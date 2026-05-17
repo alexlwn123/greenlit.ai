@@ -259,70 +259,65 @@ def _call_claude(text: str, max_tokens: int = 10000, char_budget: int = CHAR_BUD
         return _call_claude(text, max_tokens=max_tokens + 4000, char_budget=20000)
 
 
-def _apply_severity(gap_field: str, metadata: dict) -> str:
-    severity = SEVERITY_BASELINE.get(gap_field, "medium")
-    for rule in SEVERITY_UPGRADES:
-        if (
-            rule["gap_field"] == gap_field
-            and metadata.get(rule["condition_field"]) == rule["condition_value"]
-        ):
-            candidate = rule["upgrade_to"]
-            if SEVERITY_ORDER.index(candidate) < SEVERITY_ORDER.index(severity):
-                severity = candidate
-    return severity
+# Maps domain keys to the GRAS notice section most relevant for references
+_DOMAIN_TO_SECTION = {
+    "identity_and_characterization": "part_1_identity",
+    "manufacturing_process":         "part_1_identity",
+    "dietary_exposure":              "part_5_dietary_exposure",
+    "safety_data":                   "part_4_safety",
+    "general_availability":          "part_4_safety",
+    "general_acceptance":            "part_3_gras_basis",
+    "conditions_of_use":             "part_2_intended_use",
+    "regulatory_submission":         "part_6_narrative",
+}
+
+_PRIORITY_ORDER = ["foundational", "material", "documentation_issue"]
 
 
-def _compute_score(gap_field_presence: dict, metadata: dict) -> tuple[int, dict]:
-    present_counts: dict[str, int] = {"critical": 0, "high": 0, "medium": 0}
-    for field, present in gap_field_presence.items():
-        if present:
-            sev = _apply_severity(field, metadata)
-            present_counts[sev] = present_counts.get(sev, 0) + 1
-    score = BASE_SCORE
-    for sev, cap in SEVERITY_PRESENT_CAPS.items():
-        score += min(present_counts.get(sev, 0), cap) * SEVERITY_PRESENT_POINTS[sev]
-    return min(score, 100), present_counts
+def _compute_score_from_domains(domain_analysis: dict) -> tuple[int, dict]:
+    """Score based on gaps actually found in domain analysis."""
+    counts: dict[str, int] = {"foundational": 0, "material": 0, "documentation_issue": 0}
+    for domain_data in domain_analysis.values():
+        for gap in domain_data.get("gaps", []):
+            p = gap.get("priority", "material")
+            if p in counts:
+                counts[p] += 1
+
+    score = 100
+    score -= min(counts["foundational"], 5) * 15
+    score -= min(counts["material"], 7) * 7
+    score -= min(counts["documentation_issue"], 8) * 2
+    return max(score, 0), counts
 
 
-def _build_gap_report(gap_field_presence: dict, metadata: dict,
-                      approved: list, withdrawn: list) -> list[dict]:
-    """Flat scored gap list for the UI summary panel, with similar-notice waypoints."""
+def _build_gap_report_from_domains(domain_analysis: dict,
+                                   approved: list, withdrawn: list) -> list[dict]:
+    """Flat gap list derived from domain_analysis — consistent with score and domain view."""
+    ref_approved = {"grn_number": approved[0]["grn_number"],
+                    "substance_name": approved[0].get("substance_name", "")} if approved else None
+    ref_withdrawn = {"grn_number": withdrawn[0]["grn_number"],
+                     "substance_name": withdrawn[0].get("substance_name", "")} if withdrawn else None
+
     gaps = []
-    for field, present in gap_field_presence.items():
-        if present:
-            continue
-        severity = _apply_severity(field, metadata)
-        notice_section = GAP_TO_NOTICE_SECTION.get(field)
+    for domain_key, domain_data in domain_analysis.items():
+        section_key = _DOMAIN_TO_SECTION.get(domain_key, "part_1_identity")
+        section_label = NOTICE_SECTION_LABELS.get(section_key, section_key)
+        for gap in domain_data.get("gaps", []):
+            ref = {**ref_approved, "section_key": section_key,
+                   "section_label": section_label} if ref_approved else None
+            gaps.append({
+                "domain":      domain_key,
+                "title":       gap.get("title", ""),
+                "priority":    gap.get("priority", "material"),
+                "gap_type":    gap.get("gap_type", ""),
+                "section_reference": gap.get("section_reference", ""),
+                "observation": gap.get("observation", ""),
+                "approved_reference":  ref,
+                "withdrawn_reference": ref_withdrawn,
+            })
 
-        # Find a similar approved notice that addressed this gap
-        ref_approved = None
-        for notice in approved:
-            ref_approved = {
-                "grn_number": notice["grn_number"],
-                "substance_name": notice.get("substance_name", ""),
-                "section_key": notice_section,
-                "section_label": NOTICE_SECTION_LABELS.get(notice_section, notice_section),
-            }
-            break
-
-        # Find a withdrawn notice that was also missing this gap
-        ref_withdrawn = None
-        for notice in withdrawn:
-            ref_withdrawn = {
-                "grn_number": notice["grn_number"],
-                "substance_name": notice.get("substance_name", ""),
-            }
-            break
-
-        gaps.append({
-            "field":           field,
-            "title":           GAP_DISPLAY_TITLES.get(field, field),
-            "severity":        severity,
-            "approved_reference": ref_approved,
-            "withdrawn_reference": ref_withdrawn,
-        })
-
-    gaps.sort(key=lambda g: SEVERITY_ORDER.index(g["severity"]))
+    gaps.sort(key=lambda g: _PRIORITY_ORDER.index(g["priority"])
+              if g["priority"] in _PRIORITY_ORDER else 1)
     return gaps
 
 
@@ -371,18 +366,11 @@ def analyze(pdf_path: Path) -> dict:
     withdrawn = similar["withdrawn_notices"]
 
     print("[4/5] Scoring...")
-    gap_field_presence = analysis.get("gap_field_presence", {})
-    metadata_for_scoring = {
-        "substance_type": None,
-        "production_method": summary.get("production_method"),
-        "gras_basis": summary.get("gras_basis"),
-    }
-    score, present_counts = _compute_score(gap_field_presence, metadata_for_scoring)
+    domain_analysis = analysis.get("domain_analysis", {})
+    score, priority_counts = _compute_score_from_domains(domain_analysis)
 
     print("[5/5] Building report...")
-    gap_report_items = _build_gap_report(
-        gap_field_presence, metadata_for_scoring, approved, withdrawn
-    )
+    gap_report_items = _build_gap_report_from_domains(domain_analysis, approved, withdrawn)
 
     # Build consolidated gap summary across all domains
     consolidated = []
@@ -412,7 +400,7 @@ def analyze(pdf_path: Path) -> dict:
         "strengths_summary": analysis.get("strengths_summary", []),
         "gap_report": {
             "score": score,
-            "present_counts": present_counts,
+            "priority_counts": priority_counts,
             "gaps": gap_report_items,
         },
         "comparative_analysis": _build_comparative_analysis(approved, withdrawn),
@@ -464,8 +452,8 @@ if __name__ == "__main__":
         gr = result["gap_report"]
         print("\n" + "=" * 70)
         print(f"COMPLETENESS SCORE: {gr['score']}/100")
-        pc = gr['present_counts']
-        print(f"Fields present — critical: {pc.get('critical',0)}, high: {pc.get('high',0)}, medium: {pc.get('medium',0)}")
+        pc = gr['priority_counts']
+        print(f"Gaps — foundational: {pc.get('foundational',0)}, material: {pc.get('material',0)}, documentation: {pc.get('documentation_issue',0)}")
         print("=" * 70)
 
         icons = {"critical": "⛔", "high": "⚠️", "medium": "\U0001f4a1"}
