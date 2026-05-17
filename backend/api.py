@@ -16,6 +16,8 @@ if not os.environ.get("OPENAI_API_KEY") and os.environ.get("OPEN_AI_KEY"):
 
 from fastapi import FastAPI, File, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from pydantic import BaseModel
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -103,3 +105,13 @@ async def get_status(job_id: str):
 @app.get("/health")
 async def health():
     return {"status": "ok"}
+
+
+FRONTEND_DIST = Path(__file__).parent.parent / "frontend" / "dist"
+
+if FRONTEND_DIST.exists():
+    app.mount("/assets", StaticFiles(directory=FRONTEND_DIST / "assets"), name="assets")
+
+    @app.get("/{full_path:path}")
+    async def serve_frontend(full_path: str):
+        return FileResponse(FRONTEND_DIST / "index.html")

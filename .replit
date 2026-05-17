@@ -7,6 +7,8 @@ packages = ["cargo", "freetype", "lcms2", "libiconv", "libimagequant", "libjpeg"
 
 [deployment]
 run = ["uvicorn", "backend.api:app", "--host", "0.0.0.0", "--port", "8000"]
+deploymentTarget = "vm"
+build = ["bash", "-c", "cd frontend && ../node_modules/.bin/vite build"]
 
 [workflows]
 runButton = "Project"
