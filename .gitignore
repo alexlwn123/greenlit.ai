@@ -208,9 +208,14 @@ data/uploads/
 
 # Test analysis outputs
 data/notices/Test/*_Analysis.json
+data/Notices/Test/*_Analysis.json
 
 # Large PDF source files — not needed on Replit
 data/notices/**/*.pdf
+data/Notices/**/*.pdf
+
+# ChromaDB vector store — generated; run backend/embed.py to rebuild
+data/chroma/
 
 # Ruff stuff:
 .ruff_cache/
