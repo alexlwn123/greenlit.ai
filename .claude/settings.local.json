@@ -8,7 +8,10 @@
       "PowerShell(& \".\\\\venv\\\\Scripts\\\\python.exe\" -c \"import sys; sys.path.insert\\(0,'.'\\); import backend.embed; import backend.retrieve; print\\('imports ok'\\)\" 2>&1)",
       "PowerShell(& \".\\\\venv\\\\Scripts\\\\python.exe\" -c \"import sys; sys.path.insert\\(0,'.'\\); import backend.analyze; print\\('imports ok'\\)\" 2>&1)",
       "Bash(Get-Content *)",
-      "PowerShell(& \".\\\\venv\\\\Scripts\\\\python.exe\" -c \"import sys; sys.path.insert\\(0,'.'\\); import backend.analyze; print\\('ok'\\)\" 2>&1)"
+      "PowerShell(& \".\\\\venv\\\\Scripts\\\\python.exe\" -c \"import sys; sys.path.insert\\(0,'.'\\); import backend.analyze; print\\('ok'\\)\" 2>&1)",
+      "PowerShell(& \".\\\\venv\\\\Scripts\\\\python.exe\" -c \"import fastapi; import uvicorn; print\\('fastapi:', fastapi.__version__\\); print\\('uvicorn ok'\\)\" 2>&1)",
+      "PowerShell(& \".\\\\venv\\\\Scripts\\\\python.exe\" -c \"import sys; sys.path.insert\\(0,'.'\\); import backend.api; print\\('imports ok'\\)\" 2>&1)",
+      "PowerShell(& \".\\\\venv\\\\Scripts\\\\pip.exe\" install python-multipart -q; & \".\\\\venv\\\\Scripts\\\\python.exe\" -c \"import sys; sys.path.insert\\(0,'.'\\); import backend.api; print\\('imports ok'\\)\" 2>&1)"
     ]
   }
 }
