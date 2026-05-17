@@ -2,7 +2,10 @@
 
 import os
 import sys
+import time
 import uuid
+import threading
+from collections import defaultdict, deque
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor
 from enum import Enum
@@ -14,7 +17,7 @@ load_dotenv()
 if not os.environ.get("OPENAI_API_KEY") and os.environ.get("OPEN_AI_KEY"):
     os.environ["OPENAI_API_KEY"] = os.environ["OPEN_AI_KEY"]
 
-from fastapi import FastAPI, File, HTTPException, UploadFile
+from fastapi import FastAPI, File, HTTPException, Request, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
@@ -25,6 +28,15 @@ from backend.analyze import analyze
 
 UPLOAD_DIR = Path("data/uploads")
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+
+# ---------------------------------------------------------------------------
+# Abuse-control constants
+# ---------------------------------------------------------------------------
+MAX_UPLOAD_BYTES   = 50 * 1024 * 1024   # 50 MB hard cap on uploaded file
+MAX_PENDING_JOBS   = 20                  # global queue-depth cap
+MAX_JOBS_STORED    = 200                 # evict completed/failed records above this
+RATE_LIMIT_WINDOW  = 60                  # seconds per rate-limit window
+RATE_LIMIT_MAX     = 5                   # max /analyze submissions per IP per window
 
 app = FastAPI(title="GRAS Gap Analysis API", version="1.0")
 
@@ -38,6 +50,13 @@ app.add_middleware(
 # In-memory job store — replace with Redis or a DB for multi-worker deploys
 _jobs: dict[str, dict] = {}
 _executor = ThreadPoolExecutor(max_workers=4)
+
+# Single lock protecting both _jobs and _rate_store from concurrent access
+# by the async request path and the ThreadPoolExecutor workers.
+_store_lock = threading.Lock()
+
+# Per-IP sliding-window rate-limit store
+_rate_store: dict[str, deque] = defaultdict(deque)
 
 
 class JobStatus(str, Enum):
@@ -54,35 +73,120 @@ class JobResponse(BaseModel):
     error:  str | None = None
 
 
+# ---------------------------------------------------------------------------
+# Internal helpers
+# ---------------------------------------------------------------------------
+
+def _check_rate_limit(client_ip: str) -> None:
+    """Sliding-window rate limiter. Must be called with _store_lock held."""
+    now = time.monotonic()
+    window = _rate_store[client_ip]
+    while window and window[0] < now - RATE_LIMIT_WINDOW:
+        window.popleft()
+    if len(window) >= RATE_LIMIT_MAX:
+        raise HTTPException(
+            status_code=429,
+            detail=(
+                f"Too many requests. You may submit at most {RATE_LIMIT_MAX} "
+                f"analyses per {RATE_LIMIT_WINDOW} seconds."
+            ),
+        )
+    window.append(now)
+
+
+def _count_pending_locked() -> int:
+    """Count pending jobs. Must be called with _store_lock held."""
+    return sum(1 for j in _jobs.values() if j["status"] == JobStatus.pending)
+
+
+def _evict_old_jobs_locked() -> None:
+    """Remove completed/failed jobs when store exceeds MAX_JOBS_STORED.
+    Must be called with _store_lock held."""
+    if len(_jobs) <= MAX_JOBS_STORED:
+        return
+    evictable = [
+        jid for jid, j in list(_jobs.items())
+        if j["status"] in (JobStatus.complete, JobStatus.failed)
+    ]
+    for jid in evictable[: len(_jobs) - MAX_JOBS_STORED]:
+        _jobs.pop(jid, None)
+
+
 def _run_analysis(job_id: str, pdf_path: Path) -> None:
     """Runs in a thread pool — updates job store when done."""
-    _jobs[job_id]["status"] = JobStatus.running
+    with _store_lock:
+        _jobs[job_id]["status"] = JobStatus.running
     try:
         result = analyze(pdf_path)
-        _jobs[job_id]["status"] = JobStatus.complete
-        _jobs[job_id]["result"] = result
+        with _store_lock:
+            _jobs[job_id]["status"] = JobStatus.complete
+            _jobs[job_id]["result"] = result
     except Exception as exc:
-        _jobs[job_id]["status"] = JobStatus.failed
-        _jobs[job_id]["error"]  = str(exc)
+        with _store_lock:
+            _jobs[job_id]["status"] = JobStatus.failed
+            _jobs[job_id]["error"]  = str(exc)
     finally:
-        # Clean up the uploaded file
         try:
             pdf_path.unlink(missing_ok=True)
         except Exception:
             pass
+        with _store_lock:
+            _evict_old_jobs_locked()
 
+
+# ---------------------------------------------------------------------------
+# Routes
+# ---------------------------------------------------------------------------
 
 @app.post("/analyze", response_model=JobResponse, status_code=202)
-async def submit_analysis(file: UploadFile = File(...)):
+async def submit_analysis(request: Request, file: UploadFile = File(...)):
     """Accept a PDF upload and start analysis. Returns a job_id to poll."""
+    client_ip = request.client.host if request.client else "unknown"
+
+    # Filename validation (cheap — do before acquiring lock)
     if not file.filename or not file.filename.lower().endswith(".pdf"):
         raise HTTPException(status_code=400, detail="Only PDF files are accepted.")
 
-    job_id  = str(uuid.uuid4())
-    pdf_path = UPLOAD_DIR / f"{job_id}.pdf"
-    pdf_path.write_bytes(await file.read())
+    # Rate limit + queue-depth check — both under the same lock so they are
+    # atomic with respect to thread-pool workers updating job statuses.
+    with _store_lock:
+        _check_rate_limit(client_ip)      # raises 429 if over limit
+        if _count_pending_locked() >= MAX_PENDING_JOBS:
+            raise HTTPException(
+                status_code=503,
+                detail="Server is busy. Too many analyses are queued. Please try again later.",
+            )
 
-    _jobs[job_id] = {"status": JobStatus.pending, "result": None, "error": None}
+    # Stream upload directly to disk — never accumulate the full body in RAM.
+    # Each chunk is written immediately; we reject as soon as the byte count
+    # exceeds the cap and delete the partial file.
+    job_id   = str(uuid.uuid4())
+    pdf_path = UPLOAD_DIR / f"{job_id}.pdf"
+    total_bytes = 0
+    chunk_size  = 256 * 1024  # 256 KB per read
+
+    try:
+        with pdf_path.open("wb") as fh:
+            while True:
+                chunk = await file.read(chunk_size)
+                if not chunk:
+                    break
+                total_bytes += len(chunk)
+                if total_bytes > MAX_UPLOAD_BYTES:
+                    raise HTTPException(
+                        status_code=413,
+                        detail=(
+                            f"File too large. Maximum allowed size is "
+                            f"{MAX_UPLOAD_BYTES // (1024 * 1024)} MB."
+                        ),
+                    )
+                fh.write(chunk)
+    except HTTPException:
+        pdf_path.unlink(missing_ok=True)
+        raise
+
+    with _store_lock:
+        _jobs[job_id] = {"status": JobStatus.pending, "result": None, "error": None}
     _executor.submit(_run_analysis, job_id, pdf_path)
 
     return JobResponse(job_id=job_id, status=JobStatus.pending)
@@ -91,14 +195,16 @@ async def submit_analysis(file: UploadFile = File(...)):
 @app.get("/status/{job_id}", response_model=JobResponse)
 async def get_status(job_id: str):
     """Poll for job status. Result is included when status == complete."""
-    job = _jobs.get(job_id)
-    if job is None:
-        raise HTTPException(status_code=404, detail="Job not found.")
+    with _store_lock:
+        job = _jobs.get(job_id)
+        if job is None:
+            raise HTTPException(status_code=404, detail="Job not found.")
+        snapshot = dict(job)
     return JobResponse(
         job_id  = job_id,
-        status  = job["status"],
-        result  = job["result"],
-        error   = job["error"],
+        status  = snapshot["status"],
+        result  = snapshot["result"],
+        error   = snapshot["error"],
     )
 
 

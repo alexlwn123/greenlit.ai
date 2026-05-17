@@ -50,10 +50,13 @@ SECTION_PATTERNS = [
 ]
 
 
-def extract_text(pdf_path: Path) -> str:
+MAX_EXTRACT_PAGES = 500  # hard cap to prevent runaway parsing on huge PDFs
+
+
+def extract_text(pdf_path: Path, max_pages: int = MAX_EXTRACT_PAGES) -> str:
     pages = []
     with pdfplumber.open(pdf_path) as pdf:
-        for page in pdf.pages:
+        for page in pdf.pages[:max_pages]:
             text = page.extract_text()
             if text:
                 pages.append(text)
