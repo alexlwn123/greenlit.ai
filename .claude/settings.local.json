@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(& \".\\\\venv\\\\Scripts\\\\python.exe\" pipeline/extract.py 2>&1)",
+      "mcp__plugin_woz_code__Search",
+      "mcp__plugin_woz_code__Edit"
+    ]
+  }
+}
