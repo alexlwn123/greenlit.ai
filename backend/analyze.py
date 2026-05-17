@@ -439,15 +439,18 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
     parser.add_argument("pdf", help="Path to GRAS notice PDF")
-    parser.add_argument("--out", help="Write JSON output to this file")
+    parser.add_argument("--out", help="Output path (default: same folder as PDF, stem + _Analysis.json)")
     args = parser.parse_args()
 
-    result = analyze(Path(args.pdf))
+    pdf_path = Path(args.pdf)
+    out_path = Path(args.out) if args.out else pdf_path.parent / (pdf_path.stem + "_Analysis.json")
 
-    if args.out:
-        Path(args.out).write_text(json.dumps(result, indent=2), encoding="utf-8")
-        print(f"\nReport written to {args.out}")
-    else:
+    result = analyze(pdf_path)
+
+    out_path.write_text(json.dumps(result, indent=2), encoding="utf-8")
+    print(f"\nReport written to {out_path}")
+
+    if True:
         # Terminal summary
         s = result["engagement_summary"]
         print("\n" + "=" * 70)

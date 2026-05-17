@@ -1,0 +1,1030 @@
+{
+  "meta": {
+    "report_version": "1.0",
+    "analysis_date": "2026-05-17",
+    "pdf_filename": "1295_Brazzein_Komagataella.pdf"
+  },
+  "engagement_summary": {
+    "substance_name": "FarmtoryTM Brazzein (brazzein-53 sweet protein)",
+    "notifier": "MicroFarmtory LLC, Cheyenne, WY; manufactured by AquaFarmtory Biotechnology Ltd. (Jiangsu, PRC); agent PureNutrix+ Inc., Little Rock, AR",
+    "production_method": "Precision fermentation using genetically engineered Komagataella phaffii GS115 expressing the brazzein-53 gene from Pentadiplandra brazzeana; purification via heat treatment, centrifugation, ultrafiltration, ion exchange chromatography, and nanofiltration; final product is a dried powder",
+    "source_organism": "Komagataella phaffii GS115 (derived from K. phaffii NRRL Y11430); brazzein gene from Pentadiplandra brazzeana (UniProtKB P56552)",
+    "gras_basis": "scientific_procedures",
+    "intended_uses": [
+      "General-purpose sweetener in food and beverages (excluding infant formula, meat products, and poultry products)"
+    ],
+    "target_population": "General population (excluding infants via infant formula exclusion); subpopulation analyses not explicitly delineated beyond age-group intake modeling under Renwick method",
+    "date_filed": "2025-07-22",
+    "submission_completeness_note": "The notice addresses all seven required GRAS notice parts in form, but the dietary exposure section is truncated in the provided text and relies on the Renwick surrogate method without direct NHANES-based eaters-only or total-sample population modeling; several safety studies cited as foundational are identified as unpublished, which is inconsistent with GRAS general availability requirements."
+  },
+  "threshold_assessment": {
+    "categorical_eligibility": {
+      "eligible": true,
+      "basis": "Brazzein is a protein-based food ingredient proposed as a sweetener in conventional food; it does not appear to meet the definition of a color additive, new animal drug, or dietary supplement-only substance. Categorical eligibility as a conventional food ingredient subject to GRAS review appears appropriate."
+    },
+    "scope_clarity": {
+      "adequate": false,
+      "food_categories_specified": false,
+      "use_levels_specified": false,
+      "technical_function_specified": true,
+      "notes": "The conditions of use are stated only as 'general-purpose sweetener in food and beverages, excluding infant formula, meat, and poultry.' No specific food categories with discrete use levels (e.g., mg/kg or mg/serving by food type) are provided. The Renwick method used for exposure estimation requires assumed per-category use levels, but those assumptions are not explicitly disclosed in the available text. The technical function (sweetener) is clear. Absence of category-level use levels materially limits the ability to verify that safety data cover the full range of intended exposures."
+    },
+    "existing_regulatory_status": {
+      "prior_gras_notices": "No prior GRAS notices identified for brazzein specifically; K. phaffii as a production host has been acknowledged in GRN Nos. 737, 967, 1001, 1056, 1104, 1142, and 1167 per the submission",
+      "food_additive_approvals": "None identified for brazzein in the U.S. Brazzein is not listed in FDA food additive regulations. K. phaffii has QPS status in the EU for enzyme production (EFSA, 2017) per the submission.",
+      "notes": "Native brazzein from Pentadiplandra brazzeana fruit has not been the subject of a completed FDA GRAS notice based on information available in the submission. The novel production route via genetically engineered K. phaffii is a distinct regulatory consideration from any potential prior use of plant-extracted brazzein."
+    }
+  },
+  "potential_safety_signals": [
+    {
+      "signal": "Novel sweet protein produced by a GMO yeast \u2014 no precedent for brazzein in the FDA GRAS inventory",
+      "evidence": "Brazzein is a disulfide-rich 53-amino-acid protein with no current FDA authorization; its production via a CRISPR-modified K. phaffii strain introduces compositional and process-related variables not addressed by analogy to other K. phaffii-derived products",
+      "section_reference": "Part 2, Section 2.1 and 2.2; Part 6, Section 6.3",
+      "recommended_action": "Provide a full comparative safety assessment between FarmtoryTM Brazzein and plant-extracted native brazzein; address any structural differences that may affect digestibility, allergenicity, or bioavailability"
+    },
+    {
+      "signal": "Genotoxicity dataset relies substantially on unpublished studies",
+      "evidence": "Section 6.3.2.2 describes unpublished genotoxicity studies on FarmtoryTM Brazzein; the published genotoxicity data in Section 6.3.1.2 appear to cover brazzein generally but the specific substance as manufactured must be supported by publicly available data for GRAS purposes",
+      "section_reference": "Part 6, Sections 6.3.1.2 and 6.3.2.2",
+      "recommended_action": "Ensure the complete genotoxicity battery (Ames test plus chromosomal aberration or in vitro micronucleus assay) for FarmtoryTM Brazzein as manufactured is published in peer-reviewed literature or otherwise meets general availability standards prior to GRAS conclusion"
+    },
+    {
+      "signal": "Allergenicity assessment for a novel protein relies on bioinformatic screening; pepsin digestibility data status is unclear",
+      "evidence": "Section 6.3.2.3 references an allergenicity assessment; the available text does not confirm whether pepsin digestibility testing was conducted on FarmtoryTM Brazzein as manufactured, which is a standard component of novel protein allergenicity evaluation",
+      "section_reference": "Part 6, Section 6.3.2.3",
+      "recommended_action": "Confirm and document pepsin digestibility results for brazzein-53 as produced by FarmtoryTM manufacturing process; include FARRP bioinformatic screening results and cross-reactivity analysis with known allergens"
+    },
+    {
+      "signal": "Elevated sodium content in mineral profile (4,011 mg/kg) relative to other minerals",
+      "evidence": "Table 4 shows sodium at 4,011.4 ppm in the product; given intended use as a general-purpose sweetener at potentially high volumes across many food categories, cumulative sodium contribution warrants quantitative dietary assessment",
+      "section_reference": "Part 2, Section 2.3.3; Part 3, Section 3.2",
+      "recommended_action": "Quantify sodium contribution from FarmtoryTM Brazzein at proposed use levels across all food categories and assess against established ULs, particularly for children and sodium-sensitive populations"
+    },
+    {
+      "signal": "Manufacturing performed by a foreign entity (AquaFarmtory Biotechnology Ltd., PRC) with limited cGMP verification described in the submission",
+      "evidence": "Part 1 identifies AquaFarmtory Biotechnology Ltd. in Jiangsu, PRC as manufacturer; the submission asserts cGMP and HACCP compliance but provides no documentation of third-party audits, FDA facility registration, or equivalent quality assurance verification",
+      "section_reference": "Part 1, Section 1.1; Part 2, Section 2.2.2",
+      "recommended_action": "Provide documentation of cGMP compliance verification for the manufacturing facility in PRC, including FDA facility registration status and any third-party audit certifications"
+    }
+  ],
+  "domain_analysis": {
+    "identity_and_characterization": {
+      "summary": "FarmtoryTM Brazzein is characterized as brazzein-53 protein (\u226590% w/w) produced in a CRISPR-modified K. phaffii GS115 strain. Identity is supported by LC-MS/MS peptide mapping with 96.2% sequence coverage, HPLC analysis against a reference standard, and AlphaFold3 structural comparison to the PDB crystal structure. The characterization of residual host cell proteins and other minor constituents beyond ash, moisture, carbohydrate, and fat is not described in detail.",
+      "strengths": [
+        {
+          "observation": "LC-MS/MS peptide mapping demonstrates 96.2% sequence coverage matching native brazzein-53, supported by UV-HPLC analysis against an external reference standard",
+          "section_reference": "Part 2, Section 2.1.2"
+        },
+        {
+          "observation": "3D structural equivalence to native brazzein is supported by AlphaFold3 prediction compared to X-ray crystallography structure (PDBe-KB P56552)",
+          "section_reference": "Part 2, Section 2.1.3"
+        },
+        {
+          "observation": "Amino acid sequence of brazzein-53 in the product is confirmed identical to native brazzein-53 sequence; gene source (UniProtKB P56552) is documented",
+          "section_reference": "Part 2, Sections 2.1.1 and 2.2.1.2.2"
+        },
+        {
+          "observation": "PCR analysis confirms absence of detectable transgenic DNA in the final product at <0.01 ng/g, per EFSA 2011 guidelines",
+          "section_reference": "Part 2, Section 2.3.2"
+        }
+      ],
+      "gaps": [
+        {
+          "title": "Residual host cell protein characterization absent",
+          "gap_type": "evidentiary_gap",
+          "priority": "material",
+          "section_reference": "Part 2, Section 2.1.1; Part 2, Section 2.3",
+          "observation": "The submission states the product contains residual K. phaffii host cell proteins but provides no characterization of their identity, quantity, or safety profile. For a novel protein produced in a GMO yeast, residual HCP characterization is important for allergenicity and safety assessment. No HCP quantitation limit or specification is established."
+        },
+        {
+          "title": "Genetic modification characterization incomplete \u2014 number of integration sites and construct maps not provided",
+          "gap_type": "documentation_gap",
+          "priority": "material",
+          "section_reference": "Part 2, Section 2.2.1.2.2",
+          "observation": "The submission describes the genetic modifications conceptually (CRISPR knockout of protease genes, overexpression of chaperones, brazzein gene integration) but does not provide a full molecular characterization including number and location of insertion sites, absence of unintended genomic alterations, or the complete sequence of the expression cassette."
+        },
+        {
+          "title": "Post-translational modifications of recombinant brazzein-53 not characterized",
+          "gap_type": "evidentiary_gap",
+          "priority": "material",
+          "section_reference": "Part 2, Section 2.1.2",
+          "observation": "Disulfide bond pattern and glycosylation status (K. phaffii is a glycosylating yeast) of recombinant brazzein-53 are not addressed. Any difference in glycosylation relative to native plant brazzein could affect allergenicity, digestibility, and functional equivalence. This is not addressed in the identity section or safety narrative."
+        },
+        {
+          "title": "Allergenicity bioinformatic screening results not presented",
+          "gap_type": "documentation_gap",
+          "priority": "foundational",
+          "section_reference": "Part 6, Section 6.3.2.3",
+          "observation": "While Section 6.3.2.3 references an allergenicity assessment, the actual FARRP database screening results, e-value thresholds, and any sequence homology findings are not presented in the available text. For a novel protein, this data must be presented explicitly."
+        },
+        {
+          "title": "Pepsin digestibility data status unconfirmed",
+          "gap_type": "documentation_gap",
+          "priority": "foundational",
+          "section_reference": "Part 6, Section 6.3.2.3",
+          "observation": "The available text does not confirm whether pepsin digestibility testing (a standard component of novel protein allergenicity evaluation per FDA and Codex guidance) was conducted on FarmtoryTM Brazzein as manufactured. Omission of this data represents a gap in allergenicity characterization for a novel sweet protein."
+        }
+      ]
+    },
+    "manufacturing_process": {
+      "summary": "The manufacturing process is described at a process-flow level including fermentation, heat-kill, centrifugation, ultrafiltration, ion exchange chromatography, nanofiltration, filtration, and drying. Critical control points are identified at the filtration and grinding/sifting steps. However, specific fermentation parameters, processing aid identities, and purification step details are not disclosed, limiting independent expert verification.",
+      "strengths": [
+        {
+          "observation": "A process flow chart identifying major unit operations and two critical control points (microbial filtration and grinding/sifting) is provided",
+          "section_reference": "Part 2, Section 2.2.2, Figure 3"
+        },
+        {
+          "observation": "The submission asserts that all processing aids conform to FCC, applicable U.S. regulations, or GRAS status, and that the production strain contains no antibiotic resistance genes and no antibiotics are used",
+          "section_reference": "Part 2, Section 2.2.2"
+        },
+        {
+          "observation": "The production strain is confirmed to have no residual plasmids or antibiotic resistance genes, reducing horizontal gene transfer risk",
+          "section_reference": "Part 2, Section 2.2.1.2.2"
+        }
+      ],
+      "gaps": [
+        {
+          "title": "Processing aids and reagents not individually identified",
+          "gap_type": "documentation_gap",
+          "priority": "material",
+          "section_reference": "Part 2, Section 2.2.2",
+          "observation": "The submission states processing aids conform to applicable standards but does not name the specific reagents used (e.g., ion exchange resin type, NaCl gradient specifics, filtration membrane materials). Without this, independent experts cannot evaluate potential process-related contaminant risk."
+        },
+        {
+          "title": "Fermentation media composition not disclosed",
+          "gap_type": "documentation_gap",
+          "priority": "material",
+          "section_reference": "Part 2, Section 2.2.2",
+          "observation": "No fermentation media composition is provided. Media components (carbon and nitrogen sources, trace elements, growth factors) are relevant to assessing potential carryover of process-related contaminants into the final product. Their absence limits expert evaluation of the purification process adequacy."
+        },
+        {
+          "title": "Purification step performance data (clearance of host cell proteins) absent",
+          "gap_type": "evidentiary_gap",
+          "priority": "material",
+          "section_reference": "Part 2, Section 2.2.2",
+          "observation": "No data are provided on the log-reduction of host cell proteins across purification steps. Given that HCP residuals are not specified in Table 2, the adequacy of purification to achieve the \u226590% brazzein purity specification and safe HCP levels cannot be independently assessed."
+        },
+        {
+          "title": "cGMP compliance of foreign manufacturing facility not documented",
+          "gap_type": "documentation_gap",
+          "priority": "material",
+          "section_reference": "Part 1, Section 1.1; Part 2, Section 2.2.2",
+          "observation": "Manufacturing is conducted by AquaFarmtory Biotechnology Ltd. in PRC. The submission asserts cGMP/HACCP compliance but provides no audit reports, FDA facility registration number, or equivalent third-party verification applicable to the foreign facility."
+        }
+      ]
+    },
+    "dietary_exposure": {
+      "summary": "Dietary exposure is estimated using the Renwick (2008) method for high-intensity sweeteners, which involves scaling post-market surveillance intake data for other sweeteners by the relative sweetness of brazzein-53. The full Renwick table (Table 5) is truncated in the available text. No NHANES- or CSFII-based probabilistic intake modeling is presented. Specific food category use levels are not disclosed. A secondary analysis of mineral intake from the product is provided (Table 6).",
+      "strengths": [
+        {
+          "observation": "The Renwick method is a recognized, peer-reviewed approach for estimating high-intensity sweetener intake that has been applied in prior regulatory submissions and provides conservative estimates",
+          "section_reference": "Part 3, Section 3.1"
+        },
+        {
+          "observation": "A mineral intake analysis (Table 6) comparing estimated mineral intake from FarmtoryTM Brazzein to IOM Tolerable Upper Intake Levels is provided, addressing a specific compositional safety question",
+          "section_reference": "Part 3, Section 3.2"
+        }
+      ],
+      "gaps": [
+        {
+          "title": "No NHANES-based probabilistic dietary exposure modeling",
+          "gap_type": "adequacy_gap",
+          "priority": "material",
+          "section_reference": "Part 3, Section 3.1",
+          "observation": "The Renwick method uses sweetener post-market surveillance data as a surrogate; it does not employ U.S. population consumption data (NHANES or USDA CSFII) linked to food category use levels. This approach may not accurately reflect actual U.S. population exposure patterns, particularly for novel food applications."
+        },
+        {
+          "title": "Food category-specific use levels not disclosed",
+          "gap_type": "documentation_gap",
+          "priority": "material",
+          "section_reference": "Part 3, Section 3.1",
+          "observation": "The submission does not provide the per-category use levels (mg/kg food or mg/serving) assumed in the Renwick exposure calculation. Without these, it is not possible to verify that the proposed conditions of use are bounded by the exposure estimates or that safety data cover the intended use levels."
+        },
+        {
+          "title": "Eaters-only vs. total-sample population methodology not clarified",
+          "gap_type": "adequacy_gap",
+          "priority": "material",
+          "section_reference": "Part 3, Section 3.1",
+          "observation": "The available text does not clarify whether the Renwick-based intake estimates represent total-sample (all-person) or eaters-only estimates. FDA guidance recommends total-sample estimates as the primary metric for aggregate intake assessment; reliance on eaters-only data would understate population-level exposure."
+        },
+        {
+          "title": "Children 2\u20135 years and other vulnerable subpopulation analyses not explicitly presented",
+          "gap_type": "adequacy_gap",
+          "priority": "material",
+          "section_reference": "Part 3, Section 3.1",
+          "observation": "The Renwick method references population group analyses; however, the available text does not explicitly present intake estimates stratified for children aged 2\u20135 years, who may have higher per-kg-body-weight exposure. This subpopulation warrants explicit characterization given the general-purpose sweetener designation."
+        },
+        {
+          "title": "Acute (single-day) exposure assessment absent",
+          "gap_type": "evidentiary_gap",
+          "priority": "material",
+          "section_reference": "Part 3, Section 3.1",
+          "observation": "Only chronic/average intake is estimated. For a general-purpose sweetener that may be concentrated in single-product categories (e.g., beverages), acute high-percentile (P90/P95) daily intake estimates are relevant to safety evaluation and are not addressed."
+        }
+      ]
+    },
+    "safety_data": {
+      "summary": "The safety data section covers published and unpublished oral toxicity, genotoxicity, and allergenicity studies. Published studies address brazzein generally; unpublished studies are specific to FarmtoryTM Brazzein. An acute oral toxicity study, a 90-day subchronic study, and genotoxicity assays are referenced. Chronic and reproductive/developmental toxicity data are not described. The genotoxicity dataset is characterized by the submission as including an Ames test; the availability of chromosomal aberration or micronucleus data is not confirmed in the available text.",
+      "strengths": [
+        {
+          "observation": "A 90-day oral subchronic toxicity study in rodents is described, which is appropriate for the estimated exposure level and consistent with FDA Redbook guidance for this tier of safety assessment",
+          "section_reference": "Part 6, Section 6.3.1.1"
+        },
+        {
+          "observation": "Both published and unpublished safety studies are disclosed separately, and the submission acknowledges their distinct evidentiary weight, which reflects awareness of GRAS general availability standards",
+          "section_reference": "Part 6, Sections 6.3.1 and 6.3.2"
+        },
+        {
+          "observation": "A toxigenicity assessment specific to FarmtoryTM Brazzein is described in Section 6.3.2.4, addressing the production strain's safety",
+          "section_reference": "Part 6, Section 6.3.2.4"
+        }
+      ],
+      "gaps": [
+        {
+          "title": "Unpublished studies form a substantial portion of the safety dataset for FarmtoryTM Brazzein specifically",
+          "gap_type": "adequacy_gap",
+          "priority": "foundational",
+          "section_reference": "Part 6, Section 6.3.2",
+          "observation": "Sections 6.3.2.1\u20136.3.2.4 present unpublished oral toxicity, genotoxicity, allergenicity, and toxigenicity studies as part of the safety basis for FarmtoryTM Brazzein as manufactured. Under GRAS standards, unpublished data may corroborate but cannot establish the GRAS conclusion; safety of the specific substance must rest on publicly available evidence."
+        },
+        {
+          "title": "Genotoxicity battery completeness not confirmed \u2014 chromosomal aberration or micronucleus data status unclear",
+          "gap_type": "adequacy_gap",
+          "priority": "foundational",
+          "section_reference": "Part 6, Sections 6.3.1.2 and 6.3.2.2",
+          "observation": "The available text references genotoxicity studies but does not confirm whether an in vitro chromosomal aberration assay or micronucleus test was conducted for FarmtoryTM Brazzein. An Ames test alone is insufficient to constitute a complete genotoxicity battery under current regulatory expectations."
+        },
+        {
+          "title": "No reproductive or developmental toxicity data",
+          "gap_type": "evidentiary_gap",
+          "priority": "material",
+          "section_reference": "Part 6, Section 6.3 \u2014 not present",
+          "observation": "No reproductive toxicity or developmental toxicity studies are cited for brazzein or FarmtoryTM Brazzein. For a general-purpose sweetener with broad population exposure including pregnant women, absence of reproductive/developmental toxicity data represents a gap relative to FDA Redbook expectations at this exposure tier."
+        },
+        {
+          "title": "No chronic or carcinogenicity study data",
+          "gap_type": "evidentiary_gap",
+          "priority": "material",
+          "section_reference": "Part 6, Section 6.3 \u2014 not present",
+          "observation": "No chronic toxicity or carcinogenicity studies are cited. While the submission may rely on the GRAS panel to determine whether the 90-day study is sufficient, the absence of chronic data for a novel protein intended for widespread, lifelong consumption across the general population warrants explicit justification."
+        },
+        {
+          "title": "Safety studies on published brazzein not confirmed as covering brazzein-53 isoform specifically",
+          "gap_type": "adequacy_gap",
+          "priority": "material",
+          "section_reference": "Part 6, Section 6.3.1",
+          "observation": "Published brazzein safety studies (Section 6.3.1) may not have used brazzein-53 exclusively; the dominant native isoform is brazzein-54 (~80%). The submission should clarify whether published toxicology data apply specifically to brazzein-53 or to a brazzein mixture, and address any isoform-specific differences."
+        }
+      ]
+    },
+    "general_availability": {
+      "summary": "The GRAS notice represents the safety case as resting on both published peer-reviewed literature and unpublished proprietary studies. The published data address brazzein in general; the substance-specific safety data (FarmtoryTM Brazzein as manufactured) appear to rely substantially on unpublished studies. This creates a structural tension with the general availability requirement, which mandates that the safety basis be accessible to qualified experts in the scientific community.",
+      "strengths": [
+        {
+          "observation": "Published peer-reviewed studies on brazzein identity, structure, and general safety are cited and are presumably publicly accessible",
+          "section_reference": "Part 7, Section 7.1"
+        },
+        {
+          "observation": "The submission explicitly distinguishes published from unpublished data in separate subsections, demonstrating awareness of the general availability standard",
+          "section_reference": "Part 6, Sections 6.3.1 and 6.3.2"
+        }
+      ],
+      "gaps": [
+        {
+          "title": "Unpublished studies used as primary safety evidence for FarmtoryTM Brazzein as manufactured",
+          "gap_type": "adequacy_gap",
+          "priority": "foundational",
+          "section_reference": "Part 6, Section 6.3.2",
+          "observation": "Substance-specific oral toxicity, genotoxicity, allergenicity, and toxigenicity data for FarmtoryTM Brazzein are described as unpublished. GRAS by scientific procedures requires that safety data be generally available in the published literature; unpublished data alone cannot satisfy this standard for the substance-specific safety assessment."
+        },
+        {
+          "title": "Expert panel reports and underlying data not confirmed as publicly accessible",
+          "gap_type": "documentation_gap",
+          "priority": "material",
+          "section_reference": "Part 6, Section 6.5",
+          "observation": "Section 6.5 references a GRAS panel evaluation, but the panel's report, qualifications, conflict of interest disclosures, and the unpublished studies reviewed by the panel are not confirmed as publicly available. Independent expert access to the full basis for the panel's conclusion is required for GRAS general availability."
+        }
+      ]
+    },
+    "general_acceptance": {
+      "summary": "Brazzein has a published scientific literature base supporting its safety as a sweet protein, and K. phaffii is widely acknowledged as a safe production organism. However, brazzein as a food ingredient has no established regulatory acceptance by major international bodies (JECFA, EFSA) for use as a food additive, and no completed FDA GRAS notice for brazzein exists as a comparator. The novel GMO production route and reliance on unpublished data may limit the breadth of expert consensus achievable.",
+      "strengths": [
+        {
+          "observation": "K. phaffii has QPS status (EU) and has been the subject of multiple accepted GRAS notices (GRN 737, 967, 1001, 1056, 1104, 1142, 1167), supporting acceptance of the production platform",
+          "section_reference": "Part 2, Section 2.2.1.1; Part 6, Section 6.2"
+        },
+        {
+          "observation": "Published literature on brazzein structure and safety in animals is cited, providing an independent scientific basis for the protein's general safety profile",
+          "section_reference": "Part 6, Section 6.3.1"
+        }
+      ],
+      "gaps": [
+        {
+          "title": "No authoritative body (JECFA, EFSA) evaluation of brazzein as a food ingredient",
+          "gap_type": "evidentiary_gap",
+          "priority": "material",
+          "section_reference": "Part 6, Section 6.3; Part 6, Section 6.4",
+          "observation": "No JECFA, EFSA, or comparable national regulatory body has formally evaluated brazzein for use as a food sweetener. The absence of independent international authoritative body review limits the demonstration of broad expert consensus required for general acceptance under GRAS standards."
+        },
+        {
+          "title": "GRAS panel member qualifications and independence not described in available text",
+          "gap_type": "documentation_gap",
+          "priority": "material",
+          "section_reference": "Part 6, Section 6.5",
+          "observation": "Section 6.5 references a unanimous GRAS panel conclusion but the available text does not describe panel member qualifications, relevant expertise, conflict of interest disclosures, or the scope and process of the panel's review. These are necessary to evaluate the credibility of the expert panel determination."
+        }
+      ]
+    },
+    "conditions_of_use": {
+      "summary": "Conditions of use are stated as general-purpose sweetener in food and beverages, excluding infant formula, meat, and poultry products, in accordance with cGMP. No specific food categories, use levels in quantitative units, or technical function details beyond 'sweetener' are provided. The breadth of 'general-purpose' without category-level specification creates uncertainty about whether the safety data (particularly the exposure estimates) are appropriately bounded.",
+      "strengths": [
+        {
+          "observation": "Clear exclusions of infant formula, meat, and poultry products are specified, appropriately limiting the scope of use",
+          "section_reference": "Part 1, Section 1.3"
+        },
+        {
+          "observation": "Technical function as a sweetener is clearly identified and is consistent with brazzein's known sweetness potency relative to sucrose",
+          "section_reference": "Part 1, Section 1.2; Part 2, Section 2.1.1"
+        }
+      ],
+      "gaps": [
+        {
+          "title": "No specific food categories or quantitative use levels provided",
+          "gap_type": "adequacy_gap",
+          "priority": "foundational",
+          "section_reference": "Part 1, Section 1.3; Part 3, Section 3.1",
+          "observation": "The conditions of use do not specify food categories or use levels in mg/kg or mg/serving. Without defined use levels, it is not possible to verify that the exposure estimates are conservatively bounded, that safety data cover the full intended exposure range, or that the cGMP designation is sufficient to limit intake."
+        },
+        {
+          "title": "Self-limiting use section is present but analysis is not summarized in available text",
+          "gap_type": "documentation_gap",
+          "priority": "documentation_issue",
+          "section_reference": "Part 4",
+          "observation": "Part 4 on self-limiting levels of use is listed in the table of contents but its content is not included in the available text. The basis for any self-limiting use determination (e.g., flavor threshold, off-taste effects) should be documented to support the cGMP-based conditions of use."
+        }
+      ]
+    },
+    "regulatory_submission": {
+      "summary": "The notice addresses all seven required GRAS notice parts in its table of contents. Part 1 includes a signed certification by the Chief Science Officer of MicroFarmtory attesting to a complete, accurate, and balanced submission including unfavorable data. The submission was prepared by PureNutrix+ Inc. as agent. The available text is truncated and the full content of Parts 3 through 7 cannot be fully assessed. Certain structural elements (GRAS panel qualifications, full safety data tables) appear incomplete based on available text.",
+      "strengths": [
+        {
+          "observation": "Part 1 certification is signed by a responsible official (CSO) of MicroFarmtory and explicitly certifies that both favorable and unfavorable information has been considered and included, satisfying 21 CFR \u00a7170.225(a) requirements",
+          "section_reference": "Part 1"
+        },
+        {
+          "observation": "FOIA status is addressed \u2014 the submitter states that Parts 2\u20137 do not contain trade secret or confidential commercial information, facilitating public transparency",
+          "section_reference": "Part 1, Section 1.6"
+        },
+        {
+          "observation": "The submission identifies both the notifier (MicroFarmtory LLC) and the manufacturer (AquaFarmtory Biotechnology Ltd.) with addresses, and designates an agent (PureNutrix+ Inc.), meeting 21 CFR \u00a7170.203 identification requirements",
+          "section_reference": "Part 1, Section 1.1"
+        }
+      ],
+      "gaps": [
+        {
+          "title": "Part 4 (self-limiting levels) content not available for review",
+          "gap_type": "documentation_gap",
+          "priority": "documentation_issue",
+          "section_reference": "Part 4",
+          "observation": "Part 4 is listed in the table of contents but its substantive content is not present in the available text. The analytical basis for any self-limiting use determination should be included to support the conditions of use under cGMP."
+        },
+        {
+          "title": "Part 5 (common use before 1958) placeholder present but not applicable",
+          "gap_type": "documentation_gap",
+          "priority": "documentation_issue",
+          "section_reference": "Part 5",
+          "observation": "Part 5 is included in the table of contents. Since GRAS basis is scientific procedures, Part 5 should contain a clear statement that common use before 1958 is not the basis for this determination, to avoid ambiguity in the submission structure."
+        },
+        {
+          "title": "GRAS panel qualifications, independence, and report not described or attached",
+          "gap_type": "documentation_gap",
+          "priority": "material",
+          "section_reference": "Part 6, Section 6.5",
+          "observation": "The submission references a unanimous GRAS panel conclusion but does not attach the panel's written report, member CVs, conflict of interest disclosures, or the scope of the review. FDA expects sufficient documentation to allow evaluation of the panel's competence and independence."
+        },
+        {
+          "title": "Part 7 reference list truncated \u2014 completeness cannot be verified",
+          "gap_type": "documentation_gap",
+          "priority": "documentation_issue",
+          "section_reference": "Part 7, Section 7.1",
+          "observation": "The reference list and appendices list are included in the table of contents but the full content is truncated in the available text. Completeness of the supporting data list per 21 CFR \u00a7170.275 cannot be confirmed from the provided document."
+        }
+      ]
+    }
+  },
+  "consolidated_gap_summary": [
+    {
+      "title": "Allergenicity bioinformatic screening results not presented",
+      "gap_type": "documentation_gap",
+      "priority": "foundational",
+      "section_reference": "Part 6, Section 6.3.2.3",
+      "observation": "While Section 6.3.2.3 references an allergenicity assessment, the actual FARRP database screening results, e-value thresholds, and any sequence homology findings are not presented in the available text. For a novel protein, this data must be presented explicitly.",
+      "domain": "identity_and_characterization"
+    },
+    {
+      "title": "Pepsin digestibility data status unconfirmed",
+      "gap_type": "documentation_gap",
+      "priority": "foundational",
+      "section_reference": "Part 6, Section 6.3.2.3",
+      "observation": "The available text does not confirm whether pepsin digestibility testing (a standard component of novel protein allergenicity evaluation per FDA and Codex guidance) was conducted on FarmtoryTM Brazzein as manufactured. Omission of this data represents a gap in allergenicity characterization for a novel sweet protein.",
+      "domain": "identity_and_characterization"
+    },
+    {
+      "title": "Unpublished studies form a substantial portion of the safety dataset for FarmtoryTM Brazzein specifically",
+      "gap_type": "adequacy_gap",
+      "priority": "foundational",
+      "section_reference": "Part 6, Section 6.3.2",
+      "observation": "Sections 6.3.2.1\u20136.3.2.4 present unpublished oral toxicity, genotoxicity, allergenicity, and toxigenicity studies as part of the safety basis for FarmtoryTM Brazzein as manufactured. Under GRAS standards, unpublished data may corroborate but cannot establish the GRAS conclusion; safety of the specific substance must rest on publicly available evidence.",
+      "domain": "safety_data"
+    },
+    {
+      "title": "Genotoxicity battery completeness not confirmed \u2014 chromosomal aberration or micronucleus data status unclear",
+      "gap_type": "adequacy_gap",
+      "priority": "foundational",
+      "section_reference": "Part 6, Sections 6.3.1.2 and 6.3.2.2",
+      "observation": "The available text references genotoxicity studies but does not confirm whether an in vitro chromosomal aberration assay or micronucleus test was conducted for FarmtoryTM Brazzein. An Ames test alone is insufficient to constitute a complete genotoxicity battery under current regulatory expectations.",
+      "domain": "safety_data"
+    },
+    {
+      "title": "Unpublished studies used as primary safety evidence for FarmtoryTM Brazzein as manufactured",
+      "gap_type": "adequacy_gap",
+      "priority": "foundational",
+      "section_reference": "Part 6, Section 6.3.2",
+      "observation": "Substance-specific oral toxicity, genotoxicity, allergenicity, and toxigenicity data for FarmtoryTM Brazzein are described as unpublished. GRAS by scientific procedures requires that safety data be generally available in the published literature; unpublished data alone cannot satisfy this standard for the substance-specific safety assessment.",
+      "domain": "general_availability"
+    },
+    {
+      "title": "No specific food categories or quantitative use levels provided",
+      "gap_type": "adequacy_gap",
+      "priority": "foundational",
+      "section_reference": "Part 1, Section 1.3; Part 3, Section 3.1",
+      "observation": "The conditions of use do not specify food categories or use levels in mg/kg or mg/serving. Without defined use levels, it is not possible to verify that the exposure estimates are conservatively bounded, that safety data cover the full intended exposure range, or that the cGMP designation is sufficient to limit intake.",
+      "domain": "conditions_of_use"
+    },
+    {
+      "title": "Residual host cell protein characterization absent",
+      "gap_type": "evidentiary_gap",
+      "priority": "material",
+      "section_reference": "Part 2, Section 2.1.1; Part 2, Section 2.3",
+      "observation": "The submission states the product contains residual K. phaffii host cell proteins but provides no characterization of their identity, quantity, or safety profile. For a novel protein produced in a GMO yeast, residual HCP characterization is important for allergenicity and safety assessment. No HCP quantitation limit or specification is established.",
+      "domain": "identity_and_characterization"
+    },
+    {
+      "title": "Genetic modification characterization incomplete \u2014 number of integration sites and construct maps not provided",
+      "gap_type": "documentation_gap",
+      "priority": "material",
+      "section_reference": "Part 2, Section 2.2.1.2.2",
+      "observation": "The submission describes the genetic modifications conceptually (CRISPR knockout of protease genes, overexpression of chaperones, brazzein gene integration) but does not provide a full molecular characterization including number and location of insertion sites, absence of unintended genomic alterations, or the complete sequence of the expression cassette.",
+      "domain": "identity_and_characterization"
+    },
+    {
+      "title": "Post-translational modifications of recombinant brazzein-53 not characterized",
+      "gap_type": "evidentiary_gap",
+      "priority": "material",
+      "section_reference": "Part 2, Section 2.1.2",
+      "observation": "Disulfide bond pattern and glycosylation status (K. phaffii is a glycosylating yeast) of recombinant brazzein-53 are not addressed. Any difference in glycosylation relative to native plant brazzein could affect allergenicity, digestibility, and functional equivalence. This is not addressed in the identity section or safety narrative.",
+      "domain": "identity_and_characterization"
+    },
+    {
+      "title": "Processing aids and reagents not individually identified",
+      "gap_type": "documentation_gap",
+      "priority": "material",
+      "section_reference": "Part 2, Section 2.2.2",
+      "observation": "The submission states processing aids conform to applicable standards but does not name the specific reagents used (e.g., ion exchange resin type, NaCl gradient specifics, filtration membrane materials). Without this, independent experts cannot evaluate potential process-related contaminant risk.",
+      "domain": "manufacturing_process"
+    },
+    {
+      "title": "Fermentation media composition not disclosed",
+      "gap_type": "documentation_gap",
+      "priority": "material",
+      "section_reference": "Part 2, Section 2.2.2",
+      "observation": "No fermentation media composition is provided. Media components (carbon and nitrogen sources, trace elements, growth factors) are relevant to assessing potential carryover of process-related contaminants into the final product. Their absence limits expert evaluation of the purification process adequacy.",
+      "domain": "manufacturing_process"
+    },
+    {
+      "title": "Purification step performance data (clearance of host cell proteins) absent",
+      "gap_type": "evidentiary_gap",
+      "priority": "material",
+      "section_reference": "Part 2, Section 2.2.2",
+      "observation": "No data are provided on the log-reduction of host cell proteins across purification steps. Given that HCP residuals are not specified in Table 2, the adequacy of purification to achieve the \u226590% brazzein purity specification and safe HCP levels cannot be independently assessed.",
+      "domain": "manufacturing_process"
+    },
+    {
+      "title": "cGMP compliance of foreign manufacturing facility not documented",
+      "gap_type": "documentation_gap",
+      "priority": "material",
+      "section_reference": "Part 1, Section 1.1; Part 2, Section 2.2.2",
+      "observation": "Manufacturing is conducted by AquaFarmtory Biotechnology Ltd. in PRC. The submission asserts cGMP/HACCP compliance but provides no audit reports, FDA facility registration number, or equivalent third-party verification applicable to the foreign facility.",
+      "domain": "manufacturing_process"
+    },
+    {
+      "title": "No NHANES-based probabilistic dietary exposure modeling",
+      "gap_type": "adequacy_gap",
+      "priority": "material",
+      "section_reference": "Part 3, Section 3.1",
+      "observation": "The Renwick method uses sweetener post-market surveillance data as a surrogate; it does not employ U.S. population consumption data (NHANES or USDA CSFII) linked to food category use levels. This approach may not accurately reflect actual U.S. population exposure patterns, particularly for novel food applications.",
+      "domain": "dietary_exposure"
+    },
+    {
+      "title": "Food category-specific use levels not disclosed",
+      "gap_type": "documentation_gap",
+      "priority": "material",
+      "section_reference": "Part 3, Section 3.1",
+      "observation": "The submission does not provide the per-category use levels (mg/kg food or mg/serving) assumed in the Renwick exposure calculation. Without these, it is not possible to verify that the proposed conditions of use are bounded by the exposure estimates or that safety data cover the intended use levels.",
+      "domain": "dietary_exposure"
+    },
+    {
+      "title": "Eaters-only vs. total-sample population methodology not clarified",
+      "gap_type": "adequacy_gap",
+      "priority": "material",
+      "section_reference": "Part 3, Section 3.1",
+      "observation": "The available text does not clarify whether the Renwick-based intake estimates represent total-sample (all-person) or eaters-only estimates. FDA guidance recommends total-sample estimates as the primary metric for aggregate intake assessment; reliance on eaters-only data would understate population-level exposure.",
+      "domain": "dietary_exposure"
+    },
+    {
+      "title": "Children 2\u20135 years and other vulnerable subpopulation analyses not explicitly presented",
+      "gap_type": "adequacy_gap",
+      "priority": "material",
+      "section_reference": "Part 3, Section 3.1",
+      "observation": "The Renwick method references population group analyses; however, the available text does not explicitly present intake estimates stratified for children aged 2\u20135 years, who may have higher per-kg-body-weight exposure. This subpopulation warrants explicit characterization given the general-purpose sweetener designation.",
+      "domain": "dietary_exposure"
+    },
+    {
+      "title": "Acute (single-day) exposure assessment absent",
+      "gap_type": "evidentiary_gap",
+      "priority": "material",
+      "section_reference": "Part 3, Section 3.1",
+      "observation": "Only chronic/average intake is estimated. For a general-purpose sweetener that may be concentrated in single-product categories (e.g., beverages), acute high-percentile (P90/P95) daily intake estimates are relevant to safety evaluation and are not addressed.",
+      "domain": "dietary_exposure"
+    },
+    {
+      "title": "No reproductive or developmental toxicity data",
+      "gap_type": "evidentiary_gap",
+      "priority": "material",
+      "section_reference": "Part 6, Section 6.3 \u2014 not present",
+      "observation": "No reproductive toxicity or developmental toxicity studies are cited for brazzein or FarmtoryTM Brazzein. For a general-purpose sweetener with broad population exposure including pregnant women, absence of reproductive/developmental toxicity data represents a gap relative to FDA Redbook expectations at this exposure tier.",
+      "domain": "safety_data"
+    },
+    {
+      "title": "No chronic or carcinogenicity study data",
+      "gap_type": "evidentiary_gap",
+      "priority": "material",
+      "section_reference": "Part 6, Section 6.3 \u2014 not present",
+      "observation": "No chronic toxicity or carcinogenicity studies are cited. While the submission may rely on the GRAS panel to determine whether the 90-day study is sufficient, the absence of chronic data for a novel protein intended for widespread, lifelong consumption across the general population warrants explicit justification.",
+      "domain": "safety_data"
+    },
+    {
+      "title": "Safety studies on published brazzein not confirmed as covering brazzein-53 isoform specifically",
+      "gap_type": "adequacy_gap",
+      "priority": "material",
+      "section_reference": "Part 6, Section 6.3.1",
+      "observation": "Published brazzein safety studies (Section 6.3.1) may not have used brazzein-53 exclusively; the dominant native isoform is brazzein-54 (~80%). The submission should clarify whether published toxicology data apply specifically to brazzein-53 or to a brazzein mixture, and address any isoform-specific differences.",
+      "domain": "safety_data"
+    },
+    {
+      "title": "Expert panel reports and underlying data not confirmed as publicly accessible",
+      "gap_type": "documentation_gap",
+      "priority": "material",
+      "section_reference": "Part 6, Section 6.5",
+      "observation": "Section 6.5 references a GRAS panel evaluation, but the panel's report, qualifications, conflict of interest disclosures, and the unpublished studies reviewed by the panel are not confirmed as publicly available. Independent expert access to the full basis for the panel's conclusion is required for GRAS general availability.",
+      "domain": "general_availability"
+    },
+    {
+      "title": "No authoritative body (JECFA, EFSA) evaluation of brazzein as a food ingredient",
+      "gap_type": "evidentiary_gap",
+      "priority": "material",
+      "section_reference": "Part 6, Section 6.3; Part 6, Section 6.4",
+      "observation": "No JECFA, EFSA, or comparable national regulatory body has formally evaluated brazzein for use as a food sweetener. The absence of independent international authoritative body review limits the demonstration of broad expert consensus required for general acceptance under GRAS standards.",
+      "domain": "general_acceptance"
+    },
+    {
+      "title": "GRAS panel member qualifications and independence not described in available text",
+      "gap_type": "documentation_gap",
+      "priority": "material",
+      "section_reference": "Part 6, Section 6.5",
+      "observation": "Section 6.5 references a unanimous GRAS panel conclusion but the available text does not describe panel member qualifications, relevant expertise, conflict of interest disclosures, or the scope and process of the panel's review. These are necessary to evaluate the credibility of the expert panel determination.",
+      "domain": "general_acceptance"
+    },
+    {
+      "title": "GRAS panel qualifications, independence, and report not described or attached",
+      "gap_type": "documentation_gap",
+      "priority": "material",
+      "section_reference": "Part 6, Section 6.5",
+      "observation": "The submission references a unanimous GRAS panel conclusion but does not attach the panel's written report, member CVs, conflict of interest disclosures, or the scope of the review. FDA expects sufficient documentation to allow evaluation of the panel's competence and independence.",
+      "domain": "regulatory_submission"
+    },
+    {
+      "title": "Self-limiting use section is present but analysis is not summarized in available text",
+      "gap_type": "documentation_gap",
+      "priority": "documentation_issue",
+      "section_reference": "Part 4",
+      "observation": "Part 4 on self-limiting levels of use is listed in the table of contents but its content is not included in the available text. The basis for any self-limiting use determination (e.g., flavor threshold, off-taste effects) should be documented to support the cGMP-based conditions of use.",
+      "domain": "conditions_of_use"
+    },
+    {
+      "title": "Part 4 (self-limiting levels) content not available for review",
+      "gap_type": "documentation_gap",
+      "priority": "documentation_issue",
+      "section_reference": "Part 4",
+      "observation": "Part 4 is listed in the table of contents but its substantive content is not present in the available text. The analytical basis for any self-limiting use determination should be included to support the conditions of use under cGMP.",
+      "domain": "regulatory_submission"
+    },
+    {
+      "title": "Part 5 (common use before 1958) placeholder present but not applicable",
+      "gap_type": "documentation_gap",
+      "priority": "documentation_issue",
+      "section_reference": "Part 5",
+      "observation": "Part 5 is included in the table of contents. Since GRAS basis is scientific procedures, Part 5 should contain a clear statement that common use before 1958 is not the basis for this determination, to avoid ambiguity in the submission structure.",
+      "domain": "regulatory_submission"
+    },
+    {
+      "title": "Part 7 reference list truncated \u2014 completeness cannot be verified",
+      "gap_type": "documentation_gap",
+      "priority": "documentation_issue",
+      "section_reference": "Part 7, Section 7.1",
+      "observation": "The reference list and appendices list are included in the table of contents but the full content is truncated in the available text. Completeness of the supporting data list per 21 CFR \u00a7170.275 cannot be confirmed from the provided document.",
+      "domain": "regulatory_submission"
+    }
+  ],
+  "strengths_summary": [
+    {
+      "domain": "Identity and Characterization",
+      "observation": "LC-MS/MS peptide mapping (96.2% sequence coverage) combined with HPLC reference standard comparison and AlphaFold3 structural verification provides a robust, multi-method confirmation that brazzein-53 in FarmtoryTM Brazzein is chemically identical to the native protein",
+      "section_reference": "Part 2, Sections 2.1.2 and 2.1.3"
+    },
+    {
+      "domain": "Manufacturing Process",
+      "observation": "PCR analysis confirms absence of detectable transgenic DNA in the final product at <0.01 ng/g, and the production strain is confirmed free of residual plasmids and antibiotic resistance genes, addressing key biosafety concerns for a GMO-produced food ingredient",
+      "section_reference": "Part 2, Sections 2.2.1.2.2 and 2.3.2"
+    },
+    {
+      "domain": "Specifications and Purity",
+      "observation": "Comprehensive specifications table covering protein content, brazzein purity, proximate composition, four heavy metals, and six microbiological parameters with validated AOAC methods; batch data from three non-consecutive lots confirm consistent adherence to specifications",
+      "section_reference": "Part 2, Sections 2.3.1 and 2.3.2"
+    },
+    {
+      "domain": "Production Organism Characterization",
+      "observation": "K. phaffii is well characterized with BSL-1 classification, EU QPS status, and acknowledgment in multiple prior FDA GRAS notices; the submission provides taxonomic identity, strain lineage, and precedent safety data for the host organism",
+      "section_reference": "Part 2, Section 2.2.1; Part 6, Section 6.2"
+    },
+    {
+      "domain": "Regulatory Submission",
+      "observation": "The Part 1 certification by MicroFarmtory's CSO explicitly attests to inclusion of both favorable and unfavorable data, and the submission waives FOIA confidentiality for all substantive parts, supporting regulatory transparency",
+      "section_reference": "Part 1"
+    },
+    {
+      "domain": "Safety Data",
+      "observation": "Both published and unpublished safety studies are disclosed and categorized separately, demonstrating awareness of GRAS evidentiary standards; a 90-day subchronic oral toxicity study and genotoxicity assessments are included in the safety dataset",
+      "section_reference": "Part 6, Sections 6.3.1 and 6.3.2"
+    }
+  ],
+  "gap_report": {
+    "score": 88,
+    "present_counts": {
+      "critical": 4,
+      "high": 3,
+      "medium": 1
+    },
+    "gaps": [
+      {
+        "field": "intended_use_specificity",
+        "title": "Intended Use Specificity",
+        "severity": "high",
+        "approved_reference": {
+          "grn_number": 1166,
+          "substance_name": "Fava Bean Protein Hydrolysate",
+          "section_key": "part_2_intended_use",
+          "section_label": "Part 2 \u2014 Intended Use"
+        },
+        "withdrawn_reference": {
+          "grn_number": 1121,
+          "substance_name": "Fructanase (IUBMB 3.2.1.80) from a Genetically Modified Trichoderma reesei"
+        }
+      },
+      {
+        "field": "impurity_characterization",
+        "title": "Impurity Characterization",
+        "severity": "high",
+        "approved_reference": {
+          "grn_number": 1166,
+          "substance_name": "Fava Bean Protein Hydrolysate",
+          "section_key": "part_1_identity",
+          "section_label": "Part 1 \u2014 Identity, Method of Manufacture & Specifications"
+        },
+        "withdrawn_reference": {
+          "grn_number": 1121,
+          "substance_name": "Fructanase (IUBMB 3.2.1.80) from a Genetically Modified Trichoderma reesei"
+        }
+      },
+      {
+        "field": "digestibility_data",
+        "title": "Digestibility Data",
+        "severity": "medium",
+        "approved_reference": {
+          "grn_number": 1166,
+          "substance_name": "Fava Bean Protein Hydrolysate",
+          "section_key": "part_4_safety",
+          "section_label": "Part 4 \u2014 Safety"
+        },
+        "withdrawn_reference": {
+          "grn_number": 1121,
+          "substance_name": "Fructanase (IUBMB 3.2.1.80) from a Genetically Modified Trichoderma reesei"
+        }
+      },
+      {
+        "field": "stability_data",
+        "title": "Stability Data",
+        "severity": "medium",
+        "approved_reference": {
+          "grn_number": 1166,
+          "substance_name": "Fava Bean Protein Hydrolysate",
+          "section_key": "part_4_safety",
+          "section_label": "Part 4 \u2014 Safety"
+        },
+        "withdrawn_reference": {
+          "grn_number": 1121,
+          "substance_name": "Fructanase (IUBMB 3.2.1.80) from a Genetically Modified Trichoderma reesei"
+        }
+      },
+      {
+        "field": "nutritional_impact",
+        "title": "Nutritional Impact Assessment",
+        "severity": "medium",
+        "approved_reference": {
+          "grn_number": 1166,
+          "substance_name": "Fava Bean Protein Hydrolysate",
+          "section_key": "part_4_safety",
+          "section_label": "Part 4 \u2014 Safety"
+        },
+        "withdrawn_reference": {
+          "grn_number": 1121,
+          "substance_name": "Fructanase (IUBMB 3.2.1.80) from a Genetically Modified Trichoderma reesei"
+        }
+      },
+      {
+        "field": "human_exposure_data",
+        "title": "Human Exposure Data",
+        "severity": "medium",
+        "approved_reference": {
+          "grn_number": 1166,
+          "substance_name": "Fava Bean Protein Hydrolysate",
+          "section_key": "part_4_safety",
+          "section_label": "Part 4 \u2014 Safety"
+        },
+        "withdrawn_reference": {
+          "grn_number": 1121,
+          "substance_name": "Fructanase (IUBMB 3.2.1.80) from a Genetically Modified Trichoderma reesei"
+        }
+      },
+      {
+        "field": "history_of_safe_use",
+        "title": "History of Safe Use",
+        "severity": "medium",
+        "approved_reference": {
+          "grn_number": 1166,
+          "substance_name": "Fava Bean Protein Hydrolysate",
+          "section_key": "part_3_gras_basis",
+          "section_label": "Part 3 \u2014 GRAS Basis"
+        },
+        "withdrawn_reference": {
+          "grn_number": 1121,
+          "substance_name": "Fructanase (IUBMB 3.2.1.80) from a Genetically Modified Trichoderma reesei"
+        }
+      },
+      {
+        "field": "environmental_safety",
+        "title": "Environmental Safety",
+        "severity": "medium",
+        "approved_reference": {
+          "grn_number": 1166,
+          "substance_name": "Fava Bean Protein Hydrolysate",
+          "section_key": "part_4_safety",
+          "section_label": "Part 4 \u2014 Safety"
+        },
+        "withdrawn_reference": {
+          "grn_number": 1121,
+          "substance_name": "Fructanase (IUBMB 3.2.1.80) from a Genetically Modified Trichoderma reesei"
+        }
+      }
+    ]
+  },
+  "comparative_analysis": {
+    "approved_notices": [
+      {
+        "substance_name": "Fava Bean Protein Hydrolysate",
+        "source_organism_type": "plant",
+        "exposure_estimate_included": true,
+        "dietary_exposure_method": "NHANES",
+        "section": "appendix",
+        "substance_type": "protein",
+        "notifier": "Nuritas",
+        "intended_uses": "general_food",
+        "token_count": 815,
+        "grn_number": 1166,
+        "safety_data_available": "90_day_rat_study, human_clinical_trial, allergenicity_bioinformatic, history_of_safe_use, nutritional_impact",
+        "status": "no_questions",
+        "production_method": "hydrolysis",
+        "target_population": "general_population",
+        "date_filed": "2023-10-06",
+        "gras_basis": "scientific_procedures",
+        "date_closed": "",
+        "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1166",
+        "allergenicity_addressed": true,
+        "best_distance": 0.45124709606170654,
+        "relevant_sections": []
+      },
+      {
+        "grn_number": 1248,
+        "token_count": 806,
+        "date_filed": "2024-10-28",
+        "target_population": "general_population",
+        "production_method": "submerged_fermentation",
+        "exposure_estimate_included": true,
+        "status": "no_questions",
+        "allergenicity_addressed": true,
+        "substance_name": "Kluvy\u00ae Protein",
+        "source_organism_type": "yeast",
+        "section": "cover_letter",
+        "date_closed": "",
+        "dietary_exposure_method": "theoretical_maximum",
+        "substance_type": "protein",
+        "notifier": "Shanghai Changing Biotechnology Co., Ltd.",
+        "intended_uses": "general_food",
+        "gras_basis": "scientific_procedures",
+        "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1248",
+        "safety_data_available": "allergenicity_bioinformatic, history_of_safe_use, metabolic_fate",
+        "best_distance": 0.48420971632003784,
+        "relevant_sections": []
+      },
+      {
+        "token_count": 812,
+        "intended_uses": "meat_alternatives, general_food",
+        "target_population": "general_population",
+        "notifier": "MoreMeat (Guangzhou) Biotech Co., Ltd",
+        "date_filed": "",
+        "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1284",
+        "safety_data_available": "history_of_safe_use, nutritional_impact",
+        "substance_type": "biomass",
+        "section": "appendix",
+        "date_closed": "",
+        "substance_name": "Mycelial biomass of Fusarium compactum MM-135 (mycoprotein)",
+        "gras_basis": "scientific_procedures",
+        "dietary_exposure_method": "not_included",
+        "exposure_estimate_included": false,
+        "allergenicity_addressed": false,
+        "production_method": "submerged_fermentation",
+        "source_organism_type": "fungal",
+        "grn_number": 1284,
+        "status": "no_questions",
+        "best_distance": 0.4879891276359558,
+        "relevant_sections": []
+      }
+    ],
+    "withdrawn_notices": [
+      {
+        "gras_basis": "scientific_procedures",
+        "token_count": 804,
+        "exposure_estimate_included": true,
+        "dietary_exposure_method": "theoretical_maximum",
+        "substance_name": "Fructanase (IUBMB 3.2.1.80) from a Genetically Modified Trichoderma reesei",
+        "status": "withdrawn",
+        "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1121",
+        "grn_number": 1121,
+        "date_filed": "2022-12-21",
+        "safety_data_available": "history_of_safe_use, metabolic_fate",
+        "notifier": "AB Enzymes GmbH / AB Enzymes Inc.",
+        "production_method": "submerged_fermentation",
+        "date_closed": "",
+        "substance_type": "enzyme",
+        "intended_uses": "bakery",
+        "source_organism_type": "fungal",
+        "section": "cover_letter",
+        "target_population": "general_population",
+        "allergenicity_addressed": true,
+        "best_distance": 0.48115646839141846,
+        "relevant_sections": []
+      },
+      {
+        "date_closed": "",
+        "substance_name": "\u03b2-casein produced by E. coli stF_24_139",
+        "gras_basis": "scientific_procedures",
+        "exposure_estimate_included": true,
+        "token_count": 824,
+        "intended_uses": "beverages, dairy_alternatives, general_food",
+        "substance_type": "protein",
+        "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1228",
+        "allergenicity_addressed": true,
+        "safety_data_available": "digestibility_study, allergenicity_bioinformatic, history_of_safe_use, metabolic_fate",
+        "grn_number": 1228,
+        "date_filed": "2024-10-14",
+        "target_population": "general_population",
+        "production_method": "precision_fermentation",
+        "dietary_exposure_method": "NHANES",
+        "source_organism_type": "bacterial",
+        "notifier": "Fermify GmbH",
+        "section": "appendix",
+        "status": "withdrawn",
+        "best_distance": 0.48385077714920044,
+        "relevant_sections": []
+      },
+      {
+        "allergenicity_addressed": true,
+        "date_filed": "2023-07-07",
+        "token_count": 800,
+        "substance_name": "Triacylglycerol lipase (IUBMB 3.1.1.3) from a Genetically Modified Trichoderma reesei",
+        "status": "withdrawn",
+        "intended_uses": "bakery, cereals_and_grains",
+        "substance_type": "enzyme",
+        "grn_number": 1150,
+        "source_organism_type": "fungal",
+        "production_method": "submerged_fermentation",
+        "date_closed": "",
+        "dietary_exposure_method": "theoretical_maximum",
+        "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1150",
+        "safety_data_available": "history_of_safe_use",
+        "target_population": "general_population",
+        "section": "part_6_narrative",
+        "gras_basis": "scientific_procedures",
+        "exposure_estimate_included": true,
+        "notifier": "AB Enzymes GmbH / AB Enzymes Inc.",
+        "best_distance": 0.5021468997001648,
+        "relevant_sections": []
+      }
+    ]
+  },
+  "recommended_next_steps": [
+    {
+      "priority": "foundational",
+      "action": "Publish or make publicly available (in peer-reviewed literature or equivalent) all safety studies specific to FarmtoryTM Brazzein as manufactured, including oral toxicity, genotoxicity, allergenicity, and toxigenicity studies currently described as unpublished in Section 6.3.2. These studies must be generally available to qualified experts before the GRAS conclusion can rest on them.",
+      "domain": "General Availability",
+      "gap_title": "Unpublished studies used as primary safety evidence for FarmtoryTM Brazzein as manufactured"
+    },
+    {
+      "priority": "foundational",
+      "action": "Define specific food categories and quantitative use levels (mg/kg or mg/serving by food type) for all intended uses of FarmtoryTM Brazzein, and reconstruct the dietary exposure estimate using NHANES-based probabilistic modeling at the total-sample level for the general population and key subpopulations (children 2\u20135y, pregnant women), replacing or supplementing the Renwick surrogate method.",
+      "domain": "Conditions of Use / Dietary Exposure",
+      "gap_title": "No specific food categories or quantitative use levels provided"
+    },
+    {
+      "priority": "foundational",
+      "action": "Confirm and document the complete genotoxicity battery for FarmtoryTM Brazzein as manufactured, including Ames test results and at minimum one clastogenicity assay (in vitro chromosomal aberration or micronucleus test). Ensure all components of the battery are published or generally available.",
+      "domain": "Safety Data",
+      "gap_title": "Genotoxicity battery completeness not confirmed"
+    },
+    {
+      "priority": "foundational",
+      "action": "Provide explicit FARRP bioinformatic screening results (database version, e-value thresholds, positive hits if any, conclusions) and pepsin digestibility data for brazzein-53 as produced by FarmtoryTM manufacturing process, including characterization of any glycosylation relative to native plant brazzein.",
+      "domain": "Identity and Characterization / Safety Data",
+      "gap_title": "Allergenicity bioinformatic screening results not presented; pepsin digestibility data status unconfirmed"
+    },
+    {
+      "priority": "material",
+      "action": "Characterize residual K. phaffii host cell proteins in FarmtoryTM Brazzein: identity the major HCP species, establish a quantitative specification limit in Table 2, and address their safety and allergenic potential relative to the intended use population.",
+      "domain": "Identity and Characterization",
+      "gap_title": "Residual host cell protein characterization absent"
+    },
+    {
+      "priority": "material",
+      "action": "Provide a complete molecular characterization of the genetic modifications in the production strain, including: full sequence of the brazzein expression cassette, number and genomic location of insertion sites, characterization of CRISPR-deleted protease genes, confirmation of absence of unintended genomic alterations, and chaperone overexpression construct details.",
+      "domain": "Identity and Characterization",
+      "gap_title": "Genetic modification characterization incomplete"
+    },
+    {
+      "priority": "material",
+      "action": "Address reproductive and developmental toxicity: either provide published reproductive/developmental toxicity data for brazzein, or provide a documented scientific justification (with expert panel rationale) for why such studies are not warranted given the estimated exposure level and the protein's known metabolic fate.",
+      "domain": "Safety Data",
+      "gap_title": "No reproductive or developmental toxicity data"
+    },
+    {
+      "priority": "material",
+      "action": "Attach the GRAS expert panel written report including: panel member names, credentials (CVs), areas of relevant expertise, conflict of interest disclosures, scope of review, data reviewed (published and unpublished), weight-of-evidence methodology, and the basis for the unanimous conclusion.",
+      "domain": "General Acceptance / Regulatory Submission",
+      "gap_title": "GRAS panel member qualifications and independence not described"
+    },
+    {
+      "priority": "material",
+      "action": "Document cGMP compliance of the AquaFarmtory Biotechnology Ltd. manufacturing facility in PRC: provide FDA facility registration number, applicable third-party audit certifications, and a description of quality management systems applied to the specific manufacturing process for FarmtoryTM Brazzein.",
+      "domain": "Manufacturing Process",
+      "gap_title": "cGMP compliance of foreign manufacturing facility not documented"
+    },
+    {
+      "priority": "material",
+      "action": "Explicitly characterize post-translational modifications of recombinant brazzein-53, particularly disulfide bond pattern confirmation (consistent with native protein) and glycosylation status (K. phaffii is a glycosylating host); address whether any observed glycosylation differences from native plant brazzein affect safety or allergenic potential.",
+      "domain": "Identity and Characterization",
+      "gap_title": "Post-translational modifications of recombinant brazzein-53 not characterized"
+    },
+    {
+      "priority": "material",
+      "action": "Conduct and present acute high-percentile (P90/P95) exposure estimates for the intended general-purpose sweetener use, and provide explicit stratified intake estimates for children 2\u20135 years of age on a mg/kg body weight basis.",
+      "domain": "Dietary Exposure",
+      "gap_title": "Acute exposure assessment absent; children 2\u20135 years subpopulation not explicitly presented"
+    },
+    {
+      "priority": "documentation_issue",
+      "action": "Provide the substantive content of Part 4 (self-limiting levels of use), including the scientific basis for any claim that organoleptic or other properties limit intake, and include an explicit statement in Part 5 that the GRAS determination is not based on common use before 1958.",
+      "domain": "Regulatory Submission",
+      "gap_title": "Part 4 self-limiting levels content not available; Part 5 placeholder not addressed"
+    }
+  ],
+  "limitations_and_caveats": "This assessment is based on a truncated version of the GRAS notice text (approximately 30,000 characters), which does not include the complete content of Parts 3 (dietary exposure tables), 4 (self-limiting levels), 5, 6.3.2 (full unpublished study descriptions), 6.4 (safety discussion), 6.5 (GRAS panel evaluation details), or Part 7 (complete reference list and appendices). Gaps identified as 'documentation_gap' may be resolved by content present in the full submission that was not available for review. The adequacy assessment of genotoxicity, allergenicity, and reproductive toxicity datasets is necessarily provisional given that the full study descriptions in Section 6.3.2 are truncated. The mineral intake analysis in Section 3.2 and the full Renwick exposure table (Table 5) were not fully available, limiting quantitative verification of those calculations. This analysis does not constitute a legal opinion and does not predict any regulatory outcome."
+}
