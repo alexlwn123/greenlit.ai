@@ -10,3 +10,15 @@ python-dotenv==1.2.2
 python-multipart==0.0.29
 tiktoken==0.13.0
 uvicorn==0.47.0
+anthropic
+chromadb
+fastapi
+openai
+pdfplumber
+pillow
+pydantic
+pydantic-settings
+python-dotenv
+python-multipart
+tiktoken
+uvicorn

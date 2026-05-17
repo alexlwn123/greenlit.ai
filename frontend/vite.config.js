@@ -9,6 +9,11 @@ export default defineConfig({
   ],
   server: {
     host: '0.0.0.0',
-    port: 5173,
+    port: 5000,
+    proxy: {
+      '/analyze': 'http://localhost:8000',
+      '/status': 'http://localhost:8000',
+      '/health': 'http://localhost:8000',
+    },
   },
 })
