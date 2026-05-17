@@ -171,46 +171,44 @@ Use this exact structure (every field required; use null only if genuinely not d
           "gap_type": "documentation_gap | evidentiary_gap | adequacy_gap",
           "priority": "foundational | material | documentation_issue",
           "section_reference": "string - e.g. Part 2, Section 2.1 or Part 2 — not present",
-          "what_is_present": "string - what the document actually says on this topic",
-          "what_is_missing": "string - specifically what needs to be added or improved",
-          "why_it_matters": "string - significance for GRAS analysis"
+          "observation": "string - max 60 words: what is present, what is missing, why it matters"
         }}
       ]
     }},
     "manufacturing_process": {{
       "summary": "string",
       "strengths": [{{"observation": "string", "section_reference": "string"}}],
-      "gaps": [{{"title": "string", "gap_type": "string", "priority": "string", "section_reference": "string", "what_is_present": "string", "what_is_missing": "string", "why_it_matters": "string"}}]
+      "gaps": [{{"title": "string", "gap_type": "string", "priority": "string", "section_reference": "string", "observation": "string - max 60 words"}}]
     }},
     "dietary_exposure": {{
       "summary": "string",
       "strengths": [{{"observation": "string", "section_reference": "string"}}],
-      "gaps": [{{"title": "string", "gap_type": "string", "priority": "string", "section_reference": "string", "what_is_present": "string", "what_is_missing": "string", "why_it_matters": "string"}}]
+      "gaps": [{{"title": "string", "gap_type": "string", "priority": "string", "section_reference": "string", "observation": "string - max 60 words"}}]
     }},
     "safety_data": {{
       "summary": "string",
       "strengths": [{{"observation": "string", "section_reference": "string"}}],
-      "gaps": [{{"title": "string", "gap_type": "string", "priority": "string", "section_reference": "string", "what_is_present": "string", "what_is_missing": "string", "why_it_matters": "string"}}]
+      "gaps": [{{"title": "string", "gap_type": "string", "priority": "string", "section_reference": "string", "observation": "string - max 60 words"}}]
     }},
     "general_availability": {{
       "summary": "string",
       "strengths": [{{"observation": "string", "section_reference": "string"}}],
-      "gaps": [{{"title": "string", "gap_type": "string", "priority": "string", "section_reference": "string", "what_is_present": "string", "what_is_missing": "string", "why_it_matters": "string"}}]
+      "gaps": [{{"title": "string", "gap_type": "string", "priority": "string", "section_reference": "string", "observation": "string - max 60 words"}}]
     }},
     "general_acceptance": {{
       "summary": "string",
       "strengths": [{{"observation": "string", "section_reference": "string"}}],
-      "gaps": [{{"title": "string", "gap_type": "string", "priority": "string", "section_reference": "string", "what_is_present": "string", "what_is_missing": "string", "why_it_matters": "string"}}]
+      "gaps": [{{"title": "string", "gap_type": "string", "priority": "string", "section_reference": "string", "observation": "string - max 60 words"}}]
     }},
     "conditions_of_use": {{
       "summary": "string",
       "strengths": [{{"observation": "string", "section_reference": "string"}}],
-      "gaps": [{{"title": "string", "gap_type": "string", "priority": "string", "section_reference": "string", "what_is_present": "string", "what_is_missing": "string", "why_it_matters": "string"}}]
+      "gaps": [{{"title": "string", "gap_type": "string", "priority": "string", "section_reference": "string", "observation": "string - max 60 words"}}]
     }},
     "regulatory_submission": {{
       "summary": "string",
       "strengths": [{{"observation": "string", "section_reference": "string"}}],
-      "gaps": [{{"title": "string", "gap_type": "string", "priority": "string", "section_reference": "string", "what_is_present": "string", "what_is_missing": "string", "why_it_matters": "string"}}]
+      "gaps": [{{"title": "string", "gap_type": "string", "priority": "string", "section_reference": "string", "observation": "string - max 60 words"}}]
     }}
   }},
   "gap_field_presence": {{
@@ -253,17 +251,17 @@ Notice text ({char_count} characters):
 def _call_claude(text: str) -> dict:
     client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
 
-    # Send up to 80k chars — covers most notices while staying well within context
-    truncated = text[:80000]
+    # Send up to 30k chars — covers cover letter + Parts 1-4 for most notices
+    truncated = text[:30000]
     prompt = ANALYSIS_PROMPT.format(
         text=truncated,
         char_count=f"{len(truncated):,}"
-        + (" [truncated]" if len(text) > 80000 else ""),
+        + (" [truncated]" if len(text) > 30000 else ""),
     )
 
     message = client.messages.create(
         model="claude-sonnet-4-6",
-        max_tokens=8192,
+        max_tokens=16000,
         system=SYSTEM_PROMPT,
         messages=[{"role": "user", "content": prompt}],
     )

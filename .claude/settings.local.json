@@ -7,7 +7,8 @@
       "PowerShell(& \".\\\\venv\\\\Scripts\\\\python.exe\" -c \"import openai; import chromadb; print\\('openai:', openai.__version__\\); print\\('chromadb:', chromadb.__version__\\)\" 2>&1)",
       "PowerShell(& \".\\\\venv\\\\Scripts\\\\python.exe\" -c \"import sys; sys.path.insert\\(0,'.'\\); import backend.embed; import backend.retrieve; print\\('imports ok'\\)\" 2>&1)",
       "PowerShell(& \".\\\\venv\\\\Scripts\\\\python.exe\" -c \"import sys; sys.path.insert\\(0,'.'\\); import backend.analyze; print\\('imports ok'\\)\" 2>&1)",
-      "Bash(Get-Content *)"
+      "Bash(Get-Content *)",
+      "PowerShell(& \".\\\\venv\\\\Scripts\\\\python.exe\" -c \"import sys; sys.path.insert\\(0,'.'\\); import backend.analyze; print\\('ok'\\)\" 2>&1)"
     ]
   }
 }
