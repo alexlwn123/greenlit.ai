@@ -116,131 +116,45 @@ For EVERY gap identified, provide:
 
 # ─── Analysis prompt ──────────────────────────────────────────────────────────
 
+# Domain structure defined once — applied to all 8 domains in the prompt
+_DOMAIN_SCHEMA = (
+    '{{"summary": "2-3 sentence overview", '
+    '"strengths": [{{"observation": "string", "section_reference": "string"}}], '
+    '"gaps": [{{"title": "string", '
+    '"gap_type": "documentation_gap|evidentiary_gap|adequacy_gap", '
+    '"priority": "foundational|material|documentation_issue", '
+    '"section_reference": "e.g. Part 2, Section 2.1 or Part 4 — not present", '
+    '"observation": "max 60 words: what is present, what is missing, why it matters"}}]}}'
+)
+
 ANALYSIS_PROMPT = """
 Analyze the following FDA GRAS notice draft. Return ONLY a valid JSON object — no markdown fences, no preamble.
 
-Use this exact structure (every field required; use null only if genuinely not determinable):
+All domain entries use this structure: {domain_schema}
 
+Return:
 {{
-  "engagement_summary": {{
-    "substance_name": "string",
-    "notifier": "string",
-    "production_method": "string",
-    "source_organism": "string",
-    "gras_basis": "scientific_procedures | common_use_prior_1958",
-    "intended_uses": ["list of food categories"],
-    "target_population": "string",
-    "date_filed": "YYYY-MM-DD or null",
-    "submission_completeness_note": "1-2 sentence honest characterization of overall submission state"
-  }},
+  "engagement_summary": {{"substance_name": "string", "notifier": "string", "production_method": "string", "source_organism": "string", "gras_basis": "scientific_procedures|common_use_prior_1958", "intended_uses": ["list"], "target_population": "string", "date_filed": "YYYY-MM-DD or null", "submission_completeness_note": "1-2 sentences"}},
   "threshold_assessment": {{
-    "categorical_eligibility": {{
-      "eligible": true,
-      "basis": "string - why eligible or flag if color additive, new animal drug, etc."
-    }},
-    "scope_clarity": {{
-      "adequate": true,
-      "food_categories_specified": true,
-      "use_levels_specified": true,
-      "technical_function_specified": true,
-      "notes": "string - any ambiguities"
-    }},
-    "existing_regulatory_status": {{
-      "prior_gras_notices": "string or none identified",
-      "food_additive_approvals": "string or none identified",
-      "notes": "string"
-    }}
+    "categorical_eligibility": {{"eligible": true, "basis": "string"}},
+    "scope_clarity": {{"adequate": true, "food_categories_specified": true, "use_levels_specified": true, "technical_function_specified": true, "notes": "string"}},
+    "existing_regulatory_status": {{"prior_gras_notices": "string or none identified", "food_additive_approvals": "string or none identified", "notes": "string"}}
   }},
-  "potential_safety_signals": [
-    {{
-      "signal": "string - precise description",
-      "evidence": "string - what gives rise to it",
-      "section_reference": "string - where in document",
-      "recommended_action": "string"
-    }}
-  ],
+  "potential_safety_signals": [{{"signal": "string", "evidence": "string", "section_reference": "string", "recommended_action": "string"}}],
   "domain_analysis": {{
-    "identity_and_characterization": {{
-      "summary": "string - 2-3 sentences",
-      "strengths": [
-        {{"observation": "string", "section_reference": "string"}}
-      ],
-      "gaps": [
-        {{
-          "title": "string - concise gap title",
-          "gap_type": "documentation_gap | evidentiary_gap | adequacy_gap",
-          "priority": "foundational | material | documentation_issue",
-          "section_reference": "string - e.g. Part 2, Section 2.1 or Part 2 — not present",
-          "observation": "string - max 60 words: what is present, what is missing, why it matters"
-        }}
-      ]
-    }},
-    "manufacturing_process": {{
-      "summary": "string",
-      "strengths": [{{"observation": "string", "section_reference": "string"}}],
-      "gaps": [{{"title": "string", "gap_type": "string", "priority": "string", "section_reference": "string", "observation": "string - max 60 words"}}]
-    }},
-    "dietary_exposure": {{
-      "summary": "string",
-      "strengths": [{{"observation": "string", "section_reference": "string"}}],
-      "gaps": [{{"title": "string", "gap_type": "string", "priority": "string", "section_reference": "string", "observation": "string - max 60 words"}}]
-    }},
-    "safety_data": {{
-      "summary": "string",
-      "strengths": [{{"observation": "string", "section_reference": "string"}}],
-      "gaps": [{{"title": "string", "gap_type": "string", "priority": "string", "section_reference": "string", "observation": "string - max 60 words"}}]
-    }},
-    "general_availability": {{
-      "summary": "string",
-      "strengths": [{{"observation": "string", "section_reference": "string"}}],
-      "gaps": [{{"title": "string", "gap_type": "string", "priority": "string", "section_reference": "string", "observation": "string - max 60 words"}}]
-    }},
-    "general_acceptance": {{
-      "summary": "string",
-      "strengths": [{{"observation": "string", "section_reference": "string"}}],
-      "gaps": [{{"title": "string", "gap_type": "string", "priority": "string", "section_reference": "string", "observation": "string - max 60 words"}}]
-    }},
-    "conditions_of_use": {{
-      "summary": "string",
-      "strengths": [{{"observation": "string", "section_reference": "string"}}],
-      "gaps": [{{"title": "string", "gap_type": "string", "priority": "string", "section_reference": "string", "observation": "string - max 60 words"}}]
-    }},
-    "regulatory_submission": {{
-      "summary": "string",
-      "strengths": [{{"observation": "string", "section_reference": "string"}}],
-      "gaps": [{{"title": "string", "gap_type": "string", "priority": "string", "section_reference": "string", "observation": "string - max 60 words"}}]
-    }}
+    "identity_and_characterization": {domain_schema},
+    "manufacturing_process": {domain_schema},
+    "dietary_exposure": {domain_schema},
+    "safety_data": {domain_schema},
+    "general_availability": {domain_schema},
+    "general_acceptance": {domain_schema},
+    "conditions_of_use": {domain_schema},
+    "regulatory_submission": {domain_schema}
   }},
-  "gap_field_presence": {{
-    "dietary_exposure_estimate": true,
-    "allergenicity_assessment": true,
-    "genotoxicity_battery": true,
-    "production_organism_characterization": true,
-    "intended_use_specificity": true,
-    "impurity_characterization": true,
-    "manufacturing_process_detail": true,
-    "specifications_and_purity": true,
-    "digestibility_data": true,
-    "stability_data": true,
-    "nutritional_impact": true,
-    "batch_consistency": true,
-    "expert_panel_review": true,
-    "human_exposure_data": true,
-    "history_of_safe_use": true,
-    "environmental_safety": true
-  }},
-  "strengths_summary": [
-    {{"domain": "string", "observation": "string", "section_reference": "string"}}
-  ],
-  "recommended_next_steps": [
-    {{
-      "priority": "foundational | material | documentation_issue",
-      "action": "string - specific actionable step",
-      "domain": "string",
-      "gap_title": "string"
-    }}
-  ],
-  "limitations_and_caveats": "string - specific limitations of this analysis, not a generic disclaimer"
+  "gap_field_presence": {{"dietary_exposure_estimate": true, "allergenicity_assessment": true, "genotoxicity_battery": true, "production_organism_characterization": true, "intended_use_specificity": true, "impurity_characterization": true, "manufacturing_process_detail": true, "specifications_and_purity": true, "digestibility_data": true, "stability_data": true, "nutritional_impact": true, "batch_consistency": true, "expert_panel_review": true, "human_exposure_data": true, "history_of_safe_use": true, "environmental_safety": true}},
+  "strengths_summary": [{{"domain": "string", "observation": "string", "section_reference": "string"}}],
+  "recommended_next_steps": [{{"priority": "foundational|material|documentation_issue", "action": "string", "domain": "string", "gap_title": "string"}}],
+  "limitations_and_caveats": "string"
 }}
 
 Notice text ({char_count} characters):
@@ -248,22 +162,86 @@ Notice text ({char_count} characters):
 """
 
 
+# Sections in priority order — high signal first, low signal last
+_SECTION_PRIORITY = [
+    "cover_letter",
+    "part_1_identity",
+    "part_2_intended_use",
+    "part_3_gras_basis",
+    "part_4_safety",
+    "part_5_dietary_exposure",
+    "part_6_narrative",
+    "part_7_references",
+    "appendix",
+]
+
+CHAR_BUDGET = 40000
+
+
+def _smart_truncate(text: str) -> str:
+    """Split text into sections, then fill the char budget highest-priority first."""
+    from pipeline.extract import SECTION_PATTERNS
+
+    # Split text into labelled sections
+    sections: dict[str, list[str]] = {s: [] for s in _SECTION_PRIORITY}
+    current = "cover_letter"
+    for line in text.splitlines():
+        for pattern, label in SECTION_PATTERNS:
+            if pattern.search(line):
+                current = label
+                break
+        sections[current].append(line)
+
+    # Fill budget in priority order
+    parts = []
+    remaining = CHAR_BUDGET
+    included, truncated = [], []
+    for section in _SECTION_PRIORITY:
+        block = "\n".join(sections[section])
+        if not block.strip():
+            continue
+        if len(block) <= remaining:
+            parts.append(f"[{section.upper()}]\n{block}")
+            remaining -= len(block)
+            included.append(section)
+        else:
+            if remaining > 500:  # include partial if meaningful space remains
+                parts.append(f"[{section.upper()}]\n{block[:remaining]}\n[... truncated]")
+                remaining = 0
+                truncated.append(section)
+            else:
+                truncated.append(section)
+        if remaining <= 0:
+            break
+
+    if truncated:
+        print(f"  Sections truncated (low priority): {', '.join(truncated)}")
+
+    return "\n\n".join(parts)
+
+
 def _call_claude(text: str) -> dict:
     client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
 
-    # Send up to 30k chars — covers cover letter + Parts 1-4 for most notices
-    truncated = text[:30000]
+    truncated = _smart_truncate(text)
     prompt = ANALYSIS_PROMPT.format(
         text=truncated,
-        char_count=f"{len(truncated):,}"
-        + (" [truncated]" if len(text) > 30000 else ""),
+        char_count=f"{len(truncated):,} (smart-truncated from {len(text):,})",
+        domain_schema=_DOMAIN_SCHEMA,
     )
 
     message = client.messages.create(
         model="claude-sonnet-4-6",
-        max_tokens=16000,
-        system=SYSTEM_PROMPT,
+        max_tokens=10000,
+        system=[
+            {
+                "type": "text",
+                "text": SYSTEM_PROMPT,
+                "cache_control": {"type": "ephemeral"},
+            }
+        ],
         messages=[{"role": "user", "content": prompt}],
+        extra_headers={"anthropic-beta": "prompt-caching-2024-07-31"},
     )
 
     raw = message.content[0].text.strip()
