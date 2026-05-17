@@ -317,21 +317,66 @@ def _compute_score_from_domains(domain_analysis: dict) -> tuple[int, dict]:
     return max(score, 0), counts
 
 
+def _best_notice_for_section(notices: list, target_section: str) -> dict | None:
+    """Pick the notice whose chunks best match target_section.
+
+    Scoring per notice: +2 for each chunk whose section matches target_section,
+    -distance for each chunk (lower distance = more semantically similar).
+    Falls back to the notice with the best overall distance when no section
+    matches.
+    """
+    if not notices:
+        return None
+
+    best_notice = notices[0]
+    best_score = float("-inf")
+
+    for notice in notices:
+        section_hits = sum(
+            1 for c in notice.get("chunks", []) if c.get("section") == target_section
+        )
+        avg_distance = (
+            sum(c["distance"] for c in notice["chunks"]) / len(notice["chunks"])
+            if notice["chunks"] else 1.0
+        )
+        score = section_hits * 2 - avg_distance
+        if score > best_score:
+            best_score = score
+            best_notice = notice
+
+    return best_notice
+
+
 def _build_gap_report_from_domains(domain_analysis: dict,
                                    approved: list, withdrawn: list) -> list[dict]:
-    """Flat gap list derived from domain_analysis — consistent with score and domain view."""
-    ref_approved = {"grn_number": approved[0]["grn_number"],
-                    "substance_name": approved[0].get("substance_name", "")} if approved else None
-    ref_withdrawn = {"grn_number": withdrawn[0]["grn_number"],
-                     "substance_name": withdrawn[0].get("substance_name", "")} if withdrawn else None
+    """Flat gap list derived from domain_analysis — consistent with score and domain view.
 
+    Each gap gets its own approved/withdrawn reference chosen by matching the
+    gap's domain section against the sections present in each notice's chunks,
+    so different gaps cite the most topically relevant example notices.
+    """
     gaps = []
     for domain_key, domain_data in domain_analysis.items():
         section_key = _DOMAIN_TO_SECTION.get(domain_key, "part_1_identity")
         section_label = NOTICE_SECTION_LABELS.get(section_key, section_key)
+
+        best_approved  = _best_notice_for_section(approved, section_key)
+        best_withdrawn = _best_notice_for_section(withdrawn, section_key)
+
+        ref_approved = (
+            {"grn_number": best_approved["grn_number"],
+             "substance_name": best_approved.get("substance_name", ""),
+             "section_key": section_key,
+             "section_label": section_label}
+            if best_approved else None
+        )
+        ref_withdrawn = (
+            {"grn_number": best_withdrawn["grn_number"],
+             "substance_name": best_withdrawn.get("substance_name", "")}
+            if best_withdrawn else None
+        )
+
         for gap in domain_data.get("gaps", []):
-            ref = {**ref_approved, "section_key": section_key,
-                   "section_label": section_label} if ref_approved else None
             gaps.append({
                 "domain":      domain_key,
                 "title":       gap.get("title", ""),
@@ -339,7 +384,7 @@ def _build_gap_report_from_domains(domain_analysis: dict,
                 "gap_type":    gap.get("gap_type", ""),
                 "section_reference": gap.get("section_reference", ""),
                 "observation": gap.get("observation", ""),
-                "approved_reference":  ref,
+                "approved_reference":  ref_approved,
                 "withdrawn_reference": ref_withdrawn,
             })
 

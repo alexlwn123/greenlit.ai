@@ -37,7 +37,7 @@ def _group_by_grn(results: dict, top_n: int) -> list[dict]:
         grn = meta["grn_number"]
         if grn not in seen:
             seen[grn] = {**meta, "chunks": [], "best_distance": distance}
-        seen[grn]["chunks"].append({"text": doc, "distance": distance})
+        seen[grn]["chunks"].append({"text": doc, "section": meta.get("section", ""), "distance": distance})
 
     # Sort by best matching chunk distance, return top_n
     grouped = sorted(seen.values(), key=lambda x: x["best_distance"])
