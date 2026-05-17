@@ -284,9 +284,9 @@ def _compute_score_from_domains(domain_analysis: dict) -> tuple[int, dict]:
                 counts[p] += 1
 
     score = 100
-    score -= min(counts["foundational"], 5) * 15
-    score -= min(counts["material"], 7) * 7
-    score -= min(counts["documentation_issue"], 8) * 2
+    score -= min(counts["foundational"], 5) * 8
+    score -= min(counts["material"], 7) * 4
+    score -= min(counts["documentation_issue"], 8) * 1
     return max(score, 0), counts
 
 
