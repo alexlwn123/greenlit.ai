@@ -203,6 +203,15 @@ cython_debug/
 # Temporary file for partial code execution
 tempCodeRunnerFile.py
 
+# Uploaded PDFs (transient)
+data/uploads/
+
+# Test analysis outputs
+data/notices/Test/*_Analysis.json
+
+# Large PDF source files — not needed on Replit
+data/notices/**/*.pdf
+
 # Ruff stuff:
 .ruff_cache/
 
