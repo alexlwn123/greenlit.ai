@@ -318,20 +318,16 @@ def _compute_score_from_domains(domain_analysis: dict) -> tuple[int, dict]:
 
 
 def _best_notice_for_section(notices: list, target_section: str) -> dict | None:
-    """Pick the notice whose chunks best match target_section.
+    """Pick the notice most relevant to target_section from the candidate pool.
 
-    Scoring per notice: +2 for each chunk whose section matches target_section,
-    -distance for each chunk (lower distance = more semantically similar).
-    Falls back to the notice with the best overall distance when no section
-    matches.
+    Primary sort: most chunks whose section matches target_section (descending).
+    Tiebreaker: lowest average chunk distance (ascending).
+    This ensures section relevance dominates and distance only breaks ties.
     """
     if not notices:
         return None
 
-    best_notice = notices[0]
-    best_score = float("-inf")
-
-    for notice in notices:
+    def sort_key(notice):
         section_hits = sum(
             1 for c in notice.get("chunks", []) if c.get("section") == target_section
         )
@@ -339,12 +335,9 @@ def _best_notice_for_section(notices: list, target_section: str) -> dict | None:
             sum(c["distance"] for c in notice["chunks"]) / len(notice["chunks"])
             if notice["chunks"] else 1.0
         )
-        score = section_hits * 2 - avg_distance
-        if score > best_score:
-            best_score = score
-            best_notice = notice
+        return (-section_hits, avg_distance)  # most hits first, closest second
 
-    return best_notice
+    return min(notices, key=sort_key)
 
 
 def _build_gap_report_from_domains(domain_analysis: dict,
@@ -394,10 +387,10 @@ def _build_gap_report_from_domains(domain_analysis: dict,
 
 
 def _build_comparative_analysis(approved: list, withdrawn: list) -> dict:
-    """Similar notices with section waypoints stripped of raw chunk text."""
+    """Top-3 similar notices per status for the UI overview section."""
     def clean(notices):
         result = []
-        for n in notices:
+        for n in notices[:3]:  # cap at 3 for display; full pool used for per-gap refs
             entry = {k: v for k, v in n.items() if k != "chunks"}
             # Add section waypoints from the chunks that matched
             sections_seen = list(dict.fromkeys(
@@ -433,7 +426,9 @@ def analyze(pdf_path: Path) -> dict:
         summary.get("production_method", ""),
         summary.get("source_organism", ""),
     ]))
-    similar = retrieve(query)
+    # Fetch a wide pool so per-gap section matching has real variety to choose from.
+    # comparative_analysis will slice this to top-3 for the UI overview.
+    similar = retrieve(query, top_notices=10, chunks_per_status=80)
     approved = similar["approved_notices"]
     withdrawn = similar["withdrawn_notices"]
 
