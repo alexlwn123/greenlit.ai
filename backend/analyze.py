@@ -164,27 +164,37 @@ Notice text ({char_count} characters):
 """
 
 
-# Sections in priority order — high signal first, low signal last
+# Priority order — Part 5 before Part 4 because safety sections are large and
+# would otherwise consume the entire budget before dietary exposure is included
 _SECTION_PRIORITY = [
     "cover_letter",
     "part_1_identity",
     "part_2_intended_use",
     "part_3_gras_basis",
-    "part_4_safety",
     "part_5_dietary_exposure",
+    "part_4_safety",
     "part_6_narrative",
     "part_7_references",
     "appendix",
 ]
 
-CHAR_BUDGET = 40000
+# Guaranteed minimum chars per critical section before filling remaining budget
+_SECTION_MINIMUMS = {
+    "cover_letter":            2000,
+    "part_1_identity":         6000,
+    "part_2_intended_use":     3000,
+    "part_3_gras_basis":       3000,
+    "part_5_dietary_exposure": 5000,
+    "part_4_safety":           5000,
+}
+
+CHAR_BUDGET = 44000
 
 
 def _smart_truncate(text: str) -> str:
-    """Split text into sections, then fill the char budget highest-priority first."""
+    """Split into sections, guarantee minimums for critical sections, fill remainder."""
     from pipeline.extract import SECTION_PATTERNS
 
-    # Split text into labelled sections
     sections: dict[str, list[str]] = {s: [] for s in _SECTION_PRIORITY}
     current = "cover_letter"
     for line in text.splitlines():
@@ -194,25 +204,33 @@ def _smart_truncate(text: str) -> str:
                 break
         sections[current].append(line)
 
-    # Fill budget in priority order
+    blocks = {s: "\n".join(lines) for s, lines in sections.items()}
+
     parts = []
     remaining = CHAR_BUDGET
-    included, truncated = [], []
+    truncated = []
+
     for section in _SECTION_PRIORITY:
-        block = "\n".join(sections[section])
+        block = blocks.get(section, "")
         if not block.strip():
             continue
-        if len(block) <= remaining:
+
+        minimum = _SECTION_MINIMUMS.get(section, 0)
+        alloc = max(minimum, remaining) if remaining >= minimum else minimum
+        alloc = min(alloc, remaining, len(block))
+
+        if alloc <= 0:
+            truncated.append(section)
+            continue
+
+        if len(block) <= alloc:
             parts.append(f"[{section.upper()}]\n{block}")
             remaining -= len(block)
-            included.append(section)
         else:
-            if remaining > 500:  # include partial if meaningful space remains
-                parts.append(f"[{section.upper()}]\n{block[:remaining]}\n[... truncated]")
-                remaining = 0
-                truncated.append(section)
-            else:
-                truncated.append(section)
+            parts.append(f"[{section.upper()}]\n{block[:alloc]}\n[... truncated]")
+            remaining -= alloc
+            truncated.append(section)
+
         if remaining <= 0:
             break
 
