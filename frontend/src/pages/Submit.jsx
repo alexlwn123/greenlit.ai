@@ -21,7 +21,7 @@ const STATUS_MESSAGES = {
 
 export default function Submit() {
   const navigate = useNavigate()
-  const { setResult, setJobId, jobId } = useAnalysis()
+  const { setResult, setJobId } = useAnalysis()
 
   const [file, setFile] = useState(null)
   const [isDragging, setIsDragging] = useState(false)
@@ -94,17 +94,17 @@ export default function Submit() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-forest-950 flex flex-col">
+      <div className="min-h-screen bg-bg flex flex-col">
         <NavBar />
         <div className="flex-1 flex flex-col items-center justify-center gap-6 px-6">
           <div className="relative">
-            <div className="w-20 h-20 rounded-full border-2 border-forest-400 flex items-center justify-center">
-              <Dna className="w-10 h-10 text-sprout-500" />
+            <div className="w-20 h-20 rounded-full border-2 border-border flex items-center justify-center bg-surface">
+              <Dna className="w-10 h-10 text-accent" />
             </div>
-            <div className="absolute inset-0 rounded-full border-2 border-t-sprout-500 border-r-transparent border-b-transparent border-l-transparent animate-spin" />
+            <div className="absolute inset-0 rounded-full border-2 border-t-accent border-r-transparent border-b-transparent border-l-transparent animate-spin" />
           </div>
           <div className="text-center">
-            <p className="text-text-base text-lg font-medium mb-2">Analyzing your filing</p>
+            <p className="text-text-base text-lg font-semibold mb-2">Analyzing your filing</p>
             <p className="text-text-muted text-sm">{STATUS_MESSAGES[jobStatus] || 'Processing...'}</p>
           </div>
           <div className="flex items-center gap-2 text-text-dim text-xs">
@@ -117,20 +117,20 @@ export default function Submit() {
   }
 
   return (
-    <div className="min-h-screen bg-forest-950 flex flex-col">
+    <div className="min-h-screen bg-bg flex flex-col">
       <NavBar />
 
       <main className="flex-1 flex flex-col items-center justify-center px-6 py-16">
         <div className="w-full max-w-2xl">
 
           {/* Hero */}
-          <div className="text-center mb-12">
-            <div className="flex items-center justify-center gap-3 mb-4">
-              <Leaf className="w-5 h-5 text-sprout-500 opacity-60" />
-              <Microscope className="w-5 h-5 text-sprout-500 opacity-80" />
-              <FlaskConical className="w-5 h-5 text-sprout-500 opacity-60" />
+          <div className="text-center mb-10">
+            <div className="flex items-center justify-center gap-3 mb-5">
+              <Leaf className="w-5 h-5 text-accent opacity-50" />
+              <Microscope className="w-5 h-5 text-accent opacity-75" />
+              <FlaskConical className="w-5 h-5 text-accent opacity-50" />
             </div>
-            <h1 className="text-4xl font-semibold text-text-base tracking-tight mb-3">
+            <h1 className="text-4xl font-bold text-text-base tracking-tight mb-3">
               Analyze Your GRAS Filing
             </h1>
             <p className="text-text-muted text-base leading-relaxed max-w-md mx-auto">
@@ -140,10 +140,10 @@ export default function Submit() {
 
           {/* Upload zone */}
           <div
-            className="relative rounded-xl border-2 border-dashed cursor-pointer transition-all duration-200 mb-6"
+            className="relative rounded-2xl border-2 border-dashed cursor-pointer transition-all duration-200 mb-5"
             style={{
-              borderColor: isDragging ? '#22c55e' : file ? '#16a34a' : '#1b3b1f',
-              background: isDragging ? 'rgba(34,197,94,0.05)' : file ? 'rgba(22,163,74,0.04)' : 'rgba(11,26,13,0.6)',
+              borderColor: isDragging ? '#16a34a' : file ? '#16a34a' : '#ccddd3',
+              background:  isDragging ? '#f0fdf4' : file ? '#f0fdf4' : '#ffffff',
             }}
             onClick={() => !file && fileInputRef.current?.click()}
             onDragOver={e => { e.preventDefault(); setIsDragging(true) }}
@@ -159,40 +159,40 @@ export default function Submit() {
             />
 
             {file ? (
-              <div className="flex items-center justify-between p-6">
+              <div className="flex items-center justify-between p-5">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-sprout-700 flex items-center justify-center">
-                    <FileText className="w-5 h-5 text-sprout-400" />
+                  <div className="w-10 h-10 rounded-xl bg-accent-pale flex items-center justify-center">
+                    <FileText className="w-5 h-5 text-accent" />
                   </div>
                   <div>
                     <p className="text-text-base font-medium text-sm">{file.name}</p>
-                    <p className="text-text-muted text-xs mt-0.5">{(file.size / 1024).toFixed(0)} KB</p>
+                    <p className="text-text-dim text-xs mt-0.5">{(file.size / 1024).toFixed(0)} KB</p>
                   </div>
                 </div>
                 <button
                   onClick={e => { e.stopPropagation(); setFile(null) }}
-                  className="w-7 h-7 rounded-full hover:bg-forest-500 flex items-center justify-center transition-colors"
+                  className="w-7 h-7 rounded-full hover:bg-surface-2 flex items-center justify-center transition-colors"
                 >
-                  <X className="w-4 h-4 text-text-muted" />
+                  <X className="w-4 h-4 text-text-dim" />
                 </button>
               </div>
             ) : (
               <div className="flex flex-col items-center justify-center py-14 px-6 text-center">
-                <div className="w-14 h-14 rounded-full border border-forest-400 flex items-center justify-center mb-4">
+                <div className="w-14 h-14 rounded-full border border-border bg-surface-2 flex items-center justify-center mb-4">
                   <UploadCloud className="w-7 h-7 text-text-dim" />
                 </div>
-                <p className="text-text-base font-medium mb-1">Drop your GRAS notice here</p>
+                <p className="text-text-base font-semibold mb-1">Drop your GRAS notice here</p>
                 <p className="text-text-muted text-sm mb-3">or click to browse</p>
-                <span className="text-xs text-text-dim bg-forest-600 px-3 py-1 rounded-full">PDF only</span>
+                <span className="text-xs text-text-dim bg-surface-2 border border-border px-3 py-1 rounded-full">PDF only</span>
               </div>
             )}
           </div>
 
           {/* Error */}
           {error && (
-            <div className="flex items-start gap-3 bg-red-950/40 border border-red-800/50 rounded-lg p-4 mb-6">
+            <div className="flex items-start gap-3 bg-red-50 border border-red-200 rounded-xl p-4 mb-5">
               <AlertCircle className="w-4 h-4 text-critical mt-0.5 shrink-0" />
-              <p className="text-sm text-red-300">{error}</p>
+              <p className="text-sm text-red-700">{error}</p>
             </div>
           )}
 
@@ -207,11 +207,11 @@ export default function Submit() {
                 <button
                   key={area}
                   onClick={() => toggleFocus(area)}
-                  className="px-3 py-1.5 rounded-full text-sm transition-all duration-150 border"
+                  className="px-3 py-1.5 rounded-full text-sm transition-all duration-150 border font-medium"
                   style={{
-                    background: focusAreas.includes(area) ? 'rgba(34,197,94,0.12)' : 'transparent',
-                    borderColor: focusAreas.includes(area) ? '#22c55e' : '#1b3b1f',
-                    color: focusAreas.includes(area) ? '#22c55e' : '#7fa884',
+                    background:  focusAreas.includes(area) ? '#dcfce7' : '#ffffff',
+                    borderColor: focusAreas.includes(area) ? '#16a34a' : '#ccddd3',
+                    color:       focusAreas.includes(area) ? '#15803d' : '#456050',
                   }}
                 >
                   {area}
@@ -226,9 +226,9 @@ export default function Submit() {
             disabled={!file}
             className="w-full py-3.5 rounded-xl font-semibold text-base transition-all duration-200"
             style={{
-              background: file ? '#22c55e' : '#1b3b1f',
-              color: file ? '#060e07' : '#3d5e42',
-              cursor: file ? 'pointer' : 'not-allowed',
+              background: file ? '#16a34a' : '#e2ede6',
+              color:      file ? '#ffffff' : '#9cbfab',
+              cursor:     file ? 'pointer' : 'not-allowed',
             }}
           >
             Analyze Filing

@@ -1,37 +1,36 @@
 @import "tailwindcss";
 
 @theme {
-  --color-forest-950: #020804;
-  --color-forest-900: #060e07;
-  --color-forest-800: #0b1a0d;
-  --color-forest-700: #0f2212;
-  --color-forest-600: #152e18;
-  --color-forest-500: #1b3b1f;
-  --color-forest-400: #254d2a;
-  --color-forest-300: #2e6035;
+  /* Backgrounds */
+  --color-bg:        #f4f9f5;
+  --color-surface:   #ffffff;
+  --color-surface-2: #eef6f1;
+  --color-surface-3: #e2ede6;
 
-  --color-sprout-400: #4ade80;
-  --color-sprout-500: #22c55e;
-  --color-sprout-600: #16a34a;
-  --color-sprout-700: #15803d;
+  /* Borders */
+  --color-border:       #ccddd3;
+  --color-border-strong: #9cbfab;
 
-  --color-text-base: #e8f5ea;
-  --color-text-muted: #7fa884;
-  --color-text-dim: #3d5e42;
+  /* Accent */
+  --color-accent:      #16a34a;
+  --color-accent-dark: #15803d;
+  --color-accent-pale: #dcfce7;
 
-  --color-critical: #ef4444;
-  --color-moderate: #f59e0b;
-  --color-minor: #6b7280;
-  --color-safe: #22c55e;
-  --color-warn: #f59e0b;
+  /* Text */
+  --color-text-base:  #1a2e1e;
+  --color-text-muted: #456050;
+  --color-text-dim:   #7a9e85;
+
+  /* Status */
+  --color-critical: #dc2626;
+  --color-moderate: #d97706;
+  --color-minor:    #6b7280;
 
   --font-sans: 'Inter', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 }
 
-*, *::before, *::after {
-  box-sizing: border-box;
-}
+*, *::before, *::after { box-sizing: border-box; }
 
 html, body, #root {
   height: 100%;
@@ -40,11 +39,10 @@ html, body, #root {
 }
 
 body {
-  background-color: var(--color-forest-950);
+  background-color: var(--color-bg);
   color: var(--color-text-base);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 #root {
@@ -53,12 +51,6 @@ body {
   flex-direction: column;
 }
 
-.font-mono {
-  font-family: var(--font-mono);
-}
-
-/* Scrollbar */
 ::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--color-forest-900); }
-::-webkit-scrollbar-thumb { background: var(--color-forest-400); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: var(--color-forest-300); }
+::-webkit-scrollbar-track { background: var(--color-surface-2); }
+::-webkit-scrollbar-thumb { background: var(--color-border-strong); border-radius: 3px; }
