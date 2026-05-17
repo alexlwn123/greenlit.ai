@@ -1,0 +1,24 @@
+{
+  "grn_number": 1150,
+  "substance_name": "Triacylglycerol lipase (IUBMB 3.1.1.3) from a Genetically Modified Trichoderma reesei",
+  "notifier": "AB Enzymes GmbH / AB Enzymes Inc.",
+  "date_filed": "2023-07-07",
+  "date_closed": null,
+  "status": "withdrawn",
+  "substance_type": "enzyme",
+  "production_method": "submerged_fermentation",
+  "source_organism_type": "fungal",
+  "intended_uses": [
+    "bakery",
+    "cereals_and_grains"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "history_of_safe_use"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true,
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1150"
+}

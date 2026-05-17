@@ -1,0 +1,28 @@
+{
+  "grn_number": 1101,
+  "substance_name": "Dried biomass powder of Chlamydomonas reinhardtii algae (TAI114)",
+  "notifier": "Triton Algae Innovations",
+  "date_filed": "2022-09-02",
+  "date_closed": null,
+  "status": "withdrawn",
+  "substance_type": "biomass",
+  "production_method": "algal_cultivation",
+  "source_organism_type": "algal",
+  "intended_uses": [
+    "general_food"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "90_day_rat_study",
+    "genotoxicity_ames",
+    "genotoxicity_chromosomal",
+    "allergenicity_bioinformatic",
+    "metabolic_fate",
+    "history_of_safe_use"
+  ],
+  "dietary_exposure_method": "NHANES",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true,
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1101"
+}

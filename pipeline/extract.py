@@ -238,7 +238,7 @@ def process_pdf(pdf_path: Path, status: str) -> tuple[dict, list[dict]]:
     return metadata, chunks
 
 
-def run():
+def run(test_one: bool = False):
     all_chunks: list[dict] = []
 
     for directory, status in [(APPROVED_DIR, "no_questions"), (WITHDRAWN_DIR, "withdrawn")]:
@@ -247,6 +247,8 @@ def run():
             continue
 
         pdfs = sorted(directory.glob("*.pdf"))
+        if test_one:
+            pdfs = pdfs[:1]
         print(f"\nProcessing {len(pdfs)} PDFs in {directory}...")
 
         for pdf_path in pdfs:
@@ -274,4 +276,8 @@ def run():
 
 
 if __name__ == "__main__":
-    run()
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--test", action="store_true", help="Run on one PDF only")
+    args = parser.parse_args()
+    run(test_one=args.test)

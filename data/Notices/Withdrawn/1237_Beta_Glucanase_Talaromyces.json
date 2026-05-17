@@ -1,0 +1,29 @@
+{
+  "grn_number": 1237,
+  "substance_name": "\u03b2-glucanase from Talaromyces versatilis (Sumizyme PEG)",
+  "notifier": "Erbsl\u00f6h Geisenheim GmbH",
+  "date_filed": "2024-11-01",
+  "date_closed": null,
+  "status": "withdrawn",
+  "substance_type": "enzyme",
+  "production_method": "submerged_fermentation",
+  "source_organism_type": "fungal",
+  "intended_uses": [
+    "beverages",
+    "general_food"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "allergenicity_bioinformatic",
+    "history_of_safe_use",
+    "acute_toxicity",
+    "genotoxicity_ames",
+    "genotoxicity_chromosomal",
+    "90_day_rat_study"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true,
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1237"
+}
