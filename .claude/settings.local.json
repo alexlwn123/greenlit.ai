@@ -3,7 +3,9 @@
     "allow": [
       "PowerShell(& \".\\\\venv\\\\Scripts\\\\python.exe\" pipeline/extract.py 2>&1)",
       "mcp__plugin_woz_code__Search",
-      "mcp__plugin_woz_code__Edit"
+      "mcp__plugin_woz_code__Edit",
+      "PowerShell(& \".\\\\venv\\\\Scripts\\\\python.exe\" -c \"import openai; import chromadb; print\\('openai:', openai.__version__\\); print\\('chromadb:', chromadb.__version__\\)\" 2>&1)",
+      "PowerShell(& \".\\\\venv\\\\Scripts\\\\python.exe\" -c \"import sys; sys.path.insert\\(0,'.'\\); import backend.embed; import backend.retrieve; print\\('imports ok'\\)\" 2>&1)"
     ]
   }
 }

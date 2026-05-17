@@ -9,6 +9,7 @@ from pathlib import Path
 import anthropic
 import pdfplumber
 import tiktoken
+from dotenv import load_dotenv
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 from constants.enums import (
@@ -24,16 +25,7 @@ from constants.enums import (
     TARGET_POPULATION,
 )
 
-# .env is UTF-16 LE with BOM; also has a typo (ANTRHOPIC vs ANTHROPIC) — normalise both
-_env_path = Path(__file__).parent.parent / ".env"
-if _env_path.exists():
-    _raw = _env_path.read_bytes().decode("utf-16-le").lstrip("﻿")
-    for _line in _raw.splitlines():
-        _line = _line.strip()
-        if _line and "=" in _line and not _line.startswith("#"):
-            _k, _v = _line.split("=", 1)
-            _k = _k.strip().replace("ANTRHOPIC", "ANTHROPIC")  # fix typo in .env
-            os.environ.setdefault(_k, _v.strip())
+load_dotenv()
 
 APPROVED_DIR = Path("data/notices/Approved")
 WITHDRAWN_DIR = Path("data/notices/Withdrawn")
