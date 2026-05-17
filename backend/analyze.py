@@ -181,22 +181,21 @@ _SECTION_PRIORITY = [
     "appendix",
 ]
 
-# Guaranteed minimum chars per section — sized so that even a very long section
-# delivers enough content for a meaningful assessment before the budget overflows.
-# The sum of minimums (~54k) is well under CHAR_BUDGET so every critical section
-# is always represented; lower-priority sections get whatever remains.
+# Guaranteed minimum chars per section. Sum of minimums (~38k) leaves ~22k
+# of headroom in the 60k budget for overflow from the largest sections.
+# Every analytically critical section is always represented in Claude's input.
 _SECTION_MINIMUMS = {
-    "cover_letter":            3_000,
-    "part_1_identity":        15_000,
-    "part_2_intended_use":     6_000,
-    "part_3_gras_basis":       8_000,
-    "part_5_dietary_exposure": 10_000,
-    "part_4_safety":           12_000,
-    "part_6_narrative":         8_000,
-    "part_7_references":        4_000,
+    "cover_letter":            2_000,
+    "part_1_identity":        10_000,
+    "part_2_intended_use":     4_000,
+    "part_3_gras_basis":       5_000,
+    "part_5_dietary_exposure":  8_000,
+    "part_4_safety":            9_000,
+    "part_6_narrative":         5_000,
+    "part_7_references":        2_500,
 }
 
-CHAR_BUDGET = 80_000
+CHAR_BUDGET = 60_000
 
 
 def _smart_truncate(text: str) -> str:
