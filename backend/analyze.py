@@ -130,6 +130,8 @@ _DOMAIN_SCHEMA = (
 ANALYSIS_PROMPT = """
 Analyze the following FDA GRAS notice draft. Return ONLY a valid JSON object — no markdown fences, no preamble.
 
+BE CONCISE. Every observation field: max 60 words. Every summary field: max 40 words. Limit recommended_next_steps to 5 items. Limit strengths_summary to 5 items. Total response must stay under 8000 tokens.
+
 All domain entries use this structure: {domain_schema}
 
 Return:
@@ -220,10 +222,10 @@ def _smart_truncate(text: str) -> str:
     return "\n\n".join(parts)
 
 
-def _call_claude(text: str) -> dict:
+def _call_claude(text: str, max_tokens: int = 10000, char_budget: int = CHAR_BUDGET) -> dict:
     client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
 
-    truncated = _smart_truncate(text)
+    truncated = _smart_truncate(text) if char_budget == CHAR_BUDGET else text[:char_budget]
     prompt = ANALYSIS_PROMPT.format(
         text=truncated,
         char_count=f"{len(truncated):,} (smart-truncated from {len(text):,})",
@@ -232,7 +234,7 @@ def _call_claude(text: str) -> dict:
 
     message = client.messages.create(
         model="claude-sonnet-4-6",
-        max_tokens=10000,
+        max_tokens=max_tokens,
         system=[
             {
                 "type": "text",
@@ -247,7 +249,14 @@ def _call_claude(text: str) -> dict:
     raw = message.content[0].text.strip()
     raw = re.sub(r"^```(?:json)?\s*", "", raw)
     raw = re.sub(r"\s*```$", "", raw)
-    return json.loads(raw)
+
+    try:
+        return json.loads(raw)
+    except json.JSONDecodeError:
+        if max_tokens >= 14000:
+            raise  # already retried at max, give up
+        print(f"  JSON truncated at {max_tokens} tokens — retrying with {max_tokens + 4000} tokens and smaller input...")
+        return _call_claude(text, max_tokens=max_tokens + 4000, char_budget=20000)
 
 
 def _apply_severity(gap_field: str, metadata: dict) -> str:
