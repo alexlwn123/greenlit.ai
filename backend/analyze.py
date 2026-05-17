@@ -107,6 +107,9 @@ QUALITY ASSESSMENT REQUIREMENTS:
 - Production organism described only by name without genetic characterization for GMO strains = adequacy_gap
 - Safety studies conducted at exposure levels far below EDI = adequacy_gap
 
+TRUNCATION RULE — highest priority, overrides all other gap classification:
+Sections passed to you may end with [... truncated] when the full document exceeded the input budget. If the only reason you cannot assess a topic is that the relevant section was truncated, you MUST classify that gap as gap_type: documentation_gap and priority: documentation_issue — never foundational or material. In the observation, state that the section was truncated in the input provided and that the full document should be verified. Only assign foundational or material priority to gaps where you actually reviewed the content and found something absent, contradictory, or inadequate.
+
 For EVERY gap identified, provide:
 - The specific section of the DOCUMENT where this appears or should appear (e.g., "Part 2, Section 2.3" or "Part 5 — not present")
 - What is actually present in the document on this topic
@@ -178,17 +181,22 @@ _SECTION_PRIORITY = [
     "appendix",
 ]
 
-# Guaranteed minimum chars per critical section before filling remaining budget
+# Guaranteed minimum chars per section — sized so that even a very long section
+# delivers enough content for a meaningful assessment before the budget overflows.
+# The sum of minimums (~54k) is well under CHAR_BUDGET so every critical section
+# is always represented; lower-priority sections get whatever remains.
 _SECTION_MINIMUMS = {
-    "cover_letter":            2000,
-    "part_1_identity":         6000,
-    "part_2_intended_use":     3000,
-    "part_3_gras_basis":       3000,
-    "part_5_dietary_exposure": 5000,
-    "part_4_safety":           5000,
+    "cover_letter":            3_000,
+    "part_1_identity":        15_000,
+    "part_2_intended_use":     6_000,
+    "part_3_gras_basis":       8_000,
+    "part_5_dietary_exposure": 10_000,
+    "part_4_safety":           12_000,
+    "part_6_narrative":         8_000,
+    "part_7_references":        4_000,
 }
 
-CHAR_BUDGET = 44000
+CHAR_BUDGET = 80_000
 
 
 def _smart_truncate(text: str) -> str:
@@ -216,8 +224,9 @@ def _smart_truncate(text: str) -> str:
             continue
 
         minimum = _SECTION_MINIMUMS.get(section, 0)
-        alloc = max(minimum, remaining) if remaining >= minimum else minimum
-        alloc = min(alloc, remaining, len(block))
+        # Allocate at least the minimum if budget allows; otherwise take whatever is left
+        alloc = max(minimum, min(remaining, len(block))) if remaining >= minimum else remaining
+        alloc = min(alloc, len(block))
 
         if alloc <= 0:
             truncated.append(section)
