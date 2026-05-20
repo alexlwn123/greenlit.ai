@@ -1,0 +1,35 @@
+{
+  "grn_number": 904,
+  "substance_name": "Fungal protein from fermented Fusarium sp. mycelia",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Mar 26, 2021",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0904",
+  "substance_type": "protein",
+  "production_method": "submerged_fermentation",
+  "source_organism_type": "fungal",
+  "intended_uses": [
+    "general_food",
+    "protein_bars",
+    "meat_alternatives",
+    "dietary_supplements",
+    "sports_nutrition",
+    "meal_replacements"
+  ],
+  "target_population": "not_for_infants",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "acute_toxicity",
+    "genotoxicity_ames",
+    "genotoxicity_chromosomal",
+    "90_day_rat_study",
+    "allergenicity_bioinformatic",
+    "allergenicity_in_vitro",
+    "digestibility_study",
+    "nutritional_impact"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true
+}

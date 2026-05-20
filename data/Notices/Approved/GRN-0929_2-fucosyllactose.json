@@ -1,0 +1,28 @@
+{
+  "grn_number": 929,
+  "substance_name": "2'-fucosyllactose",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Feb 26, 2021",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0929",
+  "substance_type": "carbohydrate",
+  "production_method": "precision_fermentation",
+  "source_organism_type": "bacterial",
+  "intended_uses": [
+    "infant_formula",
+    "dairy_alternatives"
+  ],
+  "target_population": "children",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "genotoxicity_ames",
+    "acute_toxicity",
+    "human_clinical_trial",
+    "history_of_safe_use",
+    "allergenicity_bioinformatic"
+  ],
+  "dietary_exposure_method": "NHANES",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true
+}

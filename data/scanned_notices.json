@@ -1,0 +1,1352 @@
+[
+  {
+    "grn": 1,
+    "substance": "Soy isoflavone extract",
+    "filename": "GRN-0001_soy-isoflavone-extract_ambiguous_scanned.pdf"
+  },
+  {
+    "grn": 411,
+    "substance": "Egg yolk-derived phospholipids",
+    "filename": "GRN-0411_egg-yolk-derived-phospholipids_scanned.pdf"
+  },
+  {
+    "grn": 412,
+    "substance": "Chitin-glucan from Aspergillus niger",
+    "filename": "GRN-0412_chitin-glucan-from-aspergillus-niger_scanned.pdf"
+  },
+  {
+    "grn": 413,
+    "substance": "Beta glucans derived from Ganoderma lucidum mycelium",
+    "filename": "GRN-0413_beta-glucans-derived-from-ganoderma-lucidum-mycelium_scanned.pdf"
+  },
+  {
+    "grn": 414,
+    "substance": "L-lysine monohydrochloride",
+    "filename": "GRN-0414_l-lysine-monohydrochloride_scanned.pdf"
+  },
+  {
+    "grn": 415,
+    "substance": "Heat-killed Propionibacterium freudenreichii ET-3 culture (powder)",
+    "filename": "GRN-0415_heat-killed-propionibacterium-freudenreichii-et-3-culture-powder_scanned.pdf"
+  },
+  {
+    "grn": 418,
+    "substance": "Rebaudioside A purified from the leaves of Stevia rebaudiana (Bertoni) Bertoni (rebaudioside A)",
+    "filename": "GRN-0418_rebaudioside-a-purified-from-the-leaves-of-stevia-rebaudiana-bertoni-bertoni-reb_scanned.pdf"
+  },
+  {
+    "grn": 419,
+    "substance": "L-alpha-glycerylphosphorylcholine",
+    "filename": "GRN-0419_l-alpha-glycerylphosphorylcholine_scanned.pdf"
+  },
+  {
+    "grn": 420,
+    "substance": "Calcium acid pyrophosphate",
+    "filename": "GRN-0420_calcium-acid-pyrophosphate_scanned.pdf"
+  },
+  {
+    "grn": 421,
+    "substance": "Sucrose fatty acid esters",
+    "filename": "GRN-0421_sucrose-fatty-acid-esters_scanned.pdf"
+  },
+  {
+    "grn": 422,
+    "substance": "Modified baker's yeast Saccharomyces cerevisiae",
+    "filename": "GRN-0422_modified-bakers-yeast-saccharomyces-cerevisiae_scanned.pdf"
+  },
+  {
+    "grn": 423,
+    "substance": "Cow's milk-derived lactoferrin",
+    "filename": "GRN-0423_cows-milk-derived-lactoferrin_scanned.pdf"
+  },
+  {
+    "grn": 424,
+    "substance": "C-c-phycocyanin-enriched water extract of the cyanobacterium Arthrospira maxima or Arthrospira platensis , (also known as Spirulina maxima or Spirulina platensis )",
+    "filename": "GRN-0424_c-c-phycocyanin-enriched-water-extract-of-the-cyanobacterium-arthrospira-maxima-_scanned.pdf"
+  },
+  {
+    "grn": 425,
+    "substance": "Canola oil (low erucic acid rapeseed oil)",
+    "filename": "GRN-0425_canola-oil-low-erucic-acid-rapeseed-oil_scanned.pdf"
+  },
+  {
+    "grn": 426,
+    "substance": "Rice hull fiber",
+    "filename": "GRN-0426_rice-hull-fiber_scanned.pdf"
+  },
+  {
+    "grn": 427,
+    "substance": "Corn hull fiber (Resubmission of GRN 368 )",
+    "filename": "GRN-0427_corn-hull-fiber-resubmission-of-grn-368_scanned.pdf"
+  },
+  {
+    "grn": 428,
+    "substance": "Asparaginase enzyme preparation from genetically modified Aspergillus niger",
+    "filename": "GRN-0428_asparaginase-enzyme-preparation-from-genetically-modified-aspergillus-niger_scanned.pdf"
+  },
+  {
+    "grn": 429,
+    "substance": "Lactobacillus casei strain Shirota",
+    "filename": "GRN-0429_lactobacillus-casei-strain-shirota_scanned.pdf"
+  },
+  {
+    "grn": 430,
+    "substance": "Sugar beet fiber",
+    "filename": "GRN-0430_sugar-beet-fiber_scanned.pdf"
+  },
+  {
+    "grn": 431,
+    "substance": "Colostral whey protein concentrate",
+    "filename": "GRN-0431_colostral-whey-protein-concentrate_scanned.pdf"
+  },
+  {
+    "grn": 432,
+    "substance": "Lutein diacetate (Resubmission of GRN 416 )",
+    "filename": "GRN-0432_lutein-diacetate-resubmission-of-grn-416_scanned.pdf"
+  },
+  {
+    "grn": 433,
+    "substance": "Poloxamer fatty acid esters",
+    "filename": "GRN-0433_poloxamer-fatty-acid-esters_scanned.pdf"
+  },
+  {
+    "grn": 481,
+    "substance": "Meso-zeaxanthin",
+    "filename": "GRN-0481_meso-zeaxanthin_scanned.pdf"
+  },
+  {
+    "grn": 485,
+    "substance": "Beta-galactosidase enzyme preparation",
+    "filename": "GRN-0485_beta-galactosidase-enzyme-preparation_scanned.pdf"
+  },
+  {
+    "grn": 487,
+    "substance": "Dried citrus pulp",
+    "filename": "GRN-0487_dried-citrus-pulp_scanned.pdf"
+  },
+  {
+    "grn": 614,
+    "substance": "Chromium polynicotinate",
+    "filename": "GRN-0614_chromium-polynicotinate_scanned.pdf"
+  },
+  {
+    "grn": 616,
+    "substance": "High-amylose cornstarch acetate",
+    "filename": "GRN-0616_high-amylose-cornstarch-acetate_scanned.pdf"
+  },
+  {
+    "grn": 619,
+    "substance": "Purified steviol glycosides",
+    "filename": "GRN-0619_purified-steviol-glycosides_scanned.pdf"
+  },
+  {
+    "grn": 621,
+    "substance": "Emulsified algal oil",
+    "filename": "GRN-0621_emulsified-algal-oil_scanned.pdf"
+  },
+  {
+    "grn": 622,
+    "substance": "Emulsified fish oil",
+    "filename": "GRN-0622_emulsified-fish-oil_scanned.pdf"
+  },
+  {
+    "grn": 623,
+    "substance": "Fructooligosaccharides",
+    "filename": "GRN-0623_fructooligosaccharides_scanned.pdf"
+  },
+  {
+    "grn": 1168,
+    "substance": "Tigernuts flour",
+    "filename": "GRN-1168_tigernuts-flour_part1_scanned.pdf"
+  },
+  {
+    "grn": 1168,
+    "substance": "Tigernuts flour",
+    "filename": "GRN-1168_tigernuts-flour_part2_scanned.pdf"
+  },
+  {
+    "grn": 1168,
+    "substance": "Tigernuts flour",
+    "filename": "GRN-1168_tigernuts-flour_part3_scanned.pdf"
+  },
+  {
+    "grn": 1209,
+    "substance": "Algal oil (\u226535% docosahexaenoic acid) from Schizochytrium limacinum A2",
+    "filename": "GRN-1209_algal-oil-35-docosahexaenoic-acid-from-schizochytrium-limacinum-a2_scanned.pdf"
+  },
+  {
+    "grn": 416,
+    "substance": "Lutein diacetate",
+    "filename": "GRN-0416_lutein-diacetate_scanned.pdf"
+  },
+  {
+    "grn": 417,
+    "substance": "Dried biomass of Arthrospira platensis also known as Spirulina platensis (spirulina)",
+    "filename": "GRN-0417_dried-biomass-of-arthrospira-platensis-also-known-as-spirulina-platensis-spiruli_scanned.pdf"
+  },
+  {
+    "grn": 434,
+    "substance": "Dried aqueous extract derived from white kidney bean ( Phaseolus vulgaris )",
+    "filename": "GRN-0434_dried-aqueous-extract-derived-from-white-kidney-bean-phaseolus-vulgaris_v2_scanned.pdf"
+  },
+  {
+    "grn": 435,
+    "substance": "Preparation consisting of six bacterial monophage specific to Salmonella enterica (monophage cocktail)",
+    "filename": "GRN-0435_preparation-consisting-of-six-bacterial-monophage-specific-to-salmonella-enteric_v2_scanned.pdf"
+  },
+  {
+    "grn": 436,
+    "substance": "Enzyme-modified dextrins",
+    "filename": "GRN-0436_enzyme-modified-dextrins_v2_scanned.pdf"
+  },
+  {
+    "grn": 437,
+    "substance": "Beta-glucans from oat bran",
+    "filename": "GRN-0437_beta-glucans-from-oat-bran_v2_scanned.pdf"
+  },
+  {
+    "grn": 438,
+    "substance": "Plant stanol esters",
+    "filename": "GRN-0438_plant-stanol-esters_v2_scanned.pdf"
+  },
+  {
+    "grn": 439,
+    "substance": "Iron complex of tartaric acid",
+    "filename": "GRN-0439_iron-complex-of-tartaric-acid_v2_scanned.pdf"
+  },
+  {
+    "grn": 440,
+    "substance": "Lactobacillus reuteri strain NCIMB 30242",
+    "filename": "GRN-0440_lactobacillus-reuteri-strain-ncimb-30242_v2_scanned.pdf"
+  },
+  {
+    "grn": 441,
+    "substance": "Sodium ferrous citrate",
+    "filename": "GRN-0441_sodium-ferrous-citrate_v2_scanned.pdf"
+  },
+  {
+    "grn": 442,
+    "substance": "Volatile oil of mustard (white)",
+    "filename": "GRN-0442_volatile-oil-of-mustard-white_v2_scanned.pdf"
+  },
+  {
+    "grn": 443,
+    "substance": "Shrimp-derived chitosan (Resubmission of GRN 170 )",
+    "filename": "GRN-0443_shrimp-derived-chitosan-resubmission-of-grn-170_v2_scanned.pdf"
+  },
+  {
+    "grn": 444,
+    "substance": "Milk protein concentrate and milk protein isolate",
+    "filename": "GRN-0444_milk-protein-concentrate-and-milk-protein-isolate_v2_scanned.pdf"
+  },
+  {
+    "grn": 445,
+    "substance": "Bifidobacterium animalis subsp. lactis strains HN019, Bi-07, Bl-04 and B420",
+    "filename": "GRN-0445_bifidobacterium-animalis-subsp-lactis-strains-hn019-bi-07-bl-04-and-b420_v2_scanned.pdf"
+  },
+  {
+    "grn": 446,
+    "substance": "Red grape pomace extract",
+    "filename": "GRN-0446_red-grape-pomace-extract_v2_scanned.pdf"
+  },
+  {
+    "grn": 447,
+    "substance": "Potato protein isolates",
+    "filename": "GRN-0447_potato-protein-isolates_v2_scanned.pdf"
+  },
+  {
+    "grn": 448,
+    "substance": "Enzyme-modified steviol glycosides",
+    "filename": "GRN-0448_enzyme-modified-steviol-glycosides_v2_scanned.pdf"
+  },
+  {
+    "grn": 449,
+    "substance": "Medium chain triglycerides",
+    "filename": "GRN-0449_medium-chain-triglycerides_v2_scanned.pdf"
+  },
+  {
+    "grn": 450,
+    "substance": "Chlorella protothecoides S106 flour with 40-70% lipid",
+    "filename": "GRN-0450_chlorella-protothecoides-s106-flour-with-40-70-lipid_v2_scanned.pdf"
+  },
+  {
+    "grn": 451,
+    "substance": "Calcium ascorbate with added threonate",
+    "filename": "GRN-0451_calcium-ascorbate-with-added-threonate_v2_scanned.pdf"
+  },
+  {
+    "grn": 452,
+    "substance": "Enzyme-modified steviol glycosides",
+    "filename": "GRN-0452_enzyme-modified-steviol-glycosides_v2_scanned.pdf"
+  },
+  {
+    "grn": 453,
+    "substance": "Bifidobacterium breve M-16V",
+    "filename": "GRN-0453_bifidobacterium-breve-m-16v_v2_scanned.pdf"
+  },
+  {
+    "grn": 454,
+    "substance": "Bifidobacterium breve M-16V",
+    "filename": "GRN-0454_bifidobacterium-breve-m-16v_v2_scanned.pdf"
+  },
+  {
+    "grn": 455,
+    "substance": "Bifidobacterium breve M-16V",
+    "filename": "GRN-0455_bifidobacterium-breve-m-16v_v2_scanned.pdf"
+  },
+  {
+    "grn": 456,
+    "substance": "Rebaudioside D purified from the leaves of Stevia rebaudiana (Bertoni) Bertoni (rebaudioside D)",
+    "filename": "GRN-0456_rebaudioside-d-purified-from-the-leaves-of-stevia-rebaudiana-bertoni-bertoni-reb_v2_scanned.pdf"
+  },
+  {
+    "grn": 457,
+    "substance": "Bacteroides xylanisolvens strain DSM 23964",
+    "filename": "GRN-0457_bacteroides-xylanisolvens-strain-dsm-23964_v2_scanned.pdf"
+  },
+  {
+    "grn": 458,
+    "substance": "Xylooligosaccharides",
+    "filename": "GRN-0458_xylooligosaccharides_v2_scanned.pdf"
+  },
+  {
+    "grn": 459,
+    "substance": "Olive pulp extract",
+    "filename": "GRN-0459_olive-pulp-extract_v2_scanned.pdf"
+  },
+  {
+    "grn": 460,
+    "substance": "Curcuminoids purified from turmeric ( Curcuma longa L.)",
+    "filename": "GRN-0460_curcuminoids-purified-from-turmeric-curcuma-longa-l_v2_scanned.pdf"
+  },
+  {
+    "grn": 461,
+    "substance": "Rebaudioside A purified from the leaves of Stevia rebaudiana (Bertoni) Bertoni (rebaudioside A)",
+    "filename": "GRN-0461_rebaudioside-a-purified-from-the-leaves-of-stevia-rebaudiana-bertoni-bertoni-reb_v2_scanned.pdf"
+  },
+  {
+    "grn": 462,
+    "substance": "Lipase enzyme preparation from modified Pseudomonas fluorescens Biovar I",
+    "filename": "GRN-0462_lipase-enzyme-preparation-from-modified-pseudomonas-fluorescens-biovar-i_v2_scanned.pdf"
+  },
+  {
+    "grn": 463,
+    "substance": "Lactobacillus acidophilus strain NP 28, Lactobacillus acidophilus strain NP51, Lactobacillus subsp. lactis strain NP7, and Pediococcus acidilactici strain NP3",
+    "filename": "GRN-0463_lactobacillus-acidophilus-strain-np-28-lactobacillus-acidophilus-strain-np51-lac_v2_scanned.pdf"
+  },
+  {
+    "grn": 464,
+    "substance": "Cow's milk-derived lactoferrin (Resubmission of GRN 423 )",
+    "filename": "GRN-0464_cows-milk-derived-lactoferrin-resubmission-of-grn-423_v2_scanned.pdf"
+  },
+  {
+    "grn": 465,
+    "substance": "Cow's milk-derived lactoferrin (Resubmission of GRN 423 )",
+    "filename": "GRN-0465_cows-milk-derived-lactoferrin-resubmission-of-grn-423_v2_scanned.pdf"
+  },
+  {
+    "grn": 466,
+    "substance": "Polyglycerol polyricinoleic acid",
+    "filename": "GRN-0466_polyglycerol-polyricinoleic-acid_v2_scanned.pdf"
+  },
+  {
+    "grn": 467,
+    "substance": "Rebaudioside A purified from the leaves of Stevia rebaudiana (Bertoni) Bertoni",
+    "filename": "GRN-0467_rebaudioside-a-purified-from-the-leaves-of-stevia-rebaudiana-bertoni-bertoni_v2_scanned.pdf"
+  },
+  {
+    "grn": 468,
+    "substance": "Preparation containing the bacterial monophages, Fo1a and S16, specific to Salmonella",
+    "filename": "GRN-0468_preparation-containing-the-bacterial-monophages-fo1a-and-s16-specific-to-salmone_v2_scanned.pdf"
+  },
+  {
+    "grn": 469,
+    "substance": "Chlorella protothecoides strain S106 flour with 40-70% lipid (algal flour) (Resubmission of GRN 450 )",
+    "filename": "GRN-0469_chlorella-protothecoides-strain-s106-flour-with-40-70-lipid-algal-flour-resubmis_v2_scanned.pdf"
+  },
+  {
+    "grn": 470,
+    "substance": "Ethyl cellulose",
+    "filename": "GRN-0470_ethyl-cellulose_v2_scanned.pdf"
+  },
+  {
+    "grn": 471,
+    "substance": "Annatto seed extract",
+    "filename": "GRN-0471_annatto-seed-extract_v2_scanned.pdf"
+  },
+  {
+    "grn": 472,
+    "substance": "Xylanase enzyme preparation derived from Bacillus licheniformis carrying a gene encoding a modified xylanase from B. licheniformis",
+    "filename": "GRN-0472_xylanase-enzyme-preparation-derived-from-bacillus-licheniformis-carrying-a-gene-_v2_scanned.pdf"
+  },
+  {
+    "grn": 473,
+    "substance": "Purified steviol glycosides with rebaudioside X as the principal component",
+    "filename": "GRN-0473_purified-steviol-glycosides-with-rebaudioside-x-as-the-principal-component_v2_scanned.pdf"
+  },
+  {
+    "grn": 474,
+    "substance": "Piperine derived from the fruits of Piper nigrum L (black pepper) or P. longum (long pepper)",
+    "filename": "GRN-0474_piperine-derived-from-the-fruits-of-piper-nigrum-l-black-pepper-or-p-longum-long_v2_scanned.pdf"
+  },
+  {
+    "grn": 475,
+    "substance": "Citrus fruit extract",
+    "filename": "GRN-0475_citrus-fruit-extract_v2_scanned.pdf"
+  },
+  {
+    "grn": 476,
+    "substance": "Asparaginase enzyme preparation produced by genetically modified Bacillus subtilis",
+    "filename": "GRN-0476_asparaginase-enzyme-preparation-produced-by-genetically-modified-bacillus-subtil_v2_scanned.pdf"
+  },
+  {
+    "grn": 477,
+    "substance": "Long-chain inulin",
+    "filename": "GRN-0477_long-chain-inulin_v2_scanned.pdf"
+  },
+  {
+    "grn": 478,
+    "substance": "Rice hull fiber",
+    "filename": "GRN-0478_rice-hull-fiber_v2_scanned.pdf"
+  },
+  {
+    "grn": 479,
+    "substance": "Beta-glucanase, cellulase, and xylanase enzyme preparation from Talaromyces emersonii",
+    "filename": "GRN-0479_beta-glucanase-cellulase-and-xylanase-enzyme-preparation-from-talaromyces-emerso_v2_scanned.pdf"
+  },
+  {
+    "grn": 480,
+    "substance": "Dried aqueous extract derived from white kidney bean ( Phaseolus vulgaris ) (Resubmission of GRN 434 )",
+    "filename": "GRN-0480_dried-aqueous-extract-derived-from-white-kidney-bean-phaseolus-vulgaris-resubmis_v2_scanned.pdf"
+  },
+  {
+    "grn": 482,
+    "substance": "Beta-glucanase and xylanase enzyme preparation from Disporotrichum dimorphosporum",
+    "filename": "GRN-0482_beta-glucanase-and-xylanase-enzyme-preparation-from-disporotrichum-dimorphosporu_v2_scanned.pdf"
+  },
+  {
+    "grn": 483,
+    "substance": "Aqueous extract of Emblica officinalis (Resubmission of GRN 322 )",
+    "filename": "GRN-0483_aqueous-extract-of-emblica-officinalis-resubmission-of-grn-322_v2_scanned.pdf"
+  },
+  {
+    "grn": 484,
+    "substance": "Galacto-oligosaccharides",
+    "filename": "GRN-0484_galacto-oligosaccharides_v2_scanned.pdf"
+  },
+  {
+    "grn": 486,
+    "substance": "Oil from the seeds of Buglossoides arvensis",
+    "filename": "GRN-0486_oil-from-the-seeds-of-buglossoides-arvensis_v2_scanned.pdf"
+  },
+  {
+    "grn": 488,
+    "substance": "Benzalkonium chloride",
+    "filename": "GRN-0488_benzalkonium-chloride_v2_scanned.pdf"
+  },
+  {
+    "grn": 489,
+    "substance": "Galacto-oligosaccharides",
+    "filename": "GRN-0489_galacto-oligosaccharides_v2_scanned.pdf"
+  },
+  {
+    "grn": 490,
+    "substance": "Phospholipase A2 enzyme preparation from Trichoderma reesei",
+    "filename": "GRN-0490_phospholipase-a2-enzyme-preparation-from-trichoderma-reesei_v2_scanned.pdf"
+  },
+  {
+    "grn": 491,
+    "substance": "Rooster combs extract",
+    "filename": "GRN-0491_rooster-combs-extract_v2_scanned.pdf"
+  },
+  {
+    "grn": 492,
+    "substance": "Phytosterols and phytosterol esters",
+    "filename": "GRN-0492_phytosterols-and-phytosterol-esters_v2_scanned.pdf"
+  },
+  {
+    "grn": 493,
+    "substance": "High purity steviol glycosides (minimum purity 95%)",
+    "filename": "GRN-0493_high-purity-steviol-glycosides-minimum-purity-95_v2_scanned.pdf"
+  },
+  {
+    "grn": 494,
+    "substance": "Fatty acid ethyl ester from anchovy or menhaden oil, standardized to approximately 50 percent palmitoleic acid",
+    "filename": "GRN-0494_fatty-acid-ethyl-ester-from-anchovy-or-menhaden-oil-standardized-to-approximatel_v2_scanned.pdf"
+  },
+  {
+    "grn": 495,
+    "substance": "Galacto-oligosaccharides",
+    "filename": "GRN-0495_galacto-oligosaccharides_v2_scanned.pdf"
+  },
+  {
+    "grn": 496,
+    "substance": "Aqueous extract of Brassica oleracea var. italica Plenck seeds.",
+    "filename": "GRN-0496_aqueous-extract-of-brassica-oleracea-var-italica-plenck-seeds_v2_scanned.pdf"
+  },
+  {
+    "grn": 497,
+    "substance": "Polyphenols from the fruit of Litchi chinensis Sonn. and from leaves of Camellia sinensis (L.) Sinensis",
+    "filename": "GRN-0497_polyphenols-from-the-fruit-of-litchi-chinensis-sonn-and-from-leaves-of-camellia-_v2_scanned.pdf"
+  },
+  {
+    "grn": 498,
+    "substance": "D-psicose",
+    "filename": "GRN-0498_d-psicose_v2_scanned.pdf"
+  },
+  {
+    "grn": 499,
+    "substance": "Magnesium L-threonate hydrate",
+    "filename": "GRN-0499_magnesium-l-threonate-hydrate_v2_scanned.pdf"
+  },
+  {
+    "grn": 500,
+    "substance": "Hydroethanolic extract of Caralluma fimbriata",
+    "filename": "GRN-0500_hydroethanolic-extract-of-caralluma-fimbriata_v2_scanned.pdf"
+  },
+  {
+    "grn": 501,
+    "substance": "L-theanine (chemically synthesized)",
+    "filename": "GRN-0501_l-theanine-chemically-synthesized_v2_scanned.pdf"
+  },
+  {
+    "grn": 502,
+    "substance": "Lactobacillus acidophilus La-14",
+    "filename": "GRN-0502_lactobacillus-acidophilus-la-14_v2_scanned.pdf"
+  },
+  {
+    "grn": 503,
+    "substance": "Tamarind seed polysaccharide",
+    "filename": "GRN-0503_tamarind-seed-polysaccharide_v2_scanned.pdf"
+  },
+  {
+    "grn": 504,
+    "substance": "Milk protein concentrate and milk protein isolate (Resubmission of GRN 444 )",
+    "filename": "GRN-0504_milk-protein-concentrate-and-milk-protein-isolate-resubmission-of-grn-444_v2_scanned.pdf"
+  },
+  {
+    "grn": 505,
+    "substance": "Phosphodiesterase I enzyme preparation from Leptographium procerum",
+    "filename": "GRN-0505_phosphodiesterase-i-enzyme-preparation-from-leptographium-procerum_v2_scanned.pdf"
+  },
+  {
+    "grn": 506,
+    "substance": "Sacha inchi oil, a vegetable oil derived from Plukenetia volubilis .",
+    "filename": "GRN-0506_sacha-inchi-oil-a-vegetable-oil-derived-from-plukenetia-volubilis_v2_scanned.pdf"
+  },
+  {
+    "grn": 507,
+    "substance": "Amylomaltase enzyme preparation from Bacillus amyloliquefaciens carrying an amylomaltase gene from Thermus thermophiles",
+    "filename": "GRN-0507_amylomaltase-enzyme-preparation-from-bacillus-amyloliquefaciens-carrying-an-amyl_v2_scanned.pdf"
+  },
+  {
+    "grn": 508,
+    "substance": "Salts from dried mineral water (65% NaCl)",
+    "filename": "GRN-0508_salts-from-dried-mineral-water-65-nacl_v2_scanned.pdf"
+  },
+  {
+    "grn": 509,
+    "substance": "Glucose oxidase enzyme preparation derived from Penicillium chrysogenum",
+    "filename": "GRN-0509_glucose-oxidase-enzyme-preparation-derived-from-penicillium-chrysogenum_v2_scanned.pdf"
+  },
+  {
+    "grn": 510,
+    "substance": "Acid lactase from Aspergillus oryzae expressed in Aspergillus niger",
+    "filename": "GRN-0510_acid-lactase-from-aspergillus-oryzae-expressed-in-aspergillus-niger_v2_scanned.pdf"
+  },
+  {
+    "grn": 511,
+    "substance": "Citric acid esters of mono- and diglycerides",
+    "filename": "GRN-0511_citric-acid-esters-of-mono-and-diglycerides_v2_scanned.pdf"
+  },
+  {
+    "grn": 512,
+    "substance": "High purity Rebaudioside M",
+    "filename": "GRN-0512_high-purity-rebaudioside-m_v2_scanned.pdf"
+  },
+  {
+    "grn": 513,
+    "substance": "Dried biomass of Euglena gracilis containing beta-1,3-glucan from Euglena gracilis",
+    "filename": "GRN-0513_dried-biomass-of-euglena-gracilis-containing-beta-13-glucan-from-euglena-gracili_v2_scanned.pdf"
+  },
+  {
+    "grn": 514,
+    "substance": "Sucrose fatty acid esters",
+    "filename": "GRN-0514_sucrose-fatty-acid-esters_scanned.pdf"
+  },
+  {
+    "grn": 515,
+    "substance": "D-beta-hydroxybutyrate ester",
+    "filename": "GRN-0515_d-beta-hydroxybutyrate-ester_scanned.pdf"
+  },
+  {
+    "grn": 516,
+    "substance": "Steviol glycosides with rebaudioside A and stevioside as the principal components",
+    "filename": "GRN-0516_steviol-glycosides-with-rebaudioside-a-and-stevioside-as-the-principal-component_scanned.pdf"
+  },
+  {
+    "grn": 517,
+    "substance": "Natamycin",
+    "filename": "GRN-0517_natamycin_v2_scanned.pdf"
+  },
+  {
+    "grn": 518,
+    "substance": "Galacto-oligosaccharides",
+    "filename": "GRN-0518_galacto-oligosaccharides_v2_scanned.pdf"
+  },
+  {
+    "grn": 519,
+    "substance": "Chlorella protothecoides strain S106 flour with 40-75% protein",
+    "filename": "GRN-0519_chlorella-protothecoides-strain-s106-flour-with-40-75-protein_v2_scanned.pdf"
+  },
+  {
+    "grn": 520,
+    "substance": "Hydrogen gas",
+    "filename": "GRN-0520_hydrogen-gas_v2_scanned.pdf"
+  },
+  {
+    "grn": 521,
+    "substance": "Conjugated linoleic acid isomers",
+    "filename": "GRN-0521_conjugated-linoleic-acid-isomers_v2_scanned.pdf"
+  },
+  {
+    "grn": 522,
+    "substance": "Siraitia grosvenorii Swingle (Luo Han Guo) fruit extract",
+    "filename": "GRN-0522_siraitia-grosvenorii-swingle-luo-han-guo-fruit-extract_v2_scanned.pdf"
+  },
+  {
+    "grn": 523,
+    "substance": "l-leucine",
+    "filename": "GRN-0523_l-leucine_v2_scanned.pdf"
+  },
+  {
+    "grn": 524,
+    "substance": "Phospholipase A2 enzyme preparation from Trichoderma reesei carrying a phospholipase A2 gene from Aspergillus nishimurae (Resubmission of GRN 490 )",
+    "filename": "GRN-0524_phospholipase-a2-enzyme-preparation-from-trichoderma-reesei-carrying-a-phospholi_v2_scanned.pdf"
+  },
+  {
+    "grn": 525,
+    "substance": "Pea fiber",
+    "filename": "GRN-0525_pea-fiber_v2_scanned.pdf"
+  },
+  {
+    "grn": 526,
+    "substance": "Bacillus coagulans strain Unique IS2 spores preparation",
+    "filename": "GRN-0526_bacillus-coagulans-strain-unique-is2-spores-preparation_v2_scanned.pdf"
+  },
+  {
+    "grn": 527,
+    "substance": "Algal oil (87% oleic acid) derived from Prototheca moriformis strain S2532",
+    "filename": "GRN-0527_algal-oil-87-oleic-acid-derived-from-prototheca-moriformis-strain-s2532_v2_scanned.pdf"
+  },
+  {
+    "grn": 528,
+    "substance": "Preparation containing six bacterial monophages (LIST-36, LMSP-25, LMTA-34, LMTA-57, LMTA-94 and LMTA-148) specific to Listeria monocytogenes",
+    "filename": "GRN-0528_preparation-containing-six-bacterial-monophages-list-36-lmsp-25-lmta-34-lmta-57-_v2_scanned.pdf"
+  },
+  {
+    "grn": 529,
+    "substance": "Seed of Phalaris canariensis L. (canary seed)",
+    "filename": "GRN-0529_seed-of-phalaris-canariensis-l-canary-seed_v2_scanned.pdf"
+  },
+  {
+    "grn": 530,
+    "substance": "Extract of Apocynum venetum leaves",
+    "filename": "GRN-0530_extract-of-apocynum-venetum-leaves_v2_scanned.pdf"
+  },
+  {
+    "grn": 531,
+    "substance": "Lactobacillus fermentum CECT5716",
+    "filename": "GRN-0531_lactobacillus-fermentum-cect5716_v2_scanned.pdf"
+  },
+  {
+    "grn": 532,
+    "substance": "Complexation products of sodium tartrates with iron (III) chloride",
+    "filename": "GRN-0532_complexation-products-of-sodium-tartrates-with-iron-iii-chloride_v2_scanned.pdf"
+  },
+  {
+    "grn": 533,
+    "substance": "Lecithin from canola",
+    "filename": "GRN-0533_lecithin-from-canola_v2_scanned.pdf"
+  },
+  {
+    "grn": 534,
+    "substance": "Hydrogenated lecithin from soy",
+    "filename": "GRN-0534_hydrogenated-lecithin-from-soy_v2_scanned.pdf"
+  },
+  {
+    "grn": 535,
+    "substance": "Beta-glucanase from Streptomyces violaceoruber",
+    "filename": "GRN-0535_beta-glucanase-from-streptomyces-violaceoruber_v2_scanned.pdf"
+  },
+  {
+    "grn": 536,
+    "substance": "High purity rebaudioside C",
+    "filename": "GRN-0536_high-purity-rebaudioside-c_v2_scanned.pdf"
+  },
+  {
+    "grn": 537,
+    "substance": "Short-chain fructo-oligosaccharides",
+    "filename": "GRN-0537_short-chain-fructo-oligosaccharides_v2_scanned.pdf"
+  },
+  {
+    "grn": 538,
+    "substance": "Potassium-rich extract from Saccharum officinarum L. (sugarcane)",
+    "filename": "GRN-0538_potassium-rich-extract-from-saccharum-officinarum-l-sugarcane_v2_scanned.pdf"
+  },
+  {
+    "grn": 539,
+    "substance": "Fish meal-based lipid extract",
+    "filename": "GRN-0539_fish-meal-based-lipid-extract_v2_scanned.pdf"
+  },
+  {
+    "grn": 540,
+    "substance": "Soybean leghemoglobin from Pichia pastoris",
+    "filename": "GRN-0540_soybean-leghemoglobin-from-pichia-pastoris_v2_scanned.pdf"
+  },
+  {
+    "grn": 541,
+    "substance": "Insoluble fiber from citrus peel",
+    "filename": "GRN-0541_insoluble-fiber-from-citrus-peel_v2_scanned.pdf"
+  },
+  {
+    "grn": 542,
+    "substance": "Lutein",
+    "filename": "GRN-0542_lutein_v2_scanned.pdf"
+  },
+  {
+    "grn": 543,
+    "substance": "Lutein esters",
+    "filename": "GRN-0543_lutein-esters_v2_scanned.pdf"
+  },
+  {
+    "grn": 544,
+    "substance": "\u03b2-glucans from oat bran",
+    "filename": "GRN-0544_glucans-from-oat-bran_v2_scanned.pdf"
+  },
+  {
+    "grn": 545,
+    "substance": "Phosphatidylserine derived from sunflower",
+    "filename": "GRN-0545_phosphatidylserine-derived-from-sunflower_v2_scanned.pdf"
+  },
+  {
+    "grn": 546,
+    "substance": "2'-O-fucosyllactose",
+    "filename": "GRN-0546_2-o-fucosyllactose_v2_scanned.pdf"
+  },
+  {
+    "grn": 547,
+    "substance": "Lacto- N -neotetraose",
+    "filename": "GRN-0547_lacto-n-neotetraose_v2_scanned.pdf"
+  },
+  {
+    "grn": 548,
+    "substance": "High purity rebaudioside D",
+    "filename": "GRN-0548_high-purity-rebaudioside-d_v2_scanned.pdf"
+  },
+  {
+    "grn": 549,
+    "substance": "Sodium salts of fatty acids from Mortierella alpina oil",
+    "filename": "GRN-0549_sodium-salts-of-fatty-acids-from-mortierella-alpina-oil_v2_scanned.pdf"
+  },
+  {
+    "grn": 550,
+    "substance": "Meso-zeaxanthin",
+    "filename": "GRN-0550_meso-zeaxanthin_v2_scanned.pdf"
+  },
+  {
+    "grn": 551,
+    "substance": "Aspartic protease derived from the flowers of Cynera cardunculus L.",
+    "filename": "GRN-0551_aspartic-protease-derived-from-the-flowers-of-cynera-cardunculus-l_v2_scanned.pdf"
+  },
+  {
+    "grn": 552,
+    "substance": "Succinic acid",
+    "filename": "GRN-0552_succinic-acid_v2_scanned.pdf"
+  },
+  {
+    "grn": 553,
+    "substance": "Algal oil (40% docosahexaenoic acid) derived from Schizochytrium sp.",
+    "filename": "GRN-0553_algal-oil-40-docosahexaenoic-acid-derived-from-schizochytrium-sp_v2_scanned.pdf"
+  },
+  {
+    "grn": 554,
+    "substance": "Synthetic amorphous silica",
+    "filename": "GRN-0554_synthetic-amorphous-silica_v2_scanned.pdf"
+  },
+  {
+    "grn": 555,
+    "substance": "High purity steviol glycosides (minimum purity 95%) consisting primarily of rebaudioside A.",
+    "filename": "GRN-0555_high-purity-steviol-glycosides-minimum-purity-95-consisting-primarily-of-rebaudi_v2_scanned.pdf"
+  },
+  {
+    "grn": 556,
+    "substance": "Siraitia grosvenorii Swingle (Luo Han Guo) fruit extract",
+    "filename": "GRN-0556_siraitia-grosvenorii-swingle-luo-han-guo-fruit-extract_v2_scanned.pdf"
+  },
+  {
+    "grn": 557,
+    "substance": "Polygalacturonase from Aspergillus tubingensis expressed in Trichoderma reesei",
+    "filename": "GRN-0557_polygalacturonase-from-aspergillus-tubingensis-expressed-in-trichoderma-reesei_v2_scanned.pdf"
+  },
+  {
+    "grn": 558,
+    "substance": "Pectin esterase from Aspergillus tubingensis expressed in Trichoderma reesei",
+    "filename": "GRN-0558_pectin-esterase-from-aspergillus-tubingensis-expressed-in-trichoderma-reesei_v2_scanned.pdf"
+  },
+  {
+    "grn": 559,
+    "substance": "Bacillus coagulans",
+    "filename": "GRN-0559_bacillus-coagulans_v2_scanned.pdf"
+  },
+  {
+    "grn": 560,
+    "substance": "Bacillus licheniformis",
+    "filename": "GRN-0560_bacillus-licheniformis_v2_scanned.pdf"
+  },
+  {
+    "grn": 561,
+    "substance": "Bacillus pumilus",
+    "filename": "GRN-0561_bacillus-pumilus_v2_scanned.pdf"
+  },
+  {
+    "grn": 562,
+    "substance": "Bacillus subtilis",
+    "filename": "GRN-0562_bacillus-subtilis_v2_scanned.pdf"
+  },
+  {
+    "grn": 563,
+    "substance": "Protease from Fusarium venenatum",
+    "filename": "GRN-0563_protease-from-fusarium-venenatum_v2_scanned.pdf"
+  },
+  {
+    "grn": 564,
+    "substance": "Protease from Bacillus licheniformis",
+    "filename": "GRN-0564_protease-from-bacillus-licheniformis_v2_scanned.pdf"
+  },
+  {
+    "grn": 566,
+    "substance": "Mannanase from Trichoderma reesei",
+    "filename": "GRN-0566_mannanase-from-trichoderma-reesei_v2_scanned.pdf"
+  },
+  {
+    "grn": 567,
+    "substance": "Xylanase from Trichoderma reesei",
+    "filename": "GRN-0567_xylanase-from-trichoderma-reesei_v2_scanned.pdf"
+  },
+  {
+    "grn": 568,
+    "substance": "Apoaequorin",
+    "filename": "GRN-0568_apoaequorin_v2_scanned.pdf"
+  },
+  {
+    "grn": 569,
+    "substance": "Galacto-oligosaccharides (GOS)",
+    "filename": "GRN-0569_galacto-oligosaccharides-gos_v2_scanned.pdf"
+  },
+  {
+    "grn": 570,
+    "substance": "Magnesium lactate",
+    "filename": "GRN-0570_magnesium-lactate_v2_scanned.pdf"
+  },
+  {
+    "grn": 571,
+    "substance": "2'-Fucosyllactose",
+    "filename": "GRN-0571_2-fucosyllactose_part1_v2_scanned.pdf"
+  },
+  {
+    "grn": 571,
+    "substance": "2'-Fucosyllactose",
+    "filename": "GRN-0571_2-fucosyllactose_part2_v2_scanned.pdf"
+  },
+  {
+    "grn": 572,
+    "substance": "Lactase from Bifidobacterium bifidum produced in Bacillus licheniformis",
+    "filename": "GRN-0572_lactase-from-bifidobacterium-bifidum-produced-in-bacillus-licheniformis_v2_scanned.pdf"
+  },
+  {
+    "grn": 573,
+    "substance": "Calcium disodium ethylenediaminetetraacetate (EDTA)",
+    "filename": "GRN-0573_calcium-disodium-ethylenediaminetetraacetate-edta_v2_scanned.pdf"
+  },
+  {
+    "grn": 574,
+    "substance": "Phospholipase C from Pseudomonas fluorescens",
+    "filename": "GRN-0574_phospholipase-c-from-pseudomonas-fluorescens_v2_scanned.pdf"
+  },
+  {
+    "grn": 575,
+    "substance": "Oat protein",
+    "filename": "GRN-0575_oat-protein_v2_scanned.pdf"
+  },
+  {
+    "grn": 576,
+    "substance": "Oligofructose and inulin",
+    "filename": "GRN-0576_oligofructose-and-inulin_v2_scanned.pdf"
+  },
+  {
+    "grn": 577,
+    "substance": "Salts from dried mineral water (65% NaCl) (Resubmission of GRN 508 )",
+    "filename": "GRN-0577_salts-from-dried-mineral-water-65-nacl-resubmission-of-grn-508_v2_scanned.pdf"
+  },
+  {
+    "grn": 578,
+    "substance": "Natamycin",
+    "filename": "GRN-0578_natamycin_v2_scanned.pdf"
+  },
+  {
+    "grn": 579,
+    "substance": "Lactase from Bifidobacterium bifidum produced in Bacillus subtilis",
+    "filename": "GRN-0579_lactase-from-bifidobacterium-bifidum-produced-in-bacillus-subtilis_v2_scanned.pdf"
+  },
+  {
+    "grn": 580,
+    "substance": "Haematococcus pluvialis extract containing astaxanthin esters",
+    "filename": "GRN-0580_haematococcus-pluvialis-extract-containing-astaxanthin-esters_v2_scanned.pdf"
+  },
+  {
+    "grn": 581,
+    "substance": "Un-hydrolyzed and hydrolyzed pea protein",
+    "filename": "GRN-0581_un-hydrolyzed-and-hydrolyzed-pea-protein_v2_scanned.pdf"
+  },
+  {
+    "grn": 582,
+    "substance": "Inulin from Agave tequilana",
+    "filename": "GRN-0582_inulin-from-agave-tequilana_v2_scanned.pdf"
+  },
+  {
+    "grn": 583,
+    "substance": "Esterified propoxylated glycerol",
+    "filename": "GRN-0583_esterified-propoxylated-glycerol_v2_scanned.pdf"
+  },
+  {
+    "grn": 584,
+    "substance": "Cellulase from Penicillium funiculosum",
+    "filename": "GRN-0584_cellulase-from-penicillium-funiculosum_v2_scanned.pdf"
+  },
+  {
+    "grn": 585,
+    "substance": "1-methylcyclopropene complex",
+    "filename": "GRN-0585_1-methylcyclopropene-complex_v2_scanned.pdf"
+  },
+  {
+    "grn": 586,
+    "substance": "Taurine",
+    "filename": "GRN-0586_taurine_v2_scanned.pdf"
+  },
+  {
+    "grn": 587,
+    "substance": "Acetolactate decarboxylase from Bacillus brevis produced in Bacillus licheniformis",
+    "filename": "GRN-0587_acetolactate-decarboxylase-from-bacillus-brevis-produced-in-bacillus-licheniform_v2_scanned.pdf"
+  },
+  {
+    "grn": 588,
+    "substance": "Zeaxanthin from Capsicum annum (paprika)",
+    "filename": "GRN-0588_zeaxanthin-from-capsicum-annum-paprika_v2_scanned.pdf"
+  },
+  {
+    "grn": 589,
+    "substance": "Xylanase from Aspergillus niger",
+    "filename": "GRN-0589_xylanase-from-aspergillus-niger_v2_scanned.pdf"
+  },
+  {
+    "grn": 590,
+    "substance": "Pyrroloquinoline quinone",
+    "filename": "GRN-0590_pyrroloquinoline-quinone_v2_scanned.pdf"
+  },
+  {
+    "grn": 591,
+    "substance": "Streptococcus salivarius K12",
+    "filename": "GRN-0591_streptococcus-salivarius-k12_v2_scanned.pdf"
+  },
+  {
+    "grn": 592,
+    "substance": "\u03b2-glucanase from Bacillus subtilis",
+    "filename": "GRN-0592_glucanase-from-bacillus-subtilis_v2_scanned.pdf"
+  },
+  {
+    "grn": 593,
+    "substance": "Colicin preparations",
+    "filename": "GRN-0593_colicin-preparations_v2_scanned.pdf"
+  },
+  {
+    "grn": 594,
+    "substance": "\u03b1-amylase from Geobacillus stearothermophilus produced in Bacillus licheniformis",
+    "filename": "GRN-0594_amylase-from-geobacillus-stearothermophilus-produced-in-bacillus-licheniformis_v2_scanned.pdf"
+  },
+  {
+    "grn": 595,
+    "substance": "gamma -aminobutyric acid",
+    "filename": "GRN-0595_gamma-aminobutyric-acid_v2_scanned.pdf"
+  },
+  {
+    "grn": 596,
+    "substance": "Breadfruit flour",
+    "filename": "GRN-0596_breadfruit-flour_v2_scanned.pdf"
+  },
+  {
+    "grn": 597,
+    "substance": "Bacillus coagulans SNZ1969 spore preparation",
+    "filename": "GRN-0597_bacillus-coagulans-snz1969-spore-preparation_v2_scanned.pdf"
+  },
+  {
+    "grn": 598,
+    "substance": "Thermolysin enzyme preparation derived from Geobacillus stearothermophilus",
+    "filename": "GRN-0598_thermolysin-enzyme-preparation-derived-from-geobacillus-stearothermophilus_v2_scanned.pdf"
+  },
+  {
+    "grn": 599,
+    "substance": "Citrus fiber",
+    "filename": "GRN-0599_citrus-fiber_v2_scanned.pdf"
+  },
+  {
+    "grn": 600,
+    "substance": "Hydroxytyrosol",
+    "filename": "GRN-0600_hydroxytyrosol_v2_scanned.pdf"
+  },
+  {
+    "grn": 601,
+    "substance": "Preparation of Bacillus coagulans strain MTCC 5856 spores",
+    "filename": "GRN-0601_preparation-of-bacillus-coagulans-strain-mtcc-5856-spores_v2_scanned.pdf"
+  },
+  {
+    "grn": 602,
+    "substance": "N-acetyl-D-neuraminic  acid",
+    "filename": "GRN-0602_n-acetyl-d-neuraminic-acid_v2_scanned.pdf"
+  },
+  {
+    "grn": 603,
+    "substance": "Preparation containing the bacterial monophages, BP-63 and BP-12, specific to Salmonella",
+    "filename": "GRN-0603_preparation-containing-the-bacterial-monophages-bp-63-and-bp-12-specific-to-salm_v2_scanned.pdf"
+  },
+  {
+    "grn": 604,
+    "substance": "Baker's Yeast ( Saccharomyces cerevisiae ) expressing asparaginase II",
+    "filename": "GRN-0604_bakers-yeast-saccharomyces-cerevisiae-expressing-asparaginase-ii_v2_scanned.pdf"
+  },
+  {
+    "grn": 605,
+    "substance": "Fructo-oligosaccharides",
+    "filename": "GRN-0605_fructo-oligosaccharides_v2_scanned.pdf"
+  },
+  {
+    "grn": 606,
+    "substance": "Vinyl acetate-vinyl laurate copolymers",
+    "filename": "GRN-0606_vinyl-acetate-vinyl-laurate-copolymers_v2_scanned.pdf"
+  },
+  {
+    "grn": 607,
+    "substance": "Glucosylated steviol glycosides (minimum purity 80%)",
+    "filename": "GRN-0607_glucosylated-steviol-glycosides-minimum-purity-80_v2_scanned.pdf"
+  },
+  {
+    "grn": 608,
+    "substance": "Pea protein concentrate",
+    "filename": "GRN-0608_pea-protein-concentrate_v2_scanned.pdf"
+  },
+  {
+    "grn": 610,
+    "substance": "Isomaltodextrin",
+    "filename": "GRN-0610_isomaltodextrin_v2_scanned.pdf"
+  },
+  {
+    "grn": 611,
+    "substance": "Fractionated whey protein isolate containing cows milk derived lactoferrin, lactoperoxidase, and transforming growth factor \u03b22",
+    "filename": "GRN-0611_fractionated-whey-protein-isolate-containing-cows-milk-derived-lactoferrin-lacto_v2_scanned.pdf"
+  },
+  {
+    "grn": 612,
+    "substance": "Fractionated whey protein isolate containing cows milk derived lactoferrin, lactoperoxidase, and transforming growth factor \u03b22",
+    "filename": "GRN-0612_fractionated-whey-protein-isolate-containing-cows-milk-derived-lactoferrin-lacto_v2_scanned.pdf"
+  },
+  {
+    "grn": 613,
+    "substance": "Apple peel powder",
+    "filename": "GRN-0613_apple-peel-powder_v2_scanned.pdf"
+  },
+  {
+    "grn": 615,
+    "substance": "High-amylose cornstarch",
+    "filename": "GRN-0615_high-amylose-cornstarch_v2_scanned.pdf"
+  },
+  {
+    "grn": 617,
+    "substance": "\u03b1-amylase from Cytophaga sp. produced in Bacillus licheniformis",
+    "filename": "GRN-0617_amylase-from-cytophaga-sp-produced-in-bacillus-licheniformis_v2_scanned.pdf"
+  },
+  {
+    "grn": 618,
+    "substance": "Purified seawater",
+    "filename": "GRN-0618_purified-seawater_v2_scanned.pdf"
+  },
+  {
+    "grn": 620,
+    "substance": "Galacto-oligosaccharides",
+    "filename": "GRN-0620_galacto-oligosaccharides_v2_scanned.pdf"
+  },
+  {
+    "grn": 624,
+    "substance": "D-allulose 3-epimerase from Arthrobacter globiformis M30 produced in Escherichia coli",
+    "filename": "GRN-0624_d-allulose-3-epimerase-from-arthrobacter-globiformis-m30-produced-in-escherichia_v2_scanned.pdf"
+  },
+  {
+    "grn": 625,
+    "substance": "Pyrroloquinoline quinone disodium salt (Resubmission of GRN 590 )",
+    "filename": "GRN-0625_pyrroloquinoline-quinone-disodium-salt-resubmission-of-grn-590_v2_scanned.pdf"
+  },
+  {
+    "grn": 626,
+    "substance": "Steviol glycosides produced in Saccharomyces cerevisiae",
+    "filename": "GRN-0626_steviol-glycosides-produced-in-saccharomyces-cerevisiae_v2_scanned.pdf"
+  },
+  {
+    "grn": 627,
+    "substance": "Siraitia grosvenorii Swingle (Luo Han Guo) fruit juice concentrate",
+    "filename": "GRN-0627_siraitia-grosvenorii-swingle-luo-han-guo-fruit-juice-concentrate_v2_scanned.pdf"
+  },
+  {
+    "grn": 628,
+    "substance": "endo-1,4-beta-xylanase from Trichoderma reesei",
+    "filename": "GRN-0628_endo-14-beta-xylanase-from-trichoderma-reesei_v2_scanned.pdf"
+  },
+  {
+    "grn": 629,
+    "substance": "Siraitia grosvenorii Swingle (Luo Han Guo) fruit extract",
+    "filename": "GRN-0629_siraitia-grosvenorii-swingle-luo-han-guo-fruit-extract_v2_scanned.pdf"
+  },
+  {
+    "grn": 630,
+    "substance": "Preparation containing the bacterial monophages, Fo1a and S16, specific to Salmonella",
+    "filename": "GRN-0630_preparation-containing-the-bacterial-monophages-fo1a-and-s16-specific-to-salmone_v2_scanned.pdf"
+  },
+  {
+    "grn": 631,
+    "substance": "Triacylglycerol lipase from Fusarium oxysporum produced in Trichoderma reesei",
+    "filename": "GRN-0631_triacylglycerol-lipase-from-fusarium-oxysporum-produced-in-trichoderma-reesei_v2_scanned.pdf"
+  },
+  {
+    "grn": 632,
+    "substance": "Rebaudioside A from Yarrowia lipolytica",
+    "filename": "GRN-0632_rebaudioside-a-from-yarrowia-lipolytica_v2_scanned.pdf"
+  },
+  {
+    "grn": 633,
+    "substance": "Concentrated milk protein with a \u2265 60:40 whey:casein ratio",
+    "filename": "GRN-0633_concentrated-milk-protein-with-a-6040-wheycasein-ratio_v2_scanned.pdf"
+  },
+  {
+    "grn": 634,
+    "substance": "Calcium chloride",
+    "filename": "GRN-0634_calcium-chloride_v2_scanned.pdf"
+  },
+  {
+    "grn": 635,
+    "substance": "Nicotinamide riboside chloride",
+    "filename": "GRN-0635_nicotinamide-riboside-chloride_v2_scanned.pdf"
+  },
+  {
+    "grn": 636,
+    "substance": "Phosphatidylserine derived from sunflower lecithin",
+    "filename": "GRN-0636_phosphatidylserine-derived-from-sunflower-lecithin_v2_scanned.pdf"
+  },
+  {
+    "grn": 637,
+    "substance": "Phosphatidylserine derived from soy lecithin",
+    "filename": "GRN-0637_phosphatidylserine-derived-from-soy-lecithin_v2_scanned.pdf"
+  },
+  {
+    "grn": 638,
+    "substance": "High purity steviol glycosides (minimum purity 97%) consisting primarily of rebaudioside A",
+    "filename": "GRN-0638_high-purity-steviol-glycosides-minimum-purity-97-consisting-primarily-of-rebaudi_v2_scanned.pdf"
+  },
+  {
+    "grn": 639,
+    "substance": "Zeaxanthin from marigold",
+    "filename": "GRN-0639_zeaxanthin-from-marigold_v2_scanned.pdf"
+  },
+  {
+    "grn": 640,
+    "substance": "Esterified propoxylated glycerol",
+    "filename": "GRN-0640_esterified-propoxylated-glycerol_v2_scanned.pdf"
+  },
+  {
+    "grn": 641,
+    "substance": "Pyrroloquinoline quinone disodium salt",
+    "filename": "GRN-0641_pyrroloquinoline-quinone-disodium-salt_v2_scanned.pdf"
+  },
+  {
+    "grn": 642,
+    "substance": "Camelina oil",
+    "filename": "GRN-0642_camelina-oil_v2_scanned.pdf"
+  },
+  {
+    "grn": 643,
+    "substance": "Phosphatidylserine derived from fish",
+    "filename": "GRN-0643_phosphatidylserine-derived-from-fish_v2_scanned.pdf"
+  },
+  {
+    "grn": 644,
+    "substance": "Non-fat dry goat milk and goat whey protein",
+    "filename": "GRN-0644_non-fat-dry-goat-milk-and-goat-whey-protein_v2_scanned.pdf"
+  },
+  {
+    "grn": 645,
+    "substance": "Pullulanase from Bacillus deramificans and Bacillus acidopullulyticus expressed in Bacillus licheniformis",
+    "filename": "GRN-0645_pullulanase-from-bacillus-deramificans-and-bacillus-acidopullulyticus-expressed-_v2_scanned.pdf"
+  },
+  {
+    "grn": 646,
+    "substance": "Pecan shell fiber",
+    "filename": "GRN-0646_pecan-shell-fiber_v2_scanned.pdf"
+  },
+  {
+    "grn": 647,
+    "substance": "D-psicose",
+    "filename": "GRN-0647_d-psicose_v2_scanned.pdf"
+  },
+  {
+    "grn": 648,
+    "substance": "Monoglycerides",
+    "filename": "GRN-0648_monoglycerides_v2_scanned.pdf"
+  },
+  {
+    "grn": 649,
+    "substance": "\u03b2-galactosidase enzyme preparation from Bacillus circulans produced in Bacillus subtilis",
+    "filename": "GRN-0649_galactosidase-enzyme-preparation-from-bacillus-circulans-produced-in-bacillus-su_v2_scanned.pdf"
+  },
+  {
+    "grn": 650,
+    "substance": "2'- O -fucosyllactose",
+    "filename": "GRN-0650_2-o-fucosyllactose_v2_scanned.pdf"
+  },
+  {
+    "grn": 651,
+    "substance": "Phospholipase A1 from Talaromyces leycettanus produced in Aspergillus niger",
+    "filename": "GRN-0651_phospholipase-a1-from-talaromyces-leycettanus-produced-in-aspergillus-niger_v2_scanned.pdf"
+  },
+  {
+    "grn": 652,
+    "substance": "Gamma linolenic acid safflower oil",
+    "filename": "GRN-0652_gamma-linolenic-acid-safflower-oil_part1_scanned.pdf"
+  },
+  {
+    "grn": 653,
+    "substance": "Lysophospholipase from Aspergillus nishimurae expressed in Trichoderma reesei.",
+    "filename": "GRN-0653_lysophospholipase-from-aspergillus-nishimurae-expressed-in-trichoderma-reesei_v2_scanned.pdf"
+  },
+  {
+    "grn": 654,
+    "substance": "Cocoa butter substitute manufactured using palm oil stearin and stearic acid",
+    "filename": "GRN-0654_cocoa-butter-substitute-manufactured-using-palm-oil-stearin-and-stearic-acid_v2_scanned.pdf"
+  },
+  {
+    "grn": 655,
+    "substance": "Rice bran wax",
+    "filename": "GRN-0655_rice-bran-wax_v2_scanned.pdf"
+  },
+  {
+    "grn": 656,
+    "substance": "Enzyme-modified steviol glycosides",
+    "filename": "GRN-0656_enzyme-modified-steviol-glycosides_v2_scanned.pdf"
+  },
+  {
+    "grn": 657,
+    "substance": "Glucoamylase from Penicillum oxalicum produced in Aspergillus niger",
+    "filename": "GRN-0657_glucoamylase-from-penicillum-oxalicum-produced-in-aspergillus-niger_v2_scanned.pdf"
+  },
+  {
+    "grn": 658,
+    "substance": "Grapefruit extract",
+    "filename": "GRN-0658_grapefruit-extract_v2_scanned.pdf"
+  },
+  {
+    "grn": 662,
+    "substance": "Glucosylated steviol glycosides (minimum purity 95%)",
+    "filename": "GRN-0662_glucosylated-steviol-glycosides-minimum-purity-95_v2_scanned.pdf"
+  },
+  {
+    "grn": 663,
+    "substance": "Distarch phosphate",
+    "filename": "GRN-0663_distarch-phosphate_v2_scanned.pdf"
+  },
+  {
+    "grn": 665,
+    "substance": "Lactoperoxidase system",
+    "filename": "GRN-0665_lactoperoxidase-system_v2_scanned.pdf"
+  },
+  {
+    "grn": 666,
+    "substance": "Chondroitin sulfate sodium",
+    "filename": "GRN-0666_chondroitin-sulfate-sodium_scanned.pdf"
+  },
+  {
+    "grn": 680,
+    "substance": "Alpha-L-arabinofuranosidase from Talaromyces pinophilus produced by Trichoderma reesei",
+    "filename": "GRN-0680_alpha-l-arabinofuranosidase-from-talaromyces-pinophilus-produced-by-trichoderma-_scanned.pdf"
+  },
+  {
+    "grn": 708,
+    "substance": "Triacylglycerol lipase from Rhizopus oryzae produced in Aspergillus niger",
+    "filename": "GRN-0708_triacylglycerol-lipase-from-rhizopus-oryzae-produced-in-aspergillus-niger_part1_v2_scanned.pdf"
+  },
+  {
+    "grn": 708,
+    "substance": "Triacylglycerol lipase from Rhizopus oryzae produced in Aspergillus niger",
+    "filename": "GRN-0708_triacylglycerol-lipase-from-rhizopus-oryzae-produced-in-aspergillus-niger_part2_v2_scanned.pdf"
+  },
+  {
+    "grn": 708,
+    "substance": "Triacylglycerol lipase from Rhizopus oryzae produced in Aspergillus niger",
+    "filename": "GRN-0708_triacylglycerol-lipase-from-rhizopus-oryzae-produced-in-aspergillus-niger_part3_v2_scanned.pdf"
+  },
+  {
+    "grn": 962,
+    "substance": "Rice bran wax",
+    "filename": "GRN-0962_rice-bran-wax_scanned.pdf"
+  },
+  {
+    "grn": 963,
+    "substance": "Fungal oil (\u226540% arachidonic acid) from Mortierella alpina",
+    "filename": "GRN-0963_fungal-oil-40-arachidonic-acid-from-mortierella-alpina_part2_scanned.pdf"
+  },
+  {
+    "grn": 1079,
+    "substance": "Bifidobacterium longum strain KCTC 12200BP",
+    "filename": "GRN-1079_bifidobacterium-longum-strain-kctc-12200bp_part2_scanned.pdf"
+  },
+  {
+    "grn": 1079,
+    "substance": "Bifidobacterium longum strain KCTC 12200BP",
+    "filename": "GRN-1079_bifidobacterium-longum-strain-kctc-12200bp_part3_scanned.pdf"
+  },
+  {
+    "grn": 666,
+    "substance": "Chondroitin sulfate sodium",
+    "filename": "GRN-0666_chondroitin-sulfate-sodium_v2_scanned.pdf"
+  },
+  {
+    "grn": 680,
+    "substance": "Alpha-L-arabinofuranosidase from Talaromyces pinophilus produced by Trichoderma reesei",
+    "filename": "GRN-0680_alpha-l-arabinofuranosidase-from-talaromyces-pinophilus-produced-by-trichoderma-_v2_scanned.pdf"
+  },
+  {
+    "grn": 1168,
+    "substance": "Tigernuts flour",
+    "filename": "GRN-1168_tigernuts-flour_part1_v2_scanned.pdf"
+  },
+  {
+    "grn": 1168,
+    "substance": "Tigernuts flour",
+    "filename": "GRN-1168_tigernuts-flour_part2_v2_scanned.pdf"
+  },
+  {
+    "grn": 1168,
+    "substance": "Tigernuts flour",
+    "filename": "GRN-1168_tigernuts-flour_part3_v2_scanned.pdf"
+  },
+  {
+    "grn": 1209,
+    "substance": "Algal oil (\u226535% docosahexaenoic acid) from Schizochytrium limacinum A2",
+    "filename": "GRN-1209_algal-oil-35-docosahexaenoic-acid-from-schizochytrium-limacinum-a2_v2_scanned.pdf"
+  }
+]

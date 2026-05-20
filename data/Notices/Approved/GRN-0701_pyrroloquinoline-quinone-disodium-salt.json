@@ -1,0 +1,30 @@
+{
+  "grn_number": 701,
+  "substance_name": "Pyrroloquinoline quinone disodium salt",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Sep 8, 2017",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0701",
+  "substance_type": "vitamin",
+  "production_method": "submerged_fermentation",
+  "source_organism_type": "bacterial",
+  "intended_uses": [
+    "beverages",
+    "sports_nutrition",
+    "meal_replacements"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "genotoxicity_ames",
+    "genotoxicity_chromosomal",
+    "acute_toxicity",
+    "animal_toxicity_studies",
+    "human_clinical_trial",
+    "metabolic_fate"
+  ],
+  "dietary_exposure_method": "NHANES",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false
+}

@@ -1,0 +1,30 @@
+{
+  "grn_number": 819,
+  "substance_name": "Fatty acid ethyl esters from Alaskan Pollock",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Sep 3, 2019",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0819",
+  "substance_type": "lipid",
+  "production_method": "extraction",
+  "source_organism_type": "animal",
+  "intended_uses": [
+    "beverages",
+    "dietary_supplements",
+    "general_food"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "genotoxicity_ames",
+    "genotoxicity_chromosomal",
+    "acute_toxicity",
+    "human_clinical_trial",
+    "history_of_safe_use",
+    "allergenicity_bioinformatic"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true
+}

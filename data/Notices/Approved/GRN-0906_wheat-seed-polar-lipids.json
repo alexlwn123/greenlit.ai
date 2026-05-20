@@ -1,0 +1,28 @@
+{
+  "grn_number": 906,
+  "substance_name": "Wheat seed polar lipids",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Aug 24, 2020",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0906",
+  "substance_type": "lipid",
+  "production_method": "extraction",
+  "source_organism_type": "plant",
+  "intended_uses": [
+    "general_food",
+    "dietary_supplements"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "acute_toxicity",
+    "genotoxicity_ames",
+    "genotoxicity_chromosomal",
+    "metabolic_fate",
+    "history_of_safe_use"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true
+}

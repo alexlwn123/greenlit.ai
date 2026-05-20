@@ -1,0 +1,30 @@
+{
+  "grn_number": 1012,
+  "substance_name": "Powdered sap from Angelica keiskei (ashitaba) containing 8% chalcones (ashitaba sap)",
+  "status": "withdrawn",
+  "date_filed": "",
+  "date_closed": "Apr 7, 2022",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1012",
+  "substance_type": "plant",
+  "production_method": "extraction",
+  "source_organism_type": "plant",
+  "intended_uses": [
+    "beverages",
+    "dietary_supplements",
+    "general_food"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "acute_toxicity",
+    "history_of_safe_use",
+    "genotoxicity_ames",
+    "reproductive_toxicity",
+    "developmental_toxicity",
+    "allergenicity_bioinformatic"
+  ],
+  "dietary_exposure_method": "NHANES",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true
+}

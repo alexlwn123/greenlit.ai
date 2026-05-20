@@ -1,0 +1,30 @@
+{
+  "grn_number": 661,
+  "substance_name": "Fucoidan concentrate from Fucus vesiculosus",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Feb 10, 2017",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0661",
+  "substance_type": "carbohydrate",
+  "production_method": "extraction",
+  "source_organism_type": "algal",
+  "intended_uses": [
+    "bakery",
+    "soups_and_sauces",
+    "snacks",
+    "dairy_alternatives",
+    "condiments"
+  ],
+  "target_population": "not_for_infants",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "history_of_safe_use",
+    "human_clinical_trial",
+    "acute_toxicity",
+    "nutritional_impact"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false
+}

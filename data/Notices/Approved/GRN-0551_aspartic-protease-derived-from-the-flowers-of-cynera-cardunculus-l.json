@@ -1,0 +1,23 @@
+{
+  "grn_number": 551,
+  "substance_name": "Aspartic protease derived from the flowers of Cynera cardunculus L.",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Mar 26, 2015",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0551",
+  "substance_type": "enzyme",
+  "production_method": "extraction",
+  "source_organism_type": "plant",
+  "intended_uses": [
+    "dairy_alternatives"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "history_of_safe_use"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true
+}

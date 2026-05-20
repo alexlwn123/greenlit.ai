@@ -1,0 +1,26 @@
+{
+  "grn_number": 993,
+  "substance_name": "L-carnitine-L-tartrate (Resubmission of GRN 935 )",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Oct 18, 2021",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0993",
+  "substance_type": "vitamin",
+  "production_method": null,
+  "source_organism_type": null,
+  "intended_uses": [
+    "infant_formula"
+  ],
+  "target_population": "not_for_infants",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "acute_toxicity",
+    "chronic_toxicity",
+    "developmental_toxicity",
+    "reproductive_toxicity"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false
+}

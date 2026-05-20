@@ -1,0 +1,28 @@
+{
+  "grn_number": 868,
+  "substance_name": "Coffee fruit extract",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Mar 24, 2020",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0868",
+  "substance_type": "additive",
+  "production_method": "extraction",
+  "source_organism_type": "plant",
+  "intended_uses": [
+    "beverages",
+    "general_food"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "acute_toxicity",
+    "genotoxicity_ames",
+    "genotoxicity_chromosomal",
+    "90_day_rat_study",
+    "human_clinical_trial"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false
+}

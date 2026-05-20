@@ -1,0 +1,30 @@
+{
+  "grn_number": 541,
+  "substance_name": "Insoluble fiber from citrus peel",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Mar 24, 2015",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0541",
+  "substance_type": "carbohydrate",
+  "production_method": "extraction",
+  "source_organism_type": "plant",
+  "intended_uses": [
+    "bakery",
+    "condiments",
+    "confectionery",
+    "dairy_alternatives",
+    "beverages",
+    "meat_alternatives",
+    "soups_and_sauces",
+    "general_food"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "history_of_safe_use"
+  ],
+  "dietary_exposure_method": "USDA_CSFII",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false
+}

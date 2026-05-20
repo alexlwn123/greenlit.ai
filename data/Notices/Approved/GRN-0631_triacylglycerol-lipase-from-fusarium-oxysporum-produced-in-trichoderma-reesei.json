@@ -1,0 +1,23 @@
+{
+  "grn_number": 631,
+  "substance_name": "Triacylglycerol lipase from Fusarium oxysporum produced in Trichoderma reesei",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Jul 18, 2016",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0631",
+  "substance_type": "enzyme",
+  "production_method": "submerged_fermentation",
+  "source_organism_type": "fungal",
+  "intended_uses": [
+    "bakery"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "allergenicity_bioinformatic"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true
+}

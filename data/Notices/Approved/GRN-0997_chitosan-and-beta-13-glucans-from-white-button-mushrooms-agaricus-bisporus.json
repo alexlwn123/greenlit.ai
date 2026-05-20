@@ -1,0 +1,33 @@
+{
+  "grn_number": 997,
+  "substance_name": "Chitosan and beta -1,3-glucans from white button mushrooms ( Agaricus bisporus )",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Feb 28, 2022",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0997",
+  "substance_type": "carbohydrate",
+  "production_method": "extraction",
+  "source_organism_type": "fungal",
+  "intended_uses": [
+    "beverages",
+    "bakery",
+    "dairy_alternatives",
+    "general_food"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "acute_toxicity",
+    "repeated_dose_oral_toxicity",
+    "chronic_toxicity",
+    "developmental_toxicity",
+    "reproductive_toxicity",
+    "genotoxicity_ames",
+    "metabolic_fate",
+    "history_of_safe_use"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false
+}

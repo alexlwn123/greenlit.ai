@@ -1,0 +1,36 @@
+{
+  "grn_number": 450,
+  "substance_name": "Chlorella protothecoides S106 flour with 40-70% lipid",
+  "status": "withdrawn",
+  "date_filed": "",
+  "date_closed": "Apr 19, 2013",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0450",
+  "substance_type": "biomass",
+  "production_method": "algal_cultivation",
+  "source_organism_type": "algal",
+  "intended_uses": [
+    "bakery",
+    "beverages",
+    "dairy_alternatives",
+    "fats_and_oils",
+    "condiments",
+    "snacks",
+    "soups_and_sauces",
+    "cereals_and_grains",
+    "protein_bars",
+    "meal_replacements"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "90_day_rat_study",
+    "genotoxicity_ames",
+    "allergenicity_in_vitro",
+    "pathogenicity_study",
+    "human_clinical_trial"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true
+}

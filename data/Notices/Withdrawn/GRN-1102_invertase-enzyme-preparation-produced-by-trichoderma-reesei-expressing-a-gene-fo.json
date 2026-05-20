@@ -1,0 +1,24 @@
+{
+  "grn_number": 1102,
+  "substance_name": "Invertase enzyme preparation produced by Trichoderma reesei expressing a gene for invertase from Aspergillus niger",
+  "status": "withdrawn",
+  "date_filed": "",
+  "date_closed": "Feb 15, 2024",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1102",
+  "substance_type": "enzyme",
+  "production_method": "submerged_fermentation",
+  "source_organism_type": "fungal",
+  "intended_uses": [
+    "beverages",
+    "general_food"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "history_of_safe_use"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true
+}

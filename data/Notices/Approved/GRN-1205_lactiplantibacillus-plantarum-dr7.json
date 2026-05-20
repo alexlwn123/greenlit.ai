@@ -1,0 +1,31 @@
+{
+  "grn_number": 1205,
+  "substance_name": "Lactiplantibacillus plantarum DR7",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Mar 24, 2025",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1205",
+  "substance_type": "probiotic",
+  "production_method": "submerged_fermentation",
+  "source_organism_type": "bacterial",
+  "intended_uses": [
+    "dairy_alternatives",
+    "fermented_foods",
+    "confectionery",
+    "snacks"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "antibiotic_resistance",
+    "allergenicity_bioinformatic",
+    "acute_toxicity",
+    "human_clinical_trial",
+    "history_of_safe_use",
+    "in_silico_toxicology"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true
+}

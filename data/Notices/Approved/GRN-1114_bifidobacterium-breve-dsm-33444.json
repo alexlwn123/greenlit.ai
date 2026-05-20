@@ -1,0 +1,28 @@
+{
+  "grn_number": 1114,
+  "substance_name": "Bifidobacterium breve DSM 33444",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Jul 10, 2023",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1114",
+  "substance_type": "probiotic",
+  "production_method": "submerged_fermentation",
+  "source_organism_type": "bacterial",
+  "intended_uses": [
+    "general_food",
+    "infant_formula"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "history_of_safe_use",
+    "pathogenicity_assessment",
+    "antibiotic_resistance",
+    "metabolic_fate",
+    "human_clinical_trial"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true
+}

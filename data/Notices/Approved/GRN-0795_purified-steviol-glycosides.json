@@ -1,0 +1,28 @@
+{
+  "grn_number": 795,
+  "substance_name": "Purified steviol glycosides",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Sep 25, 2018",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0795",
+  "substance_type": "flavoring_agent",
+  "production_method": "extraction",
+  "source_organism_type": "plant",
+  "intended_uses": [
+    "beverages",
+    "condiments",
+    "general_food"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "common_use_prior_1958",
+  "safety_data_available": [
+    "genotoxicity_ames",
+    "metabolic_fate",
+    "human_clinical_trial",
+    "history_of_safe_use"
+  ],
+  "dietary_exposure_method": "NHANES",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false
+}

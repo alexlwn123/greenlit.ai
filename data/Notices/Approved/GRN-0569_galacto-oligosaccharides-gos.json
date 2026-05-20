@@ -1,0 +1,34 @@
+{
+  "grn_number": 569,
+  "substance_name": "Galacto-oligosaccharides (GOS)",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Nov 25, 2015",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0569",
+  "substance_type": "carbohydrate",
+  "production_method": "enzymatic",
+  "source_organism_type": null,
+  "intended_uses": [
+    "infant_formula",
+    "cereals_and_grains",
+    "dairy_alternatives",
+    "general_food"
+  ],
+  "target_population": "not_for_infants",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "90_day_rat_study",
+    "genotoxicity_ames",
+    "genotoxicity_chromosomal",
+    "allergenicity_bioinformatic",
+    "allergenicity_in_vitro",
+    "acute_toxicity",
+    "nutritional_impact",
+    "human_clinical_trial",
+    "history_of_safe_use"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true
+}

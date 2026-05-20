@@ -1,0 +1,31 @@
+{
+  "grn_number": 726,
+  "substance_name": "Phenolic preparation from olive fruit",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Feb 28, 2018",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0726",
+  "substance_type": "additive",
+  "production_method": "extraction",
+  "source_organism_type": "plant",
+  "intended_uses": [
+    "beverages",
+    "dietary_supplements",
+    "condiments",
+    "general_food"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "90_day_rat_study",
+    "genotoxicity_ames",
+    "allergenicity_bioinformatic",
+    "acute_toxicity",
+    "metabolic_fate",
+    "history_of_safe_use"
+  ],
+  "dietary_exposure_method": "NHANES",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true
+}

@@ -1,0 +1,34 @@
+{
+  "grn_number": 502,
+  "substance_name": "Lactobacillus acidophilus La-14",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Aug 19, 2014",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0502",
+  "substance_type": "probiotic",
+  "production_method": "submerged_fermentation",
+  "source_organism_type": "bacterial",
+  "intended_uses": [
+    "cereals_and_grains",
+    "protein_bars",
+    "dairy_alternatives",
+    "beverages",
+    "snacks",
+    "condiments",
+    "confectionery",
+    "fermented_foods",
+    "sports_nutrition",
+    "meal_replacements"
+  ],
+  "target_population": "not_for_infants",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "history_of_safe_use",
+    "acute_toxicity",
+    "allergenicity_bioinformatic"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true
+}

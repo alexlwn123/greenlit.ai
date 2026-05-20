@@ -1,0 +1,28 @@
+{
+  "grn_number": 1087,
+  "substance_name": "Streptococcus thermophilus strain KCTC 11870BP",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Dec 15, 2023",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1087",
+  "substance_type": "microorganism",
+  "production_method": "submerged_fermentation",
+  "source_organism_type": "bacterial",
+  "intended_uses": [
+    "fermented_foods",
+    "dairy_alternatives"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "allergenicity_bioinformatic",
+    "allergenicity_in_vitro",
+    "acute_toxicity",
+    "human_clinical_trial",
+    "history_of_safe_use"
+  ],
+  "dietary_exposure_method": "market_share",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true
+}

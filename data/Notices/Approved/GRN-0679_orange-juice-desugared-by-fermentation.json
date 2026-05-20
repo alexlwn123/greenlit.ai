@@ -1,0 +1,23 @@
+{
+  "grn_number": 679,
+  "substance_name": "Orange juice desugared by fermentation",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "May 10, 2017",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0679",
+  "substance_type": "carbohydrate",
+  "production_method": "submerged_fermentation",
+  "source_organism_type": "yeast",
+  "intended_uses": [
+    "beverages"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "history_of_safe_use"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false
+}

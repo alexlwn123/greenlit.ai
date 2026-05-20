@@ -1,0 +1,27 @@
+{
+  "grn_number": 1217,
+  "substance_name": "Algal oil (\u226540% docosahexaenoic acid) from Aurantiochytrium limacinum CCAP A1",
+  "status": "withdrawn",
+  "date_filed": "",
+  "date_closed": "May 7, 2025",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1217",
+  "substance_type": "lipid",
+  "production_method": "submerged_fermentation",
+  "source_organism_type": "algal",
+  "intended_uses": [
+    "general_food",
+    "infant_formula"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "metabolic_fate",
+    "history_of_safe_use",
+    "human_clinical_trial",
+    "allergenicity_bioinformatic"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true
+}

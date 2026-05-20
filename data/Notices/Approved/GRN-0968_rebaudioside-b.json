@@ -1,0 +1,32 @@
+{
+  "grn_number": 968,
+  "substance_name": "Rebaudioside B",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Mar 10, 2022",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0968",
+  "substance_type": "flavoring_agent",
+  "production_method": "precision_fermentation",
+  "source_organism_type": "yeast",
+  "intended_uses": [
+    "beverages",
+    "general_food",
+    "condiments",
+    "snacks",
+    "confectionery"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "acute_toxicity",
+    "genotoxicity_ames",
+    "genotoxicity_chromosomal",
+    "reproductive_toxicity",
+    "developmental_toxicity",
+    "history_of_safe_use"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true
+}

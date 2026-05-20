@@ -1,0 +1,24 @@
+{
+  "grn_number": 470,
+  "substance_name": "Ethyl cellulose",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Dec 16, 2013",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0470",
+  "substance_type": "additive",
+  "production_method": null,
+  "source_organism_type": "plant",
+  "intended_uses": [
+    "cereals_and_grains",
+    "general_food",
+    "fats_and_oils",
+    "beverages"
+  ],
+  "target_population": "not_for_infants",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false
+}

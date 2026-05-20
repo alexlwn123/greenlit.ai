@@ -1,0 +1,25 @@
+{
+  "grn_number": 1195,
+  "substance_name": "Chymosin enzyme preparation produced by Aspergillus niger expressing a gene encoding chymosin from Erinaceus europaeus",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Mar 6, 2025",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1195",
+  "substance_type": "enzyme",
+  "production_method": "submerged_fermentation",
+  "source_organism_type": "fungal",
+  "intended_uses": [
+    "dairy_alternatives"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "history_of_safe_use",
+    "allergenicity_bioinformatic",
+    "toxigenic_potential_assessment"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true
+}

@@ -1,0 +1,27 @@
+{
+  "grn_number": 796,
+  "substance_name": "Orange extract (85% hesperidin)",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Feb 20, 2019",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0796",
+  "substance_type": "additive",
+  "production_method": "extraction",
+  "source_organism_type": "plant",
+  "intended_uses": [
+    "beverages",
+    "general_food"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "common_use_prior_1958",
+  "safety_data_available": [
+    "history_of_safe_use",
+    "human_clinical_trial",
+    "metabolic_fate",
+    "in_silico_toxicology"
+  ],
+  "dietary_exposure_method": "NHANES",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false
+}

@@ -1,0 +1,29 @@
+{
+  "grn_number": 884,
+  "substance_name": "Rice bran extract",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Aug 19, 2020",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0884",
+  "substance_type": "additive",
+  "production_method": "extraction",
+  "source_organism_type": "plant",
+  "intended_uses": [
+    "general_food",
+    "beverages",
+    "bakery",
+    "condiments"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "history_of_safe_use",
+    "allergenicity_bioinformatic",
+    "nutritional_impact",
+    "acute_toxicity"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true
+}

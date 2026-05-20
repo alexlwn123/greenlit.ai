@@ -1,0 +1,34 @@
+{
+  "grn_number": 506,
+  "substance_name": "Sacha inchi oil, a vegetable oil derived from Plukenetia volubilis .",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Sep 10, 2014",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0506",
+  "substance_type": "lipid",
+  "production_method": "extraction",
+  "source_organism_type": "plant",
+  "intended_uses": [
+    "beverages",
+    "dairy_alternatives",
+    "bakery",
+    "condiments",
+    "snacks",
+    "general_food",
+    "fats_and_oils"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "acute_toxicity",
+    "genotoxicity_ames",
+    "90_day_rat_study",
+    "human_clinical_trial",
+    "metabolic_fate",
+    "nutritional_impact"
+  ],
+  "dietary_exposure_method": "NHANES",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false
+}

@@ -1,0 +1,33 @@
+{
+  "grn_number": 497,
+  "substance_name": "Polyphenols from the fruit of Litchi chinensis Sonn. and from leaves of Camellia sinensis (L.) Sinensis",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Jun 12, 2014",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0497",
+  "substance_type": "flavoring_agent",
+  "production_method": "extraction",
+  "source_organism_type": "plant",
+  "intended_uses": [
+    "beverages",
+    "dairy_alternatives",
+    "protein_bars",
+    "bakery",
+    "cereals_and_grains",
+    "meal_replacements"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "acute_toxicity",
+    "genotoxicity_ames",
+    "genotoxicity_chromosomal",
+    "allergenicity_bioinformatic",
+    "human_clinical_trial",
+    "nutritional_impact"
+  ],
+  "dietary_exposure_method": "NHANES",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true
+}

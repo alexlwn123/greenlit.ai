@@ -1,0 +1,25 @@
+{
+  "grn_number": 574,
+  "substance_name": "Phospholipase C from Pseudomonas fluorescens",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Jul 23, 2015",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0574",
+  "substance_type": "enzyme",
+  "production_method": "precision_fermentation",
+  "source_organism_type": "bacterial",
+  "intended_uses": [
+    "fats_and_oils"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "acute_toxicity",
+    "allergenicity_bioinformatic",
+    "in_silico_toxicology"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true
+}

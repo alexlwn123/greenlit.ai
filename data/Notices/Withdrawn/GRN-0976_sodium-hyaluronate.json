@@ -1,0 +1,34 @@
+{
+  "grn_number": 976,
+  "substance_name": "Sodium hyaluronate",
+  "status": "withdrawn",
+  "date_filed": "",
+  "date_closed": "May 24, 2021",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0976",
+  "substance_type": "carbohydrate",
+  "production_method": "submerged_fermentation",
+  "source_organism_type": "bacterial",
+  "intended_uses": [
+    "beverages",
+    "dairy_alternatives",
+    "dietary_supplements",
+    "condiments",
+    "snacks",
+    "general_food"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "in_vitro_toxicology",
+    "acute_toxicity",
+    "developmental_toxicity",
+    "reproductive_toxicity",
+    "allergenicity_bioinformatic",
+    "metabolic_fate",
+    "history_of_safe_use"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true
+}

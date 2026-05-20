@@ -1,0 +1,26 @@
+{
+  "grn_number": 668,
+  "substance_name": "Sodium formate",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Mar 9, 2017",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0668",
+  "substance_type": "additive",
+  "production_method": "chemical_synthesis",
+  "source_organism_type": null,
+  "intended_uses": [
+    "dairy_alternatives",
+    "fermented_foods"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "history_of_safe_use",
+    "repeated_dose_toxicity",
+    "human_clinical_trial"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false
+}

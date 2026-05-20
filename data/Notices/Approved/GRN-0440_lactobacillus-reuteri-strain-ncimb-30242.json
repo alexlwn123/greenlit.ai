@@ -1,0 +1,34 @@
+{
+  "grn_number": 440,
+  "substance_name": "Lactobacillus reuteri strain NCIMB 30242",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Feb 12, 2013",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0440",
+  "substance_type": "probiotic",
+  "production_method": "submerged_fermentation",
+  "source_organism_type": "bacterial",
+  "intended_uses": [
+    "beverages",
+    "dairy_alternatives",
+    "bakery",
+    "cereals_and_grains",
+    "condiments",
+    "fats_and_oils",
+    "snacks",
+    "meal_replacements"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "metabolic_fate",
+    "acute_toxicity",
+    "human_clinical_trial",
+    "history_of_safe_use",
+    "allergenicity_bioinformatic"
+  ],
+  "dietary_exposure_method": "NHANES",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true
+}

@@ -1,0 +1,26 @@
+{
+  "grn_number": 529,
+  "substance_name": "Seed of Phalaris canariensis L. (canary seed)",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Jan 29, 2015",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0529",
+  "substance_type": "carbohydrate",
+  "production_method": null,
+  "source_organism_type": "plant",
+  "intended_uses": [
+    "bakery",
+    "cereals_and_grains",
+    "snacks"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "nutritional_impact",
+    "history_of_safe_use"
+  ],
+  "dietary_exposure_method": "market_share",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false
+}

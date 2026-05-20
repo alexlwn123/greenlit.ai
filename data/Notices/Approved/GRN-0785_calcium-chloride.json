@@ -1,0 +1,23 @@
+{
+  "grn_number": 785,
+  "substance_name": "Calcium chloride",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Nov 20, 2018",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0785",
+  "substance_type": "additive",
+  "production_method": null,
+  "source_organism_type": null,
+  "intended_uses": [
+    "fruits_and_vegetables"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "history_of_safe_use"
+  ],
+  "dietary_exposure_method": "not_included",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false
+}

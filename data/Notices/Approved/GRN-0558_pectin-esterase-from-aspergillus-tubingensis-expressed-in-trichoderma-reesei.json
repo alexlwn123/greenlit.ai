@@ -1,0 +1,27 @@
+{
+  "grn_number": 558,
+  "substance_name": "Pectin esterase from Aspergillus tubingensis expressed in Trichoderma reesei",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Jul 23, 2015",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0558",
+  "substance_type": "enzyme",
+  "production_method": "submerged_fermentation",
+  "source_organism_type": "fungal",
+  "intended_uses": [
+    "beverages",
+    "general_food",
+    "cereals_and_grains",
+    "soups_and_sauces"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "metabolic_fate",
+    "history_of_safe_use"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false
+}

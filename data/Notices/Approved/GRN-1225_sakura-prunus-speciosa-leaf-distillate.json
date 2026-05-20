@@ -1,0 +1,25 @@
+{
+  "grn_number": 1225,
+  "substance_name": "Sakura ( Prunus speciosa ) leaf distillate",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Jun 3, 2025",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1225",
+  "substance_type": "flavoring_agent",
+  "production_method": "extraction",
+  "source_organism_type": "plant",
+  "intended_uses": [
+    "beverages"
+  ],
+  "target_population": "adults_only",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "history_of_safe_use",
+    "in_silico_toxicology",
+    "allergenicity_bioinformatic"
+  ],
+  "dietary_exposure_method": "NHANES",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true
+}

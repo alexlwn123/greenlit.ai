@@ -1,0 +1,28 @@
+{
+  "grn_number": 973,
+  "substance_name": "Maple wood fiber",
+  "status": "withdrawn",
+  "date_filed": "",
+  "date_closed": "May 13, 2021",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0973",
+  "substance_type": "carbohydrate",
+  "production_method": "hydrolysis",
+  "source_organism_type": "plant",
+  "intended_uses": [
+    "general_food",
+    "beverages",
+    "bakery",
+    "condiments",
+    "snacks"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "history_of_safe_use",
+    "in_silico_toxicology"
+  ],
+  "dietary_exposure_method": "market_share",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false
+}

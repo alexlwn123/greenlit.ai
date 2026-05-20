@@ -1,0 +1,25 @@
+{
+  "grn_number": 431,
+  "substance_name": "Colostral whey protein concentrate",
+  "status": "withdrawn",
+  "date_filed": "",
+  "date_closed": "Oct 12, 2012",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0431",
+  "substance_type": "protein",
+  "production_method": "fractionation",
+  "source_organism_type": "animal",
+  "intended_uses": [
+    "general_food",
+    "dietary_supplements",
+    "protein_bars"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "history_of_safe_use"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false
+}

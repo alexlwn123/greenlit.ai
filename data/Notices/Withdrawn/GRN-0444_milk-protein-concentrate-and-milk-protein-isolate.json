@@ -1,0 +1,34 @@
+{
+  "grn_number": 444,
+  "substance_name": "Milk protein concentrate and milk protein isolate",
+  "status": "withdrawn",
+  "date_filed": "",
+  "date_closed": "Mar 18, 2013",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0444",
+  "substance_type": "protein",
+  "production_method": "fractionation",
+  "source_organism_type": "animal",
+  "intended_uses": [
+    "meal_replacements",
+    "beverages",
+    "protein_bars",
+    "infant_formula",
+    "dairy_alternatives",
+    "soups_and_sauces",
+    "confectionery",
+    "snacks",
+    "condiments"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "history_of_safe_use",
+    "allergenicity_bioinformatic",
+    "digestibility_study",
+    "nutritional_impact"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true
+}

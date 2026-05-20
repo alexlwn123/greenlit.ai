@@ -1,0 +1,29 @@
+{
+  "grn_number": 498,
+  "substance_name": "D-psicose",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Jun 12, 2014",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0498",
+  "substance_type": "carbohydrate",
+  "production_method": "enzymatic",
+  "source_organism_type": "bacterial",
+  "intended_uses": [
+    "beverages",
+    "cereals_and_grains",
+    "confectionery",
+    "general_food"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "history_of_safe_use",
+    "genotoxicity_ames",
+    "nutritional_impact",
+    "metabolic_fate"
+  ],
+  "dietary_exposure_method": null,
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false
+}

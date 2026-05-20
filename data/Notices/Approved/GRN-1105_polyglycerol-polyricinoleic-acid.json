@@ -1,0 +1,30 @@
+{
+  "grn_number": 1105,
+  "substance_name": "Polyglycerol polyricinoleic acid",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Jun 14, 2023",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1105",
+  "substance_type": "additive",
+  "production_method": null,
+  "source_organism_type": null,
+  "intended_uses": [
+    "confectionery",
+    "fats_and_oils"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "acute_toxicity",
+    "subchronic_toxicity",
+    "chronic_toxicity",
+    "reproductive_toxicity",
+    "developmental_toxicity",
+    "genotoxicity_ames",
+    "metabolic_fate"
+  ],
+  "dietary_exposure_method": "NHANES",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false
+}

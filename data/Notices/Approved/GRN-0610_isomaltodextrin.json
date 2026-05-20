@@ -1,0 +1,22 @@
+{
+  "grn_number": 610,
+  "substance_name": "Isomaltodextrin",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Jun 6, 2016",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0610",
+  "substance_type": "carbohydrate",
+  "production_method": "enzymatic",
+  "source_organism_type": null,
+  "intended_uses": [
+    "general_food",
+    "dietary_supplements"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [],
+  "dietary_exposure_method": null,
+  "exposure_estimate_included": false,
+  "allergenicity_addressed": false
+}

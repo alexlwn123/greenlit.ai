@@ -1,0 +1,27 @@
+{
+  "grn_number": 1231,
+  "substance_name": "Bacillus velezensis PTA-127359",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Jul 11, 2025",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1231",
+  "substance_type": "microorganism",
+  "production_method": "submerged_fermentation",
+  "source_organism_type": "bacterial",
+  "intended_uses": [
+    "general_food"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "90_day_rat_study",
+    "allergenicity_bioinformatic",
+    "acute_toxicity",
+    "human_clinical_trial",
+    "in_silico_toxicology"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true
+}

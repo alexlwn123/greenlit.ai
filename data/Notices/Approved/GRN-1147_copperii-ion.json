@@ -1,0 +1,29 @@
+{
+  "grn_number": 1147,
+  "substance_name": "Copper(II) ion",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Jul 5, 2024",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1147",
+  "substance_type": "additive",
+  "production_method": null,
+  "source_organism_type": null,
+  "intended_uses": [
+    "general_food"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "acute_toxicity",
+    "repeated_dose_toxicity",
+    "genotoxicity_ames",
+    "reproductive_toxicity",
+    "developmental_toxicity",
+    "metabolic_fate",
+    "history_of_safe_use"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false
+}

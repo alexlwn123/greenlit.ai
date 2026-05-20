@@ -1,0 +1,4409 @@
+[
+  {
+    "grn": 1295,
+    "substance": "grn-1295",
+    "error": "detail page: detail page fetch failed: 400 Client Error: Record GRN001295 does not exist. for url: https://www.hfpappexternal.fda.gov/scripts/fdcc/index.cfm?set=GRASNotices&id=GRN001295"
+  },
+  {
+    "grn": 1304,
+    "substance": "Preparation containing at least three bacteriophages (phage) specific toListeriaspp.",
+    "error": "detail page: detail page fetch failed: 400 Client Error: Record GRN001304 does not exist. for url: https://www.hfpappexternal.fda.gov/scripts/fdcc/index.cfm?set=GRASNotices&id=GRN001304"
+  },
+  {
+    "grn": 800,
+    "substance": "gamma-oryzanol",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 416,
+    "substance": "Lutein diacetate",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm299322.pdf",
+    "filename": "GRN-0416_lutein-diacetate.pdf",
+    "error": "429 Client Error: Too Many Requests for url: https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm299322.pdf"
+  },
+  {
+    "grn": 417,
+    "substance": "Dried biomass of Arthrospira platensis also known as Spirulina platensis (spirulina)",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm299323.pdf",
+    "filename": "GRN-0417_dried-biomass-of-arthrospira-platensis-also-known-as-spirulina-platensis-spiruli.pdf",
+    "error": "429 Client Error: Too Many Requests for url: https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm299323.pdf"
+  },
+  {
+    "grn": 514,
+    "substance": "Sucrose fatty acid esters",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm403927.pdf",
+    "filename": "GRN-0514_sucrose-fatty-acid-esters.pdf",
+    "error": "429 Client Error: Too Many Requests for url: https://wayback.archive-it.org/7993/20171031042042/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/UCM403927.pdf"
+  },
+  {
+    "grn": 515,
+    "substance": "D-beta-hydroxybutyrate ester",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm403846.pdf",
+    "filename": "GRN-0515_d-beta-hydroxybutyrate-ester.pdf",
+    "error": "429 Client Error: Too Many Requests for url: https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm403846.pdf"
+  },
+  {
+    "grn": 516,
+    "substance": "Steviol glycosides with rebaudioside A and stevioside as the principal components",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm403848.pdf",
+    "filename": "GRN-0516_steviol-glycosides-with-rebaudioside-a-and-stevioside-as-the-principal-component.pdf",
+    "error": "429 Client Error: Too Many Requests for url: https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm403848.pdf"
+  },
+  {
+    "grn": 565,
+    "substance": "Fucoidan from Undaria pinnatifida",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 609,
+    "substance": "Rice protein",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 659,
+    "substance": "Lacto- N -neotetraose",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 660,
+    "substance": "Bacillus coagulans GBI-30, 6086 spores",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 661,
+    "substance": "Fucoidan concentrate from Fucus vesiculosus",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 664,
+    "substance": "Alpha-amylase from Cytophaga sp. expressed in Bacillus licheniformis",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 666,
+    "substance": "Chondroitin sulfate sodium",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 667,
+    "substance": "Rebaudioside M",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 668,
+    "substance": "Sodium formate",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 669,
+    "substance": "Cows milk-derived lactoferrin",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 670,
+    "substance": "Inactivated Bacillus coagulans GBI-30, 6086",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 671,
+    "substance": "Galacto-oligosaccharides (GOS)",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 672,
+    "substance": "Preparation containing five bacterial monophages specific to Shigella spp.",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 673,
+    "substance": "Algal fat derived from Prototheca moriformis (S7737)",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 674,
+    "substance": "Isomalto-oligosaccharides",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 675,
+    "substance": "Xylanase enzyme preparation produced by Trichoderma reesei carrying a xylanase gene from Talaromyces leycettanus",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 676,
+    "substance": "Colicin preparations",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 677,
+    "substance": "Docosahexaenoic acid oil produced in Schizochytrium sp.",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 678,
+    "substance": "Alpha-cyclodextrin",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 679,
+    "substance": "Orange juice desugared by fermentation",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 680,
+    "substance": "Alpha-L-arabinofuranosidase from Talaromyces pinophilus produced by Trichoderma reesei",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 681,
+    "substance": "Dried isomaltulose syrup",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 682,
+    "substance": "Lecithin from canola",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 683,
+    "substance": "Canola protein isolate",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 684,
+    "substance": "Mung bean protein isolate",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 685,
+    "substance": "Lactobacillus plantarum strain 299v",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 686,
+    "substance": "Curcumin from turmeric ( Curcuma longa L.)",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 687,
+    "substance": "Inulin from Agave tequilana (Resubmission of GRN 582 )",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 688,
+    "substance": "Sodium thiocyanate",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 689,
+    "substance": "Phospholipase C from Bacillus thuringiensis produced in Bacillus licheniformis",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 690,
+    "substance": "Fruit and vegetable vitamin extract",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 691,
+    "substance": "Bacillus coagulans SANK 70258 spore preparation",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 692,
+    "substance": "Quinoa sprout extract",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 693,
+    "substance": "D-psicose",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 694,
+    "substance": "Pyrroloquinoline quinone disodium salt (PQQ)",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 695,
+    "substance": "Dimethyl ether",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 696,
+    "substance": "Dolomite",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 697,
+    "substance": "Dried biomass of Euglena gracilis",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 698,
+    "substance": "Paramylon isolate from Euglena gracilis",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 699,
+    "substance": "Trehalase from Myceliophthora sepedonium produced by Aspergillus niger",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 700,
+    "substance": "Paracoccus carotinifaciens extract containing carotenoids",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 701,
+    "substance": "Pyrroloquinoline quinone disodium salt",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 702,
+    "substance": "Purified steviol glycosides",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 703,
+    "substance": "Alpha-glucosidase from Aspergillus niger produced by Trichoderma reesi",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 704,
+    "substance": "Corn oil (by-product of ethanol production)",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 705,
+    "substance": "Distarch phosphate (Resubmission of GRN 663 )",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 706,
+    "substance": "Siraitia grosvenorii Swingle (Luo Han Guo) fruit extract (Resubmission of GRN 629 )",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 707,
+    "substance": "Glucose oxidase from Penicillium produced in Trichoderma reesei",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 709,
+    "substance": "Pyrroloquinoline quinone disodium salt",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 710,
+    "substance": "Basic methacrylate copolymer",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 711,
+    "substance": "Glucan",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 712,
+    "substance": "Calcium acetate",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 713,
+    "substance": "Hydrolyzed pork cartilage",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 714,
+    "substance": "Subtilisin from Bacillus amyloliquefaciens produced in Bacillus subtilis",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 715,
+    "substance": "Rebaudioside D",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 716,
+    "substance": "Bovine milk osteopontin",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 717,
+    "substance": "Short-chain fructo-oligosaccharides",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 718,
+    "substance": "Calcium acid pyrophosphate",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 719,
+    "substance": "Orange pomace and enzyme-treated orange pomace",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 720,
+    "substance": "Rice bran wax (Resubmission of GRN 655 )",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 721,
+    "substance": "Galacto-oligosaccharides (Resubmission of GRN 671 )",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 722,
+    "substance": "Lactobacillus plantarum Lp-115",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 723,
+    "substance": "Benzalkonium chloride",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 724,
+    "substance": "Preparation containing six bacterial phages specific to shiga-toxin producing Escherichia coli",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 725,
+    "substance": "Inactivated Bacillus coagulans GBI-30, 6086",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 726,
+    "substance": "Phenolic preparation from olive fruit",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 727,
+    "substance": "Trehalase from Trichoderma reesei produced in Trichoderma reesei",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 728,
+    "substance": "Phospholipase C from Pseudomonas sp. 62186 produced in Bacillus licheniformis",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 729,
+    "substance": "Galacto-oligosaccharides",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 730,
+    "substance": "Arachidonic-acid rich oil from Mortierella alpina strain LU 166",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 731,
+    "substance": "Docosahexaenoic acid oil produced in Schizochytrium sp.",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 732,
+    "substance": "Docosahexaenoic acid oil produced in Schizochytrium sp.",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 733,
+    "substance": "Purified steviol glycosides",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 734,
+    "substance": "Ergothioneine",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 735,
+    "substance": "2'-Fucosyllactose",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 736,
+    "substance": "Lactobacillus casei subsp. paracasei Lpc-37",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 737,
+    "substance": "Soy leghemoglobin preparation from a strain of Pichia pastoris (Resubmission of GRN 540 )",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 738,
+    "substance": "Thaumatin",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 739,
+    "substance": "Mannanase enzyme from Talaromyces leycettanus produced in Aspergillus niger",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 740,
+    "substance": "Glycolipids from Dacryopinax spathularia",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 741,
+    "substance": "Dimethyl ether (Resubmission of GRN 695 )",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 742,
+    "substance": "Duckweed (subfamily Lemnoideae) powder",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 743,
+    "substance": "\u03b2-galactosidase from Papiliotrema terrestris",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 744,
+    "substance": "Steviol glycosides consisting primarily of rebaudioside M",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 745,
+    "substance": "Steviol glycosides consisting primarily of rebaudioside M",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 746,
+    "substance": "Maltogenic amylase from Geobacillus stearothermophilus produced in Bacillus subtilis",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 747,
+    "substance": "Calcium lactate",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 748,
+    "substance": "Tomato powder",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 749,
+    "substance": "2'-O-fucosyllactose",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 750,
+    "substance": "Beta-glucosidase from Aspergillus niger",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 751,
+    "substance": "Maltogenic alpha-amylase from Bacillus stearothermophilus produced in Bacillus subtilis",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 752,
+    "substance": "Preparation containing the bacterial monophages, BP-63 and LVR16-A, specific to Salmonella",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 753,
+    "substance": "Sodium thiocyanate (Resubmission of GRN 688 )",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 754,
+    "substance": "Algal oil (87% oleic acid) derived from Prototheca moriformis strain S6697",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 755,
+    "substance": "D-psicose",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 756,
+    "substance": "Endo-1,4-beta-glucanase from Trichoderma reesei",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 757,
+    "substance": "Preparation containing two bacterial phages specific to Escherichia coli O157",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 758,
+    "substance": "Lactobacillus helveticus R0052, Bifidobacterium longum subsp. infantis R0033, and Bifidobacterium bifidum R0071",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 759,
+    "substance": "Steviol glycosides consisting primarily of rebaudioside M produced in Yarrowia lipolytica",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 760,
+    "substance": "Lactobacillus curvatus DSM 18775",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 761,
+    "substance": "Esterified propoxylated glycerol",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 762,
+    "substance": "Carnobacterium divergens M35 preparation",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 763,
+    "substance": "Alpha-lactalbumin",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 764,
+    "substance": "Rebaudioside D",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 765,
+    "substance": "Dehulled hemp seed",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 766,
+    "substance": "3'-sialyllactose sodium salt",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 767,
+    "substance": "Polyvinyl alcohol",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 768,
+    "substance": "Stevia leaf extract",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 769,
+    "substance": "Vitamin C (fruit and vegetable derived)",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 770,
+    "substance": "Potassium polyaspartate",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 771,
+    "substance": "Hemp seed protein",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 772,
+    "substance": "Palmitoylated green tea catechins",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 773,
+    "substance": "Dried biomass of Chlamydomonas reinhardtii",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 774,
+    "substance": "Glutaminase from Bacillus licheniformis produced in Bacillus licheniformis",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 775,
+    "substance": "Colicin preparations",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 776,
+    "substance": "Algal oil (35% docosahexaenoic acid) from Schizochytrium sp. strain FCC-1324",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 777,
+    "substance": "Algal oil (55% docosahexaenoic acid) from Schizochytrium sp. strain FCC-3204",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 778,
+    "substance": "Hemp seed oil",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 779,
+    "substance": "Isomalto-oligosaccharide mixture",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 780,
+    "substance": "Rebaudioside M",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 781,
+    "substance": "Alpha-tocopherol (fruit and vegetable derived)",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 782,
+    "substance": "L-arabinose",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 783,
+    "substance": "Triacylglycerol lipase from Rhizopus oryzae produced in Aspergillus niger",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 784,
+    "substance": "Siraitia grosvenorii Swingle (Luo Han Guo) fruit juice concentrate",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 785,
+    "substance": "Calcium chloride",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 786,
+    "substance": "Calcium propionate",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 787,
+    "substance": "Quinoa sprout powder (Resubmission of GRN 692 )",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 788,
+    "substance": "Pea protein concentrate",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 789,
+    "substance": "Erythritol",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 790,
+    "substance": "Steviol glycosides (minimum purity 95%)",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 791,
+    "substance": "Urolithin A",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 792,
+    "substance": "Cultured corn starch fermented by Corynebacterium glutamicum",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 793,
+    "substance": "Cultured corn starch fermented by Corynebacterium stationis",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 794,
+    "substance": "Shiitake, pea, and rice protein fermented with Lentinula edodes",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 795,
+    "substance": "Purified steviol glycosides",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 796,
+    "substance": "Orange extract (85% hesperidin)",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 797,
+    "substance": "Fructooligosaccharides",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 798,
+    "substance": "Saccharomyces cerevisiae strain yBBS002",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 799,
+    "substance": "Rebaudioside M",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 800,
+    "substance": "gamma-oryzanol",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 801,
+    "substance": "Chymosin enzyme from Camelus dromedarius produced in Aspergillus niger",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 802,
+    "substance": "Endolysin",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 803,
+    "substance": "Pea protein",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 804,
+    "substance": "Pea protein",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 805,
+    "substance": "Apple peel powder (Resubmission of GRN 613 )",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 806,
+    "substance": "Dolomite (Resubmission of GRN 696 )",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 807,
+    "substance": "Streptococcus salivarius M18",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 808,
+    "substance": "Lipase from Aspergillus tubingensis produced in Trichoderma reesei",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 809,
+    "substance": "Fractionated whey protein concentrate containing 41% alpha-lactalbumin",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 810,
+    "substance": "Lactobacillus paracasei subsp. paracasei strain F-19e",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 811,
+    "substance": "Phospholipase A1 produced by Aspergillus oryzae",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 812,
+    "substance": "Rebaudioside M",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 813,
+    "substance": "Bifidobacterium longum BORI",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 814,
+    "substance": "Bifidobacterium bifidum BGN4",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 815,
+    "substance": "2'-fucosyllactose and difucosyllactose",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 816,
+    "substance": "Xylooligosaccharides from sugarcane",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 817,
+    "substance": "Serine endopeptidase from Malbranchea cinnamomea produced in Trichoderma  reesei",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 818,
+    "substance": "Isomalto-oligosaccharides",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 819,
+    "substance": "Fatty acid ethyl esters from Alaskan Pollock",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 820,
+    "substance": "Lactobacillus fermentum CECT5716",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 821,
+    "substance": "Glucosylated steviol glycosides",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 822,
+    "substance": "Curcumin",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 823,
+    "substance": "Rebaudioside E",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 824,
+    "substance": "Bacteriocin preparations specific to Salmonella",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 825,
+    "substance": "Beta-galactosidase from Kluyveromyces lactis",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 826,
+    "substance": "Dihydroquercetin",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 827,
+    "substance": "Preparation containing three bacterial phages specific to several Escherichia coli serotypes",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 828,
+    "substance": "D-psicose (Resubmission of GRN 755 )",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 829,
+    "substance": "Powdered Aspergillus oryzae grown with one or more added minerals",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 830,
+    "substance": "Chicory flour",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 831,
+    "substance": "Bacillus subtilis DE111",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 832,
+    "substance": "Acid prolyl endopeptidase produced by Aspergillus niger",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 833,
+    "substance": "Lacto- N -tetraose",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 834,
+    "substance": "Preparation containing bacterial phages specific to shiga-toxin producing Escherichia coli",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 835,
+    "substance": "Ilex guayusa leaf extract",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 836,
+    "substance": "Algal oil (50-60% docosahexaenoic acid) from Schizochytrium sp. HS01",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 837,
+    "substance": "Hydroxytyrosol",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 838,
+    "substance": "Purified steviol glycosides",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 839,
+    "substance": "Purified steviol glycosides",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 840,
+    "substance": "Lactobacillus paracasei strain F19",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 841,
+    "substance": "Saccharomyces cerevisiae expressing L-lactate dehydrogenase from Rhizopus oryzae",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 842,
+    "substance": "Maltogenic alpha-amylase",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 843,
+    "substance": "Algal oil (35% docosahexaenoic acid) from Schizochytrium sp. strain FCC-1324",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 844,
+    "substance": "Algal oil (55% docosahexaenoic acid) from Schizochytrium sp. strain FCC-3204",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 845,
+    "substance": "Lactobacillus rhamnosus LGG",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 846,
+    "substance": "Rebaudioside M",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 847,
+    "substance": "Lactobacillus plantarum ECGC 13110402",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 848,
+    "substance": "Pea and rice protein fermented by shiitake mycelia",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 849,
+    "substance": "Inulin from artichoke",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 850,
+    "substance": "Olein from shea tree nut extract",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 851,
+    "substance": "Pea protein",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 852,
+    "substance": "2'-fucosyllactose",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 853,
+    "substance": "Lysozyme produced by Trichoderma reesei",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 854,
+    "substance": "Agave mixed fructans from Agave tequilana",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 855,
+    "substance": "Bifidobacterium animalis subsp. lactis strain R0421",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 856,
+    "substance": "Bifidobacterium animalis subsp. lactis strain BB-12",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 857,
+    "substance": "Phospholipase A1 produced by Aspergillus niger",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 858,
+    "substance": "Glucosylated steviol glycosides",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 859,
+    "substance": "2'-fucosyllactose",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 860,
+    "substance": "Algal oil (36% docosahexaenoic acid) from Schizochytrium sp. strain DHF",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 861,
+    "substance": "Pullulanase from Bacillus deramificans produced in Bacillus subtilis",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 862,
+    "substance": "Algal oil (40% docosahexaenoic acid) from Schizochytrium sp. strain ONC-T18",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 863,
+    "substance": "\u03b2-lactoglobulin produced by Trichoderma reesei",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 864,
+    "substance": "Bacillus coagulans SNZ 1969 spore preparation",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 865,
+    "substance": "Lactobacillus acidophilus NCFM",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 866,
+    "substance": "Lipase from Penicillium camemberti",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 867,
+    "substance": "Rebaudioside M",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 868,
+    "substance": "Coffee fruit extract",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 869,
+    "substance": "Ilex guayusa leaf aqueous extract",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 870,
+    "substance": "Ilex guayusa leaf hydroethanolic extract",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 871,
+    "substance": "Lactobacillus acidophilus DDS-1",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 872,
+    "substance": "Bifidobacterium animalis subsp. lactis UABla-12",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 873,
+    "substance": "Cranberry extract",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 874,
+    "substance": "Corn protein",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 875,
+    "substance": "Bifidobacterium animalis subsp. lactis AD011",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 876,
+    "substance": "Hydroxytyrosol (Resubmission of GRN 837 )",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 877,
+    "substance": "Bifidobacterium longum BB536",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 878,
+    "substance": "Glucosylated steviol glycosides",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 879,
+    "substance": "Fava bean protein isolate",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 880,
+    "substance": "3'-sialyllactose sodium salt",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 881,
+    "substance": "6'-sialyllactose sodium salt",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 882,
+    "substance": "Rebaudioside M (Resubmission of GRN 867 )",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 883,
+    "substance": "Ilex guayusa leaf aqueous extract",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 884,
+    "substance": "Rice bran extract",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 885,
+    "substance": "Vinyl acetate-vinyl laurate copolymer",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 886,
+    "substance": "Monoacylglycerides from grape seed",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 887,
+    "substance": "Menaquinone-7",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 888,
+    "substance": "Preparation containing three bacterial phages specific to Salmonella",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 889,
+    "substance": "Spermidine rich wheat germ extract",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 890,
+    "substance": "Corn oil derived from distillers grains",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 891,
+    "substance": "Cellulase produced by Trichoderma reesei",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 892,
+    "substance": "Refined shea butter",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 893,
+    "substance": "D-psicose",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 894,
+    "substance": "White mulberry leaf extract",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 895,
+    "substance": "Lacto- N -neotetraose",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 896,
+    "substance": "Alpha-galacto-oligosaccharides",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 897,
+    "substance": "2'- O -fucosyllactose",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 898,
+    "substance": "Anhydrous milk fat",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 899,
+    "substance": "Citric acid esters of mono- and diglycerides",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 900,
+    "substance": "Corn oil",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 901,
+    "substance": "Glucosyl hesperidin",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 902,
+    "substance": "Neohesperidin dihydrochalcone",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 903,
+    "substance": "Quillaia extract type 2",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 904,
+    "substance": "Fungal protein from fermented Fusarium sp. mycelia",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 905,
+    "substance": "Bacillus subtilis SG188",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 906,
+    "substance": "Wheat seed polar lipids",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 907,
+    "substance": "Wheat seed oil",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 908,
+    "substance": "Lipase from Penicillium camemberti (Resubmission of GRN 866 )",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 909,
+    "substance": "Whey protein containing 41% alpha-lactalbumin",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 910,
+    "substance": "Thaumatin II",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 911,
+    "substance": "Rebaudioside I",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 912,
+    "substance": "Trehalose",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 913,
+    "substance": "Algal oil (minimum 35% DHA)",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 914,
+    "substance": "Alpha-linolenic acid diacylglycerol",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 915,
+    "substance": "Calcium L-methylfolate",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 916,
+    "substance": "Dihydroquercetin (Resubmission of GRN 826 )",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 917,
+    "substance": "Preparation containing three bacterial phages specific to Salmonella (Resubmission of GRN 888 )",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 918,
+    "substance": "Partially defatted almond protein flour",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 919,
+    "substance": "Lacto- N -neotetraose",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 920,
+    "substance": "Thaumatin II",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 921,
+    "substance": "3'-sialyllactose sodium salt",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 922,
+    "substance": "6'-sialyllactose sodium salt",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 923,
+    "substance": "Lacto- N -tetraose",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 924,
+    "substance": "2'-fucosyllactose",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 925,
+    "substance": "3-fucosyllactose",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 926,
+    "substance": "Soluble rice flour",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 927,
+    "substance": "Polyvinyl alcohol",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 928,
+    "substance": "Dried Saccharomyces cerevisiae yeast fermentate",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 929,
+    "substance": "2'-fucosyllactose",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 930,
+    "substance": "Silk fibroin derived from Bombyx mori cocoons",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 931,
+    "substance": "Creatine monohydrate",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 932,
+    "substance": "2'-fucosyllactose (Resubmission of GRN 859 )",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 933,
+    "substance": "Algal oil (\u226536% docosahexaenoic acid) from Schizochytrium sp. strain DHF (Resubmission of GRN 860 )",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 934,
+    "substance": "Algal oil (\u226535% docosahexanoic acid (DHA)) derived from Schizochytrium sp. strain CABIO-A-2",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 935,
+    "substance": "L-carnitine-L-tartrate",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 936,
+    "substance": "Leuconostoc carnosum DSM 32756",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 937,
+    "substance": "Staphylococcus carnosus DSM 25010",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 938,
+    "substance": "Pichia kluyveri DSM 33235",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 939,
+    "substance": "Sunflower lecithin",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 940,
+    "substance": "Phospholipase A2 enzyme from Sus scrofa (wild pig) produced by Yarrowia lipolytica",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 941,
+    "substance": "Oat polar lipid extract",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 942,
+    "substance": "Whey permeate",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 943,
+    "substance": "Citrus fiber from the peels of oranges, lemons, or limes",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 944,
+    "substance": "Rice protein hydrolysate",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 945,
+    "substance": "Fungal protein from Fusarium sp. mycelia",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 946,
+    "substance": "Lactobacillus plantarum strain DSM 33452",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 947,
+    "substance": "Cacao pulp and cacao fruit juice concentrate",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 948,
+    "substance": "Enzyme-treated pea protein",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 949,
+    "substance": "Bacillus coagulans strain DSM 17654 spore preparation",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 950,
+    "substance": "Bifidobacterium longum subsp. infantis DSM 33361",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 951,
+    "substance": "3-fucosyllactose",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 952,
+    "substance": "Bifidobacterium animalis subsp. lactis strain AD011 (Resubmission of GRN 875 )",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 953,
+    "substance": "Lactobacillus plantarum strain CECT 7527, CECT 7528, and CECT 7529",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 954,
+    "substance": "Fibrillated cellulose",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 955,
+    "substance": "Bacillus subtilis strain BS-MB40 PTA-122264 spore preparation",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 956,
+    "substance": "Bacillus subtilis ATCC SD-7280",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 957,
+    "substance": "Lactobacillus johnsonii strain ATCC PTA-124205",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 958,
+    "substance": "Fungal oil (\u226540% arachidonic acid) from Mortierella alpina strain AF",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 959,
+    "substance": "Iron milk proteinate",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 960,
+    "substance": "Hypromellose acetate succinate",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 961,
+    "substance": "\u03b2-glucan derived from Agrobacterium sp. CCTCC No. M2010020",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 962,
+    "substance": "Rice bran wax",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 963,
+    "substance": "Fungal oil (\u226540% arachidonic acid) from Mortierella alpina",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 964,
+    "substance": "Lysophospholipase enzyme preparation from Aspergillus niger produced by Trichoderma reesei",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 965,
+    "substance": "Arabinase enzyme preparation produced by Aspergillus tubingensis",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 966,
+    "substance": "Preparations containing three to eight bacteriophages specific to Campylobacter jejuni",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 967,
+    "substance": "Soluble egg-white protein produced by Komagataella phaffii strain GSD-1209",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 968,
+    "substance": "Rebaudioside B",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 969,
+    "substance": "Bacillus subtilis Bss-19 spore preparation",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 970,
+    "substance": "Enzyme-modified steviol glycosides",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 971,
+    "substance": "Bacillus clausii strain 088AE spore preparation",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 972,
+    "substance": "Pectin hydrolysate from carrot pomace",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 973,
+    "substance": "Maple wood fiber",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 974,
+    "substance": "Maltogenic alpha-amylase enzyme preparation produced by Bacillus subtilis",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 975,
+    "substance": "Maltogenic alpha-amylase enzyme preparation produced by Bacillus licheniformis carrying the gene coding for maltogenic alpha-amylase from Geobacillus stearothermophilus",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 976,
+    "substance": "Sodium hyaluronate",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 977,
+    "substance": "D-tagatose produced via novel enzymatic cascade",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 978,
+    "substance": "Hydrolyzed aqueous olive pulp extract",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 979,
+    "substance": "Pectin esterase enzyme preparation produced by Aspergillus oryzae expressing a pectin esterase gene from A. tubingensis",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 980,
+    "substance": "Dry whole milk",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 981,
+    "substance": "Sterol esterase enzyme preparation produced by Trichoderma reesei expressing a gene encoding sterol esterase from Melanocarpus albomyces",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 982,
+    "substance": "Polygalacturonase enzyme preparation produced by Aspergillus oryzae expressing a polygalacturonase gene from A. tubingensis Mosseray",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 983,
+    "substance": "Purified steviol glycosides from the leaves of Stevia rebaudiana (Bertoni)",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 984,
+    "substance": "Wolffia globosa",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 985,
+    "substance": "Bifidobacterium longum subsp. infantis strain ATCC SD 6720",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 986,
+    "substance": "Chlorella sorokiniana powder and C. sorokiniana micro powder",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 987,
+    "substance": "2'-fucosyllactose",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 988,
+    "substance": "Lactobacillus fermentum LfQi6",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 989,
+    "substance": "Bacillus subtilis expressing a modified gene encoding a variant of the wild-type subtilisin from B. clausii",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 990,
+    "substance": "Short-chain fructooligosaccharides",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 991,
+    "substance": "Chitosanase enzyme preparation produced by Bacillus subtilis",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 992,
+    "substance": "White mulberry ( Morus alba Linn) leaf extract",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 993,
+    "substance": "L-carnitine-L-tartrate (Resubmission of GRN 935 )",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 994,
+    "substance": "Miracle fruit ( Synsepalum dulcificum ), in pulp, powder, or protein forms",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 995,
+    "substance": "\u03b2-glucans from Antrodia cinnamomea strain ATCC 200183",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 996,
+    "substance": "Synthetic amorphous silica",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 997,
+    "substance": "Chitosan and beta -1,3-glucans from white button mushrooms ( Agaricus bisporus )",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 998,
+    "substance": "Corn bran arabinoxylan",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 999,
+    "substance": "Enzyme-modified steviol glycosides",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1000,
+    "substance": "Phycocyanin-rich extract of Galdieria sulphuraria ( G. sulphuraria strain FCC3424)",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1001,
+    "substance": "Myoglobin preparation from a strain of Pichia pastoris expressing the myoglobin gene from Bos taurus",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1002,
+    "substance": "Bifidobacterium breve strain MCC1274",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1003,
+    "substance": "Bifidobacterium longum subsp. infantis M-63",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1004,
+    "substance": "Maltosyltrehalose syrup",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1005,
+    "substance": "\u03b2-Lactoglobulin from cow milk",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1006,
+    "substance": "Short-chain fructooligosaccharides",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1007,
+    "substance": "Bacillus subtilis strain R0179",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1008,
+    "substance": "Algal oil (\u226545% docosahexaenoic acid) from Aurantiochytrium limacinum TKD-1",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1009,
+    "substance": "Water-soluble palm fruit extract",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1010,
+    "substance": "Rebaudioside M obtained by enzymatic treatment of steviol glycosides purified from the leaves of Stevia rebaudiana (Bertoni)",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1011,
+    "substance": "Alpha-amylase enzyme preparation produced by Bacillus subtilis strain AR-651 expressing the gene encoding alpha-amylase from Thermoactinomyces vulgaris",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1012,
+    "substance": "Powdered sap from Angelica keiskei (ashitaba) containing 8% chalcones (ashitaba sap)",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1013,
+    "substance": "Lactobacillus rhamnosus DSM 33156",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1014,
+    "substance": "2'-fucosyllactose",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1015,
+    "substance": "3'-sialyllactose sodium salt",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1016,
+    "substance": "6'-sialyllactose sodium salt",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1017,
+    "substance": "Lacto- N -tetraose",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1018,
+    "substance": "Carbon monoxide",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1019,
+    "substance": "Agave mixed fructans from Agave tequilana Weber var. azul",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1020,
+    "substance": "Protein from Helianthus annuus (sunflower protein)",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1021,
+    "substance": "Transglutaminase enzyme preparation produced by Streptomyces mobaraensis strain M2020197",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1022,
+    "substance": "Streptococcus salivarius DB-B5",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1023,
+    "substance": "Monosodium L-5-methyltetrahydrofolate",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1024,
+    "substance": "D-psicose",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1025,
+    "substance": "Pepsin A enzyme preparation produced by Pichia pastoris to overexpress the gene encoding pepsin A",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1026,
+    "substance": "Silk fibroin derived from Bombyx mori cocoons (Resubmission of GRN 930 )",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1027,
+    "substance": "Miracle fruit ( Synsepalum dulcificum ) powder",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1028,
+    "substance": "Metschnikowia pulcherrima DANMET-A and M. fructicola DANMET-B",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1029,
+    "substance": "D-psicose",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1030,
+    "substance": "Cellulase enzyme preparation produced by Aspergillus niger genetically engineered to express a cellulase gene from Trichoderma reesei",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1031,
+    "substance": "Barley and rice protein hydrolysate",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1032,
+    "substance": "D-\u03b2-hydroxybutyrate",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1033,
+    "substance": "Hydrolyzed Saccharomyces cerevisiae",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1034,
+    "substance": "2'-fucosyllactose",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1035,
+    "substance": "Lacto- N -fucopentaose I with 2'-fucosyllactose",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1036,
+    "substance": "Complexation products of iron with sodium citrate",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1037,
+    "substance": "3-fucosyllactose",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1038,
+    "substance": "Preparation containing six bacteriophages (phage) specific to Salmonella enterica spp. serovars",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1039,
+    "substance": "Lactase enzyme preparation produced by Aspergillus oryzae",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1040,
+    "substance": "2'-fucosyllactose",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1041,
+    "substance": "Dry whole milk",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1042,
+    "substance": "Menaquinone-7 derived from a specific strain of Bacillus subtilis natto",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1043,
+    "substance": "Cetylated fatty acids",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1044,
+    "substance": "Calcium disodium ethylenediaminetetraacetic acid",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1045,
+    "substance": "Resistant dextrin from tapioca",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1046,
+    "substance": "Collagenase enzyme preparation from genetically modified Streptomyces violaceoruber expressing a collagenase gene",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1047,
+    "substance": "Lipase enzyme preparation produced by Saccharomyces cerevisiae expressing a gene encoding a lipase from Fusarium oxysporum",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1048,
+    "substance": "Aminopeptidase enzyme preparation produced by Trichoderma reesei expressing a gene encoding an aminopeptidase from Aspergillus clavatus",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1049,
+    "substance": "Medium-chain triacylglycerols",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1050,
+    "substance": "High 2-palmitic acid vegetable oil",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1051,
+    "substance": "2'-fucosyllactose",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1052,
+    "substance": "3'-sialyllactose sodium salt",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1053,
+    "substance": "6'-sialyllactose sodium salt",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1054,
+    "substance": "Glucose oxidase enzyme preparation produced by Aspergillus niger expressing the gene encoding glucose oxidase from A. niger",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1055,
+    "substance": "Xylanase enzyme preparation produced by Bacillus licheniformis strain expressing the xylanase gene from Chryseobacterium",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1056,
+    "substance": "\u03b2-lactoglobulin produced by Komagataella phaffii strain yRMK-66",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1057,
+    "substance": "D-psicose (Resubmission of GRN 893 )",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1058,
+    "substance": "Polyvinyl alcohol",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1059,
+    "substance": "Lacto- N -neotetraose",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1060,
+    "substance": "2'-fucosyllactose",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1061,
+    "substance": "Deactivated alkaline serine protease produced by Bacillus licheniformis strain CICC 10266",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1062,
+    "substance": "Saccharomyces cerevisiae strain OYR-185",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1063,
+    "substance": "Weissella cibaria CMU",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1064,
+    "substance": "Whole fruit pomegranate extract",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1065,
+    "substance": "Anaerobutyricum soehngenii CH106",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1066,
+    "substance": "Carnobacterium divergens strain M35",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1067,
+    "substance": "Lacto- N -neotetraose",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1068,
+    "substance": "Lacto- N -tetraose",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1069,
+    "substance": "Corn protein (Resubmission of GRN 874 )",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1070,
+    "substance": "Preparations containing six bacteriophages (phage) specific to Salmonella enterica",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1071,
+    "substance": "Glucose oxidase enzyme preparation produced by Saccharomyces cerevisiae expressing a gene encoding a glucose oxidase from Aspergillus niger",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1072,
+    "substance": "Lemnaceae fiber",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1073,
+    "substance": "Corn bran arabinoxylan (Resubmission of GRN 998 )",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1074,
+    "substance": "3'-sialyllactose sodium salt",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1075,
+    "substance": "6'-sialyllactose sodium salt",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1076,
+    "substance": "Galacto-oligosaccharides",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1077,
+    "substance": "Oat polar lipid extract",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1078,
+    "substance": "Bifidobacterium bifidum strain KCTC 12199BP",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1079,
+    "substance": "Bifidobacterium longum strain KCTC 12200BP",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1080,
+    "substance": "Bifidobacterium breve strain KCTC 12201BP",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1081,
+    "substance": "Bifidobacterium infantis strain KCTC 11859BP",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1082,
+    "substance": "Bifidobacterium lactis strain KCTC 11904BP",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1083,
+    "substance": "Lactobacillus acidophilus KCTC 11906BP",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1084,
+    "substance": "Lactobacillus rhamnosus KCTC 12202BP",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1085,
+    "substance": "Lactobacillus casei strain KCTC 12398BP",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1086,
+    "substance": "Lactobacillus plantarum KCTC 10782BP",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1087,
+    "substance": "Streptococcus thermophilus strain KCTC 11870BP",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1088,
+    "substance": "Lactococcus lactis strain KCTC 11865BP",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1089,
+    "substance": "Lactobacillus gasseri strain NCIMB 30370",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1090,
+    "substance": "Bifidobacterium bifidum strain NITE BP-31",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1091,
+    "substance": "2'-fucosyllactose",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1092,
+    "substance": "Bifidobacterium animalis subsp. lactis IDCC 4301",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1093,
+    "substance": "Lacticaseibacillus rhamnosus IDCC 3201",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1094,
+    "substance": "Saccharomyces cerevisiae strain BY-989 expressing a gene encoding a carbon-sulfur lyase from Citrobacter freundii",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1095,
+    "substance": "Bacillus subtilis strain ATCC AAN000002 spore preparation",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1096,
+    "substance": "Saccharomyces cerevisiae strain OYR-243",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1097,
+    "substance": "Maltogenic alpha-amylase enzyme preparation produced by Escherichia coli expressing a gene encoding a maltogenic alpha-amylase from Geobacillus stearothermophilus",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1098,
+    "substance": "Chickpea protein concentrate",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1099,
+    "substance": "3-fucosyllactose",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1100,
+    "substance": "Fractionated whey protein concentrate containing 41% alpha-lactalbumin (Resubmission of GRN 909 )",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1101,
+    "substance": "Dried biomass of Chlamydomonas reinhardtii strain TAI114",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1102,
+    "substance": "Invertase enzyme preparation produced by Trichoderma reesei expressing a gene for invertase from Aspergillus niger",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1103,
+    "substance": "Canola protein isolate",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1104,
+    "substance": "Egg-white protein produced by Komagataella phaffii ATCC GSD-1235",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1105,
+    "substance": "Polyglycerol polyricinoleic acid",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1106,
+    "substance": "Rebaudioside I obtained by enzymatic treatment of steviol glycosides purified from the leaves of Stevia rebaudiana (Bertoni) Bertoni (rebaudioside I)",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1107,
+    "substance": "Bifidobacterium longum subsp. infantis strain LMG 11588",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1108,
+    "substance": "Lactiplantibacillus plantarum strain MCC 0537",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1109,
+    "substance": "\u03b2-agarase enzyme preparation produced by Streptomyces coelicolor",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1110,
+    "substance": "Polygalacturonase enzyme preparation produced by Trichoderma reesei expressing a gene encoding a polygalacturonase from Aspergillus kawachii",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1111,
+    "substance": "Endo-1,4-\u03b2-xylanase enzyme preparation produced by Bacillus subtilis expressing the gene encoding xylanase from B. subtilis",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1112,
+    "substance": "Limosilactobacillus reuteri strain ATCC PTA-126787 and L. reuteri strain ATCC PTA-126788, in combination, on a 1:1 ratio of colony forming unit (CFU) basis",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1113,
+    "substance": "Lactobacillus plantarum NCIMB 30562",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1114,
+    "substance": "Bifidobacterium breve DSM 33444",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1115,
+    "substance": "Fungal oil (\u226540% arachidonic acid (ARA)) from Mortierella alpina strain AF",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1116,
+    "substance": "Shea stearin (Resubmission of GRN 892 )",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1117,
+    "substance": "Mycelial biomass from Neurospora crassa",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1118,
+    "substance": "Pyrroloquinoline quinone disodium salt",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1119,
+    "substance": "Olea europaea L. leaf extract",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1120,
+    "substance": "\u03b1-Galactosidase enzyme preparation produced by Aspergillus niger",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1121,
+    "substance": "Fructanase enzyme preparation produced by Trichoderma reesei expressing the gene encoding fructanase from Lactobacillus sp.",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1122,
+    "substance": "Canola concentrate",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1123,
+    "substance": "Sucrose fatty acid esters",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1124,
+    "substance": "\u03b2-glucans from Hericium erinaceus strain BCRC 35669",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1125,
+    "substance": "Pea protein fermented by shiitake mycelia",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1127,
+    "substance": "Lactiplantibacillus plantarum ATCC-202195",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1128,
+    "substance": "Algal oil (\u226535% docosahexaenoic acid) from Schizochytrium sp.",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1129,
+    "substance": "Heat-killed Clostridium tyrobutyricum strain ASM#19",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1130,
+    "substance": "Lactobacillus rhamnosus CGMCC 21225",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1131,
+    "substance": "Bacillus subtilis ATCC BS50 PTA-127287",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1132,
+    "substance": "Hydrolyzed poultry protein",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1133,
+    "substance": "Resistant dextrin from corn",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1134,
+    "substance": "Bacteriophage preparation specific to Salmonella Enteritidis",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1135,
+    "substance": "Galacto-oligosaccharides",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1136,
+    "substance": "Dry whole goat milk",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1137,
+    "substance": "Protein-sucrose",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1138,
+    "substance": "Hydroxytyrosol",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1140,
+    "substance": "Enzyme-modified steviol glycosides",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1141,
+    "substance": "L-\u03b1-glycerophosphorylcholine",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1142,
+    "substance": "Brazzein produced by Komagataella phaffii expressing a gene encoding for brazzein from Pentadiplandra brazzeana",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1143,
+    "substance": "Bacillus subtilis NRRL 68053",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1144,
+    "substance": "Miracle fruit ( Synsepalum dulcificum ) powder (Resubmission of GRN 1027 )",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1146,
+    "substance": "Nuclease enzyme preparation produced by Bacillus amyloliquefaciens expressing the gene encoding a nuclease from Serratia marcescens",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1148,
+    "substance": "D-psicose",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1149,
+    "substance": "High-selenium Saccharomyces cerevisiae yeast",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1150,
+    "substance": "Triacylglycerol lipase enzyme preparation produced by Trichoderma reesei expressing a gene for triacylglycerol lipase from Thermomyces lanuginosis",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1151,
+    "substance": "Fava bean protein",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1152,
+    "substance": "Phoenix oyster mushroom ( Pleurotus pulmonarius ) mycelia biomass",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1153,
+    "substance": "Pongamia bean oil",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1154,
+    "substance": "Triacylglycerol lipase enzyme preparation produced by Komagataella phaffii expressing the gene encoding lipase from Fusarium oxysporum",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1155,
+    "substance": "1-methylcyclopropene complex",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1156,
+    "substance": "Algal oil (\u226535% docosahexaenoic acid) from Schizochytrium sp. FJRK-SCH3",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1157,
+    "substance": "2'-fucosyllactose",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1158,
+    "substance": "Lactiplantibacillus plantarum DSM 34613",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1159,
+    "substance": "Heyndrickxia coagulans strain MTCC 25460 spore preparation",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1160,
+    "substance": "Lemna leaf protein",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1162,
+    "substance": "Fungal oil (\u226538% arachidonic acid (ARA)) from Mortierella alpina FJRK-MA01",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1167,
+    "substance": "Brazzein produced by Komagataella phaffii expressing a gene encoding for brazzein from Pentadiplandra brazzeana",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1172,
+    "substance": "liquid milk, both whole and nonfat, combined with lactose and water",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1175,
+    "substance": "Lactiplantibacillus plantarum DSM 23881",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1179,
+    "substance": "Liquid whole cow milk",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1183,
+    "substance": "Monellin preparation produced by Komagataella phaffii P-MON-040 expressing a gene encoding for a modified monellin",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1185,
+    "substance": "Algal oil (\u226535% docosahexaenoic acid) from Schizochytrium sp. \" FJRK-SCH3\"",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1186,
+    "substance": "Fungal oil (\u226538% arachidonic acid (ARA)) from Mortierella alpina \"FJRK-MA01\"",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 1190,
+    "substance": "Saccharomyces cerevisiae strain OYR-481 expressing a gene encoding acetolactate decarboxylase from Brevibacillus brevis",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 452,
+    "substance": "Enzyme-modified steviol glycosides",
+    "url": "https://www.fda.gov/media/120312/download",
+    "filename": "GRN-0452_enzyme-modified-steviol-glycosides_supplement.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/media/120312/download"
+  },
+  {
+    "grn": 927,
+    "substance": "Polyvinyl alcohol",
+    "url": "https://www.fda.gov/media/145165 /download",
+    "filename": "GRN-0927_polyvinyl-alcohol_part1.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/media/145165%20/download"
+  },
+  {
+    "grn": 700,
+    "substance": "grn-700",
+    "error": "no PDF links found"
+  },
+  {
+    "grn": 411,
+    "substance": "Egg yolk-derived phospholipids",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm299306.pdf",
+    "filename": "GRN-0411_egg-yolk-derived-phospholipids_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm299306.pdf"
+  },
+  {
+    "grn": 412,
+    "substance": "Chitin-glucan from Aspergillus niger",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm299308.pdf",
+    "filename": "GRN-0412_chitin-glucan-from-aspergillus-niger_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm299308.pdf"
+  },
+  {
+    "grn": 413,
+    "substance": "Beta glucans derived from Ganoderma lucidum mycelium",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm299311.pdf",
+    "filename": "GRN-0413_beta-glucans-derived-from-ganoderma-lucidum-mycelium_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm299311.pdf"
+  },
+  {
+    "grn": 414,
+    "substance": "L-lysine monohydrochloride",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm299316.pdf",
+    "filename": "GRN-0414_l-lysine-monohydrochloride_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm299316.pdf"
+  },
+  {
+    "grn": 415,
+    "substance": "Heat-killed Propionibacterium freudenreichii ET-3 culture (powder)",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm299319.pdf",
+    "filename": "GRN-0415_heat-killed-propionibacterium-freudenreichii-et-3-culture-powder_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm299319.pdf"
+  },
+  {
+    "grn": 416,
+    "substance": "Lutein diacetate",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm299322.pdf",
+    "filename": "GRN-0416_lutein-diacetate.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm299322.pdf"
+  },
+  {
+    "grn": 417,
+    "substance": "Dried biomass of Arthrospira platensis also known as Spirulina platensis (spirulina)",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm299323.pdf",
+    "filename": "GRN-0417_dried-biomass-of-arthrospira-platensis-also-known-as-spirulina-platensis-spiruli.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm299323.pdf"
+  },
+  {
+    "grn": 418,
+    "substance": "Rebaudioside A purified from the leaves of Stevia rebaudiana (Bertoni) Bertoni (rebaudioside A)",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm299327.pdf",
+    "filename": "GRN-0418_rebaudioside-a-purified-from-the-leaves-of-stevia-rebaudiana-bertoni-bertoni-reb_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm299327.pdf"
+  },
+  {
+    "grn": 419,
+    "substance": "L-alpha-glycerylphosphorylcholine",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm299330.pdf",
+    "filename": "GRN-0419_l-alpha-glycerylphosphorylcholine_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm299330.pdf"
+  },
+  {
+    "grn": 420,
+    "substance": "Calcium acid pyrophosphate",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm299333.pdf",
+    "filename": "GRN-0420_calcium-acid-pyrophosphate_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm299333.pdf"
+  },
+  {
+    "grn": 421,
+    "substance": "Sucrose fatty acid esters",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm299334.pdf",
+    "filename": "GRN-0421_sucrose-fatty-acid-esters_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm299334.pdf"
+  },
+  {
+    "grn": 422,
+    "substance": "Modified baker's yeast Saccharomyces cerevisiae",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm304303.pdf",
+    "filename": "GRN-0422_modified-bakers-yeast-saccharomyces-cerevisiae_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm304303.pdf"
+  },
+  {
+    "grn": 423,
+    "substance": "Cow's milk-derived lactoferrin",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm303340.pdf",
+    "filename": "GRN-0423_cows-milk-derived-lactoferrin_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm303340.pdf"
+  },
+  {
+    "grn": 424,
+    "substance": "C-c-phycocyanin-enriched water extract of the cyanobacterium Arthrospira maxima or Arthrospira platensis , (also known as Spirulina maxima or Spirulina platensis )",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm303341.pdf",
+    "filename": "GRN-0424_c-c-phycocyanin-enriched-water-extract-of-the-cyanobacterium-arthrospira-maxima-_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm303341.pdf"
+  },
+  {
+    "grn": 425,
+    "substance": "Canola oil (low erucic acid rapeseed oil)",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm303342.pdf",
+    "filename": "GRN-0425_canola-oil-low-erucic-acid-rapeseed-oil_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm303342.pdf"
+  },
+  {
+    "grn": 426,
+    "substance": "Rice hull fiber",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm304304.pdf",
+    "filename": "GRN-0426_rice-hull-fiber_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm304304.pdf"
+  },
+  {
+    "grn": 427,
+    "substance": "Corn hull fiber (Resubmission of GRN 368 )",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm304306.pdf",
+    "filename": "GRN-0427_corn-hull-fiber-resubmission-of-grn-368_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm304306.pdf"
+  },
+  {
+    "grn": 428,
+    "substance": "Asparaginase enzyme preparation from genetically modified Aspergillus niger",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm313038.pdf",
+    "filename": "GRN-0428_asparaginase-enzyme-preparation-from-genetically-modified-aspergillus-niger_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm313038.pdf"
+  },
+  {
+    "grn": 429,
+    "substance": "Lactobacillus casei strain Shirota",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm309143.pdf",
+    "filename": "GRN-0429_lactobacillus-casei-strain-shirota_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm309143.pdf"
+  },
+  {
+    "grn": 430,
+    "substance": "Sugar beet fiber",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm311002.pdf",
+    "filename": "GRN-0430_sugar-beet-fiber_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm311002.pdf"
+  },
+  {
+    "grn": 431,
+    "substance": "Colostral whey protein concentrate",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm313526.pdf",
+    "filename": "GRN-0431_colostral-whey-protein-concentrate_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm313526.pdf"
+  },
+  {
+    "grn": 432,
+    "substance": "Lutein diacetate (Resubmission of GRN 416 )",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm309148.pdf",
+    "filename": "GRN-0432_lutein-diacetate-resubmission-of-grn-416_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm309148.pdf"
+  },
+  {
+    "grn": 433,
+    "substance": "Poloxamer fatty acid esters",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm313931.pdf",
+    "filename": "GRN-0433_poloxamer-fatty-acid-esters_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm313931.pdf"
+  },
+  {
+    "grn": 434,
+    "substance": "Dried aqueous extract derived from white kidney bean ( Phaseolus vulgaris )",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm315867.pdf",
+    "filename": "GRN-0434_dried-aqueous-extract-derived-from-white-kidney-bean-phaseolus-vulgaris_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm315867.pdf"
+  },
+  {
+    "grn": 435,
+    "substance": "Preparation consisting of six bacterial monophage specific to Salmonella enterica (monophage cocktail)",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm320623.pdf",
+    "filename": "GRN-0435_preparation-consisting-of-six-bacterial-monophage-specific-to-salmonella-enteric_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm320623.pdf"
+  },
+  {
+    "grn": 436,
+    "substance": "Enzyme-modified dextrins",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm316569.pdf",
+    "filename": "GRN-0436_enzyme-modified-dextrins_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm316569.pdf"
+  },
+  {
+    "grn": 437,
+    "substance": "Beta-glucans from oat bran",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm316626.pdf",
+    "filename": "GRN-0437_beta-glucans-from-oat-bran_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm316626.pdf"
+  },
+  {
+    "grn": 438,
+    "substance": "Plant stanol esters",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm321676.pdf",
+    "filename": "GRN-0438_plant-stanol-esters_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm321676.pdf"
+  },
+  {
+    "grn": 439,
+    "substance": "Iron complex of tartaric acid",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm337454.pdf",
+    "filename": "GRN-0439_iron-complex-of-tartaric-acid_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm337454.pdf"
+  },
+  {
+    "grn": 440,
+    "substance": "Lactobacillus reuteri strain NCIMB 30242",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm322242.pdf",
+    "filename": "GRN-0440_lactobacillus-reuteri-strain-ncimb-30242_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm322242.pdf"
+  },
+  {
+    "grn": 441,
+    "substance": "Sodium ferrous citrate",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm322246.pdf",
+    "filename": "GRN-0441_sodium-ferrous-citrate_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm322246.pdf"
+  },
+  {
+    "grn": 442,
+    "substance": "Volatile oil of mustard (white)",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm322243.pdf",
+    "filename": "GRN-0442_volatile-oil-of-mustard-white_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm322243.pdf"
+  },
+  {
+    "grn": 443,
+    "substance": "Shrimp-derived chitosan (Resubmission of GRN 170 )",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm337459.pdf",
+    "filename": "GRN-0443_shrimp-derived-chitosan-resubmission-of-grn-170_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm337459.pdf"
+  },
+  {
+    "grn": 444,
+    "substance": "Milk protein concentrate and milk protein isolate",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm337460.pdf",
+    "filename": "GRN-0444_milk-protein-concentrate-and-milk-protein-isolate_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm337460.pdf"
+  },
+  {
+    "grn": 445,
+    "substance": "Bifidobacterium animalis subsp. lactis strains HN019, Bi-07, Bl-04 and B420",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm337456.pdf",
+    "filename": "GRN-0445_bifidobacterium-animalis-subsp-lactis-strains-hn019-bi-07-bl-04-and-b420_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm337456.pdf"
+  },
+  {
+    "grn": 446,
+    "substance": "Red grape pomace extract",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm337457.pdf",
+    "filename": "GRN-0446_red-grape-pomace-extract_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm337457.pdf"
+  },
+  {
+    "grn": 447,
+    "substance": "Potato protein isolates",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm337463.pdf",
+    "filename": "GRN-0447_potato-protein-isolates_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm337463.pdf"
+  },
+  {
+    "grn": 448,
+    "substance": "Enzyme-modified steviol glycosides",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm337462.pdf",
+    "filename": "GRN-0448_enzyme-modified-steviol-glycosides_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm337462.pdf"
+  },
+  {
+    "grn": 449,
+    "substance": "Medium chain triglycerides",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm337464.pdf",
+    "filename": "GRN-0449_medium-chain-triglycerides_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm337464.pdf"
+  },
+  {
+    "grn": 450,
+    "substance": "Chlorella protothecoides S106 flour with 40-70% lipid",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm337476.pdf",
+    "filename": "GRN-0450_chlorella-protothecoides-s106-flour-with-40-70-lipid_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm337476.pdf"
+  },
+  {
+    "grn": 451,
+    "substance": "Calcium ascorbate with added threonate",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm337465.pdf",
+    "filename": "GRN-0451_calcium-ascorbate-with-added-threonate_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm337465.pdf"
+  },
+  {
+    "grn": 452,
+    "substance": "Enzyme-modified steviol glycosides",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm346874.pdf",
+    "filename": "GRN-0452_enzyme-modified-steviol-glycosides_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm346874.pdf"
+  },
+  {
+    "grn": 452,
+    "substance": "Enzyme-modified steviol glycosides",
+    "url": "https://www.fda.gov/media/120312/download",
+    "filename": "GRN-0452_enzyme-modified-steviol-glycosides_supplement.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/media/120312/download"
+  },
+  {
+    "grn": 453,
+    "substance": "Bifidobacterium breve M-16V",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm346877.pdf",
+    "filename": "GRN-0453_bifidobacterium-breve-m-16v_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm346877.pdf"
+  },
+  {
+    "grn": 454,
+    "substance": "Bifidobacterium breve M-16V",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm346879.pdf",
+    "filename": "GRN-0454_bifidobacterium-breve-m-16v_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm346879.pdf"
+  },
+  {
+    "grn": 455,
+    "substance": "Bifidobacterium breve M-16V",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm346881.pdf",
+    "filename": "GRN-0455_bifidobacterium-breve-m-16v_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm346881.pdf"
+  },
+  {
+    "grn": 456,
+    "substance": "Rebaudioside D purified from the leaves of Stevia rebaudiana (Bertoni) Bertoni (rebaudioside D)",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm346884.pdf",
+    "filename": "GRN-0456_rebaudioside-d-purified-from-the-leaves-of-stevia-rebaudiana-bertoni-bertoni-reb_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm346884.pdf"
+  },
+  {
+    "grn": 457,
+    "substance": "Bacteroides xylanisolvens strain DSM 23964",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm349352.pdf",
+    "filename": "GRN-0457_bacteroides-xylanisolvens-strain-dsm-23964_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm349352.pdf"
+  },
+  {
+    "grn": 458,
+    "substance": "Xylooligosaccharides",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm349361.pdf",
+    "filename": "GRN-0458_xylooligosaccharides_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm349361.pdf"
+  },
+  {
+    "grn": 459,
+    "substance": "Olive pulp extract",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm346897.pdf",
+    "filename": "GRN-0459_olive-pulp-extract_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm346897.pdf"
+  },
+  {
+    "grn": 460,
+    "substance": "Curcuminoids purified from turmeric ( Curcuma longa L.)",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm346902.pdf",
+    "filename": "GRN-0460_curcuminoids-purified-from-turmeric-curcuma-longa-l_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm346902.pdf"
+  },
+  {
+    "grn": 461,
+    "substance": "Rebaudioside A purified from the leaves of Stevia rebaudiana (Bertoni) Bertoni (rebaudioside A)",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm349353.pdf",
+    "filename": "GRN-0461_rebaudioside-a-purified-from-the-leaves-of-stevia-rebaudiana-bertoni-bertoni-reb_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm349353.pdf"
+  },
+  {
+    "grn": 462,
+    "substance": "Lipase enzyme preparation from modified Pseudomonas fluorescens Biovar I",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm352595.pdf",
+    "filename": "GRN-0462_lipase-enzyme-preparation-from-modified-pseudomonas-fluorescens-biovar-i_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm352595.pdf"
+  },
+  {
+    "grn": 463,
+    "substance": "Lactobacillus acidophilus strain NP 28, Lactobacillus acidophilus strain NP51, Lactobacillus subsp. lactis strain NP7, and Pediococcus acidilactici strain NP3",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm349355.pdf",
+    "filename": "GRN-0463_lactobacillus-acidophilus-strain-np-28-lactobacillus-acidophilus-strain-np51-lac_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm349355.pdf"
+  },
+  {
+    "grn": 464,
+    "substance": "Cow's milk-derived lactoferrin (Resubmission of GRN 423 )",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm349356.pdf",
+    "filename": "GRN-0464_cows-milk-derived-lactoferrin-resubmission-of-grn-423_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm349356.pdf"
+  },
+  {
+    "grn": 465,
+    "substance": "Cow's milk-derived lactoferrin (Resubmission of GRN 423 )",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm349358.pdf",
+    "filename": "GRN-0465_cows-milk-derived-lactoferrin-resubmission-of-grn-423_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm349358.pdf"
+  },
+  {
+    "grn": 466,
+    "substance": "Polyglycerol polyricinoleic acid",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm356269.pdf",
+    "filename": "GRN-0466_polyglycerol-polyricinoleic-acid_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm356269.pdf"
+  },
+  {
+    "grn": 467,
+    "substance": "Rebaudioside A purified from the leaves of Stevia rebaudiana (Bertoni) Bertoni",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm355543.pdf",
+    "filename": "GRN-0467_rebaudioside-a-purified-from-the-leaves-of-stevia-rebaudiana-bertoni-bertoni_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm355543.pdf"
+  },
+  {
+    "grn": 468,
+    "substance": "Preparation containing the bacterial monophages, Fo1a and S16, specific to Salmonella",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm356271.pdf",
+    "filename": "GRN-0468_preparation-containing-the-bacterial-monophages-fo1a-and-s16-specific-to-salmone_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm356271.pdf"
+  },
+  {
+    "grn": 469,
+    "substance": "Chlorella protothecoides strain S106 flour with 40-70% lipid (algal flour) (Resubmission of GRN 450 )",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm359718.pdf",
+    "filename": "GRN-0469_chlorella-protothecoides-strain-s106-flour-with-40-70-lipid-algal-flour-resubmis_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm359718.pdf"
+  },
+  {
+    "grn": 470,
+    "substance": "Ethyl cellulose",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm360908.pdf",
+    "filename": "GRN-0470_ethyl-cellulose_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm360908.pdf"
+  },
+  {
+    "grn": 471,
+    "substance": "Annatto seed extract",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm359902.pdf",
+    "filename": "GRN-0471_annatto-seed-extract_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm359902.pdf"
+  },
+  {
+    "grn": 472,
+    "substance": "Xylanase enzyme preparation derived from Bacillus licheniformis carrying a gene encoding a modified xylanase from B. licheniformis",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm361038.pdf",
+    "filename": "GRN-0472_xylanase-enzyme-preparation-derived-from-bacillus-licheniformis-carrying-a-gene-_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm361038.pdf"
+  },
+  {
+    "grn": 473,
+    "substance": "Purified steviol glycosides with rebaudioside X as the principal component",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm359700.pdf",
+    "filename": "GRN-0473_purified-steviol-glycosides-with-rebaudioside-x-as-the-principal-component_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm359700.pdf"
+  },
+  {
+    "grn": 474,
+    "substance": "Piperine derived from the fruits of Piper nigrum L (black pepper) or P. longum (long pepper)",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm362936.pdf",
+    "filename": "GRN-0474_piperine-derived-from-the-fruits-of-piper-nigrum-l-black-pepper-or-p-longum-long_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm362936.pdf"
+  },
+  {
+    "grn": 475,
+    "substance": "Citrus fruit extract",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm362939.pdf",
+    "filename": "GRN-0475_citrus-fruit-extract_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm362939.pdf"
+  },
+  {
+    "grn": 476,
+    "substance": "Asparaginase enzyme preparation produced by genetically modified Bacillus subtilis",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm362205.pdf",
+    "filename": "GRN-0476_asparaginase-enzyme-preparation-produced-by-genetically-modified-bacillus-subtil_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm362205.pdf"
+  },
+  {
+    "grn": 477,
+    "substance": "Long-chain inulin",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm370435.pdf",
+    "filename": "GRN-0477_long-chain-inulin_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm370435.pdf"
+  },
+  {
+    "grn": 478,
+    "substance": "Rice hull fiber",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm370439.pdf",
+    "filename": "GRN-0478_rice-hull-fiber_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm370439.pdf"
+  },
+  {
+    "grn": 479,
+    "substance": "Beta-glucanase, cellulase, and xylanase enzyme preparation from Talaromyces emersonii",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm370440.pdf",
+    "filename": "GRN-0479_beta-glucanase-cellulase-and-xylanase-enzyme-preparation-from-talaromyces-emerso_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm370440.pdf"
+  },
+  {
+    "grn": 480,
+    "substance": "Dried aqueous extract derived from white kidney bean ( Phaseolus vulgaris ) (Resubmission of GRN 434 )",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm370441.pdf",
+    "filename": "GRN-0480_dried-aqueous-extract-derived-from-white-kidney-bean-phaseolus-vulgaris-resubmis_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm370441.pdf"
+  },
+  {
+    "grn": 481,
+    "substance": "Meso-zeaxanthin",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm381221.pdf",
+    "filename": "GRN-0481_meso-zeaxanthin_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm381221.pdf"
+  },
+  {
+    "grn": 482,
+    "substance": "Beta-glucanase and xylanase enzyme preparation from Disporotrichum dimorphosporum",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm377732.pdf",
+    "filename": "GRN-0482_beta-glucanase-and-xylanase-enzyme-preparation-from-disporotrichum-dimorphosporu_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm377732.pdf"
+  },
+  {
+    "grn": 483,
+    "substance": "Aqueous extract of Emblica officinalis (Resubmission of GRN 322 )",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm381223.pdf",
+    "filename": "GRN-0483_aqueous-extract-of-emblica-officinalis-resubmission-of-grn-322_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm381223.pdf"
+  },
+  {
+    "grn": 484,
+    "substance": "Galacto-oligosaccharides",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm379675.pdf",
+    "filename": "GRN-0484_galacto-oligosaccharides_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm379675.pdf"
+  },
+  {
+    "grn": 485,
+    "substance": "Beta-galactosidase enzyme preparation",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm381224.pdf",
+    "filename": "GRN-0485_beta-galactosidase-enzyme-preparation_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm381224.pdf"
+  },
+  {
+    "grn": 486,
+    "substance": "Oil from the seeds of Buglossoides arvensis",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm377737.pdf",
+    "filename": "GRN-0486_oil-from-the-seeds-of-buglossoides-arvensis_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm377737.pdf"
+  },
+  {
+    "grn": 487,
+    "substance": "Dried citrus pulp",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm381225.pdf",
+    "filename": "GRN-0487_dried-citrus-pulp_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm381225.pdf"
+  },
+  {
+    "grn": 488,
+    "substance": "Benzalkonium chloride",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm377740.pdf",
+    "filename": "GRN-0488_benzalkonium-chloride_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm377740.pdf"
+  },
+  {
+    "grn": 489,
+    "substance": "Galacto-oligosaccharides",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm381400.pdf",
+    "filename": "GRN-0489_galacto-oligosaccharides_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm381400.pdf"
+  },
+  {
+    "grn": 490,
+    "substance": "Phospholipase A2 enzyme preparation from Trichoderma reesei",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm389668.pdf",
+    "filename": "GRN-0490_phospholipase-a2-enzyme-preparation-from-trichoderma-reesei_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm389668.pdf"
+  },
+  {
+    "grn": 491,
+    "substance": "Rooster combs extract",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm388583.pdf",
+    "filename": "GRN-0491_rooster-combs-extract_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm388583.pdf"
+  },
+  {
+    "grn": 492,
+    "substance": "Phytosterols and phytosterol esters",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm386798.pdf",
+    "filename": "GRN-0492_phytosterols-and-phytosterol-esters_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm386798.pdf"
+  },
+  {
+    "grn": 493,
+    "substance": "High purity steviol glycosides (minimum purity 95%)",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm386791.pdf",
+    "filename": "GRN-0493_high-purity-steviol-glycosides-minimum-purity-95_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm386791.pdf"
+  },
+  {
+    "grn": 494,
+    "substance": "Fatty acid ethyl ester from anchovy or menhaden oil, standardized to approximately 50 percent palmitoleic acid",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm386773.pdf",
+    "filename": "GRN-0494_fatty-acid-ethyl-ester-from-anchovy-or-menhaden-oil-standardized-to-approximatel_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm386773.pdf"
+  },
+  {
+    "grn": 495,
+    "substance": "Galacto-oligosaccharides",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm386769.pdf",
+    "filename": "GRN-0495_galacto-oligosaccharides_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm386769.pdf"
+  },
+  {
+    "grn": 496,
+    "substance": "Aqueous extract of Brassica oleracea var. italica Plenck seeds.",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm388588.pdf",
+    "filename": "GRN-0496_aqueous-extract-of-brassica-oleracea-var-italica-plenck-seeds_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm388588.pdf"
+  },
+  {
+    "grn": 497,
+    "substance": "Polyphenols from the fruit of Litchi chinensis Sonn. and from leaves of Camellia sinensis (L.) Sinensis",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm388598.pdf",
+    "filename": "GRN-0497_polyphenols-from-the-fruit-of-litchi-chinensis-sonn-and-from-leaves-of-camellia-_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm388598.pdf"
+  },
+  {
+    "grn": 498,
+    "substance": "D-psicose",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm387347.pdf",
+    "filename": "GRN-0498_d-psicose_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm387347.pdf"
+  },
+  {
+    "grn": 499,
+    "substance": "Magnesium L-threonate hydrate",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm400322.pdf",
+    "filename": "GRN-0499_magnesium-l-threonate-hydrate_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm400322.pdf"
+  },
+  {
+    "grn": 500,
+    "substance": "Hydroethanolic extract of Caralluma fimbriata",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm402152.pdf",
+    "filename": "GRN-0500_hydroethanolic-extract-of-caralluma-fimbriata_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm402152.pdf"
+  },
+  {
+    "grn": 501,
+    "substance": "L-theanine (chemically synthesized)",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm401160.pdf",
+    "filename": "GRN-0501_l-theanine-chemically-synthesized_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm401160.pdf"
+  },
+  {
+    "grn": 502,
+    "substance": "Lactobacillus acidophilus La-14",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm400673.pdf",
+    "filename": "GRN-0502_lactobacillus-acidophilus-la-14_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm400673.pdf"
+  },
+  {
+    "grn": 503,
+    "substance": "Tamarind seed polysaccharide",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm403104.pdf",
+    "filename": "GRN-0503_tamarind-seed-polysaccharide_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm403104.pdf"
+  },
+  {
+    "grn": 504,
+    "substance": "Milk protein concentrate and milk protein isolate (Resubmission of GRN 444 )",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm400536.pdf",
+    "filename": "GRN-0504_milk-protein-concentrate-and-milk-protein-isolate-resubmission-of-grn-444_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm400536.pdf"
+  },
+  {
+    "grn": 505,
+    "substance": "Phosphodiesterase I enzyme preparation from Leptographium procerum",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm400699.pdf",
+    "filename": "GRN-0505_phosphodiesterase-i-enzyme-preparation-from-leptographium-procerum_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm400699.pdf"
+  },
+  {
+    "grn": 506,
+    "substance": "Sacha inchi oil, a vegetable oil derived from Plukenetia volubilis .",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm403106.pdf",
+    "filename": "GRN-0506_sacha-inchi-oil-a-vegetable-oil-derived-from-plukenetia-volubilis_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm403106.pdf"
+  },
+  {
+    "grn": 507,
+    "substance": "Amylomaltase enzyme preparation from Bacillus amyloliquefaciens carrying an amylomaltase gene from Thermus thermophiles",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm401162.pdf",
+    "filename": "GRN-0507_amylomaltase-enzyme-preparation-from-bacillus-amyloliquefaciens-carrying-an-amyl_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm401162.pdf"
+  },
+  {
+    "grn": 508,
+    "substance": "Salts from dried mineral water (65% NaCl)",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm400751.pdf",
+    "filename": "GRN-0508_salts-from-dried-mineral-water-65-nacl_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm400751.pdf"
+  },
+  {
+    "grn": 509,
+    "substance": "Glucose oxidase enzyme preparation derived from Penicillium chrysogenum",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm403108.pdf",
+    "filename": "GRN-0509_glucose-oxidase-enzyme-preparation-derived-from-penicillium-chrysogenum_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm403108.pdf"
+  },
+  {
+    "grn": 510,
+    "substance": "Acid lactase from Aspergillus oryzae expressed in Aspergillus niger",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm400718.pdf",
+    "filename": "GRN-0510_acid-lactase-from-aspergillus-oryzae-expressed-in-aspergillus-niger_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm400718.pdf"
+  },
+  {
+    "grn": 511,
+    "substance": "Citric acid esters of mono- and diglycerides",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm400542.pdf",
+    "filename": "GRN-0511_citric-acid-esters-of-mono-and-diglycerides_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm400542.pdf"
+  },
+  {
+    "grn": 512,
+    "substance": "High purity Rebaudioside M",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm400646.pdf",
+    "filename": "GRN-0512_high-purity-rebaudioside-m_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm400646.pdf"
+  },
+  {
+    "grn": 513,
+    "substance": "Dried biomass of Euglena gracilis containing beta-1,3-glucan from Euglena gracilis",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm403333.pdf",
+    "filename": "GRN-0513_dried-biomass-of-euglena-gracilis-containing-beta-13-glucan-from-euglena-gracili_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm403333.pdf"
+  },
+  {
+    "grn": 514,
+    "substance": "Sucrose fatty acid esters",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm403927.pdf",
+    "filename": "GRN-0514_sucrose-fatty-acid-esters.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm403927.pdf"
+  },
+  {
+    "grn": 515,
+    "substance": "D-beta-hydroxybutyrate ester",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm403846.pdf",
+    "filename": "GRN-0515_d-beta-hydroxybutyrate-ester.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm403846.pdf"
+  },
+  {
+    "grn": 516,
+    "substance": "Steviol glycosides with rebaudioside A and stevioside as the principal components",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm403848.pdf",
+    "filename": "GRN-0516_steviol-glycosides-with-rebaudioside-a-and-stevioside-as-the-principal-component.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm403848.pdf"
+  },
+  {
+    "grn": 517,
+    "substance": "Natamycin",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm404947.pdf",
+    "filename": "GRN-0517_natamycin_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm404947.pdf"
+  },
+  {
+    "grn": 518,
+    "substance": "Galacto-oligosaccharides",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm409795.pdf",
+    "filename": "GRN-0518_galacto-oligosaccharides_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm409795.pdf"
+  },
+  {
+    "grn": 519,
+    "substance": "Chlorella protothecoides strain S106 flour with 40-75% protein",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm407677.pdf",
+    "filename": "GRN-0519_chlorella-protothecoides-strain-s106-flour-with-40-75-protein_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm407677.pdf"
+  },
+  {
+    "grn": 520,
+    "substance": "Hydrogen gas",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm409796.pdf",
+    "filename": "GRN-0520_hydrogen-gas_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm409796.pdf"
+  },
+  {
+    "grn": 521,
+    "substance": "Conjugated linoleic acid isomers",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm408896.pdf",
+    "filename": "GRN-0521_conjugated-linoleic-acid-isomers_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm408896.pdf"
+  },
+  {
+    "grn": 522,
+    "substance": "Siraitia grosvenorii Swingle (Luo Han Guo) fruit extract",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm409798.pdf",
+    "filename": "GRN-0522_siraitia-grosvenorii-swingle-luo-han-guo-fruit-extract_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm409798.pdf"
+  },
+  {
+    "grn": 523,
+    "substance": "l-leucine",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm407679.pdf",
+    "filename": "GRN-0523_l-leucine_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm407679.pdf"
+  },
+  {
+    "grn": 524,
+    "substance": "Phospholipase A2 enzyme preparation from Trichoderma reesei carrying a phospholipase A2 gene from Aspergillus nishimurae (Resubmission of GRN 490 )",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm410988.pdf",
+    "filename": "GRN-0524_phospholipase-a2-enzyme-preparation-from-trichoderma-reesei-carrying-a-phospholi_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm410988.pdf"
+  },
+  {
+    "grn": 525,
+    "substance": "Pea fiber",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm411943.pdf",
+    "filename": "GRN-0525_pea-fiber_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm411943.pdf"
+  },
+  {
+    "grn": 526,
+    "substance": "Bacillus coagulans strain Unique IS2 spores preparation",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm413003.pdf",
+    "filename": "GRN-0526_bacillus-coagulans-strain-unique-is2-spores-preparation_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm413003.pdf"
+  },
+  {
+    "grn": 527,
+    "substance": "Algal oil (87% oleic acid) derived from Prototheca moriformis strain S2532",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm431759.pdf",
+    "filename": "GRN-0527_algal-oil-87-oleic-acid-derived-from-prototheca-moriformis-strain-s2532_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm431759.pdf"
+  },
+  {
+    "grn": 528,
+    "substance": "Preparation containing six bacterial monophages (LIST-36, LMSP-25, LMTA-34, LMTA-57, LMTA-94 and LMTA-148) specific to Listeria monocytogenes",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm411668.pdf",
+    "filename": "GRN-0528_preparation-containing-six-bacterial-monophages-list-36-lmsp-25-lmta-34-lmta-57-_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm411668.pdf"
+  },
+  {
+    "grn": 529,
+    "substance": "Seed of Phalaris canariensis L. (canary seed)",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm422564.pdf",
+    "filename": "GRN-0529_seed-of-phalaris-canariensis-l-canary-seed_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm422564.pdf"
+  },
+  {
+    "grn": 530,
+    "substance": "Extract of Apocynum venetum leaves",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm422635.pdf",
+    "filename": "GRN-0530_extract-of-apocynum-venetum-leaves_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm422635.pdf"
+  },
+  {
+    "grn": 531,
+    "substance": "Lactobacillus fermentum CECT5716",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm422874.pdf",
+    "filename": "GRN-0531_lactobacillus-fermentum-cect5716_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm422874.pdf"
+  },
+  {
+    "grn": 532,
+    "substance": "Complexation products of sodium tartrates with iron (III) chloride",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm423095.pdf",
+    "filename": "GRN-0532_complexation-products-of-sodium-tartrates-with-iron-iii-chloride_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm423095.pdf"
+  },
+  {
+    "grn": 533,
+    "substance": "Lecithin from canola",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm422881.pdf",
+    "filename": "GRN-0533_lecithin-from-canola_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm422881.pdf"
+  },
+  {
+    "grn": 534,
+    "substance": "Hydrogenated lecithin from soy",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm422883.pdf",
+    "filename": "GRN-0534_hydrogenated-lecithin-from-soy_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm422883.pdf"
+  },
+  {
+    "grn": 535,
+    "substance": "Beta-glucanase from Streptomyces violaceoruber",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm422887.pdf",
+    "filename": "GRN-0535_beta-glucanase-from-streptomyces-violaceoruber_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm422887.pdf"
+  },
+  {
+    "grn": 536,
+    "substance": "High purity rebaudioside C",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm422889.pdf",
+    "filename": "GRN-0536_high-purity-rebaudioside-c_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm422889.pdf"
+  },
+  {
+    "grn": 537,
+    "substance": "Short-chain fructo-oligosaccharides",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm422895.pdf",
+    "filename": "GRN-0537_short-chain-fructo-oligosaccharides_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm422895.pdf"
+  },
+  {
+    "grn": 538,
+    "substance": "Potassium-rich extract from Saccharum officinarum L. (sugarcane)",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm423097.pdf",
+    "filename": "GRN-0538_potassium-rich-extract-from-saccharum-officinarum-l-sugarcane_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm423097.pdf"
+  },
+  {
+    "grn": 539,
+    "substance": "Fish meal-based lipid extract",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm422897.pdf",
+    "filename": "GRN-0539_fish-meal-based-lipid-extract_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm422897.pdf"
+  },
+  {
+    "grn": 540,
+    "substance": "Soybean leghemoglobin from Pichia pastoris",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm427026.pdf",
+    "filename": "GRN-0540_soybean-leghemoglobin-from-pichia-pastoris_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm427026.pdf"
+  },
+  {
+    "grn": 541,
+    "substance": "Insoluble fiber from citrus peel",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm431760.pdf",
+    "filename": "GRN-0541_insoluble-fiber-from-citrus-peel_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm431760.pdf"
+  },
+  {
+    "grn": 542,
+    "substance": "Lutein",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm439150.pdf",
+    "filename": "GRN-0542_lutein_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm439150.pdf"
+  },
+  {
+    "grn": 543,
+    "substance": "Lutein esters",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm439151.pdf",
+    "filename": "GRN-0543_lutein-esters_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm439151.pdf"
+  },
+  {
+    "grn": 544,
+    "substance": "\u03b2-glucans from oat bran",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm428925.pdf",
+    "filename": "GRN-0544_glucans-from-oat-bran_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm428925.pdf"
+  },
+  {
+    "grn": 545,
+    "substance": "Phosphatidylserine derived from sunflower",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm428926.pdf",
+    "filename": "GRN-0545_phosphatidylserine-derived-from-sunflower_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm428926.pdf"
+  },
+  {
+    "grn": 546,
+    "substance": "2'-O-fucosyllactose",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm427768.pdf",
+    "filename": "GRN-0546_2-o-fucosyllactose_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm427768.pdf"
+  },
+  {
+    "grn": 547,
+    "substance": "Lacto- N -neotetraose",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm439156.pdf",
+    "filename": "GRN-0547_lacto-n-neotetraose_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm439156.pdf"
+  },
+  {
+    "grn": 548,
+    "substance": "High purity rebaudioside D",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm438675.pdf",
+    "filename": "GRN-0548_high-purity-rebaudioside-d_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm438675.pdf"
+  },
+  {
+    "grn": 549,
+    "substance": "Sodium salts of fatty acids from Mortierella alpina oil",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm427770.pdf",
+    "filename": "GRN-0549_sodium-salts-of-fatty-acids-from-mortierella-alpina-oil_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm427770.pdf"
+  },
+  {
+    "grn": 550,
+    "substance": "Meso-zeaxanthin",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm428929.pdf",
+    "filename": "GRN-0550_meso-zeaxanthin_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm428929.pdf"
+  },
+  {
+    "grn": 551,
+    "substance": "Aspartic protease derived from the flowers of Cynera cardunculus L.",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm434979.pdf",
+    "filename": "GRN-0551_aspartic-protease-derived-from-the-flowers-of-cynera-cardunculus-l_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm434979.pdf"
+  },
+  {
+    "grn": 552,
+    "substance": "Succinic acid",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm438683.pdf",
+    "filename": "GRN-0552_succinic-acid_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm438683.pdf"
+  },
+  {
+    "grn": 553,
+    "substance": "Algal oil (40% docosahexaenoic acid) derived from Schizochytrium sp.",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm456952.pdf",
+    "filename": "GRN-0553_algal-oil-40-docosahexaenoic-acid-derived-from-schizochytrium-sp_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm456952.pdf"
+  },
+  {
+    "grn": 554,
+    "substance": "Synthetic amorphous silica",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm438717.pdf",
+    "filename": "GRN-0554_synthetic-amorphous-silica_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm438717.pdf"
+  },
+  {
+    "grn": 555,
+    "substance": "High purity steviol glycosides (minimum purity 95%) consisting primarily of rebaudioside A.",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm438731.pdf",
+    "filename": "GRN-0555_high-purity-steviol-glycosides-minimum-purity-95-consisting-primarily-of-rebaudi_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm438731.pdf"
+  },
+  {
+    "grn": 556,
+    "substance": "Siraitia grosvenorii Swingle (Luo Han Guo) fruit extract",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm438743.pdf",
+    "filename": "GRN-0556_siraitia-grosvenorii-swingle-luo-han-guo-fruit-extract_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm438743.pdf"
+  },
+  {
+    "grn": 557,
+    "substance": "Polygalacturonase from Aspergillus tubingensis expressed in Trichoderma reesei",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm439605.pdf",
+    "filename": "GRN-0557_polygalacturonase-from-aspergillus-tubingensis-expressed-in-trichoderma-reesei_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm439605.pdf"
+  },
+  {
+    "grn": 558,
+    "substance": "Pectin esterase from Aspergillus tubingensis expressed in Trichoderma reesei",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm438821.pdf",
+    "filename": "GRN-0558_pectin-esterase-from-aspergillus-tubingensis-expressed-in-trichoderma-reesei_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm438821.pdf"
+  },
+  {
+    "grn": 559,
+    "substance": "Bacillus coagulans",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm448208.pdf",
+    "filename": "GRN-0559_bacillus-coagulans_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm448208.pdf"
+  },
+  {
+    "grn": 560,
+    "substance": "Bacillus licheniformis",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm448211.pdf",
+    "filename": "GRN-0560_bacillus-licheniformis_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm448211.pdf"
+  },
+  {
+    "grn": 561,
+    "substance": "Bacillus pumilus",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm448212.pdf",
+    "filename": "GRN-0561_bacillus-pumilus_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm448212.pdf"
+  },
+  {
+    "grn": 562,
+    "substance": "Bacillus subtilis",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm448213.pdf",
+    "filename": "GRN-0562_bacillus-subtilis_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm448213.pdf"
+  },
+  {
+    "grn": 563,
+    "substance": "Protease from Fusarium venenatum",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm441257.pdf",
+    "filename": "GRN-0563_protease-from-fusarium-venenatum_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm441257.pdf"
+  },
+  {
+    "grn": 564,
+    "substance": "Protease from Bacillus licheniformis",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm441264.pdf",
+    "filename": "GRN-0564_protease-from-bacillus-licheniformis_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm441264.pdf"
+  },
+  {
+    "grn": 566,
+    "substance": "Mannanase from Trichoderma reesei",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm441270.pdf",
+    "filename": "GRN-0566_mannanase-from-trichoderma-reesei_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm441270.pdf"
+  },
+  {
+    "grn": 567,
+    "substance": "Xylanase from Trichoderma reesei",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm441510.pdf",
+    "filename": "GRN-0567_xylanase-from-trichoderma-reesei_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm441510.pdf"
+  },
+  {
+    "grn": 568,
+    "substance": "Apoaequorin",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm457034.pdf",
+    "filename": "GRN-0568_apoaequorin_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm457034.pdf"
+  },
+  {
+    "grn": 569,
+    "substance": "Galacto-oligosaccharides (GOS)",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm475293.pdf",
+    "filename": "GRN-0569_galacto-oligosaccharides-gos_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm475293.pdf"
+  },
+  {
+    "grn": 570,
+    "substance": "Magnesium lactate",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm466054.pdf",
+    "filename": "GRN-0570_magnesium-lactate_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm466054.pdf"
+  },
+  {
+    "grn": 571,
+    "substance": "2'-Fucosyllactose",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm461885.pdf",
+    "filename": "GRN-0571_2-fucosyllactose_part1_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm461885.pdf"
+  },
+  {
+    "grn": 571,
+    "substance": "2'-Fucosyllactose",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm461901.pdf",
+    "filename": "GRN-0571_2-fucosyllactose_part2_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm461901.pdf"
+  },
+  {
+    "grn": 572,
+    "substance": "Lactase from Bifidobacterium bifidum produced in Bacillus licheniformis",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm461532.pdf",
+    "filename": "GRN-0572_lactase-from-bifidobacterium-bifidum-produced-in-bacillus-licheniformis_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm461532.pdf"
+  },
+  {
+    "grn": 573,
+    "substance": "Calcium disodium ethylenediaminetetraacetate (EDTA)",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm456215.pdf",
+    "filename": "GRN-0573_calcium-disodium-ethylenediaminetetraacetate-edta_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm456215.pdf"
+  },
+  {
+    "grn": 574,
+    "substance": "Phospholipase C from Pseudomonas fluorescens",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm461535.pdf",
+    "filename": "GRN-0574_phospholipase-c-from-pseudomonas-fluorescens_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm461535.pdf"
+  },
+  {
+    "grn": 575,
+    "substance": "Oat protein",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm458544.pdf",
+    "filename": "GRN-0575_oat-protein_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm458544.pdf"
+  },
+  {
+    "grn": 576,
+    "substance": "Oligofructose and inulin",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm475305.pdf",
+    "filename": "GRN-0576_oligofructose-and-inulin_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm475305.pdf"
+  },
+  {
+    "grn": 577,
+    "substance": "Salts from dried mineral water (65% NaCl) (Resubmission of GRN 508 )",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm461912.pdf",
+    "filename": "GRN-0577_salts-from-dried-mineral-water-65-nacl-resubmission-of-grn-508_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm461912.pdf"
+  },
+  {
+    "grn": 578,
+    "substance": "Natamycin",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm458545.pdf",
+    "filename": "GRN-0578_natamycin_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm458545.pdf"
+  },
+  {
+    "grn": 579,
+    "substance": "Lactase from Bifidobacterium bifidum produced in Bacillus subtilis",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm461536.pdf",
+    "filename": "GRN-0579_lactase-from-bifidobacterium-bifidum-produced-in-bacillus-subtilis_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm461536.pdf"
+  },
+  {
+    "grn": 580,
+    "substance": "Haematococcus pluvialis extract containing astaxanthin esters",
+    "url": "https://wayback.archive-it.org/7993/20171031055001/https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm494027.pdf",
+    "filename": "GRN-0580_haematococcus-pluvialis-extract-containing-astaxanthin-esters_v2.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm494027.pdf"
+  },
+  {
+    "grn": 581,
+    "substance": "Un-hydrolyzed and hydrolyzed pea protein",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm492913.pdf",
+    "filename": "GRN-0581_un-hydrolyzed-and-hydrolyzed-pea-protein_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 582,
+    "substance": "Inulin from Agave tequilana",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm494655.pdf",
+    "filename": "GRN-0582_inulin-from-agave-tequilana_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 583,
+    "substance": "Esterified propoxylated glycerol",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm465255.pdf",
+    "filename": "GRN-0583_esterified-propoxylated-glycerol_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 584,
+    "substance": "Cellulase from Penicillium funiculosum",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm478474.pdf",
+    "filename": "GRN-0584_cellulase-from-penicillium-funiculosum_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 585,
+    "substance": "1-methylcyclopropene complex",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm475306.pdf",
+    "filename": "GRN-0585_1-methylcyclopropene-complex_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 586,
+    "substance": "Taurine",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm465256.pdf",
+    "filename": "GRN-0586_taurine_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 587,
+    "substance": "Acetolactate decarboxylase from Bacillus brevis produced in Bacillus licheniformis",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm478490.pdf",
+    "filename": "GRN-0587_acetolactate-decarboxylase-from-bacillus-brevis-produced-in-bacillus-licheniform_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 588,
+    "substance": "Zeaxanthin from Capsicum annum (paprika)",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm475307.pdf",
+    "filename": "GRN-0588_zeaxanthin-from-capsicum-annum-paprika_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 589,
+    "substance": "Xylanase from Aspergillus niger",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm478499.pdf",
+    "filename": "GRN-0589_xylanase-from-aspergillus-niger_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 590,
+    "substance": "Pyrroloquinoline quinone",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm464361.pdf",
+    "filename": "GRN-0590_pyrroloquinoline-quinone_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 591,
+    "substance": "Streptococcus salivarius K12",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm494554.pdf",
+    "filename": "GRN-0591_streptococcus-salivarius-k12_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 592,
+    "substance": "\u03b2-glucanase from Bacillus subtilis",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm478500.pdf",
+    "filename": "GRN-0592_glucanase-from-bacillus-subtilis_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 593,
+    "substance": "Colicin preparations",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm464859.pdf",
+    "filename": "GRN-0593_colicin-preparations_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 594,
+    "substance": "\u03b1-amylase from Geobacillus stearothermophilus produced in Bacillus licheniformis",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm478503.pdf",
+    "filename": "GRN-0594_amylase-from-geobacillus-stearothermophilus-produced-in-bacillus-licheniformis_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 595,
+    "substance": "gamma -aminobutyric acid",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm495917.pdf",
+    "filename": "GRN-0595_gamma-aminobutyric-acid_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 596,
+    "substance": "Breadfruit flour",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm491835.pdf",
+    "filename": "GRN-0596_breadfruit-flour_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 597,
+    "substance": "Bacillus coagulans SNZ1969 spore preparation",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm475920.pdf",
+    "filename": "GRN-0597_bacillus-coagulans-snz1969-spore-preparation_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 598,
+    "substance": "Thermolysin enzyme preparation derived from Geobacillus stearothermophilus",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm476743.pdf",
+    "filename": "GRN-0598_thermolysin-enzyme-preparation-derived-from-geobacillus-stearothermophilus_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 599,
+    "substance": "Citrus fiber",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm475922.pdf",
+    "filename": "GRN-0599_citrus-fiber_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 600,
+    "substance": "Hydroxytyrosol",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm494696.pdf",
+    "filename": "GRN-0600_hydroxytyrosol_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 601,
+    "substance": "Preparation of Bacillus coagulans strain MTCC 5856 spores",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm476927.pdf",
+    "filename": "GRN-0601_preparation-of-bacillus-coagulans-strain-mtcc-5856-spores_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 602,
+    "substance": "N-acetyl-D-neuraminic  acid",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm475925.pdf",
+    "filename": "GRN-0602_n-acetyl-d-neuraminic-acid_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 603,
+    "substance": "Preparation containing the bacterial monophages, BP-63 and BP-12, specific to Salmonella",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm476554.pdf",
+    "filename": "GRN-0603_preparation-containing-the-bacterial-monophages-bp-63-and-bp-12-specific-to-salm_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 604,
+    "substance": "Baker's Yeast ( Saccharomyces cerevisiae ) expressing asparaginase II",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm494009.pdf",
+    "filename": "GRN-0604_bakers-yeast-saccharomyces-cerevisiae-expressing-asparaginase-ii_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 605,
+    "substance": "Fructo-oligosaccharides",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm495918.pdf",
+    "filename": "GRN-0605_fructo-oligosaccharides_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 606,
+    "substance": "Vinyl acetate-vinyl laurate copolymers",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm495920.pdf",
+    "filename": "GRN-0606_vinyl-acetate-vinyl-laurate-copolymers_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 607,
+    "substance": "Glucosylated steviol glycosides (minimum purity 80%)",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm502980.pdf",
+    "filename": "GRN-0607_glucosylated-steviol-glycosides-minimum-purity-80_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 608,
+    "substance": "Pea protein concentrate",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm495922.pdf",
+    "filename": "GRN-0608_pea-protein-concentrate_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 610,
+    "substance": "Isomaltodextrin",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm502983.pdf",
+    "filename": "GRN-0610_isomaltodextrin_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 611,
+    "substance": "Fractionated whey protein isolate containing cows milk derived lactoferrin, lactoperoxidase, and transforming growth factor \u03b22",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm497473.pdf",
+    "filename": "GRN-0611_fractionated-whey-protein-isolate-containing-cows-milk-derived-lactoferrin-lacto_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 612,
+    "substance": "Fractionated whey protein isolate containing cows milk derived lactoferrin, lactoperoxidase, and transforming growth factor \u03b22",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm497475.pdf",
+    "filename": "GRN-0612_fractionated-whey-protein-isolate-containing-cows-milk-derived-lactoferrin-lacto_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 613,
+    "substance": "Apple peel powder",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm502984.pdf",
+    "filename": "GRN-0613_apple-peel-powder_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 614,
+    "substance": "Chromium polynicotinate",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm502986.pdf",
+    "filename": "GRN-0614_chromium-polynicotinate_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 615,
+    "substance": "High-amylose cornstarch",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm502987.pdf",
+    "filename": "GRN-0615_high-amylose-cornstarch_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 616,
+    "substance": "High-amylose cornstarch acetate",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm503288.pdf",
+    "filename": "GRN-0616_high-amylose-cornstarch-acetate_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 617,
+    "substance": "\u03b1-amylase from Cytophaga sp. produced in Bacillus licheniformis",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm503311.pdf",
+    "filename": "GRN-0617_amylase-from-cytophaga-sp-produced-in-bacillus-licheniformis_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 618,
+    "substance": "Purified seawater",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm505245.pdf",
+    "filename": "GRN-0618_purified-seawater_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 619,
+    "substance": "Purified steviol glycosides",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm502990.pdf",
+    "filename": "GRN-0619_purified-steviol-glycosides_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 620,
+    "substance": "Galacto-oligosaccharides",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm504605.pdf",
+    "filename": "GRN-0620_galacto-oligosaccharides_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 621,
+    "substance": "Emulsified algal oil",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm503314.pdf",
+    "filename": "GRN-0621_emulsified-algal-oil_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 622,
+    "substance": "Emulsified fish oil",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm503317.pdf",
+    "filename": "GRN-0622_emulsified-fish-oil_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 623,
+    "substance": "Fructooligosaccharides",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm504609.pdf",
+    "filename": "GRN-0623_fructooligosaccharides_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 624,
+    "substance": "D-allulose 3-epimerase from Arthrobacter globiformis M30 produced in Escherichia coli",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm505386.pdf",
+    "filename": "GRN-0624_d-allulose-3-epimerase-from-arthrobacter-globiformis-m30-produced-in-escherichia_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 625,
+    "substance": "Pyrroloquinoline quinone disodium salt (Resubmission of GRN 590 )",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm504613.pdf",
+    "filename": "GRN-0625_pyrroloquinoline-quinone-disodium-salt-resubmission-of-grn-590_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 626,
+    "substance": "Steviol glycosides produced in Saccharomyces cerevisiae",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm505151.pdf",
+    "filename": "GRN-0626_steviol-glycosides-produced-in-saccharomyces-cerevisiae_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 627,
+    "substance": "Siraitia grosvenorii Swingle (Luo Han Guo) fruit juice concentrate",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm505153.pdf",
+    "filename": "GRN-0627_siraitia-grosvenorii-swingle-luo-han-guo-fruit-juice-concentrate_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 628,
+    "substance": "endo-1,4-beta-xylanase from Trichoderma reesei",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm505388.pdf",
+    "filename": "GRN-0628_endo-14-beta-xylanase-from-trichoderma-reesei_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 629,
+    "substance": "Siraitia grosvenorii Swingle (Luo Han Guo) fruit extract",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm505159.pdf",
+    "filename": "GRN-0629_siraitia-grosvenorii-swingle-luo-han-guo-fruit-extract_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 630,
+    "substance": "Preparation containing the bacterial monophages, Fo1a and S16, specific to Salmonella",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm505161.pdf",
+    "filename": "GRN-0630_preparation-containing-the-bacterial-monophages-fo1a-and-s16-specific-to-salmone_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 631,
+    "substance": "Triacylglycerol lipase from Fusarium oxysporum produced in Trichoderma reesei",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm505390.pdf",
+    "filename": "GRN-0631_triacylglycerol-lipase-from-fusarium-oxysporum-produced-in-trichoderma-reesei_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 632,
+    "substance": "Rebaudioside A from Yarrowia lipolytica",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm505249.pdf",
+    "filename": "GRN-0632_rebaudioside-a-from-yarrowia-lipolytica_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 633,
+    "substance": "Concentrated milk protein with a \u2265 60:40 whey:casein ratio",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm505250.pdf",
+    "filename": "GRN-0633_concentrated-milk-protein-with-a-6040-wheycasein-ratio_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 634,
+    "substance": "Calcium chloride",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm505252.pdf",
+    "filename": "GRN-0634_calcium-chloride_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 635,
+    "substance": "Nicotinamide riboside chloride",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm505226.pdf",
+    "filename": "GRN-0635_nicotinamide-riboside-chloride_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 636,
+    "substance": "Phosphatidylserine derived from sunflower lecithin",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm505227.pdf",
+    "filename": "GRN-0636_phosphatidylserine-derived-from-sunflower-lecithin_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 637,
+    "substance": "Phosphatidylserine derived from soy lecithin",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm505228.pdf",
+    "filename": "GRN-0637_phosphatidylserine-derived-from-soy-lecithin_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 638,
+    "substance": "High purity steviol glycosides (minimum purity 97%) consisting primarily of rebaudioside A",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm507830.pdf",
+    "filename": "GRN-0638_high-purity-steviol-glycosides-minimum-purity-97-consisting-primarily-of-rebaudi_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 639,
+    "substance": "Zeaxanthin from marigold",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm514709.pdf",
+    "filename": "GRN-0639_zeaxanthin-from-marigold_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 640,
+    "substance": "Esterified propoxylated glycerol",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm508140.pdf",
+    "filename": "GRN-0640_esterified-propoxylated-glycerol_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 641,
+    "substance": "Pyrroloquinoline quinone disodium salt",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm508141.pdf",
+    "filename": "GRN-0641_pyrroloquinoline-quinone-disodium-salt_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 642,
+    "substance": "Camelina oil",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm507833.pdf",
+    "filename": "GRN-0642_camelina-oil_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 643,
+    "substance": "Phosphatidylserine derived from fish",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm513828.pdf",
+    "filename": "GRN-0643_phosphatidylserine-derived-from-fish_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 644,
+    "substance": "Non-fat dry goat milk and goat whey protein",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm508746.pdf",
+    "filename": "GRN-0644_non-fat-dry-goat-milk-and-goat-whey-protein_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 645,
+    "substance": "Pullulanase from Bacillus deramificans and Bacillus acidopullulyticus expressed in Bacillus licheniformis",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm508748.pdf",
+    "filename": "GRN-0645_pullulanase-from-bacillus-deramificans-and-bacillus-acidopullulyticus-expressed-_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 646,
+    "substance": "Pecan shell fiber",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm507835.pdf",
+    "filename": "GRN-0646_pecan-shell-fiber_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 647,
+    "substance": "D-psicose",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm513830.pdf",
+    "filename": "GRN-0647_d-psicose_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 648,
+    "substance": "Monoglycerides",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm510908.pdf",
+    "filename": "GRN-0648_monoglycerides_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 649,
+    "substance": "\u03b2-galactosidase enzyme preparation from Bacillus circulans produced in Bacillus subtilis",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm513831.pdf",
+    "filename": "GRN-0649_galactosidase-enzyme-preparation-from-bacillus-circulans-produced-in-bacillus-su_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 650,
+    "substance": "2'- O -fucosyllactose",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm513832.pdf",
+    "filename": "GRN-0650_2-o-fucosyllactose_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 651,
+    "substance": "Phospholipase A1 from Talaromyces leycettanus produced in Aspergillus niger",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm514712.pdf",
+    "filename": "GRN-0651_phospholipase-a1-from-talaromyces-leycettanus-produced-in-aspergillus-niger_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 652,
+    "substance": "Gamma linolenic acid safflower oil",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm510909.pdf",
+    "filename": "GRN-0652_gamma-linolenic-acid-safflower-oil_part1.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 653,
+    "substance": "Lysophospholipase from Aspergillus nishimurae expressed in Trichoderma reesei.",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm514715.pdf",
+    "filename": "GRN-0653_lysophospholipase-from-aspergillus-nishimurae-expressed-in-trichoderma-reesei_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 654,
+    "substance": "Cocoa butter substitute manufactured using palm oil stearin and stearic acid",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm516029.pdf",
+    "filename": "GRN-0654_cocoa-butter-substitute-manufactured-using-palm-oil-stearin-and-stearic-acid_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 655,
+    "substance": "Rice bran wax",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm516030.pdf",
+    "filename": "GRN-0655_rice-bran-wax_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 656,
+    "substance": "Enzyme-modified steviol glycosides",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm516894.pdf",
+    "filename": "GRN-0656_enzyme-modified-steviol-glycosides_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 657,
+    "substance": "Glucoamylase from Penicillum oxalicum produced in Aspergillus niger",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm520972.pdf",
+    "filename": "GRN-0657_glucoamylase-from-penicillum-oxalicum-produced-in-aspergillus-niger_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 658,
+    "substance": "Grapefruit extract",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm516895.pdf",
+    "filename": "GRN-0658_grapefruit-extract_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 662,
+    "substance": "Glucosylated steviol glycosides (minimum purity 95%)",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm519307.pdf",
+    "filename": "GRN-0662_glucosylated-steviol-glycosides-minimum-purity-95_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 663,
+    "substance": "Distarch phosphate",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm519311.pdf",
+    "filename": "GRN-0663_distarch-phosphate_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 665,
+    "substance": "Lactoperoxidase system",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm528631.pdf",
+    "filename": "GRN-0665_lactoperoxidase-system_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 708,
+    "substance": "Triacylglycerol lipase from Rhizopus oryzae produced in Aspergillus niger",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm610783.pdf",
+    "filename": "GRN-0708_triacylglycerol-lipase-from-rhizopus-oryzae-produced-in-aspergillus-niger_part1_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 708,
+    "substance": "Triacylglycerol lipase from Rhizopus oryzae produced in Aspergillus niger",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm610784.pdf",
+    "filename": "GRN-0708_triacylglycerol-lipase-from-rhizopus-oryzae-produced-in-aspergillus-niger_part2_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 708,
+    "substance": "Triacylglycerol lipase from Rhizopus oryzae produced in Aspergillus niger",
+    "url": "https://wayback.archive-it.org/7993/20190208035755/https:/www.fda.gov/downloads/Food/IngredientsPackagingLabeling/GRAS/NoticeInventory/ucm610786.pdf",
+    "filename": "GRN-0708_triacylglycerol-lipase-from-rhizopus-oryzae-produced-in-aspergillus-niger_part3_v2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 927,
+    "substance": "Polyvinyl alcohol",
+    "url": "https://www.fda.gov/media/145165 /download",
+    "filename": "GRN-0927_polyvinyl-alcohol_part1.pdf",
+    "error": "404 Client Error: Not Found for url: https://www.fda.gov/media/145165%20/download"
+  },
+  {
+    "grn": 962,
+    "substance": "Rice bran wax",
+    "url": "https://www.fda.gov/media/155708/download",
+    "filename": "GRN-0962_rice-bran-wax.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 963,
+    "substance": "Fungal oil (\u226540% arachidonic acid) from Mortierella alpina",
+    "url": "https://public4.pagefreezer.com/browse/FDA/31-12-2023T10:22/https://www.fda.gov/media/153918/download",
+    "filename": "GRN-0963_fungal-oil-40-arachidonic-acid-from-mortierella-alpina_part2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 1079,
+    "substance": "Bifidobacterium longum strain KCTC 12200BP",
+    "url": "https://public4.pagefreezer.com/browse/FDA/11-08-2024T23:20/https://www.fda.gov/media/177679/download",
+    "filename": "GRN-1079_bifidobacterium-longum-strain-kctc-12200bp_part2.pdf",
+    "error": "Server returned HTML instead of PDF"
+  },
+  {
+    "grn": 1079,
+    "substance": "Bifidobacterium longum strain KCTC 12200BP",
+    "url": "https://public4.pagefreezer.com/browse/FDA/30-04-2024T15:08/https://www.fda.gov/media/177680/download",
+    "filename": "GRN-1079_bifidobacterium-longum-strain-kctc-12200bp_part3.pdf",
+    "error": "Server returned HTML instead of PDF"
+  }
+]

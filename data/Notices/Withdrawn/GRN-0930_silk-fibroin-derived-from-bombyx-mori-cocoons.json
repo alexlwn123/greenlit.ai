@@ -1,0 +1,32 @@
+{
+  "grn_number": 930,
+  "substance_name": "Silk fibroin derived from Bombyx mori cocoons",
+  "status": "withdrawn",
+  "date_filed": "",
+  "date_closed": "May 25, 2021",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0930",
+  "substance_type": "protein",
+  "production_method": "extraction",
+  "source_organism_type": "insect",
+  "intended_uses": [
+    "general_food",
+    "bakery",
+    "confectionery",
+    "meat_alternatives",
+    "dairy_alternatives"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "genotoxicity_ames",
+    "genotoxicity_chromosomal",
+    "acute_toxicity",
+    "digestibility_study",
+    "allergenicity_bioinformatic",
+    "history_of_safe_use"
+  ],
+  "dietary_exposure_method": "NHANES",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true
+}

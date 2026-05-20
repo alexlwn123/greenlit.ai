@@ -1,0 +1,29 @@
+{
+  "grn_number": 424,
+  "substance_name": "C-c-phycocyanin-enriched water extract of the cyanobacterium Arthrospira maxima or Arthrospira platensis , (also known as Spirulina maxima or Spirulina platensis )",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Dec 6, 2012",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0424",
+  "substance_type": "protein",
+  "production_method": "extraction",
+  "source_organism_type": "algal",
+  "intended_uses": [
+    "dietary_supplements",
+    "general_food"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "acute_toxicity",
+    "chronic_toxicity",
+    "reproductive_toxicity",
+    "developmental_toxicity",
+    "history_of_safe_use",
+    "immunological_studies"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false
+}

@@ -1,0 +1,28 @@
+{
+  "grn_number": 1084,
+  "substance_name": "Lactobacillus rhamnosus KCTC 12202BP",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Oct 31, 2023",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1084",
+  "substance_type": "probiotic",
+  "production_method": "submerged_fermentation",
+  "source_organism_type": "bacterial",
+  "intended_uses": [
+    "dietary_supplements",
+    "general_food"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "history_of_safe_use",
+    "in_vitro_toxicity",
+    "acute_toxicity",
+    "human_clinical_trial",
+    "allergenicity_bioinformatic"
+  ],
+  "dietary_exposure_method": "market_share",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true
+}

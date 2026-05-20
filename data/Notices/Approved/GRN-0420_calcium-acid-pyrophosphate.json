@@ -1,0 +1,24 @@
+{
+  "grn_number": 420,
+  "substance_name": "Calcium acid pyrophosphate",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Aug 10, 2012",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0420",
+  "substance_type": "additive",
+  "production_method": null,
+  "source_organism_type": null,
+  "intended_uses": [
+    "bakery"
+  ],
+  "target_population": "per-capita",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "history_of_safe_use",
+    "metabolic_fate"
+  ],
+  "dietary_exposure_method": "USDA_CSFII",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false
+}

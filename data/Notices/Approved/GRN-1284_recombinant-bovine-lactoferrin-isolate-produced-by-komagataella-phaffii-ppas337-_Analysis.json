@@ -1,0 +1,877 @@
+{
+  "meta": {
+    "report_version": "1.0",
+    "analysis_date": "2026-05-19",
+    "pdf_filename": "GRN-1284_recombinant-bovine-lactoferrin-isolate-produced-by-komagataella-phaffii-ppas337-.pdf"
+  },
+  "engagement_summary": {
+    "substance_name": "Bovine lactoferrin produced by a modified strain of Komagataella phaffii (ALLGLF)",
+    "notifier": "All G Co Holdings Pty Limited (agent: Vireo Advisors, LLC / Jo Anne Shatkin, Ph.D.)",
+    "production_method": "Precision fermentation using genetically modified K. phaffii strain Ppas_337 with introduced bovine lactoferrin gene",
+    "source_organism": "Komagataella phaffii (strain Ppas_337, derived from BG11 lineage of NRRL Y-11430)",
+    "gras_basis": "scientific_procedures",
+    "intended_uses": [
+      "Sports and functional foods and beverages",
+      "Dairy and non-dairy yogurt",
+      "Ice cream and frozen desserts",
+      "Powdered milk",
+      "Non-dairy milk",
+      "Chewing gum",
+      "Other food categories per Table 1/Table 6"
+    ],
+    "target_population": "General population including infants and children; adults; vulnerable subpopulations addressed in dietary exposure section",
+    "date_filed": "2025-05-29",
+    "submission_completeness_note": "Submission includes Parts 1\u20137, FDA Form 3667, cover letter, and a January 2026 amendment responding to FDA questions. The input was smart-truncated; allergenicity LC-MS/MS results, Part 6.4 summary, and full Part 7 references were not fully available for review."
+  },
+  "threshold_assessment": {
+    "categorical_eligibility": {
+      "eligible": true,
+      "basis": "Submission is structured as a GRAS notice under 21 CFR \u00a7170 Subpart E, based on scientific procedures. K. phaffii is an established expression host for food ingredients with multiple prior successful GRNs. Bovine lactoferrin has multiple prior 'no questions' GRNs from cow's milk sources."
+    },
+    "scope_clarity": {
+      "adequate": true,
+      "food_categories_specified": true,
+      "use_levels_specified": true,
+      "technical_function_specified": true,
+      "notes": "Food categories and use levels are provided in Tables 1 and 6. 'Probiotic drinks' category was flagged by FDA and confirmed removed in January 2026 amendment. Technical function is as a protein ingredient/nutritional component."
+    },
+    "existing_regulatory_status": {
+      "prior_gras_notices": "GRNs 67, 77, 130, 464, 465, 669 (cow's milk-derived lactoferrin, all 'no questions'); GRN 1219 (recombinant bLF from K. phaffii by Turtle Tree, reported 'no questions' publicly but listed as pending at submission date)",
+      "food_additive_approvals": "21 CFR 573.587 cited for animal feed context; confirmed by notifier as non-applicable to human food safety conclusion",
+      "notes": "EFSA granted K. phaffii QPS status for production purposes. Multiple prior K. phaffii-derived food ingredient GRNs (GRNs 204, 737, 967, 1001, 1025, 1056, 1104, 1142) received no questions."
+    }
+  },
+  "potential_safety_signals": [
+    {
+      "signal": "Non-native glycosylation pattern (phosphomannose glycans; absence of hybrid and complex glycans)",
+      "evidence": "LC-MS/MS glycan analysis shows ALLGLF lacks hybrid/complex glycans present in native bLF and contains phosphomannose glycans typical of yeast expression. Submission argues differences are negligible based on K. phaffii QPS status and GRN 1104 precedent.",
+      "section_reference": "Part 2, Section 2.1.3.3; Part 6, Section 6.2.3",
+      "recommended_action": "Confirm whether phosphomannose glycans have been evaluated for immunogenicity in relevant populations; cross-reference with GRN 1219 FDA review of same structural feature."
+    },
+    {
+      "signal": "Residual K. phaffii host cell proteins in final product",
+      "evidence": "LC-MS/MS analysis of three batches was conducted to characterize residual host cell proteins. Table 12 shows identified protein abundance; full results appear truncated in the reviewed input.",
+      "section_reference": "Part 6, Section 6.3; Table 12",
+      "recommended_action": "Verify that full residual host cell protein identity and allergenicity screening results are present in the untruncated submission."
+    },
+    {
+      "signal": "Antibody response to bovine lactoferrin observed in human clinical study",
+      "evidence": "Peterson et al. (2024) randomized trial detected significant anti-lactoferrin antibody response to bLF at 3.4 g/day over 28 days. No clinical allergy or adverse events were reported.",
+      "section_reference": "Part 6, Section 6.2.2",
+      "recommended_action": "Assess whether the immunogenicity finding warrants further characterization, particularly for repeat/high-dose consumers and atopic individuals."
+    }
+  ],
+  "domain_analysis": {
+    "identity_and_characterization": {
+      "summary": "ALLGLF is extensively characterized relative to native bLF using SDS-PAGE, LC-MS/MS amino acid sequencing, glycan analysis, iron binding, isoelectric point, circular dichroism, and DSC. Minor glycosylation differences (phosphomannose; absence of hybrid/complex glycans) are acknowledged. Characterization data are published in Food Hydrocolloids (Cavallo et al., 2025).",
+      "strengths": [
+        {
+          "observation": "Seven independent physicochemical parameters compared head-to-head between ALLGLF and commercial bLF, providing a comprehensive structural similarity package.",
+          "section_reference": "Part 2, Sections 2.1.3.1\u20132.1.3.7"
+        },
+        {
+          "observation": "Characterization peer-reviewed and published in an open-access journal, satisfying general availability requirements for this data.",
+          "section_reference": "Part 6, Section 6.2.3"
+        }
+      ],
+      "gaps": [
+        {
+          "title": "Pepsin digestibility data not identified",
+          "gap_type": "evidentiary_gap",
+          "priority": "material",
+          "section_reference": "Part 6, Section 6.3; Part 2 \u2014 not present",
+          "observation": "No pepsin digestibility assay for ALLGLF was identified in the reviewed text. For a novel protein with non-native glycosylation, digestibility data support allergenicity conclusions. The submission relies on bioinformatic screening and host organism history but does not appear to include a digestibility study."
+        },
+        {
+          "title": "Full allergenicity LC-MS/MS results truncated",
+          "gap_type": "documentation_gap",
+          "priority": "documentation_issue",
+          "section_reference": "Part 6, Section 6.3; Table 12",
+          "observation": "Section 6.3 and Table 12 were truncated in the input provided. The full residual host cell protein allergenicity screening results should be verified in the complete submission document."
+        }
+      ]
+    },
+    "manufacturing_process": {
+      "summary": "The manufacturing process is described with a process diagram (Figure 8) covering fermentation through purification. Production strain construction (Ppas_337), genetic stability over 87 generations, absence of antibiotic resistance genes, and absence of viable cells in final product are documented. Processing aids are stated to be food-grade and GRAS.",
+      "strengths": [
+        {
+          "observation": "Genetic construction of Ppas_337 documented including AOX1 deletion, introduced DNA origins (Bos taurus, S. cerevisiae), and whole-genome sequencing confirmation.",
+          "section_reference": "Part 2, Sections 2.2.1.1\u20132.2.1.5"
+        },
+        {
+          "observation": "Three independent production batches analyzed with consistent results demonstrating process reproducibility.",
+          "section_reference": "Part 2, Section 2.2.3.2; Table 5"
+        }
+      ],
+      "gaps": [
+        {
+          "title": "Specific processing aids and reagents not fully enumerated in reviewed text",
+          "gap_type": "documentation_gap",
+          "priority": "material",
+          "section_reference": "Part 2, Section 2.2.2",
+          "observation": "The narrative states all processing aids are food-grade and GRAS but does not appear to enumerate each reagent, solvent, and chromatography media used. Full enumeration is needed to confirm no residual process-related contaminants of concern."
+        },
+        {
+          "title": "Residual methanol characterization not addressed",
+          "gap_type": "evidentiary_gap",
+          "priority": "material",
+          "section_reference": "Part 2, Section 2.2.2",
+          "observation": "K. phaffii uses methanol as inducer/carbon source. No specification limit or measured residual methanol level in the final product was identified in the reviewed text. Methanol residue in fermentation-derived food ingredients is a known process-related contaminant concern."
+        }
+      ]
+    },
+    "dietary_exposure": {
+      "summary": "Estimated dietary intake is calculated using proposed use levels across food categories (Table 7), with background lactoferrin exposure from bovine milk addressed (Table 8) and cumulative exposure including other GRAS-notified sources (Table 9). Subpopulations including infants and children appear to be addressed. The methodology section references NHANES or equivalent data sources.",
+      "strengths": [
+        {
+          "observation": "Background bovine lactoferrin exposure from milk consumption is quantified and integrated into cumulative exposure estimates alongside ALLGLF.",
+          "section_reference": "Part 3, Sections 3.1.3\u20133.1.4; Tables 8\u20139"
+        },
+        {
+          "observation": "Conservative approach using 90th percentile consumers-only intake values acknowledged, with infant and age-stratified analysis included.",
+          "section_reference": "Part 3, Section 3.1.2; Part 6, Section 6.2.2"
+        }
+      ],
+      "gaps": [
+        {
+          "title": "Dietary exposure methodology detail truncated",
+          "gap_type": "documentation_gap",
+          "priority": "documentation_issue",
+          "section_reference": "Part 3, Section 3.1.1",
+          "observation": "The methodology section is referenced but not fully reproduced in the reviewed input. Whether aggregate total-sample intake or eaters-only distributions were used as the primary conservative estimate cannot be confirmed from reviewed text alone."
+        },
+        {
+          "title": "'Probiotic drinks' category originally included",
+          "gap_type": "adequacy_gap",
+          "priority": "documentation_issue",
+          "section_reference": "Part 3, Table 6; Amendment 2026-01-15",
+          "observation": "FDA identified 'probiotic drinks' in Tables 1 and 6. Notifier confirmed removal in January 2026 amendment. The original intake calculation may have included this category; it should be confirmed that the EDI tables were updated to reflect removal."
+        }
+      ]
+    },
+    "safety_data": {
+      "summary": "The safety data package for bLF is extensive, including acute, sub-acute (14-day), 4-week, 13-week subchronic, and chronic (40\u201365 week) oral toxicity studies in rats with NOAEL >2000 mg/kg/day. Human clinical data at doses up to 9 g/day show no adverse effects. Read-across from bLF to ALLGLF is supported by demonstrated structural similarity. A 100-fold safety factor is applied.",
+      "strengths": [
+        {
+          "observation": "Chronic rodent feeding studies up to 65 weeks at 5% dietary bLF with no adverse effects; NOAEL >2000 mg/kg/day independently established across multiple studies.",
+          "section_reference": "Part 6, Section 6.2.2"
+        },
+        {
+          "observation": "Human clinical safety data at high doses (up to 9 g/day in adults; up to 833 mg/day in infants) with no significant adverse events provides direct human relevance.",
+          "section_reference": "Part 6, Section 6.2.2"
+        },
+        {
+          "observation": "28-day oral toxicity and immunotoxicity study of recombinant lactoferrin produced in K. phaffii (rhLF, Effera) with NOAEL 2000 mg/kg/day provides direct relevance to recombinant production.",
+          "section_reference": "Part 6, Section 6.2.2"
+        }
+      ],
+      "gaps": [
+        {
+          "title": "Genotoxicity data for ALLGLF not identified",
+          "gap_type": "evidentiary_gap",
+          "priority": "material",
+          "section_reference": "Part 6 \u2014 not present",
+          "observation": "No genotoxicity studies (Ames test, chromosomal aberration, or in vitro micronucleus) for ALLGLF or bLF were identified in the reviewed text. For a novel precision fermentation protein, a standard genotoxicity battery is expected. Reliance on read-across alone may not be sufficient."
+        },
+        {
+          "title": "Safety data specific to ALLGLF limited; read-across to bLF and rhLF",
+          "gap_type": "adequacy_gap",
+          "priority": "material",
+          "section_reference": "Part 6, Section 6.2.3",
+          "observation": "Safety studies are conducted with bLF or rhLF (a different recombinant product). ALLGLF-specific toxicology is not presented. The structural similarity case is well-made, but the non-native glycosylation pattern is a distinguishing feature that may warrant at least a subacute study with ALLGLF itself."
+        },
+        {
+          "title": "Reproductive and developmental toxicity data not identified",
+          "gap_type": "evidentiary_gap",
+          "priority": "material",
+          "section_reference": "Part 6 \u2014 not present",
+          "observation": "No reproductive or developmental toxicity studies for bLF or ALLGLF were identified. Given the proposed use in foods consumed by pregnant women and infants/young children, and the broad use categories, the absence of this data element warrants attention."
+        }
+      ]
+    },
+    "general_availability": {
+      "summary": "The primary characterization data are published in Food Hydrocolloids (Cavallo et al., 2025) as open-access. Safety data for bLF reference peer-reviewed publications and prior GRAS submissions. The Peterson et al. (2024) rhLF studies are cited; their publication status should be verified.",
+      "strengths": [
+        {
+          "observation": "ALLGLF characterization data published open-access in Food Hydrocolloids, satisfying the public availability requirement for that dataset.",
+          "section_reference": "Part 6, Section 6.2.3"
+        },
+        {
+          "observation": "Core bLF safety data (Yamauchi et al., 2000; Tamano et al., 2008) are peer-reviewed published studies widely available to qualified experts.",
+          "section_reference": "Part 6, Section 6.2.2"
+        }
+      ],
+      "gaps": [
+        {
+          "title": "Publication status of Peterson et al. (2024) studies unclear",
+          "gap_type": "documentation_gap",
+          "priority": "material",
+          "section_reference": "Part 6, Section 6.2.2; Part 7",
+          "observation": "Peterson et al. (2024) is cited for multiple key safety studies (14-day, 28-day toxicity, human clinical trial). If these are unpublished or preprint-only at filing date, they can corroborate but cannot independently establish the GRAS conclusion. Publication status should be confirmed."
+        }
+      ]
+    },
+    "general_acceptance": {
+      "summary": "Strong signals of general acceptance exist: EFSA QPS status for K. phaffii, multiple prior K. phaffii food ingredient GRNs with no questions, EFSA safety opinion on bLF including infant formula, and the closely analogous GRN 1219 (recombinant bLF from K. phaffii) reportedly receiving a no-questions letter. No identified scientific controversy regarding bLF safety.",
+      "strengths": [
+        {
+          "observation": "EFSA QPS status for K. phaffii and EFSA 2012 scientific opinion on bLF safety including infant formula use represent authoritative international body endorsement.",
+          "section_reference": "Part 6, Sections 6.2.1\u20136.2.2"
+        },
+        {
+          "observation": "Eight prior K. phaffii-derived food ingredient GRNs with no-questions outcomes, including GRN 1219 for the same substance (recombinant bLF), support broad expert acceptance of the platform.",
+          "section_reference": "Part 6, Section 6.2.1; Table 10"
+        }
+      ],
+      "gaps": [
+        {
+          "title": "GRN 1219 status relied upon but listed as pending at filing",
+          "gap_type": "adequacy_gap",
+          "priority": "documentation_issue",
+          "section_reference": "Part 6, Tables 10\u201311",
+          "observation": "GRN 1219 is cited as supporting precedent but was officially listed as pending in the FDA inventory at filing. The notifier acknowledges this discrepancy. Its evidentiary weight as general acceptance support is qualified until official FDA disposition is confirmed."
+        }
+      ]
+    },
+    "conditions_of_use": {
+      "summary": "Food categories and use levels are specified in Tables 1 and 6, with numerical use levels (e.g., mg/serving, mg/100g). Technical function is identified as a protein ingredient. The 'probiotic drinks' category was removed via amendment. Target population encompasses general population including vulnerable subgroups.",
+      "strengths": [
+        {
+          "observation": "Use levels are provided in quantitative terms across each food category, enabling exposure calculation and safety margin assessment.",
+          "section_reference": "Part 2, Table 1; Part 3, Table 6"
+        }
+      ],
+      "gaps": [
+        {
+          "title": "Infant formula exclusion not explicitly stated",
+          "gap_type": "documentation_gap",
+          "priority": "material",
+          "section_reference": "Part 2, Table 1; Part 1, Section 1.2",
+          "observation": "Prior K. phaffii GRNs (e.g., GRN 967) explicitly exclude infant formula. The reviewed text does not clearly state whether ALLGLF is intended for or excluded from infant formula. Given infant-specific exposure analysis, this boundary should be explicit in the conditions of use."
+        }
+      ]
+    },
+    "regulatory_submission": {
+      "summary": "The submission includes all seven parts of a GRAS notice, FDA Form 3667 with dual certification (agent and notifier), and a substantive amendment responding to FDA questions. Certification is provided by both Jo Anne Shatkin (agent) and Jared Raynes (All G). The submission appears structurally complete.",
+      "strengths": [
+        {
+          "observation": "Both the notifier (Jared Raynes, All G) and the agent (Jo Anne Shatkin, Vireo Advisors) provide signed certifications of completeness, balance, and accuracy.",
+          "section_reference": "Part 1; Form 3667, Section F"
+        },
+        {
+          "observation": "Proactive January 2026 amendment responding to FDA questions demonstrates engagement and addresses the animal feed regulatory citation and probiotic drinks category issues.",
+          "section_reference": "Amendment 2026-01-15"
+        }
+      ],
+      "gaps": [
+        {
+          "title": "Part 6.4 summary and full Part 7 references truncated in reviewed input",
+          "gap_type": "documentation_gap",
+          "priority": "documentation_issue",
+          "section_reference": "Part 6, Section 6.4; Part 7, Section 7.1",
+          "observation": "The GRAS basis summary (Section 6.4) and complete reference list (Part 7) were truncated in the input provided. The full document should be verified to ensure all references are cited and the basis summary is complete and addresses unfavorable data."
+        }
+      ]
+    }
+  },
+  "consolidated_gap_summary": [
+    {
+      "title": "Pepsin digestibility data not identified",
+      "gap_type": "evidentiary_gap",
+      "priority": "material",
+      "section_reference": "Part 6, Section 6.3; Part 2 \u2014 not present",
+      "observation": "No pepsin digestibility assay for ALLGLF was identified in the reviewed text. For a novel protein with non-native glycosylation, digestibility data support allergenicity conclusions. The submission relies on bioinformatic screening and host organism history but does not appear to include a digestibility study.",
+      "domain": "identity_and_characterization"
+    },
+    {
+      "title": "Specific processing aids and reagents not fully enumerated in reviewed text",
+      "gap_type": "documentation_gap",
+      "priority": "material",
+      "section_reference": "Part 2, Section 2.2.2",
+      "observation": "The narrative states all processing aids are food-grade and GRAS but does not appear to enumerate each reagent, solvent, and chromatography media used. Full enumeration is needed to confirm no residual process-related contaminants of concern.",
+      "domain": "manufacturing_process"
+    },
+    {
+      "title": "Residual methanol characterization not addressed",
+      "gap_type": "evidentiary_gap",
+      "priority": "material",
+      "section_reference": "Part 2, Section 2.2.2",
+      "observation": "K. phaffii uses methanol as inducer/carbon source. No specification limit or measured residual methanol level in the final product was identified in the reviewed text. Methanol residue in fermentation-derived food ingredients is a known process-related contaminant concern.",
+      "domain": "manufacturing_process"
+    },
+    {
+      "title": "Genotoxicity data for ALLGLF not identified",
+      "gap_type": "evidentiary_gap",
+      "priority": "material",
+      "section_reference": "Part 6 \u2014 not present",
+      "observation": "No genotoxicity studies (Ames test, chromosomal aberration, or in vitro micronucleus) for ALLGLF or bLF were identified in the reviewed text. For a novel precision fermentation protein, a standard genotoxicity battery is expected. Reliance on read-across alone may not be sufficient.",
+      "domain": "safety_data"
+    },
+    {
+      "title": "Safety data specific to ALLGLF limited; read-across to bLF and rhLF",
+      "gap_type": "adequacy_gap",
+      "priority": "material",
+      "section_reference": "Part 6, Section 6.2.3",
+      "observation": "Safety studies are conducted with bLF or rhLF (a different recombinant product). ALLGLF-specific toxicology is not presented. The structural similarity case is well-made, but the non-native glycosylation pattern is a distinguishing feature that may warrant at least a subacute study with ALLGLF itself.",
+      "domain": "safety_data"
+    },
+    {
+      "title": "Reproductive and developmental toxicity data not identified",
+      "gap_type": "evidentiary_gap",
+      "priority": "material",
+      "section_reference": "Part 6 \u2014 not present",
+      "observation": "No reproductive or developmental toxicity studies for bLF or ALLGLF were identified. Given the proposed use in foods consumed by pregnant women and infants/young children, and the broad use categories, the absence of this data element warrants attention.",
+      "domain": "safety_data"
+    },
+    {
+      "title": "Publication status of Peterson et al. (2024) studies unclear",
+      "gap_type": "documentation_gap",
+      "priority": "material",
+      "section_reference": "Part 6, Section 6.2.2; Part 7",
+      "observation": "Peterson et al. (2024) is cited for multiple key safety studies (14-day, 28-day toxicity, human clinical trial). If these are unpublished or preprint-only at filing date, they can corroborate but cannot independently establish the GRAS conclusion. Publication status should be confirmed.",
+      "domain": "general_availability"
+    },
+    {
+      "title": "Infant formula exclusion not explicitly stated",
+      "gap_type": "documentation_gap",
+      "priority": "material",
+      "section_reference": "Part 2, Table 1; Part 1, Section 1.2",
+      "observation": "Prior K. phaffii GRNs (e.g., GRN 967) explicitly exclude infant formula. The reviewed text does not clearly state whether ALLGLF is intended for or excluded from infant formula. Given infant-specific exposure analysis, this boundary should be explicit in the conditions of use.",
+      "domain": "conditions_of_use"
+    },
+    {
+      "title": "Full allergenicity LC-MS/MS results truncated",
+      "gap_type": "documentation_gap",
+      "priority": "documentation_issue",
+      "section_reference": "Part 6, Section 6.3; Table 12",
+      "observation": "Section 6.3 and Table 12 were truncated in the input provided. The full residual host cell protein allergenicity screening results should be verified in the complete submission document.",
+      "domain": "identity_and_characterization"
+    },
+    {
+      "title": "Dietary exposure methodology detail truncated",
+      "gap_type": "documentation_gap",
+      "priority": "documentation_issue",
+      "section_reference": "Part 3, Section 3.1.1",
+      "observation": "The methodology section is referenced but not fully reproduced in the reviewed input. Whether aggregate total-sample intake or eaters-only distributions were used as the primary conservative estimate cannot be confirmed from reviewed text alone.",
+      "domain": "dietary_exposure"
+    },
+    {
+      "title": "'Probiotic drinks' category originally included",
+      "gap_type": "adequacy_gap",
+      "priority": "documentation_issue",
+      "section_reference": "Part 3, Table 6; Amendment 2026-01-15",
+      "observation": "FDA identified 'probiotic drinks' in Tables 1 and 6. Notifier confirmed removal in January 2026 amendment. The original intake calculation may have included this category; it should be confirmed that the EDI tables were updated to reflect removal.",
+      "domain": "dietary_exposure"
+    },
+    {
+      "title": "GRN 1219 status relied upon but listed as pending at filing",
+      "gap_type": "adequacy_gap",
+      "priority": "documentation_issue",
+      "section_reference": "Part 6, Tables 10\u201311",
+      "observation": "GRN 1219 is cited as supporting precedent but was officially listed as pending in the FDA inventory at filing. The notifier acknowledges this discrepancy. Its evidentiary weight as general acceptance support is qualified until official FDA disposition is confirmed.",
+      "domain": "general_acceptance"
+    },
+    {
+      "title": "Part 6.4 summary and full Part 7 references truncated in reviewed input",
+      "gap_type": "documentation_gap",
+      "priority": "documentation_issue",
+      "section_reference": "Part 6, Section 6.4; Part 7, Section 7.1",
+      "observation": "The GRAS basis summary (Section 6.4) and complete reference list (Part 7) were truncated in the input provided. The full document should be verified to ensure all references are cited and the basis summary is complete and addresses unfavorable data.",
+      "domain": "regulatory_submission"
+    }
+  ],
+  "strengths_summary": [
+    {
+      "domain": "Safety Data",
+      "observation": "Extensive bLF toxicology package with NOAEL >2000 mg/kg/day across multiple independent rodent studies and human clinical safety data up to 9 g/day; robust safety margins.",
+      "section_reference": "Part 6, Section 6.2.2"
+    },
+    {
+      "domain": "Identity & Characterization",
+      "observation": "Comprehensive seven-parameter physicochemical characterization comparing ALLGLF to native bLF, peer-reviewed and published open-access.",
+      "section_reference": "Part 2, Section 2.1.3; Part 6, Section 6.2.3"
+    },
+    {
+      "domain": "General Acceptance",
+      "observation": "EFSA QPS for K. phaffii, EFSA safety opinion for bLF, eight prior K. phaffii food ingredient GRNs, and close analogue GRN 1219 collectively reflect broad expert acceptance.",
+      "section_reference": "Part 6, Sections 6.2.1\u20136.2.2; Table 10"
+    },
+    {
+      "domain": "Manufacturing Process",
+      "observation": "Full genetic characterization of production strain Ppas_337, stability confirmed over 87 generations, no antibiotic resistance genes, viable cells absent from final product.",
+      "section_reference": "Part 2, Sections 2.2.1.1\u20132.2.1.6"
+    },
+    {
+      "domain": "Regulatory Submission",
+      "observation": "Dual certification by both agent and notifier, all seven parts present, and a substantive FDA-responsive amendment filed within seven months of original submission.",
+      "section_reference": "Part 1; Form 3667; Amendment 2026-01-15"
+    }
+  ],
+  "gap_report": {
+    "score": 67,
+    "priority_counts": {
+      "foundational": 0,
+      "material": 8,
+      "documentation_issue": 5
+    },
+    "gaps": [
+      {
+        "domain": "identity_and_characterization",
+        "title": "Pepsin digestibility data not identified",
+        "priority": "material",
+        "gap_type": "evidentiary_gap",
+        "section_reference": "Part 6, Section 6.3; Part 2 \u2014 not present",
+        "observation": "No pepsin digestibility assay for ALLGLF was identified in the reviewed text. For a novel protein with non-native glycosylation, digestibility data support allergenicity conclusions. The submission relies on bioinformatic screening and host organism history but does not appear to include a digestibility study.",
+        "approved_reference": {
+          "grn_number": 1284,
+          "substance_name": "Recombinant bovine lactoferrin isolate produced by Komagataella phaffii Ppas_337 expressing the gene encoding bovine lactoferrin",
+          "section_key": "part_1_identity",
+          "section_label": "Part 1 \u2014 Identity, Method of Manufacture & Specifications"
+        },
+        "withdrawn_reference": {
+          "grn_number": 1228,
+          "substance_name": "\u03b2-casein produced by E. coli DSM 35048"
+        }
+      },
+      {
+        "domain": "manufacturing_process",
+        "title": "Specific processing aids and reagents not fully enumerated in reviewed text",
+        "priority": "material",
+        "gap_type": "documentation_gap",
+        "section_reference": "Part 2, Section 2.2.2",
+        "observation": "The narrative states all processing aids are food-grade and GRAS but does not appear to enumerate each reagent, solvent, and chromatography media used. Full enumeration is needed to confirm no residual process-related contaminants of concern.",
+        "approved_reference": {
+          "grn_number": 1284,
+          "substance_name": "Recombinant bovine lactoferrin isolate produced by Komagataella phaffii Ppas_337 expressing the gene encoding bovine lactoferrin",
+          "section_key": "part_1_identity",
+          "section_label": "Part 1 \u2014 Identity, Method of Manufacture & Specifications"
+        },
+        "withdrawn_reference": {
+          "grn_number": 1228,
+          "substance_name": "\u03b2-casein produced by E. coli DSM 35048"
+        }
+      },
+      {
+        "domain": "manufacturing_process",
+        "title": "Residual methanol characterization not addressed",
+        "priority": "material",
+        "gap_type": "evidentiary_gap",
+        "section_reference": "Part 2, Section 2.2.2",
+        "observation": "K. phaffii uses methanol as inducer/carbon source. No specification limit or measured residual methanol level in the final product was identified in the reviewed text. Methanol residue in fermentation-derived food ingredients is a known process-related contaminant concern.",
+        "approved_reference": {
+          "grn_number": 1284,
+          "substance_name": "Recombinant bovine lactoferrin isolate produced by Komagataella phaffii Ppas_337 expressing the gene encoding bovine lactoferrin",
+          "section_key": "part_1_identity",
+          "section_label": "Part 1 \u2014 Identity, Method of Manufacture & Specifications"
+        },
+        "withdrawn_reference": {
+          "grn_number": 1228,
+          "substance_name": "\u03b2-casein produced by E. coli DSM 35048"
+        }
+      },
+      {
+        "domain": "safety_data",
+        "title": "Genotoxicity data for ALLGLF not identified",
+        "priority": "material",
+        "gap_type": "evidentiary_gap",
+        "section_reference": "Part 6 \u2014 not present",
+        "observation": "No genotoxicity studies (Ames test, chromosomal aberration, or in vitro micronucleus) for ALLGLF or bLF were identified in the reviewed text. For a novel precision fermentation protein, a standard genotoxicity battery is expected. Reliance on read-across alone may not be sufficient.",
+        "approved_reference": {
+          "grn_number": 1284,
+          "substance_name": "Recombinant bovine lactoferrin isolate produced by Komagataella phaffii Ppas_337 expressing the gene encoding bovine lactoferrin",
+          "section_key": "part_4_safety",
+          "section_label": "Part 4 \u2014 Safety"
+        },
+        "withdrawn_reference": {
+          "grn_number": 1228,
+          "substance_name": "\u03b2-casein produced by E. coli DSM 35048"
+        }
+      },
+      {
+        "domain": "safety_data",
+        "title": "Safety data specific to ALLGLF limited; read-across to bLF and rhLF",
+        "priority": "material",
+        "gap_type": "adequacy_gap",
+        "section_reference": "Part 6, Section 6.2.3",
+        "observation": "Safety studies are conducted with bLF or rhLF (a different recombinant product). ALLGLF-specific toxicology is not presented. The structural similarity case is well-made, but the non-native glycosylation pattern is a distinguishing feature that may warrant at least a subacute study with ALLGLF itself.",
+        "approved_reference": {
+          "grn_number": 1284,
+          "substance_name": "Recombinant bovine lactoferrin isolate produced by Komagataella phaffii Ppas_337 expressing the gene encoding bovine lactoferrin",
+          "section_key": "part_4_safety",
+          "section_label": "Part 4 \u2014 Safety"
+        },
+        "withdrawn_reference": {
+          "grn_number": 1228,
+          "substance_name": "\u03b2-casein produced by E. coli DSM 35048"
+        }
+      },
+      {
+        "domain": "safety_data",
+        "title": "Reproductive and developmental toxicity data not identified",
+        "priority": "material",
+        "gap_type": "evidentiary_gap",
+        "section_reference": "Part 6 \u2014 not present",
+        "observation": "No reproductive or developmental toxicity studies for bLF or ALLGLF were identified. Given the proposed use in foods consumed by pregnant women and infants/young children, and the broad use categories, the absence of this data element warrants attention.",
+        "approved_reference": {
+          "grn_number": 1284,
+          "substance_name": "Recombinant bovine lactoferrin isolate produced by Komagataella phaffii Ppas_337 expressing the gene encoding bovine lactoferrin",
+          "section_key": "part_4_safety",
+          "section_label": "Part 4 \u2014 Safety"
+        },
+        "withdrawn_reference": {
+          "grn_number": 1228,
+          "substance_name": "\u03b2-casein produced by E. coli DSM 35048"
+        }
+      },
+      {
+        "domain": "general_availability",
+        "title": "Publication status of Peterson et al. (2024) studies unclear",
+        "priority": "material",
+        "gap_type": "documentation_gap",
+        "section_reference": "Part 6, Section 6.2.2; Part 7",
+        "observation": "Peterson et al. (2024) is cited for multiple key safety studies (14-day, 28-day toxicity, human clinical trial). If these are unpublished or preprint-only at filing date, they can corroborate but cannot independently establish the GRAS conclusion. Publication status should be confirmed.",
+        "approved_reference": {
+          "grn_number": 1284,
+          "substance_name": "Recombinant bovine lactoferrin isolate produced by Komagataella phaffii Ppas_337 expressing the gene encoding bovine lactoferrin",
+          "section_key": "part_4_safety",
+          "section_label": "Part 4 \u2014 Safety"
+        },
+        "withdrawn_reference": {
+          "grn_number": 1228,
+          "substance_name": "\u03b2-casein produced by E. coli DSM 35048"
+        }
+      },
+      {
+        "domain": "conditions_of_use",
+        "title": "Infant formula exclusion not explicitly stated",
+        "priority": "material",
+        "gap_type": "documentation_gap",
+        "section_reference": "Part 2, Table 1; Part 1, Section 1.2",
+        "observation": "Prior K. phaffii GRNs (e.g., GRN 967) explicitly exclude infant formula. The reviewed text does not clearly state whether ALLGLF is intended for or excluded from infant formula. Given infant-specific exposure analysis, this boundary should be explicit in the conditions of use.",
+        "approved_reference": {
+          "grn_number": 1284,
+          "substance_name": "Recombinant bovine lactoferrin isolate produced by Komagataella phaffii Ppas_337 expressing the gene encoding bovine lactoferrin",
+          "section_key": "part_2_intended_use",
+          "section_label": "Part 2 \u2014 Intended Use"
+        },
+        "withdrawn_reference": {
+          "grn_number": 1228,
+          "substance_name": "\u03b2-casein produced by E. coli DSM 35048"
+        }
+      },
+      {
+        "domain": "identity_and_characterization",
+        "title": "Full allergenicity LC-MS/MS results truncated",
+        "priority": "documentation_issue",
+        "gap_type": "documentation_gap",
+        "section_reference": "Part 6, Section 6.3; Table 12",
+        "observation": "Section 6.3 and Table 12 were truncated in the input provided. The full residual host cell protein allergenicity screening results should be verified in the complete submission document.",
+        "approved_reference": {
+          "grn_number": 1284,
+          "substance_name": "Recombinant bovine lactoferrin isolate produced by Komagataella phaffii Ppas_337 expressing the gene encoding bovine lactoferrin",
+          "section_key": "part_1_identity",
+          "section_label": "Part 1 \u2014 Identity, Method of Manufacture & Specifications"
+        },
+        "withdrawn_reference": {
+          "grn_number": 1228,
+          "substance_name": "\u03b2-casein produced by E. coli DSM 35048"
+        }
+      },
+      {
+        "domain": "dietary_exposure",
+        "title": "Dietary exposure methodology detail truncated",
+        "priority": "documentation_issue",
+        "gap_type": "documentation_gap",
+        "section_reference": "Part 3, Section 3.1.1",
+        "observation": "The methodology section is referenced but not fully reproduced in the reviewed input. Whether aggregate total-sample intake or eaters-only distributions were used as the primary conservative estimate cannot be confirmed from reviewed text alone.",
+        "approved_reference": {
+          "grn_number": 1284,
+          "substance_name": "Recombinant bovine lactoferrin isolate produced by Komagataella phaffii Ppas_337 expressing the gene encoding bovine lactoferrin",
+          "section_key": "part_5_dietary_exposure",
+          "section_label": "Part 5 \u2014 Dietary Exposure"
+        },
+        "withdrawn_reference": {
+          "grn_number": 1228,
+          "substance_name": "\u03b2-casein produced by E. coli DSM 35048"
+        }
+      },
+      {
+        "domain": "dietary_exposure",
+        "title": "'Probiotic drinks' category originally included",
+        "priority": "documentation_issue",
+        "gap_type": "adequacy_gap",
+        "section_reference": "Part 3, Table 6; Amendment 2026-01-15",
+        "observation": "FDA identified 'probiotic drinks' in Tables 1 and 6. Notifier confirmed removal in January 2026 amendment. The original intake calculation may have included this category; it should be confirmed that the EDI tables were updated to reflect removal.",
+        "approved_reference": {
+          "grn_number": 1284,
+          "substance_name": "Recombinant bovine lactoferrin isolate produced by Komagataella phaffii Ppas_337 expressing the gene encoding bovine lactoferrin",
+          "section_key": "part_5_dietary_exposure",
+          "section_label": "Part 5 \u2014 Dietary Exposure"
+        },
+        "withdrawn_reference": {
+          "grn_number": 1228,
+          "substance_name": "\u03b2-casein produced by E. coli DSM 35048"
+        }
+      },
+      {
+        "domain": "general_acceptance",
+        "title": "GRN 1219 status relied upon but listed as pending at filing",
+        "priority": "documentation_issue",
+        "gap_type": "adequacy_gap",
+        "section_reference": "Part 6, Tables 10\u201311",
+        "observation": "GRN 1219 is cited as supporting precedent but was officially listed as pending in the FDA inventory at filing. The notifier acknowledges this discrepancy. Its evidentiary weight as general acceptance support is qualified until official FDA disposition is confirmed.",
+        "approved_reference": {
+          "grn_number": 1284,
+          "substance_name": "Recombinant bovine lactoferrin isolate produced by Komagataella phaffii Ppas_337 expressing the gene encoding bovine lactoferrin",
+          "section_key": "part_3_gras_basis",
+          "section_label": "Part 3 \u2014 GRAS Basis"
+        },
+        "withdrawn_reference": {
+          "grn_number": 1228,
+          "substance_name": "\u03b2-casein produced by E. coli DSM 35048"
+        }
+      },
+      {
+        "domain": "regulatory_submission",
+        "title": "Part 6.4 summary and full Part 7 references truncated in reviewed input",
+        "priority": "documentation_issue",
+        "gap_type": "documentation_gap",
+        "section_reference": "Part 6, Section 6.4; Part 7, Section 7.1",
+        "observation": "The GRAS basis summary (Section 6.4) and complete reference list (Part 7) were truncated in the input provided. The full document should be verified to ensure all references are cited and the basis summary is complete and addresses unfavorable data.",
+        "approved_reference": {
+          "grn_number": 1284,
+          "substance_name": "Recombinant bovine lactoferrin isolate produced by Komagataella phaffii Ppas_337 expressing the gene encoding bovine lactoferrin",
+          "section_key": "part_6_narrative",
+          "section_label": "Part 6 \u2014 Narrative"
+        },
+        "withdrawn_reference": {
+          "grn_number": 1228,
+          "substance_name": "\u03b2-casein produced by E. coli DSM 35048"
+        }
+      }
+    ]
+  },
+  "comparative_analysis": {
+    "approved_notices": [
+      {
+        "source_organism_type": "yeast",
+        "substance_type": "protein",
+        "exposure_estimate_included": true,
+        "intended_uses": "general_food, dietary_supplements",
+        "section": "appendix",
+        "date_filed": "",
+        "date_closed": "Mar 25, 2026",
+        "status": "no_questions",
+        "target_population": "general_population",
+        "production_method": "precision_fermentation",
+        "notifier": "",
+        "dietary_exposure_method": "theoretical_maximum",
+        "token_count": 807,
+        "allergenicity_addressed": true,
+        "substance_name": "Recombinant bovine lactoferrin isolate produced by Komagataella phaffii Ppas_337 expressing the gene encoding bovine lactoferrin",
+        "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1284",
+        "safety_data_available": "allergenicity_bioinformatic, history_of_safe_use, in_silico_toxicology",
+        "gras_basis": "scientific_procedures",
+        "grn_number": 1284,
+        "best_distance": 0.20607364177703857,
+        "relevant_sections": [
+          {
+            "key": "appendix",
+            "label": "Appendix"
+          },
+          {
+            "key": "part_6_narrative",
+            "label": "Part 6 \u2014 Narrative"
+          },
+          {
+            "key": "cover_letter",
+            "label": "Cover Letter"
+          }
+        ]
+      },
+      {
+        "section": "cover_letter",
+        "production_method": "precision_fermentation",
+        "dietary_exposure_method": "theoretical_maximum",
+        "allergenicity_addressed": true,
+        "gras_basis": "scientific_procedures",
+        "intended_uses": "dairy_alternatives, protein_bars, bakery, meat_alternatives, confectionery, general_food",
+        "date_filed": "",
+        "safety_data_available": "allergenicity_bioinformatic, nutritional_impact, history_of_safe_use, metabolic_fate",
+        "source_organism_type": "yeast",
+        "status": "no_questions",
+        "substance_name": "\u03b2-lactoglobulin produced by Komagataella phaffii strain VIPLA",
+        "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1200",
+        "date_closed": "Feb 28, 2025",
+        "grn_number": 1200,
+        "target_population": "general_population",
+        "token_count": 803,
+        "notifier": "",
+        "exposure_estimate_included": true,
+        "substance_type": "protein",
+        "best_distance": 0.28062349557876587,
+        "relevant_sections": [
+          {
+            "key": "cover_letter",
+            "label": "Cover Letter"
+          },
+          {
+            "key": "appendix",
+            "label": "Appendix"
+          }
+        ]
+      },
+      {
+        "production_method": "precision_fermentation",
+        "section": "part_6_narrative",
+        "safety_data_available": "allergenicity_bioinformatic, allergenicity_in_vitro, digestibility_study, metabolic_fate, history_of_safe_use",
+        "allergenicity_addressed": true,
+        "exposure_estimate_included": true,
+        "target_population": "general_population",
+        "grn_number": 1056,
+        "status": "no_questions",
+        "date_filed": "",
+        "date_closed": "Feb 15, 2023",
+        "token_count": 770,
+        "source_organism_type": "yeast",
+        "gras_basis": "scientific_procedures",
+        "notifier": "",
+        "substance_name": "\u03b2-lactoglobulin produced by Komagataella phaffii strain yRMK-66",
+        "dietary_exposure_method": "NHANES",
+        "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1056",
+        "substance_type": "protein",
+        "intended_uses": "beverages, dairy_alternatives, protein_bars, bakery, meat_alternatives, general_food",
+        "best_distance": 0.3060115575790405,
+        "relevant_sections": [
+          {
+            "key": "part_6_narrative",
+            "label": "Part 6 \u2014 Narrative"
+          },
+          {
+            "key": "appendix",
+            "label": "Appendix"
+          }
+        ]
+      }
+    ],
+    "withdrawn_notices": [
+      {
+        "date_closed": "May 19, 2016",
+        "target_population": "not_for_infants",
+        "dietary_exposure_method": "not_included",
+        "notifier": "",
+        "token_count": 802,
+        "gras_basis": "scientific_procedures",
+        "production_method": "extraction",
+        "safety_data_available": "",
+        "source_organism_type": "animal",
+        "allergenicity_addressed": false,
+        "substance_type": "protein",
+        "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0612",
+        "substance_name": "Fractionated whey protein isolate containing cows milk derived lactoferrin, lactoperoxidase, and transforming growth factor \u03b22",
+        "intended_uses": "infant_formula, beverages, meal_replacements",
+        "grn_number": 612,
+        "exposure_estimate_included": false,
+        "section": "appendix",
+        "status": "withdrawn",
+        "date_filed": "",
+        "best_distance": 0.38698315620422363,
+        "relevant_sections": [
+          {
+            "key": "appendix",
+            "label": "Appendix"
+          }
+        ]
+      },
+      {
+        "date_closed": "Jun 13, 2025",
+        "token_count": 824,
+        "date_filed": "",
+        "safety_data_available": "digestibility_study, allergenicity_bioinformatic, metabolic_fate, history_of_safe_use",
+        "exposure_estimate_included": true,
+        "production_method": "precision_fermentation",
+        "substance_name": "\u03b2-casein produced by E. coli DSM 35048",
+        "section": "appendix",
+        "target_population": "general_population",
+        "dietary_exposure_method": "NHANES",
+        "notifier": "",
+        "status": "withdrawn",
+        "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1228",
+        "substance_type": "protein",
+        "allergenicity_addressed": true,
+        "intended_uses": "beverages, dairy_alternatives, general_food",
+        "grn_number": 1228,
+        "gras_basis": "scientific_procedures",
+        "source_organism_type": "bacterial",
+        "best_distance": 0.38720476627349854,
+        "relevant_sections": [
+          {
+            "key": "appendix",
+            "label": "Appendix"
+          }
+        ]
+      },
+      {
+        "status": "withdrawn",
+        "section": "appendix",
+        "source_organism_type": "animal",
+        "gras_basis": "scientific_procedures",
+        "token_count": 809,
+        "exposure_estimate_included": false,
+        "target_population": "general_population",
+        "production_method": "",
+        "dietary_exposure_method": "",
+        "grn_number": 611,
+        "date_filed": "",
+        "allergenicity_addressed": false,
+        "safety_data_available": "",
+        "substance_name": "Fractionated whey protein isolate containing cows milk derived lactoferrin, lactoperoxidase, and transforming growth factor \u03b22",
+        "substance_type": "protein",
+        "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0611",
+        "date_closed": "Apr 15, 2016",
+        "intended_uses": "infant_formula, meal_replacements, general_food",
+        "notifier": "",
+        "best_distance": 0.38776683807373047,
+        "relevant_sections": [
+          {
+            "key": "appendix",
+            "label": "Appendix"
+          }
+        ]
+      }
+    ]
+  },
+  "recommended_next_steps": [
+    {
+      "priority": "material",
+      "action": "Conduct or identify published genotoxicity studies for ALLGLF (Ames test plus chromosomal aberration or in vitro micronucleus assay) to complete the standard toxicological battery.",
+      "domain": "Safety Data",
+      "gap_title": "Genotoxicity data for ALLGLF not identified"
+    },
+    {
+      "priority": "material",
+      "action": "Conduct pepsin digestibility assay for ALLGLF to support allergenicity conclusions given the non-native phosphomannose glycosylation pattern.",
+      "domain": "Identity & Characterization",
+      "gap_title": "Pepsin digestibility data not identified"
+    },
+    {
+      "priority": "material",
+      "action": "Verify publication status of Peterson et al. (2024) studies; if unpublished at filing date, assess whether they can independently support GRAS conclusions or only corroborate.",
+      "domain": "General Availability",
+      "gap_title": "Publication status of Peterson et al. (2024) studies unclear"
+    },
+    {
+      "priority": "material",
+      "action": "Add or confirm a residual methanol specification limit in the product specifications and provide measured residual levels from batch analyses.",
+      "domain": "Manufacturing Process",
+      "gap_title": "Residual methanol characterization not addressed"
+    },
+    {
+      "priority": "material",
+      "action": "Explicitly state in the conditions of use whether infant formula is included or excluded, consistent with treatment in analogous K. phaffii GRNs.",
+      "domain": "Conditions of Use",
+      "gap_title": "Infant formula exclusion not explicitly stated"
+    }
+  ],
+  "limitations_and_caveats": "This assessment is based on a smart-truncated input (60,052 of 486,083 characters). Sections 6.3 (allergenicity LC-MS/MS results), 6.4 (GRAS basis summary), Part 3 methodology detail, and Part 7 full reference list were not fully available for review. Gaps classified as documentation_gap with documentation_issue priority where truncation is the plausible sole reason for absence. This assessment evaluates evidence sufficiency only and does not constitute a GRAS determination, legal opinion, or prediction of FDA response."
+}

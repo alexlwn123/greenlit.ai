@@ -1,0 +1,24 @@
+{
+  "grn_number": 632,
+  "substance_name": "Rebaudioside A from Yarrowia lipolytica",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Jun 24, 2016",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0632",
+  "substance_type": "flavoring_agent",
+  "production_method": "precision_fermentation",
+  "source_organism_type": "yeast",
+  "intended_uses": [
+    "beverages",
+    "bakery",
+    "confectionery",
+    "dairy_alternatives"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [],
+  "dietary_exposure_method": null,
+  "exposure_estimate_included": false,
+  "allergenicity_addressed": false
+}

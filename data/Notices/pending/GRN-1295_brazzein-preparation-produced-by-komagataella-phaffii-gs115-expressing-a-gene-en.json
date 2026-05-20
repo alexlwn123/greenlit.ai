@@ -1,0 +1,31 @@
+{
+  "grn_number": 1295,
+  "substance_name": "Brazzein preparation produced by Komagataella phaffii GS115 expressing a gene encoding for brazzein from Pentadiplandra brazzeana",
+  "status": "pending",
+  "date_filed": "",
+  "date_closed": "",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1295",
+  "substance_type": "protein",
+  "production_method": "precision_fermentation",
+  "source_organism_type": "yeast",
+  "intended_uses": [
+    "beverages",
+    "bakery",
+    "confectionery",
+    "snacks",
+    "general_food"
+  ],
+  "target_population": "not_for_infants",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "acute_toxicity",
+    "genotoxicity_ames",
+    "genotoxicity_chromosomal",
+    "allergenicity_bioinformatic",
+    "allergenicity_in_vitro"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true
+}

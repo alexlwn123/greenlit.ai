@@ -1,0 +1,35 @@
+{
+  "grn_number": 580,
+  "substance_name": "Haematococcus pluvialis extract containing astaxanthin esters",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Dec 18, 2015",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0580",
+  "substance_type": "colorant",
+  "production_method": "algal_cultivation",
+  "source_organism_type": "algal",
+  "intended_uses": [
+    "bakery",
+    "beverages",
+    "cereals_and_grains",
+    "confectionery",
+    "dairy_alternatives",
+    "soups_and_sauces",
+    "snacks"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "genotoxicity_ames",
+    "genotoxicity_chromosomal",
+    "acute_toxicity",
+    "chronic_toxicity",
+    "metabolic_fate",
+    "human_clinical_trial",
+    "allergenicity_bioinformatic"
+  ],
+  "dietary_exposure_method": "NHANES",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true
+}

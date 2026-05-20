@@ -1,0 +1,32 @@
+{
+  "grn_number": 1072,
+  "substance_name": "Lemnaceae fiber",
+  "status": "withdrawn",
+  "date_filed": "",
+  "date_closed": "Jan 30, 2023",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1072",
+  "substance_type": "carbohydrate",
+  "production_method": "extraction",
+  "source_organism_type": "plant",
+  "intended_uses": [
+    "general_food",
+    "dietary_supplements",
+    "meat_alternatives",
+    "bakery",
+    "snacks"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "genotoxicity_ames",
+    "genotoxicity_chromosomal",
+    "allergenicity_bioinformatic",
+    "history_of_safe_use",
+    "nutritional_impact",
+    "metabolic_fate"
+  ],
+  "dietary_exposure_method": "USDA_CSFII",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true
+}

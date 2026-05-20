@@ -1,0 +1,26 @@
+{
+  "grn_number": 975,
+  "substance_name": "Maltogenic alpha-amylase enzyme preparation produced by Bacillus licheniformis carrying the gene coding for maltogenic alpha-amylase from Geobacillus stearothermophilus",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Jul 8, 2021",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0975",
+  "substance_type": "enzyme",
+  "production_method": "submerged_fermentation",
+  "source_organism_type": "bacterial",
+  "intended_uses": [
+    "bakery",
+    "general_food"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "90_day_rat_study",
+    "allergenicity_bioinformatic",
+    "acute_toxicity"
+  ],
+  "dietary_exposure_method": "USDA_CSFII",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true
+}

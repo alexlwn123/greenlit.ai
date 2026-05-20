@@ -1,0 +1,24 @@
+{
+  "grn_number": 928,
+  "substance_name": "Dried Saccharomyces cerevisiae yeast fermentate",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "May 14, 2021",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0928",
+  "substance_type": "microorganism",
+  "production_method": "submerged_fermentation",
+  "source_organism_type": "yeast",
+  "intended_uses": [
+    "general_food"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "90_day_rat_study",
+    "history_of_safe_use"
+  ],
+  "dietary_exposure_method": "NHANES",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false
+}

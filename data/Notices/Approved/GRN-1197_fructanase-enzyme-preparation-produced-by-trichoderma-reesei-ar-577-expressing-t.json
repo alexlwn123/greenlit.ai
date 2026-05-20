@@ -1,0 +1,23 @@
+{
+  "grn_number": 1197,
+  "substance_name": "Fructanase enzyme preparation produced by Trichoderma reesei AR-577 expressing the gene encoding fructanase from Lactobacillus crispatus (Resubmission of GRN 1121 )",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Mar 14, 2025",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1197",
+  "substance_type": "enzyme",
+  "production_method": "submerged_fermentation",
+  "source_organism_type": "fungal",
+  "intended_uses": [
+    "bakery"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "allergenicity_bioinformatic"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true
+}

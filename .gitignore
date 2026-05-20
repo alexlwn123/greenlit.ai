@@ -217,6 +217,9 @@ data/Notices/**/*.pdf
 # ChromaDB vector store — generated; run backend/embed.py to rebuild
 data/chroma/
 
+# Chunks file — generated; run pipeline/extract.py to rebuild
+data/chunks.jsonl
+
 # Ruff stuff:
 .ruff_cache/
 

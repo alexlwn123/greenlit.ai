@@ -1,0 +1,26 @@
+{
+  "grn_number": 1226,
+  "substance_name": "Orange ( Citrus sinensis ) extract",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Jun 9, 2025",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1226",
+  "substance_type": "additive",
+  "production_method": "extraction",
+  "source_organism_type": "plant",
+  "intended_uses": [
+    "beverages",
+    "general_food"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "common_use_prior_1958",
+  "safety_data_available": [
+    "history_of_safe_use",
+    "in_silico_toxicology",
+    "allergenicity_bioinformatic"
+  ],
+  "dietary_exposure_method": "not_included",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true
+}

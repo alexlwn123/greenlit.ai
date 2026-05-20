@@ -1,0 +1,26 @@
+{
+  "grn_number": 1211,
+  "substance_name": "Reduced minerals goat whey",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Feb 4, 2025",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1211",
+  "substance_type": "protein",
+  "production_method": "extraction",
+  "source_organism_type": "animal",
+  "intended_uses": [
+    "infant_formula"
+  ],
+  "target_population": "not_for_infants",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "allergenicity_bioinformatic",
+    "allergenicity_in_vitro",
+    "history_of_safe_use",
+    "nutritional_impact"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true
+}

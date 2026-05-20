@@ -1,0 +1,35 @@
+{
+  "grn_number": 436,
+  "substance_name": "Enzyme-modified dextrins",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Jan 18, 2013",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0436",
+  "substance_type": "carbohydrate",
+  "production_method": "enzymatic",
+  "source_organism_type": null,
+  "intended_uses": [
+    "beverages",
+    "dairy_alternatives",
+    "protein_bars",
+    "bakery",
+    "snacks",
+    "general_food",
+    "cereals_and_grains",
+    "soups_and_sauces",
+    "fats_and_oils",
+    "confectionery",
+    "fermented_foods"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "digestibility_study",
+    "nutritional_impact",
+    "allergenicity_bioinformatic"
+  ],
+  "dietary_exposure_method": "market_share",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true
+}

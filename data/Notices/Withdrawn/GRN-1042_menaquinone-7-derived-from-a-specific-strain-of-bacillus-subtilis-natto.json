@@ -1,0 +1,28 @@
+{
+  "grn_number": 1042,
+  "substance_name": "Menaquinone-7 derived from a specific strain of Bacillus subtilis natto",
+  "status": "withdrawn",
+  "date_filed": "",
+  "date_closed": "Apr 3, 2023",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1042",
+  "substance_type": "vitamin",
+  "production_method": "precision_fermentation",
+  "source_organism_type": "bacterial",
+  "intended_uses": [
+    "general_food"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "90_day_rat_study",
+    "genotoxicity_ames",
+    "acute_toxicity",
+    "human_clinical_trial",
+    "metabolic_fate",
+    "in_silico_toxicology"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false
+}

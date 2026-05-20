@@ -1,0 +1,25 @@
+{
+  "grn_number": 672,
+  "substance_name": "Preparation containing five bacterial monophages specific to Shigella spp.",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Mar 27, 2017",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0672",
+  "substance_type": "microorganism",
+  "production_method": "submerged_fermentation",
+  "source_organism_type": "bacterial",
+  "intended_uses": [
+    "general_food",
+    "meat_alternatives"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "history_of_safe_use",
+    "substantial_equivalence"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false
+}

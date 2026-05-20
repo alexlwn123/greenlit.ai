@@ -1,0 +1,25 @@
+{
+  "grn_number": 1172,
+  "substance_name": "liquid milk, both whole and nonfat, combined with lactose and water",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "May 20, 2024",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1172",
+  "substance_type": "protein",
+  "production_method": null,
+  "source_organism_type": "animal",
+  "intended_uses": [
+    "infant_formula"
+  ],
+  "target_population": "not_for_infants",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "history_of_safe_use",
+    "digestibility_study",
+    "allergenicity_bioinformatic"
+  ],
+  "dietary_exposure_method": "NHANES",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true
+}

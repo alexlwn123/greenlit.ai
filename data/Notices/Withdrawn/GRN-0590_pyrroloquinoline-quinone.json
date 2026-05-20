@@ -1,0 +1,26 @@
+{
+  "grn_number": 590,
+  "substance_name": "Pyrroloquinoline quinone",
+  "status": "withdrawn",
+  "date_filed": "",
+  "date_closed": "Jan 18, 2016",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0590",
+  "substance_type": "additive",
+  "production_method": null,
+  "source_organism_type": null,
+  "intended_uses": [
+    "beverages",
+    "meal_replacements",
+    "snacks",
+    "cereals_and_grains"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "history_of_safe_use"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false
+}

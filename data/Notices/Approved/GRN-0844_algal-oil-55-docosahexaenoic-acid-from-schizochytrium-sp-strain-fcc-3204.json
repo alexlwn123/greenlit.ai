@@ -1,0 +1,31 @@
+{
+  "grn_number": 844,
+  "substance_name": "Algal oil (55% docosahexaenoic acid) from Schizochytrium sp. strain FCC-3204",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Oct 18, 2019",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0844",
+  "substance_type": "lipid",
+  "production_method": "submerged_fermentation",
+  "source_organism_type": "algal",
+  "intended_uses": [
+    "beverages",
+    "dairy_alternatives",
+    "infant_formula",
+    "dietary_supplements",
+    "general_food"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "history_of_safe_use",
+    "acute_toxicity",
+    "nutritional_impact",
+    "metabolic_fate",
+    "allergenicity_bioinformatic"
+  ],
+  "dietary_exposure_method": "USDA_CSFII",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true
+}

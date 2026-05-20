@@ -1,0 +1,40 @@
+{
+  "grn_number": 1125,
+  "substance_name": "Pea protein fermented by shiitake mycelia",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Mar 27, 2024",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1125",
+  "substance_type": "protein",
+  "production_method": "solid_state_fermentation",
+  "source_organism_type": "fungal",
+  "intended_uses": [
+    "beverages",
+    "dairy_alternatives",
+    "protein_bars",
+    "bakery",
+    "meat_alternatives",
+    "dietary_supplements",
+    "condiments",
+    "snacks",
+    "general_food",
+    "cereals_and_grains",
+    "soups_and_sauces",
+    "fats_and_oils",
+    "confectionery",
+    "sports_nutrition",
+    "meal_replacements"
+  ],
+  "target_population": "not_for_infants",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "history_of_safe_use",
+    "allergenicity_bioinformatic",
+    "metabolic_fate",
+    "nutritional_impact"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true
+}

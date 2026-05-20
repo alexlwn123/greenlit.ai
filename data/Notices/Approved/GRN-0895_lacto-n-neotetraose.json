@@ -1,0 +1,28 @@
+{
+  "grn_number": 895,
+  "substance_name": "Lacto- N -neotetraose",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Dec 3, 2020",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0895",
+  "substance_type": "carbohydrate",
+  "production_method": "precision_fermentation",
+  "source_organism_type": "bacterial",
+  "intended_uses": [
+    "infant_formula",
+    "beverages",
+    "general_food"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "metabolic_fate",
+    "allergenicity_bioinformatic",
+    "human_clinical_trial",
+    "history_of_safe_use"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true
+}

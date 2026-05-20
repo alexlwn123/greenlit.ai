@@ -1,0 +1,32 @@
+{
+  "grn_number": 581,
+  "substance_name": "Un-hydrolyzed and hydrolyzed pea protein",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Jan 25, 2016",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0581",
+  "substance_type": "protein",
+  "production_method": "extraction",
+  "source_organism_type": "plant",
+  "intended_uses": [
+    "bakery",
+    "beverages",
+    "snacks",
+    "dairy_alternatives",
+    "protein_bars",
+    "meat_alternatives",
+    "meal_replacements",
+    "soups_and_sauces"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "history_of_safe_use",
+    "allergenicity_bioinformatic",
+    "nutritional_impact"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true
+}

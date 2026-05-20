@@ -1,0 +1,29 @@
+{
+  "grn_number": 1083,
+  "substance_name": "Lactobacillus acidophilus KCTC 11906BP",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Oct 31, 2023",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1083",
+  "substance_type": "probiotic",
+  "production_method": "submerged_fermentation",
+  "source_organism_type": "bacterial",
+  "intended_uses": [
+    "dairy_alternatives",
+    "fermented_foods",
+    "dietary_supplements",
+    "general_food"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "allergenicity_in_vitro",
+    "acute_toxicity",
+    "human_clinical_trial",
+    "in_silico_toxicology"
+  ],
+  "dietary_exposure_method": "market_share",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true
+}

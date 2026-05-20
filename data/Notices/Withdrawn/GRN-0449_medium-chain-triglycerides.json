@@ -1,0 +1,34 @@
+{
+  "grn_number": 449,
+  "substance_name": "Medium chain triglycerides",
+  "status": "withdrawn",
+  "date_filed": "",
+  "date_closed": "Feb 19, 2014",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0449",
+  "substance_type": "lipid",
+  "production_method": "fractionation",
+  "source_organism_type": "plant",
+  "intended_uses": [
+    "bakery",
+    "beverages",
+    "confectionery",
+    "dairy_alternatives",
+    "fats_and_oils",
+    "snacks",
+    "sports_nutrition"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "acute_toxicity",
+    "reproductive_toxicity",
+    "developmental_toxicity",
+    "genotoxicity_ames",
+    "history_of_safe_use",
+    "nutritional_impact"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false
+}

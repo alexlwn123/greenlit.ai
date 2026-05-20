@@ -1,0 +1,23 @@
+{
+  "grn_number": 1134,
+  "substance_name": "Bacteriophage preparation specific to Salmonella Enteritidis",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Feb 8, 2024",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1134",
+  "substance_type": "microorganism",
+  "production_method": null,
+  "source_organism_type": "bacterial",
+  "intended_uses": [
+    "meat_alternatives"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "acute_toxicity"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false
+}

@@ -1,0 +1,28 @@
+{
+  "grn_number": 1269,
+  "substance_name": "Monellin preparation produced by Komagataella phaffii CBS 150005 expressing a gene encoding for a modified monellin",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Feb 4, 2026",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1269",
+  "substance_type": "protein",
+  "production_method": "precision_fermentation",
+  "source_organism_type": "yeast",
+  "intended_uses": [
+    "beverages",
+    "general_food"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "metabolic_fate",
+    "acute_toxicity",
+    "allergenicity_bioinformatic",
+    "human_clinical_trial",
+    "in_silico_toxicology"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true
+}
