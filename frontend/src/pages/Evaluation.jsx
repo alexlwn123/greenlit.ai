@@ -163,40 +163,27 @@ function CollapsibleSection({ icon: Icon, title, badge, defaultOpen = false, chi
   )
 }
 
-// Safety signal card — already collapsible
 function SignalCard({ signal }) {
-  const [open, setOpen] = useState(false)
   return (
-    <div className="rounded-xl border border-amber-200 bg-surface overflow-hidden">
-      <button
-        className="w-full flex items-start justify-between gap-3 p-4 text-left hover:bg-amber-50 transition-colors"
-        onClick={() => setOpen(o => !o)}
-      >
-        <div className="flex items-start gap-3">
-          <ShieldAlert className="w-4 h-4 text-moderate mt-0.5 shrink-0" />
-          <p className="text-text-base text-sm font-semibold leading-snug">{signal.signal}</p>
-        </div>
-        {open
-          ? <ChevronUp className="w-4 h-4 text-text-dim shrink-0 mt-0.5" />
-          : <ChevronDown className="w-4 h-4 text-text-dim shrink-0 mt-0.5" />
-        }
-      </button>
-      {open && (
-        <div className="px-4 pb-4 border-t border-amber-100">
-          <p className="text-text-muted text-sm leading-relaxed mt-3 mb-3">{signal.evidence}</p>
+    <div className="rounded-xl border border-amber-300 bg-amber-50 overflow-hidden">
+      <div className="flex items-start gap-3 p-5">
+        <ShieldAlert className="w-5 h-5 text-amber-600 mt-0.5 shrink-0" />
+        <div className="flex-1 min-w-0">
+          <p className="text-text-base text-sm font-bold leading-snug mb-2">{signal.signal}</p>
+          <p className="text-text-muted text-sm leading-relaxed mb-3">{signal.evidence}</p>
           {signal.section_reference && (
             <p className="text-xs text-text-dim mb-3" style={{ fontFamily: 'var(--font-mono)' }}>
               {signal.section_reference}
             </p>
           )}
           {signal.recommended_action && (
-            <div className="rounded-lg bg-green-50 border border-green-200 p-3">
-              <p className="text-xs text-accent font-semibold mb-1">Recommended action</p>
+            <div className="rounded-lg bg-white border border-amber-200 p-3">
+              <p className="text-xs text-amber-700 font-semibold mb-1">Recommended action</p>
               <p className="text-xs text-text-muted leading-relaxed">{signal.recommended_action}</p>
             </div>
           )}
         </div>
-      )}
+      </div>
     </div>
   )
 }
@@ -283,6 +270,34 @@ export default function Evaluation() {
             </div>
           </div>
         </section>
+
+        {/* Safety Signals */}
+        {signals.length > 0 && (
+          <section className="rounded-2xl border-2 border-amber-300 bg-amber-50 p-6 flex flex-col gap-4">
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-lg bg-amber-100 border border-amber-300 flex items-center justify-center shrink-0">
+                <ShieldAlert className="w-5 h-5 text-amber-600" />
+              </div>
+              <div className="flex-1">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <h2 className="text-xl font-bold text-text-base tracking-tight">Safety Signals</h2>
+                  <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-amber-200 text-amber-800 border border-amber-300">
+                    {signals.length} flagged
+                  </span>
+                  <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-white text-text-dim border border-border">
+                    Expert-level analysis
+                  </span>
+                </div>
+                <p className="text-text-muted text-xs mt-0.5">
+                  Substantive issues identified through deep regulatory review — the kind a senior attorney would raise.
+                </p>
+              </div>
+            </div>
+            <div className="flex flex-col gap-3">
+              {signals.map((s, i) => <SignalCard key={i} signal={s} />)}
+            </div>
+          </section>
+        )}
 
         {/* Benchmark */}
         {benchmark && (
@@ -386,18 +401,7 @@ export default function Evaluation() {
           </section>
         )}
 
-        {/* Safety Signals — individual cards already collapsible */}
-        {signals.length > 0 && (
-          <CollapsibleSection
-            icon={ShieldAlert}
-            title="Safety Signals"
-            badge={`${signals.length} flagged`}
-          >
-            <div className="flex flex-col gap-3">
-              {signals.map((s, i) => <SignalCard key={i} signal={s} />)}
-            </div>
-          </CollapsibleSection>
-        )}
+
 
         {/* Next Steps — collapsed by default */}
         {nextSteps.length > 0 && (
