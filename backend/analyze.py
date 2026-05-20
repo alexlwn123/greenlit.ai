@@ -1,9 +1,11 @@
 """Deep gap analysis for a user-uploaded GRAS notice PDF."""
 
 import json
+import logging
 import os
 import re
 import sys
+import threading
 import time
 from datetime import date
 from pathlib import Path
@@ -43,15 +45,18 @@ class AnalysisError(Exception):
 
 # Module-level Anthropic client — shared across calls for connection-pool reuse.
 _anthropic_client: anthropic.Anthropic | None = None
+_anthropic_client_lock = threading.Lock()
 
 
 def _get_anthropic_client() -> anthropic.Anthropic:
     global _anthropic_client
     if _anthropic_client is None:
-        _anthropic_client = anthropic.Anthropic(
-            api_key=os.environ["ANTHROPIC_API_KEY"],
-            timeout=_CLAUDE_TIMEOUT,
-        )
+        with _anthropic_client_lock:
+            if _anthropic_client is None:
+                _anthropic_client = anthropic.Anthropic(
+                    api_key=os.environ["ANTHROPIC_API_KEY"],
+                    timeout=_CLAUDE_TIMEOUT,
+                )
     return _anthropic_client
 
 # Character budget for Claude input — PDFs beyond this are truncated with a marker.
@@ -774,6 +779,7 @@ def analyze(pdf_path: Path, on_progress=None) -> dict:
         summary.get("production_method", ""),
         summary.get("source_organism", ""),
     ]))
+    logging.info("retrieve query: %r", query)
     similar   = retrieve(query, top_notices=10, chunks_per_status=300)
     approved  = similar["approved_notices"]
     withdrawn = similar["withdrawn_notices"]

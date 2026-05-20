@@ -18,6 +18,14 @@ load_dotenv()
 if not os.environ.get("OPENAI_API_KEY") and os.environ.get("OPEN_AI_KEY"):
     os.environ["OPENAI_API_KEY"] = os.environ["OPEN_AI_KEY"]
 
+_REQUIRED_ENV = ["ANTHROPIC_API_KEY", "OPENAI_API_KEY"]
+_missing_env = [k for k in _REQUIRED_ENV if not os.environ.get(k)]
+if _missing_env:
+    raise RuntimeError(
+        f"Missing required environment variables: {', '.join(_missing_env)}. "
+        "Set them in your .env file or shell before starting the server."
+    )
+
 from fastapi import FastAPI, File, HTTPException, Request, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
@@ -40,7 +48,8 @@ MAX_PENDING_JOBS    = 20                  # global queue-depth cap
 MAX_JOBS_STORED     = 200                 # evict completed/failed records above this
 RATE_LIMIT_WINDOW   = 60                  # seconds per rate-limit window
 RATE_LIMIT_MAX      = 5                   # max /analyze submissions per IP per window
-JOB_TIMEOUT_SECONDS    = 660   # fail jobs still running after this long
+JOB_TIMEOUT_SECONDS    = 660       # fail jobs still running after this long
+RESULTS_TTL_SECONDS    = 24 * 3600  # delete persisted result files older than this
 STATUS_RATE_LIMIT_MAX  = 120   # max /status polls per IP per RATE_LIMIT_WINDOW
 
 app = FastAPI(title="GRAS Gap Analysis API", version="1.0")
@@ -121,7 +130,7 @@ def _evict_old_jobs_locked() -> None:
 
 
 def _watchdog() -> None:
-    """Background thread: fail jobs that have been running longer than JOB_TIMEOUT_SECONDS."""
+    """Background thread: timeout stale jobs and sweep expired result files from disk."""
     while True:
         time.sleep(30)
         now = time.monotonic()
@@ -132,6 +141,15 @@ def _watchdog() -> None:
                     if started and now - started > JOB_TIMEOUT_SECONDS:
                         job["status"] = JobStatus.failed
                         job["error"]  = "Analysis timed out — the job ran longer than the allowed limit."
+
+        # Sweep old result files without holding the lock (I/O, not in-memory state)
+        cutoff = time.time() - RESULTS_TTL_SECONDS
+        for result_file in RESULTS_DIR.glob("*.json"):
+            try:
+                if result_file.stat().st_mtime < cutoff:
+                    result_file.unlink(missing_ok=True)
+            except Exception:
+                pass
 
 
 _watchdog_thread = threading.Thread(target=_watchdog, daemon=True)

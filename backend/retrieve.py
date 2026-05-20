@@ -1,7 +1,9 @@
 """Retrieve relevant GRAS notices from ChromaDB by semantic query."""
 
 import json
+import logging
 import os
+import threading
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -18,17 +20,20 @@ COLLECTION_NAME = "gras_notices"
 
 
 _collection = None
+_collection_lock = threading.Lock()
 
 
 def get_collection():
     global _collection
     if _collection is None:
-        client = chromadb.PersistentClient(path=str(CHROMA_DIR))
-        ef = embedding_functions.OpenAIEmbeddingFunction(
-            api_key=os.environ["OPENAI_API_KEY"],
-            model_name="text-embedding-3-small",
-        )
-        _collection = client.get_collection(COLLECTION_NAME, embedding_function=ef)
+        with _collection_lock:
+            if _collection is None:
+                client = chromadb.PersistentClient(path=str(CHROMA_DIR))
+                ef = embedding_functions.OpenAIEmbeddingFunction(
+                    api_key=os.environ["OPENAI_API_KEY"],
+                    model_name="text-embedding-3-small",
+                )
+                _collection = client.get_collection(COLLECTION_NAME, embedding_function=ef)
     return _collection
 
 
