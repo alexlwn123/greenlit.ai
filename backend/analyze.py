@@ -4,6 +4,7 @@ import json
 import os
 import re
 import sys
+import time
 from datetime import date
 from pathlib import Path
 
@@ -16,10 +17,12 @@ if not os.environ.get("OPENAI_API_KEY") and os.environ.get("OPEN_AI_KEY"):
 import anthropic
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
-from pipeline.extract import extract_text
+from pipeline.extract import extract_text, detect_section
 from backend.retrieve import retrieve
 from constants.scoring import (
     BASE_SCORE,
+    DOMAIN_PRIORITY,
+    DOMAIN_PRIORITY_DEFAULT,
     GAP_DISPLAY_TITLES,
     SEVERITY_BASELINE,
     SEVERITY_PRESENT_CAPS,
@@ -28,6 +31,49 @@ from constants.scoring import (
 )
 
 SEVERITY_ORDER = ["critical", "high", "medium", "low"]
+
+
+class AnalysisError(Exception):
+    """Structured error with a machine-readable code for the API layer."""
+    def __init__(self, code: str, message: str):
+        super().__init__(message)
+        self.code    = code
+        self.message = message
+
+
+# Module-level Anthropic client — shared across calls for connection-pool reuse.
+_anthropic_client: anthropic.Anthropic | None = None
+
+
+def _get_anthropic_client() -> anthropic.Anthropic:
+    global _anthropic_client
+    if _anthropic_client is None:
+        _anthropic_client = anthropic.Anthropic(
+            api_key=os.environ["ANTHROPIC_API_KEY"],
+            timeout=_CLAUDE_TIMEOUT,
+        )
+    return _anthropic_client
+
+# Character budget for Claude input — PDFs beyond this are truncated with a marker.
+_MAX_ANALYSIS_CHARS = 400_000
+
+# Module-level sidecar cache — loaded once per process, not per analysis run.
+_sidecar_cache: dict[str, list[dict]] = {}
+
+
+def _load_sidecars_cached(directory: Path, status_value: str) -> list[dict]:
+    key = str(directory)
+    if key not in _sidecar_cache:
+        result = []
+        for json_path in directory.glob("*.json"):
+            try:
+                data = json.loads(json_path.read_text(encoding="utf-8"))
+                if data.get("status") == status_value:
+                    result.append(data)
+            except Exception:
+                pass
+        _sidecar_cache[key] = result
+    return _sidecar_cache[key]
 
 # Maps each gap field to the GRAS notice section where it should appear
 GAP_TO_NOTICE_SECTION = {
@@ -133,7 +179,7 @@ _DOMAIN_SCHEMA = (
 ANALYSIS_PROMPT = """
 Analyze the following FDA GRAS notice draft. Return ONLY a valid JSON object — no markdown fences, no preamble.
 
-BE CONCISE. Every observation field: max 60 words. Every summary field: max 40 words. Limit recommended_next_steps to 5 items. Limit strengths_summary to 5 items. Total response must stay under 8000 tokens.
+BE CONCISE. Every observation field: max 60 words. Every summary field: max 40 words. Limit recommended_next_steps to 5 items. Limit strengths_summary to 5 items. Total response must stay under 14000 tokens.
 
 All domain entries use this structure: {domain_schema}
 
@@ -156,7 +202,6 @@ Return:
     "conditions_of_use": {domain_schema},
     "regulatory_submission": {domain_schema}
   }},
-  "gap_field_presence": {{"dietary_exposure_estimate": true, "allergenicity_assessment": true, "genotoxicity_battery": true, "production_organism_characterization": true, "intended_use_specificity": true, "impurity_characterization": true, "manufacturing_process_detail": true, "specifications_and_purity": true, "digestibility_data": true, "stability_data": true, "nutritional_impact": true, "batch_consistency": true, "expert_panel_review": true, "human_exposure_data": true, "history_of_safe_use": true, "environmental_safety": true}},
   "strengths_summary": [{{"domain": "string", "observation": "string", "section_reference": "string"}}],
   "recommended_next_steps": [{{"priority": "foundational|material|documentation_issue", "action": "string", "domain": "string", "gap_title": "string", "fda_pushback_probability": "high|medium|low", "pushback_reasoning": "1 sentence: the specific pattern FDA typically challenges on this issue, grounded in what is present or absent in this submission"}}],
   "limitations_and_caveats": "string"
@@ -169,28 +214,203 @@ Notice text ({char_count} characters):
 
 
 
-def _call_claude(text: str, max_tokens: int = 10000) -> dict:
-    client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
+# Keywords that signal substantive presence of each documentation field.
+# Multiple terms per field — ANY match (case-insensitive) marks the field present.
+_FIELD_KEYWORDS: dict[str, list[str]] = {
+    "dietary_exposure_estimate": [
+        "dietary exposure", "estimated daily intake", "nhanes",
+        "usda food", "mg/kg body weight", "mg/kg bw", "exposure estimate",
+        "theoretical maximum", "consumption estimate", "per capita intake",
+        "food consumption data", "intake estimate", "daily consumption",
+        "exposure assessment", "intake assessment", "dietary intake estimate",
+        "estimated intake", "consumption data", "food intake",
+        "poundage data", "market share", "eating occasion",
+        "part 5", "section 5", "total daily intake", "estimated total intake",
+        "consumption modeling", "eaters only", "eaters-only", "total diet study",
+        "food frequency", "intake modeling", "daily consumption estimate",
+        "exposure modeling", "dietary survey", "consumption survey",
+    ],
+    "allergenicity_assessment": [
+        "allergenicity", "allergenic", "allergen", "allerhunter", "farrp",
+        "ige binding", "ige-binding", "homology search", "cross-reactive",
+        "allergic sensitization", "allergy", "hypersensitivity",
+        "sequence homology", "protein allergen", "allergic reaction",
+        "sensitization potential", "bioinformatic", "sequence similarity",
+        "blastp", "fasta search", "allergome", "protein homology",
+        "amino acid homology", "allergenic protein",
+    ],
+    "genotoxicity_battery": [
+        "genotoxicity", "genotoxic", "ames test", "bacterial reverse mutation",
+        "chromosomal aberration", "micronucleus", "clastogenicity", "clastogenic",
+        "mutagenicity", "mutagenic", "in vitro genetic", "genetic toxicology",
+        "dna damage", "comet assay", "salmonella typhimurium",
+        "mammalian cell", "mouse lymphoma", "genotoxicology",
+        "in vitro micronucleus", "mouse lymphoma assay", "mla assay",
+        "tk locus", "hprt assay", "unscheduled dna synthesis", "uds assay",
+    ],
+    "digestibility_data": [
+        "digestibility", "digestible", "pepsin", "pancreatin",
+        "in vitro digest", "gastrointestinal digest", "simulated gastric",
+        "digestive stability", "proteolytic", "sgf", "sif",
+        "simulated intestinal", "gastric fluid", "intestinal fluid",
+        "protein digestibility", "pepsin digestibility", "simulated digestion",
+        "gastrointestinal stability", "gut stability",
+    ],
+    "nutritional_impact": [
+        "nutritional impact", "nutritional assessment", "nutritional contribution",
+        "nutrient intake", "nutritional value", "macronutrient", "micronutrient",
+        "caloric", "calorie", "protein content", "fat content",
+        "carbohydrate", "fiber content", "amino acid", "fatty acid",
+        "vitamin", "mineral content", "nutritional profile",
+        "nutrition facts", "nutrient composition", "caloric contribution",
+        "recommended daily", "daily value", "percent dv", "nutrient density",
+        "macronutrient profile", "dietary contribution",
+    ],
+    "human_exposure_data": [
+        "clinical trial", "human study", "human clinical", "clinical study",
+        "human subjects", "human consumption", "human volunteer",
+        "randomized controlled", "human intervention", "human data",
+        "human safety", "tolerability study", "bioavailability study",
+        "pharmacokinetic", "human pharmacology", "human trial",
+        "open-label study", "crossover study", "double-blind",
+        "human tolerability", "clinical evaluation",
+    ],
+    "history_of_safe_use": [
+        "history of safe use", "history of use", "traditional use",
+        "conventional food", "prior to 1958", "pre-1958", "pre 1958",
+        "safe use in food", "years of consumption", "long history",
+        "traditional food", "centuries", "decades of use", "long-standing use",
+        "widely consumed", "common use", "documented use", "food use history",
+        "common use in food", "traditional food ingredient",
+        "long-standing food use", "historical use", "established use",
+    ],
+}
 
+# Terms used to verify the uploaded PDF is actually a GRAS notice.
+_GRAS_MARKER_TERMS = [
+    "generally recognized as safe", "gras notice", "gras determination",
+    "gras basis", "gras conclusion", "grn",
+]
+_FDA_MARKER_TERMS = [
+    "food and drug administration", "fda", "21 cfr", "federal register",
+]
+_STRUCTURE_MARKER_TERMS = [
+    "part 1", "part 2", "part 3", "intended use",
+    "dietary exposure", "safety assessment", "manufacturing process",
+]
+
+
+def _validate_gras_notice(text: str) -> tuple[bool, str]:
+    """Heuristic check that the uploaded PDF looks like a GRAS notice."""
+    lower = text.lower()
+    gras_hits   = sum(1 for t in _GRAS_MARKER_TERMS   if t in lower)
+    fda_hits    = sum(1 for t in _FDA_MARKER_TERMS    if t in lower)
+    struct_hits = sum(1 for t in _STRUCTURE_MARKER_TERMS if t in lower)
+    if gras_hits == 0 and fda_hits == 0:
+        return False, (
+            "The uploaded document does not appear to be an FDA GRAS notice — "
+            "no GRAS or FDA terminology was detected. "
+            "Please upload a GRAS notice draft in standard Parts 1–7 format."
+        )
+    if gras_hits == 0 and struct_hits < 2:
+        return False, (
+            "The uploaded document may not be a complete FDA GRAS notice. "
+            "GRAS-specific terminology is absent. "
+            "Please verify you uploaded the correct file."
+        )
+    return True, ""
+
+
+def _split_text_by_section(text: str) -> dict[str, str]:
+    """Bucket document text by Part section using header detection."""
+    buckets: dict[str, list[str]] = {}
+    current = "cover_letter"
+    for line in text.splitlines():
+        detected = detect_section(line)
+        if detected:
+            current = detected
+        buckets.setdefault(current, []).append(line)
+    return {k: "\n".join(v).lower() for k, v in buckets.items()}
+
+
+def _check_field_presence(text: str) -> dict:
+    """Keyword scan scoped to the document section where each field belongs.
+
+    Falls back to full-text scan if the target section is absent or too short
+    (< 300 chars), which handles notices that don't follow standard Part headers.
+    """
+    full_lower = text.lower()
+    section_texts = _split_text_by_section(text)
+    result = {}
+    for field, keywords in _FIELD_KEYWORDS.items():
+        target_section = GAP_TO_NOTICE_SECTION.get(field)
+        scoped = section_texts.get(target_section, "") if target_section else ""
+        search_text = scoped if len(scoped) >= 300 else full_lower
+        result[field] = any(kw in search_text for kw in keywords)
+        print(f"  [field_presence] {field}: {result[field]} "
+              f"({'section:' + target_section if len(scoped) >= 300 else 'full-text'})")
+    return result
+
+
+def _applicable_fields(engagement_summary: dict) -> dict[str, bool]:
+    """Which of the 7 benchmark fields are applicable for this filing type."""
+    gras_basis = engagement_summary.get("gras_basis", "scientific_procedures")
+    return {
+        "dietary_exposure_estimate": True,
+        "allergenicity_assessment":  True,
+        "genotoxicity_battery":      True,
+        "digestibility_data":        True,
+        "nutritional_impact":        True,
+        "human_exposure_data":       True,
+        "history_of_safe_use":       gras_basis == "common_use_prior_1958",
+    }
+
+
+_CLAUDE_TIMEOUT = 600.0  # seconds before giving up on a single API call
+_TRANSIENT_RETRY_MAX = 3
+
+
+def _call_claude(text: str, max_tokens: int = 16000, _attempt: int = 0) -> dict:
+    client = _get_anthropic_client()
+
+    # Escape curly braces in PDF text so str.format() doesn't misparse them
+    # as format placeholders (e.g. tables or formulas like "{EC 3.2.1.4}").
+    safe_text = text.replace("{", "{{").replace("}", "}}")
     prompt = ANALYSIS_PROMPT.format(
-        text=text,
+        text=safe_text,
         char_count=f"{len(text):,}",
         domain_schema=_DOMAIN_SCHEMA,
     )
 
-    message = client.messages.create(
-        model="claude-sonnet-4-6",
-        max_tokens=max_tokens,
-        system=[
-            {
-                "type": "text",
-                "text": SYSTEM_PROMPT,
-                "cache_control": {"type": "ephemeral"},
-            }
-        ],
-        messages=[{"role": "user", "content": prompt}],
-        extra_headers={"anthropic-beta": "prompt-caching-2024-07-31"},
-    )
+    try:
+        message = client.messages.create(
+            model="claude-sonnet-4-6",
+            max_tokens=max_tokens,
+            temperature=0,
+            system=[
+                {
+                    "type": "text",
+                    "text": SYSTEM_PROMPT,
+                    "cache_control": {"type": "ephemeral"},
+                }
+            ],
+            messages=[{"role": "user", "content": prompt}],
+            extra_headers={"anthropic-beta": "prompt-caching-2024-07-31,output-128k-2025-02-19"},
+        )
+    except (anthropic.APIConnectionError, anthropic.RateLimitError) as exc:
+        if _attempt >= _TRANSIENT_RETRY_MAX:
+            raise AnalysisError("api_error", f"Claude API unavailable after {_TRANSIENT_RETRY_MAX} retries: {exc}")
+        wait = 2 ** _attempt + 1
+        print(f"  [{exc.__class__.__name__}] — retrying in {wait}s (attempt {_attempt + 1}/{_TRANSIENT_RETRY_MAX})...")
+        time.sleep(wait)
+        return _call_claude(text, max_tokens=max_tokens, _attempt=_attempt + 1)
+    except anthropic.APIStatusError as exc:
+        if exc.status_code in (429, 529) and _attempt < _TRANSIENT_RETRY_MAX:
+            wait = 2 ** _attempt + 1
+            print(f"  [HTTP {exc.status_code}] API busy — retrying in {wait}s (attempt {_attempt + 1}/{_TRANSIENT_RETRY_MAX})...")
+            time.sleep(wait)
+            return _call_claude(text, max_tokens=max_tokens, _attempt=_attempt + 1)
+        raise AnalysisError("api_error", f"Claude API error {exc.status_code}: {exc.message}")
 
     raw = message.content[0].text.strip()
     raw = re.sub(r"^```(?:json)?\s*", "", raw)
@@ -199,8 +419,8 @@ def _call_claude(text: str, max_tokens: int = 10000) -> dict:
     try:
         return json.loads(raw)
     except json.JSONDecodeError:
-        if max_tokens >= 14000:
-            raise  # already retried at max, give up
+        if max_tokens >= 24000:
+            raise
         print(f"  JSON truncated at {max_tokens} tokens — retrying with {max_tokens + 4000} tokens...")
         return _call_claude(text, max_tokens=max_tokens + 4000)
 
@@ -264,13 +484,18 @@ def _build_gap_report_from_domains(domain_analysis: dict,
     gap's domain section against the sections present in each notice's chunks,
     so different gaps cite the most topically relevant example notices.
     """
+    # Precompute best notice per section key — avoids O(gaps) repeated sorts
+    used_sections = {_DOMAIN_TO_SECTION.get(d, "part_1_identity") for d in domain_analysis}
+    best_approved_by_section  = {s: _best_notice_for_section(approved,  s) for s in used_sections}
+    best_withdrawn_by_section = {s: _best_notice_for_section(withdrawn, s) for s in used_sections}
+
     gaps = []
     for domain_key, domain_data in domain_analysis.items():
         section_key = _DOMAIN_TO_SECTION.get(domain_key, "part_1_identity")
         section_label = NOTICE_SECTION_LABELS.get(section_key, section_key)
 
-        best_approved  = _best_notice_for_section(approved, section_key)
-        best_withdrawn = _best_notice_for_section(withdrawn, section_key)
+        best_approved  = best_approved_by_section[section_key]
+        best_withdrawn = best_withdrawn_by_section[section_key]
 
         ref_approved = (
             {"grn_number": best_approved["grn_number"],
@@ -285,11 +510,12 @@ def _build_gap_report_from_domains(domain_analysis: dict,
             if best_withdrawn else None
         )
 
+        domain_priority = DOMAIN_PRIORITY.get(domain_key, DOMAIN_PRIORITY_DEFAULT)
         for gap in domain_data.get("gaps", []):
             gaps.append({
                 "domain":      domain_key,
                 "title":       gap.get("title", ""),
-                "priority":    gap.get("priority", "material"),
+                "priority":    domain_priority,
                 "gap_type":    gap.get("gap_type", ""),
                 "section_reference": gap.get("section_reference", ""),
                 "observation": gap.get("observation", ""),
@@ -347,10 +573,22 @@ _KNOWN_PRODUCTION_METHODS = [
 ]
 
 
-def _proxy_score(field_presence: dict) -> float:
-    """Weighted field-absence penalty, normalized 0–1. Lower is better."""
-    missing = sum(_BENCHMARKABLE_WEIGHTS[f] for f in _BENCHMARKABLE_FIELDS if not field_presence.get(f))
-    return round(missing / _MAX_BENCHMARK_WEIGHT, 3)
+def _proxy_score(field_presence: dict, applicable: dict | None = None) -> float:
+    """Weighted field-absence penalty, normalized 0–1. Lower is better.
+
+    If applicable is provided, non-applicable fields are excluded from both
+    numerator and denominator so the score is fair across filing types.
+    """
+    total = 0
+    missing = 0
+    for f in _BENCHMARKABLE_FIELDS:
+        if applicable is not None and not applicable.get(f, True):
+            continue
+        w = _BENCHMARKABLE_WEIGHTS[f]
+        total += w
+        if not field_presence.get(f):
+            missing += w
+    return round(missing / total, 3) if total else 0.0
 
 
 def _match_production_method(pm_text: str) -> str | None:
@@ -399,20 +637,9 @@ def _build_benchmark(
     pm_text = engagement_summary.get("production_method", "")
     pm_match = _match_production_method(pm_text)
 
-    # Load all approved + withdrawn sidecars
-    def load_sidecars(directory: Path, status_value: str) -> list[dict]:
-        result = []
-        for json_path in directory.glob("*.json"):
-            try:
-                data = json.loads(json_path.read_text(encoding="utf-8"))
-                if data.get("status") == status_value:
-                    result.append(data)
-            except Exception:
-                pass
-        return result
 
-    approved_sidecars  = load_sidecars(Path("data/notices/Approved"),  "no_questions")
-    withdrawn_sidecars = load_sidecars(Path("data/notices/Withdrawn"), "withdrawn")
+    approved_sidecars  = _load_sidecars_cached(Path("data/notices/Approved"),  "no_questions")
+    withdrawn_sidecars = _load_sidecars_cached(Path("data/notices/Withdrawn"), "withdrawn")
 
     # Option A: corpus baseline — filter approved to matching production method
     category = [s for s in approved_sidecars if pm_match and s.get("production_method") == pm_match]
@@ -431,10 +658,13 @@ def _build_benchmark(
             "n": len(category),
         }
 
+    applicable = _applicable_fields(engagement_summary)
+
     # Proxy scores: current notice vs approved category vs all withdrawn
-    current_proxy  = _proxy_score(gap_field_presence)
-    approved_scores  = [_proxy_score(_sidecar_field_presence(s)) for s in category]
-    withdrawn_scores = [_proxy_score(_sidecar_field_presence(s)) for s in withdrawn_sidecars]
+    # All three use the same applicable-field mask so scores are comparable.
+    current_proxy    = _proxy_score(gap_field_presence, applicable)
+    approved_scores  = [_proxy_score(_sidecar_field_presence(s), applicable) for s in category]
+    withdrawn_scores = [_proxy_score(_sidecar_field_presence(s), applicable) for s in withdrawn_sidecars]
     approved_mean  = round(sum(approved_scores)  / len(approved_scores),  3) if approved_scores  else 0.0
     withdrawn_mean = round(sum(withdrawn_scores) / len(withdrawn_scores), 3) if withdrawn_scores else 0.0
 
@@ -449,6 +679,7 @@ def _build_benchmark(
         }
 
     return {
+        "applicable_fields": applicable,
         "proxy_score": {
             "current":        current_proxy,
             "approved_mean":  approved_mean,
@@ -512,46 +743,63 @@ def _build_comparative_analysis(approved: list, withdrawn: list) -> dict:
     }
 
 
-def analyze(pdf_path: Path) -> dict:
-    print("[1/5] Extracting text...")
-    text = extract_text(pdf_path)
-    if not text.strip():
-        raise ValueError("No text could be extracted from the PDF.")
+def analyze(pdf_path: Path, on_progress=None) -> dict:
+    def _progress(step: str, label: str):
+        print(f"[{label}]", flush=True)
+        if on_progress:
+            on_progress(step)
 
-    print("[2/5] Running deep analysis with Claude...")
+    _progress("extracting", "1/5 Extracting text")
+    text, skipped_pages = extract_text(pdf_path, return_stats=True)
+    if not text.strip():
+        raise AnalysisError("no_text", "No text could be extracted from the PDF. It may be a scanned image-only document.")
+
+    valid, msg = _validate_gras_notice(text)
+    if not valid:
+        raise AnalysisError("invalid_document", msg)
+
+    truncated = len(text) > _MAX_ANALYSIS_CHARS
+    if truncated:
+        print(f"  Document truncated: {len(text):,} chars → {_MAX_ANALYSIS_CHARS:,} chars", flush=True)
+        text = text[:_MAX_ANALYSIS_CHARS] + "\n\n[... truncated: document exceeded analysis input budget]"
+
+    _progress("analyzing", "2/5 Running deep analysis with Claude")
     analysis = _call_claude(text)
 
     summary = analysis.get("engagement_summary", {})
 
-    print("[3/5] Retrieving similar notices...")
+    _progress("retrieving", "3/5 Retrieving similar notices")
     query = " ".join(filter(None, [
         summary.get("substance_name", ""),
         summary.get("production_method", ""),
         summary.get("source_organism", ""),
     ]))
-    # Fetch a wide pool so per-gap section matching has real variety to choose from.
-    # comparative_analysis will slice this to top-3 for the UI overview.
-    similar = retrieve(query, top_notices=10, chunks_per_status=80)
-    approved = similar["approved_notices"]
+    similar   = retrieve(query, top_notices=10, chunks_per_status=300)
+    approved  = similar["approved_notices"]
     withdrawn = similar["withdrawn_notices"]
 
-    print("[4/5] Scoring...")
+    _progress("benchmarking", "4/5 Scoring and benchmarking")
     domain_analysis = analysis.get("domain_analysis", {})
     score, priority_counts = _compute_score_from_domains(domain_analysis)
+    field_presence = _check_field_presence(text)
+    benchmark = _build_benchmark(summary, field_presence, approved)
 
-    print("[5/5] Building report...")
-    benchmark = _build_benchmark(summary, analysis.get("gap_field_presence", {}), approved)
+    _progress("finalizing", "5/5 Building gap report")
     gap_report_items = _build_gap_report_from_domains(domain_analysis, approved, withdrawn)
 
-    # Build consolidated gap summary across all domains
+    # Build consolidated gap summary; enrich with reference notices from gap_report_items
+    ref_lookup = {g["title"]: g for g in gap_report_items}
     consolidated = []
-    for domain_key, domain_data in analysis.get("domain_analysis", {}).items():
+    priority_order = ["foundational", "material", "documentation_issue"]
+    for domain_key, domain_data in domain_analysis.items():
         for gap in domain_data.get("gaps", []):
+            ref = ref_lookup.get(gap.get("title"), {})
             consolidated.append({
                 **gap,
-                "domain": domain_key,
+                "domain":               domain_key,
+                "approved_reference":   ref.get("approved_reference"),
+                "withdrawn_reference":  ref.get("withdrawn_reference"),
             })
-    priority_order = ["foundational", "material", "documentation_issue"]
     consolidated.sort(
         key=lambda g: priority_order.index(g.get("priority", "material"))
         if g.get("priority") in priority_order else 1
@@ -560,22 +808,24 @@ def analyze(pdf_path: Path) -> dict:
     return {
         "meta": {
             "report_version": "1.0",
-            "analysis_date": date.today().isoformat(),
-            "pdf_filename": pdf_path.name,
+            "analysis_date":  date.today().isoformat(),
+            "pdf_filename":   pdf_path.name,
+            "truncated":      truncated,
+            "skipped_pages":  skipped_pages,
         },
-        "engagement_summary": summary,
-        "threshold_assessment": analysis.get("threshold_assessment", {}),
+        "engagement_summary":      summary,
+        "threshold_assessment":    analysis.get("threshold_assessment", {}),
         "potential_safety_signals": analysis.get("potential_safety_signals", []),
-        "domain_analysis": analysis.get("domain_analysis", {}),
+        "domain_analysis":         analysis.get("domain_analysis", {}),
         "consolidated_gap_summary": consolidated,
-        "strengths_summary": analysis.get("strengths_summary", []),
+        "strengths_summary":       analysis.get("strengths_summary", []),
         "gap_report": {
-            "score": score,
+            "score":           score,
             "priority_counts": priority_counts,
-            "gaps": gap_report_items,
         },
-        "benchmark": benchmark,
-        "comparative_analysis": _build_comparative_analysis(approved, withdrawn),
+        "benchmark":              benchmark,
+        "gap_field_presence":     field_presence,
+        "comparative_analysis":   _build_comparative_analysis(approved, withdrawn),
         "recommended_next_steps": _enrich_next_steps(analysis.get("recommended_next_steps", []), withdrawn),
         "limitations_and_caveats": analysis.get("limitations_and_caveats", ""),
     }
@@ -668,7 +918,7 @@ if __name__ == "__main__":
         cb = bm["corpus_baseline"]
         pc_bm = bm["peer_comparison"]
         ps = bm["proxy_score"]
-        gfp = analysis.get("gap_field_presence", {})
+        gfp = field_presence
         print("\n" + "=" * 70)
         print("BENCHMARK vs. APPROVED CORPUS")
         print("=" * 70)

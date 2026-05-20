@@ -17,13 +17,19 @@ CHROMA_DIR = Path("data/chroma")
 COLLECTION_NAME = "gras_notices"
 
 
+_collection = None
+
+
 def get_collection():
-    client = chromadb.PersistentClient(path=str(CHROMA_DIR))
-    ef = embedding_functions.OpenAIEmbeddingFunction(
-        api_key=os.environ["OPENAI_API_KEY"],
-        model_name="text-embedding-3-small",
-    )
-    return client.get_collection(COLLECTION_NAME, embedding_function=ef)
+    global _collection
+    if _collection is None:
+        client = chromadb.PersistentClient(path=str(CHROMA_DIR))
+        ef = embedding_functions.OpenAIEmbeddingFunction(
+            api_key=os.environ["OPENAI_API_KEY"],
+            model_name="text-embedding-3-small",
+        )
+        _collection = client.get_collection(COLLECTION_NAME, embedding_function=ef)
+    return _collection
 
 
 def _group_by_grn(results: dict, top_n: int) -> list[dict]:

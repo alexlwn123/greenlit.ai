@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { UploadCloud, FileText, X, Dna, Microscope, FlaskConical, Leaf, Loader2, AlertCircle } from 'lucide-react'
+import { UploadCloud, FileText, X, Dna, Loader2, AlertCircle } from 'lucide-react'
 import NavBar from '../components/NavBar'
 import { useAnalysis } from '../context/AnalysisContext'
 import { submitAnalysis, getStatus } from '../lib/api'
@@ -14,9 +14,19 @@ const FOCUS_OPTIONS = [
   'Expert Panel Qualifications',
 ]
 
-const STATUS_MESSAGES = {
-  pending: 'Extracting filing metadata...',
-  running: 'Identifying comparable notices and running gap analysis...',
+const PROGRESS_MESSAGES = {
+  extracting:   'Extracting document text...',
+  analyzing:    'Running deep analysis with Claude AI...',
+  retrieving:   'Finding similar GRAS notices...',
+  benchmarking: 'Computing benchmark comparison...',
+  finalizing:   'Building gap report...',
+}
+
+const ERROR_MESSAGES = {
+  no_text:          'No text could be extracted. The PDF may be a scanned image — try running OCR first.',
+  invalid_document: 'This file does not appear to be an FDA GRAS notice. Please upload a notice draft in standard Parts 1–7 format.',
+  api_error:        'The analysis service is temporarily unavailable. Please try again in a few minutes.',
+  internal_error:   'An unexpected error occurred. Please try again.',
 }
 
 export default function Submit() {
@@ -28,6 +38,7 @@ export default function Submit() {
   const [focusAreas, setFocusAreas] = useState([])
   const [loading, setLoading] = useState(false)
   const [jobStatus, setJobStatus] = useState(null)
+  const [progressStep, setProgressStep] = useState(null)
   const [error, setError] = useState(null)
   const fileInputRef = useRef(null)
   const pollingRef = useRef(null)
@@ -37,14 +48,15 @@ export default function Submit() {
       try {
         const data = await getStatus(id)
         setJobStatus(data.status)
+        if (data.progress_step) setProgressStep(data.progress_step)
         if (data.status === 'complete') {
           clearInterval(pollingRef.current)
           setResult(data.result)
-          navigate('/attributes')
+          navigate('/evaluation')
         } else if (data.status === 'failed') {
           clearInterval(pollingRef.current)
           setLoading(false)
-          setError(data.error || 'Analysis failed. Please try again.')
+          setError(ERROR_MESSAGES[data.error_code] || data.error || 'Analysis failed. Please try again.')
         }
       } catch {
         clearInterval(pollingRef.current)
@@ -105,7 +117,9 @@ export default function Submit() {
           </div>
           <div className="text-center">
             <p className="text-text-base text-lg font-semibold mb-2">Analyzing your filing</p>
-            <p className="text-text-muted text-sm">{STATUS_MESSAGES[jobStatus] || 'Processing...'}</p>
+            <p className="text-text-muted text-sm">
+              {PROGRESS_MESSAGES[progressStep] || (jobStatus === 'pending' ? 'Queued...' : 'Processing...')}
+            </p>
           </div>
           <div className="flex items-center gap-2 text-text-dim text-xs">
             <Loader2 className="w-3 h-3 animate-spin" />
@@ -125,16 +139,11 @@ export default function Submit() {
 
           {/* Hero */}
           <div className="text-center mb-10">
-            <div className="flex items-center justify-center gap-3 mb-5">
-              <Leaf className="w-5 h-5 text-accent opacity-50" />
-              <Microscope className="w-5 h-5 text-accent opacity-75" />
-              <FlaskConical className="w-5 h-5 text-accent opacity-50" />
-            </div>
-            <h1 className="text-4xl font-bold text-text-base tracking-tight mb-3">
-              Analyze Your GRAS Filing
+            <h1 className="text-4xl font-bold text-text-base tracking-tight mb-3" style={{ letterSpacing: '-0.03em' }}>
+              GRAS gap analysis
             </h1>
             <p className="text-text-muted text-base leading-relaxed max-w-md mx-auto">
-              Upload your draft GRAS notice and receive an AI-powered gap analysis with scoring, comparables, and actionable recommendations.
+              Upload your draft GRAS notice for an AI-powered gap analysis — scored, benchmarked, and ready to act on.
             </p>
           </div>
 
@@ -142,8 +151,8 @@ export default function Submit() {
           <div
             className="relative rounded-2xl border-2 border-dashed cursor-pointer transition-all duration-200 mb-5"
             style={{
-              borderColor: isDragging ? '#16a34a' : file ? '#16a34a' : '#ccddd3',
-              background:  isDragging ? '#f0fdf4' : file ? '#f0fdf4' : '#ffffff',
+              borderColor: isDragging ? '#00ff88' : file ? '#00ff88' : '#222222',
+              background:  isDragging ? 'rgba(0,255,136,0.05)' : file ? 'rgba(0,255,136,0.03)' : '#0d0d0d',
             }}
             onClick={() => !file && fileInputRef.current?.click()}
             onDragOver={e => { e.preventDefault(); setIsDragging(true) }}
@@ -203,8 +212,8 @@ export default function Submit() {
             disabled={!file}
             className="w-full py-3.5 rounded-xl font-semibold text-base transition-all duration-200"
             style={{
-              background: file ? '#16a34a' : '#e2ede6',
-              color:      file ? '#ffffff' : '#9cbfab',
+              background: file ? '#00ff88' : '#181818',
+              color:      file ? '#000000' : '#383838',
               cursor:     file ? 'pointer' : 'not-allowed',
             }}
           >

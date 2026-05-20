@@ -1,5 +1,6 @@
 """FastAPI layer for the GRAS gap analysis tool."""
 
+import json
 import os
 import sys
 import time
@@ -24,19 +25,23 @@ from fastapi.responses import FileResponse
 from pydantic import BaseModel
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
-from backend.analyze import analyze
+from backend.analyze import analyze, AnalysisError
 
-UPLOAD_DIR = Path("data/uploads")
+UPLOAD_DIR  = Path("data/uploads")
+RESULTS_DIR = Path("data/results")
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 
 # ---------------------------------------------------------------------------
 # Abuse-control constants
 # ---------------------------------------------------------------------------
-MAX_UPLOAD_BYTES   = 50 * 1024 * 1024   # 50 MB hard cap on uploaded file
-MAX_PENDING_JOBS   = 20                  # global queue-depth cap
-MAX_JOBS_STORED    = 200                 # evict completed/failed records above this
-RATE_LIMIT_WINDOW  = 60                  # seconds per rate-limit window
-RATE_LIMIT_MAX     = 5                   # max /analyze submissions per IP per window
+MAX_UPLOAD_BYTES    = 50 * 1024 * 1024   # 50 MB hard cap on uploaded file
+MAX_PENDING_JOBS    = 20                  # global queue-depth cap
+MAX_JOBS_STORED     = 200                 # evict completed/failed records above this
+RATE_LIMIT_WINDOW   = 60                  # seconds per rate-limit window
+RATE_LIMIT_MAX      = 5                   # max /analyze submissions per IP per window
+JOB_TIMEOUT_SECONDS    = 660   # fail jobs still running after this long
+STATUS_RATE_LIMIT_MAX  = 120   # max /status polls per IP per RATE_LIMIT_WINDOW
 
 app = FastAPI(title="GRAS Gap Analysis API", version="1.0")
 
@@ -55,8 +60,9 @@ _executor = ThreadPoolExecutor(max_workers=4)
 # by the async request path and the ThreadPoolExecutor workers.
 _store_lock = threading.Lock()
 
-# Per-IP sliding-window rate-limit store
-_rate_store: dict[str, deque] = defaultdict(deque)
+# Per-IP sliding-window rate-limit stores (submit and status use separate limits)
+_rate_store:        dict[str, deque] = defaultdict(deque)
+_status_rate_store: dict[str, deque] = defaultdict(deque)
 
 
 class JobStatus(str, Enum):
@@ -67,10 +73,12 @@ class JobStatus(str, Enum):
 
 
 class JobResponse(BaseModel):
-    job_id: str
-    status: JobStatus
-    result: Any = None
-    error:  str | None = None
+    job_id:        str
+    status:        JobStatus
+    result:        Any = None
+    error:         str | None = None
+    error_code:    str | None = None
+    progress_step: str | None = None
 
 
 # ---------------------------------------------------------------------------
@@ -112,19 +120,52 @@ def _evict_old_jobs_locked() -> None:
         _jobs.pop(jid, None)
 
 
+def _watchdog() -> None:
+    """Background thread: fail jobs that have been running longer than JOB_TIMEOUT_SECONDS."""
+    while True:
+        time.sleep(30)
+        now = time.monotonic()
+        with _store_lock:
+            for job in _jobs.values():
+                if job["status"] == JobStatus.running:
+                    started = job.get("started_at")
+                    if started and now - started > JOB_TIMEOUT_SECONDS:
+                        job["status"] = JobStatus.failed
+                        job["error"]  = "Analysis timed out — the job ran longer than the allowed limit."
+
+
+_watchdog_thread = threading.Thread(target=_watchdog, daemon=True)
+_watchdog_thread.start()
+
+
 def _run_analysis(job_id: str, pdf_path: Path) -> None:
     """Runs in a thread pool — updates job store when done."""
     with _store_lock:
-        _jobs[job_id]["status"] = JobStatus.running
+        _jobs[job_id]["status"]     = JobStatus.running
+        _jobs[job_id]["started_at"] = time.monotonic()
+
+    def on_progress(step: str):
+        with _store_lock:
+            if job_id in _jobs:
+                _jobs[job_id]["progress_step"] = step
+
     try:
-        result = analyze(pdf_path)
+        result = analyze(pdf_path, on_progress=on_progress)
+        result_path = RESULTS_DIR / f"{job_id}.json"
+        result_path.write_text(json.dumps(result), encoding="utf-8")
         with _store_lock:
             _jobs[job_id]["status"] = JobStatus.complete
             _jobs[job_id]["result"] = result
+    except AnalysisError as exc:
+        with _store_lock:
+            _jobs[job_id]["status"]     = JobStatus.failed
+            _jobs[job_id]["error"]      = exc.message
+            _jobs[job_id]["error_code"] = exc.code
     except Exception as exc:
         with _store_lock:
-            _jobs[job_id]["status"] = JobStatus.failed
-            _jobs[job_id]["error"]  = str(exc)
+            _jobs[job_id]["status"]     = JobStatus.failed
+            _jobs[job_id]["error"]      = str(exc)
+            _jobs[job_id]["error_code"] = "internal_error"
     finally:
         try:
             pdf_path.unlink(missing_ok=True)
@@ -193,18 +234,42 @@ async def submit_analysis(request: Request, file: UploadFile = File(...)):
 
 
 @app.get("/status/{job_id}", response_model=JobResponse)
-async def get_status(job_id: str):
+async def get_status(request: Request, job_id: str):
     """Poll for job status. Result is included when status == complete."""
+    client_ip = request.client.host if request.client else "unknown"
+    now = time.monotonic()
     with _store_lock:
+        window = _status_rate_store[client_ip]
+        while window and window[0] < now - RATE_LIMIT_WINDOW:
+            window.popleft()
+        if len(window) >= STATUS_RATE_LIMIT_MAX:
+            raise HTTPException(status_code=429, detail="Too many status requests. Please slow down polling.")
+        window.append(now)
+
         job = _jobs.get(job_id)
         if job is None:
-            raise HTTPException(status_code=404, detail="Job not found.")
-        snapshot = dict(job)
+            snapshot = None
+        else:
+            snapshot = dict(job)
+
+    if snapshot is None:
+        # Try persisted result on disk (survives server restarts)
+        result_path = RESULTS_DIR / f"{job_id}.json"
+        if result_path.exists():
+            try:
+                result = json.loads(result_path.read_text(encoding="utf-8"))
+                return JobResponse(job_id=job_id, status=JobStatus.complete, result=result)
+            except Exception:
+                pass
+        raise HTTPException(status_code=404, detail="Job not found.")
+
     return JobResponse(
-        job_id  = job_id,
-        status  = snapshot["status"],
-        result  = snapshot["result"],
-        error   = snapshot["error"],
+        job_id        = job_id,
+        status        = snapshot["status"],
+        result        = snapshot.get("result"),
+        error         = snapshot.get("error"),
+        error_code    = snapshot.get("error_code"),
+        progress_step = snapshot.get("progress_step"),
     )
 
 

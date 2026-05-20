@@ -71,6 +71,19 @@ GAP_DISPLAY_TITLES = {
     "environmental_safety":                 "Environmental Safety",
 }
 
+# Fixed severity per analysis domain — overrides Claude's per-gap classification
+# so gap counts are deterministic regardless of LLM output.
+DOMAIN_PRIORITY = {
+    "dietary_exposure":              "foundational",
+    "safety_data":                   "foundational",
+    "identity_and_characterization": "foundational",
+    "manufacturing_process":         "material",
+    "general_availability":          "material",
+    "general_acceptance":            "material",
+    "conditions_of_use":             "material",
+}
+DOMAIN_PRIORITY_DEFAULT = "documentation_issue"
+
 # What Claude should look for when detecting each gap field in a document
 GAP_DETECTION_HINTS = {
     "dietary_exposure_estimate":            "quantitative dietary exposure or intake analysis using NHANES, USDA, or theoretical maximum consumption data",

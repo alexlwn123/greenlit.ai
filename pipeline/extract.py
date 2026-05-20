@@ -87,14 +87,24 @@ def detect_section(line: str) -> str | None:
 
 # ── Text extraction (also used by analyze.py) ─────────────────────────────────
 
-def extract_text(pdf_path: Path, max_pages: int = MAX_EXTRACT_PAGES) -> str:
+def extract_text(pdf_path: Path, max_pages: int = MAX_EXTRACT_PAGES,
+                 return_stats: bool = False):
+    """Extract text from a PDF.
+
+    If return_stats=True, returns (text, skipped_pages) where skipped_pages
+    is the count of pages that yielded no text (scanned/image pages).
+    """
     pages = []
+    skipped = 0
     with pdfplumber.open(pdf_path) as pdf:
         for page in pdf.pages[:max_pages]:
             text = page.extract_text()
             if text:
                 pages.append(text)
-    return "\n".join(pages)
+            else:
+                skipped += 1
+    result = "\n".join(pages)
+    return (result, skipped) if return_stats else result
 
 
 # ── Chunking (also used by analyze.py indirectly via chunks.jsonl) ────────────
