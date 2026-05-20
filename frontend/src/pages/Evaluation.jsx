@@ -445,7 +445,7 @@ export default function Evaluation() {
                       <p className="text-text-muted text-sm leading-relaxed mb-3">{step.action}</p>
                       {ref && (
                         <a
-                          href={`https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn${String(ref.grn_number).padStart(4, '0')}`}
+                          href={`https://www.cfsanappsexternal.fda.gov/scripts/fdcc/?set=GRASNotices&id=${ref.grn_number}`}
                           target="_blank" rel="noreferrer"
                           className="inline-flex items-center gap-1.5 text-xs text-critical font-semibold hover:underline"
                         >

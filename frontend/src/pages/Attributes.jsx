@@ -57,7 +57,7 @@ function CompCard({ notice, variant }) {
             </span>
           )}
         <a
-            href={`https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn${String(notice.grn_number).padStart(4, '0')}`}
+            href={`https://www.cfsanappsexternal.fda.gov/scripts/fdcc/?set=GRASNotices&id=${notice.grn_number}`}
             target="_blank" rel="noreferrer"
           >
             <ExternalLink className="w-3.5 h-3.5 text-text-dim hover:text-accent transition-colors" />
