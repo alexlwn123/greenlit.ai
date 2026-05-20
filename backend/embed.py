@@ -19,7 +19,7 @@ CHUNKS_FILE = Path("data/chunks.jsonl")
 NOTICES_DIRS = [Path("data/notices/Approved"), Path("data/notices/Withdrawn")]
 CHROMA_DIR = Path("data/chroma")
 COLLECTION_NAME = "gras_notices"
-BATCH_SIZE = 50
+BATCH_SIZE = 20
 
 
 def load_notice_metadata() -> dict[int, dict]:
@@ -127,7 +127,15 @@ def run():
             metadatas.append(build_metadata(chunk, notice))
 
         if ids:
-            collection.add(ids=ids, documents=documents, metadatas=metadatas)
+            for attempt in range(3):
+                try:
+                    collection.add(ids=ids, documents=documents, metadatas=metadatas)
+                    break
+                except Exception as exc:
+                    if attempt == 2:
+                        raise
+                    print(f"\n  Batch error (attempt {attempt+1}/3): {exc} — retrying...")
+                    import time; time.sleep(5)
 
         done = min(batch_start + BATCH_SIZE, len(chunks))
         print(f"  {done}/{len(chunks)} chunks embedded", end="\r")

@@ -167,94 +167,14 @@ Notice text ({char_count} characters):
 """
 
 
-# Priority order — Part 5 before Part 4 because safety sections are large and
-# would otherwise consume the entire budget before dietary exposure is included
-_SECTION_PRIORITY = [
-    "cover_letter",
-    "part_1_identity",
-    "part_2_intended_use",
-    "part_3_gras_basis",
-    "part_5_dietary_exposure",
-    "part_4_safety",
-    "part_6_narrative",
-    "part_7_references",
-    "appendix",
-]
-
-# Guaranteed minimum chars per section. Sum of minimums (~38k) leaves ~22k
-# of headroom in the 60k budget for overflow from the largest sections.
-# Every analytically critical section is always represented in Claude's input.
-_SECTION_MINIMUMS = {
-    "cover_letter":            2_000,
-    "part_1_identity":        10_000,
-    "part_2_intended_use":     4_000,
-    "part_3_gras_basis":       5_000,
-    "part_5_dietary_exposure":  8_000,
-    "part_4_safety":            9_000,
-    "part_6_narrative":         5_000,
-    "part_7_references":        2_500,
-}
-
-CHAR_BUDGET = 60_000
 
 
-def _smart_truncate(text: str) -> str:
-    """Split into sections, guarantee minimums for critical sections, fill remainder."""
-    from pipeline.extract import SECTION_PATTERNS
-
-    sections: dict[str, list[str]] = {s: [] for s in _SECTION_PRIORITY}
-    current = "cover_letter"
-    for line in text.splitlines():
-        for pattern, label in SECTION_PATTERNS:
-            if pattern.search(line):
-                current = label
-                break
-        sections[current].append(line)
-
-    blocks = {s: "\n".join(lines) for s, lines in sections.items()}
-
-    parts = []
-    remaining = CHAR_BUDGET
-    truncated = []
-
-    for section in _SECTION_PRIORITY:
-        block = blocks.get(section, "")
-        if not block.strip():
-            continue
-
-        minimum = _SECTION_MINIMUMS.get(section, 0)
-        # Allocate at least the minimum if budget allows; otherwise take whatever is left
-        alloc = max(minimum, min(remaining, len(block))) if remaining >= minimum else remaining
-        alloc = min(alloc, len(block))
-
-        if alloc <= 0:
-            truncated.append(section)
-            continue
-
-        if len(block) <= alloc:
-            parts.append(f"[{section.upper()}]\n{block}")
-            remaining -= len(block)
-        else:
-            parts.append(f"[{section.upper()}]\n{block[:alloc]}\n[... truncated]")
-            remaining -= alloc
-            truncated.append(section)
-
-        if remaining <= 0:
-            break
-
-    if truncated:
-        print(f"  Sections truncated (low priority): {', '.join(truncated)}")
-
-    return "\n\n".join(parts)
-
-
-def _call_claude(text: str, max_tokens: int = 10000, char_budget: int = CHAR_BUDGET) -> dict:
+def _call_claude(text: str, max_tokens: int = 10000) -> dict:
     client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
 
-    truncated = _smart_truncate(text) if char_budget == CHAR_BUDGET else text[:char_budget]
     prompt = ANALYSIS_PROMPT.format(
-        text=truncated,
-        char_count=f"{len(truncated):,} (smart-truncated from {len(text):,})",
+        text=text,
+        char_count=f"{len(text):,}",
         domain_schema=_DOMAIN_SCHEMA,
     )
 
@@ -281,8 +201,8 @@ def _call_claude(text: str, max_tokens: int = 10000, char_budget: int = CHAR_BUD
     except json.JSONDecodeError:
         if max_tokens >= 14000:
             raise  # already retried at max, give up
-        print(f"  JSON truncated at {max_tokens} tokens — retrying with {max_tokens + 4000} tokens and smaller input...")
-        return _call_claude(text, max_tokens=max_tokens + 4000, char_budget=20000)
+        print(f"  JSON truncated at {max_tokens} tokens — retrying with {max_tokens + 4000} tokens...")
+        return _call_claude(text, max_tokens=max_tokens + 4000)
 
 
 # Maps domain keys to the GRAS notice section most relevant for references
@@ -301,7 +221,7 @@ _PRIORITY_ORDER = ["foundational", "material", "documentation_issue"]
 
 
 def _compute_score_from_domains(domain_analysis: dict) -> tuple[int, dict]:
-    """Score based on gaps actually found in domain analysis."""
+    """Penalty score: 0 = no gaps (best), higher = more/worse gaps."""
     counts: dict[str, int] = {"foundational": 0, "material": 0, "documentation_issue": 0}
     for domain_data in domain_analysis.values():
         for gap in domain_data.get("gaps", []):
@@ -309,11 +229,8 @@ def _compute_score_from_domains(domain_analysis: dict) -> tuple[int, dict]:
             if p in counts:
                 counts[p] += 1
 
-    score = 100
-    score -= min(counts["foundational"], 5) * 8
-    score -= min(counts["material"], 7) * 4
-    score -= min(counts["documentation_issue"], 8) * 1
-    return max(score, 0), counts
+    score = counts["foundational"] * 10 + counts["material"] * 5 + counts["documentation_issue"] * 1
+    return score, counts
 
 
 def _best_notice_for_section(notices: list, target_section: str) -> dict | None:
@@ -385,6 +302,174 @@ def _build_gap_report_from_domains(domain_analysis: dict,
     return gaps
 
 
+# ─── Benchmark: corpus baseline + peer comparison ─────────────────────────────
+
+# The 7 gap fields reliably inferrable from sidecar metadata.
+# Remaining 9 fields require full Claude analysis and are not in the corpus baseline.
+_BENCHMARKABLE_FIELDS = [
+    "dietary_exposure_estimate",
+    "allergenicity_assessment",
+    "genotoxicity_battery",
+    "digestibility_data",
+    "nutritional_impact",
+    "human_exposure_data",
+    "history_of_safe_use",
+]
+
+_BENCHMARK_LABELS = {
+    "dietary_exposure_estimate": "Dietary Exposure Estimate",
+    "allergenicity_assessment":  "Allergenicity Assessment",
+    "genotoxicity_battery":      "Genotoxicity Battery",
+    "digestibility_data":        "Digestibility Data",
+    "nutritional_impact":        "Nutritional Impact",
+    "human_exposure_data":       "Human Exposure Data",
+    "history_of_safe_use":       "History of Safe Use",
+}
+
+# Weights for the 7 benchmarkable fields drawn from SEVERITY_BASELINE.
+# Scale: critical=10, high=5, medium=1 — matches the gap penalty scale.
+_BENCHMARKABLE_WEIGHTS = {
+    "dietary_exposure_estimate": 10,  # critical
+    "allergenicity_assessment":  10,  # critical
+    "genotoxicity_battery":      10,  # critical
+    "digestibility_data":         1,  # medium
+    "nutritional_impact":         1,  # medium
+    "human_exposure_data":         1,  # medium
+    "history_of_safe_use":         1,  # medium
+}
+_MAX_BENCHMARK_WEIGHT = sum(_BENCHMARKABLE_WEIGHTS.values())  # 34
+
+_KNOWN_PRODUCTION_METHODS = [
+    "precision_fermentation", "solid_state_fermentation", "submerged_fermentation",
+    "traditional_fermentation", "cell_culture", "plant_cell_culture", "extraction",
+    "enzymatic", "chemical_synthesis", "hydrolysis", "fractionation",
+    "electrospinning", "air_fermentation", "algal_cultivation",
+]
+
+
+def _proxy_score(field_presence: dict) -> float:
+    """Weighted field-absence penalty, normalized 0–1. Lower is better."""
+    missing = sum(_BENCHMARKABLE_WEIGHTS[f] for f in _BENCHMARKABLE_FIELDS if not field_presence.get(f))
+    return round(missing / _MAX_BENCHMARK_WEIGHT, 3)
+
+
+def _match_production_method(pm_text: str) -> str | None:
+    pm_lower = pm_text.lower().replace("-", " ")
+    for pm in _KNOWN_PRODUCTION_METHODS:
+        if pm.replace("_", " ") in pm_lower:
+            return pm
+    return None
+
+
+def _sidecar_field_presence(sidecar: dict) -> dict[str, bool]:
+    """Map approved sidecar JSON (list-form safety_data_available) to gap field booleans."""
+    sd = set(sidecar.get("safety_data_available") or [])
+    return {
+        "dietary_exposure_estimate": bool(sidecar.get("exposure_estimate_included")),
+        "allergenicity_assessment":  bool(sidecar.get("allergenicity_addressed")),
+        "genotoxicity_battery":      bool(sd & {"genotoxicity_ames", "genotoxicity_chromosomal"}),
+        "digestibility_data":        "digestibility_study" in sd,
+        "nutritional_impact":        "nutritional_impact" in sd,
+        "human_exposure_data":       "human_clinical_trial" in sd,
+        "history_of_safe_use":       "history_of_safe_use" in sd,
+    }
+
+
+def _peer_field_presence(notice_meta: dict) -> dict[str, bool]:
+    """Map ChromaDB notice metadata (string-form safety_data_available) to gap field booleans."""
+    sd_str = notice_meta.get("safety_data_available", "")
+    sd = {v.strip() for v in sd_str.split(",")} if sd_str else set()
+    return {
+        "dietary_exposure_estimate": bool(notice_meta.get("exposure_estimate_included")),
+        "allergenicity_assessment":  bool(notice_meta.get("allergenicity_addressed")),
+        "genotoxicity_battery":      bool(sd & {"genotoxicity_ames", "genotoxicity_chromosomal"}),
+        "digestibility_data":        "digestibility_study" in sd,
+        "nutritional_impact":        "nutritional_impact" in sd,
+        "human_exposure_data":       "human_clinical_trial" in sd,
+        "history_of_safe_use":       "history_of_safe_use" in sd,
+    }
+
+
+def _build_benchmark(
+    engagement_summary: dict,
+    gap_field_presence: dict,
+    approved_peers: list,
+) -> dict:
+    """Build corpus baseline (Option A) and peer comparison (Option B) with proxy scores."""
+    pm_text = engagement_summary.get("production_method", "")
+    pm_match = _match_production_method(pm_text)
+
+    # Load all approved + withdrawn sidecars
+    def load_sidecars(directory: Path, status_value: str) -> list[dict]:
+        result = []
+        for json_path in directory.glob("*.json"):
+            try:
+                data = json.loads(json_path.read_text(encoding="utf-8"))
+                if data.get("status") == status_value:
+                    result.append(data)
+            except Exception:
+                pass
+        return result
+
+    approved_sidecars  = load_sidecars(Path("data/notices/Approved"),  "no_questions")
+    withdrawn_sidecars = load_sidecars(Path("data/notices/Withdrawn"), "withdrawn")
+
+    # Option A: corpus baseline — filter approved to matching production method
+    category = [s for s in approved_sidecars if pm_match and s.get("production_method") == pm_match]
+    if len(category) >= 5:
+        category_label = f"{pm_match.replace('_', ' ')} ({len(category)} approved notices)"
+    else:
+        category = approved_sidecars
+        category_label = f"all approved ({len(category)} notices)"
+
+    corpus_fields = {}
+    for field in _BENCHMARKABLE_FIELDS:
+        n = sum(1 for s in category if _sidecar_field_presence(s).get(field))
+        corpus_fields[field] = {
+            "rate": round(n / len(category), 3) if category else 0.0,
+            "count": n,
+            "n": len(category),
+        }
+
+    # Proxy scores: current notice vs approved category vs all withdrawn
+    current_proxy  = _proxy_score(gap_field_presence)
+    approved_scores  = [_proxy_score(_sidecar_field_presence(s)) for s in category]
+    withdrawn_scores = [_proxy_score(_sidecar_field_presence(s)) for s in withdrawn_sidecars]
+    approved_mean  = round(sum(approved_scores)  / len(approved_scores),  3) if approved_scores  else 0.0
+    withdrawn_mean = round(sum(withdrawn_scores) / len(withdrawn_scores), 3) if withdrawn_scores else 0.0
+
+    # Option B: peer comparison from top retrieved approved notices
+    peer_fields = {}
+    for field in _BENCHMARKABLE_FIELDS:
+        n = sum(1 for p in approved_peers if _peer_field_presence(p).get(field))
+        peer_fields[field] = {
+            "peer_count": n,
+            "n_peers": len(approved_peers),
+            "peer_rate": round(n / len(approved_peers), 3) if approved_peers else 0.0,
+        }
+
+    return {
+        "proxy_score": {
+            "current":        current_proxy,
+            "approved_mean":  approved_mean,
+            "withdrawn_mean": withdrawn_mean,
+            "n_approved":     len(category),
+            "n_withdrawn":    len(withdrawn_sidecars),
+            "note": "Weighted field-absence penalty (7 of 16 fields; critical=10, medium=1). Lower is better. Not equivalent to the full analysis score.",
+        },
+        "corpus_baseline": {
+            "category_label": category_label,
+            "n_notices": len(category),
+            "fields": corpus_fields,
+            "coverage_note": "Rates cover 7 of 16 gap fields reliably inferrable from pipeline metadata.",
+        },
+        "peer_comparison": {
+            "n_peers": len(approved_peers),
+            "fields": peer_fields,
+        },
+    }
+
+
 def _build_comparative_analysis(approved: list, withdrawn: list) -> dict:
     """Top-3 similar notices per status for the UI overview section."""
     def clean(notices):
@@ -436,6 +521,7 @@ def analyze(pdf_path: Path) -> dict:
     score, priority_counts = _compute_score_from_domains(domain_analysis)
 
     print("[5/5] Building report...")
+    benchmark = _build_benchmark(summary, analysis.get("gap_field_presence", {}), approved)
     gap_report_items = _build_gap_report_from_domains(domain_analysis, approved, withdrawn)
 
     # Build consolidated gap summary across all domains
@@ -469,6 +555,7 @@ def analyze(pdf_path: Path) -> dict:
             "priority_counts": priority_counts,
             "gaps": gap_report_items,
         },
+        "benchmark": benchmark,
         "comparative_analysis": _build_comparative_analysis(approved, withdrawn),
         "recommended_next_steps": analysis.get("recommended_next_steps", []),
         "limitations_and_caveats": analysis.get("limitations_and_caveats", ""),
@@ -517,21 +604,22 @@ if __name__ == "__main__":
 
         gr = result["gap_report"]
         print("\n" + "=" * 70)
-        print(f"COMPLETENESS SCORE: {gr['score']}/100")
+        print(f"GAP SCORE: {gr['score']}  (lower is better; 0 = no gaps)")
         pc = gr['priority_counts']
-        print(f"Gaps — foundational: {pc.get('foundational',0)}, material: {pc.get('material',0)}, documentation: {pc.get('documentation_issue',0)}")
+        print(f"  foundational ×3: {pc.get('foundational',0)}  |  material ×2: {pc.get('material',0)}  |  documentation ×1: {pc.get('documentation_issue',0)}")
         print("=" * 70)
 
-        icons = {"critical": "⛔", "high": "⚠️", "medium": "\U0001f4a1"}
-        current_sev = None
+        icons = {"foundational": "⛔", "material": "⚠️", "documentation_issue": "\U0001f4a1"}
+        current_pri = None
         for gap in gr["gaps"]:
-            if gap["severity"] != current_sev:
-                current_sev = gap["severity"]
-                print(f"\n{current_sev.upper()} GAPS")
+            pri = gap.get("priority", "material")
+            if pri != current_pri:
+                current_pri = pri
+                print(f"\n{current_pri.upper()} GAPS")
                 print("-" * 40)
-            icon = icons.get(gap["severity"], "•")
+            icon = icons.get(pri, "•")
             ref = gap.get("approved_reference")
-            ref_str = f" → See GRN {ref['grn_number']} {ref['section_label']}" if ref else ""
+            ref_str = f" → See GRN {ref['grn_number']}" if ref else ""
             print(f"{icon} {gap['title']}{ref_str}")
 
         print("\n" + "=" * 70)
@@ -556,5 +644,32 @@ if __name__ == "__main__":
             a_str = f"GRN {a['grn_number']} — {str(a.get('substance_name',''))[:30]}" if a else ""
             w_str = f"GRN {w['grn_number']} — {str(w.get('substance_name',''))[:30]}" if w else ""
             print(f"{a_str:<42} {w_str:<42}")
+
+        bm = result["benchmark"]
+        cb = bm["corpus_baseline"]
+        pc_bm = bm["peer_comparison"]
+        ps = bm["proxy_score"]
+        gfp = analysis.get("gap_field_presence", {})
+        print("\n" + "=" * 70)
+        print("BENCHMARK vs. APPROVED CORPUS")
+        print("=" * 70)
+        print(f"Category: {cb['category_label']}")
+        print()
+        print(f"  Proxy gap score (7 fields, lower is better):")
+        print(f"    Your notice:    {ps['current']:.0%}")
+        print(f"    Approved avg:   {ps['approved_mean']:.0%}  (n={ps['n_approved']})")
+        print(f"    Withdrawn avg:  {ps['withdrawn_mean']:.0%}  (n={ps['n_withdrawn']})")
+        print()
+        print(f"{'Field':<32} {'Yours':>6}  {'Corpus':>7}  {'Peers':>10}")
+        print("-" * 60)
+        for field in _BENCHMARKABLE_FIELDS:
+            label = _BENCHMARK_LABELS[field]
+            yours = "✓" if gfp.get(field) else "✗"
+            corpus_rate = cb["fields"][field]["rate"]
+            pf = pc_bm["fields"][field]
+            peer_str = f"{pf['peer_count']}/{pf['n_peers']}"
+            print(f"  {label:<30} {yours:>6}  {corpus_rate:>6.0%}  {peer_str:>10}")
+        print(f"  (7 of 16 fields benchmarkable from corpus metadata)")
+        print(f"  Note: proxy score ≠ analysis score — field presence only, not gap depth.")
 
         print(f"\nRun with --out report.json to save the full structured report.")
