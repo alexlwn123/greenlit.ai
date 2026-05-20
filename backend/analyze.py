@@ -474,7 +474,7 @@ def _build_comparative_analysis(approved: list, withdrawn: list) -> dict:
     """Top-3 similar notices per status for the UI overview section."""
     def clean(notices):
         result = []
-        for n in notices[:3]:  # cap at 3 for display; full pool used for per-gap refs
+        for n in notices[:5]:  # cap at 5 for display; full pool used for per-gap refs
             entry = {k: v for k, v in n.items() if k != "chunks"}
             # Add section waypoints from the chunks that matched
             sections_seen = list(dict.fromkeys(

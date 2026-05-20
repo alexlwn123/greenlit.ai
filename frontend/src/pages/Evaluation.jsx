@@ -223,6 +223,10 @@ export default function Evaluation() {
 
   const score = result.gap_report?.score ?? 0
   const counts = result.gap_report?.priority_counts || {}
+  const benchmark = result.benchmark || null
+  const proxyScore = benchmark?.proxy_score
+  const corpusBaseline = benchmark?.corpus_baseline
+  const peerComparison = benchmark?.peer_comparison
   const allGaps = [...(result.consolidated_gap_summary || [])].sort(
     (a, b) => (PRIORITY_ORDER[a.priority] ?? 3) - (PRIORITY_ORDER[b.priority] ?? 3)
   )
@@ -279,6 +283,78 @@ export default function Evaluation() {
             </div>
           </div>
         </section>
+
+        {/* Benchmark */}
+        {benchmark && (
+          <section>
+            <h2 className="text-2xl font-bold text-text-base tracking-tight mb-6">Benchmark vs. Approved Corpus</h2>
+            <div className="rounded-2xl border border-border bg-surface p-6 flex flex-col gap-6">
+
+              {/* Proxy score row */}
+              {proxyScore && (
+                <div className="flex flex-col sm:flex-row gap-4">
+                  {[
+                    { label: 'Your Notice', value: proxyScore.current, n: null },
+                    { label: 'Approved Avg', value: proxyScore.approved_mean, n: proxyScore.n_approved },
+                    { label: 'Withdrawn Avg', value: proxyScore.withdrawn_mean, n: proxyScore.n_withdrawn },
+                  ].map(({ label, value, n }) => {
+                    const pct = Math.round(value * 100)
+                    const color = pct === 0 ? '#16a34a' : pct <= 20 ? '#65a30d' : pct <= 40 ? '#d97706' : '#dc2626'
+                    return (
+                      <div key={label} className="flex-1 rounded-xl border border-border bg-surface-2 p-4 text-center">
+                        <p className="text-text-dim text-xs font-semibold uppercase tracking-wider mb-1">{label}</p>
+                        <p className="text-3xl font-bold" style={{ color }}>{pct}%</p>
+                        {n != null && <p className="text-text-dim text-xs mt-1">n={n}</p>}
+                      </div>
+                    )
+                  })}
+                </div>
+              )}
+              <p className="text-text-dim text-xs -mt-2">Proxy gap score — weighted field-absence penalty across 7 key fields. Lower is better.</p>
+
+              {/* Field table */}
+              {corpusBaseline && (
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="border-b border-border">
+                        <th className="text-left text-text-dim text-xs font-semibold uppercase tracking-wider pb-2 pr-4">Field</th>
+                        <th className="text-center text-text-dim text-xs font-semibold uppercase tracking-wider pb-2 px-3">Yours</th>
+                        <th className="text-center text-text-dim text-xs font-semibold uppercase tracking-wider pb-2 px-3">Corpus</th>
+                        <th className="text-center text-text-dim text-xs font-semibold uppercase tracking-wider pb-2 px-3">Peers</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {Object.entries(corpusBaseline.fields).map(([field, data]) => {
+                        const gfp = result.gap_field_presence || {}
+                        const present = gfp[field]
+                        const peerData = peerComparison?.fields?.[field]
+                        const label = field.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
+                        return (
+                          <tr key={field} className="border-b border-border last:border-0">
+                            <td className="py-2.5 pr-4 text-text-muted font-medium">{label}</td>
+                            <td className="py-2.5 px-3 text-center">
+                              <span className={present ? 'text-accent font-bold' : 'text-critical font-bold'}>
+                                {present ? '✓' : '✗'}
+                              </span>
+                            </td>
+                            <td className="py-2.5 px-3 text-center text-text-muted">
+                              {Math.round(data.rate * 100)}%
+                            </td>
+                            <td className="py-2.5 px-3 text-center text-text-muted">
+                              {peerData ? `${peerData.peer_count}/${peerData.n_peers}` : '—'}
+                            </td>
+                          </tr>
+                        )
+                      })}
+                    </tbody>
+                  </table>
+                  <p className="text-text-dim text-xs mt-3">{corpusBaseline.coverage_note}</p>
+                </div>
+              )}
+            </div>
+          </section>
+        )}
 
         {/* Gaps */}
         {allGaps.length > 0 && (

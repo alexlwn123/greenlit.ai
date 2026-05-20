@@ -56,11 +56,12 @@ function CompCard({ notice, variant }) {
               {similarity}
             </span>
           )}
-          {notice.source_pdf_url && (
-            <a href={notice.source_pdf_url} target="_blank" rel="noreferrer">
-              <ExternalLink className="w-3.5 h-3.5 text-text-dim hover:text-accent transition-colors" />
-            </a>
-          )}
+        <a
+            href={`https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn${String(notice.grn_number).padStart(4, '0')}`}
+            target="_blank" rel="noreferrer"
+          >
+            <ExternalLink className="w-3.5 h-3.5 text-text-dim hover:text-accent transition-colors" />
+          </a>
         </div>
       </div>
 
