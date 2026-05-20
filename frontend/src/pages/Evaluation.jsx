@@ -405,30 +405,54 @@ export default function Evaluation() {
 
         {/* Next Steps — collapsed by default */}
         {nextSteps.length > 0 && (
-          <CollapsibleSection
-            icon={ListChecks}
-            title="Recommended Next Steps"
-            badge={`${nextSteps.length} actions`}
-          >
-            <div className="flex flex-col gap-3">
-              {nextSteps.map((step, i) => (
-                <div key={i} className="flex gap-4 rounded-xl border border-border bg-surface p-5">
-                  <div className="w-7 h-7 rounded-full border border-border bg-surface-2 flex items-center justify-center text-xs font-bold text-text-muted shrink-0 mt-0.5">
-                    {i + 1}
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex flex-wrap items-center gap-2 mb-2">
-                      <SeverityBadge priority={step.priority} />
-                      <span className="text-xs text-text-dim bg-surface-2 border border-border px-2 py-0.5 rounded capitalize">
-                        {step.domain}
-                      </span>
-                    </div>
-                    <p className="text-text-muted text-sm leading-relaxed">{step.action}</p>
-                  </div>
-                </div>
-              ))}
+          <section>
+            <div className="flex items-center gap-2 mb-6">
+              <ListChecks className="w-5 h-5 text-text-muted" />
+              <h2 className="text-2xl font-bold text-text-base tracking-tight">Recommended Next Steps</h2>
+              <span className="ml-2 text-sm text-text-dim bg-surface-2 border border-border px-2 py-0.5 rounded-full">
+                {nextSteps.length} actions
+              </span>
             </div>
-          </CollapsibleSection>
+            <div className="flex flex-col gap-3">
+              {nextSteps.map((step, i) => {
+                const prob = step.fda_pushback_probability || 'medium'
+                const probConfig = {
+                  high:   { label: 'High FDA pushback risk',   bg: '#fef2f2', border: '#fecaca', color: '#dc2626', dot: '#dc2626' },
+                  medium: { label: 'Medium FDA pushback risk', bg: '#fffbeb', border: '#fde68a', color: '#d97706', dot: '#d97706' },
+                  low:    { label: 'Low FDA pushback risk',    bg: '#f0fdf4', border: '#bbf7d0', color: '#16a34a', dot: '#16a34a' },
+                }[prob]
+                const ref = step.withdrawn_reference
+                return (
+                  <div key={i} className="rounded-xl border bg-surface overflow-hidden" style={{ borderColor: probConfig.border }}>
+                    <div className="flex items-center gap-2 px-5 py-2.5 border-b" style={{ background: probConfig.bg, borderColor: probConfig.border }}>
+                      <span className="w-2 h-2 rounded-full shrink-0" style={{ background: probConfig.dot }} />
+                      <span className="text-xs font-bold uppercase tracking-wider" style={{ color: probConfig.color }}>
+                        {probConfig.label}
+                      </span>
+                      <span className="ml-auto text-xs text-text-dim capitalize">{step.domain?.replace(/_/g, ' ')}</span>
+                    </div>
+                    <div className="p-5">
+                      <p className="text-text-base text-sm font-semibold mb-1">{step.gap_title}</p>
+                      {step.pushback_reasoning && (
+                        <p className="text-text-muted text-sm leading-relaxed mb-3 italic">{step.pushback_reasoning}</p>
+                      )}
+                      <p className="text-text-muted text-sm leading-relaxed mb-3">{step.action}</p>
+                      {ref && (
+                        <a
+                          href={`https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn${String(ref.grn_number).padStart(4, '0')}`}
+                          target="_blank" rel="noreferrer"
+                          className="inline-flex items-center gap-1.5 text-xs text-critical font-semibold hover:underline"
+                        >
+                          <AlertTriangle className="w-3 h-3" />
+                          This issue contributed to withdrawal of GRN-{ref.grn_number} ({ref.substance_name})
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          </section>
         )}
 
         {/* Narrative — collapsed by default */}

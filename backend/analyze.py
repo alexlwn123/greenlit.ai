@@ -158,7 +158,7 @@ Return:
   }},
   "gap_field_presence": {{"dietary_exposure_estimate": true, "allergenicity_assessment": true, "genotoxicity_battery": true, "production_organism_characterization": true, "intended_use_specificity": true, "impurity_characterization": true, "manufacturing_process_detail": true, "specifications_and_purity": true, "digestibility_data": true, "stability_data": true, "nutritional_impact": true, "batch_consistency": true, "expert_panel_review": true, "human_exposure_data": true, "history_of_safe_use": true, "environmental_safety": true}},
   "strengths_summary": [{{"domain": "string", "observation": "string", "section_reference": "string"}}],
-  "recommended_next_steps": [{{"priority": "foundational|material|documentation_issue", "action": "string", "domain": "string", "gap_title": "string"}}],
+  "recommended_next_steps": [{{"priority": "foundational|material|documentation_issue", "action": "string", "domain": "string", "gap_title": "string", "fda_pushback_probability": "high|medium|low", "pushback_reasoning": "1 sentence: the specific pattern FDA typically challenges on this issue, grounded in what is present or absent in this submission"}}],
   "limitations_and_caveats": "string"
 }}
 
@@ -470,6 +470,25 @@ def _build_benchmark(
     }
 
 
+_PUSHBACK_ORDER = {"high": 0, "medium": 1, "low": 2}
+
+
+def _enrich_next_steps(next_steps: list, withdrawn: list) -> list:
+    """Attach the most relevant withdrawn GRN to each step and sort by pushback probability."""
+    for step in next_steps:
+        section_key = _DOMAIN_TO_SECTION.get(step.get("domain", ""), "part_4_safety")
+        best = _best_notice_for_section(withdrawn, section_key)
+        step["withdrawn_reference"] = (
+            {"grn_number": best["grn_number"],
+             "substance_name": best.get("substance_name", "")}
+            if best else None
+        )
+    next_steps.sort(
+        key=lambda s: _PUSHBACK_ORDER.get(s.get("fda_pushback_probability", "medium"), 1)
+    )
+    return next_steps
+
+
 def _build_comparative_analysis(approved: list, withdrawn: list) -> dict:
     """Top-3 similar notices per status for the UI overview section."""
     def clean(notices):
@@ -557,7 +576,7 @@ def analyze(pdf_path: Path) -> dict:
         },
         "benchmark": benchmark,
         "comparative_analysis": _build_comparative_analysis(approved, withdrawn),
-        "recommended_next_steps": analysis.get("recommended_next_steps", []),
+        "recommended_next_steps": _enrich_next_steps(analysis.get("recommended_next_steps", []), withdrawn),
         "limitations_and_caveats": analysis.get("limitations_and_caveats", ""),
     }
 
