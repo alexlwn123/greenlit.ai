@@ -302,69 +302,75 @@ export default function Evaluation() {
         {/* Benchmark */}
         {benchmark && (
           <section>
-            <h2 className="text-2xl font-bold text-text-base tracking-tight mb-6">Benchmark vs. Approved Corpus</h2>
-            <div className="rounded-2xl border border-border bg-surface p-6 flex flex-col gap-6">
+            <div className="flex items-center gap-2 mb-2">
+              <h2 className="text-2xl font-bold text-text-base tracking-tight">How Does This Filing Compare?</h2>
+            </div>
+            <p className="text-text-muted text-sm mb-6">
+              Comparing key documentation fields against {corpusBaseline?.n_notices} similar approved filings in the FDA GRAS corpus.
+            </p>
+            <div className="flex flex-col gap-4">
 
-              {/* Proxy score row */}
+              {/* Proxy score callout */}
               {proxyScore && (
-                <div className="flex flex-col sm:flex-row gap-4">
-                  {[
-                    { label: 'Your Notice', value: proxyScore.current, n: null },
-                    { label: 'Approved Avg', value: proxyScore.approved_mean, n: proxyScore.n_approved },
-                    { label: 'Withdrawn Avg', value: proxyScore.withdrawn_mean, n: proxyScore.n_withdrawn },
-                  ].map(({ label, value, n }) => {
-                    const pct = Math.round(value * 100)
-                    const color = pct === 0 ? '#16a34a' : pct <= 20 ? '#65a30d' : pct <= 40 ? '#d97706' : '#dc2626'
-                    return (
-                      <div key={label} className="flex-1 rounded-xl border border-border bg-surface-2 p-4 text-center">
-                        <p className="text-text-dim text-xs font-semibold uppercase tracking-wider mb-1">{label}</p>
-                        <p className="text-3xl font-bold" style={{ color }}>{pct}%</p>
-                        {n != null && <p className="text-text-dim text-xs mt-1">n={n}</p>}
-                      </div>
-                    )
-                  })}
+                <div className="rounded-2xl border border-border bg-surface p-5">
+                  <p className="text-xs font-semibold text-text-dim uppercase tracking-wider mb-3">Missing-field penalty score (lower = fewer gaps)</p>
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    {[
+                      { label: 'This filing', value: proxyScore.current, n: null, highlight: true },
+                      { label: 'Approved filings avg', value: proxyScore.approved_mean, n: proxyScore.n_approved, highlight: false },
+                      { label: 'Withdrawn filings avg', value: proxyScore.withdrawn_mean, n: proxyScore.n_withdrawn, highlight: false },
+                    ].map(({ label, value, n, highlight }) => {
+                      const pct = Math.round(value * 100)
+                      const color = pct === 0 ? '#16a34a' : pct <= 20 ? '#65a30d' : pct <= 40 ? '#d97706' : '#dc2626'
+                      return (
+                        <div key={label} className={`flex-1 rounded-xl p-4 text-center ${highlight ? 'border-2 border-accent bg-accent-pale' : 'border border-border bg-surface-2'}`}>
+                          <p className="text-text-dim text-xs font-medium mb-1">{label}{n ? ` (n=${n})` : ''}</p>
+                          <p className="text-3xl font-bold" style={{ color }}>{pct}%</p>
+                        </div>
+                      )
+                    })}
+                  </div>
                 </div>
               )}
-              <p className="text-text-dim text-xs -mt-2">Proxy gap score — weighted field-absence penalty across 7 key fields. Lower is better.</p>
 
-              {/* Field table */}
+              {/* Per-field breakdown */}
               {corpusBaseline && (
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm">
-                    <thead>
-                      <tr className="border-b border-border">
-                        <th className="text-left text-text-dim text-xs font-semibold uppercase tracking-wider pb-2 pr-4">Field</th>
-                        <th className="text-center text-text-dim text-xs font-semibold uppercase tracking-wider pb-2 px-3">Yours</th>
-                        <th className="text-center text-text-dim text-xs font-semibold uppercase tracking-wider pb-2 px-3">Corpus</th>
-                        <th className="text-center text-text-dim text-xs font-semibold uppercase tracking-wider pb-2 px-3">Peers</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {Object.entries(corpusBaseline.fields).map(([field, data]) => {
-                        const gfp = result.gap_field_presence || {}
-                        const present = gfp[field]
-                        const peerData = peerComparison?.fields?.[field]
-                        const label = field.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
-                        return (
-                          <tr key={field} className="border-b border-border last:border-0">
-                            <td className="py-2.5 pr-4 text-text-muted font-medium">{label}</td>
-                            <td className="py-2.5 px-3 text-center">
-                              <span className={present ? 'text-accent font-bold' : 'text-critical font-bold'}>
-                                {present ? '✓' : '✗'}
-                              </span>
-                            </td>
-                            <td className="py-2.5 px-3 text-center text-text-muted">
-                              {Math.round(data.rate * 100)}%
-                            </td>
-                            <td className="py-2.5 px-3 text-center text-text-muted">
-                              {peerData ? `${peerData.peer_count}/${peerData.n_peers}` : '—'}
-                            </td>
-                          </tr>
-                        )
-                      })}
-                    </tbody>
-                  </table>
-                  <p className="text-text-dim text-xs mt-3">{corpusBaseline.coverage_note}</p>
+                <div className="rounded-2xl border border-border bg-surface overflow-hidden">
+                  <div className="grid grid-cols-[1fr_auto_auto_auto] gap-0">
+                    {/* Header */}
+                    <div className="px-5 py-3 bg-surface-2 border-b border-border text-xs font-semibold text-text-dim uppercase tracking-wider">Documentation field</div>
+                    <div className="px-4 py-3 bg-surface-2 border-b border-border text-xs font-semibold text-text-dim uppercase tracking-wider text-center">Your filing</div>
+                    <div className="px-4 py-3 bg-surface-2 border-b border-border text-xs font-semibold text-text-dim uppercase tracking-wider text-center">Approved avg</div>
+                    <div className="px-4 py-3 bg-surface-2 border-b border-border text-xs font-semibold text-text-dim uppercase tracking-wider text-center">Top 10 peers</div>
+
+                    {Object.entries(corpusBaseline.fields).map(([field, data], idx) => {
+                      const gfp = result.gap_field_presence || {}
+                      const present = gfp[field]
+                      const peerData = peerComparison?.fields?.[field]
+                      const label = field.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
+                      const rowBg = idx % 2 === 0 ? '' : 'bg-surface-2'
+                      return (
+                        <>
+                          <div key={field+'-label'} className={`px-5 py-3.5 border-b border-border text-sm text-text-muted font-medium ${rowBg}`}>{label}</div>
+                          <div key={field+'-yours'} className={`px-4 py-3.5 border-b border-border text-center ${rowBg}`}>
+                            {present
+                              ? <span className="inline-block px-2 py-0.5 rounded-full text-xs font-semibold bg-green-100 text-accent border border-green-200">Found</span>
+                              : <span className="inline-block px-2 py-0.5 rounded-full text-xs font-semibold bg-red-50 text-critical border border-red-200">Missing</span>
+                            }
+                          </div>
+                          <div key={field+'-corpus'} className={`px-4 py-3.5 border-b border-border text-center text-sm text-text-muted ${rowBg}`}>
+                            {Math.round(data.rate * 100)}% included it
+                          </div>
+                          <div key={field+'-peers'} className={`px-4 py-3.5 border-b border-border text-center text-sm text-text-muted ${rowBg}`}>
+                            {peerData ? `${peerData.peer_count} of ${peerData.n_peers}` : '—'}
+                          </div>
+                        </>
+                      )
+                    })}
+                  </div>
+                  <p className="px-5 py-3 text-text-dim text-xs border-t border-border bg-surface-2">
+                    Covers 7 of 16 gap fields — those reliably extractable from FDA filing metadata. “Approved avg” = {corpusBaseline.category_label}.
+                  </p>
                 </div>
               )}
             </div>
