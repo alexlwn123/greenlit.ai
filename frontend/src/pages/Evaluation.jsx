@@ -30,32 +30,18 @@ const PRIORITY_ORDER = { foundational: 0, material: 1, documentation_issue: 2 }
 const DEFAULT_VISIBLE_GAPS = 5
 
 function scoreColor(score) {
-  if (score >= 80) return '#16a34a'
-  if (score >= 60) return '#d97706'
+  if (score === 0) return '#16a34a'
+  if (score <= 10) return '#65a30d'
+  if (score <= 25) return '#d97706'
   return '#dc2626'
 }
 
-function ScoreRing({ score }) {
-  const r = 52
-  const circ = 2 * Math.PI * r
-  const offset = circ - (score / 100) * circ
+function ScoreDisplay({ score }) {
   const color = scoreColor(score)
   return (
-    <div className="relative inline-flex items-center justify-center">
-      <svg width="140" height="140" className="-rotate-90">
-        <circle cx="70" cy="70" r={r} fill="none" stroke="#e2ede6" strokeWidth="10" />
-        <circle
-          cx="70" cy="70" r={r} fill="none"
-          stroke={color} strokeWidth="10"
-          strokeDasharray={circ} strokeDashoffset={offset}
-          strokeLinecap="round"
-          style={{ transition: 'stroke-dashoffset 1s ease' }}
-        />
-      </svg>
-      <div className="absolute text-center">
-        <span className="text-4xl font-bold" style={{ color }}>{score}</span>
-        <span className="text-text-dim text-sm block -mt-1">/100</span>
-      </div>
+    <div className="flex flex-col items-center justify-center w-36">
+      <span className="text-6xl font-bold" style={{ color }}>{score}</span>
+      <span className="text-text-dim text-xs mt-1 text-center">gap score<br/>lower is better</span>
     </div>
   )
 }
@@ -236,7 +222,7 @@ export default function Evaluation() {
   }
 
   const score = result.gap_report?.score ?? 0
-  const counts = result.gap_report?.present_counts || {}
+  const counts = result.gap_report?.priority_counts || {}
   const allGaps = [...(result.consolidated_gap_summary || [])].sort(
     (a, b) => (PRIORITY_ORDER[a.priority] ?? 3) - (PRIORITY_ORDER[b.priority] ?? 3)
   )
@@ -260,33 +246,33 @@ export default function Evaluation() {
 
         {/* Score */}
         <section>
-          <h2 className="text-2xl font-bold text-text-base tracking-tight mb-6">Completeness Score</h2>
+          <h2 className="text-2xl font-bold text-text-base tracking-tight mb-6">Gap Score</h2>
           <div className="rounded-2xl border border-border bg-surface p-8 flex flex-col sm:flex-row items-center gap-10">
-            <ScoreRing score={score} />
+            <ScoreDisplay score={score} />
             <div className="flex flex-col gap-4 flex-1">
               <p className="text-text-muted text-sm leading-relaxed max-w-sm">
-                Based on gap severity and coverage across all 8 regulatory domains.
+                Penalty score across all 8 regulatory domains. Each foundational gap adds 10 points, material gaps add 5, documentation issues add 1.
               </p>
               <div className="flex flex-wrap gap-3">
-                {counts.critical > 0 && (
+                {counts.foundational > 0 && (
                   <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-red-50 border border-red-200">
                     <AlertOctagon className="w-4 h-4 text-critical" />
-                    <span className="text-sm font-bold text-critical">{counts.critical}</span>
-                    <span className="text-sm text-text-muted">Critical</span>
+                    <span className="text-sm font-bold text-critical">{counts.foundational}</span>
+                    <span className="text-sm text-text-muted">Foundational ×10</span>
                   </div>
                 )}
-                {counts.high > 0 && (
+                {counts.material > 0 && (
                   <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-amber-50 border border-amber-200">
                     <AlertTriangle className="w-4 h-4 text-moderate" />
-                    <span className="text-sm font-bold text-moderate">{counts.high}</span>
-                    <span className="text-sm text-text-muted">Moderate</span>
+                    <span className="text-sm font-bold text-moderate">{counts.material}</span>
+                    <span className="text-sm text-text-muted">Material ×5</span>
                   </div>
                 )}
-                {counts.medium > 0 && (
+                {counts.documentation_issue > 0 && (
                   <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-surface-2 border border-border">
                     <Minus className="w-4 h-4 text-minor" />
-                    <span className="text-sm font-bold text-minor">{counts.medium}</span>
-                    <span className="text-sm text-text-muted">Minor</span>
+                    <span className="text-sm font-bold text-minor">{counts.documentation_issue}</span>
+                    <span className="text-sm text-text-muted">Documentation ×1</span>
                   </div>
                 )}
               </div>
