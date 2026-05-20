@@ -109,7 +109,7 @@ export default function Submit() {
           </div>
           <div className="flex items-center gap-2 text-text-dim text-xs">
             <Loader2 className="w-3 h-3 animate-spin" />
-            This may take 30–60 seconds
+            This may take 3–5 minutes
           </div>
         </div>
       </div>
@@ -196,29 +196,6 @@ export default function Submit() {
             </div>
           )}
 
-          {/* Focus areas */}
-          <div className="mb-8">
-            <p className="text-text-muted text-sm font-medium mb-3">
-              What areas should we focus on?{' '}
-              <span className="text-text-dim font-normal">(optional)</span>
-            </p>
-            <div className="flex flex-wrap gap-2">
-              {FOCUS_OPTIONS.map(area => (
-                <button
-                  key={area}
-                  onClick={() => toggleFocus(area)}
-                  className="px-3 py-1.5 rounded-full text-sm transition-all duration-150 border font-medium"
-                  style={{
-                    background:  focusAreas.includes(area) ? '#dcfce7' : '#ffffff',
-                    borderColor: focusAreas.includes(area) ? '#16a34a' : '#ccddd3',
-                    color:       focusAreas.includes(area) ? '#15803d' : '#456050',
-                  }}
-                >
-                  {area}
-                </button>
-              ))}
-            </div>
-          </div>
 
           {/* Submit */}
           <button
