@@ -296,6 +296,18 @@ async def health():
     return {"status": "ok"}
 
 
+@app.get("/research")
+async def get_research(substance: str, method: str = "", organism: str = ""):
+    """Fetch top PubMed papers relevant to a substance and return relevance summaries."""
+    import asyncio
+    from backend.research import fetch_research
+    try:
+        papers = await asyncio.to_thread(fetch_research, substance, method, organism)
+        return {"papers": papers}
+    except Exception as exc:
+        raise HTTPException(status_code=502, detail=f"Research fetch failed: {exc}")
+
+
 FRONTEND_DIST = Path(__file__).parent.parent / "frontend" / "dist"
 
 if FRONTEND_DIST.exists():

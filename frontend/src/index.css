@@ -2,31 +2,31 @@
 
 @theme {
   /* Backgrounds */
-  --color-bg:        #f4f9f5;
-  --color-surface:   #ffffff;
-  --color-surface-2: #eef6f1;
-  --color-surface-3: #e2ede6;
+  --color-bg:        #0a0a0a;
+  --color-surface:   #141414;
+  --color-surface-2: #1e1e1e;
+  --color-surface-3: #282828;
 
   /* Borders */
-  --color-border:       #ccddd3;
-  --color-border-strong: #9cbfab;
+  --color-border:        #2e2e2e;
+  --color-border-strong: #444444;
 
-  /* Accent */
-  --color-accent:      #16a34a;
-  --color-accent-dark: #15803d;
-  --color-accent-pale: #dcfce7;
+  /* Accent — neon green */
+  --color-accent:      #00ff88;
+  --color-accent-dark: #00cc6a;
+  --color-accent-pale: rgba(0,255,136,0.08);
 
   /* Text */
-  --color-text-base:  #1a2e1e;
-  --color-text-muted: #456050;
-  --color-text-dim:   #7a9e85;
+  --color-text-base:  #f4f4f4;
+  --color-text-muted: #cccccc;
+  --color-text-dim:   #999999;
 
   /* Status */
-  --color-critical: #dc2626;
-  --color-moderate: #d97706;
-  --color-minor:    #6b7280;
+  --color-critical: #ff4040;
+  --color-moderate: #ff9500;
+  --color-minor:    #888888;
 
-  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-sans: 'Space Grotesk', 'Inter', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 }
 
@@ -52,5 +52,12 @@ body {
 }
 
 ::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--color-surface-2); }
-::-webkit-scrollbar-thumb { background: var(--color-border-strong); border-radius: 3px; }
+::-webkit-scrollbar-track { background: #0d0d0d; }
+::-webkit-scrollbar-thumb { background: #333333; border-radius: 3px; }
+
+@media print {
+  .no-print { display: none !important; }
+  .print-only { display: block !important; }
+  @page { margin: 2cm; size: A4; }
+  body { background: white; color: #111111; }
+}

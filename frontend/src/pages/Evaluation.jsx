@@ -1,13 +1,15 @@
-import { useState } from 'react'
+﻿import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   ArrowLeft, RotateCcw, AlertOctagon, AlertTriangle, Minus,
   ShieldAlert, ChevronDown, ChevronUp, CheckCircle2, Microscope,
   ListChecks, ArrowRight, BarChart2, ExternalLink, GitCompare,
-  Download, Info
+  Download, Info, BookOpen, Loader2, AlertCircle, FileText
 } from 'lucide-react'
 import NavBar from '../components/NavBar'
 import { useAnalysis } from '../context/AnalysisContext'
+import { fetchResearch } from '../lib/api'
+import { getFdaQuestion } from '../lib/fdaQuestions'
 
 const SEVERITY_CONFIG = {
   foundational: {
@@ -28,7 +30,74 @@ const SEVERITY_CONFIG = {
 }
 
 const PRIORITY_ORDER = { foundational: 0, material: 1, documentation_issue: 2 }
+const PUSHBACK_ORDER  = { high: 0, medium: 1, low: 2 }
 const DEFAULT_VISIBLE_GAPS = 5
+
+const GAP_REMEDIATION = {
+  safety_data: {
+    foundational: { cost: '$80K–$300K', timeline: '6–18 mo', study: 'Genotoxicity battery + subchronic rodent study' },
+    material:     { cost: '$30K–$80K',  timeline: '3–6 mo',  study: 'Genotoxicity battery (Ames + chromosomal aberration)' },
+    documentation_issue: { cost: '$5K–$15K', timeline: '2–4 wk', study: 'Literature compilation / expert panel review' },
+  },
+  dietary_exposure: {
+    foundational: { cost: '$20K–$60K', timeline: '1–3 mo', study: 'Quantitative dietary exposure estimate (NHANES/TDS)' },
+    material:     { cost: '$10K–$30K', timeline: '3–6 wk', study: 'Dietary exposure desk study' },
+    documentation_issue: { cost: '$3K–$8K', timeline: '1–2 wk', study: 'Documentation update' },
+  },
+  identity_and_characterization: {
+    foundational: { cost: '$15K–$50K', timeline: '1–3 mo', study: 'Analytical characterization package (purity, specs, impurities)' },
+    material:     { cost: '$8K–$25K',  timeline: '3–6 wk', study: 'Supplemental analytical testing' },
+    documentation_issue: { cost: '$2K–$8K', timeline: '1–2 wk', study: 'Specification documentation update' },
+  },
+  manufacturing_process: {
+    foundational: { cost: '$10K–$40K', timeline: '1–2 mo', study: 'Process validation / GMP documentation' },
+    material:     { cost: '$5K–$20K',  timeline: '2–4 wk', study: 'Process description and controls documentation' },
+    documentation_issue: { cost: '$2K–$6K', timeline: '1–2 wk', study: 'Technical documentation update' },
+  },
+  general_availability: {
+    foundational: { cost: '$15K–$40K', timeline: '1–3 mo', study: 'Literature review + expert safety opinion' },
+    material:     { cost: '$8K–$20K',  timeline: '3–5 wk', study: 'Published literature compilation' },
+    documentation_issue: { cost: '$2K–$8K', timeline: '1–2 wk', study: 'Citation package update' },
+  },
+  general_acceptance: {
+    foundational: { cost: '$20K–$60K', timeline: '2–4 mo', study: 'Expert panel convening + consensus statement' },
+    material:     { cost: '$8K–$25K',  timeline: '1–2 mo', study: 'Expert opinion letters / GRAS panel review' },
+    documentation_issue: { cost: '$3K–$10K', timeline: '2–3 wk', study: 'Supporting expert documentation' },
+  },
+  conditions_of_use: {
+    foundational: { cost: '$10K–$30K', timeline: '3–6 wk', study: 'Conditions of use redefinition + exposure recalculation' },
+    material:     { cost: '$5K–$15K',  timeline: '2–3 wk', study: 'Conditions of use documentation update' },
+    documentation_issue: { cost: '$1K–$5K', timeline: '1 wk', study: 'Label/use specification clarification' },
+  },
+  regulatory_submission: {
+    foundational: { cost: '$10K–$25K', timeline: '2–4 wk', study: 'Regulatory affairs consultation + submission revision' },
+    material:     { cost: '$5K–$12K',  timeline: '1–2 wk', study: 'Submission formatting and completeness review' },
+    documentation_issue: { cost: '$1K–$4K', timeline: '3–5 days', study: 'Administrative correction' },
+  },
+}
+
+const FALLBACK_REMEDIATION = {
+  foundational:        { cost: '$50K–$300K', timeline: '6–18 mo', study: 'Major safety studies or systematic documentation required' },
+  material:            { cost: '$10K–$80K',  timeline: '1–6 mo',  study: 'Additional studies or documentation needed' },
+  documentation_issue: { cost: '$2K–$15K',  timeline: '1–4 wk',  study: 'Documentation review and update' },
+}
+
+function getRemediation(gap) {
+  return GAP_REMEDIATION[gap.domain]?.[gap.priority]
+    || FALLBACK_REMEDIATION[gap.priority]
+    || FALLBACK_REMEDIATION.material
+}
+const DOMAIN_SECTION_LABEL = {
+  identity_and_characterization: 'Part 1 — Identity & Specifications',
+  manufacturing_process:         'Part 1 — Identity & Specifications',
+  dietary_exposure:              'Part 5 — Dietary Exposure',
+  safety_data:                   'Part 4 — Safety',
+  general_availability:          'Part 4 — Safety',
+  general_acceptance:            'Part 3 — GRAS Basis',
+  conditions_of_use:             'Part 2 — Intended Use',
+  regulatory_submission:         'Part 6 — Narrative',
+}
+
 
 function scoreColor(score) {
   if (score === 0) return '#00ff88'
@@ -132,37 +201,87 @@ function SeverityBadge({ priority }) {
   )
 }
 
-function GapCard({ gap, compGap }) {
+function GapCard({ gap, compGap, substanceName, fallbackRef }) {
   const [open, setOpen] = useState(false)
   const cfg = SEVERITY_CONFIG[gap.priority] || SEVERITY_CONFIG.documentation_issue
+  const isCritical = gap.priority === 'foundational'
+  const ref = compGap?.approved_reference || fallbackRef
 
   return (
     <div
-      className="rounded-xl border bg-surface overflow-hidden"
-      style={{ borderColor: cfg.border, borderLeftWidth: '4px', borderLeftColor: cfg.color }}
+      className="rounded-xl border overflow-hidden"
+      style={{
+        borderColor: cfg.border,
+        borderLeftWidth: '4px',
+        borderLeftColor: cfg.color,
+        background: isCritical ? 'rgba(255,64,64,0.04)' : 'var(--color-surface)',
+      }}
     >
       <button
-        className="w-full flex items-center justify-between gap-3 p-4 text-left hover:bg-surface-2 transition-colors"
+        className="w-full flex flex-col p-4 text-left hover:bg-surface-2 transition-colors"
         onClick={() => setOpen(o => !o)}
       >
-        <div className="flex items-center gap-3 min-w-0">
-          <SeverityBadge priority={gap.priority} />
-          <h4 className="text-text-base font-semibold text-sm leading-snug truncate">{gap.title}</h4>
+        <div className="flex items-center justify-between gap-3 w-full">
+          <div className="flex items-center gap-3 min-w-0">
+            <SeverityBadge priority={gap.priority} />
+            <h4 className="text-text-base font-semibold text-sm leading-snug truncate">{gap.title}</h4>
+          </div>
+          <div className="flex items-center gap-2 shrink-0">
+            <span className="text-xs text-text-dim bg-surface-2 border border-border px-2 py-0.5 rounded capitalize hidden sm:inline">
+              {gap.domain?.replace(/_/g, ' ')}
+            </span>
+            {open
+              ? <ChevronUp className="w-4 h-4 text-text-dim" />
+              : <ChevronDown className="w-4 h-4 text-text-dim" />
+            }
+          </div>
         </div>
-        <div className="flex items-center gap-2 shrink-0">
-          <span className="text-xs text-text-dim bg-surface-2 border border-border px-2 py-0.5 rounded capitalize hidden sm:inline">
-            {gap.domain?.replace(/_/g, ' ')}
-          </span>
-          {open
-            ? <ChevronUp className="w-4 h-4 text-text-dim" />
-            : <ChevronDown className="w-4 h-4 text-text-dim" />
-          }
-        </div>
+        {!open && ref && (
+          <div className="flex items-center gap-1.5 mt-1.5">
+            <CheckCircle2 className="w-3 h-3 shrink-0" style={{ color: 'rgba(0,255,136,0.65)' }} />
+            <span className="text-xs text-text-muted truncate">
+              See GRN-{ref.grn_number}: {ref.substance_name}
+            </span>
+          </div>
+        )}
       </button>
 
       {open && (
         <div className="px-4 pb-4 border-t border-border">
           <p className="text-text-muted text-sm leading-relaxed mt-3 mb-3">{gap.observation}</p>
+          {(() => {
+            const rem = getRemediation(gap)
+            return rem ? (
+              <div className="flex flex-wrap items-center gap-2 mb-3">
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold border"
+                  style={{ background: 'rgba(255,255,255,0.04)', borderColor: 'rgba(255,255,255,0.1)', color: '#a0a0a0' }}>
+                  {rem.cost}
+                </span>
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold border"
+                  style={{ background: 'rgba(255,255,255,0.04)', borderColor: 'rgba(255,255,255,0.1)', color: '#a0a0a0' }}>
+                  {rem.timeline}
+                </span>
+                <span className="text-xs text-text-dim italic truncate">{rem.study}</span>
+              </div>
+            ) : null
+          })()}
+          {(() => {
+            const fda = getFdaQuestion(gap, substanceName)
+            return (
+              <div className="rounded-lg mb-3 overflow-hidden" style={{ border: '1px solid rgba(255,180,0,0.3)', background: 'rgba(255,180,0,0.04)' }}>
+                <div className="flex items-center gap-2 px-3 py-2" style={{ borderBottom: '1px solid rgba(255,180,0,0.2)', background: 'rgba(255,180,0,0.07)' }}>
+                  <FileText className="w-3.5 h-3.5 shrink-0" style={{ color: '#c89b00' }} />
+                  <span className="text-xs font-bold tracking-wide uppercase" style={{ color: '#c89b00' }}>FDA would ask</span>
+                </div>
+                <div className="px-3 py-2.5">
+                  <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.8)', fontStyle: 'italic' }}>
+                    &ldquo;{fda.question}&rdquo;
+                  </p>
+                  <p className="text-xs mt-2" style={{ color: 'rgba(255,180,0,0.6)' }}>{fda.note}</p>
+                </div>
+              </div>
+            )
+          })()}
           <div className="flex flex-wrap items-center gap-2 text-xs text-text-dim mb-3">
             <span className="bg-surface-2 border border-border px-2 py-0.5 rounded capitalize sm:hidden">
               {gap.domain?.replace(/_/g, ' ')}
@@ -172,7 +291,7 @@ function GapCard({ gap, compGap }) {
             )}
           </div>
 
-          {compGap?.approved_reference && (
+          {ref && (
             <div className="mt-2">
               <div className="rounded-lg p-3" style={{ background: 'rgba(0,255,136,0.06)', border: '1px solid rgba(0,255,136,0.2)' }}>
                 <div className="flex items-center gap-1.5 mb-1">
@@ -180,10 +299,10 @@ function GapCard({ gap, compGap }) {
                   <span className="text-xs text-accent font-semibold">What good looks like</span>
                 </div>
                 <p className="text-xs text-text-muted font-medium leading-snug" style={{ fontFamily: 'var(--font-mono)' }}>
-                  {compGap.approved_reference.substance_name}
+                  {ref.substance_name}
                 </p>
                 <p className="text-xs text-text-dim mt-0.5">
-                  GRN-{compGap.approved_reference.grn_number} · {compGap.approved_reference.section_label}
+                  GRN-{ref.grn_number} · {ref.section_label || DOMAIN_SECTION_LABEL[gap.domain] || gap.domain?.replace(/_/g, ' ')}
                 </p>
               </div>
             </div>
@@ -530,6 +649,25 @@ export default function Evaluation() {
   const [showAllGaps, setShowAllGaps] = useState(false)
   const [gapsView, setGapsView] = useState('severity')
   const [showScoreInfo, setShowScoreInfo] = useState(false)
+  const [research, setResearch]           = useState(null)
+  const [researchLoading, setResearchLoading] = useState(false)
+  const [researchError, setResearchError] = useState(null)
+
+  function openResearch() {
+    setActiveSection('research')
+    if (research || researchLoading) return
+    setResearchLoading(true)
+    setResearchError(null)
+    const s = result?.engagement_summary || {}
+    fetchResearch(
+      s.substance_name || '',
+      s.production_method || '',
+      s.source_organism || '',
+    )
+      .then(data => { setResearch(data.papers) })
+      .catch(err  => { setResearchError(err.message) })
+      .finally(()  => { setResearchLoading(false) })
+  }
 
   if (!result) {
     return (
@@ -560,7 +698,9 @@ export default function Evaluation() {
   const hiddenCount = allGaps.length - DEFAULT_VISIBLE_GAPS
 
   const signals   = result.potential_safety_signals || []
-  const nextSteps = result.recommended_next_steps || []
+  const nextSteps = [...(result.recommended_next_steps || [])].sort(
+    (a, b) => (PUSHBACK_ORDER[a.fda_pushback_probability] ?? 1) - (PUSHBACK_ORDER[b.fda_pushback_probability] ?? 1)
+  )
   const narrative = result.limitations_and_caveats || ''
 
   const compLookup = {}
@@ -572,6 +712,9 @@ export default function Evaluation() {
   const topNotices = [...approved_notices, ...withdrawn_notices]
     .sort((a, b) => (a.best_distance ?? 1) - (b.best_distance ?? 1))
     .slice(0, 3)
+  const fallbackRef = approved_notices[0]
+    ? { substance_name: approved_notices[0].substance_name, grn_number: approved_notices[0].grn_number }
+    : null
 
   // ── Detail views ──────────────────────────────────────────────────────────
 
@@ -680,7 +823,7 @@ export default function Evaluation() {
             <>
               <div className="flex flex-col gap-2">
                 {visibleGaps.map((gap, i) => (
-                  <GapCard key={i} gap={gap} compGap={compLookup[gap.title]} />
+                  <GapCard key={i} gap={gap} compGap={compLookup[gap.title]} substanceName={result.engagement_summary?.substance_name} fallbackRef={fallbackRef} />
                 ))}
               </div>
               {hiddenCount > 0 && (
@@ -712,7 +855,7 @@ export default function Evaluation() {
                   </div>
                   <div className="flex flex-col gap-2">
                     {gaps.map((gap, i) => (
-                      <GapCard key={i} gap={gap} compGap={compLookup[gap.title]} />
+                      <GapCard key={i} gap={gap} compGap={compLookup[gap.title]} substanceName={result.engagement_summary?.substance_name} fallbackRef={fallbackRef} />
                     ))}
                   </div>
                 </div>
@@ -824,12 +967,107 @@ export default function Evaluation() {
     )
   }
 
+  if (activeSection === 'research') {
+    return (
+      <div className="min-h-screen bg-bg flex flex-col">
+        <NavBar />
+        <main className="w-full max-w-3xl mx-auto px-6 py-12">
+          <DetailHeader title="Relevant Research" icon={BookOpen} onBack={() => setActiveSection(null)} />
+          <p className="text-text-muted text-xs mb-6">
+            Top PubMed papers matched to this substance — real citations, relevance summaries by Claude.
+          </p>
+
+          {researchLoading && (
+            <div className="flex flex-col items-center justify-center gap-4 py-20">
+              <Loader2 className="w-8 h-8 text-accent animate-spin" />
+              <p className="text-text-muted text-sm">Searching PubMed and summarizing relevance…</p>
+            </div>
+          )}
+
+          {researchError && (
+            <div className="flex items-start gap-3 rounded-xl border px-4 py-3" style={{ background: 'rgba(255,64,64,0.06)', borderColor: 'rgba(255,64,64,0.25)' }}>
+              <AlertCircle className="w-4 h-4 text-critical mt-0.5 shrink-0" />
+              <p className="text-sm text-text-muted">{researchError}</p>
+            </div>
+          )}
+
+          {research && research.length === 0 && (
+            <p className="text-text-dim text-sm italic">No relevant papers found on PubMed for this substance.</p>
+          )}
+
+          {research && research.length > 0 && (
+            <div className="flex flex-col gap-4">
+              {research.map((paper, i) => (
+                <div key={paper.pmid} className="rounded-xl border border-border bg-surface p-5">
+                  <div className="flex items-start justify-between gap-3 mb-2">
+                    <span className="text-xs font-bold text-text-dim shrink-0 mt-0.5">{i + 1}</span>
+                    <div className="flex-1 min-w-0">
+                      <a
+                        href={paper.url}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-sm font-semibold text-text-base hover:text-accent transition-colors leading-snug block mb-1"
+                      >
+                        {paper.title}
+                      </a>
+                      <p className="text-xs text-text-muted mb-0.5">{paper.authors}</p>
+                      <p className="text-xs text-text-dim">
+                        {paper.journal}{paper.journal && paper.year ? ' · ' : ''}{paper.year}
+                        {paper.doi && (
+                          <>
+                            {' · '}
+                            <a
+                              href={`https://doi.org/${paper.doi}`}
+                              target="_blank" rel="noreferrer"
+                              className="hover:text-accent transition-colors"
+                            >
+                              {paper.doi}
+                            </a>
+                          </>
+                        )}
+                      </p>
+                    </div>
+                    <a href={paper.url} target="_blank" rel="noreferrer" className="shrink-0">
+                      <ExternalLink className="w-3.5 h-3.5 text-text-dim hover:text-accent transition-colors" />
+                    </a>
+                  </div>
+
+                  {paper.relevance && (
+                    <div className="mt-3 rounded-lg px-3 py-2.5 flex items-start gap-2"
+                      style={{ background: 'rgba(0,255,136,0.05)', border: '1px solid rgba(0,255,136,0.15)' }}>
+                      <CheckCircle2 className="w-3.5 h-3.5 text-accent shrink-0 mt-0.5" />
+                      <p className="text-xs text-text-muted leading-relaxed">{paper.relevance}</p>
+                    </div>
+                  )}
+
+                  {paper.abstract && (
+                    <details className="mt-3 group">
+                      <summary className="text-xs text-text-dim cursor-pointer hover:text-text-muted transition-colors list-none flex items-center gap-1">
+                        <ChevronDown className="w-3 h-3 group-open:rotate-180 transition-transform" />
+                        Show abstract
+                      </summary>
+                      <p className="mt-2 text-xs text-text-muted leading-relaxed">{paper.abstract}</p>
+                    </details>
+                  )}
+                </div>
+              ))}
+              <p className="text-xs text-text-dim text-center pt-2">
+                Results from PubMed · Always verify citations before use
+              </p>
+            </div>
+          )}
+        </main>
+      </div>
+    )
+  }
+
   if (activeSection === 'nextsteps') {
     return (
       <div className="min-h-screen bg-bg flex flex-col">
         <NavBar />
         <main className="w-full max-w-3xl mx-auto px-6 py-12">
           <DetailHeader title="Recommended Next Steps" icon={ListChecks} onBack={() => setActiveSection(null)} />
+          <p className="text-text-muted text-xs mb-6">Sorted by FDA pushback risk — address high-risk items first.</p>
           <div className="flex flex-col gap-3">
             {nextSteps.map((step, i) => {
               const prob = step.fda_pushback_probability || 'medium'
@@ -854,6 +1092,23 @@ export default function Evaluation() {
                       <p className="text-text-muted text-sm leading-relaxed mb-3 italic">{step.pushback_reasoning}</p>
                     )}
                     <p className="text-text-muted text-sm leading-relaxed mb-3">{step.action}</p>
+                    {(() => {
+                      const priority = step.fda_pushback_probability === 'high' ? 'foundational' : step.fda_pushback_probability === 'low' ? 'documentation_issue' : 'material'
+                      const rem = GAP_REMEDIATION[step.domain]?.[priority] || FALLBACK_REMEDIATION[priority] || FALLBACK_REMEDIATION.material
+                      return (
+                        <div className="flex flex-wrap items-center gap-2 mt-2 mb-2">
+                          <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold border"
+                            style={{ background: 'rgba(255,255,255,0.04)', borderColor: 'rgba(255,255,255,0.1)', color: '#a0a0a0' }}>
+                            {rem.cost}
+                          </span>
+                          <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold border"
+                            style={{ background: 'rgba(255,255,255,0.04)', borderColor: 'rgba(255,255,255,0.1)', color: '#a0a0a0' }}>
+                            {rem.timeline}
+                          </span>
+                          <span className="text-xs text-text-dim italic truncate">{rem.study}</span>
+                        </div>
+                      )
+                    })()}
                     {ref && (
                       <a
                         href={`https://www.cfsanappsexternal.fda.gov/scripts/fdcc/?set=GRASNotices&id=${ref.grn_number}`}
@@ -869,6 +1124,7 @@ export default function Evaluation() {
               )
             })}
           </div>
+          <p className="text-xs text-text-dim italic mt-4">Cost and timeline ranges are rough industry estimates and vary by CRO, study design, and jurisdiction.</p>
         </main>
       </div>
     )
@@ -923,12 +1179,37 @@ export default function Evaluation() {
           </div>
         )}
 
+        {/* Orientation header */}
+        {result.engagement_summary?.substance_name && (
+          <div>
+            <p className="text-text-dim text-xs uppercase tracking-widest font-semibold mb-1">Gap Analysis Report</p>
+            <h1 className="text-2xl font-bold text-text-base mb-1.5" style={{ letterSpacing: '-0.02em' }}>
+              {result.engagement_summary.substance_name}
+            </h1>
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-text-muted text-sm">
+              {result.engagement_summary.notifier && <span>{result.engagement_summary.notifier}</span>}
+              {result.engagement_summary.date_filed && (
+                <>
+                  <span className="text-text-dim">·</span>
+                  <span>Filed {new Date(result.engagement_summary.date_filed).toLocaleDateString('en-US', { year: 'numeric', month: 'short' })}</span>
+                </>
+              )}
+              {result.engagement_summary.gras_basis && (
+                <>
+                  <span className="text-text-dim">·</span>
+                  <span className="capitalize">{result.engagement_summary.gras_basis.replace(/_/g, ' ')}</span>
+                </>
+              )}
+            </div>
+          </div>
+        )}
+
         {/* Score hero */}
         <div className="rounded-2xl border border-border bg-surface p-8">
           <div className="flex items-baseline gap-3 mb-1">
             <span className="text-7xl font-bold" style={{ color: scoreCol }}>{score}</span>
             <div className="flex items-center gap-1.5">
-              <span className="text-text-dim text-sm">gap score</span>
+              <span className="text-text-dim text-sm">gap score <span className="text-text-dim opacity-60 text-xs">· lower is better</span></span>
               <div className="relative">
                 <button
                   onClick={() => setShowScoreInfo(o => !o)}
@@ -970,31 +1251,90 @@ export default function Evaluation() {
               </div>
             </div>
           </div>
+          {/* Score gauge */}
+          <div className="mt-2 mb-4">
+            <div className="relative h-1.5 rounded-full overflow-hidden flex">
+              <div className="h-full" style={{ width: '20%', background: 'rgba(0,255,136,0.35)' }} />
+              <div className="h-full" style={{ width: '30%', background: 'rgba(255,149,0,0.35)' }} />
+              <div className="h-full" style={{ flex: 1, background: 'rgba(255,64,64,0.35)' }} />
+              <div
+                className="absolute top-0 w-1 h-full rounded-full -translate-x-1/2"
+                style={{ left: `${Math.min(score / 50 * 100, 97)}%`, background: scoreCol }}
+              />
+            </div>
+            <div className="flex justify-between mt-1 text-xs" style={{ color: 'rgba(255,255,255,0.45)' }}>
+              <span style={{ color: 'rgba(0,255,136,0.75)' }}>0 ← best</span>
+              <span>10</span>
+              <span>25</span>
+              <span>50+</span>
+            </div>
+          </div>
           <p className="text-text-dim text-xs mb-6">
             {issueLabel ? `${issueLabel} · ` : ''}{totalIssues} issue{totalIssues !== 1 ? 's' : ''} across 8 regulatory domains
           </p>
 
-          {topNotices.length > 0 && (
+          {(topNotices.length > 0 || result.gap_field_presence) && (
             <div>
               <p className="text-xs font-semibold text-text-dim uppercase tracking-widest mb-3">
                 Documentation completeness vs. {topNotices.length} most similar filings
               </p>
-              {currentProxyPct != null && (
-                <ProxyRow label="Your filing" pct={currentProxyPct} color={scoreCol} bold />
+              <div className="overflow-x-auto">
+                <table className="w-full text-xs border-collapse">
+                  <thead>
+                    <tr>
+                      <th className="text-left text-text-dim font-medium pb-2 pr-4">Field</th>
+                      <th className="text-center text-text-dim font-medium pb-2 px-3 whitespace-nowrap">Yours</th>
+                      {topNotices.map(n => (
+                        <th key={n.grn_number} className="text-center font-semibold pb-2 px-3 whitespace-nowrap" style={{ color: n.status === 'withdrawn' ? '#ff9500' : '#00ff88' }}>
+                          GRN-{n.grn_number}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {BENCHMARKABLE_FIELDS.map(field => {
+                      const gfp = result.gap_field_presence || {}
+                      const yours = gfp[field]
+                      const applicable = result.benchmark?.applicable_fields || getApplicableFields(result.engagement_summary)
+                      const isNA = applicable[field] === false
+                      return (
+                        <tr key={field} className="border-t" style={{ borderColor: 'rgba(255,255,255,0.05)' }}>
+                          <td className="py-1.5 pr-4 text-text-muted">{FIELD_LABELS[field]}</td>
+                          <td className="py-1.5 px-3 text-center">
+                            {isNA
+                              ? <span className="text-text-dim opacity-40">N/A</span>
+                              : yours
+                                ? <span className="font-bold" style={{ color: '#00ff88' }}>✓</span>
+                                : <span className="font-bold" style={{ color: '#ff4040' }}>✗</span>
+                            }
+                          </td>
+                          {topNotices.map(n => {
+                            const has = peerFields(n)[field]
+                            return (
+                              <td key={n.grn_number} className="py-1.5 px-3 text-center">
+                                {isNA
+                                  ? <span className="text-text-dim opacity-40">N/A</span>
+                                  : <span style={{ color: has ? '#00ff88' : '#333' }}>{has ? '✓' : '·'}</span>
+                                }
+                              </td>
+                            )
+                          })}
+                        </tr>
+                      )
+                    })}
+                  </tbody>
+                </table>
+              </div>
+              {topNotices.length > 0 && (
+                <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1">
+                  {topNotices.map(n => (
+                    <span key={n.grn_number} className="text-xs text-text-dim">
+                      <span className="font-semibold" style={{ color: n.status === 'withdrawn' ? '#ff9500' : '#00ff88' }}>GRN-{n.grn_number}</span>
+                      {' '}{n.substance_name} ({n.status === 'withdrawn' ? 'withdrawn' : 'approved'})
+                    </span>
+                  ))}
+                </div>
               )}
-              <div className="h-px my-2" style={{ background: 'rgba(255,255,255,0.08)' }} />
-              {topNotices.map(n => {
-                const isApproved = n.status !== 'withdrawn'
-                const applicable = result.benchmark?.applicable_fields || getApplicableFields(result.engagement_summary)
-                return (
-                  <ProxyRow
-                    key={n.grn_number}
-                    label={`${isApproved ? '✓' : '✕'} GRN-${n.grn_number}`}
-                    pct={peerProxyPct(n, applicable)}
-                    color={isApproved ? '#00ff88' : '#ff9500'}
-                  />
-                )
-              })}
             </div>
           )}
         </div>
@@ -1008,7 +1348,11 @@ export default function Evaluation() {
               icon={GitCompare}
               title="Comparable Filings"
               badge={`${topNotices.length} notices`}
-              preview={topSimilar ? `${topSimilar.status === 'withdrawn' ? 'Withdrawn' : 'Approved'}: ${topSimilar.substance_name} (GRN-${topSimilar.grn_number})` : undefined}
+              preview={(() => {
+                const nApproved = approved_notices.length
+                const nWithdrawn = withdrawn_notices.length
+                return `${nApproved} approved · ${nWithdrawn} withdrawn · closest: GRN-${topSimilar?.grn_number}`
+              })()}
               onClick={() => setActiveSection('comparables')}
             />
           )}
@@ -1018,7 +1362,9 @@ export default function Evaluation() {
             icon={ShieldAlert}
             title="Safety Signals"
             badge={signals.length > 0 ? `${signals.length} flagged` : 'None'}
-            preview={topSignal ? topSignal.signal : 'No safety signals identified in this filing.'}
+            preview={signals.length > 0
+              ? `${signals.length} concern${signals.length > 1 ? 's' : ''} flagged for expert review`
+              : 'No safety signals identified in this filing.'}
             accentBorder={signals.length > 0 ? '#fcd34d' : undefined}
             onClick={() => setActiveSection('signals')}
             disabled={signals.length === 0}
@@ -1029,32 +1375,53 @@ export default function Evaluation() {
             icon={AlertOctagon}
             title="Identified Gaps"
             badge={`${allGaps.length} total`}
-            preview={topGap ? topGap.title : 'No gaps identified.'}
+            preview={[
+              counts.foundational && `${counts.foundational} critical`,
+              counts.material     && `${counts.material} moderate`,
+              counts.documentation_issue && `${counts.documentation_issue} minor`,
+            ].filter(Boolean).join(' · ') || 'No gaps identified.'}
             onClick={() => setActiveSection('gaps')}
             disabled={allGaps.length === 0}
           />
 
           {/* Benchmark */}
-          {topNotices.length > 0 && (
-            <OverviewCard
-              icon={BarChart2}
-              title="Documentation Fields"
-              badge="7 key fields"
-              preview={`Field-by-field checklist vs. your ${topNotices.length} most similar filings.`}
-              onClick={() => setActiveSection('benchmark')}
-            />
-          )}
+          {topNotices.length > 0 && (() => {
+            const gfp = result.gap_field_presence || {}
+            const presentCount = BENCHMARKABLE_FIELDS.filter(f => gfp[f]).length
+            return (
+              <OverviewCard
+                icon={BarChart2}
+                title="Documentation Fields"
+                badge="7 key fields"
+                preview={`${presentCount} of ${BENCHMARKABLE_FIELDS.length} key fields present — see how you compare to similar filings`}
+                onClick={() => setActiveSection('benchmark')}
+              />
+            )
+          })()}
 
           {/* Next Steps */}
-          {nextSteps.length > 0 && (
-            <OverviewCard
-              icon={ListChecks}
-              title="Recommended Next Steps"
-              badge={`${nextSteps.length} actions`}
-              preview={topStep ? topStep.gap_title || topStep.action : undefined}
-              onClick={() => setActiveSection('nextsteps')}
-            />
-          )}
+          {nextSteps.length > 0 && (() => {
+            const highCount = nextSteps.filter(s => s.fda_pushback_probability === 'high').length
+            return (
+              <OverviewCard
+                icon={ListChecks}
+                title="Recommended Next Steps"
+                badge={`${nextSteps.length} actions`}
+                preview={`${nextSteps.length} prioritized actions · ${highCount} high FDA pushback risk`}
+                onClick={() => setActiveSection('nextsteps')}
+              />
+            )
+          })()}
+
+          {/* Relevant Research */}
+          <OverviewCard
+            icon={BookOpen}
+            title="Relevant Research"
+            badge="PubMed"
+            preview="Top 3 papers matched to this substance — real citations, Claude relevance summaries"
+            accentBorder="rgba(0,200,255,0.3)"
+            onClick={openResearch}
+          />
 
         </div>
 

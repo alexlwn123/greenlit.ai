@@ -13,3 +13,10 @@ export async function getStatus(jobId) {
   if (!res.ok) throw new Error(await res.text())
   return res.json()
 }
+
+export async function fetchResearch(substance, method = '', organism = '') {
+  const params = new URLSearchParams({ substance, method, organism })
+  const res = await fetch(`${BASE_URL}/research?${params}`)
+  if (!res.ok) throw new Error(await res.text())
+  return res.json()
+}

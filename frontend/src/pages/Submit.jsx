@@ -1,17 +1,17 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { UploadCloud, FileText, X, Dna, Loader2, AlertCircle } from 'lucide-react'
+import { UploadCloud, FileText, X, AlertCircle } from 'lucide-react'
 import NavBar from '../components/NavBar'
 import { useAnalysis } from '../context/AnalysisContext'
 import { submitAnalysis, getStatus } from '../lib/api'
+import { MOCK_RESULT } from '../lib/mockResult'
 
-const FOCUS_OPTIONS = [
-  'Safety Study Completeness',
-  'Intended Use & Exposure Estimates',
-  'Substance Identity & Characterization',
-  'Regulatory History',
-  'Literature Review Coverage',
-  'Expert Panel Qualifications',
+const ANALYSIS_STEPS = [
+  { key: 'extracting',    label: 'Extracting text' },
+  { key: 'analyzing',     label: 'Running AI analysis' },
+  { key: 'retrieving',    label: 'Finding similar filings' },
+  { key: 'benchmarking',  label: 'Computing benchmark' },
+  { key: 'finalizing',    label: 'Building report' },
 ]
 
 const PROGRESS_MESSAGES = {
@@ -35,7 +35,6 @@ export default function Submit() {
 
   const [file, setFile] = useState(null)
   const [isDragging, setIsDragging] = useState(false)
-  const [focusAreas, setFocusAreas] = useState([])
   const [loading, setLoading] = useState(false)
   const [jobStatus, setJobStatus] = useState(null)
   const [progressStep, setProgressStep] = useState(null)
@@ -98,32 +97,53 @@ export default function Submit() {
     handleFile(e.dataTransfer.files[0])
   }
 
-  function toggleFocus(area) {
-    setFocusAreas(prev =>
-      prev.includes(area) ? prev.filter(a => a !== area) : [...prev, area]
-    )
-  }
-
   if (loading) {
+    const stepIdx  = ANALYSIS_STEPS.findIndex(s => s.key === progressStep)
+    const activeStep = stepIdx >= 0 ? stepIdx : (jobStatus === 'pending' ? -1 : 0)
     return (
       <div className="min-h-screen bg-bg flex flex-col">
         <NavBar />
-        <div className="flex-1 flex flex-col items-center justify-center gap-6 px-6">
-          <div className="relative">
-            <div className="w-20 h-20 rounded-full border-2 border-border flex items-center justify-center bg-surface">
-              <Dna className="w-10 h-10 text-accent" />
-            </div>
-            <div className="absolute inset-0 rounded-full border-2 border-t-accent border-r-transparent border-b-transparent border-l-transparent animate-spin" />
-          </div>
-          <div className="text-center">
-            <p className="text-text-base text-lg font-semibold mb-2">Analyzing your filing</p>
-            <p className="text-text-muted text-sm">
-              {PROGRESS_MESSAGES[progressStep] || (jobStatus === 'pending' ? 'Queued...' : 'Processing...')}
+        <div className="flex-1 flex flex-col items-center justify-center px-6">
+          <div className="w-full max-w-xs">
+            <p className="text-text-base text-lg font-bold text-center mb-1" style={{ letterSpacing: '-0.02em' }}>
+              Analyzing your filing
             </p>
-          </div>
-          <div className="flex items-center gap-2 text-text-dim text-xs">
-            <Loader2 className="w-3 h-3 animate-spin" />
-            This may take 3–5 minutes
+            <p className="text-text-dim text-xs text-center mb-10">
+              {jobStatus === 'pending' ? 'Queued, waiting to start…' : 'This may take 3–5 minutes'}
+            </p>
+            <div className="flex flex-col">
+              {ANALYSIS_STEPS.map((step, i) => {
+                const done   = activeStep > i
+                const active = activeStep === i
+                return (
+                  <div key={step.key} className="flex items-start gap-4">
+                    <div className="flex flex-col items-center shrink-0">
+                      <div
+                        className="w-7 h-7 rounded-full border-2 flex items-center justify-center text-xs font-bold"
+                        style={{
+                          borderColor: done || active ? '#00ff88' : '#2a2a2a',
+                          background:  done ? '#00ff88' : active ? 'rgba(0,255,136,0.1)' : 'transparent',
+                          color:       done ? '#000' : active ? '#00ff88' : '#333',
+                        }}
+                      >
+                        {done ? '✓' : i + 1}
+                      </div>
+                      {i < ANALYSIS_STEPS.length - 1 && (
+                        <div className="w-px my-1" style={{ height: '2rem', background: done ? '#00ff88' : '#1e1e1e' }} />
+                      )}
+                    </div>
+                    <div className="pb-8">
+                      <p className="text-sm font-semibold leading-tight" style={{ color: done ? '#444' : active ? '#f4f4f4' : '#2e2e2e' }}>
+                        {step.label}
+                      </p>
+                      {active && (
+                        <p className="text-xs text-text-dim mt-0.5">{PROGRESS_MESSAGES[step.key] || 'Processing…'}</p>
+                      )}
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
           </div>
         </div>
       </div>
@@ -219,6 +239,15 @@ export default function Submit() {
           >
             Analyze Filing
           </button>
+
+          <p className="text-center mt-4">
+            <button
+              onClick={() => { setResult(MOCK_RESULT); navigate('/evaluation') }}
+              className="text-xs text-text-dim hover:text-text-muted transition-colors underline underline-offset-2"
+            >
+              Load demo result
+            </button>
+          </p>
 
         </div>
       </main>
