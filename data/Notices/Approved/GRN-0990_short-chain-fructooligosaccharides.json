@@ -17,12 +17,12 @@
   "safety_data_available": [
     "acute_toxicity",
     "chronic_toxicity",
-    "developmental_toxicity",
     "reproductive_toxicity",
+    "developmental_toxicity",
     "genotoxicity_ames",
-    "metabolic_fate",
+    "digestibility_study",
     "human_clinical_trial",
-    "digestibility_study"
+    "metabolic_fate"
   ],
   "dietary_exposure_method": "theoretical_maximum",
   "exposure_estimate_included": true,

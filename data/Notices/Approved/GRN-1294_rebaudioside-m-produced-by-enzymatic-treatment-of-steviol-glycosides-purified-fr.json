@@ -18,10 +18,11 @@
   "safety_data_available": [
     "subchronic_toxicity",
     "human_clinical_trial",
-    "metabolic_fate",
-    "history_of_safe_use"
+    "history_of_safe_use",
+    "metabolic_fate"
   ],
   "dietary_exposure_method": "theoretical_maximum",
   "exposure_estimate_included": true,
-  "allergenicity_addressed": false
+  "allergenicity_addressed": false,
+  "source_organism_name": "Stevia rebaudiana"
 }

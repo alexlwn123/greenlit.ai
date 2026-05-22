@@ -23,13 +23,13 @@
   "target_population": "general_population",
   "gras_basis": "scientific_procedures",
   "safety_data_available": [
-    "genotoxicity_ames",
-    "genotoxicity_chromosomal",
     "acute_toxicity",
     "chronic_toxicity",
+    "genotoxicity_ames",
+    "genotoxicity_chromosomal",
+    "digestibility_study",
     "human_clinical_trial",
     "history_of_safe_use",
-    "digestibility_study",
     "metabolic_fate",
     "in_silico_toxicology"
   ],

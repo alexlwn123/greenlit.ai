@@ -17,12 +17,13 @@
   "target_population": "general_population",
   "gras_basis": "scientific_procedures",
   "safety_data_available": [
-    "repeated_dose_toxicity",
+    "subchronic_toxicity",
     "genotoxicity_ames",
-    "metabolic_fate",
-    "human_clinical_trial"
+    "human_clinical_trial",
+    "metabolic_fate"
   ],
   "dietary_exposure_method": "theoretical_maximum",
   "exposure_estimate_included": true,
-  "allergenicity_addressed": false
+  "allergenicity_addressed": false,
+  "source_organism_name": "Stevia rebaudiana"
 }

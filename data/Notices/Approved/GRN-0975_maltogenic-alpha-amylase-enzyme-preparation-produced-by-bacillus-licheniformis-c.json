@@ -16,11 +16,12 @@
   "target_population": "general_population",
   "gras_basis": "scientific_procedures",
   "safety_data_available": [
-    "90_day_rat_study",
-    "allergenicity_bioinformatic",
-    "acute_toxicity"
+    "acute_toxicity",
+    "subchronic_toxicity",
+    "allergenicity_bioinformatic"
   ],
   "dietary_exposure_method": "USDA_CSFII",
   "exposure_estimate_included": true,
-  "allergenicity_addressed": true
+  "allergenicity_addressed": true,
+  "source_organism_name": "Bacillus licheniformis"
 }

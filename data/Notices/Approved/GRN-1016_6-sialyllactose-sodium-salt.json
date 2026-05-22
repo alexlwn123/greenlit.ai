@@ -20,10 +20,10 @@
   "safety_data_available": [
     "acute_toxicity",
     "developmental_toxicity",
+    "allergenicity_bioinformatic",
     "digestibility_study",
-    "metabolic_fate",
     "human_clinical_trial",
-    "allergenicity_bioinformatic"
+    "metabolic_fate"
   ],
   "dietary_exposure_method": "USDA_CSFII",
   "exposure_estimate_included": true,

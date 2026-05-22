@@ -15,8 +15,8 @@
   "target_population": "general_population",
   "gras_basis": "scientific_procedures",
   "safety_data_available": [
-    "allergenicity_bioinformatic",
     "acute_toxicity",
+    "allergenicity_bioinformatic",
     "metabolic_fate"
   ],
   "dietary_exposure_method": "theoretical_maximum",

@@ -17,10 +17,10 @@
   "target_population": "general_population",
   "gras_basis": "scientific_procedures",
   "safety_data_available": [
-    "history_of_safe_use",
-    "toxicology_studies",
     "human_clinical_trial",
-    "metabolic_fate"
+    "history_of_safe_use",
+    "metabolic_fate",
+    "animal_toxicity_studies"
   ],
   "dietary_exposure_method": "NHANES",
   "exposure_estimate_included": true,

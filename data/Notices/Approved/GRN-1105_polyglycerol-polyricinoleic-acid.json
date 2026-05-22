@@ -26,5 +26,6 @@
   ],
   "dietary_exposure_method": "NHANES",
   "exposure_estimate_included": true,
-  "allergenicity_addressed": false
+  "allergenicity_addressed": false,
+  "source_organism_name": "Polyglycerol polyricinoleic"
 }

@@ -1,6 +1,6 @@
 {
   "grn_number": 1005,
-  "substance_name": "\u03b2-Lactoglobulin from cow milk",
+  "substance_name": "β-Lactoglobulin from cow milk",
   "status": "withdrawn",
   "date_filed": "",
   "date_closed": "Mar 3, 2022",
@@ -17,9 +17,9 @@
   "gras_basis": "scientific_procedures",
   "safety_data_available": [
     "allergenicity_bioinformatic",
+    "human_clinical_trial",
     "history_of_safe_use",
-    "metabolic_fate",
-    "human_clinical_trial"
+    "metabolic_fate"
   ],
   "dietary_exposure_method": "theoretical_maximum",
   "exposure_estimate_included": true,

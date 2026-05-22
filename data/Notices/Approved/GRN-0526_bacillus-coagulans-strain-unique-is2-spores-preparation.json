@@ -25,12 +25,13 @@
   "safety_data_available": [
     "chronic_toxicity",
     "reproductive_toxicity",
-    "genotoxicity_in_vitro",
     "genotoxicity_chromosomal",
+    "genotoxicity_in_vitro",
     "human_clinical_trial",
     "history_of_safe_use"
   ],
   "dietary_exposure_method": "theoretical_maximum",
   "exposure_estimate_included": true,
-  "allergenicity_addressed": false
+  "allergenicity_addressed": false,
+  "source_organism_name": "Bacillus coagulans"
 }

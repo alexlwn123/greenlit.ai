@@ -17,8 +17,8 @@
   "gras_basis": "scientific_procedures",
   "safety_data_available": [
     "nutritional_impact",
-    "metabolic_fate",
-    "history_of_safe_use"
+    "history_of_safe_use",
+    "metabolic_fate"
   ],
   "dietary_exposure_method": "NHANES",
   "exposure_estimate_included": true,

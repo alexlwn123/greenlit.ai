@@ -16,10 +16,10 @@
   "target_population": "general_population",
   "gras_basis": "common_use_prior_1958",
   "safety_data_available": [
-    "history_of_safe_use",
     "allergenicity_bioinformatic",
-    "metabolic_fate",
-    "digestibility_study"
+    "digestibility_study",
+    "history_of_safe_use",
+    "metabolic_fate"
   ],
   "dietary_exposure_method": "theoretical_maximum",
   "exposure_estimate_included": true,

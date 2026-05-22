@@ -1,6 +1,6 @@
 {
   "grn_number": 1228,
-  "substance_name": "\u03b2-casein produced by E. coli DSM 35048",
+  "substance_name": "β-casein produced by E. coli DSM 35048",
   "status": "withdrawn",
   "date_filed": "",
   "date_closed": "Jun 13, 2025",
@@ -17,10 +17,10 @@
   "target_population": "general_population",
   "gras_basis": "scientific_procedures",
   "safety_data_available": [
-    "digestibility_study",
     "allergenicity_bioinformatic",
-    "metabolic_fate",
-    "history_of_safe_use"
+    "digestibility_study",
+    "history_of_safe_use",
+    "metabolic_fate"
   ],
   "dietary_exposure_method": "NHANES",
   "exposure_estimate_included": true,

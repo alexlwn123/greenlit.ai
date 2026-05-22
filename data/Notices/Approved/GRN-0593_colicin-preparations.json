@@ -17,5 +17,6 @@
   "safety_data_available": [],
   "dietary_exposure_method": "not_included",
   "exposure_estimate_included": false,
-  "allergenicity_addressed": null
+  "allergenicity_addressed": null,
+  "source_organism_name": "Colicin preparations"
 }

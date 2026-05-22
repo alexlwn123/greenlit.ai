@@ -15,12 +15,13 @@
   "target_population": "general_population",
   "gras_basis": "scientific_procedures",
   "safety_data_available": [
-    "90_day_rat_study",
     "acute_toxicity",
+    "subchronic_toxicity",
     "nutritional_impact",
     "metabolic_fate"
   ],
   "dietary_exposure_method": "NHANES",
   "exposure_estimate_included": true,
-  "allergenicity_addressed": false
+  "allergenicity_addressed": false,
+  "source_organism_name": "Complexation products"
 }

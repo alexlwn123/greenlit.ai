@@ -1,6 +1,6 @@
 {
   "grn_number": 1247,
-  "substance_name": "\u03b2-Lactoglobulin produced by Kluyveromyces lactis CCTCC M20241460",
+  "substance_name": "β-Lactoglobulin produced by Kluyveromyces lactis CCTCC M20241460",
   "status": "no_questions",
   "date_filed": "",
   "date_closed": "Sep 19, 2025",
@@ -15,13 +15,14 @@
   "target_population": "general_population",
   "gras_basis": "scientific_procedures",
   "safety_data_available": [
+    "acute_toxicity",
+    "subchronic_toxicity",
     "genotoxicity_ames",
     "genotoxicity_chromosomal",
-    "acute_toxicity",
-    "90_day_rat_study",
     "allergenicity_bioinformatic"
   ],
   "dietary_exposure_method": "theoretical_maximum",
   "exposure_estimate_included": true,
-  "allergenicity_addressed": true
+  "allergenicity_addressed": true,
+  "source_organism_name": "Kluyveromyces lactis CCTCC"
 }

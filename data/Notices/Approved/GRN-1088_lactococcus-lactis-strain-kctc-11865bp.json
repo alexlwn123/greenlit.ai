@@ -15,12 +15,13 @@
   "target_population": "general_population",
   "gras_basis": "scientific_procedures",
   "safety_data_available": [
-    "allergenicity_in_vitro",
     "acute_toxicity",
+    "allergenicity_in_vitro",
     "human_clinical_trial",
     "history_of_safe_use"
   ],
   "dietary_exposure_method": "market_share",
   "exposure_estimate_included": true,
-  "allergenicity_addressed": true
+  "allergenicity_addressed": true,
+  "source_organism_name": "Lactococcus lactis KCTC"
 }

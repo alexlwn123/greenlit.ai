@@ -25,9 +25,9 @@
   "target_population": "general_population",
   "gras_basis": "scientific_procedures",
   "safety_data_available": [
+    "allergenicity_bioinformatic",
     "digestibility_study",
-    "nutritional_impact",
-    "allergenicity_bioinformatic"
+    "nutritional_impact"
   ],
   "dietary_exposure_method": "market_share",
   "exposure_estimate_included": true,

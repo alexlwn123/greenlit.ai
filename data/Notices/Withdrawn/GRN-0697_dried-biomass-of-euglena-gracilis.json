@@ -20,13 +20,14 @@
   "gras_basis": "scientific_procedures",
   "safety_data_available": [
     "acute_toxicity",
-    "90_day_rat_study",
+    "subchronic_toxicity",
     "genotoxicity_ames",
     "genotoxicity_chromosomal",
-    "metabolic_fate",
-    "digestibility_study"
+    "digestibility_study",
+    "metabolic_fate"
   ],
   "dietary_exposure_method": "dietary_intake_survey",
   "exposure_estimate_included": true,
-  "allergenicity_addressed": false
+  "allergenicity_addressed": false,
+  "source_organism_name": "Euglena gracilis"
 }

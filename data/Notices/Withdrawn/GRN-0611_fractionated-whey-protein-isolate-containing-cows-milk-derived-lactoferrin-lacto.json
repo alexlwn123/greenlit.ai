@@ -1,6 +1,6 @@
 {
   "grn_number": 611,
-  "substance_name": "Fractionated whey protein isolate containing cows milk derived lactoferrin, lactoperoxidase, and transforming growth factor \u03b22",
+  "substance_name": "Fractionated whey protein isolate containing cows milk derived lactoferrin, lactoperoxidase, and transforming growth factor β2",
   "status": "withdrawn",
   "date_filed": "",
   "date_closed": "Apr 15, 2016",
@@ -19,5 +19,6 @@
   "safety_data_available": [],
   "dietary_exposure_method": null,
   "exposure_estimate_included": false,
-  "allergenicity_addressed": false
+  "allergenicity_addressed": false,
+  "source_organism_name": "Fractionated whey"
 }

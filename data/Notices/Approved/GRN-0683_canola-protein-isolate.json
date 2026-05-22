@@ -19,10 +19,10 @@
   "gras_basis": "scientific_procedures",
   "safety_data_available": [
     "acute_toxicity",
-    "nutritional_impact",
-    "metabolic_fate",
     "allergenicity_bioinformatic",
-    "digestibility_study"
+    "digestibility_study",
+    "nutritional_impact",
+    "metabolic_fate"
   ],
   "dietary_exposure_method": "theoretical_maximum",
   "exposure_estimate_included": true,

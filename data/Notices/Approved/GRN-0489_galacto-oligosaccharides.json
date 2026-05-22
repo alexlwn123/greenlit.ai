@@ -18,12 +18,12 @@
   "target_population": "general_population",
   "gras_basis": "scientific_procedures",
   "safety_data_available": [
-    "human_clinical_trial",
-    "digestibility_study",
-    "metabolic_fate",
-    "allergenicity_bioinformatic",
     "acute_toxicity",
-    "nutritional_impact"
+    "allergenicity_bioinformatic",
+    "digestibility_study",
+    "nutritional_impact",
+    "human_clinical_trial",
+    "metabolic_fate"
   ],
   "dietary_exposure_method": "NHANES",
   "exposure_estimate_included": true,

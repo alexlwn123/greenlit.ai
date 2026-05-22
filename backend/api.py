@@ -308,6 +308,59 @@ async def get_research(substance: str, method: str = "", organism: str = ""):
         raise HTTPException(status_code=502, detail=f"Research fetch failed: {exc}")
 
 
+
+
+@app.get("/outline/{job_id}")
+async def get_outline(job_id: str):
+    """Generate and return a Word amendment outline for a completed analysis job."""
+    import asyncio
+    from fastapi.responses import Response
+    from backend.outline import generate_outline_doc
+
+    with _store_lock:
+        job = _jobs.get(job_id)
+        result = job.get("result") if job else None
+
+    if result is None:
+        result_path = RESULTS_DIR / f"{job_id}.json"
+        if result_path.exists():
+            import json as _json
+            result = _json.loads(result_path.read_text(encoding="utf-8"))
+
+    if result is None:
+        raise HTTPException(status_code=404, detail="Job not found or not complete")
+
+    try:
+        doc_bytes = await asyncio.to_thread(generate_outline_doc, result)
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail=f"Outline generation failed: {exc}")
+
+    substance = result.get("engagement_summary", {}).get("substance_name", "amendment")
+    safe_name = "".join(c if c.isalnum() or c in " -_" else "_" for c in substance)[:60]
+    filename = f"GRAS_Amendment_Outline_{safe_name}.docx".replace(" ", "_")
+
+    return Response(
+        content=doc_bytes,
+        media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        headers={"Content-Disposition": f'attachment; filename="{filename}"'},
+    )
+
+
+@app.get("/sidecar/{grn_number}")
+async def get_sidecar(grn_number: int):
+    """Return the metadata sidecar for a specific GRN notice (approved or withdrawn)."""
+    import glob, json as _json
+    for status_dir in ["Approved", "Withdrawn"]:
+        pattern = str(Path("data/notices") / status_dir / "*.json")
+        for path in glob.glob(pattern):
+            try:
+                data = _json.loads(Path(path).read_text(encoding="utf-8-sig"))
+                if data.get("grn_number") == grn_number:
+                    return data
+            except Exception:
+                continue
+    raise HTTPException(status_code=404, detail=f"GRN {grn_number} not found")
+
 FRONTEND_DIST = Path(__file__).parent.parent / "frontend" / "dist"
 
 if FRONTEND_DIST.exists():

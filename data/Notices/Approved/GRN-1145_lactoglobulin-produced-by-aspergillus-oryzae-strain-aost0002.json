@@ -1,6 +1,6 @@
 {
   "grn_number": 1145,
-  "substance_name": "\u03b2-lactoglobulin produced by Aspergillus oryzae strain Ao_st0002",
+  "substance_name": "β-lactoglobulin produced by Aspergillus oryzae strain Ao_st0002",
   "status": "no_questions",
   "date_filed": "",
   "date_closed": "Dec 18, 2023",
@@ -22,5 +22,6 @@
   ],
   "dietary_exposure_method": "theoretical_maximum",
   "exposure_estimate_included": true,
-  "allergenicity_addressed": true
+  "allergenicity_addressed": true,
+  "source_organism_name": "Aspergillus oryzae"
 }

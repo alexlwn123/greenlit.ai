@@ -17,8 +17,8 @@
   "target_population": "children",
   "gras_basis": "scientific_procedures",
   "safety_data_available": [
-    "history_of_safe_use",
     "digestibility_study",
+    "history_of_safe_use",
     "metabolic_fate"
   ],
   "dietary_exposure_method": "theoretical_maximum",

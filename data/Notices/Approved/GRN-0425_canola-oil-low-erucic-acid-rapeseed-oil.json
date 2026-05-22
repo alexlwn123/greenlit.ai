@@ -15,11 +15,11 @@
   "target_population": "not_for_infants",
   "gras_basis": "scientific_procedures",
   "safety_data_available": [
-    "nutritional_impact",
     "acute_toxicity",
     "digestibility_study",
-    "metabolic_fate",
+    "nutritional_impact",
     "human_clinical_trial",
+    "metabolic_fate",
     "in_silico_toxicology"
   ],
   "dietary_exposure_method": "theoretical_maximum",

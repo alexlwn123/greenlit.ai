@@ -23,5 +23,6 @@
   ],
   "dietary_exposure_method": "theoretical_maximum",
   "exposure_estimate_included": true,
-  "allergenicity_addressed": true
+  "allergenicity_addressed": true,
+  "source_organism_name": "Escherichia coli"
 }

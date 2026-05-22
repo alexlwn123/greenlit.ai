@@ -18,13 +18,14 @@
   "target_population": "general_population",
   "gras_basis": "common_use_prior_1958",
   "safety_data_available": [
-    "history_of_safe_use",
-    "in_vitro",
     "acute_toxicity",
+    "allergenicity_bioinformatic",
     "human_clinical_trial",
-    "allergenicity_bioinformatic"
+    "history_of_safe_use",
+    "in_vitro_toxicity"
   ],
   "dietary_exposure_method": "theoretical_maximum",
   "exposure_estimate_included": true,
-  "allergenicity_addressed": true
+  "allergenicity_addressed": true,
+  "source_organism_name": "Lactiplantibacillus plantarum DSM"
 }

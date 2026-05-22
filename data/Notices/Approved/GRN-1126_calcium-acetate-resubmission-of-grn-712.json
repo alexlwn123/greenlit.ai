@@ -15,9 +15,9 @@
   "target_population": "general_population",
   "gras_basis": "scientific_procedures",
   "safety_data_available": [
-    "metabolic_fate",
     "chronic_toxicity",
-    "nutritional_impact"
+    "nutritional_impact",
+    "metabolic_fate"
   ],
   "dietary_exposure_method": "USDA_CSFII",
   "exposure_estimate_included": true,

@@ -15,11 +15,12 @@
   "target_population": "general_population",
   "gras_basis": "scientific_procedures",
   "safety_data_available": [
-    "allergenicity_bioinformatic",
     "acute_toxicity",
-    "90_day_rat_study"
+    "subchronic_toxicity",
+    "allergenicity_bioinformatic"
   ],
   "dietary_exposure_method": "theoretical_maximum",
   "exposure_estimate_included": true,
-  "allergenicity_addressed": true
+  "allergenicity_addressed": true,
+  "source_organism_name": "Bacillus amyloliquefaciens"
 }

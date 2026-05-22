@@ -17,7 +17,7 @@
   "target_population": "general_population",
   "gras_basis": "scientific_procedures",
   "safety_data_available": [
-    "90_day_rat_study",
+    "subchronic_toxicity",
     "genotoxicity_ames",
     "allergenicity_bioinformatic",
     "digestibility_study",
@@ -25,5 +25,6 @@
   ],
   "dietary_exposure_method": "theoretical_maximum",
   "exposure_estimate_included": true,
-  "allergenicity_addressed": true
+  "allergenicity_addressed": true,
+  "source_organism_name": "Dried isomaltulose"
 }

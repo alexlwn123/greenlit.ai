@@ -23,7 +23,7 @@
   "gras_basis": "scientific_procedures",
   "safety_data_available": [
     "acute_toxicity",
-    "90_day_rat_study",
+    "subchronic_toxicity",
     "chronic_toxicity",
     "reproductive_toxicity",
     "developmental_toxicity",

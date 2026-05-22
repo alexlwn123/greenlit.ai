@@ -18,8 +18,8 @@
   "target_population": "general_population",
   "gras_basis": "scientific_procedures",
   "safety_data_available": [
-    "history_of_safe_use",
-    "nutritional_impact"
+    "nutritional_impact",
+    "history_of_safe_use"
   ],
   "dietary_exposure_method": "not_included",
   "exposure_estimate_included": false,

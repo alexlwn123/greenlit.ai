@@ -17,13 +17,14 @@
   "target_population": "general_population",
   "gras_basis": "scientific_procedures",
   "safety_data_available": [
-    "history_of_safe_use",
-    "allergenicity_bioinformatic",
     "acute_toxicity",
-    "in_vitro_toxicology",
-    "human_clinical_trial"
+    "allergenicity_bioinformatic",
+    "human_clinical_trial",
+    "history_of_safe_use",
+    "in_vitro_toxicity"
   ],
   "dietary_exposure_method": "theoretical_maximum",
   "exposure_estimate_included": true,
-  "allergenicity_addressed": true
+  "allergenicity_addressed": true,
+  "source_organism_name": "Lactobacillus plantarum 299v"
 }

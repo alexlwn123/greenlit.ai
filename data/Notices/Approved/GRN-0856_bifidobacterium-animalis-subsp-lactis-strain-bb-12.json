@@ -22,5 +22,6 @@
   "safety_data_available": [],
   "dietary_exposure_method": "theoretical_maximum",
   "exposure_estimate_included": true,
-  "allergenicity_addressed": false
+  "allergenicity_addressed": false,
+  "source_organism_name": "Bifidobacterium animalis subsp. lactis BB-12"
 }

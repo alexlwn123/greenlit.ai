@@ -18,10 +18,10 @@
   "target_population": "general_population",
   "gras_basis": "scientific_procedures",
   "safety_data_available": [
-    "genotoxicity_ames",
-    "genotoxicity_chromosomal",
     "subchronic_toxicity",
     "developmental_toxicity",
+    "genotoxicity_ames",
+    "genotoxicity_chromosomal",
     "allergenicity_bioinformatic",
     "human_clinical_trial",
     "metabolic_fate"

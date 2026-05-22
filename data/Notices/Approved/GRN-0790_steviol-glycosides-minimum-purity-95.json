@@ -23,5 +23,6 @@
   "safety_data_available": [],
   "dietary_exposure_method": null,
   "exposure_estimate_included": true,
-  "allergenicity_addressed": false
+  "allergenicity_addressed": false,
+  "source_organism_name": "Steviol glycosides"
 }

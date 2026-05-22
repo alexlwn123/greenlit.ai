@@ -17,11 +17,11 @@
   "safety_data_available": [
     "acute_toxicity",
     "chronic_toxicity",
-    "developmental_toxicity",
     "reproductive_toxicity",
+    "developmental_toxicity",
     "genotoxicity_ames",
-    "metabolic_fate",
     "allergenicity_bioinformatic",
+    "metabolic_fate",
     "in_silico_toxicology"
   ],
   "dietary_exposure_method": "theoretical_maximum",

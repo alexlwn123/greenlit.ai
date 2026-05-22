@@ -18,12 +18,13 @@
   "target_population": "general_population",
   "gras_basis": "scientific_procedures",
   "safety_data_available": [
-    "in_vitro_toxicity",
-    "animal_studies",
+    "allergenicity_in_vitro",
     "human_clinical_trial",
-    "allergenicity_in_vitro"
+    "animal_toxicity_studies",
+    "in_vitro_toxicity"
   ],
   "dietary_exposure_method": "market_share",
   "exposure_estimate_included": true,
-  "allergenicity_addressed": true
+  "allergenicity_addressed": true,
+  "source_organism_name": "Lactobacillus casei KCTC"
 }

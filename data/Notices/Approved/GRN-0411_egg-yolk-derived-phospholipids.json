@@ -15,9 +15,9 @@
   "target_population": "not_for_infants",
   "gras_basis": "scientific_procedures",
   "safety_data_available": [
+    "allergenicity_bioinformatic",
     "nutritional_impact",
-    "history_of_safe_use",
-    "allergenicity_bioinformatic"
+    "history_of_safe_use"
   ],
   "dietary_exposure_method": "theoretical_maximum",
   "exposure_estimate_included": true,

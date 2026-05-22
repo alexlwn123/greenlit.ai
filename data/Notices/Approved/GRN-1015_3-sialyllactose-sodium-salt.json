@@ -17,12 +17,12 @@
   "target_population": "general_population",
   "gras_basis": "scientific_procedures",
   "safety_data_available": [
-    "90_day_rat_study",
-    "digestibility_study",
-    "metabolic_fate",
-    "human_clinical_trial",
+    "subchronic_toxicity",
+    "developmental_toxicity",
     "allergenicity_bioinformatic",
-    "developmental_toxicity"
+    "digestibility_study",
+    "human_clinical_trial",
+    "metabolic_fate"
   ],
   "dietary_exposure_method": "theoretical_maximum",
   "exposure_estimate_included": true,

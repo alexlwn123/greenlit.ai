@@ -21,15 +21,16 @@
   "target_population": "general_population",
   "gras_basis": "scientific_procedures",
   "safety_data_available": [
-    "genotoxicity_ames",
-    "genotoxicity_chromosomal",
     "acute_toxicity",
     "chronic_toxicity",
-    "metabolic_fate",
+    "genotoxicity_ames",
+    "genotoxicity_chromosomal",
+    "allergenicity_bioinformatic",
     "human_clinical_trial",
-    "allergenicity_bioinformatic"
+    "metabolic_fate"
   ],
   "dietary_exposure_method": "NHANES",
   "exposure_estimate_included": true,
-  "allergenicity_addressed": true
+  "allergenicity_addressed": true,
+  "source_organism_name": "Haematococcus pluvialis"
 }

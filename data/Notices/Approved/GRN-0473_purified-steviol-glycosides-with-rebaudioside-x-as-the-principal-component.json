@@ -25,5 +25,6 @@
   ],
   "dietary_exposure_method": null,
   "exposure_estimate_included": null,
-  "allergenicity_addressed": true
+  "allergenicity_addressed": true,
+  "source_organism_name": "Purified steviol"
 }

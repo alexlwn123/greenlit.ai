@@ -18,11 +18,12 @@
   "gras_basis": "common_use_prior_1958",
   "safety_data_available": [
     "genotoxicity_ames",
-    "metabolic_fate",
     "human_clinical_trial",
-    "history_of_safe_use"
+    "history_of_safe_use",
+    "metabolic_fate"
   ],
   "dietary_exposure_method": "NHANES",
   "exposure_estimate_included": true,
-  "allergenicity_addressed": false
+  "allergenicity_addressed": false,
+  "source_organism_name": "Purified steviol"
 }

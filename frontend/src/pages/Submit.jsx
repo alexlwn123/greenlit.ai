@@ -75,6 +75,7 @@ export default function Submit() {
     try {
       const { job_id } = await submitAnalysis(file)
       setJobId(job_id)
+      sessionStorage.setItem("gras_job_id", job_id)
       startPolling(job_id)
     } catch {
       setLoading(false)
@@ -118,22 +119,37 @@ export default function Submit() {
                 return (
                   <div key={step.key} className="flex items-start gap-4">
                     <div className="flex flex-col items-center shrink-0">
-                      <div
-                        className="w-7 h-7 rounded-full border-2 flex items-center justify-center text-xs font-bold"
-                        style={{
-                          borderColor: done || active ? '#00ff88' : '#2a2a2a',
-                          background:  done ? '#00ff88' : active ? 'rgba(0,255,136,0.1)' : 'transparent',
-                          color:       done ? '#000' : active ? '#00ff88' : '#333',
-                        }}
-                      >
-                        {done ? '✓' : i + 1}
-                      </div>
+                      {active ? (
+                        <div className="relative w-7 h-7">
+                          <div
+                            className="absolute inset-0 rounded-full border-2 animate-spin"
+                            style={{ borderColor: 'transparent', borderTopColor: '#00ff88' }}
+                          />
+                          <div
+                            className="absolute inset-0 rounded-full border-2 flex items-center justify-center text-xs font-bold"
+                            style={{ borderColor: 'rgba(0,255,136,0.25)', background: 'rgba(0,255,136,0.1)', color: '#00ff88' }}
+                          >
+                            {i + 1}
+                          </div>
+                        </div>
+                      ) : (
+                        <div
+                          className="w-7 h-7 rounded-full border-2 flex items-center justify-center text-xs font-bold"
+                          style={{
+                            borderColor: done ? '#00ff88' : '#2a2a2a',
+                            background:  done ? '#00ff88' : 'transparent',
+                            color:       done ? '#000' : '#333',
+                          }}
+                        >
+                          {done ? '✓' : i + 1}
+                        </div>
+                      )}
                       {i < ANALYSIS_STEPS.length - 1 && (
                         <div className="w-px my-1" style={{ height: '2rem', background: done ? '#00ff88' : '#1e1e1e' }} />
                       )}
                     </div>
                     <div className="pb-8">
-                      <p className="text-sm font-semibold leading-tight" style={{ color: done ? '#444' : active ? '#f4f4f4' : '#2e2e2e' }}>
+                      <p className="text-sm font-semibold leading-tight" style={{ color: done ? '#00ff88' : active ? '#f4f4f4' : '#2e2e2e' }}>
                         {step.label}
                       </p>
                       {active && (

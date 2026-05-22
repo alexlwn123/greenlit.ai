@@ -16,13 +16,14 @@
   "target_population": "general_population",
   "gras_basis": "scientific_procedures",
   "safety_data_available": [
+    "human_clinical_trial",
     "history_of_safe_use",
-    "pathogenicity_assessment",
-    "antibiotic_resistance",
     "metabolic_fate",
-    "human_clinical_trial"
+    "pathogenicity_assessment",
+    "antibiotic_resistance"
   ],
   "dietary_exposure_method": "theoretical_maximum",
   "exposure_estimate_included": true,
-  "allergenicity_addressed": true
+  "allergenicity_addressed": true,
+  "source_organism_name": "Bifidobacterium breve DSM"
 }

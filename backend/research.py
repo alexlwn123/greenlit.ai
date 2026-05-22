@@ -1,18 +1,18 @@
-﻿"""Fetch relevant PubMed papers and add Claude relevance summaries."""
+"""Fetch relevant PubMed papers and add Claude relevance summaries."""
 
 import json
 import logging
 import os
 import re
+import time
 import xml.etree.ElementTree as ET
 from urllib.parse import quote_plus
-from urllib.request import urlopen
-from urllib.error import URLError
 
 PUBMED_BASE = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils"
 _TOOL  = "greenlit-ai-gras"
 _EMAIL = os.environ.get("PUBMED_EMAIL", "gras-tool@greenlit.ai")
-_TIMEOUT = 12  # seconds per request
+_TIMEOUT = 15  # seconds per request
+_RATE_DELAY = 0.4  # seconds between NCBI calls (limit: 3/sec without API key)
 
 
 _HEADERS = {
@@ -20,12 +20,21 @@ _HEADERS = {
     "Accept": "application/json, text/xml, */*",
 }
 
+_session = None
+
+def _get_session():
+    global _session
+    if _session is None:
+        import requests as _requests
+        _session = _requests.Session()
+        _session.headers.update(_HEADERS)
+    return _session
+
 def _get(url: str) -> bytes:
-    from urllib.request import Request
-    req = Request(url, headers=_HEADERS)
     try:
-        with urlopen(req, timeout=_TIMEOUT) as r:
-            return r.read()
+        resp = _get_session().get(url, timeout=_TIMEOUT)
+        resp.raise_for_status()
+        return resp.content
     except Exception as e:
         raise RuntimeError(f"PubMed request failed: {e}") from e
 
@@ -47,6 +56,7 @@ def _esearch(query: str, retmax: int = 8) -> list[str]:
         f"&sort=relevance&retmode=json&tool={_TOOL}&email={_EMAIL}"
     )
     data = json.loads(_get(url))
+    time.sleep(_RATE_DELAY)
     return data["esearchresult"]["idlist"]
 
 
@@ -55,7 +65,9 @@ def _esummary(pmids: list[str]) -> dict:
         f"{PUBMED_BASE}/esummary.fcgi"
         f"?db=pubmed&id={','.join(pmids)}&retmode=json&tool={_TOOL}&email={_EMAIL}"
     )
-    return json.loads(_get(url))["result"]
+    result = json.loads(_get(url))["result"]
+    time.sleep(_RATE_DELAY)
+    return result
 
 
 def _efetch_abstracts(pmids: list[str]) -> dict[str, str]:

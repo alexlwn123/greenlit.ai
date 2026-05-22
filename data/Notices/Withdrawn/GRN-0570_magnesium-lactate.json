@@ -16,8 +16,8 @@
   "gras_basis": "scientific_procedures",
   "safety_data_available": [
     "nutritional_impact",
-    "history_of_safe_use",
     "human_clinical_trial",
+    "history_of_safe_use",
     "in_silico_toxicology"
   ],
   "dietary_exposure_method": "NHANES",

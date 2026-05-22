@@ -20,9 +20,9 @@
   "gras_basis": "scientific_procedures",
   "safety_data_available": [
     "genotoxicity_ames",
-    "animal_studies",
+    "allergenicity_bioinformatic",
     "human_clinical_trial",
-    "allergenicity_bioinformatic"
+    "animal_toxicity_studies"
   ],
   "dietary_exposure_method": "NHANES",
   "exposure_estimate_included": true,

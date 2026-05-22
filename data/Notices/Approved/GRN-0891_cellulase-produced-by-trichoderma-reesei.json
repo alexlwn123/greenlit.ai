@@ -21,5 +21,6 @@
   ],
   "dietary_exposure_method": "USDA_CSFII",
   "exposure_estimate_included": true,
-  "allergenicity_addressed": true
+  "allergenicity_addressed": true,
+  "source_organism_name": "Trichoderma reesei"
 }

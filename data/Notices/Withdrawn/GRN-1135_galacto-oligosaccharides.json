@@ -20,9 +20,9 @@
     "genotoxicity_ames",
     "genotoxicity_chromosomal",
     "allergenicity_bioinformatic",
-    "clinical_studies",
-    "metabolic_fate",
-    "digestibility_study"
+    "digestibility_study",
+    "human_clinical_trial",
+    "metabolic_fate"
   ],
   "dietary_exposure_method": "USDA_CSFII",
   "exposure_estimate_included": true,

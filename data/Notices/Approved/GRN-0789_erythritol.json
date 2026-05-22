@@ -18,12 +18,12 @@
   "target_population": "general_population",
   "gras_basis": "scientific_procedures",
   "safety_data_available": [
-    "90_day_rat_study",
+    "acute_toxicity",
+    "subchronic_toxicity",
     "genotoxicity_ames",
     "genotoxicity_chromosomal",
-    "acute_toxicity",
-    "human_clinical_trial",
     "digestibility_study",
+    "human_clinical_trial",
     "metabolic_fate"
   ],
   "dietary_exposure_method": "NHANES",

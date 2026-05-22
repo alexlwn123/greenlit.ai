@@ -20,10 +20,11 @@
   "gras_basis": "common_use_prior_1958",
   "safety_data_available": [
     "genotoxicity_ames",
-    "metabolic_fate",
-    "history_of_safe_use"
+    "history_of_safe_use",
+    "metabolic_fate"
   ],
   "dietary_exposure_method": "theoretical_maximum",
   "exposure_estimate_included": true,
-  "allergenicity_addressed": false
+  "allergenicity_addressed": false,
+  "source_organism_name": "Stevia rebaudiana"
 }

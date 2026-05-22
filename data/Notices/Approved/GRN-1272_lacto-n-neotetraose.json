@@ -15,12 +15,12 @@
   "target_population": "not_for_infants",
   "gras_basis": "scientific_procedures",
   "safety_data_available": [
-    "90_day_rat_study",
+    "acute_toxicity",
+    "subchronic_toxicity",
     "genotoxicity_ames",
     "allergenicity_bioinformatic",
-    "acute_toxicity",
-    "nutritional_impact",
     "digestibility_study",
+    "nutritional_impact",
     "metabolic_fate"
   ],
   "dietary_exposure_method": "NHANES",

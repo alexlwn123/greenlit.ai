@@ -19,8 +19,8 @@
     "acute_toxicity",
     "reproductive_toxicity",
     "developmental_toxicity",
-    "metabolic_fate",
     "human_clinical_trial",
+    "metabolic_fate",
     "in_silico_toxicology"
   ],
   "dietary_exposure_method": "NHANES",

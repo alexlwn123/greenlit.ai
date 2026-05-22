@@ -22,13 +22,14 @@
   "gras_basis": "scientific_procedures",
   "safety_data_available": [
     "acute_toxicity",
+    "subchronic_toxicity",
     "genotoxicity_ames",
-    "90_day_rat_study",
+    "nutritional_impact",
     "human_clinical_trial",
-    "metabolic_fate",
-    "nutritional_impact"
+    "metabolic_fate"
   ],
   "dietary_exposure_method": "NHANES",
   "exposure_estimate_included": true,
-  "allergenicity_addressed": false
+  "allergenicity_addressed": false,
+  "source_organism_name": "Plukenetia volubilis"
 }

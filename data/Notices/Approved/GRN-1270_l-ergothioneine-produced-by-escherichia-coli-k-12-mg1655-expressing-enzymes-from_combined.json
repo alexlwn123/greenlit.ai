@@ -26,15 +26,16 @@
   "gras_basis": "scientific_procedures",
   "safety_data_available": [
     "acute_toxicity",
-    "90_day_rat_study",
-    "genotoxicity_ames",
-    "genotoxicity_chromosomal",
+    "subchronic_toxicity",
     "reproductive_toxicity",
     "developmental_toxicity",
-    "metabolic_fate",
-    "history_of_safe_use"
+    "genotoxicity_ames",
+    "genotoxicity_chromosomal",
+    "history_of_safe_use",
+    "metabolic_fate"
   ],
   "dietary_exposure_method": "theoretical_maximum",
   "exposure_estimate_included": true,
-  "allergenicity_addressed": false
+  "allergenicity_addressed": false,
+  "source_organism_name": "Escherichia coli"
 }

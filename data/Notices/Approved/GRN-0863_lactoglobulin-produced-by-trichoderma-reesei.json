@@ -1,6 +1,6 @@
 {
   "grn_number": 863,
-  "substance_name": "\u03b2-lactoglobulin produced by Trichoderma reesei",
+  "substance_name": "β-lactoglobulin produced by Trichoderma reesei",
   "status": "no_questions",
   "date_filed": "",
   "date_closed": "Mar 25, 2020",
@@ -24,5 +24,6 @@
   ],
   "dietary_exposure_method": "theoretical_maximum",
   "exposure_estimate_included": true,
-  "allergenicity_addressed": true
+  "allergenicity_addressed": true,
+  "source_organism_name": "Trichoderma reesei"
 }

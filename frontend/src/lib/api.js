@@ -20,3 +20,15 @@ export async function fetchResearch(substance, method = '', organism = '') {
   if (!res.ok) throw new Error(await res.text())
   return res.json()
 }
+
+export async function downloadOutline(jobId) {
+  const res = await fetch(`${BASE_URL}/outline/${jobId}`)
+  if (!res.ok) throw new Error(await res.text())
+  return res.blob()
+}
+
+export async function fetchSidecar(grnNumber) {
+  const res = await fetch(`${BASE_URL}/sidecar/${grnNumber}`)
+  if (!res.ok) throw new Error(await res.text())
+  return res.json()
+}

@@ -17,5 +17,6 @@
   "safety_data_available": [],
   "dietary_exposure_method": "not_included",
   "exposure_estimate_included": false,
-  "allergenicity_addressed": false
+  "allergenicity_addressed": false,
+  "source_organism_name": "Geobacillus stearothermophilus"
 }

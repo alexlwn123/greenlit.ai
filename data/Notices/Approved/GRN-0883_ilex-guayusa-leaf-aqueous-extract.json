@@ -17,8 +17,8 @@
   "safety_data_available": [
     "acute_toxicity",
     "nutritional_impact",
-    "metabolic_fate",
     "human_clinical_trial",
+    "metabolic_fate",
     "in_silico_toxicology"
   ],
   "dietary_exposure_method": "theoretical_maximum",

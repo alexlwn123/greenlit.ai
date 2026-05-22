@@ -22,13 +22,14 @@
   "target_population": "general_population",
   "gras_basis": "scientific_procedures",
   "safety_data_available": [
-    "metabolic_fate",
     "acute_toxicity",
+    "allergenicity_bioinformatic",
     "human_clinical_trial",
     "history_of_safe_use",
-    "allergenicity_bioinformatic"
+    "metabolic_fate"
   ],
   "dietary_exposure_method": "NHANES",
   "exposure_estimate_included": true,
-  "allergenicity_addressed": true
+  "allergenicity_addressed": true,
+  "source_organism_name": "Lactobacillus reuteri NCIMB"
 }

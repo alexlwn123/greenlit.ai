@@ -18,11 +18,12 @@
   "gras_basis": "scientific_procedures",
   "safety_data_available": [
     "allergenicity_bioinformatic",
-    "metabolic_fate",
     "history_of_safe_use",
+    "metabolic_fate",
     "in_silico_toxicology"
   ],
   "dietary_exposure_method": "market_share",
   "exposure_estimate_included": true,
-  "allergenicity_addressed": true
+  "allergenicity_addressed": true,
+  "source_organism_name": "Stevia rebaudiana"
 }

@@ -15,13 +15,14 @@
   "target_population": "general_population",
   "gras_basis": "scientific_procedures",
   "safety_data_available": [
-    "genotoxicity_ames",
     "acute_toxicity",
     "developmental_toxicity",
-    "metabolic_fate",
-    "history_of_safe_use"
+    "genotoxicity_ames",
+    "history_of_safe_use",
+    "metabolic_fate"
   ],
   "dietary_exposure_method": null,
   "exposure_estimate_included": true,
-  "allergenicity_addressed": false
+  "allergenicity_addressed": false,
+  "source_organism_name": "Glucosyl hesperidin"
 }

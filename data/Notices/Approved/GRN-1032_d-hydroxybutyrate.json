@@ -1,6 +1,6 @@
 {
   "grn_number": 1032,
-  "substance_name": "D-\u03b2-hydroxybutyrate",
+  "substance_name": "D-β-hydroxybutyrate",
   "status": "no_questions",
   "date_filed": "",
   "date_closed": "Jun 2, 2022",
@@ -17,9 +17,9 @@
   "target_population": "general_population",
   "gras_basis": "scientific_procedures",
   "safety_data_available": [
-    "metabolic_fate",
-    "human_clinical_trial",
     "acute_toxicity",
+    "human_clinical_trial",
+    "metabolic_fate",
     "in_silico_toxicology"
   ],
   "dietary_exposure_method": "theoretical_maximum",

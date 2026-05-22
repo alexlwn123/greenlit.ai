@@ -18,12 +18,12 @@
   "target_population": "general_population",
   "gras_basis": "scientific_procedures",
   "safety_data_available": [
-    "genotoxicity_ames",
     "acute_toxicity",
-    "nutritional_impact",
+    "genotoxicity_ames",
     "digestibility_study",
-    "metabolic_fate",
+    "nutritional_impact",
     "human_clinical_trial",
+    "metabolic_fate",
     "in_silico_toxicology"
   ],
   "dietary_exposure_method": "USDA_CSFII",

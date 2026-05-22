@@ -19,13 +19,14 @@
   "target_population": "general_population",
   "gras_basis": "scientific_procedures",
   "safety_data_available": [
-    "history_of_safe_use",
     "acute_toxicity",
+    "allergenicity_bioinformatic",
     "nutritional_impact",
-    "metabolic_fate",
-    "allergenicity_bioinformatic"
+    "history_of_safe_use",
+    "metabolic_fate"
   ],
   "dietary_exposure_method": "theoretical_maximum",
   "exposure_estimate_included": true,
-  "allergenicity_addressed": true
+  "allergenicity_addressed": true,
+  "source_organism_name": "Undaria pinnatifida"
 }

@@ -1,6 +1,6 @@
 {
   "grn_number": 958,
-  "substance_name": "Fungal oil (\u226540% arachidonic acid) from Mortierella alpina strain AF",
+  "substance_name": "Fungal oil (≥40% arachidonic acid) from Mortierella alpina strain AF",
   "status": "withdrawn",
   "date_filed": "",
   "date_closed": "Mar 26, 2021",
@@ -15,15 +15,16 @@
   "target_population": "not_for_infants",
   "gras_basis": "scientific_procedures",
   "safety_data_available": [
+    "acute_toxicity",
     "genotoxicity_ames",
     "genotoxicity_chromosomal",
     "allergenicity_bioinformatic",
-    "acute_toxicity",
-    "toxicology_studies",
     "human_clinical_trial",
-    "metabolic_fate"
+    "metabolic_fate",
+    "animal_toxicity_studies"
   ],
   "dietary_exposure_method": "theoretical_maximum",
   "exposure_estimate_included": true,
-  "allergenicity_addressed": true
+  "allergenicity_addressed": true,
+  "source_organism_name": "Mortierella alpina AF"
 }

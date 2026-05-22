@@ -17,9 +17,9 @@
   "gras_basis": "scientific_procedures",
   "safety_data_available": [
     "allergenicity_bioinformatic",
-    "metabolic_fate",
     "digestibility_study",
-    "nutritional_impact"
+    "nutritional_impact",
+    "metabolic_fate"
   ],
   "dietary_exposure_method": "theoretical_maximum",
   "exposure_estimate_included": true,

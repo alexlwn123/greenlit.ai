@@ -18,12 +18,13 @@
   "target_population": "general_population",
   "gras_basis": "scientific_procedures",
   "safety_data_available": [
-    "history_of_safe_use",
     "acute_toxicity",
     "digestibility_study",
-    "human_clinical_trial"
+    "human_clinical_trial",
+    "history_of_safe_use"
   ],
   "dietary_exposure_method": "theoretical_maximum",
   "exposure_estimate_included": true,
-  "allergenicity_addressed": false
+  "allergenicity_addressed": false,
+  "source_organism_name": "Limosilactobacillus reuteri ATCC"
 }

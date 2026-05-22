@@ -23,8 +23,8 @@
   "safety_data_available": [
     "acute_toxicity",
     "genotoxicity_ames",
-    "nutritional_impact",
     "digestibility_study",
+    "nutritional_impact",
     "metabolic_fate"
   ],
   "dietary_exposure_method": "NHANES",

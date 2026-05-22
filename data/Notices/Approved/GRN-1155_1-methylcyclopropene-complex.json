@@ -16,9 +16,9 @@
   "gras_basis": "scientific_procedures",
   "safety_data_available": [
     "acute_toxicity",
-    "genotoxicity_ames",
     "reproductive_toxicity",
     "developmental_toxicity",
+    "genotoxicity_ames",
     "metabolic_fate"
   ],
   "dietary_exposure_method": "theoretical_maximum",

@@ -20,8 +20,8 @@
     "genotoxicity_ames",
     "genotoxicity_chromosomal",
     "allergenicity_bioinformatic",
-    "metabolic_fate",
-    "nutritional_impact"
+    "nutritional_impact",
+    "metabolic_fate"
   ],
   "dietary_exposure_method": "theoretical_maximum",
   "exposure_estimate_included": true,

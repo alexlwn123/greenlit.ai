@@ -15,10 +15,10 @@
   "target_population": "general_population",
   "gras_basis": "scientific_procedures",
   "safety_data_available": [
-    "90_day_rat_study",
+    "acute_toxicity",
+    "subchronic_toxicity",
     "genotoxicity_ames",
     "allergenicity_bioinformatic",
-    "acute_toxicity",
     "nutritional_impact",
     "history_of_safe_use"
   ],

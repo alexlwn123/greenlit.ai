@@ -22,10 +22,10 @@
   "gras_basis": "scientific_procedures",
   "safety_data_available": [
     "subchronic_toxicity",
-    "genotoxicity_ames",
-    "genotoxicity_chromosomal",
     "reproductive_toxicity",
     "developmental_toxicity",
+    "genotoxicity_ames",
+    "genotoxicity_chromosomal",
     "metabolic_fate",
     "immunotoxicity"
   ],

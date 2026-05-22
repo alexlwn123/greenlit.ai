@@ -18,11 +18,11 @@
   "target_population": "not_for_infants",
   "gras_basis": "scientific_procedures",
   "safety_data_available": [
-    "90_day_rat_study",
-    "genotoxicity_ames",
-    "genotoxicity_chromosomal",
+    "subchronic_toxicity",
     "reproductive_toxicity",
     "developmental_toxicity",
+    "genotoxicity_ames",
+    "genotoxicity_chromosomal",
     "human_clinical_trial",
     "history_of_safe_use"
   ],

@@ -21,9 +21,9 @@
   "gras_basis": "scientific_procedures",
   "safety_data_available": [
     "acute_toxicity",
+    "subchronic_toxicity",
     "genotoxicity_ames",
     "genotoxicity_chromosomal",
-    "90_day_rat_study",
     "allergenicity_bioinformatic",
     "allergenicity_in_vitro",
     "digestibility_study",

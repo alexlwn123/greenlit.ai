@@ -18,13 +18,13 @@
   "target_population": "general_population",
   "gras_basis": "scientific_procedures",
   "safety_data_available": [
+    "acute_toxicity",
     "genotoxicity_ames",
     "genotoxicity_chromosomal",
     "allergenicity_bioinformatic",
-    "acute_toxicity",
-    "metabolic_fate",
     "human_clinical_trial",
-    "history_of_safe_use"
+    "history_of_safe_use",
+    "metabolic_fate"
   ],
   "dietary_exposure_method": "NHANES",
   "exposure_estimate_included": true,

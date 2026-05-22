@@ -20,10 +20,10 @@
   "gras_basis": "scientific_procedures",
   "safety_data_available": [
     "acute_toxicity",
-    "genotoxicity_ames",
-    "genotoxicity_chromosomal",
     "reproductive_toxicity",
     "developmental_toxicity",
+    "genotoxicity_ames",
+    "genotoxicity_chromosomal",
     "history_of_safe_use"
   ],
   "dietary_exposure_method": "theoretical_maximum",

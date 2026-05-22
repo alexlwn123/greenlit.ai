@@ -18,10 +18,10 @@
   "target_population": "not_for_infants",
   "gras_basis": "scientific_procedures",
   "safety_data_available": [
-    "90_day_rat_study",
-    "metabolic_fate",
+    "subchronic_toxicity",
+    "allergenicity_bioinformatic",
     "human_clinical_trial",
-    "allergenicity_bioinformatic"
+    "metabolic_fate"
   ],
   "dietary_exposure_method": "market_share",
   "exposure_estimate_included": true,

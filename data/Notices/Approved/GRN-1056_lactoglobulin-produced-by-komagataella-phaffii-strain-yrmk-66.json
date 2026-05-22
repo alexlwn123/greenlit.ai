@@ -1,6 +1,6 @@
 {
   "grn_number": 1056,
-  "substance_name": "\u03b2-lactoglobulin produced by Komagataella phaffii strain yRMK-66",
+  "substance_name": "β-lactoglobulin produced by Komagataella phaffii strain yRMK-66",
   "status": "no_questions",
   "date_filed": "",
   "date_closed": "Feb 15, 2023",
@@ -23,10 +23,11 @@
     "allergenicity_bioinformatic",
     "allergenicity_in_vitro",
     "digestibility_study",
-    "metabolic_fate",
-    "history_of_safe_use"
+    "history_of_safe_use",
+    "metabolic_fate"
   ],
   "dietary_exposure_method": "NHANES",
   "exposure_estimate_included": true,
-  "allergenicity_addressed": true
+  "allergenicity_addressed": true,
+  "source_organism_name": "Komagataella phaffii"
 }

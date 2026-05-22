@@ -16,14 +16,14 @@
   "gras_basis": "scientific_procedures",
   "safety_data_available": [
     "acute_toxicity",
-    "short-term_toxicity",
     "subchronic_toxicity",
+    "chronic_toxicity",
     "reproductive_toxicity",
     "developmental_toxicity",
-    "genotoxicity_ames",
-    "chronic_toxicity"
+    "genotoxicity_ames"
   ],
   "dietary_exposure_method": "NHANES",
   "exposure_estimate_included": true,
-  "allergenicity_addressed": false
+  "allergenicity_addressed": false,
+  "source_organism_name": "Vinyl acetate"
 }

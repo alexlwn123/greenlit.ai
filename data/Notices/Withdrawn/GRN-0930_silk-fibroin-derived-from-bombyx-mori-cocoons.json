@@ -19,14 +19,15 @@
   "target_population": "general_population",
   "gras_basis": "scientific_procedures",
   "safety_data_available": [
+    "acute_toxicity",
     "genotoxicity_ames",
     "genotoxicity_chromosomal",
-    "acute_toxicity",
-    "digestibility_study",
     "allergenicity_bioinformatic",
+    "digestibility_study",
     "history_of_safe_use"
   ],
   "dietary_exposure_method": "NHANES",
   "exposure_estimate_included": true,
-  "allergenicity_addressed": true
+  "allergenicity_addressed": true,
+  "source_organism_name": "Bombyx mori"
 }

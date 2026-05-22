@@ -16,15 +16,16 @@
   "target_population": "general_population",
   "gras_basis": "scientific_procedures",
   "safety_data_available": [
+    "acute_toxicity",
+    "reproductive_toxicity",
+    "developmental_toxicity",
     "genotoxicity_ames",
     "genotoxicity_chromosomal",
-    "acute_toxicity",
-    "metabolic_fate",
     "human_clinical_trial",
-    "reproductive_toxicity",
-    "developmental_toxicity"
+    "metabolic_fate"
   ],
   "dietary_exposure_method": "NHANES",
   "exposure_estimate_included": true,
-  "allergenicity_addressed": false
+  "allergenicity_addressed": false,
+  "source_organism_name": "Conjugated linoleic"
 }

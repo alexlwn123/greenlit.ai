@@ -24,10 +24,11 @@
     "genotoxicity_ames",
     "genotoxicity_chromosomal",
     "allergenicity_bioinformatic",
-    "human_clinical_trial",
-    "nutritional_impact"
+    "nutritional_impact",
+    "human_clinical_trial"
   ],
   "dietary_exposure_method": "NHANES",
   "exposure_estimate_included": true,
-  "allergenicity_addressed": true
+  "allergenicity_addressed": true,
+  "source_organism_name": "Litchi chinensis"
 }

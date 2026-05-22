@@ -21,6 +21,7 @@ import anthropic
 sys.path.insert(0, str(Path(__file__).parent.parent))
 from pipeline.extract import extract_text, detect_section
 from backend.retrieve import retrieve
+from backend.enrich_sidecars import extract_organism_name
 from constants.scoring import (
     BASE_SCORE,
     DOMAIN_PRIORITY,
@@ -128,10 +129,13 @@ THREE GAP TYPES — always classify gaps precisely:
 2. evidentiary_gap: the data does not appear to exist or has not been generated. More serious — goes to substance of the GRAS analysis.
 3. adequacy_gap: data was provided but is insufficient in quality, scope, or relevance to support the conclusions drawn from it. Requires explaining specifically what the data show and why they fall short.
 
-PRIORITY LEVELS:
-- foundational: the GRAS conclusion cannot be supported without resolving this
-- material: weakens the conclusion but may be addressable; reduces confidence
-- documentation_issue: affects presentation or organization, not substantive safety case
+PRIORITY LEVELS — apply strictly and conservatively:
+
+- foundational: The GRAS conclusion CANNOT be supported without this. Reserve ONLY when ALL three conditions hold: (1) the missing/inadequate data is essential to establish safety at the estimated exposure level and nothing else in the submission compensates; (2) comparable approved GRAS notices consistently include this element; (3) the absence is not explained by filing type or product class. Typical examples: no toxicological data whatsoever for a novel substance at a material exposure level; no exposure estimate of any kind; no genetic characterization for a GMO organism with no prior regulatory history. CALIBRATION: a competently prepared notice should have 0-2 foundational gaps. If you identify more than 3, reconsider — foundational must be rare and defensible.
+
+- material: Weakens the conclusion but does not make it unsupportable. Use when: data present but inadequate in scope or quality (adequacy_gap); a study type is missing but comparable approved notices also commonly omit it; addressable by augmenting existing data. Default to material when uncertain between foundational and material. This is the correct classification for the majority of gaps in a competently prepared filing.
+
+- documentation_issue: Affects presentation or organization only — not the substantive safety case. Use when information likely exists but is not clearly presented, citation/formatting issues, or cross-reference problems. Do not inflate to material unless the substantive gap is real.
 
 EIGHT ANALYTICAL DOMAINS — evaluate each in depth:
 
@@ -190,7 +194,7 @@ All domain entries use this structure: {domain_schema}
 
 Return:
 {{
-  "engagement_summary": {{"substance_name": "string", "notifier": "string", "production_method": "string", "source_organism": "string", "gras_basis": "scientific_procedures|common_use_prior_1958", "intended_uses": ["list"], "target_population": "string", "date_filed": "YYYY-MM-DD or null", "submission_completeness_note": "1-2 sentences"}},
+  "engagement_summary": {{"substance_name": "string", "notifier": "string", "substance_type": "enzyme|probiotic|botanical_extract|algal_ingredient|amino_acid|fatty_acid|carbohydrate|mineral|vitamin|flavoring|biomass|other", "production_method": "string (plain English, e.g. microbial fermentation, chemical synthesis)", "source_organism": "string", "gras_basis": "scientific_procedures|common_use_prior_1958", "intended_uses": ["list of food categories"], "target_population": "string", "date_filed": "YYYY-MM-DD or null", "dietary_exposure_method": "e.g. USDA food consumption database, theoretical maximum, probabilistic model, or null", "submission_completeness_note": "1-2 sentences"}},
   "threshold_assessment": {{
     "categorical_eligibility": {{"eligible": true, "basis": "string"}},
     "scope_clarity": {{"adequate": true, "food_categories_specified": true, "use_levels_specified": true, "technical_function_specified": true, "notes": "string"}},
@@ -211,6 +215,8 @@ Return:
   "recommended_next_steps": [{{"priority": "foundational|material|documentation_issue", "action": "string", "domain": "string", "gap_title": "string", "fda_pushback_probability": "high|medium|low", "pushback_reasoning": "1 sentence: the specific pattern FDA typically challenges on this issue, grounded in what is present or absent in this submission"}}],
   "limitations_and_caveats": "string"
 }}
+
+{peer_context}
 
 Notice text ({char_count} characters):
 {text}
@@ -338,6 +344,83 @@ def _split_text_by_section(text: str) -> dict[str, str]:
     return {k: "\n".join(v).lower() for k, v in buckets.items()}
 
 
+
+# Extended keywords for detailed safety-test types (used in filing diff scan).
+# These map to the same keys used in sidecar safety_data_available lists.
+_SAFETY_TEST_KEYWORDS: dict[str, list[str]] = {
+    "acute_toxicity": [
+        "acute toxicity", "acute oral toxicity", "ld50", "lethal dose",
+        "acute lethality", "acute dose", "single dose", "acute exposure",
+        "oecd 420", "oecd 423", "oecd 425",
+    ],
+    "90_day_rat_study": [
+        "90-day", "90 day", "13-week", "13 week", "subchronic",
+        "subacute", "repeated dose", "90-day study", "repeated-dose",
+        "oecd 408", "oecd 407", "subchronic oral", "90 day rat",
+        "90-day rat", "short-term toxicity",
+    ],
+    "chronic_toxicity": [
+        "chronic toxicity", "2-year study", "24-month", "lifetime study",
+        "long-term toxicity", "chronic oral", "chronic feeding",
+        "oecd 452", "oecd 453", "chronic dietary",
+    ],
+    "genotoxicity_ames": [
+        "ames test", "bacterial reverse mutation", "salmonella typhimurium",
+        "his reversion", "ames assay", "oecd 471", "e. coli wp2",
+        "reverse mutation", "plate incorporation",
+    ],
+    "genotoxicity_chromosomal": [
+        "chromosomal aberration", "micronucleus", "clastogenic", "clastogenicity",
+        "chromosome aberration", "in vitro micronucleus", "oecd 473", "oecd 487",
+        "in vivo micronucleus", "oecd 474", "mouse lymphoma", "tk locus",
+        "hprt", "oecd 476", "unscheduled dna synthesis",
+    ],
+    "genotoxicity_in_vitro": [
+        "in vitro genotox", "in vitro genetic", "comet assay", "dna strand break",
+        "sister chromatid", "sce assay",
+    ],
+    "genotoxicity_in_vivo": [
+        "in vivo genotox", "in vivo micronucleus", "erythrocyte micronucleus",
+        "bone marrow", "peripheral blood micronucleus",
+    ],
+    "allergenicity_bioinformatic": [
+        "bioinformatic", "sequence homology", "blastp", "fasta search",
+        "allergen database", "allergenicity assessment", "protein homology",
+        "amino acid homology", "allergome", "fao/who", "sequence similarity",
+        "codex alimentarius allergen",
+    ],
+    "allergenicity_serum": [
+        "serum screening", "ige binding", "ige-binding", "immunocap",
+        "rast", "immunoblot", "western blot allergen", "ige immunoassay",
+        "serum pool", "patient serum", "allergic serum",
+    ],
+    "digestibility_study": [
+        "in vitro digestibility", "pepsin digestion", "simulated gastric fluid",
+        "sgf", "sif", "simulated intestinal", "pepsin stability",
+        "digestibility assay", "pepsin resistance", "sds-page digest",
+    ],
+    "nutritional_impact": [
+        "nutritional impact", "nutrient content", "nutritional composition",
+        "macronutrient", "micronutrient", "caloric content", "energy value",
+        "nutritional equivalence", "anti-nutritional",
+    ],
+    "human_clinical_trial": [
+        "clinical trial", "human study", "human clinical", "randomized controlled",
+        "crossover study", "intervention study", "human volunteer",
+        "double-blind", "placebo-controlled", "clinical investigation",
+    ],
+    "metabolic_fate": [
+        "metabolic fate", "absorption", "distribution", "metabolism", "excretion",
+        "adme", "toxicokinetics", "bioavailability", "pharmacokinetics",
+        "metabolite", "biotransformation",
+    ],
+    "history_of_safe_use": [
+        "history of safe use", "traditional use", "centuries of use",
+        "long history", "prior use", "customary use", "historical use",
+        "prior dietary exposure", "history of consumption",
+    ],
+}
+
 def _check_field_presence(text: str) -> dict:
     """Keyword scan scoped to the document section where each field belongs.
 
@@ -354,6 +437,12 @@ def _check_field_presence(text: str) -> dict:
         result[field] = any(kw in search_text for kw in keywords)
         print(f"  [field_presence] {field}: {result[field]} "
               f"({'section:' + target_section if len(scoped) >= 300 else 'full-text'})")
+    # Extended scan: detailed safety test types, full-text search in Part 4 / full doc
+    safety_section = section_texts.get("part_4_safety", "").lower()
+    safety_text = safety_section if len(safety_section) >= 300 else full_lower
+    for test, keywords in _SAFETY_TEST_KEYWORDS.items():
+        result[f"test_{test}"] = any(kw in safety_text for kw in keywords)
+
     return result
 
 
@@ -371,20 +460,95 @@ def _applicable_fields(engagement_summary: dict) -> dict[str, bool]:
     }
 
 
+
+# Precomputed corpus context — built once per process, injected into every analysis prompt.
+_corpus_context_cache: str | None = None
+_corpus_context_lock = threading.Lock()
+
+
+def _build_corpus_context() -> str:
+    """Build calibration context from approved + withdrawn corpus field-presence rates.
+
+    Empirical deltas (approved_rate - withdrawn_rate) are included so Claude knows
+    which absences actually distinguish approved from withdrawn notices.
+    """
+    global _corpus_context_cache
+    if _corpus_context_cache is not None:
+        return _corpus_context_cache
+    with _corpus_context_lock:
+        if _corpus_context_cache is not None:
+            return _corpus_context_cache
+        try:
+            approved  = _load_sidecars_cached(Path("data/notices/Approved"),  "no_questions")
+            withdrawn = _load_sidecars_cached(Path("data/notices/Withdrawn"), "withdrawn")
+            na, nw = len(approved), len(withdrawn)
+            if na < 5:
+                _corpus_context_cache = ""
+                return ""
+
+            field_stats = {}
+            for field in _BENCHMARKABLE_FIELDS:
+                a_rate = sum(1 for s in approved  if _sidecar_field_presence(s).get(field)) / na
+                w_rate = sum(1 for s in withdrawn if _sidecar_field_presence(s).get(field)) / nw
+                delta  = a_rate - w_rate
+                field_stats[field] = (a_rate, w_rate, delta)
+
+            lines = [
+                f"\nCORPUS CALIBRATION DATA ({na} approved, {nw} withdrawn GRAS notices):",
+                "Empirical field presence rates and predictive signal for withdrawal:",
+                "(Delta = approved_rate - withdrawn_rate; positive = absence correlates with withdrawal)",
+                "",
+            ]
+            for field, (ar, wr, delta) in field_stats.items():
+                label = _BENCHMARK_LABELS.get(field, field)
+                if abs(delta) > 0.07:
+                    signal = "MODERATE empirical signal"
+                elif abs(delta) > 0.03:
+                    signal = "weak empirical signal"
+                else:
+                    signal = "NO empirical signal -- absence does not predict withdrawal"
+                lines.append(
+                    f"  {label}: approved={ar:.0%}, withdrawn={wr:.0%}, delta={delta:+.1%}  [{signal}]"
+                )
+            lines.extend([
+                "",
+                "CALIBRATION RULES derived from corpus analysis:",
+                "1. No single field absence has >10% predictive delta. Absence ALONE cannot",
+                "   justify foundational priority. Reserve foundational for multi-factor failures.",
+                "2. Allergenicity is the best-validated predictor (9.5% delta). Absence in",
+                "   allergen-risk substances (novel proteins, yeast-expressed) warrants material.",
+                "3. Genotoxicity battery: 1% delta -- NOT empirically linked to withdrawal.",
+                "   Absence is common in approved notices. Classify as material at most unless",
+                "   substance has structural alerts or novel mechanism of action.",
+                "4. History of Safe Use: 0% delta -- no predictive value. Never foundational.",
+                "5. Dietary Exposure Estimate absent: 6% delta -- classify as material, not foundational,",
+                "   unless the product targets a high-exposure population with no other exposure data.",
+                "6. Foundational priority requires: (a) absence of the element AND (b) product-specific",
+                "   risk factor that elevates the gap beyond normal variation (novel mechanism,",
+                "   known allergen source, immunocompromised target population, etc.).",
+            ])
+            _corpus_context_cache = "\n".join(lines)
+        except Exception as exc:
+            logging.warning("Could not build corpus context: %s", exc)
+            _corpus_context_cache = ""
+        return _corpus_context_cache
+
 _CLAUDE_TIMEOUT = 600.0  # seconds before giving up on a single API call
 _TRANSIENT_RETRY_MAX = 3
 
 
-def _call_claude(text: str, max_tokens: int = 16000, _attempt: int = 0) -> dict:
+def _call_claude(text: str, max_tokens: int = 16000, _attempt: int = 0, peer_context: str = "") -> dict:
     client = _get_anthropic_client()
 
     # Escape curly braces in PDF text so str.format() doesn't misparse them
     # as format placeholders (e.g. tables or formulas like "{EC 3.2.1.4}").
     safe_text = text.replace("{", "{{").replace("}", "}}")
+    peer_context = peer_context or _build_corpus_context()
     prompt = ANALYSIS_PROMPT.format(
         text=safe_text,
         char_count=f"{len(text):,}",
         domain_schema=_DOMAIN_SCHEMA,
+        peer_context=peer_context,
     )
 
     try:
@@ -408,7 +572,7 @@ def _call_claude(text: str, max_tokens: int = 16000, _attempt: int = 0) -> dict:
         wait = 2 ** _attempt + 1
         print(f"  [{exc.__class__.__name__}] — retrying in {wait}s (attempt {_attempt + 1}/{_TRANSIENT_RETRY_MAX})...")
         time.sleep(wait)
-        return _call_claude(text, max_tokens=max_tokens, _attempt=_attempt + 1)
+        return _call_claude(text, max_tokens=max_tokens, _attempt=_attempt + 1, peer_context=peer_context)
     except anthropic.APIStatusError as exc:
         if exc.status_code in (429, 529) and _attempt < _TRANSIENT_RETRY_MAX:
             wait = 2 ** _attempt + 1
@@ -427,7 +591,7 @@ def _call_claude(text: str, max_tokens: int = 16000, _attempt: int = 0) -> dict:
         if max_tokens >= 24000:
             raise
         print(f"  JSON truncated at {max_tokens} tokens — retrying with {max_tokens + 4000} tokens...")
-        return _call_claude(text, max_tokens=max_tokens + 4000)
+        return _call_claude(text, max_tokens=max_tokens + 4000, peer_context=peer_context)
 
 
 # Maps domain keys to the GRAS notice section most relevant for references
@@ -709,11 +873,23 @@ def _build_benchmark(
 _PUSHBACK_ORDER = {"high": 0, "medium": 1, "low": 2}
 
 
+def _normalize_domain(domain: str) -> str:
+    """Normalize Claude-generated domain strings (title case or snake_case) to snake_case keys."""
+    return domain.lower().replace(" ", "_").replace("-", "_")
+
+
 def _enrich_next_steps(next_steps: list, withdrawn: list) -> list:
-    """Attach the most relevant withdrawn GRN to each step and sort by pushback probability."""
+    """Query ChromaDB per step using the gap title for the most specific withdrawn reference."""
     for step in next_steps:
-        section_key = _DOMAIN_TO_SECTION.get(step.get("domain", ""), "part_4_safety")
-        best = _best_notice_for_section(withdrawn, section_key)
+        query = (step.get("gap_title") or "") + " " + (step.get("action") or "")
+        query = query.strip() or "food safety GRAS"
+        try:
+            w = retrieve(query, top_notices=3, chunks_per_status=30)["withdrawn_notices"]
+        except Exception:
+            w = []
+        raw_domain = step.get("domain", "")
+        section_key = _DOMAIN_TO_SECTION.get(_normalize_domain(raw_domain), "part_4_safety")
+        best = _best_notice_for_section(w, section_key) or _best_notice_for_section(withdrawn, section_key)
         step["withdrawn_reference"] = (
             {"grn_number": best["grn_number"],
              "substance_name": best.get("substance_name", "")}
@@ -788,6 +964,8 @@ def analyze(pdf_path: Path, on_progress=None) -> dict:
     domain_analysis = analysis.get("domain_analysis", {})
     score, priority_counts = _compute_score_from_domains(domain_analysis)
     field_presence = _check_field_presence(text)
+    if summary.get("gras_basis") == "common_use_prior_1958":
+        field_presence["history_of_safe_use"] = True
     benchmark = _build_benchmark(summary, field_presence, approved)
 
     _progress("finalizing", "5/5 Building gap report")
@@ -819,7 +997,7 @@ def analyze(pdf_path: Path, on_progress=None) -> dict:
             "truncated":      truncated,
             "skipped_pages":  skipped_pages,
         },
-        "engagement_summary":      summary,
+        "engagement_summary":      {**summary, "source_organism_name": extract_organism_name(summary.get("substance_name", "") or "")},
         "threshold_assessment":    analysis.get("threshold_assessment", {}),
         "potential_safety_signals": analysis.get("potential_safety_signals", []),
         "domain_analysis":         analysis.get("domain_analysis", {}),

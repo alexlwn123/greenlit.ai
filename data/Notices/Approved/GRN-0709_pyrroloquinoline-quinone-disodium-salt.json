@@ -17,15 +17,16 @@
   "target_population": "general_population",
   "gras_basis": "scientific_procedures",
   "safety_data_available": [
-    "genotoxicity_ames",
-    "genotoxicity_chromosomal",
     "acute_toxicity",
     "chronic_toxicity",
-    "metabolic_fate",
+    "genotoxicity_ames",
+    "genotoxicity_chromosomal",
     "human_clinical_trial",
+    "metabolic_fate",
     "in_silico_toxicology"
   ],
   "dietary_exposure_method": "NHANES",
   "exposure_estimate_included": true,
-  "allergenicity_addressed": false
+  "allergenicity_addressed": false,
+  "source_organism_name": "Pyrroloquinoline quinone"
 }

@@ -1,6 +1,6 @@
 {
   "grn_number": 1111,
-  "substance_name": "Endo-1,4-\u03b2-xylanase enzyme preparation produced by Bacillus subtilis expressing the gene encoding xylanase from B. subtilis",
+  "substance_name": "Endo-1,4-β-xylanase enzyme preparation produced by Bacillus subtilis expressing the gene encoding xylanase from B. subtilis",
   "status": "withdrawn",
   "date_filed": "",
   "date_closed": "Feb 15, 2024",
@@ -22,5 +22,6 @@
   ],
   "dietary_exposure_method": "theoretical_maximum",
   "exposure_estimate_included": true,
-  "allergenicity_addressed": true
+  "allergenicity_addressed": true,
+  "source_organism_name": "Bacillus subtilis"
 }

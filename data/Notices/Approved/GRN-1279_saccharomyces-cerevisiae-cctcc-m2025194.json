@@ -15,10 +15,11 @@
   "target_population": "general_population",
   "gras_basis": "common_use_prior_1958",
   "safety_data_available": [
-    "history_of_safe_use",
-    "allergenicity_bioinformatic"
+    "allergenicity_bioinformatic",
+    "history_of_safe_use"
   ],
   "dietary_exposure_method": "not_included",
   "exposure_estimate_included": false,
-  "allergenicity_addressed": true
+  "allergenicity_addressed": true,
+  "source_organism_name": "Saccharomyces cerevisiae CCTCC"
 }

@@ -22,5 +22,6 @@
   "safety_data_available": null,
   "dietary_exposure_method": null,
   "exposure_estimate_included": true,
-  "allergenicity_addressed": null
+  "allergenicity_addressed": null,
+  "source_organism_name": "Lactobacillus casei subsp. paracasei"
 }
