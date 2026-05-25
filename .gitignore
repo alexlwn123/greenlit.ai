@@ -238,3 +238,16 @@ __marimo__/
 node_modules/
 dist/
 .env
+
+# Claude Code settings
+.claude/settings.local.json
+
+# Scratch / temp files
+frontend/frontend/
+"frontend/C:/Users/jason/AppData/Local/Temp/calibrate2.py"
+fix_fda.py
+fdaQuestions.js
+—
+
+# Supabase local keys
+frontend/.env.local
