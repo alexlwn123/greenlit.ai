@@ -1,4 +1,4 @@
-"""Deep gap analysis for a user-uploaded GRAS notice PDF."""
+﻿"""Deep gap analysis for a user-uploaded GRAS notice PDF."""
 
 import json
 import logging
@@ -213,6 +213,7 @@ Return:
   }},
   "strengths_summary": [{{"domain": "string", "observation": "string", "section_reference": "string"}}],
   "recommended_next_steps": [{{"priority": "foundational|material|documentation_issue", "action": "string", "domain": "string", "gap_title": "string", "fda_pushback_probability": "high|medium|low", "pushback_reasoning": "1 sentence: the specific pattern FDA typically challenges on this issue, grounded in what is present or absent in this submission"}}],
+  "summary_paragraph": "string (2 sentences: what this filing covers and its overall readiness state -- written for a regulatory consultant, not a lawyer)",
   "limitations_and_caveats": "string"
 }}
 
@@ -963,6 +964,7 @@ def analyze(pdf_path: Path, on_progress=None) -> dict:
     _progress("benchmarking", "4/5 Scoring and benchmarking")
     domain_analysis = analysis.get("domain_analysis", {})
     score, priority_counts = _compute_score_from_domains(domain_analysis)
+    health_score = max(0, 100 - score)
     field_presence = _check_field_presence(text)
     if summary.get("gras_basis") == "common_use_prior_1958":
         field_presence["history_of_safe_use"] = True
@@ -1011,7 +1013,9 @@ def analyze(pdf_path: Path, on_progress=None) -> dict:
         "gap_field_presence":     field_presence,
         "comparative_analysis":   _build_comparative_analysis(approved, withdrawn),
         "recommended_next_steps": _enrich_next_steps(analysis.get("recommended_next_steps", []), withdrawn),
+        "summary_paragraph":       analysis.get("summary_paragraph", ""),
         "limitations_and_caveats": analysis.get("limitations_and_caveats", ""),
+        "health_score":             health_score,
     }
 
 

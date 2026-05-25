@@ -2,486 +2,95 @@
 import { useNavigate } from 'react-router-dom'
 import {
   ArrowLeft, RotateCcw, AlertOctagon, AlertTriangle, Minus,
-  ShieldAlert, ChevronDown, ChevronUp, CheckCircle2, Microscope,
-  ListChecks, ArrowRight, BarChart2, ExternalLink, GitCompare,
-  Download, Info, BookOpen, Loader2, AlertCircle, FileText, SplitSquareHorizontal, FilePlus2
+  ShieldAlert, CheckCircle2, Microscope,
+  ListChecks, BarChart2, ExternalLink, GitCompare,
+  Download, BookOpen, SplitSquareHorizontal, FilePlus2,
 } from 'lucide-react'
 import NavBar from '../components/NavBar'
 import { useAnalysis } from '../context/AnalysisContext'
-import { fetchResearch, downloadOutline, fetchSidecar } from '../lib/api'
-import { getFdaQuestion } from '../lib/fdaQuestions'
+import {
+  SEVERITY_CONFIG, PRIORITY_ORDER, PUSHBACK_ORDER,
+  BENCHMARKABLE_FIELDS, FIELD_LABELS,
+  scoreColor, healthScoreColor, peerFields, getApplicableFields, getEmpiricalSignal, SIGNAL_ORDER,
+} from '../lib/evaluationHelpers'
+import { OverviewCard } from '../components/EvaluationShared'
+import { useAuth } from '../context/AuthContext'
+import { supabase, supabaseEnabled } from '../lib/supabase'
+import AuthModal from '../components/AuthModal'
 
-const SEVERITY_CONFIG = {
-  foundational: {
-    label: 'Critical', color: '#ff4040',
-    bg: 'rgba(255,64,64,0.08)', border: 'rgba(255,64,64,0.3)',
-    Icon: AlertOctagon,
-  },
-  material: {
-    label: 'Moderate', color: '#ff9500',
-    bg: 'rgba(255,149,0,0.08)', border: 'rgba(255,149,0,0.3)',
-    Icon: AlertTriangle,
-  },
-  documentation_issue: {
-    label: 'Minor', color: '#666666',
-    bg: 'rgba(255,255,255,0.04)', border: 'rgba(255,255,255,0.12)',
-    Icon: Minus,
-  },
-}
+function SaveNudge({ result }) {
+  const { user } = useAuth()
+  const [showAuth, setShowAuth] = useState(false)
+  const [saved, setSaved] = useState(false)
+  const [saving, setSaving] = useState(false)
+  const [saveError, setSaveError] = useState('')
 
-const PRIORITY_ORDER = { foundational: 0, material: 1, documentation_issue: 2 }
-const PUSHBACK_ORDER  = { high: 0, medium: 1, low: 2 }
-const DEFAULT_VISIBLE_GAPS = 5
+  if (!supabaseEnabled) return null
 
-const GAP_REMEDIATION = {
-  safety_data: {
-    foundational: { cost: '$80K–$300K', timeline: '6–18 mo', study: 'Genotoxicity battery + subchronic rodent study' },
-    material:     { cost: '$30K–$80K',  timeline: '3–6 mo',  study: 'Genotoxicity battery (Ames + chromosomal aberration)' },
-    documentation_issue: { cost: '$5K–$15K', timeline: '2–4 wk', study: 'Literature compilation / expert panel review' },
-  },
-  dietary_exposure: {
-    foundational: { cost: '$20K–$60K', timeline: '1–3 mo', study: 'Quantitative dietary exposure estimate (NHANES/TDS)' },
-    material:     { cost: '$10K–$30K', timeline: '3–6 wk', study: 'Dietary exposure desk study' },
-    documentation_issue: { cost: '$3K–$8K', timeline: '1–2 wk', study: 'Documentation update' },
-  },
-  identity_and_characterization: {
-    foundational: { cost: '$15K–$50K', timeline: '1–3 mo', study: 'Analytical characterization package (purity, specs, impurities)' },
-    material:     { cost: '$8K–$25K',  timeline: '3–6 wk', study: 'Supplemental analytical testing' },
-    documentation_issue: { cost: '$2K–$8K', timeline: '1–2 wk', study: 'Specification documentation update' },
-  },
-  manufacturing_process: {
-    foundational: { cost: '$10K–$40K', timeline: '1–2 mo', study: 'Process validation / GMP documentation' },
-    material:     { cost: '$5K–$20K',  timeline: '2–4 wk', study: 'Process description and controls documentation' },
-    documentation_issue: { cost: '$2K–$6K', timeline: '1–2 wk', study: 'Technical documentation update' },
-  },
-  general_availability: {
-    foundational: { cost: '$15K–$40K', timeline: '1–3 mo', study: 'Literature review + expert safety opinion' },
-    material:     { cost: '$8K–$20K',  timeline: '3–5 wk', study: 'Published literature compilation' },
-    documentation_issue: { cost: '$2K–$8K', timeline: '1–2 wk', study: 'Citation package update' },
-  },
-  general_acceptance: {
-    foundational: { cost: '$20K–$60K', timeline: '2–4 mo', study: 'Expert panel convening + consensus statement' },
-    material:     { cost: '$8K–$25K',  timeline: '1–2 mo', study: 'Expert opinion letters / GRAS panel review' },
-    documentation_issue: { cost: '$3K–$10K', timeline: '2–3 wk', study: 'Supporting expert documentation' },
-  },
-  conditions_of_use: {
-    foundational: { cost: '$10K–$30K', timeline: '3–6 wk', study: 'Conditions of use redefinition + exposure recalculation' },
-    material:     { cost: '$5K–$15K',  timeline: '2–3 wk', study: 'Conditions of use documentation update' },
-    documentation_issue: { cost: '$1K–$5K', timeline: '1 wk', study: 'Label/use specification clarification' },
-  },
-  regulatory_submission: {
-    foundational: { cost: '$10K–$25K', timeline: '2–4 wk', study: 'Regulatory affairs consultation + submission revision' },
-    material:     { cost: '$5K–$12K',  timeline: '1–2 wk', study: 'Submission formatting and completeness review' },
-    documentation_issue: { cost: '$1K–$4K', timeline: '3–5 days', study: 'Administrative correction' },
-  },
-}
-
-const FALLBACK_REMEDIATION = {
-  foundational:        { cost: '$50K–$300K', timeline: '6–18 mo', study: 'Major safety studies or systematic documentation required' },
-  material:            { cost: '$10K–$80K',  timeline: '1–6 mo',  study: 'Additional studies or documentation needed' },
-  documentation_issue: { cost: '$2K–$15K',  timeline: '1–4 wk',  study: 'Documentation review and update' },
-}
-
-function getRemediation(gap) {
-  return GAP_REMEDIATION[gap.domain]?.[gap.priority]
-    || FALLBACK_REMEDIATION[gap.priority]
-    || FALLBACK_REMEDIATION.material
-}
-const DOMAIN_SECTION_LABEL = {
-  identity_and_characterization: 'Part 1 — Identity & Specifications',
-  manufacturing_process:         'Part 1 — Identity & Specifications',
-  dietary_exposure:              'Part 5 — Dietary Exposure',
-  safety_data:                   'Part 4 — Safety',
-  general_availability:          'Part 4 — Safety',
-  general_acceptance:            'Part 3 — GRAS Basis',
-  conditions_of_use:             'Part 2 — Intended Use',
-  regulatory_submission:         'Part 6 — Narrative',
-}
-
-
-function scoreColor(score) {
-  if (score === 0) return '#00ff88'
-  if (score <= 10) return '#00cc6a'
-  if (score <= 25) return '#ff9500'
-  return '#ff4040'
-}
-
-const PROXY_WEIGHTS = {
-  dietary_exposure_estimate: 10,
-  allergenicity_assessment: 10,
-  genotoxicity_battery: 10,
-  digestibility_data: 1,
-  nutritional_impact: 1,
-  human_exposure_data: 1,
-  history_of_safe_use: 1,
-}
-const PROXY_MAX = 34
-
-const BENCHMARKABLE_FIELDS = [
-  'dietary_exposure_estimate',
-  'allergenicity_assessment',
-  'genotoxicity_battery',
-  'digestibility_data',
-  'nutritional_impact',
-  'human_exposure_data',
-  'history_of_safe_use',
-]
-
-const FIELD_LABELS = {
-  dietary_exposure_estimate: 'Dietary Exposure Estimate',
-  allergenicity_assessment:  'Allergenicity Assessment',
-  genotoxicity_battery:      'Genotoxicity Battery',
-  digestibility_data:        'Digestibility Data',
-  nutritional_impact:        'Nutritional Impact',
-  human_exposure_data:       'Human Exposure Data',
-  history_of_safe_use:       'History of Safe Use',
-}
-
-// Empirical calibration data: field presence rates in 714 approved vs 158 withdrawn FDA GRAS notices.
-// Delta = approved_rate - withdrawn_rate (positive = absence correlates with withdrawal).
-// Source: Greenlit AI corpus analysis of the FDA GRAS Notice Inventory.
-const EMPIRICAL_CALIBRATION = [
-  { field: 'allergenicity_assessment',  label: 'Allergenicity Assessment',  approved: 0.58, withdrawn: 0.49, delta: 0.095, signal: 'moderate' },
-  { field: 'dietary_exposure_estimate', label: 'Dietary Exposure Estimate',  approved: 0.86, withdrawn: 0.80, delta: 0.061, signal: 'weak'     },
-  { field: 'nutritional_impact',        label: 'Nutritional Impact',         approved: 0.24, withdrawn: 0.19, delta: 0.051, signal: 'weak'     },
-  { field: 'digestibility_data',        label: 'Digestibility Data',         approved: 0.16, withdrawn: 0.11, delta: 0.044, signal: 'weak'     },
-  { field: 'human_exposure_data',       label: 'Human Exposure Data',        approved: 0.29, withdrawn: 0.25, delta: 0.041, signal: 'weak'     },
-  { field: 'genotoxicity_battery',      label: 'Genotoxicity Battery',       approved: 0.35, withdrawn: 0.34, delta: 0.010, signal: 'none'     },
-  { field: 'history_of_safe_use',       label: 'History of Safe Use',        approved: 0.57, withdrawn: 0.57, delta: -0.001, signal: 'none'    },
-]
-function peerFields(notice) {
-  const sd = new Set((notice.safety_data_available || '').split(',').map(s => s.trim()))
-  return {
-    dietary_exposure_estimate: !!notice.exposure_estimate_included,
-    allergenicity_assessment:  !!notice.allergenicity_addressed,
-    genotoxicity_battery:      sd.has('genotoxicity_ames') || sd.has('genotoxicity_chromosomal'),
-    digestibility_data:        sd.has('digestibility_study'),
-    nutritional_impact:        sd.has('nutritional_impact'),
-    human_exposure_data:       sd.has('human_clinical_trial'),
-    history_of_safe_use:       sd.has('history_of_safe_use'),
+  async function handleSave() {
+    setSaving(true)
+    setSaveError('')
+    const { error } = await supabase.from('analyses').insert({
+      user_id: user.id,
+      substance_name: result.engagement_summary?.substance_name ?? null,
+      result_json: result,
+    })
+    if (error) {
+      setSaveError('Save failed. Please try again.')
+    } else {
+      setSaved(true)
+    }
+    setSaving(false)
   }
-}
 
-function getApplicableFields(engagementSummary) {
-  const grasBasis = engagementSummary?.gras_basis || 'scientific_procedures'
-  return {
-    dietary_exposure_estimate: true,
-    allergenicity_assessment:  true,
-    genotoxicity_battery:      true,
-    digestibility_data:        true,
-    nutritional_impact:        true,
-    human_exposure_data:       true,
-    history_of_safe_use:       true,
+  if (saved) {
+    return (
+      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1rem', borderRadius: '0.75rem', border: '1px solid rgba(0,204,106,0.2)', background: 'rgba(0,204,106,0.05)' }}>
+        <span style={{ color: '#00cc6a', fontSize: '0.85rem', fontWeight: 600 }}>✓ Analysis saved to your account</span>
+      </div>
+    )
   }
-}
 
-function peerProxyPct(notice, applicable = null) {
-  const present = peerFields(notice)
-  let total = 0, missing = 0
-  for (const [f, w] of Object.entries(PROXY_WEIGHTS)) {
-    if (applicable && applicable[f] === false) continue
-    total += w
-    if (!present[f]) missing += w
+  if (user) {
+    return (
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.75rem', padding: '0.75rem 1rem', borderRadius: '0.75rem', border: '1px solid rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.02)' }}>
+        <p style={{ margin: 0, fontSize: '0.82rem', color: '#888' }}>Save this analysis to your account to access it later.</p>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '0.25rem' }}>
+          <button
+            onClick={handleSave}
+            disabled={saving}
+            style={{ padding: '0.45rem 1rem', borderRadius: '2rem', border: 'none', background: saving ? '#1a3d2a' : '#00cc6a', color: saving ? '#888' : '#000', fontWeight: 700, fontSize: '0.8rem', cursor: saving ? 'default' : 'pointer' }}
+          >{saving ? 'Saving…' : 'Save analysis'}</button>
+          {saveError && <span style={{ fontSize: '0.72rem', color: '#ff4040' }}>{saveError}</span>}
+        </div>
+      </div>
+    )
   }
-  return total ? Math.round(missing / total * 100) : 0
-}
 
-function ProxyRow({ label, pct, color, bold }) {
   return (
-    <div className="flex items-center gap-3 py-1">
-      <span className={`text-xs truncate shrink-0 w-44 ${bold ? 'font-semibold text-text-base' : 'text-text-muted'}`}>
-        {label}
-      </span>
-      <div className="flex-1 bg-surface-2 rounded-full h-1.5 overflow-hidden">
-        <div className="h-full rounded-full transition-all" style={{ width: `${pct}%`, background: color }} />
+    <>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.75rem', padding: '0.75rem 1rem', borderRadius: '0.75rem', border: '1px solid rgba(0,204,106,0.15)', background: 'rgba(0,204,106,0.03)' }}>
+        <div>
+          <p style={{ margin: 0, fontSize: '0.82rem', fontWeight: 600, color: '#ccc' }}>Save this analysis</p>
+          <p style={{ margin: '0.15rem 0 0', fontSize: '0.75rem', color: '#666' }}>Sign in to save, annotate, and return to this report.</p>
+        </div>
+        <button
+          onClick={() => setShowAuth(true)}
+          style={{ padding: '0.45rem 1rem', borderRadius: '2rem', border: '1px solid rgba(0,204,106,0.4)', background: 'transparent', color: '#00cc6a', fontWeight: 600, fontSize: '0.8rem', cursor: 'pointer', whiteSpace: 'nowrap' }}
+        >Sign in / Create account</button>
       </div>
-      <span className="text-xs font-semibold w-8 text-right shrink-0" style={{ color }}>{pct}%</span>
-    </div>
+      {showAuth && <AuthModal onClose={() => setShowAuth(false)} />}
+    </>
   )
 }
-
-function SeverityBadge({ priority }) {
-  const cfg = SEVERITY_CONFIG[priority] || SEVERITY_CONFIG.documentation_issue
-  return (
-    <span
-      className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold border shrink-0"
-      style={{ background: cfg.bg, color: cfg.color, borderColor: cfg.border }}
-    >
-      <cfg.Icon className="w-3 h-3" />
-      {cfg.label}
-    </span>
-  )
-}
-
-function GapCard({ gap, compGap, substanceName, fallbackRef }) {
-  const [open, setOpen] = useState(false)
-  const cfg = SEVERITY_CONFIG[gap.priority] || SEVERITY_CONFIG.documentation_issue
-  const isCritical = gap.priority === 'foundational'
-  const ref = compGap?.approved_reference || fallbackRef
-
-  return (
-    <div
-      className="rounded-xl border overflow-hidden"
-      style={{
-        borderColor: cfg.border,
-        borderLeftWidth: '4px',
-        borderLeftColor: cfg.color,
-        background: isCritical ? 'rgba(255,64,64,0.04)' : 'var(--color-surface)',
-      }}
-    >
-      <button
-        className="w-full flex flex-col p-4 text-left hover:bg-surface-2 transition-colors"
-        onClick={() => setOpen(o => !o)}
-      >
-        <div className="flex items-center justify-between gap-3 w-full">
-          <div className="flex items-center gap-3 min-w-0">
-            <SeverityBadge priority={gap.priority} />
-            <h4 className="text-text-base font-semibold text-sm leading-snug truncate">{gap.title}</h4>
-          </div>
-          <div className="flex items-center gap-2 shrink-0">
-            <span className="text-xs text-text-dim bg-surface-2 border border-border px-2 py-0.5 rounded capitalize hidden sm:inline">
-              {gap.domain?.replace(/_/g, ' ')}
-            </span>
-            {open
-              ? <ChevronUp className="w-4 h-4 text-text-dim" />
-              : <ChevronDown className="w-4 h-4 text-text-dim" />
-            }
-          </div>
-        </div>
-        {!open && ref && (
-          <div className="flex items-center gap-1.5 mt-1.5">
-            <CheckCircle2 className="w-3 h-3 shrink-0" style={{ color: 'rgba(0,255,136,0.65)' }} />
-            <span className="text-xs text-text-muted truncate">
-              See GRN-{ref.grn_number}: {ref.substance_name}
-            </span>
-          </div>
-        )}
-      </button>
-
-      {open && (
-        <div className="px-4 pb-4 border-t border-border">
-          <p className="text-text-muted text-sm leading-relaxed mt-3 mb-3">{gap.observation}</p>
-          {(() => {
-            const rem = getRemediation(gap)
-            return rem ? (
-              <div className="flex flex-wrap items-center gap-2 mb-3">
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold border"
-                  style={{ background: 'rgba(255,255,255,0.04)', borderColor: 'rgba(255,255,255,0.1)', color: '#a0a0a0' }}>
-                  {rem.cost}
-                </span>
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold border"
-                  style={{ background: 'rgba(255,255,255,0.04)', borderColor: 'rgba(255,255,255,0.1)', color: '#a0a0a0' }}>
-                  {rem.timeline}
-                </span>
-                <span className="text-xs text-text-dim italic truncate">{rem.study}</span>
-              </div>
-            ) : null
-          })()}
-          {(() => {
-            const fda = getFdaQuestion(gap, substanceName)
-            return (
-              <div className="rounded-lg mb-3 overflow-hidden" style={{ border: '1px solid rgba(255,180,0,0.3)', background: 'rgba(255,180,0,0.04)' }}>
-                <div className="flex items-center gap-2 px-3 py-2" style={{ borderBottom: '1px solid rgba(255,180,0,0.2)', background: 'rgba(255,180,0,0.07)' }}>
-                  <FileText className="w-3.5 h-3.5 shrink-0" style={{ color: '#c89b00' }} />
-                  <span className="text-xs font-bold tracking-wide uppercase" style={{ color: '#c89b00' }}>FDA would ask</span>
-                </div>
-                <div className="px-3 py-2.5">
-                  <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.8)', fontStyle: 'italic' }}>
-                    &ldquo;{fda.question}&rdquo;
-                  </p>
-                  <p className="text-xs mt-2" style={{ color: 'rgba(255,180,0,0.6)' }}>{fda.note}</p>
-                </div>
-              </div>
-            )
-          })()}
-          <div className="flex flex-wrap items-center gap-2 text-xs text-text-dim mb-3">
-            <span className="bg-surface-2 border border-border px-2 py-0.5 rounded capitalize sm:hidden">
-              {gap.domain?.replace(/_/g, ' ')}
-            </span>
-            {gap.section_reference && (
-              <span style={{ fontFamily: 'var(--font-mono)' }}>{gap.section_reference}</span>
-            )}
-          </div>
-
-          {ref && (
-            <div className="mt-2">
-              <div className="rounded-lg p-3" style={{ background: 'rgba(0,255,136,0.06)', border: '1px solid rgba(0,255,136,0.2)' }}>
-                <div className="flex items-center gap-1.5 mb-1">
-                  <CheckCircle2 className="w-3 h-3 text-accent" />
-                  <span className="text-xs text-accent font-semibold">What good looks like</span>
-                </div>
-                <a
-                  href={`https://www.cfsanappsexternal.fda.gov/scripts/fdcc/?set=GRASNotices&id=${ref.grn_number}`}
-                  target="_blank" rel="noreferrer"
-                  className="block hover:underline"
-                >
-                  <p className="text-xs text-text-muted font-medium leading-snug" style={{ fontFamily: 'var(--font-mono)' }}>
-                    {ref.substance_name}
-                  </p>
-                  <p className="text-xs text-text-dim mt-0.5">
-                    GRN-{ref.grn_number} · {ref.section_label || DOMAIN_SECTION_LABEL[gap.domain] || gap.domain?.replace(/_/g, ' ')}
-                  </p>
-                </a>
-              </div>
-            </div>
-          )}
-        </div>
-      )}
-    </div>
-  )
-}
-
-function CompCard({ notice, variant }) {
-  const isStrong = variant === 'strong'
-  const year = notice.date_filed ? new Date(notice.date_filed).getFullYear() : '—'
-  const similarity = notice.best_distance != null
-    ? `${Math.round((1 - notice.best_distance) * 100)}% match`
-    : null
-
-  const borderColor = isStrong ? 'rgba(0,255,136,0.25)' : 'rgba(255,149,0,0.25)'
-
-  return (
-    <div
-      className="rounded-xl border p-4 bg-surface transition-colors hover:bg-surface-2"
-      style={{ borderColor }}
-    >
-      <div className="flex items-start justify-between gap-2 mb-3">
-        <div className="flex items-center gap-2">
-          {isStrong
-            ? <CheckCircle2 className="w-4 h-4 text-accent shrink-0" />
-            : <AlertTriangle className="w-4 h-4 text-moderate shrink-0" />
-          }
-          <span className={`text-xs font-bold uppercase tracking-wider ${isStrong ? 'text-accent' : 'text-moderate'}`}>
-            {isStrong ? 'Approved' : 'Withdrawn'}
-          </span>
-        </div>
-        <div className="flex items-center gap-2">
-          {similarity && (
-            <span className="text-xs text-text-dim bg-surface-2 border border-border px-2 py-0.5 rounded-full">
-              {similarity}
-            </span>
-          )}
-          <a
-            href={`https://www.cfsanappsexternal.fda.gov/scripts/fdcc/?set=GRASNotices&id=${notice.grn_number}`}
-            target="_blank" rel="noreferrer"
-          >
-            <ExternalLink className="w-3.5 h-3.5 text-text-dim hover:text-accent transition-colors" />
-          </a>
-        </div>
-      </div>
-
-      <p className="text-text-base text-sm font-semibold leading-snug mb-1" style={{ fontFamily: 'var(--font-mono)' }}>
-        {notice.substance_name}
-      </p>
-      {notice.notifier && <p className="text-text-muted text-xs mb-3">{notice.notifier}</p>}
-
-      <div className="flex items-center gap-3 text-xs text-text-dim">
-        <span>GRN-{notice.grn_number}</span>
-        <span>·</span>
-        <span>{year}</span>
-        {notice.production_method && (
-          <>
-            <span>·</span>
-            <span className="capitalize">{notice.production_method.replace(/_/g, ' ')}</span>
-          </>
-        )}
-      </div>
-
-      {notice.safety_data_available && (
-        <div className="mt-3 flex flex-wrap gap-1">
-          {notice.safety_data_available.split(', ').slice(0, 3).map(s => (
-            <span key={s} className="px-1.5 py-0.5 rounded text-xs bg-surface-2 text-text-dim border border-border">
-              {s.replace(/_/g, ' ')}
-            </span>
-          ))}
-        </div>
-      )}
-    </div>
-  )
-}
-
-function SignalCard({ signal }) {
-  return (
-    <div className="rounded-xl border overflow-hidden" style={{ borderColor: 'rgba(255,149,0,0.3)', background: 'rgba(255,149,0,0.05)' }}>
-      <div className="flex items-start gap-3 p-5">
-        <ShieldAlert className="w-5 h-5 mt-0.5 shrink-0" style={{ color: '#ff9500' }} />
-        <div className="flex-1 min-w-0">
-          <p className="text-text-base text-sm font-bold leading-snug mb-2">{signal.signal}</p>
-          <p className="text-text-muted text-sm leading-relaxed mb-3">{signal.evidence}</p>
-          {signal.section_reference && (
-            <p className="text-xs text-text-dim mb-3" style={{ fontFamily: 'var(--font-mono)' }}>
-              {signal.section_reference}
-            </p>
-          )}
-          {signal.recommended_action && (
-            <div className="rounded-lg p-3" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,149,0,0.2)' }}>
-              <p className="text-xs font-semibold mb-1" style={{ color: '#ff9500' }}>Recommended action</p>
-              <p className="text-xs text-text-muted leading-relaxed">{signal.recommended_action}</p>
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
-  )
-}
-
-function DetailHeader({ title, icon: Icon, onBack }) {
-  return (
-    <div className="flex items-center gap-3 mb-8">
-      <button
-        onClick={onBack}
-        className="flex items-center gap-1.5 text-text-muted hover:text-text-base transition-colors text-sm font-medium"
-      >
-        <ArrowLeft className="w-4 h-4" />
-        Overview
-      </button>
-      <span className="text-text-dim text-sm">·</span>
-      <div className="flex items-center gap-2">
-        <Icon className="w-4 h-4 text-text-muted" />
-        <span className="text-text-base font-semibold text-sm">{title}</span>
-      </div>
-    </div>
-  )
-}
-
-function OverviewCard({ icon: Icon, title, badge, preview, accentBorder, onClick, disabled }) {
-  return (
-    <button
-      onClick={disabled ? undefined : onClick}
-      disabled={disabled}
-      className={`text-left rounded-2xl border bg-surface p-5 transition-all group w-full ${
-        disabled ? 'opacity-40 cursor-default' : 'hover:bg-surface-2 hover:shadow-sm cursor-pointer'
-      }`}
-      style={accentBorder ? { borderColor: accentBorder } : {}}
-    >
-      <div className="flex items-start justify-between gap-2 mb-3">
-        <div className="flex items-center gap-2">
-          <Icon className="w-4 h-4 text-text-muted" />
-          <span className="text-sm font-bold text-text-base">{title}</span>
-        </div>
-        {badge && (
-          <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-surface-2 text-text-dim border border-border shrink-0">
-            {badge}
-          </span>
-        )}
-      </div>
-      {preview && (
-        <p className="text-text-muted text-xs leading-relaxed line-clamp-2 mb-4">{preview}</p>
-      )}
-      {!disabled && (
-        <div className="flex items-center gap-1 text-xs font-medium text-text-dim group-hover:text-text-base transition-colors">
-          View all <ArrowRight className="w-3 h-3" />
-        </div>
-      )}
-    </button>
-  )
-}
-
+// Print-only report — rendered hidden, shown on window.print()
 function PrintReport({ result, allGaps, signals, nextSteps, narrative, topNotices, compLookup }) {
   const s = result.engagement_summary || {}
   const score = result.gap_report?.score ?? 0
   const counts = result.gap_report?.priority_counts || {}
   const totalIssues = (counts.foundational || 0) + (counts.material || 0) + (counts.documentation_issue || 0)
+  const printHealthScore = result.health_score ?? null
+  const printSummaryParagraph = result.summary_paragraph || ''
   const benchmark = result.benchmark || null
   const proxyScore = benchmark?.proxy_score
   const corpusBaseline = benchmark?.corpus_baseline
@@ -494,10 +103,9 @@ function PrintReport({ result, allGaps, signals, nextSteps, narrative, topNotice
 
   return (
     <div className="print-only hidden" style={{ fontFamily: 'Space Grotesk, Inter, system-ui, sans-serif', color: '#111111', fontSize: '0.85rem', lineHeight: 1.6 }}>
-      {/* Header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.5rem', paddingBottom: '1rem', borderBottom: '2px solid #00cc6a' }}>
         <div>
-          <div style={{ fontSize: '1.1rem', fontWeight: 800, color: '#00aa55', letterSpacing: '-0.02em' }}>greenlit.ai — Gap Analysis Report</div>
+          <div style={{ fontSize: '1.1rem', fontWeight: 800, color: '#00aa55', letterSpacing: '-0.02em' }}>greenlit.ai - Gap Analysis Report</div>
           {s.substance_name && <div style={{ fontSize: '1rem', fontWeight: 700, color: '#111111', marginTop: '0.25rem' }}>{s.substance_name}</div>}
           {s.notifier && <div style={{ fontSize: '0.8rem', color: '#555555', marginTop: '0.1rem' }}>{s.notifier}</div>}
         </div>
@@ -506,21 +114,23 @@ function PrintReport({ result, allGaps, signals, nextSteps, narrative, topNotice
           <div style={{ marginTop: '0.1rem' }}>Generated {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</div>
         </div>
       </div>
-
-      {/* Severity summary */}
       <div>
-        <div style={h2Style}>Gap Summary</div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '0.25rem' }}>
+          <div style={h2Style}>Gap Summary</div>
+          {printHealthScore !== null && (
+            <span style={{ fontWeight: 800, fontSize: '1.1rem', color: printHealthScore >= 75 ? '#00aa55' : printHealthScore >= 50 ? '#d97706' : '#dc2626' }}>
+              {printHealthScore}/100 health
+            </span>
+          )}
+        </div>
+        {printSummaryParagraph && <div style={{ marginBottom: '0.75rem', fontSize: '0.82rem', color: '#333', lineHeight: 1.65 }}>{printSummaryParagraph}</div>}
         <div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap' }}>
           <span style={{ color: '#dc2626', fontWeight: 700, fontSize: '1rem' }}>{counts.foundational || 0} Critical</span>
           <span style={{ color: '#d97706', fontWeight: 700, fontSize: '1rem' }}>{counts.material || 0} Moderate</span>
           <span style={{ color: '#666666', fontWeight: 700, fontSize: '1rem' }}>{counts.documentation_issue || 0} Minor</span>
         </div>
-        <div style={{ marginTop: '0.4rem', fontSize: '0.8rem', color: '#555' }}>
-          {totalIssues} issue{totalIssues !== 1 ? 's' : ''} across 8 regulatory domains
-        </div>
+        <div style={{ marginTop: '0.4rem', fontSize: '0.8rem', color: '#555' }}>{totalIssues} issue{totalIssues !== 1 ? 's' : ''} across 8 regulatory domains</div>
       </div>
-
-      {/* Safety Signals */}
       {signals.length > 0 && (
         <div style={sectionStyle}>
           <div style={h2Style}>Safety Signals ({signals.length})</div>
@@ -528,77 +138,28 @@ function PrintReport({ result, allGaps, signals, nextSteps, narrative, topNotice
             <div key={i} style={{ marginBottom: '0.75rem', paddingLeft: '0.75rem', borderLeft: '3px solid #f59e0b' }}>
               <div style={{ fontWeight: 700, marginBottom: '0.2rem' }}>{sig.signal}</div>
               <div style={{ color: '#555555', marginBottom: '0.2rem' }}>{sig.evidence}</div>
-              {sig.section_reference && <div style={{ ...monoStyle, fontSize: '0.75rem', color: '#888888' }}>{sig.section_reference}</div>}
               {sig.recommended_action && <div style={{ marginTop: '0.3rem', fontSize: '0.8rem', color: '#333333' }}><strong>Action:</strong> {sig.recommended_action}</div>}
             </div>
           ))}
         </div>
       )}
-
-      {/* Gaps */}
       {allGaps.length > 0 && (
         <div style={sectionStyle}>
           <div style={h2Style}>Identified Gaps ({allGaps.length})</div>
           {allGaps.map((gap, i) => {
             const cfg = SEVERITY_CONFIG[gap.priority] || SEVERITY_CONFIG.documentation_issue
-            const cg = compLookup[gap.title]
             return (
               <div key={i} style={{ marginBottom: '0.75rem', paddingLeft: '0.75rem', borderLeft: `3px solid ${cfg.color}` }}>
                 <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'baseline', flexWrap: 'wrap', marginBottom: '0.15rem' }}>
                   <span style={{ fontSize: '0.7rem', fontWeight: 700, textTransform: 'uppercase', color: cfg.color }}>{cfg.label}</span>
                   <span style={{ fontWeight: 600 }}>{gap.title}</span>
-                  {gap.domain && <span style={{ fontSize: '0.75rem', color: '#7a9e85' }}>— {gap.domain.replace(/_/g, ' ')}</span>}
                 </div>
-                <div style={{ color: '#555555', fontSize: '0.82rem', marginBottom: '0.15rem' }}>{gap.observation}</div>
-                {gap.section_reference && <div style={{ ...monoStyle, fontSize: '0.72rem', color: '#888888' }}>{gap.section_reference}</div>}
-                {cg?.approved_reference && <div style={{ fontSize: '0.75rem', color: '#00aa55', marginTop: '0.2rem' }}>✓ What good looks like: {cg.approved_reference.substance_name} (GRN-{cg.approved_reference.grn_number})</div>}
+                <div style={{ color: '#555555', fontSize: '0.82rem' }}>{gap.observation}</div>
               </div>
             )
           })}
         </div>
       )}
-
-      {/* Benchmark */}
-      {benchmark && (
-        <div style={sectionStyle}>
-          <div style={h2Style}>Benchmark Comparison</div>
-          {proxyScore && (
-            <div style={{ display: 'flex', gap: '2rem', marginBottom: '0.75rem', flexWrap: 'wrap' }}>
-              <div><span style={labelStyle}>This filing: </span><strong style={{ color: Math.round(proxyScore.current * 100) <= 20 ? '#00aa55' : '#ff4040' }}>{Math.round(proxyScore.current * 100)}% missing</strong></div>
-              <div><span style={labelStyle}>Approved avg: </span><strong>{Math.round(proxyScore.approved_mean * 100)}%</strong></div>
-            </div>
-          )}
-          {corpusBaseline && (
-            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.8rem' }}>
-              <thead>
-                <tr style={{ borderBottom: '1px solid #e5e5e5' }}>
-                  <th style={{ textAlign: 'left', padding: '0.25rem 0.5rem', color: '#888888', fontWeight: 600 }}>Field</th>
-                  <th style={{ textAlign: 'center', padding: '0.25rem 0.5rem', color: '#888888', fontWeight: 600 }}>Your filing</th>
-                  <th style={{ textAlign: 'center', padding: '0.25rem 0.5rem', color: '#888888', fontWeight: 600 }}>Approved avg</th>
-                  <th style={{ textAlign: 'center', padding: '0.25rem 0.5rem', color: '#888888', fontWeight: 600 }}>Top peers</th>
-                </tr>
-              </thead>
-              <tbody>
-                {Object.entries(corpusBaseline.fields).map(([field, data], idx) => {
-                  const present = (result.gap_field_presence || {})[field]
-                  const peerData = peerComparison?.fields?.[field]
-                  const label = field.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
-                  return (
-                    <tr key={field} style={{ borderBottom: '1px solid #eef6f1', background: idx % 2 ? '#f4f9f5' : 'white' }}>
-                      <td style={{ padding: '0.25rem 0.5rem' }}>{label}</td>
-                      <td style={{ padding: '0.25rem 0.5rem', textAlign: 'center', color: present ? '#00aa55' : '#ff4040', fontWeight: 600 }}>{present ? 'Found' : 'Missing'}</td>
-                      <td style={{ padding: '0.25rem 0.5rem', textAlign: 'center', color: '#555555' }}>{Math.round(data.rate * 100)}%</td>
-                      <td style={{ padding: '0.25rem 0.5rem', textAlign: 'center', color: '#555555' }}>{peerData ? `${peerData.peer_count}/${peerData.n_peers}` : '—'}</td>
-                    </tr>
-                  )
-                })}
-              </tbody>
-            </table>
-          )}
-        </div>
-      )}
-
-      {/* Comparables */}
       {topNotices.length > 0 && (
         <div style={sectionStyle}>
           <div style={h2Style}>5 Most Similar Filings</div>
@@ -610,50 +171,20 @@ function PrintReport({ result, allGaps, signals, nextSteps, narrative, topNotice
                   <span style={{ fontSize: '0.7rem', fontWeight: 700, color: isApproved ? '#00aa55' : '#ff9500', textTransform: 'uppercase' }}>{isApproved ? 'Approved' : 'Withdrawn'}</span>
                   <span style={{ ...monoStyle, fontWeight: 600, fontSize: '0.8rem' }}>{n.substance_name}</span>
                 </div>
-                <div style={{ fontSize: '0.75rem', color: '#888888' }}>GRN-{n.grn_number} · {n.notifier} · {n.best_distance != null ? `${Math.round((1 - n.best_distance) * 100)}% match` : ''}</div>
+                <div style={{ fontSize: '0.75rem', color: '#888888' }}>GRN-{n.grn_number} - {n.best_distance != null ? `${Math.round((1 - n.best_distance) * 100)}% match` : ''}</div>
               </div>
             )
           })}
         </div>
       )}
-
-      {/* Next Steps */}
-      {nextSteps.length > 0 && (
-        <div style={sectionStyle}>
-          <div style={h2Style}>Recommended Next Steps ({nextSteps.length})</div>
-          {nextSteps.map((step, i) => {
-            const prob = step.fda_pushback_probability || 'medium'
-            const color = { high: '#ff4040', medium: '#ff9500', low: '#00aa55' }[prob]
-            return (
-              <div key={i} style={{ marginBottom: '0.75rem', paddingLeft: '0.75rem', borderLeft: `3px solid ${color}` }}>
-                <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'baseline', flexWrap: 'wrap', marginBottom: '0.15rem' }}>
-                  <span style={{ fontSize: '0.7rem', fontWeight: 700, textTransform: 'uppercase', color }}>{prob} FDA pushback risk</span>
-                  <span style={{ fontWeight: 600 }}>{step.gap_title}</span>
-                </div>
-                {step.pushback_reasoning && <div style={{ color: '#555555', fontSize: '0.82rem', fontStyle: 'italic', marginBottom: '0.15rem' }}>{step.pushback_reasoning}</div>}
-                <div style={{ color: '#555555', fontSize: '0.82rem' }}>{step.action}</div>
-                {step.withdrawn_reference && (
-                  <div style={{ fontSize: '0.75rem', color: '#d97706', marginTop: '0.2rem' }}>
-                    ⚠ Withdrawal precedent: GRN-{step.withdrawn_reference.grn_number} ({step.withdrawn_reference.substance_name})
-                  </div>
-                )}
-              </div>
-            )
-          })}
-        </div>
-      )}
-
-      {/* Narrative */}
       {narrative && (
         <div style={sectionStyle}>
           <div style={h2Style}>Evaluation Summary</div>
           <div style={{ color: '#456050', lineHeight: 1.7 }}>{narrative}</div>
         </div>
       )}
-
-      {/* Footer */}
       <div style={{ marginTop: '2rem', paddingTop: '0.75rem', borderTop: '1px solid #ccddd3', fontSize: '0.7rem', color: '#7a9e85', display: 'flex', justifyContent: 'space-between' }}>
-        <span>GRAS-sy — AI-assisted regulatory gap analysis</span>
+        <span>greenlit.ai - AI-assisted regulatory gap analysis</span>
         <span>Not legal advice</span>
       </div>
     </div>
@@ -662,35 +193,7 @@ function PrintReport({ result, allGaps, signals, nextSteps, narrative, topNotice
 
 export default function Evaluation() {
   const navigate = useNavigate()
-  const { result, reset, jobId } = useAnalysis()
-  const [activeSection, setActiveSection] = useState(null)
-  const [showAllGaps, setShowAllGaps] = useState(false)
-  const [gapsView, setGapsView] = useState('severity')
-  const [showScoreInfo, setShowScoreInfo] = useState(false)
-  const [research, setResearch]           = useState(null)
-  const [researchLoading, setResearchLoading] = useState(false)
-  const [researchError, setResearchError] = useState(null)
-  const [outlineLoading, setOutlineLoading]   = useState(false)
-  const [outlineError, setOutlineError]       = useState(null)
-  const [diffSidecar, setDiffSidecar]         = useState(null)
-  const [diffLoading, setDiffLoading]         = useState(false)
-  const [diffError, setDiffError]             = useState(null)
-
-  function openResearch() {
-    setActiveSection('research')
-    if (research || researchLoading) return
-    setResearchLoading(true)
-    setResearchError(null)
-    const s = result?.engagement_summary || {}
-    fetchResearch(
-      s.substance_name || '',
-      s.production_method || '',
-      s.source_organism || '',
-    )
-      .then(data => { setResearch(data.papers) })
-      .catch(err  => { setResearchError(err.message) })
-      .finally(()  => { setResearchLoading(false) })
-  }
+  const { result, reset } = useAnalysis()
 
   if (!result) {
     return (
@@ -699,9 +202,7 @@ export default function Evaluation() {
         <div className="flex-1 flex items-center justify-center flex-col gap-4">
           <Microscope className="w-10 h-10 text-text-dim" />
           <p className="text-text-muted text-sm">No analysis found. Please submit a filing first.</p>
-          <button onClick={() => navigate('/')} className="text-accent text-sm hover:underline font-medium">
-            Go back
-          </button>
+          <button onClick={() => navigate('/')} className="text-accent text-sm hover:underline font-medium">Go back</button>
         </div>
       </div>
     )
@@ -712,755 +213,28 @@ export default function Evaluation() {
   const counts = result.gap_report?.priority_counts || {}
   const benchmark = result.benchmark || null
   const proxyScore = benchmark?.proxy_score
-  const corpusBaseline = benchmark?.corpus_baseline
-  const peerComparison = benchmark?.peer_comparison
-  const allGaps = [...(result.consolidated_gap_summary || [])].sort(
-    (a, b) => (PRIORITY_ORDER[a.priority] ?? 3) - (PRIORITY_ORDER[b.priority] ?? 3)
-  )
-  const visibleGaps = showAllGaps ? allGaps : allGaps.slice(0, DEFAULT_VISIBLE_GAPS)
-  const hiddenCount = allGaps.length - DEFAULT_VISIBLE_GAPS
-
-  const signals   = result.potential_safety_signals || []
+  const allGaps = [...(result.consolidated_gap_summary || [])].sort((a, b) => {
+    const priA = PRIORITY_ORDER[a.priority] ?? 3
+    const priB = PRIORITY_ORDER[b.priority] ?? 3
+    if (priA !== priB) return priA - priB
+    return (SIGNAL_ORDER[getEmpiricalSignal(a)?.signal] ?? 3) - (SIGNAL_ORDER[getEmpiricalSignal(b)?.signal] ?? 3)
+  })
+  const signals = result.potential_safety_signals || []
   const nextSteps = [...(result.recommended_next_steps || [])].sort(
     (a, b) => (PUSHBACK_ORDER[a.fda_pushback_probability] ?? 1) - (PUSHBACK_ORDER[b.fda_pushback_probability] ?? 1)
   )
   const narrative = result.limitations_and_caveats || ''
-
+  const summaryParagraph = result.summary_paragraph || ''
+  const healthScore = result.health_score ?? null
   const compLookup = {}
-  for (const g of result.consolidated_gap_summary || []) {
-    compLookup[g.title] = g
-  }
-
+  for (const g of result.consolidated_gap_summary || []) compLookup[g.title] = g
   const { approved_notices = [], withdrawn_notices = [] } = result.comparative_analysis || {}
   const topNotices = [...approved_notices, ...withdrawn_notices]
     .sort((a, b) => (a.best_distance ?? 1) - (b.best_distance ?? 1))
     .slice(0, 3)
-  const fallbackRef = approved_notices[0]
-    ? { substance_name: approved_notices[0].substance_name, grn_number: approved_notices[0].grn_number }
-    : null
 
-  // ── Detail views ──────────────────────────────────────────────────────────
-
-  if (activeSection === 'comparables') {
-    return (
-      <div className="min-h-screen bg-bg flex flex-col">
-        <NavBar />
-        <main className="w-full max-w-3xl mx-auto px-6 py-12">
-          <DetailHeader title="Comparable Filings" icon={GitCompare} onBack={() => setActiveSection(null)} />
-          <p className="text-text-muted text-xs mb-6">3 most similar GRAS notices by semantic similarity, regardless of outcome.</p>
-          <div className="flex flex-col gap-3">
-            {topNotices.length > 0
-              ? topNotices.map(n => (
-                  <CompCard
-                    key={n.grn_number}
-                    notice={n}
-                    variant={n.status === 'withdrawn' ? 'cautionary' : 'strong'}
-                  />
-                ))
-              : <p className="text-text-dim text-sm italic">No comparable filings found.</p>
-            }
-          </div>
-        </main>
-      </div>
-    )
-  }
-
-  if (activeSection === 'signals') {
-    return (
-      <div className="min-h-screen bg-bg flex flex-col">
-        <NavBar />
-        <main className="w-full max-w-3xl mx-auto px-6 py-12">
-          <DetailHeader title="Safety Signals" icon={ShieldAlert} onBack={() => setActiveSection(null)} />
-          <div className="flex flex-col gap-3">
-            {signals.map((s, i) => <SignalCard key={i} signal={s} />)}
-          </div>
-        </main>
-      </div>
-    )
-  }
-
-  if (activeSection === 'gaps') {
-    const gapsByDomain = {}
-    for (const gap of allGaps) {
-      const d = gap.domain || 'other'
-      if (!gapsByDomain[d]) gapsByDomain[d] = []
-      gapsByDomain[d].push(gap)
-    }
-    const domainGroups = Object.entries(gapsByDomain).sort(([, a], [, b]) =>
-      (PRIORITY_ORDER[a[0].priority] ?? 3) - (PRIORITY_ORDER[b[0].priority] ?? 3)
-    )
-
-    return (
-      <div className="min-h-screen bg-bg flex flex-col">
-        <NavBar />
-        <main className="w-full max-w-3xl mx-auto px-6 py-12">
-          <DetailHeader title="Identified Gaps" icon={AlertOctagon} onBack={() => setActiveSection(null)} />
-
-          {/* Summary + toggle */}
-          <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
-            <div className="flex flex-wrap gap-2">
-              {counts.foundational > 0 && (
-                <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-red-50 border border-red-200">
-                  <AlertOctagon className="w-4 h-4 text-critical" />
-                  <span className="text-sm font-bold text-critical">{counts.foundational}</span>
-                  <span className="text-sm text-text-muted">Critical</span>
-                </div>
-              )}
-              {counts.material > 0 && (
-                <div className="flex items-center gap-2 px-3 py-2 rounded-lg" style={{ background: 'rgba(255,149,0,0.08)', border: '1px solid rgba(255,149,0,0.25)' }}>
-                  <AlertTriangle className="w-4 h-4 text-moderate" />
-                  <span className="text-sm font-bold text-moderate">{counts.material}</span>
-                  <span className="text-sm text-text-muted">Moderate</span>
-                </div>
-              )}
-              {counts.documentation_issue > 0 && (
-                <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-surface-2 border border-border">
-                  <Minus className="w-4 h-4 text-minor" />
-                  <span className="text-sm font-bold text-minor">{counts.documentation_issue}</span>
-                  <span className="text-sm text-text-muted">Minor</span>
-                </div>
-              )}
-            </div>
-            <div className="flex items-center rounded-lg border border-border bg-surface-2 p-0.5 text-xs font-medium">
-              <button
-                onClick={() => setGapsView('severity')}
-                className={`px-3 py-1.5 rounded-md transition-colors ${
-                  gapsView === 'severity' ? 'bg-surface text-text-base shadow-sm' : 'text-text-dim hover:text-text-muted'
-                }`}
-              >
-                By severity
-              </button>
-              <button
-                onClick={() => setGapsView('domain')}
-                className={`px-3 py-1.5 rounded-md transition-colors ${
-                  gapsView === 'domain' ? 'bg-surface text-text-base shadow-sm' : 'text-text-dim hover:text-text-muted'
-                }`}
-              >
-                By topic
-              </button>
-            </div>
-          </div>
-
-          {/* Severity view */}
-          {gapsView === 'severity' && (
-            <>
-              <div className="flex flex-col gap-2">
-                {visibleGaps.map((gap, i) => (
-                  <GapCard key={i} gap={gap} compGap={compLookup[gap.title]} substanceName={result.engagement_summary?.substance_name} fallbackRef={fallbackRef} />
-                ))}
-              </div>
-              {hiddenCount > 0 && (
-                <button
-                  onClick={() => setShowAllGaps(o => !o)}
-                  className="mt-4 w-full py-2.5 rounded-xl border border-border bg-surface hover:bg-surface-2 text-text-muted hover:text-text-base text-sm font-medium transition-colors flex items-center justify-center gap-2"
-                >
-                  {showAllGaps
-                    ? <><ChevronUp className="w-4 h-4" /> Show fewer</>
-                    : <><ChevronDown className="w-4 h-4" /> Show {hiddenCount} more gap{hiddenCount > 1 ? 's' : ''}</>
-                  }
-                </button>
-              )}
-            </>
-          )}
-
-          {/* Domain view */}
-          {gapsView === 'domain' && (
-            <div className="flex flex-col gap-6">
-              {domainGroups.map(([domain, gaps]) => (
-                <div key={domain}>
-                  <div className="flex items-center gap-2 mb-2">
-                    <h3 className="text-xs font-bold uppercase tracking-widest text-text-dim">
-                      {domain.replace(/_/g, ' ')}
-                    </h3>
-                    <span className="text-xs text-text-dim bg-surface-2 border border-border px-2 py-0.5 rounded-full">
-                      {gaps.length}
-                    </span>
-                  </div>
-                  <div className="flex flex-col gap-2">
-                    {gaps.map((gap, i) => (
-                      <GapCard key={i} gap={gap} compGap={compLookup[gap.title]} substanceName={result.engagement_summary?.substance_name} fallbackRef={fallbackRef} />
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </main>
-      </div>
-    )
-  }
-
-  if (activeSection === 'benchmark') {
-    const gfp = result.gap_field_presence || {}
-    const gfpAvailable = Object.keys(gfp).length > 0
-    const applicable = { ...(result.benchmark?.applicable_fields || getApplicableFields(result.engagement_summary)), history_of_safe_use: true }
-    const naFields = Object.entries(applicable).filter(([, v]) => !v).map(([k]) => k)
-    return (
-      <div className="min-h-screen bg-bg flex flex-col">
-        <NavBar />
-        <main className="w-full max-w-3xl mx-auto px-6 py-12">
-          <DetailHeader title="Documentation Fields" icon={BarChart2} onBack={() => setActiveSection(null)} />
-          <p className="text-text-muted text-xs mb-6">
-            7 key fields compared against your {topNotices.length} most similar filings.
-            {naFields.length > 0 && (
-              <span className="text-text-dim"> Fields marked N/A are not applicable to this filing type ({result.engagement_summary?.gras_basis?.replace(/_/g, ' ')}).</span>
-            )}
-          </p>
-
-          {/* Column headers */}
-          {topNotices.length > 0 && (
-            <div className="flex items-center gap-3 px-4 mb-2">
-              <span className="flex-1" />
-              <span className="text-xs font-semibold text-text-dim w-20 text-center">Your filing</span>
-              <div className="flex gap-1">
-                {topNotices.map(n => (
-                  <span key={n.grn_number} className="text-xs text-text-dim w-16 text-center" title={n.substance_name}>
-                    {n.status === 'withdrawn'
-                      ? <span className="text-moderate">GRN-{n.grn_number}</span>
-                      : <span className="text-accent">GRN-{n.grn_number}</span>
-                    }
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
-
-          <div className="flex flex-col gap-2">
-            {BENCHMARKABLE_FIELDS.map(field => {
-              const yours = gfpAvailable ? !!gfp[field] : null
-              const peerPresence = topNotices.map(n => peerFields(n)[field])
-              const peerCount = peerPresence.filter(Boolean).length
-              return (
-                <div key={field} className="rounded-xl border border-border bg-surface px-4 py-3 flex items-center gap-3">
-                  <span className="flex-1 text-sm font-medium text-text-base">{FIELD_LABELS[field]}</span>
-                  <div className="w-20 flex justify-center">
-                    {yours === null
-                      ? <span className="text-xs text-text-dim">—</span>
-                      : yours
-                        ? <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold" style={{ background: 'rgba(0,255,136,0.1)', color: '#00ff88', border: '1px solid rgba(0,255,136,0.3)' }}><CheckCircle2 className="w-3 h-3" />Found</span>
-                        : <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold" style={{ background: 'rgba(255,64,64,0.08)', color: '#ff4040', border: '1px solid rgba(255,64,64,0.25)' }}><Minus className="w-3 h-3" />Missing</span>
-                    }
-                  </div>
-                  {topNotices.length > 0 && (
-                    <div className="flex gap-1">
-                      {peerPresence.map((has, i) => (
-                        <div
-                          key={i}
-                          className="w-16 flex justify-center"
-                          title={`${topNotices[i].substance_name}: ${applicable[field] === false ? 'not applicable' : has ? 'present' : 'absent'}`}
-                        >
-                          {applicable[field] === false
-                            ? <span className="text-xs text-text-dim opacity-40">N/A</span>
-                            : <span className={`text-sm font-bold ${has ? 'text-accent' : 'text-moderate'}`}>{has ? '✓' : '✗'}</span>
-                          }
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              )
-            })}
-          </div>
-
-          {!gfpAvailable && (
-            <p className="text-text-dim text-xs mt-4 italic">
-              Your filing column unavailable — re-run analysis to populate.
-            </p>
-          )}
-
-          {/* Peer legend */}
-          {topNotices.length > 0 && (
-            <div className="mt-4 flex flex-wrap gap-3">
-              {topNotices.map(n => (
-                <span key={n.grn_number} className="text-xs text-text-dim">
-                  <span className={n.status === 'withdrawn' ? 'text-moderate font-semibold' : 'text-accent font-semibold'}>
-                    GRN-{n.grn_number}
-                  </span>
-                  {' '}{n.substance_name} ({n.status === 'withdrawn' ? 'withdrawn' : 'approved'})
-                </span>
-              ))}
-            </div>
-          )}
-
-          {/* Empirical calibration table */}
-          <div className="mt-8 rounded-xl border border-border bg-surface p-5" style={{ borderColor: 'rgba(0,255,136,0.15)' }}>
-            <p className="text-xs font-semibold uppercase tracking-widest mb-1" style={{ color: '#00ff88' }}>Empirical Calibration Basis</p>
-            <p className="text-xs text-text-dim mb-4">
-              Field presence rates across <span className="text-text-muted font-medium">714 approved</span> and <span className="text-text-muted font-medium">158 withdrawn</span> FDA GRAS notices.
-              Delta = approved rate minus withdrawn rate. Fields with low delta have weak predictive signal for FDA outcomes
-              and are classified conservatively.
-            </p>
-            <div className="overflow-x-auto">
-              <table className="w-full text-xs border-collapse">
-                <thead>
-                  <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
-                    <th className="text-left text-text-dim font-medium py-2 pr-4">Field</th>
-                    <th className="text-right text-text-dim font-medium py-2 px-3">Approved</th>
-                    <th className="text-right text-text-dim font-medium py-2 px-3">Withdrawn</th>
-                    <th className="text-right text-text-dim font-medium py-2 px-3">Delta</th>
-                    <th className="text-left text-text-dim font-medium py-2 pl-4">Signal</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {EMPIRICAL_CALIBRATION.map(row => (
-                    <tr key={row.field} style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
-                      <td className="py-2 pr-4 text-text-muted">{row.label}</td>
-                      <td className="py-2 px-3 text-right text-text-base font-mono">{Math.round(row.approved * 100)}%</td>
-                      <td className="py-2 px-3 text-right font-mono" style={{ color: '#ff9500' }}>{Math.round(row.withdrawn * 100)}%</td>
-                      <td className="py-2 px-3 text-right font-mono font-semibold" style={{
-                        color: row.signal === 'moderate' ? '#00ff88' : row.signal === 'weak' ? 'rgba(255,255,255,0.5)' : 'rgba(255,255,255,0.25)'
-                      }}>
-                        {row.delta >= 0 ? '+' : ''}{Math.round(row.delta * 100)}%
-                      </td>
-                      <td className="py-2 pl-4">
-                        {row.signal === 'moderate' && <span className="px-2 py-0.5 rounded-full text-xs font-semibold" style={{ background: 'rgba(0,255,136,0.1)', color: '#00ff88', border: '1px solid rgba(0,255,136,0.25)' }}>Moderate</span>}
-                        {row.signal === 'weak'     && <span className="px-2 py-0.5 rounded-full text-xs font-semibold" style={{ background: 'rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.4)', border: '1px solid rgba(255,255,255,0.1)' }}>Weak</span>}
-                        {row.signal === 'none'     && <span className="px-2 py-0.5 rounded-full text-xs font-semibold" style={{ background: 'rgba(255,64,64,0.06)', color: 'rgba(255,64,64,0.5)', border: '1px solid rgba(255,64,64,0.15)' }}>None</span>}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-            <p className="text-text-dim text-xs mt-3 italic">
-              Note: "withdrawn" includes voluntary company withdrawals, not only FDA-objected filings,
-              which dilutes the signal. True predictive validity against FDA letters of objection is higher than shown.
-            </p>
-          </div>
-
-          <p className="text-text-dim text-xs mt-5 leading-relaxed" style={{ borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: '1rem' }}>
-            <span className="font-semibold text-text-muted">Note:</span> Peer filing columns are derived from pipeline metadata, not a full text scan. Fields may be undercounted if the sidecar data was not fully populated during ingestion — a missing ✓ does not necessarily mean the field is absent from the actual PDF.
-          </p>
-        </main>
-      </div>
-    )
-  }
-
-  if (activeSection === 'research') {
-    return (
-      <div className="min-h-screen bg-bg flex flex-col">
-        <NavBar />
-        <main className="w-full max-w-3xl mx-auto px-6 py-12">
-          <DetailHeader title="Relevant Research" icon={BookOpen} onBack={() => setActiveSection(null)} />
-          <p className="text-text-muted text-xs mb-6">
-            Top PubMed papers matched to this substance — real citations, relevance summaries by Claude.
-          </p>
-
-          {researchLoading && (
-            <div className="flex flex-col items-center justify-center gap-4 py-20">
-              <Loader2 className="w-8 h-8 text-accent animate-spin" />
-              <p className="text-text-muted text-sm">Searching PubMed and summarizing relevance…</p>
-            </div>
-          )}
-
-          {researchError && (
-            <div className="flex items-start gap-3 rounded-xl border px-4 py-3" style={{ background: 'rgba(255,64,64,0.06)', borderColor: 'rgba(255,64,64,0.25)' }}>
-              <AlertCircle className="w-4 h-4 text-critical mt-0.5 shrink-0" />
-              <p className="text-sm text-text-muted">{researchError}</p>
-            </div>
-          )}
-
-          {research && research.length === 0 && (
-            <p className="text-text-dim text-sm italic">No relevant papers found on PubMed for this substance.</p>
-          )}
-
-          {research && research.length > 0 && (
-            <div className="flex flex-col gap-4">
-              {research.map((paper, i) => (
-                <div key={paper.pmid} className="rounded-xl border border-border bg-surface p-5">
-                  <div className="flex items-start justify-between gap-3 mb-2">
-                    <span className="text-xs font-bold text-text-dim shrink-0 mt-0.5">{i + 1}</span>
-                    <div className="flex-1 min-w-0">
-                      <a
-                        href={paper.url}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="text-sm font-semibold text-text-base hover:text-accent transition-colors leading-snug block mb-1"
-                      >
-                        {paper.title}
-                      </a>
-                      <p className="text-xs text-text-muted mb-0.5">{paper.authors}</p>
-                      <p className="text-xs text-text-dim">
-                        {paper.journal}{paper.journal && paper.year ? ' · ' : ''}{paper.year}
-                        {paper.doi && (
-                          <>
-                            {' · '}
-                            <a
-                              href={`https://doi.org/${paper.doi}`}
-                              target="_blank" rel="noreferrer"
-                              className="hover:text-accent transition-colors"
-                            >
-                              {paper.doi}
-                            </a>
-                          </>
-                        )}
-                      </p>
-                    </div>
-                    <a href={paper.url} target="_blank" rel="noreferrer" className="shrink-0">
-                      <ExternalLink className="w-3.5 h-3.5 text-text-dim hover:text-accent transition-colors" />
-                    </a>
-                  </div>
-
-                  {paper.relevance && (
-                    <div className="mt-3 rounded-lg px-3 py-2.5 flex items-start gap-2"
-                      style={{ background: 'rgba(0,255,136,0.05)', border: '1px solid rgba(0,255,136,0.15)' }}>
-                      <CheckCircle2 className="w-3.5 h-3.5 text-accent shrink-0 mt-0.5" />
-                      <p className="text-xs text-text-muted leading-relaxed">{paper.relevance}</p>
-                    </div>
-                  )}
-
-                  {paper.abstract && (
-                    <details className="mt-3 group">
-                      <summary className="text-xs text-text-dim cursor-pointer hover:text-text-muted transition-colors list-none flex items-center gap-1">
-                        <ChevronDown className="w-3 h-3 group-open:rotate-180 transition-transform" />
-                        Show abstract
-                      </summary>
-                      <p className="mt-2 text-xs text-text-muted leading-relaxed">{paper.abstract}</p>
-                    </details>
-                  )}
-                </div>
-              ))}
-              <p className="text-xs text-text-dim text-center pt-2">
-                Results from PubMed · Always verify citations before use
-              </p>
-            </div>
-          )}
-        </main>
-      </div>
-    )
-  }
-
-  if (activeSection === 'nextsteps') {
-    return (
-      <div className="min-h-screen bg-bg flex flex-col">
-        <NavBar />
-        <main className="w-full max-w-3xl mx-auto px-6 py-12">
-          <DetailHeader title="Recommended Next Steps" icon={ListChecks} onBack={() => setActiveSection(null)} />
-          <p className="text-text-muted text-xs mb-6">Sorted by FDA pushback risk — address high-risk items first.</p>
-          <div className="flex flex-col gap-3">
-            {nextSteps.map((step, i) => {
-              const prob = step.fda_pushback_probability || 'medium'
-              const probConfig = {
-                high:   { label: 'High FDA pushback risk',    bg: 'rgba(255,64,64,0.07)',  border: 'rgba(255,64,64,0.25)',  color: '#ff4040', dot: '#ff4040' },
-                medium: { label: 'Medium FDA pushback risk', bg: 'rgba(255,149,0,0.07)', border: 'rgba(255,149,0,0.25)', color: '#ff9500', dot: '#ff9500' },
-                low:    { label: 'Low FDA pushback risk',    bg: 'rgba(0,255,136,0.07)', border: 'rgba(0,255,136,0.25)', color: '#00ff88', dot: '#00ff88' },
-              }[prob]
-              const ref = step.withdrawn_reference
-              return (
-                <div key={i} className="rounded-xl border bg-surface overflow-hidden" style={{ borderColor: probConfig.border }}>
-                  <div className="flex items-center gap-2 px-5 py-2.5 border-b" style={{ background: probConfig.bg, borderColor: probConfig.border }}>
-                    <span className="w-2 h-2 rounded-full shrink-0" style={{ background: probConfig.dot }} />
-                    <span className="text-xs font-bold uppercase tracking-wider" style={{ color: probConfig.color }}>
-                      {probConfig.label}
-                    </span>
-                    <span className="ml-auto text-xs text-text-dim capitalize">{step.domain?.replace(/_/g, ' ')}</span>
-                  </div>
-                  <div className="p-5">
-                    <p className="text-text-base text-sm font-semibold mb-1">{step.gap_title}</p>
-                    {step.pushback_reasoning && (
-                      <p className="text-text-muted text-sm leading-relaxed mb-3 italic">{step.pushback_reasoning}</p>
-                    )}
-                    <p className="text-text-muted text-sm leading-relaxed mb-3">{step.action}</p>
-                    {(() => {
-                      const priority = step.fda_pushback_probability === 'high' ? 'foundational' : step.fda_pushback_probability === 'low' ? 'documentation_issue' : 'material'
-                      const rem = GAP_REMEDIATION[step.domain]?.[priority] || FALLBACK_REMEDIATION[priority] || FALLBACK_REMEDIATION.material
-                      return (
-                        <div className="flex flex-wrap items-center gap-2 mt-2 mb-2">
-                          <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold border"
-                            style={{ background: 'rgba(255,255,255,0.04)', borderColor: 'rgba(255,255,255,0.1)', color: '#a0a0a0' }}>
-                            {rem.cost}
-                          </span>
-                          <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold border"
-                            style={{ background: 'rgba(255,255,255,0.04)', borderColor: 'rgba(255,255,255,0.1)', color: '#a0a0a0' }}>
-                            {rem.timeline}
-                          </span>
-                          <span className="text-xs text-text-dim italic truncate">{rem.study}</span>
-                        </div>
-                      )
-                    })()}
-                    {ref && (
-                      <div className="mt-3 rounded-lg px-3 py-2 flex items-start gap-2" style={{ background: 'rgba(255,64,64,0.06)', border: '1px solid rgba(255,64,64,0.25)' }}>
-                        <AlertTriangle className="w-3.5 h-3.5 shrink-0 mt-0.5 text-critical" />
-                        <a
-                          href={`https://www.cfsanappsexternal.fda.gov/scripts/fdcc/?set=GRASNotices&id=${ref.grn_number}`}
-                          target="_blank" rel="noreferrer"
-                          className="text-xs text-critical font-semibold hover:underline leading-snug"
-                        >
-                          This issue contributed to the withdrawal of GRN-{ref.grn_number} ({ref.substance_name})
-                        </a>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              )
-            })}
-          </div>
-          <p className="text-xs text-text-dim italic mt-4">Cost and timeline ranges are rough industry estimates and vary by CRO, study design, and jurisdiction.</p>
-        </main>
-      </div>
-    )
-  }
-
-
-  // -- Amendment Outline --
-  if (activeSection === 'outline') {
-    return (
-      <div className="min-h-screen bg-bg flex flex-col">
-        <NavBar />
-        <main className="w-full max-w-3xl mx-auto px-6 py-12">
-          <DetailHeader title="Amendment Outline" icon={FilePlus2} onBack={() => setActiveSection(null)} />
-          <p className="text-text-muted text-xs mb-8 leading-relaxed">
-            A structured Word document (.docx) outlining what each section of the supplemental GRAS filing
-            must contain to close every identified gap. Claude writes the section-by-section guidance.
-          </p>
-          <div className="rounded-xl border border-border bg-surface p-6 flex flex-col items-center gap-4 text-center">
-            <FilePlus2 className="w-10 h-10 text-accent opacity-80" />
-            <div>
-              <p className="text-text-base font-semibold mb-1">Download Amendment Outline</p>
-              <p className="text-text-muted text-sm">
-                Generates a formatted Word outline with gap tables and AI-written guidance per GRAS section.
-                Takes 1–2 minutes.
-              </p>
-            </div>
-            {outlineError && (
-              <div className="flex items-center gap-2 text-critical text-sm">
-                <AlertCircle className="w-4 h-4 shrink-0" />
-                {outlineError}
-              </div>
-            )}
-            <button
-              disabled={outlineLoading}
-              onClick={async () => {
-                setOutlineLoading(true)
-                setOutlineError(null)
-                try {
-                  const effectiveJobId = jobId || sessionStorage.getItem("gras_job_id")
-                  if (!effectiveJobId) throw new Error("Job ID not found — please re-upload the filing")
-                  const blob = await downloadOutline(effectiveJobId)
-                  const url = URL.createObjectURL(blob)
-                  const a = document.createElement('a')
-                  a.href = url
-                  const substance = result.engagement_summary?.substance_name || 'amendment'
-                  a.download = `GRAS_Amendment_Outline_${substance.replace(/[^a-zA-Z0-9 -]/g,'_').slice(0,60)}.docx`
-                  a.click()
-                  URL.revokeObjectURL(url)
-                } catch (err) {
-                  setOutlineError(err.message)
-                } finally {
-                  setOutlineLoading(false)
-                }
-              }}
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all"
-              style={{
-                background: outlineLoading ? 'rgba(0,255,136,0.15)' : 'rgba(0,255,136,0.2)',
-                border: '1px solid rgba(0,255,136,0.4)',
-                color: '#00ff88',
-                cursor: outlineLoading ? 'not-allowed' : 'pointer',
-              }}
-            >
-              {outlineLoading
-                ? <><Loader2 className="w-4 h-4 animate-spin" /> Generating outline...</>
-                : <><Download className="w-4 h-4" /> Download .docx</>
-              }
-            </button>
-          </div>
-        </main>
-      </div>
-    )
-  }
-
-  // -- Filing Diff --
-  if (activeSection === 'diff') {
-    const topApproved = result.comparative_analysis?.approved_notices?.[0]
-    if (!topApproved && !diffLoading && !diffSidecar) {
-      return (
-        <div className="min-h-screen bg-bg flex flex-col">
-          <NavBar />
-          <main className="w-full max-w-3xl mx-auto px-6 py-12">
-            <DetailHeader title="Filing Diff" icon={SplitSquareHorizontal} onBack={() => setActiveSection(null)} />
-            <p className="text-text-muted text-sm">No comparable approved filing available for this analysis.</p>
-          </main>
-        </div>
-      )
-    }
-
-    if (!diffSidecar && !diffLoading && topApproved) {
-      setDiffLoading(true)
-      fetchSidecar(topApproved.grn_number)
-        .then(data => { setDiffSidecar(data); setDiffLoading(false) })
-        .catch(err => { setDiffError(err.message); setDiffLoading(false) })
-    }
-
-    const es = result.engagement_summary || {}
-    const gfp = result.gap_field_presence || {}
-
-    const SAFETY_TEST_LABELS = {
-      acute_toxicity:              'Acute Toxicity Study',
-      '90_day_rat_study':          '90-Day Rat Study',
-      chronic_toxicity:            'Chronic Toxicity Study',
-      genotoxicity_ames:           'Genotoxicity (Ames)',
-      genotoxicity_chromosomal:    'Genotoxicity (Chromosomal)',
-      allergenicity_bioinformatic: 'Allergenicity (Bioinformatic)',
-      allergenicity_serum:         'Allergenicity (Serum)',
-      digestibility_study:         'Digestibility Study',
-      nutritional_impact:          'Nutritional Impact Data',
-      human_clinical_trial:        'Human Clinical Trial',
-      history_of_safe_use:         'History of Safe Use',
-      metabolic_fate:              'Metabolic Fate Study',
-      genotoxicity_in_vitro:       'Genotoxicity (In Vitro)',
-      genotoxicity_in_vivo:        'Genotoxicity (In Vivo)',
-    }
-
-    const peerSd = new Set(diffSidecar?.safety_data_available || [])
-    const cap = s => s && typeof s === 'string' ? s.charAt(0).toUpperCase() + s.slice(1) : s
-    const allTests = Object.keys(SAFETY_TEST_LABELS)
-
-    const metaRows = [
-      { label: 'Notifier',               yours: es.notifier || '—',                                                  peer: topApproved?.notifier || diffSidecar?.notifier || '—' },
-      { label: 'Substance Type',          yours: cap(es.substance_type?.replace(/_/g,' ')) || '—',                      peer: cap(diffSidecar?.substance_type?.replace(/_/g,' ')) || '—' },
-      { label: 'GRAS Basis',              yours: cap(es.gras_basis?.replace(/_/g,' ')) || '—',                          peer: cap(diffSidecar?.gras_basis?.replace(/_/g,' ')) || '—' },
-      { label: 'Production Method',       yours: cap(es.production_method?.replace(/_/g,' ')) || '—',                   peer: cap(diffSidecar?.production_method?.replace(/_/g,' ')) || '—' },
-      { label: 'Organism Type',           yours: (() => { const s = es.source_organism || ''; return s ? (s.length > 50 ? s.slice(0, 47).trimEnd() + '…' : cap(s)) : '—' })(),  peer: cap(diffSidecar?.source_organism_type?.replace(/_/g,' ')) || '—' },
-      { label: 'Organism Name',           yours: es.source_organism_name || '—',                                    peer: diffSidecar?.source_organism_name || '—' },
-      { label: 'Intended Uses',           yours: (es.intended_uses || []).map(u => cap(u.replace(/_/g,' '))).join(', ') || '—',  peer: (diffSidecar?.intended_uses || []).map(u => cap(u.replace(/_/g,' '))).join(', ') || '—' },
-      { label: 'Target Population',       yours: cap(es.target_population?.replace(/_/g,' ')) || '—',                   peer: cap(diffSidecar?.target_population?.replace(/_/g,' ')) || '—' },
-      { label: 'Exposure Estimate',       yours: gfp.dietary_exposure_estimate ? 'Included' : 'Missing',            peer: diffSidecar?.exposure_estimate_included ? 'Included' : 'Missing' },
-      { label: 'Allergenicity',           yours: gfp.allergenicity_assessment  ? 'Addressed' : 'Missing',          peer: diffSidecar?.allergenicity_addressed    ? 'Addressed' : 'Missing' },
-      { label: 'Dietary Exposure Method', yours: cap(es.dietary_exposure_method?.replace(/_/g,' ')) || '—',             peer: cap(diffSidecar?.dietary_exposure_method?.replace(/_/g,' ')) || '—' },
-    ]
-
-    const DiffCell = ({ value, match }) => {
-      const base = 'text-xs px-2 py-0.5 rounded font-medium'
-      if (match === true)  return <span className={base} style={{ color: '#00ff88', background: 'rgba(0,255,136,0.08)' }}>{value}</span>
-      if (match === false) return <span className={base} style={{ color: '#ff4040', background: 'rgba(255,64,64,0.08)' }}>{value}</span>
-      return <span className={`${base} text-text-muted`}>{value || '—'}</span>
-    }
-
-    return (
-      <div className="min-h-screen bg-bg flex flex-col">
-        <NavBar />
-        <main className="w-full max-w-4xl mx-auto px-6 py-12">
-          <DetailHeader title="Filing Diff" icon={SplitSquareHorizontal} onBack={() => setActiveSection(null)} />
-          {topApproved && (
-            <p className="text-text-muted text-xs mb-6">
-              Your filing vs.{' '}
-              <a
-                href={`https://www.cfsanappsexternal.fda.gov/scripts/fdcc/?set=GRASNotices&id=${topApproved.grn_number}`}
-                target="_blank" rel="noreferrer"
-                className="text-accent hover:underline font-semibold"
-              >
-                GRN-{topApproved.grn_number} ({topApproved.substance_name})
-              </a>
-              {' '}— the most similar approved notice.
-              Red = you are missing something they included.
-            </p>
-          )}
-
-          {diffLoading && (
-            <div className="flex items-center gap-2 text-text-muted text-sm py-8">
-              <Loader2 className="w-4 h-4 animate-spin" /> Loading comparison data...
-            </div>
-          )}
-          {diffError && <p className="text-critical text-sm">{diffError}</p>}
-
-          {diffSidecar && (
-            <div className="flex flex-col gap-6">
-              {/* Metadata comparison */}
-              <div className="rounded-xl border overflow-hidden" style={{ borderColor: 'rgba(255,255,255,0.08)' }}>
-                <div className="grid text-xs" style={{ gridTemplateColumns: '1fr 1fr 1fr', borderBottom: '1px solid rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.03)' }}>
-                  <div className="px-4 py-2.5 text-text-dim font-semibold uppercase tracking-wider text-xs">Field</div>
-                  <div className="px-4 py-2.5 text-text-dim font-semibold uppercase tracking-wider text-xs border-l" style={{ borderColor: 'rgba(255,255,255,0.06)' }}>Your Filing</div>
-                  <div className="px-4 py-2.5 font-semibold uppercase tracking-wider text-xs border-l text-accent" style={{ borderColor: 'rgba(255,255,255,0.06)' }}>
-                    GRN-{topApproved.grn_number}
-                  </div>
-                </div>
-                {metaRows.map((row, idx) => (
-                  <div
-                    key={row.label}
-                    className="grid text-xs"
-                    style={{
-                      gridTemplateColumns: '1fr 1fr 1fr',
-                      borderTop: idx > 0 ? '1px solid rgba(255,255,255,0.05)' : 'none',
-                    }}
-                  >
-                    <div className="px-4 py-3 text-text-muted">{row.label}</div>
-                    <div className="px-4 py-3 border-l flex items-center" style={{ borderColor: 'rgba(255,255,255,0.06)' }}><DiffCell value={row.yours} match={null} /></div>
-                    <div className="px-4 py-3 border-l flex items-center" style={{ borderColor: 'rgba(255,255,255,0.06)' }}><DiffCell value={row.peer} match={null} /></div>
-                  </div>
-                ))}
-              </div>
-
-              {/* Safety data comparison */}
-              <div className="rounded-xl border overflow-hidden" style={{ borderColor: 'rgba(255,255,255,0.08)' }}>
-                <div className="grid text-xs" style={{ gridTemplateColumns: '1fr 7rem 7rem', borderBottom: '1px solid rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.03)' }}>
-                  <div className="px-4 py-2.5 text-text-dim font-semibold uppercase tracking-wider text-xs">Study / Data Type</div>
-                  <div className="px-4 py-2.5 text-text-dim font-semibold uppercase tracking-wider text-xs text-center border-l" style={{ borderColor: 'rgba(255,255,255,0.06)' }}>Your Filing</div>
-                  <div className="px-4 py-2.5 font-semibold uppercase tracking-wider text-xs text-center border-l text-accent" style={{ borderColor: 'rgba(255,255,255,0.06)' }}>GRN-{topApproved.grn_number}</div>
-                </div>
-                <div>
-                  {allTests.map((test, idx) => {
-                    const peerHas  = peerSd.has(test)
-                    const yoursVal = (() => {
-                      const testKey = 'test_' + test
-                      if (gfp[testKey] !== undefined) return gfp[testKey]
-                      if (test === 'genotoxicity_ames' || test === 'genotoxicity_chromosomal') return gfp.genotoxicity_battery ?? null
-                      if (test === 'digestibility_study') return gfp.digestibility_data ?? null
-                      if (test === 'nutritional_impact') return gfp.nutritional_impact ?? null
-                      if (test === 'human_clinical_trial') return gfp.human_exposure_data ?? null
-                      if (test === 'history_of_safe_use') return gfp.history_of_safe_use ?? null
-                      return null
-                    })()
-                    const missing = peerHas && yoursVal === false
-                    return (
-                      <div
-                        key={test}
-                        className="grid text-xs"
-                        style={{
-                          gridTemplateColumns: '1fr 7rem 7rem',
-                          borderTop: '1px solid rgba(255,255,255,0.05)',
-                          background: missing ? 'rgba(255,64,64,0.04)' : undefined,
-                        }}
-                      >
-                        <div className="px-4 py-3 text-text-muted">{SAFETY_TEST_LABELS[test]}</div>
-                        <div className="px-4 py-3 text-center border-l flex items-center justify-center" style={{ borderColor: 'rgba(255,255,255,0.06)' }}>
-                          {yoursVal === null
-                            ? <span className="text-text-dim">?</span>
-                            : yoursVal
-                              ? <span className="font-bold text-accent">✓</span>
-                              : <span className="font-bold text-critical">✗</span>
-                          }
-                        </div>
-                        <div className="px-4 py-3 text-center border-l flex items-center justify-center" style={{ borderColor: 'rgba(255,255,255,0.06)' }}>
-                          <span className={`font-bold ${peerHas ? 'text-accent' : 'text-critical'}`}>
-                            {peerHas ? '✓' : '✗'}
-                          </span>
-                        </div>
-                      </div>
-                    )
-                  })}
-                </div>
-              </div>
-              <p className="text-text-dim text-xs mt-2 italic">
-                ? = not reliably detectable from this filing's metadata. Red rows = peer included it, yours did not.
-              </p>
-            </div>
-          )}
-        </main>
-      </div>
-    )
-  }
-  // ── Overview ──────────────────────────────────────────────────────────────
-
-  const topSimilar = topNotices[0]
-  const topGap = allGaps[0]
   const totalIssues = (counts.foundational || 0) + (counts.material || 0) + (counts.documentation_issue || 0)
-  const issueLabel = [
-    counts.foundational  && `${counts.foundational} critical`,
-    counts.material      && `${counts.material} moderate`,
-    counts.documentation_issue && `${counts.documentation_issue} minor`,
-  ].filter(Boolean).join(' · ')
-  const topSignal = signals[0]
-  const topStep = nextSteps.find(s => s.fda_pushback_probability === 'high') || nextSteps[0]
+  const topSimilar = topNotices[0]
   const currentProxyPct = proxyScore ? Math.round(proxyScore.current * 100) : null
   const approvedProxyPct = proxyScore ? Math.round(proxyScore.approved_mean * 100) : null
 
@@ -1468,37 +242,22 @@ export default function Evaluation() {
     <div className="min-h-screen bg-bg flex flex-col">
       <div className="no-print"><NavBar /></div>
 
-      <PrintReport
-        result={result}
-        allGaps={allGaps}
-        signals={signals}
-        nextSteps={nextSteps}
-        narrative={narrative}
-        topNotices={topNotices}
-        compLookup={compLookup}
-      />
+      <PrintReport result={result} allGaps={allGaps} signals={signals} nextSteps={nextSteps} narrative={narrative} topNotices={topNotices} compLookup={compLookup} />
 
       <main className="no-print w-full max-w-3xl mx-auto px-6 py-12 flex flex-col gap-8">
 
-        {/* Truncation / skipped-pages warning */}
+        {/* Truncation warning */}
         {(result.meta?.truncated || result.meta?.skipped_pages > 0) && (
           <div className="flex items-start gap-3 rounded-xl border px-4 py-3" style={{ background: 'rgba(255,149,0,0.07)', borderColor: 'rgba(255,149,0,0.3)' }}>
             <AlertTriangle className="w-4 h-4 mt-0.5 shrink-0" style={{ color: '#ff9500' }} />
             <p className="text-xs text-text-muted leading-relaxed">
-              {result.meta?.truncated && (
-                <><span className="font-semibold" style={{ color: '#ff9500' }}>Document truncated</span> — this PDF exceeded the analysis input limit. Sections near the end (typically Part 6–7) may not have been fully reviewed. Gaps there may be undercounted.</>
-              )}
-              {result.meta?.skipped_pages > 0 && (
-                <span className={result.meta?.truncated ? ' ' : ''}>
-                  {result.meta?.truncated ? ' ' : <><span className="font-semibold" style={{ color: '#ff9500' }}>Partial extraction</span> — </>}
-                  <strong>{result.meta.skipped_pages}</strong> page{result.meta.skipped_pages !== 1 ? 's' : ''} had no extractable text (likely scanned images) and were skipped.
-                </span>
-              )}
+              {result.meta?.truncated && <><span className="font-semibold" style={{ color: '#ff9500' }}>Document truncated</span> - this PDF exceeded the analysis input limit. Sections near the end may not have been fully reviewed.</>}
+              {result.meta?.skipped_pages > 0 && <span>{result.meta?.truncated ? ' ' : <><span className="font-semibold" style={{ color: '#ff9500' }}>Partial extraction</span> - </>}<strong>{result.meta.skipped_pages}</strong> page{result.meta.skipped_pages !== 1 ? 's' : ''} had no extractable text and were skipped.</span>}
             </p>
           </div>
         )}
 
-        {/* Orientation header */}
+        {/* Header */}
         {result.engagement_summary?.substance_name && (
           <div>
             <p className="text-text-dim text-xs uppercase tracking-widest font-semibold mb-1">Gap Analysis Report</p>
@@ -1508,64 +267,64 @@ export default function Evaluation() {
             <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-text-muted text-sm">
               {result.engagement_summary.notifier && <span>{result.engagement_summary.notifier}</span>}
               {result.engagement_summary.date_filed && (
-                <>
-                  <span className="text-text-dim">·</span>
-                  <span>Filed {new Date(result.engagement_summary.date_filed).toLocaleDateString('en-US', { year: 'numeric', month: 'short' })}</span>
-                </>
+                <><span className="text-text-dim">-</span><span>Filed {new Date(result.engagement_summary.date_filed).toLocaleDateString('en-US', { year: 'numeric', month: 'short' })}</span></>
               )}
               {result.engagement_summary.gras_basis && (
-                <>
-                  <span className="text-text-dim">·</span>
-                  <span className="capitalize">{result.engagement_summary.gras_basis.replace(/_/g, ' ')}</span>
-                </>
+                <><span className="text-text-dim">-</span><span className="capitalize">{result.engagement_summary.gras_basis.replace(/_/g, ' ')}</span></>
               )}
             </div>
           </div>
         )}
 
-        {/* Severity summary */}
+        {/* Save nudge */}
+        <SaveNudge result={result} />
+
+        {/* Summary paragraph */}
+        {summaryParagraph && (
+          <div className="rounded-xl px-5 py-4" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)' }}>
+            <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.65)' }}>{summaryParagraph}</p>
+          </div>
+        )}
+
+        {/* Gap summary card */}
         <div className="rounded-2xl border border-border bg-surface p-8">
-          <p className="text-xs font-semibold text-text-dim uppercase tracking-widest mb-5">Gap summary</p>
+          <div className="flex items-center justify-between mb-5">
+            <p className="text-xs font-semibold text-text-dim uppercase tracking-widest">Gap summary</p>
+            {healthScore !== null && (
+              <div className="flex items-baseline gap-1.5">
+                <span className="text-3xl font-black" style={{ color: healthScoreColor(healthScore), letterSpacing: '-0.03em' }}>{healthScore}</span>
+                <span className="text-xs font-semibold text-text-dim">/100</span>
+                <span className="text-xs text-text-dim ml-1">health</span>
+              </div>
+            )}
+          </div>
           <div className="flex flex-wrap gap-3 mb-6">
-            <div
-              className="flex items-center gap-2.5 px-4 py-3 rounded-xl border"
-              style={{ borderColor: 'rgba(255,64,64,0.35)', background: 'rgba(255,64,64,0.07)' }}
-            >
+            <div className="flex items-center gap-2.5 px-4 py-3 rounded-xl border" style={{ borderColor: 'rgba(255,64,64,0.35)', background: 'rgba(255,64,64,0.07)' }}>
               <AlertOctagon className="w-4 h-4" style={{ color: '#ff4040' }} />
               <span className="text-2xl font-bold" style={{ color: '#ff4040' }}>{counts.foundational || 0}</span>
               <span className="text-sm font-semibold" style={{ color: 'rgba(255,64,64,0.8)' }}>Critical</span>
             </div>
-            <div
-              className="flex items-center gap-2.5 px-4 py-3 rounded-xl border"
-              style={{ borderColor: 'rgba(255,149,0,0.35)', background: 'rgba(255,149,0,0.07)' }}
-            >
+            <div className="flex items-center gap-2.5 px-4 py-3 rounded-xl border" style={{ borderColor: 'rgba(255,149,0,0.35)', background: 'rgba(255,149,0,0.07)' }}>
               <AlertTriangle className="w-4 h-4" style={{ color: '#ff9500' }} />
               <span className="text-2xl font-bold" style={{ color: '#ff9500' }}>{counts.material || 0}</span>
               <span className="text-sm font-semibold" style={{ color: 'rgba(255,149,0,0.8)' }}>Moderate</span>
             </div>
-            <div
-              className="flex items-center gap-2.5 px-4 py-3 rounded-xl border"
-              style={{ borderColor: 'rgba(255,255,255,0.12)', background: 'rgba(255,255,255,0.04)' }}
-            >
+            <div className="flex items-center gap-2.5 px-4 py-3 rounded-xl border" style={{ borderColor: 'rgba(255,255,255,0.12)', background: 'rgba(255,255,255,0.04)' }}>
               <Minus className="w-4 h-4" style={{ color: '#888' }} />
               <span className="text-2xl font-bold" style={{ color: '#888' }}>{counts.documentation_issue || 0}</span>
               <span className="text-sm font-semibold" style={{ color: '#666' }}>Minor</span>
             </div>
           </div>
-          <p className="text-text-dim text-xs mb-4">
-            {totalIssues} issue{totalIssues !== 1 ? 's' : ''} across 8 regulatory domains
-          </p>
+          <p className="text-text-dim text-xs mb-4">{totalIssues} issue{totalIssues !== 1 ? 's' : ''} across 8 regulatory domains</p>
           <div className="flex items-start gap-2 rounded-xl px-3 py-2.5 mb-6" style={{ background: 'rgba(0,255,136,0.04)', border: '1px solid rgba(0,255,136,0.12)' }}>
             <span style={{ color: '#00ff88', fontSize: '0.6rem', marginTop: '0.2rem', flexShrink: 0 }}>●</span>
             <p className="text-xs leading-relaxed" style={{ color: 'rgba(255,255,255,0.45)' }}>
               Gap priority calibrated against{' '}
               <span style={{ color: 'rgba(255,255,255,0.7)' }}>714 approved + 158 withdrawn</span>{' '}
-              FDA GRAS notices. Allergenicity is the strongest empirical predictor of withdrawal (9.5% delta).
-              Genotoxicity and history of safe use show near-zero signal and are down-weighted accordingly.{' '}
-              <button
-                onClick={() => setActiveSection('benchmark')}
-                style={{ color: '#00ff88', textDecoration: 'underline', background: 'none', border: 'none', cursor: 'pointer', padding: 0, font: 'inherit' }}
-              >See methodology</button>
+              FDA GRAS notices. Allergenicity is the strongest empirical predictor of withdrawal (9.5% delta).{' '}
+              <button onClick={() => navigate('/evaluation/benchmark')} style={{ color: '#00ff88', textDecoration: 'underline', background: 'none', border: 'none', cursor: 'pointer', padding: 0, font: 'inherit' }}>
+                See methodology
+              </button>
             </p>
           </div>
 
@@ -1597,21 +356,16 @@ export default function Evaluation() {
                         <tr key={field} className="border-t" style={{ borderColor: 'rgba(255,255,255,0.05)' }}>
                           <td className="py-1.5 pr-4 text-text-muted">{FIELD_LABELS[field]}</td>
                           <td className="py-1.5 px-3 text-center">
-                            {isNA
-                              ? <span className="text-text-dim opacity-40">N/A</span>
-                              : yours
-                                ? <span className="font-bold" style={{ color: '#00ff88' }}>✓</span>
-                                : <span className="font-bold" style={{ color: '#ff4040' }}>✗</span>
-                            }
+                            {isNA ? <span className="text-text-dim opacity-40">N/A</span>
+                              : yours ? <span className="font-bold" style={{ color: '#00ff88' }}>✓</span>
+                              : <span className="font-bold" style={{ color: '#ff4040' }}>✗</span>}
                           </td>
                           {topNotices.map(n => {
                             const has = peerFields(n)[field]
                             return (
                               <td key={n.grn_number} className="py-1.5 px-3 text-center">
-                                {isNA
-                                  ? <span className="text-text-dim opacity-40">N/A</span>
-                                  : <span style={{ color: has ? '#00ff88' : '#ff4040', fontWeight: 'bold' }}>{has ? '✓' : '✗'}</span>
-                                }
+                                {isNA ? <span className="text-text-dim opacity-40">N/A</span>
+                                  : <span style={{ color: has ? '#00ff88' : '#ff4040', fontWeight: 'bold' }}>{has ? '✓' : '✗'}</span>}
                               </td>
                             )
                           })}
@@ -1637,8 +391,6 @@ export default function Evaluation() {
 
         {/* Section cards grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-
-          {/* Comparables */}
           {topNotices.length > 0 && (
             <OverviewCard
               icon={GitCompare}
@@ -1647,41 +399,28 @@ export default function Evaluation() {
               preview={(() => {
                 if (!topSimilar) return 'No similar filings found.'
                 const sim = topSimilar.best_distance != null ? `${Math.round((1 - topSimilar.best_distance) * 100)}% match` : ''
-                const name = topSimilar.substance_name || `GRN-${topSimilar.grn_number}`
-                return `Closest: ${name}${sim ? ' · ' + sim : ''}`
+                return `Closest: ${topSimilar.substance_name || `GRN-${topSimilar.grn_number}`}${sim ? ' - ' + sim : ''}`
               })()}
-              onClick={() => setActiveSection('comparables')}
+              onClick={() => navigate('/evaluation/comparables')}
             />
           )}
-
-          {/* Safety Signals */}
           <OverviewCard
             icon={ShieldAlert}
             title="Safety Signals"
             badge={signals.length > 0 ? `${signals.length} flagged` : 'None'}
-            preview={signals.length > 0
-              ? `${signals.length} concern${signals.length > 1 ? 's' : ''} flagged for expert review`
-              : 'No safety signals identified in this filing.'}
+            preview={signals.length > 0 ? `${signals.length} concern${signals.length > 1 ? 's' : ''} flagged for expert review` : 'No safety signals identified in this filing.'}
             accentBorder={signals.length > 0 ? '#fcd34d' : undefined}
-            onClick={() => setActiveSection('signals')}
+            onClick={() => navigate('/evaluation/signals')}
             disabled={signals.length === 0}
           />
-
-          {/* Gaps */}
           <OverviewCard
             icon={AlertOctagon}
             title="Identified Gaps"
             badge={`${allGaps.length} total`}
-            preview={[
-              counts.foundational && `${counts.foundational} critical`,
-              counts.material     && `${counts.material} moderate`,
-              counts.documentation_issue && `${counts.documentation_issue} minor`,
-            ].filter(Boolean).join(' · ') || 'No gaps identified.'}
-            onClick={() => setActiveSection('gaps')}
+            preview={[counts.foundational && `${counts.foundational} critical`, counts.material && `${counts.material} moderate`, counts.documentation_issue && `${counts.documentation_issue} minor`].filter(Boolean).join(' - ') || 'No gaps identified.'}
+            onClick={() => navigate('/evaluation/gaps')}
             disabled={allGaps.length === 0}
           />
-
-          {/* Benchmark */}
           {topNotices.length > 0 && (() => {
             const gfp = result.gap_field_presence || {}
             const presentCount = BENCHMARKABLE_FIELDS.filter(f => gfp[f]).length
@@ -1690,13 +429,11 @@ export default function Evaluation() {
                 icon={BarChart2}
                 title="Documentation Fields"
                 badge="7 key fields"
-                preview={`${presentCount} of ${BENCHMARKABLE_FIELDS.length} key fields present — see how you compare to similar filings`}
-                onClick={() => setActiveSection('benchmark')}
+                preview={`${presentCount} of ${BENCHMARKABLE_FIELDS.length} key fields present`}
+                onClick={() => navigate('/evaluation/benchmark')}
               />
             )
           })()}
-
-          {/* Next Steps */}
           {nextSteps.length > 0 && (() => {
             const highCount = nextSteps.filter(s => s.fda_pushback_probability === 'high').length
             return (
@@ -1704,47 +441,40 @@ export default function Evaluation() {
                 icon={ListChecks}
                 title="Recommended Next Steps"
                 badge={`${nextSteps.length} actions`}
-                preview={`${nextSteps.length} prioritized actions · ${highCount} high FDA pushback risk`}
-                onClick={() => setActiveSection('nextsteps')}
+                preview={`${nextSteps.length} prioritized actions - ${highCount} high FDA pushback risk`}
+                onClick={() => navigate('/evaluation/nextsteps')}
               />
             )
           })()}
-
-          {/* Relevant Research */}
           <OverviewCard
             icon={BookOpen}
             title="Relevant Research"
             badge="PubMed"
-            preview="Top 3 papers matched to this substance — real citations, Claude relevance summaries"
+            preview="Top 3 papers matched to this substance - real citations, Claude relevance summaries"
             accentBorder="rgba(0,200,255,0.3)"
-            onClick={openResearch}
+            onClick={() => navigate('/evaluation/research')}
           />
-
-          {/* Amendment Outline */}
           <OverviewCard
             icon={FilePlus2}
             title="Amendment Outline"
             badge=".docx download"
             preview="Section-by-section Word outline of what the supplemental filing must include to close every gap"
             accentBorder="rgba(160,120,255,0.3)"
-            onClick={() => setActiveSection('outline')}
+            onClick={() => navigate('/evaluation/outline')}
           />
-
-          {/* Filing Diff */}
           {result.comparative_analysis?.approved_notices?.length > 0 && (
             <OverviewCard
               icon={SplitSquareHorizontal}
               title="Filing Diff"
               badge={result.comparative_analysis.approved_notices[0] ? `vs GRN-${result.comparative_analysis.approved_notices[0].grn_number}` : 'Compare'}
-              preview="Side-by-side: your filing vs the closest approved GRN — exactly what they included that you did not"
+              preview="Side-by-side: your filing vs the closest approved GRN"
               accentBorder="rgba(0,180,255,0.3)"
-              onClick={() => { setDiffSidecar(null); setDiffError(null); setActiveSection('diff') }}
+              onClick={() => navigate('/evaluation/diff')}
             />
           )}
-
         </div>
 
-        {/* Narrative disclaimer */}
+        {/* Narrative */}
         {narrative && (
           <p className="text-text-dim text-xs leading-relaxed border-t border-border pt-6">
             <span className="font-semibold">Evaluation summary: </span>{narrative}
@@ -1753,32 +483,23 @@ export default function Evaluation() {
 
         {/* Actions */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-border">
-          <button
-            onClick={() => navigate('/')}
-            className="flex items-center gap-2 text-text-muted hover:text-text-base transition-colors text-sm font-medium"
-          >
+          <button onClick={() => navigate('/')} className="flex items-center gap-2 text-text-muted hover:text-text-base transition-colors text-sm font-medium">
             <ArrowLeft className="w-4 h-4" />
             Back to Submit
           </button>
           <div className="flex items-center gap-3">
-            <button
-              onClick={() => window.print()}
-              className="flex items-center gap-2 px-5 py-2.5 rounded-xl border border-border bg-surface hover:bg-surface-2 text-text-muted hover:text-text-base transition-colors text-sm font-medium"
-            >
+            <button onClick={() => window.print()} className="flex items-center gap-2 px-5 py-2.5 rounded-xl border border-border bg-surface hover:bg-surface-2 text-text-muted hover:text-text-base transition-colors text-sm font-medium">
               <Download className="w-4 h-4" />
               Export PDF
             </button>
-            <button
-              onClick={() => { reset(); navigate('/') }}
-              className="flex items-center gap-2 px-5 py-2.5 rounded-xl border border-border text-text-muted hover:text-text-base hover:border-border-strong transition-colors text-sm font-medium"
-            >
+            <button onClick={() => { reset(); navigate('/') }} className="flex items-center gap-2 px-5 py-2.5 rounded-xl border border-border text-text-muted hover:text-text-base hover:border-border-strong transition-colors text-sm font-medium">
               <RotateCcw className="w-4 h-4" />
               Start New Analysis
             </button>
           </div>
         </div>
-
       </main>
     </div>
   )
 }
+
