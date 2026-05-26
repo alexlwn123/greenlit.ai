@@ -279,26 +279,44 @@ export default function Evaluation() {
         {/* Save nudge */}
         <SaveNudge result={result} />
 
-        {/* Summary paragraph */}
-        {summaryParagraph && (
-          <div className="rounded-xl px-5 py-4" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)' }}>
-            <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.65)' }}>{summaryParagraph}</p>
-          </div>
-        )}
-
         {/* Gap summary card */}
         <div className="rounded-2xl border border-border bg-surface p-8">
-          <div className="flex items-center justify-between mb-5">
-            <p className="text-xs font-semibold text-text-dim uppercase tracking-widest">Gap summary</p>
-            {healthScore !== null && (
-              <div className="flex items-baseline gap-1.5">
-                <span className="text-3xl font-black" style={{ color: healthScoreColor(healthScore), letterSpacing: '-0.03em' }}>{healthScore}</span>
-                <span className="text-xs font-semibold text-text-dim">/100</span>
-                <span className="text-xs text-text-dim ml-1">health</span>
+          <p className="text-xs font-semibold text-text-dim uppercase tracking-widest mb-5">Gap summary</p>
+
+          {/* Health score bar */}
+          {healthScore !== null && (() => {
+            const col = healthScoreColor(healthScore)
+            const tier = healthScore >= 90 ? 'Submission-ready'
+              : healthScore >= 75 ? 'Nearly ready'
+              : healthScore >= 50 ? 'Needs work'
+              : 'Not ready'
+            const ticks = [{ pct: 50, label: 'Needs work' }, { pct: 75, label: 'Nearly ready' }, { pct: 90, label: 'Ready' }]
+            return (
+              <div style={{ marginBottom: '1.75rem' }}>
+                <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: '0.6rem' }}>
+                  <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.25rem' }}>
+                    <span style={{ fontSize: '2.25rem', fontWeight: 900, color: col, letterSpacing: '-0.04em', lineHeight: 1 }}>{healthScore}</span>
+                    <span style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.25)', marginLeft: '0.1rem' }}>/100</span>
+                  </div>
+                  <span style={{ fontSize: '0.72rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: col }}>{tier}</span>
+                </div>
+                <div style={{ position: 'relative', height: '6px', borderRadius: '3px', background: 'linear-gradient(to right, #ff4040 0%, #ff9500 38%, #ffcc00 60%, #00cc6a 78%, #00ff88 100%)', marginBottom: '0.5rem' }}>
+                  {ticks.map(t => (
+                    <div key={t.pct} style={{ position: 'absolute', left: `${t.pct}%`, top: 0, width: '1px', height: '100%', background: 'rgba(0,0,0,0.4)' }} />
+                  ))}
+                  <div style={{ position: 'absolute', left: `${healthScore}%`, top: '50%', transform: 'translate(-50%,-50%)', width: '13px', height: '13px', borderRadius: '50%', background: col, border: '2px solid #111', boxShadow: `0 0 8px ${col}88` }} />
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', paddingRight: '0' }}>
+                  <span style={{ fontSize: '0.6rem', color: '#ff4040', fontWeight: 600 }}>Not ready</span>
+                  <span style={{ fontSize: '0.6rem', color: '#ff9500', fontWeight: 600, position: 'relative', left: '-2%' }}>Needs work</span>
+                  <span style={{ fontSize: '0.6rem', color: '#00cc6a', fontWeight: 600 }}>Nearly ready</span>
+                  <span style={{ fontSize: '0.6rem', color: '#00ff88', fontWeight: 600 }}>Ready</span>
+                </div>
               </div>
-            )}
-          </div>
-          <div className="flex flex-wrap gap-3 mb-6">
+            )
+          })()}
+
+          <div className="flex flex-wrap gap-3 mb-4">
             <div className="flex items-center gap-2.5 px-4 py-3 rounded-xl border" style={{ borderColor: 'rgba(255,64,64,0.35)', background: 'rgba(255,64,64,0.07)' }}>
               <AlertOctagon className="w-4 h-4" style={{ color: '#ff4040' }} />
               <span className="text-2xl font-bold" style={{ color: '#ff4040' }}>{counts.foundational || 0}</span>
@@ -316,7 +334,7 @@ export default function Evaluation() {
             </div>
           </div>
           <p className="text-text-dim text-xs mb-4">{totalIssues} issue{totalIssues !== 1 ? 's' : ''} across 8 regulatory domains</p>
-          <div className="flex items-start gap-2 rounded-xl px-3 py-2.5 mb-6" style={{ background: 'rgba(0,255,136,0.04)', border: '1px solid rgba(0,255,136,0.12)' }}>
+          <div className="flex items-start gap-2 rounded-xl px-3 py-2.5 mb-5" style={{ background: 'rgba(0,255,136,0.04)', border: '1px solid rgba(0,255,136,0.12)' }}>
             <span style={{ color: '#00ff88', fontSize: '0.6rem', marginTop: '0.2rem', flexShrink: 0 }}>●</span>
             <p className="text-xs leading-relaxed" style={{ color: 'rgba(255,255,255,0.45)' }}>
               Gap priority calibrated against{' '}
@@ -328,64 +346,15 @@ export default function Evaluation() {
             </p>
           </div>
 
-          {(topNotices.length > 0 || result.gap_field_presence) && (
-            <div>
-              <p className="text-xs font-semibold text-text-dim uppercase tracking-widest mb-3">
-                Documentation completeness vs. {topNotices.length} most similar filings
-              </p>
-              <div className="overflow-x-auto">
-                <table className="w-full text-xs border-collapse">
-                  <thead>
-                    <tr>
-                      <th className="text-left text-text-dim font-medium pb-2 pr-4">Field</th>
-                      <th className="text-center text-text-dim font-medium pb-2 px-3 whitespace-nowrap">Yours</th>
-                      {topNotices.map(n => (
-                        <th key={n.grn_number} className="text-center font-semibold pb-2 px-3 whitespace-nowrap" style={{ color: n.status === 'withdrawn' ? '#ff9500' : '#00ff88' }}>
-                          GRN-{n.grn_number}
-                        </th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {BENCHMARKABLE_FIELDS.map(field => {
-                      const gfp = result.gap_field_presence || {}
-                      const yours = gfp[field]
-                      const applicable = { ...(result.benchmark?.applicable_fields || getApplicableFields(result.engagement_summary)), history_of_safe_use: true }
-                      const isNA = applicable[field] === false
-                      return (
-                        <tr key={field} className="border-t" style={{ borderColor: 'rgba(255,255,255,0.05)' }}>
-                          <td className="py-1.5 pr-4 text-text-muted">{FIELD_LABELS[field]}</td>
-                          <td className="py-1.5 px-3 text-center">
-                            {isNA ? <span className="text-text-dim opacity-40">N/A</span>
-                              : yours ? <span className="font-bold" style={{ color: '#00ff88' }}>✓</span>
-                              : <span className="font-bold" style={{ color: '#ff4040' }}>✗</span>}
-                          </td>
-                          {topNotices.map(n => {
-                            const has = peerFields(n)[field]
-                            return (
-                              <td key={n.grn_number} className="py-1.5 px-3 text-center">
-                                {isNA ? <span className="text-text-dim opacity-40">N/A</span>
-                                  : <span style={{ color: has ? '#00ff88' : '#ff4040', fontWeight: 'bold' }}>{has ? '✓' : '✗'}</span>}
-                              </td>
-                            )
-                          })}
-                        </tr>
-                      )
-                    })}
-                  </tbody>
-                </table>
-              </div>
-              {topNotices.length > 0 && (
-                <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1">
-                  {topNotices.map(n => (
-                    <span key={n.grn_number} className="text-xs text-text-dim">
-                      <span className="font-semibold" style={{ color: n.status === 'withdrawn' ? '#ff9500' : '#00ff88' }}>GRN-{n.grn_number}</span>
-                      {' '}{n.substance_name} ({n.status === 'withdrawn' ? 'withdrawn' : 'approved'})
-                    </span>
-                  ))}
-                </div>
-              )}
-            </div>
+          {summaryParagraph && (
+            <ul style={{ margin: 0, padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+              {summaryParagraph.split('\n').filter(l => l.trim()).map((line, i) => (
+                <li key={i} style={{ display: 'flex', gap: '0.6rem', alignItems: 'flex-start' }}>
+                  <span style={{ color: '#00ff88', fontSize: '0.55rem', marginTop: '0.35rem', flexShrink: 0 }}>●</span>
+                  <span style={{ fontSize: '0.82rem', lineHeight: 1.6, color: 'rgba(255,255,255,0.6)' }}>{line.replace(/^•\s*/, '')}</span>
+                </li>
+              ))}
+            </ul>
           )}
         </div>
 

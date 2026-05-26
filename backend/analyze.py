@@ -213,7 +213,7 @@ Return:
   }},
   "strengths_summary": [{{"domain": "string", "observation": "string", "section_reference": "string"}}],
   "recommended_next_steps": [{{"priority": "foundational|material|documentation_issue", "action": "string", "domain": "string", "gap_title": "string", "fda_pushback_probability": "high|medium|low", "pushback_reasoning": "1 sentence: the specific pattern FDA typically challenges on this issue, grounded in what is present or absent in this submission"}}],
-  "summary_paragraph": "string (2 sentences: what this filing covers and its overall readiness state -- written for a regulatory consultant, not a lawyer)",
+  "summary_paragraph": "string: 4-5 bullet points separated by \n, each starting with •. Do NOT include an introductory sentence about the substance. Cover: (1) foundational gaps by name and location; (2) material gaps; (3) any safety signals; (4) benchmark context vs approved/withdrawn notices; (5) overall readiness verdict. Be specific — name domains, cite part numbers, reference data. No hedging.",
   "limitations_and_caveats": "string"
 }}
 

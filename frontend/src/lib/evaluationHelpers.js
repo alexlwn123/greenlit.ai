@@ -136,13 +136,13 @@ export const FIELD_LABELS = {
 }
 
 export const EMPIRICAL_CALIBRATION = [
-  { field: 'allergenicity_assessment',  label: 'Allergenicity Assessment',  approved: 0.58, withdrawn: 0.49, delta: 0.095, signal: 'moderate' },
-  { field: 'dietary_exposure_estimate', label: 'Dietary Exposure Estimate',  approved: 0.86, withdrawn: 0.80, delta: 0.061, signal: 'weak'     },
-  { field: 'nutritional_impact',        label: 'Nutritional Impact',         approved: 0.24, withdrawn: 0.19, delta: 0.051, signal: 'weak'     },
-  { field: 'digestibility_data',        label: 'Digestibility Data',         approved: 0.16, withdrawn: 0.11, delta: 0.044, signal: 'weak'     },
-  { field: 'human_exposure_data',       label: 'Human Exposure Data',        approved: 0.29, withdrawn: 0.25, delta: 0.041, signal: 'weak'     },
-  { field: 'genotoxicity_battery',      label: 'Genotoxicity Battery',       approved: 0.35, withdrawn: 0.34, delta: 0.010, signal: 'none'     },
-  { field: 'history_of_safe_use',       label: 'History of Safe Use',        approved: 0.57, withdrawn: 0.57, delta: -0.001, signal: 'none'    },
+  { field: 'allergenicity_assessment',  label: 'Allergenicity Assessment',  approved: 0.58, withdrawn: 0.49, delta: 0.095, signal: 'strong' },
+  { field: 'dietary_exposure_estimate', label: 'Dietary Exposure Estimate',  approved: 0.86, withdrawn: 0.80, delta: 0.061, signal: 'moderate'     },
+  { field: 'nutritional_impact',        label: 'Nutritional Impact',         approved: 0.24, withdrawn: 0.19, delta: 0.051, signal: 'moderate'     },
+  { field: 'digestibility_data',        label: 'Digestibility Data',         approved: 0.16, withdrawn: 0.11, delta: 0.044, signal: 'moderate'     },
+  { field: 'human_exposure_data',       label: 'Human Exposure Data',        approved: 0.29, withdrawn: 0.25, delta: 0.041, signal: 'moderate'     },
+  { field: 'genotoxicity_battery',      label: 'Genotoxicity Battery',       approved: 0.35, withdrawn: 0.34, delta: 0.010, signal: 'weak'     },
+  { field: 'history_of_safe_use',       label: 'History of Safe Use',        approved: 0.57, withdrawn: 0.57, delta: -0.001, signal: 'weak'    },
 ]
 
 export function peerFields(notice) {
@@ -181,26 +181,26 @@ export function peerProxyPct(notice, applicable = null) {
   return total ? Math.round(missing / total * 100) : 0
 }
 
-export const SIGNAL_ORDER = { moderate: 0, weak: 1, none: 2 }
+export const SIGNAL_ORDER = { strong: 0, moderate: 1, weak: 2 }
 
 export function getEmpiricalSignal(gap) {
   const t = ((gap.title || '') + ' ' + (gap.observation || '')).toLowerCase()
   const domain = gap.domain || ''
 
   if (t.includes('allergenicit'))
-    return { signal: 'moderate', label: 'Moderate signal', delta: '+9.5%' }
+    return { signal: 'strong', label: 'Strong signal', delta: '+9.5%' }
   if (t.includes('dietary exposure') || t.includes('exposure estimate') || domain === 'dietary_exposure')
-    return { signal: 'weak', label: 'Weak signal', delta: '+6.1%' }
+    return { signal: 'moderate', label: 'Moderate signal', delta: '+6.1%' }
   if (t.includes('nutritional impact') || t.includes('nutritional_impact'))
-    return { signal: 'weak', label: 'Weak signal', delta: '+5.1%' }
+    return { signal: 'moderate', label: 'Moderate signal', delta: '+5.1%' }
   if (t.includes('digestibilit'))
-    return { signal: 'weak', label: 'Weak signal', delta: '+4.4%' }
+    return { signal: 'moderate', label: 'Moderate signal', delta: '+4.4%' }
   if (t.includes('human exposure') || t.includes('clinical trial') || t.includes('human clinical'))
-    return { signal: 'weak', label: 'Weak signal', delta: '+4.1%' }
+    return { signal: 'moderate', label: 'Moderate signal', delta: '+4.1%' }
   if (t.includes('genotoxicit') || t.includes('ames test') || t.includes('chromosomal'))
-    return { signal: 'none', label: 'No signal', delta: '+1.0%' }
+    return { signal: 'weak', label: 'Weak signal', delta: '+1.0%' }
   if (t.includes('history of safe use') || t.includes('safe use history'))
-    return { signal: 'none', label: 'No signal', delta: '-0.1%' }
+    return { signal: 'weak', label: 'Weak signal', delta: '-0.1%' }
 
   return null
 }

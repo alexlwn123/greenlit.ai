@@ -205,6 +205,8 @@
       },
     ],
   },
+  summary_paragraph: '• Two foundational gaps block submission: Part 5 has no quantitative dietary exposure estimate (mg/kg bw/day), and the Part 6 genotoxicity battery is incomplete — Ames test only, where ICH S2(R1) requires both a gene mutation assay and a chromosomal aberration or micronucleus test.\n• Three material gaps further weaken the safety case: the allergenicity bioinformatics pipeline is undescribed (no method, threshold, or database stated), impurity characterization covers a single lot only, and digestibility data uses a non-standard pepsin concentration.\n• Safety signal flagged: 34% sequence homology to a known tree nut allergen — requires expert allergenicity review before submission.\n• Benchmarked against 714 approved + 158 withdrawn notices, this filing sits in the lower third for documentation completeness, most similar in profile to withdrawn GRN-0312.\n• Substantive remediation across dietary exposure, genotoxicity, and allergenicity is required before this notice is ready for FDA review.',
+  health_score: 62,
   limitations_and_caveats: 'This analysis is AI-generated and should be reviewed by a qualified regulatory professional before use. Gap identification is based on pattern matching against ~950 historical GRAS notices and may not capture all FDA-specific expectations for this particular substance class. Safety signals are flagged for human review and do not constitute a legal or scientific determination.',
   meta: { truncated: false, skipped_pages: 0 },
 }
