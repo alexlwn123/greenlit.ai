@@ -259,7 +259,7 @@ function BenchmarkSection({ result, topNotices, onBack }) {
           <div className="overflow-x-auto">
             <table className="w-full text-xs border-collapse">
               <thead>
-                <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
+                <tr style={{ borderBottom: '1px solid var(--glass-8)' }}>
                   <th className="text-left text-text-dim font-medium py-2 pr-4">Field</th>
                   <th className="text-right text-text-dim font-medium py-2 px-3">Approved</th>
                   <th className="text-right text-text-dim font-medium py-2 px-3">Withdrawn</th>
@@ -269,16 +269,16 @@ function BenchmarkSection({ result, topNotices, onBack }) {
               </thead>
               <tbody>
                 {EMPIRICAL_CALIBRATION.map(row => (
-                  <tr key={row.field} style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
+                  <tr key={row.field} style={{ borderBottom: '1px solid var(--glass-4)' }}>
                     <td className="py-2 pr-4 text-text-muted">{row.label}</td>
                     <td className="py-2 px-3 text-right text-text-base font-mono">{Math.round(row.approved * 100)}%</td>
                     <td className="py-2 px-3 text-right font-mono" style={{ color: '#ff9500' }}>{Math.round(row.withdrawn * 100)}%</td>
-                    <td className="py-2 px-3 text-right font-mono font-semibold" style={{ color: row.signal === 'moderate' ? '#00ff88' : row.signal === 'weak' ? 'rgba(255,255,255,0.5)' : 'rgba(255,255,255,0.25)' }}>
+                    <td className="py-2 px-3 text-right font-mono font-semibold" style={{ color: row.signal === 'moderate' ? '#00ff88' : row.signal === 'weak' ? 'rgba(255,255,255,0.5)' : 'var(--glass-25)' }}>
                       {row.delta >= 0 ? '+' : ''}{Math.round(row.delta * 100)}%
                     </td>
                     <td className="py-2 pl-4">
                       {row.signal === 'moderate' && <span className="px-2 py-0.5 rounded-full text-xs font-semibold" style={{ background: 'rgba(0,255,136,0.1)', color: '#00ff88', border: '1px solid rgba(0,255,136,0.25)' }}>Moderate</span>}
-                      {row.signal === 'weak' && <span className="px-2 py-0.5 rounded-full text-xs font-semibold" style={{ background: 'rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.4)', border: '1px solid rgba(255,255,255,0.1)' }}>Weak</span>}
+                      {row.signal === 'weak' && <span className="px-2 py-0.5 rounded-full text-xs font-semibold" style={{ background: 'var(--glass-5)', color: 'var(--glass-45)', border: '1px solid var(--glass-10)' }}>Weak</span>}
                       {row.signal === 'none' && <span className="px-2 py-0.5 rounded-full text-xs font-semibold" style={{ background: 'rgba(255,64,64,0.06)', color: 'rgba(255,64,64,0.5)', border: '1px solid rgba(255,64,64,0.15)' }}>None</span>}
                     </td>
                   </tr>
@@ -288,7 +288,7 @@ function BenchmarkSection({ result, topNotices, onBack }) {
           </div>
           <p className="text-text-dim text-xs mt-3 italic">Note: "withdrawn" includes voluntary company withdrawals, which dilutes the signal.</p>
         </div>
-        <p className="text-text-dim text-xs mt-5 leading-relaxed" style={{ borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: '1rem' }}>
+        <p className="text-text-dim text-xs mt-5 leading-relaxed" style={{ borderTop: '1px solid var(--glass-6)', paddingTop: '1rem' }}>
           <span className="font-semibold text-text-muted">Note:</span> Peer filing columns are derived from pipeline metadata, not a full text scan.
         </p>
       </main>
@@ -381,8 +381,8 @@ function NextStepsSection({ nextSteps, onBack }) {
                   {step.pushback_reasoning && <p className="text-text-muted text-sm leading-relaxed mb-3 italic">{step.pushback_reasoning}</p>}
                   <p className="text-text-muted text-sm leading-relaxed mb-3">{step.action}</p>
                   <div className="flex flex-wrap items-center gap-2 mt-2 mb-2">
-                    <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold border" style={{ background: 'rgba(255,255,255,0.04)', borderColor: 'rgba(255,255,255,0.1)', color: '#a0a0a0' }}>{rem.cost}</span>
-                    <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold border" style={{ background: 'rgba(255,255,255,0.04)', borderColor: 'rgba(255,255,255,0.1)', color: '#a0a0a0' }}>{rem.timeline}</span>
+                    <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold border" style={{ background: 'var(--glass-4)', borderColor: 'var(--glass-10)', color: '#a0a0a0' }}>{rem.cost}</span>
+                    <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold border" style={{ background: 'var(--glass-4)', borderColor: 'var(--glass-10)', color: '#a0a0a0' }}>{rem.timeline}</span>
                     <span className="text-xs text-text-dim italic truncate">{rem.study}</span>
                   </div>
                   {ref && (
@@ -531,25 +531,25 @@ function DiffSection({ result, onBack }) {
         {error && <p className="text-critical text-sm">{error}</p>}
         {diffSidecar && (
           <div className="flex flex-col gap-6">
-            <div className="rounded-xl border overflow-hidden" style={{ borderColor: 'rgba(255,255,255,0.08)' }}>
-              <div className="grid text-xs" style={{ gridTemplateColumns: '1fr 1fr 1fr', borderBottom: '1px solid rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.03)' }}>
+            <div className="rounded-xl border overflow-hidden" style={{ borderColor: 'var(--glass-8)' }}>
+              <div className="grid text-xs" style={{ gridTemplateColumns: '1fr 1fr 1fr', borderBottom: '1px solid var(--glass-8)', background: 'var(--glass-3)' }}>
                 <div className="px-4 py-2.5 text-text-dim font-semibold uppercase tracking-wider">Field</div>
-                <div className="px-4 py-2.5 text-text-dim font-semibold uppercase tracking-wider border-l" style={{ borderColor: 'rgba(255,255,255,0.06)' }}>Your Filing</div>
-                <div className="px-4 py-2.5 font-semibold uppercase tracking-wider border-l text-accent" style={{ borderColor: 'rgba(255,255,255,0.06)' }}>GRN-{topApproved.grn_number}</div>
+                <div className="px-4 py-2.5 text-text-dim font-semibold uppercase tracking-wider border-l" style={{ borderColor: 'var(--glass-6)' }}>Your Filing</div>
+                <div className="px-4 py-2.5 font-semibold uppercase tracking-wider border-l text-accent" style={{ borderColor: 'var(--glass-6)' }}>GRN-{topApproved.grn_number}</div>
               </div>
               {metaRows.map((row, idx) => (
-                <div key={row.label} className="grid text-xs" style={{ gridTemplateColumns: '1fr 1fr 1fr', borderTop: idx > 0 ? '1px solid rgba(255,255,255,0.05)' : 'none' }}>
+                <div key={row.label} className="grid text-xs" style={{ gridTemplateColumns: '1fr 1fr 1fr', borderTop: idx > 0 ? '1px solid var(--glass-5)' : 'none' }}>
                   <div className="px-4 py-3 text-text-muted">{row.label}</div>
-                  <div className="px-4 py-3 border-l flex items-center" style={{ borderColor: 'rgba(255,255,255,0.06)' }}><DiffCell value={row.yours} /></div>
-                  <div className="px-4 py-3 border-l flex items-center" style={{ borderColor: 'rgba(255,255,255,0.06)' }}><DiffCell value={row.peer} /></div>
+                  <div className="px-4 py-3 border-l flex items-center" style={{ borderColor: 'var(--glass-6)' }}><DiffCell value={row.yours} /></div>
+                  <div className="px-4 py-3 border-l flex items-center" style={{ borderColor: 'var(--glass-6)' }}><DiffCell value={row.peer} /></div>
                 </div>
               ))}
             </div>
-            <div className="rounded-xl border overflow-hidden" style={{ borderColor: 'rgba(255,255,255,0.08)' }}>
-              <div className="grid text-xs" style={{ gridTemplateColumns: '1fr 7rem 7rem', borderBottom: '1px solid rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.03)' }}>
+            <div className="rounded-xl border overflow-hidden" style={{ borderColor: 'var(--glass-8)' }}>
+              <div className="grid text-xs" style={{ gridTemplateColumns: '1fr 7rem 7rem', borderBottom: '1px solid var(--glass-8)', background: 'var(--glass-3)' }}>
                 <div className="px-4 py-2.5 text-text-dim font-semibold uppercase tracking-wider">Study / Data Type</div>
-                <div className="px-4 py-2.5 text-text-dim font-semibold uppercase tracking-wider text-center border-l" style={{ borderColor: 'rgba(255,255,255,0.06)' }}>Your Filing</div>
-                <div className="px-4 py-2.5 font-semibold uppercase tracking-wider text-center border-l text-accent" style={{ borderColor: 'rgba(255,255,255,0.06)' }}>GRN-{topApproved.grn_number}</div>
+                <div className="px-4 py-2.5 text-text-dim font-semibold uppercase tracking-wider text-center border-l" style={{ borderColor: 'var(--glass-6)' }}>Your Filing</div>
+                <div className="px-4 py-2.5 font-semibold uppercase tracking-wider text-center border-l text-accent" style={{ borderColor: 'var(--glass-6)' }}>GRN-{topApproved.grn_number}</div>
               </div>
               <div>
                 {allTests.map((test) => {
@@ -566,12 +566,12 @@ function DiffSection({ result, onBack }) {
                   })()
                   const missing = peerHas && yoursVal === false
                   return (
-                    <div key={test} className="grid text-xs" style={{ gridTemplateColumns: '1fr 7rem 7rem', borderTop: '1px solid rgba(255,255,255,0.05)', background: missing ? 'rgba(255,64,64,0.04)' : undefined }}>
+                    <div key={test} className="grid text-xs" style={{ gridTemplateColumns: '1fr 7rem 7rem', borderTop: '1px solid var(--glass-5)', background: missing ? 'rgba(255,64,64,0.04)' : undefined }}>
                       <div className="px-4 py-3 text-text-muted">{SAFETY_TEST_LABELS[test]}</div>
-                      <div className="px-4 py-3 text-center border-l flex items-center justify-center" style={{ borderColor: 'rgba(255,255,255,0.06)' }}>
+                      <div className="px-4 py-3 text-center border-l flex items-center justify-center" style={{ borderColor: 'var(--glass-6)' }}>
                         {yoursVal === null ? <span className="text-text-dim">?</span> : yoursVal ? <span className="font-bold text-accent">✓</span> : <span className="font-bold text-critical">✗</span>}
                       </div>
-                      <div className="px-4 py-3 text-center border-l flex items-center justify-center" style={{ borderColor: 'rgba(255,255,255,0.06)' }}>
+                      <div className="px-4 py-3 text-center border-l flex items-center justify-center" style={{ borderColor: 'var(--glass-6)' }}>
                         <span className={`font-bold ${peerHas ? 'text-accent' : 'text-critical'}`}>{peerHas ? '✓' : '✗'}</span>
                       </div>
                     </div>

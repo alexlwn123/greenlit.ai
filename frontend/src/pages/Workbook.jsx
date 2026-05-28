@@ -9,7 +9,7 @@ import { supabaseEnabled } from '../lib/supabase'
 import AuthModal from '../components/AuthModal'
 
 const STATUSES = [
-  { key: 'draft',      label: 'Draft',           color: '#888',    bg: 'rgba(255,255,255,0.06)', border: 'rgba(255,255,255,0.15)' },
+  { key: 'draft',      label: 'Draft',           color: '#888',    bg: 'var(--glass-6)', border: 'var(--glass-15)' },
   { key: 'in_review',  label: 'In Review',        color: '#ff9500', bg: 'rgba(255,149,0,0.08)',  border: 'rgba(255,149,0,0.35)'   },
   { key: 'ready',      label: 'Ready to Submit',  color: '#00cc6a', bg: 'rgba(0,204,106,0.08)',  border: 'rgba(0,204,106,0.35)'   },
   { key: 'submitted',  label: 'Submitted',         color: '#00b4ff', bg: 'rgba(0,180,255,0.08)',  border: 'rgba(0,180,255,0.35)'   },
@@ -78,7 +78,7 @@ export default function Workbook() {
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '0.35rem' }}>
               <BookMarked size={18} style={{ color: '#888' }} />
-              <h1 style={{ margin: 0, fontSize: '1.25rem', fontWeight: 700, color: '#f0f0f0' }}>Workbook</h1>
+              <h1 style={{ margin: 0, fontSize: '1.25rem', fontWeight: 700, color: 'var(--color-text-base)' }}>Workbook</h1>
             </div>
             <p style={{ margin: 0, fontSize: '0.82rem', color: '#555', fontFamily: 'var(--font-mono)' }}>{substanceName}</p>
           </div>
@@ -102,7 +102,7 @@ export default function Workbook() {
                       <button
                         key={s.key}
                         onClick={() => handleStatusClick(s.key)}
-                        style={{ padding: '0.4rem 1rem', borderRadius: '2rem', border: `1px solid ${active ? s.border : 'rgba(255,255,255,0.1)'}`, background: active ? s.bg : 'transparent', color: active ? s.color : '#555', fontSize: '0.8rem', fontWeight: active ? 700 : 500, cursor: 'pointer', transition: 'all 0.15s' }}
+                        style={{ padding: '0.4rem 1rem', borderRadius: '2rem', border: `1px solid ${active ? s.border : 'var(--glass-10)'}`, background: active ? s.bg : 'transparent', color: active ? s.color : '#555', fontSize: '0.8rem', fontWeight: active ? 700 : 500, cursor: 'pointer', transition: 'all 0.15s' }}
                       >{s.label}</button>
                     )
                   })}
@@ -112,7 +112,7 @@ export default function Workbook() {
               <div>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
                   <p style={{ margin: 0, fontSize: '0.7rem', fontWeight: 700, color: '#555', textTransform: 'uppercase', letterSpacing: '0.07em' }}>General Notes</p>
-                  <span style={{ fontSize: '0.7rem', color: '#3a3a3a' }}>
+                  <span style={{ fontSize: '0.7rem', color: 'var(--color-text-dim)' }}>
                     {saving ? 'Saving…' : savedAt ? `Saved ${savedAt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}` : null}
                   </span>
                 </div>
@@ -121,16 +121,16 @@ export default function Workbook() {
                   onChange={handleGeneralChange}
                   placeholder="Overall notes, action items, decisions, open questions…"
                   rows={8}
-                  style={{ width: '100%', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '0.75rem', color: '#e0e0e0', fontSize: '0.875rem', padding: '0.875rem 1rem', resize: 'vertical', outline: 'none', boxSizing: 'border-box', fontFamily: 'inherit', lineHeight: 1.6 }}
-                  onFocus={e => e.target.style.borderColor = 'rgba(255,255,255,0.18)'}
-                  onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,0.08)'}
+                  style={{ width: '100%', background: 'var(--glass-3)', border: '1px solid var(--glass-8)', borderRadius: '0.75rem', color: 'var(--color-text-base)', fontSize: '0.875rem', padding: '0.875rem 1rem', resize: 'vertical', outline: 'none', boxSizing: 'border-box', fontFamily: 'inherit', lineHeight: 1.6 }}
+                  onFocus={e => e.target.style.borderColor = 'var(--glass-18)'}
+                  onBlur={e => e.target.style.borderColor = 'var(--glass-8)'}
                 />
               </div>
 
               <div>
                 <p style={{ margin: '0 0 0.75rem', fontSize: '0.7rem', fontWeight: 700, color: '#555', textTransform: 'uppercase', letterSpacing: '0.07em' }}>Section Notes</p>
                 {sectionNotes.length === 0 ? (
-                  <p style={{ fontSize: '0.82rem', color: '#3a3a3a', fontStyle: 'italic' }}>
+                  <p style={{ fontSize: '0.82rem', color: 'var(--color-text-dim)', fontStyle: 'italic' }}>
                     Open any section and click &ldquo;Add note&rdquo; to annotate it here.
                   </p>
                 ) : (
@@ -142,7 +142,7 @@ export default function Workbook() {
                 )}
               </div>
 
-              <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: '1.5rem' }}>
+              <div style={{ borderTop: '1px solid var(--glass-6)', paddingTop: '1.5rem' }}>
                 <button
                   onClick={() => navigate('/history')}
                   style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'none', border: 'none', cursor: 'pointer', color: '#444', fontSize: '0.8rem', padding: 0 }}
@@ -165,9 +165,9 @@ function SectionNoteRow({ label, note, onClick }) {
   return (
     <button
       onClick={onClick}
-      style={{ textAlign: 'left', padding: '0.875rem 1rem', borderRadius: '0.75rem', border: '1px solid rgba(255,255,255,0.07)', background: 'rgba(255,255,255,0.02)', cursor: 'pointer', transition: 'background 0.15s', width: '100%' }}
-      onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.05)'}
-      onMouseLeave={e => e.currentTarget.style.background = 'rgba(255,255,255,0.02)'}
+      style={{ textAlign: 'left', padding: '0.875rem 1rem', borderRadius: '0.75rem', border: '1px solid var(--glass-7)', background: 'var(--glass-2)', cursor: 'pointer', transition: 'background 0.15s', width: '100%' }}
+      onMouseEnter={e => e.currentTarget.style.background = 'var(--glass-5)'}
+      onMouseLeave={e => e.currentTarget.style.background = 'var(--glass-2)'}
     >
       <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.3rem' }}>
         <Notebook size={11} style={{ color: '#00cc6a', flexShrink: 0 }} />

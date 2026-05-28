@@ -57,7 +57,7 @@ function SaveNudge({ result }) {
 
   if (user) {
     return (
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.75rem', padding: '0.75rem 1rem', borderRadius: '0.75rem', border: '1px solid rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.02)' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.75rem', padding: '0.75rem 1rem', borderRadius: '0.75rem', border: '1px solid var(--glass-8)', background: 'var(--glass-2)' }}>
         <p style={{ margin: 0, fontSize: '0.82rem', color: '#888' }}>Save this analysis to your account to access it later.</p>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '0.25rem' }}>
           <button
@@ -75,7 +75,7 @@ function SaveNudge({ result }) {
     <>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.75rem', padding: '0.75rem 1rem', borderRadius: '0.75rem', border: '1px solid rgba(0,204,106,0.15)', background: 'rgba(0,204,106,0.03)' }}>
         <div>
-          <p style={{ margin: 0, fontSize: '0.82rem', fontWeight: 600, color: '#ccc' }}>Save this analysis</p>
+          <p style={{ margin: 0, fontSize: '0.82rem', fontWeight: 600, color: 'var(--color-text-muted)' }}>Save this analysis</p>
           <p style={{ margin: '0.15rem 0 0', fontSize: '0.75rem', color: '#666' }}>Sign in to save, annotate, and return to this report.</p>
         </div>
         <button
@@ -225,10 +225,10 @@ function ScrollHint() {
       }}
     >
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.2rem' }}>
-        <div style={{ width: '1px', height: '18px', background: 'rgba(255,255,255,0.25)', position: 'relative', overflow: 'hidden', borderRadius: '1px' }}>
-          <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', background: 'rgba(255,255,255,0.6)', borderRadius: '1px', animation: 'scrollDrop 1.4s ease-in-out infinite', height: '8px' }} />
+        <div style={{ width: '1px', height: '18px', background: 'var(--glass-25)', position: 'relative', overflow: 'hidden', borderRadius: '1px' }}>
+          <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', background: 'var(--glass-60)', borderRadius: '1px', animation: 'scrollDrop 1.4s ease-in-out infinite', height: '8px' }} />
         </div>
-        <span style={{ fontSize: '0.65rem', color: 'rgba(255,255,255,0.3)', letterSpacing: '0.06em', textTransform: 'uppercase' }}>scroll</span>
+        <span style={{ fontSize: '0.65rem', color: 'var(--glass-30)', letterSpacing: '0.06em', textTransform: 'uppercase' }}>scroll</span>
       </div>
     </div>
   )
@@ -341,7 +341,7 @@ export default function Evaluation() {
                 <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: '0.6rem' }}>
                   <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.25rem' }}>
                     <span style={{ fontSize: '2.25rem', fontWeight: 900, color: col, letterSpacing: '-0.04em', lineHeight: 1 }}>{healthScore}</span>
-                    <span style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.25)', marginLeft: '0.1rem' }}>/100</span>
+                    <span style={{ fontSize: '0.7rem', color: 'var(--glass-25)', marginLeft: '0.1rem' }}>/100</span>
                   </div>
                   <span style={{ fontSize: '0.72rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: col }}>{tier}</span>
                 </div>
@@ -372,7 +372,7 @@ export default function Evaluation() {
               <span className="text-2xl font-bold" style={{ color: '#ff9500' }}>{counts.material || 0}</span>
               <span className="text-sm font-semibold" style={{ color: 'rgba(255,149,0,0.8)' }}>Moderate</span>
             </div>
-            <div className="flex items-center gap-2.5 px-4 py-3 rounded-xl border" style={{ borderColor: 'rgba(255,255,255,0.12)', background: 'rgba(255,255,255,0.04)' }}>
+            <div className="flex items-center gap-2.5 px-4 py-3 rounded-xl border" style={{ borderColor: 'var(--glass-12)', background: 'var(--glass-4)' }}>
               <Minus className="w-4 h-4" style={{ color: '#888' }} />
               <span className="text-2xl font-bold" style={{ color: '#888' }}>{counts.documentation_issue || 0}</span>
               <span className="text-sm font-semibold" style={{ color: '#666' }}>Minor</span>
@@ -381,9 +381,9 @@ export default function Evaluation() {
           <p className="text-text-dim text-xs mb-4">{totalIssues} issue{totalIssues !== 1 ? 's' : ''} across 8 regulatory domains</p>
           <div className="flex items-start gap-2 rounded-xl px-3 py-2.5 mb-5" style={{ background: 'rgba(0,255,136,0.04)', border: '1px solid rgba(0,255,136,0.12)' }}>
             <span style={{ color: '#00ff88', fontSize: '0.6rem', marginTop: '0.2rem', flexShrink: 0 }}>●</span>
-            <p className="text-xs leading-relaxed" style={{ color: 'rgba(255,255,255,0.45)' }}>
+            <p className="text-xs leading-relaxed" style={{ color: 'var(--glass-45)' }}>
               Gap priority calibrated against{' '}
-              <span style={{ color: 'rgba(255,255,255,0.7)' }}>714 approved + 158 withdrawn</span>{' '}
+              <span style={{ color: 'var(--glass-70)' }}>714 approved + 158 withdrawn</span>{' '}
               FDA GRAS notices. Allergenicity is the strongest empirical predictor of withdrawal (9.5% delta).{' '}
               <button onClick={() => navigate('/evaluation/benchmark')} style={{ color: '#00ff88', textDecoration: 'underline', background: 'none', border: 'none', cursor: 'pointer', padding: 0, font: 'inherit' }}>
                 See methodology
@@ -396,7 +396,7 @@ export default function Evaluation() {
               {summaryParagraph.split('\n').filter(l => l.trim()).map((line, i) => (
                 <li key={i} style={{ display: 'flex', gap: '0.6rem', alignItems: 'flex-start' }}>
                   <span style={{ color: '#00ff88', fontSize: '0.55rem', marginTop: '0.35rem', flexShrink: 0 }}>●</span>
-                  <span style={{ fontSize: '0.82rem', lineHeight: 1.6, color: 'rgba(255,255,255,0.6)' }}>{line.replace(/^•\s*/, '')}</span>
+                  <span style={{ fontSize: '0.82rem', lineHeight: 1.6, color: 'var(--glass-60)' }}>{line.replace(/^•\s*/, '')}</span>
                 </li>
               ))}
             </ul>

@@ -43,7 +43,7 @@ export function EmpiricalSignalBadge({ signal }) {
   const config = {
     moderate: { label: 'Moderate signal', bg: 'rgba(0,255,136,0.08)', color: '#00ff88', border: 'rgba(0,255,136,0.25)' },
     weak:     { label: 'Weak signal',     bg: 'rgba(255,149,0,0.08)', color: '#ff9500', border: 'rgba(255,149,0,0.25)' },
-    none:     { label: 'No signal',       bg: 'rgba(255,255,255,0.03)', color: 'rgba(255,255,255,0.3)', border: 'rgba(255,255,255,0.1)' },
+    none:     { label: 'No signal',       bg: 'var(--glass-3)', color: 'var(--glass-30)', border: 'var(--glass-10)' },
   }[signal.signal]
   if (!config) return null
   return (
@@ -111,11 +111,11 @@ export function GapCard({ gap, compGap, substanceName, fallbackRef }) {
             return rem ? (
               <div className="flex flex-wrap items-center gap-2 mb-3">
                 <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold border"
-                  style={{ background: 'rgba(255,255,255,0.04)', borderColor: 'rgba(255,255,255,0.1)', color: '#a0a0a0' }}>
+                  style={{ background: 'var(--glass-4)', borderColor: 'var(--glass-10)', color: '#a0a0a0' }}>
                   {rem.cost}
                 </span>
                 <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold border"
-                  style={{ background: 'rgba(255,255,255,0.04)', borderColor: 'rgba(255,255,255,0.1)', color: '#a0a0a0' }}>
+                  style={{ background: 'var(--glass-4)', borderColor: 'var(--glass-10)', color: '#a0a0a0' }}>
                   {rem.timeline}
                 </span>
                 <span className="text-xs text-text-dim italic truncate">{rem.study}</span>
@@ -131,7 +131,7 @@ export function GapCard({ gap, compGap, substanceName, fallbackRef }) {
                   <span className="text-xs font-bold tracking-wide uppercase" style={{ color: '#c89b00' }}>FDA would ask</span>
                 </div>
                 <div className="px-3 py-2.5">
-                  <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.8)', fontStyle: 'italic' }}>
+                  <p className="text-sm leading-relaxed" style={{ color: 'var(--glass-80)', fontStyle: 'italic' }}>
                     &ldquo;{fda.question}&rdquo;
                   </p>
                   <p className="text-xs mt-2" style={{ color: 'rgba(255,180,0,0.6)' }}>{fda.note}</p>
@@ -259,7 +259,7 @@ export function SignalCard({ signal }) {
             </p>
           )}
           {signal.recommended_action && (
-            <div className="rounded-lg p-3" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,149,0,0.2)' }}>
+            <div className="rounded-lg p-3" style={{ background: 'var(--glass-4)', border: '1px solid rgba(255,149,0,0.2)' }}>
               <p className="text-xs font-semibold mb-1" style={{ color: '#ff9500' }}>Recommended action</p>
               <p className="text-xs text-text-muted leading-relaxed">{signal.recommended_action}</p>
             </div>

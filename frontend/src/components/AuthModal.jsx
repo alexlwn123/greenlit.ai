@@ -1,50 +1,7 @@
-﻿import { useEffect, useRef, useState } from 'react'
-import { X, Mail, Lock, Loader2 } from 'lucide-react'
-import { supabase } from '../lib/supabase'
-
-const INPUT = {
-  width: '100%',
-  padding: '0.65rem 0.875rem',
-  borderRadius: '0.625rem',
-  border: '1px solid rgba(255,255,255,0.12)',
-  background: 'rgba(255,255,255,0.04)',
-  color: '#f0f0f0',
-  fontSize: '0.875rem',
-  outline: 'none',
-  boxSizing: 'border-box',
-}
-
-const BTN_PRIMARY = {
-  width: '100%',
-  padding: '0.7rem',
-  borderRadius: '0.625rem',
-  border: 'none',
-  background: '#00cc6a',
-  color: '#000',
-  fontWeight: 700,
-  fontSize: '0.875rem',
-  cursor: 'pointer',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  gap: '0.5rem',
-}
-
-const BTN_GOOGLE = {
-  width: '100%',
-  padding: '0.7rem',
-  borderRadius: '0.625rem',
-  border: '1px solid rgba(255,255,255,0.15)',
-  background: 'rgba(255,255,255,0.05)',
-  color: '#e0e0e0',
-  fontWeight: 600,
-  fontSize: '0.875rem',
-  cursor: 'pointer',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  gap: '0.625rem',
-}
+﻿import { useEffect, useRef, useState } from "react"
+import { X, Mail, Lock, Loader2 } from "lucide-react"
+import { supabase } from "../lib/supabase"
+import { useTheme } from "../context/ThemeContext"
 
 function GoogleIcon() {
   return (
@@ -57,51 +14,73 @@ function GoogleIcon() {
   )
 }
 
-export default function AuthModal({ onClose, defaultTab = 'signin' }) {
+export default function AuthModal({ onClose, defaultTab = "signin" }) {
+  const { theme } = useTheme()
+  const isDark = theme === "dark"
   const [tab, setTab] = useState(defaultTab)
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
-  const [error, setError] = useState('')
-  const [message, setMessage] = useState('')
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("")
+  const [error, setError] = useState("")
+  const [message, setMessage] = useState("")
   const [loading, setLoading] = useState(false)
   const overlayRef = useRef(null)
 
+  const panelBg = isDark ? "#0e0e0e" : "#ffffff"
+  const panelBorder = isDark ? "rgba(255,255,255,0.1)" : "#dddddd"
+  const textBase = isDark ? "#f0f0f0" : "#111111"
+  const textMuted = isDark ? "#aaaaaa" : "#666666"
+  const textDim = isDark ? "#666666" : "#aaaaaa"
+  const inputBg = isDark ? "rgba(255,255,255,0.04)" : "#f5f5f5"
+  const inputBorder = isDark ? "rgba(255,255,255,0.12)" : "#dddddd"
+  const inputBorderFocus = isDark ? "#00cc6a" : "#007a44"
+  const googleBg = isDark ? "rgba(255,255,255,0.05)" : "#f5f5f5"
+  const googleBorder = isDark ? "rgba(255,255,255,0.15)" : "#dddddd"
+  const googleText = isDark ? "#e0e0e0" : "#333333"
+  const tabSwitcherBg = isDark ? "rgba(255,255,255,0.05)" : "#f0f0f0"
+  const tabActiveBg = isDark ? "rgba(255,255,255,0.1)" : "#ffffff"
+  const tabActiveText = isDark ? "#f0f0f0" : "#111111"
+  const divider = isDark ? "rgba(255,255,255,0.08)" : "#eeeeee"
+
+  const INPUT = {
+    width: "100%",
+    padding: "0.65rem 0.875rem",
+    borderRadius: "0.625rem",
+    border: `1px solid ${inputBorder}`,
+    background: inputBg,
+    color: textBase,
+    fontSize: "0.875rem",
+    outline: "none",
+    boxSizing: "border-box",
+  }
+
   useEffect(() => {
-    function onKey(e) { if (e.key === 'Escape') onClose() }
-    document.addEventListener('keydown', onKey)
-    return () => document.removeEventListener('keydown', onKey)
+    function onKey(e) { if (e.key === "Escape") onClose() }
+    document.addEventListener("keydown", onKey)
+    return () => document.removeEventListener("keydown", onKey)
   }, [onClose])
 
-  function switchTab(t) { setTab(t); setError(''); setMessage('') }
+  function switchTab(t) { setTab(t); setError(""); setMessage("") }
 
   async function handleSubmit(e) {
     e.preventDefault()
-    setError('')
-    setMessage('')
-
-    if (tab === 'signup' && password !== confirmPassword) {
-      setError('Passwords do not match.')
-      return
-    }
-    if (password.length < 6) {
-      setError('Password must be at least 6 characters.')
-      return
-    }
-
+    setError("")
+    setMessage("")
+    if (tab === "signup" && password !== confirmPassword) { setError("Passwords do not match."); return }
+    if (password.length < 6) { setError("Password must be at least 6 characters."); return }
     setLoading(true)
     try {
-      if (tab === 'signin') {
+      if (tab === "signin") {
         const { error: err } = await supabase.auth.signInWithPassword({ email, password })
-        if (err) { setError('Invalid email or password.'); return }
+        if (err) { setError("Invalid email or password."); return }
         onClose()
       } else {
         const { error: err } = await supabase.auth.signUp({ email, password })
         if (err) {
-          setError(err.message.includes('already') ? 'An account with this email already exists.' : err.message)
+          setError(err.message.includes("already") ? "An account with this email already exists." : err.message)
           return
         }
-        setMessage('Account created — you are now signed in.')
+        setMessage("Account created — you are now signed in.")
         setTimeout(onClose, 1200)
       }
     } finally {
@@ -110,87 +89,82 @@ export default function AuthModal({ onClose, defaultTab = 'signin' }) {
   }
 
   async function handleGoogle() {
-    await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: { redirectTo: window.location.origin },
-    })
+    await supabase.auth.signInWithOAuth({ provider: "google", options: { redirectTo: window.location.origin } })
   }
 
   return (
     <div
       ref={overlayRef}
       onClick={e => { if (e.target === overlayRef.current) onClose() }}
-      style={{ position: 'fixed', inset: 0, zIndex: 100, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.75)', backdropFilter: 'blur(6px)' }}
+      style={{ position: "fixed", inset: 0, zIndex: 100, display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(0,0,0,0.75)", backdropFilter: "blur(6px)" }}
     >
-      <div style={{ width: '100%', maxWidth: '22rem', margin: '1rem', borderRadius: '1.25rem', border: '1px solid rgba(255,255,255,0.1)', background: '#0e0e0e', padding: '2rem', position: 'relative' }}>
-        <button onClick={onClose} style={{ position: 'absolute', top: '1rem', right: '1rem', background: 'none', border: 'none', cursor: 'pointer', color: '#666', padding: '0.25rem' }}>
+      <div style={{ width: "100%", maxWidth: "22rem", margin: "1rem", borderRadius: "1.25rem", border: `1px solid ${panelBorder}`, background: panelBg, padding: "2rem", position: "relative" }}>
+        <button onClick={onClose} style={{ position: "absolute", top: "1rem", right: "1rem", background: "none", border: "none", cursor: "pointer", color: textDim, padding: "0.25rem" }}>
           <X size={16} />
         </button>
 
-        <div style={{ marginBottom: '1.5rem' }}>
-          <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: '1.1rem', color: '#00ff88', marginBottom: '0.25rem' }}>greenlit.ai</div>
-          <p style={{ fontSize: '0.8rem', color: '#666', margin: 0 }}>Save analyses and access your workspace.</p>
+        <div style={{ marginBottom: "1.5rem" }}>
+          <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: "1.1rem", color: "var(--color-accent)", marginBottom: "0.25rem" }}>greenlit.ai</div>
+          <p style={{ fontSize: "0.8rem", color: textDim, margin: 0 }}>Save analyses and access your workspace.</p>
         </div>
 
-        {/* Tab switcher */}
-        <div style={{ display: 'flex', gap: '0', marginBottom: '1.5rem', background: 'rgba(255,255,255,0.05)', borderRadius: '0.625rem', padding: '3px' }}>
-          {[['signin', 'Sign in'], ['signup', 'Create account']].map(([t, label]) => (
+        <div style={{ display: "flex", gap: "0", marginBottom: "1.5rem", background: tabSwitcherBg, borderRadius: "0.625rem", padding: "3px" }}>
+          {[["signin", "Sign in"], ["signup", "Create account"]].map(([t, label]) => (
             <button
               key={t}
               onClick={() => switchTab(t)}
-              style={{ flex: 1, padding: '0.45rem', borderRadius: '0.5rem', border: 'none', cursor: 'pointer', fontSize: '0.8rem', fontWeight: 600, transition: 'all 0.15s', background: tab === t ? 'rgba(255,255,255,0.1)' : 'transparent', color: tab === t ? '#f0f0f0' : '#666' }}
+              style={{ flex: 1, padding: "0.45rem", borderRadius: "0.5rem", border: "none", cursor: "pointer", fontSize: "0.8rem", fontWeight: 600, transition: "all 0.15s", background: tab === t ? tabActiveBg : "transparent", color: tab === t ? tabActiveText : textDim }}
             >{label}</button>
           ))}
         </div>
 
-        {/* Google */}
-        <button onClick={handleGoogle} style={BTN_GOOGLE}>
+        <button onClick={handleGoogle} style={{ width: "100%", padding: "0.7rem", borderRadius: "0.625rem", border: `1px solid ${googleBorder}`, background: googleBg, color: googleText, fontWeight: 600, fontSize: "0.875rem", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: "0.625rem" }}>
           <GoogleIcon /> Continue with Google
         </button>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', margin: '1rem 0' }}>
-          <div style={{ flex: 1, height: '1px', background: 'rgba(255,255,255,0.08)' }} />
-          <span style={{ fontSize: '0.7rem', color: '#555' }}>or</span>
-          <div style={{ flex: 1, height: '1px', background: 'rgba(255,255,255,0.08)' }} />
+        <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", margin: "1rem 0" }}>
+          <div style={{ flex: 1, height: "1px", background: divider }} />
+          <span style={{ fontSize: "0.7rem", color: textDim }}>or</span>
+          <div style={{ flex: 1, height: "1px", background: divider }} />
         </div>
 
-        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-          <div style={{ position: 'relative' }}>
-            <Mail size={14} style={{ position: 'absolute', left: '0.75rem', top: '50%', transform: 'translateY(-50%)', color: '#555' }} />
+        <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+          <div style={{ position: "relative" }}>
+            <Mail size={14} style={{ position: "absolute", left: "0.75rem", top: "50%", transform: "translateY(-50%)", color: textDim }} />
             <input
               type="email" required value={email} onChange={e => setEmail(e.target.value)}
-              placeholder="Email" style={{ ...INPUT, paddingLeft: '2.25rem' }}
-              onFocus={e => e.target.style.borderColor = '#00cc6a'}
-              onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,0.12)'}
+              placeholder="Email" style={{ ...INPUT, paddingLeft: "2.25rem" }}
+              onFocus={e => e.target.style.borderColor = inputBorderFocus}
+              onBlur={e => e.target.style.borderColor = inputBorder}
             />
           </div>
-          <div style={{ position: 'relative' }}>
-            <Lock size={14} style={{ position: 'absolute', left: '0.75rem', top: '50%', transform: 'translateY(-50%)', color: '#555' }} />
+          <div style={{ position: "relative" }}>
+            <Lock size={14} style={{ position: "absolute", left: "0.75rem", top: "50%", transform: "translateY(-50%)", color: textDim }} />
             <input
               type="password" required value={password} onChange={e => setPassword(e.target.value)}
-              placeholder="Password" style={{ ...INPUT, paddingLeft: '2.25rem' }}
-              onFocus={e => e.target.style.borderColor = '#00cc6a'}
-              onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,0.12)'}
+              placeholder="Password" style={{ ...INPUT, paddingLeft: "2.25rem" }}
+              onFocus={e => e.target.style.borderColor = inputBorderFocus}
+              onBlur={e => e.target.style.borderColor = inputBorder}
             />
           </div>
-          {tab === 'signup' && (
-            <div style={{ position: 'relative' }}>
-              <Lock size={14} style={{ position: 'absolute', left: '0.75rem', top: '50%', transform: 'translateY(-50%)', color: '#555' }} />
+          {tab === "signup" && (
+            <div style={{ position: "relative" }}>
+              <Lock size={14} style={{ position: "absolute", left: "0.75rem", top: "50%", transform: "translateY(-50%)", color: textDim }} />
               <input
                 type="password" required value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)}
-                placeholder="Confirm password" style={{ ...INPUT, paddingLeft: '2.25rem' }}
-                onFocus={e => e.target.style.borderColor = '#00cc6a'}
-                onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,0.12)'}
+                placeholder="Confirm password" style={{ ...INPUT, paddingLeft: "2.25rem" }}
+                onFocus={e => e.target.style.borderColor = inputBorderFocus}
+                onBlur={e => e.target.style.borderColor = inputBorder}
               />
             </div>
           )}
 
-          {error && <p style={{ margin: 0, fontSize: '0.78rem', color: '#ff4040' }}>{error}</p>}
-          {message && <p style={{ margin: 0, fontSize: '0.78rem', color: '#00cc6a' }}>{message}</p>}
+          {error && <p style={{ margin: 0, fontSize: "0.78rem", color: "#ff4040" }}>{error}</p>}
+          {message && <p style={{ margin: 0, fontSize: "0.78rem", color: "var(--color-accent)" }}>{message}</p>}
 
-          <button type="submit" disabled={loading} style={{ ...BTN_PRIMARY, opacity: loading ? 0.7 : 1 }}>
+          <button type="submit" disabled={loading} style={{ width: "100%", padding: "0.7rem", borderRadius: "0.625rem", border: "none", background: "var(--color-accent-dark)", color: "#000", fontWeight: 700, fontSize: "0.875rem", cursor: loading ? "default" : "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: "0.5rem", opacity: loading ? 0.7 : 1 }}>
             {loading ? <Loader2 size={15} className="animate-spin" /> : null}
-            {tab === 'signin' ? 'Sign in' : 'Create account'}
+            {tab === "signin" ? "Sign in" : "Create account"}
           </button>
         </form>
       </div>

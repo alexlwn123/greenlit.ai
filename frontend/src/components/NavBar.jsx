@@ -1,6 +1,6 @@
-﻿import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
-import { LogOut, ChevronDown, Clock, Sun, Moon, HelpCircle, Bug, X, ExternalLink, ChevronRight } from "lucide-react"
+import { LogOut, ChevronDown, Clock, Sun, Moon, HelpCircle, Bug, X, ChevronRight } from "lucide-react"
 import { useAuth } from "../context/AuthContext"
 import { useTheme } from "../context/ThemeContext"
 import { supabaseEnabled } from "../lib/supabase"
@@ -130,15 +130,25 @@ function HelpModal({ onClose, isDark }) {
 }
 
 function BugModal({ onClose, isDark }) {
+  const [text, setText] = useState('')
   const bg = isDark ? "#111111" : "#ffffff"
   const border = isDark ? "rgba(255,255,255,0.1)" : "#dddddd"
   const textBase = isDark ? "#f4f4f4" : "#111111"
   const textSub = isDark ? "#aaaaaa" : "#666666"
   const textDim = isDark ? "#555555" : "#aaaaaa"
-  const linkBg = isDark ? "rgba(255,255,255,0.05)" : "#f5f5f5"
-  const linkBgHover = isDark ? "rgba(255,255,255,0.1)" : "#ebebeb"
-  const linkBorder = isDark ? "rgba(255,255,255,0.15)" : "#dddddd"
-  const linkColor = isDark ? "#dddddd" : "#333333"
+  const inputBg = isDark ? "rgba(255,255,255,0.04)" : "#f5f5f5"
+  const inputBorder = isDark ? "rgba(255,255,255,0.12)" : "#dddddd"
+  const btnBg = isDark ? "rgba(255,255,255,0.07)" : "#f0f0f0"
+  const btnBgHover = isDark ? "rgba(255,255,255,0.13)" : "#e5e5e5"
+  const btnBorder = isDark ? "rgba(255,255,255,0.15)" : "#cccccc"
+  const btnColor = isDark ? "#dddddd" : "#333333"
+
+  function handleSend() {
+    const subject = encodeURIComponent('Bug Report: greenlit.ai')
+    const body = encodeURIComponent(text || '(no description provided)')
+    window.open(`mailto:?subject=${subject}&body=${body}`)
+    onClose()
+  }
 
   return (
     <ModalOverlay onClose={onClose}>
@@ -153,25 +163,28 @@ function BugModal({ onClose, isDark }) {
           </button>
         </div>
 
-        <p style={{ fontSize: "0.84rem", color: textSub, lineHeight: 1.6, marginBottom: "1.25rem" }}>
-          Found something broken or unexpected? File an issue on GitHub and we will look into it.
+        <p style={{ fontSize: "0.84rem", color: textSub, lineHeight: 1.6, marginBottom: "1rem" }}>
+          Describe what happened and what you expected. This will open your email client with the details pre-filled.
         </p>
 
-        <a
-          href="https://github.com/jsplatkin/greenlit.ai/issues/new"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.5rem", width: "100%", padding: "0.65rem 1rem", borderRadius: "0.6rem", border: `1px solid ${linkBorder}`, background: linkBg, color: linkColor, fontSize: "0.85rem", fontWeight: 600, textDecoration: "none", cursor: "pointer", transition: "background 0.15s" }}
-          onMouseEnter={e => { e.currentTarget.style.background = linkBgHover }}
-          onMouseLeave={e => { e.currentTarget.style.background = linkBg }}
+        <textarea
+          value={text}
+          onChange={e => setText(e.target.value)}
+          placeholder="What went wrong? What were you doing when it happened?"
+          rows={4}
+          style={{ width: "100%", background: inputBg, border: `1px solid ${inputBorder}`, borderRadius: "0.6rem", color: textBase, fontSize: "0.84rem", padding: "0.65rem 0.875rem", resize: "vertical", outline: "none", boxSizing: "border-box", fontFamily: "inherit", lineHeight: 1.6, marginBottom: "0.875rem" }}
+          onFocus={e => e.target.style.borderColor = isDark ? "rgba(255,255,255,0.25)" : "#aaaaaa"}
+          onBlur={e => e.target.style.borderColor = inputBorder}
+        />
+
+        <button
+          onClick={handleSend}
+          style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.5rem", width: "100%", padding: "0.65rem 1rem", borderRadius: "0.6rem", border: `1px solid ${btnBorder}`, background: btnBg, color: btnColor, fontSize: "0.85rem", fontWeight: 600, cursor: "pointer", transition: "background 0.15s" }}
+          onMouseEnter={e => { e.currentTarget.style.background = btnBgHover }}
+          onMouseLeave={e => { e.currentTarget.style.background = btnBg }}
         >
-          <ExternalLink size={14} />
-          Open GitHub Issue
-        </a>
-
-        <p style={{ fontSize: "0.75rem", color: textDim, textAlign: "center", marginTop: "0.75rem", marginBottom: 0 }}>
-          Include what you were doing and what you expected to happen.
-        </p>
+          Send via email
+        </button>
       </div>
     </ModalOverlay>
   )

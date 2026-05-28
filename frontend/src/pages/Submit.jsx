@@ -145,11 +145,11 @@ export default function Submit() {
                         </div>
                       )}
                       {i < ANALYSIS_STEPS.length - 1 && (
-                        <div className="w-px my-1" style={{ height: '2rem', background: done ? '#00ff88' : '#1e1e1e' }} />
+                        <div className="w-px my-1" style={{ height: '2rem', background: done ? 'var(--color-accent)' : 'var(--color-surface-2)' }} />
                       )}
                     </div>
                     <div className="pb-8">
-                      <p className="text-sm font-semibold leading-tight" style={{ color: done ? '#00ff88' : active ? '#f4f4f4' : '#2e2e2e' }}>
+                      <p className="text-sm font-semibold leading-tight" style={{ color: done ? 'var(--color-accent)' : active ? 'var(--color-text-base)' : 'var(--color-border)' }}>
                         {step.label}
                       </p>
                       {active && (
@@ -188,7 +188,7 @@ export default function Submit() {
             className="relative rounded-2xl border-2 border-dashed cursor-pointer transition-all duration-200 mb-5"
             style={{
               borderColor: isDragging ? '#00ff88' : file ? '#00ff88' : '#222222',
-              background:  isDragging ? 'rgba(0,255,136,0.05)' : file ? 'rgba(0,255,136,0.03)' : '#0d0d0d',
+              background:  isDragging ? 'rgba(0,255,136,0.05)' : file ? 'rgba(0,255,136,0.03)' : 'var(--color-surface)',
             }}
             onClick={() => !file && fileInputRef.current?.click()}
             onDragOver={e => { e.preventDefault(); setIsDragging(true) }}
@@ -248,8 +248,8 @@ export default function Submit() {
             disabled={!file}
             className="w-full py-3.5 rounded-xl font-semibold text-base transition-all duration-200"
             style={{
-              background: file ? '#00ff88' : '#181818',
-              color:      file ? '#000000' : '#383838',
+              background: file ? 'var(--color-accent)' : 'var(--color-surface-2)',
+              color:      file ? '#000000' : 'var(--color-border-strong)',
               cursor:     file ? 'pointer' : 'not-allowed',
             }}
           >

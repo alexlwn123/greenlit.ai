@@ -57,7 +57,7 @@ export default function History() {
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
             <Clock size={18} style={{ color: '#888' }} />
-            <h1 style={{ margin: 0, fontSize: '1.25rem', fontWeight: 700, color: '#f0f0f0' }}>Your Analyses</h1>
+            <h1 style={{ margin: 0, fontSize: '1.25rem', fontWeight: 700, color: 'var(--color-text-base)' }}>Your Analyses</h1>
           </div>
 
           {!supabaseEnabled || !user ? (
@@ -73,13 +73,13 @@ export default function History() {
               <Loader2 size={14} className="animate-spin" /> Loading…
             </div>
           ) : analyses.length === 0 ? (
-            <div style={{ padding: '3rem 2rem', borderRadius: '0.875rem', border: '1px solid rgba(255,255,255,0.06)', background: 'rgba(255,255,255,0.02)', textAlign: 'center' }}>
+            <div style={{ padding: '3rem 2rem', borderRadius: '0.875rem', border: '1px solid var(--glass-6)', background: 'var(--glass-2)', textAlign: 'center' }}>
               <Microscope size={32} style={{ color: '#333', margin: '0 auto 0.875rem' }} />
               <p style={{ color: '#555', fontSize: '0.85rem', margin: '0 0 0.5rem' }}>No saved analyses yet.</p>
-              <p style={{ color: '#3a3a3a', fontSize: '0.78rem', margin: 0 }}>Submit a filing and click &ldquo;Save analysis&rdquo; to track it here.</p>
+              <p style={{ color: 'var(--color-text-dim)', fontSize: '0.78rem', margin: 0 }}>Submit a filing and click &ldquo;Save analysis&rdquo; to track it here.</p>
               <button
                 onClick={() => navigate('/')}
-                style={{ marginTop: '1.25rem', padding: '0.45rem 1.25rem', borderRadius: '2rem', border: '1px solid rgba(255,255,255,0.12)', background: 'transparent', color: '#888', fontWeight: 600, fontSize: '0.82rem', cursor: 'pointer' }}
+                style={{ marginTop: '1.25rem', padding: '0.45rem 1.25rem', borderRadius: '2rem', border: '1px solid var(--glass-12)', background: 'transparent', color: '#888', fontWeight: 600, fontSize: '0.82rem', cursor: 'pointer' }}
               >Submit a filing</button>
             </div>
           ) : (
@@ -113,11 +113,11 @@ function AnalysisRow({ analysis, opening, onOpen }) {
       style={{
         textAlign: 'left', width: '100%', display: 'flex', alignItems: 'center', gap: '1rem',
         padding: '1rem 1.125rem', borderRadius: '0.875rem',
-        border: '1px solid rgba(255,255,255,0.07)', background: 'rgba(255,255,255,0.02)',
+        border: '1px solid var(--glass-7)', background: 'var(--glass-2)',
         cursor: opening ? 'default' : 'pointer', transition: 'background 0.15s', opacity: opening ? 0.6 : 1,
       }}
-      onMouseEnter={e => { if (!opening) e.currentTarget.style.background = 'rgba(255,255,255,0.05)' }}
-      onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.02)' }}
+      onMouseEnter={e => { if (!opening) e.currentTarget.style.background = 'var(--glass-5)' }}
+      onMouseLeave={e => { e.currentTarget.style.background = 'var(--glass-2)' }}
     >
       {score != null && (
         <div style={{ flexShrink: 0, width: '2.75rem', height: '2.75rem', borderRadius: '50%', border: `2px solid ${scoreCol}`, display: 'flex', alignItems: 'center', justifyContent: 'center', background: `${scoreCol}14` }}>
@@ -125,7 +125,7 @@ function AnalysisRow({ analysis, opening, onOpen }) {
         </div>
       )}
       <div style={{ flex: 1, minWidth: 0 }}>
-        <p style={{ margin: '0 0 0.2rem', fontWeight: 600, color: '#e0e0e0', fontSize: '0.9rem', fontFamily: 'var(--font-mono)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+        <p style={{ margin: '0 0 0.2rem', fontWeight: 600, color: 'var(--color-text-base)', fontSize: '0.9rem', fontFamily: 'var(--font-mono)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
           {analysis.substance_name ?? 'Untitled'}
         </p>
         <p style={{ margin: 0, fontSize: '0.75rem', color: '#555' }}>{date}</p>
