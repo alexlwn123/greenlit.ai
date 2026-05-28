@@ -1,6 +1,6 @@
 ﻿import { useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { LogOut, ChevronDown } from 'lucide-react'
+import { LogOut, ChevronDown, Clock } from 'lucide-react'
 import { useAuth } from '../context/AuthContext'
 import { supabaseEnabled } from '../lib/supabase'
 import AuthModal from './AuthModal'
@@ -104,7 +104,20 @@ export default function NavBar() {
           <div>
             {supabaseEnabled && (
               user
-                ? <UserMenu user={user} signOut={signOut} />
+                ? (
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <button
+                      onClick={() => navigate('/history')}
+                      title="Your analyses"
+                      style={{ display: 'flex', alignItems: 'center', padding: '0.35rem', borderRadius: '0.5rem', border: 'none', background: 'none', cursor: 'pointer', color: '#555' }}
+                      onMouseEnter={e => e.currentTarget.style.color = '#aaa'}
+                      onMouseLeave={e => e.currentTarget.style.color = '#555'}
+                    >
+                      <Clock size={15} />
+                    </button>
+                    <UserMenu user={user} signOut={signOut} />
+                  </div>
+                )
                 : <button onClick={() => setShowAuth(true)} style={{ padding: '0.4rem 0.875rem', borderRadius: '2rem', border: '1px solid rgba(0,204,106,0.4)', background: 'rgba(0,204,106,0.07)', color: '#00cc6a', fontSize: '0.8rem', fontWeight: 600, cursor: 'pointer' }}>Sign in</button>
             )}
           </div>
@@ -114,3 +127,4 @@ export default function NavBar() {
     </>
   )
 }
+

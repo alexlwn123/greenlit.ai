@@ -21,6 +21,7 @@ import AuthModal from '../components/AuthModal'
 
 function SaveNudge({ result }) {
   const { user } = useAuth()
+  const { filingId } = useAnalysis()
   const [showAuth, setShowAuth] = useState(false)
   const [saved, setSaved] = useState(false)
   const [saving, setSaving] = useState(false)
@@ -35,6 +36,8 @@ function SaveNudge({ result }) {
       user_id: user.id,
       substance_name: result.engagement_summary?.substance_name ?? null,
       result_json: result,
+      filing_id: filingId,
+      health_score: result.gap_report?.score ?? null,
     })
     if (error) {
       setSaveError('Save failed. Please try again.')
@@ -521,6 +524,7 @@ export default function Evaluation() {
     </div>
   )
 }
+
 
 
 

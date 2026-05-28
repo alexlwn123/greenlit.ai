@@ -1,6 +1,6 @@
 ﻿import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { BookMarked, Notebook } from 'lucide-react'
+import { BookMarked, Notebook, Clock } from 'lucide-react'
 import NavBar from '../components/NavBar'
 import { useAnalysis } from '../context/AnalysisContext'
 import { useAuth } from '../context/AuthContext'
@@ -141,6 +141,17 @@ export default function Workbook() {
                   </div>
                 )}
               </div>
+
+              <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: '1.5rem' }}>
+                <button
+                  onClick={() => navigate('/history')}
+                  style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'none', border: 'none', cursor: 'pointer', color: '#444', fontSize: '0.8rem', padding: 0 }}
+                  onMouseEnter={e => e.currentTarget.style.color = '#888'}
+                  onMouseLeave={e => e.currentTarget.style.color = '#444'}
+                >
+                  <Clock size={13} /> View all past analyses
+                </button>
+              </div>
             </>
           )}
         </main>
@@ -166,3 +177,4 @@ function SectionNoteRow({ label, note, onClick }) {
     </button>
   )
 }
+

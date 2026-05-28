@@ -12,6 +12,12 @@ export function AnalysisProvider({ children }) {
     if (r) setFilingId(prev => prev ?? crypto.randomUUID())
   }
 
+  function loadSaved(analysis) {
+    setResultRaw(analysis.result_json)
+    setFilingId(analysis.filing_id ?? crypto.randomUUID())
+    setJobId(null)
+  }
+
   function reset() {
     setResultRaw(null)
     setJobId(null)
@@ -19,7 +25,7 @@ export function AnalysisProvider({ children }) {
   }
 
   return (
-    <AnalysisContext.Provider value={{ result, setResult, jobId, setJobId, filingId, reset }}>
+    <AnalysisContext.Provider value={{ result, setResult, jobId, setJobId, filingId, loadSaved, reset }}>
       {children}
     </AnalysisContext.Provider>
   )
