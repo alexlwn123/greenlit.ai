@@ -256,8 +256,8 @@ export default function NavBar() {
 
   const headerBg = isDark ? "#000000" : "#ffffff"
   const headerBorder = isDark ? "#1a1a1a" : "#e8e8e8"
-  const iconColor = isDark ? "#555" : "#999"
-  const iconHover = isDark ? "#aaa" : "#444"
+  const iconColor = isDark ? "#888" : "#666"
+  const iconHover = isDark ? "#ccc" : "#222"
   const accentColor = isDark ? "#00ff88" : "#009955"
 
   return (
@@ -269,8 +269,8 @@ export default function NavBar() {
           <nav className="hidden sm:flex items-center gap-1">
             {STEPS.map((step, i) => {
               const state = i < active ? "done" : i === active ? "active" : "future"
-              const doneColor = isDark ? "#aaaaaa" : "#777777"
-              const futureColor = isDark ? "#555555" : "#cccccc"
+              const doneColor = isDark ? "#cccccc" : "#444444"
+              const futureColor = isDark ? "#888888" : "#aaaaaa"
               const connectorActive = accentColor
               const connectorInactive = isDark ? "#222222" : "#e0e0e0"
               return (
@@ -283,7 +283,7 @@ export default function NavBar() {
                   >
                     <span
                       className="w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold border"
-                      style={{ borderColor: state === "active" ? accentColor : state === "done" ? (isDark ? "#555555" : "#cccccc") : (isDark ? "#2a2a2a" : "#e0e0e0"), color: state === "active" ? accentColor : state === "done" ? doneColor : futureColor, background: "transparent" }}
+                      style={{ borderColor: state === "active" ? accentColor : state === "done" ? (isDark ? "#aaaaaa" : "#bbbbbb") : (isDark ? "#2a2a2a" : "#e0e0e0"), color: state === "active" ? accentColor : state === "done" ? doneColor : futureColor, background: "transparent" }}
                     >
                       {state === "done" ? "✓" : i + 1}
                     </span>
