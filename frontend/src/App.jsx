@@ -2,6 +2,7 @@
 import Submit from './pages/Submit'
 import Evaluation from './pages/Evaluation'
 import EvaluationSection from './pages/EvaluationSection'
+import Workbook from './pages/Workbook'
 
 export default function App() {
   return (
@@ -9,6 +10,7 @@ export default function App() {
       <Route path="/" element={<Submit />} />
       <Route path="/evaluation" element={<Evaluation />} />
       <Route path="/evaluation/:section" element={<EvaluationSection />} />
+      <Route path="/workbook" element={<Workbook />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   )

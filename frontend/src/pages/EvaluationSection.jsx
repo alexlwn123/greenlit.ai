@@ -16,6 +16,7 @@ import {
   peerFields, getApplicableFields,
 } from '../lib/evaluationHelpers'
 import { GapCard, CompCard, SignalCard, DetailHeader } from '../components/EvaluationShared'
+import SectionNoteWidget from '../components/SectionNote'
 
 export default function EvaluationSection() {
   const { section } = useParams()
@@ -52,17 +53,23 @@ export default function EvaluationSection() {
     ? { substance_name: approved_notices[0].substance_name, grn_number: approved_notices[0].grn_number }
     : null
 
-  if (section === 'comparables') return <ComparablesSection topNotices={topNotices} onBack={goBack} />
-  if (section === 'signals') return <SignalsSection signals={signals} onBack={goBack} />
-  if (section === 'gaps') return <GapsSection result={result} allGaps={allGaps} counts={counts} compLookup={compLookup} fallbackRef={fallbackRef} onBack={goBack} />
-  if (section === 'benchmark') return <BenchmarkSection result={result} topNotices={topNotices} onBack={goBack} />
-  if (section === 'research') return <ResearchSection result={result} onBack={goBack} />
-  if (section === 'nextsteps') return <NextStepsSection nextSteps={nextSteps} onBack={goBack} />
-  if (section === 'outline') return <OutlineSection result={result} jobId={jobId} onBack={goBack} />
-  if (section === 'diff') return <DiffSection result={result} onBack={goBack} />
+  let content = null
+  if (section === 'comparables') content = <ComparablesSection topNotices={topNotices} onBack={goBack} />
+  else if (section === 'signals') content = <SignalsSection signals={signals} onBack={goBack} />
+  else if (section === 'gaps') content = <GapsSection result={result} allGaps={allGaps} counts={counts} compLookup={compLookup} fallbackRef={fallbackRef} onBack={goBack} />
+  else if (section === 'benchmark') content = <BenchmarkSection result={result} topNotices={topNotices} onBack={goBack} />
+  else if (section === 'research') content = <ResearchSection result={result} onBack={goBack} />
+  else if (section === 'nextsteps') content = <NextStepsSection nextSteps={nextSteps} onBack={goBack} />
+  else if (section === 'outline') content = <OutlineSection result={result} jobId={jobId} onBack={goBack} />
+  else if (section === 'diff') content = <DiffSection result={result} onBack={goBack} />
+  else { navigate('/evaluation'); return null }
 
-  navigate('/evaluation')
-  return null
+  return (
+    <>
+      {content}
+      <SectionNoteWidget sectionKey={section} />
+    </>
+  )
 }
 
 function ComparablesSection({ topNotices, onBack }) {
@@ -579,4 +586,5 @@ function DiffSection({ result, onBack }) {
     </div>
   )
 }
+
 

@@ -4,7 +4,7 @@ import {
   ArrowLeft, RotateCcw, AlertOctagon, AlertTriangle, Minus,
   ShieldAlert, CheckCircle2, Microscope,
   ListChecks, BarChart2, ExternalLink, GitCompare,
-  Download, BookOpen, SplitSquareHorizontal, FilePlus2,
+  Download, BookOpen, BookMarked, SplitSquareHorizontal, FilePlus2,
 } from 'lucide-react'
 import NavBar from '../components/NavBar'
 import { useAnalysis } from '../context/AnalysisContext'
@@ -15,6 +15,7 @@ import {
 } from '../lib/evaluationHelpers'
 import { OverviewCard } from '../components/EvaluationShared'
 import { useAuth } from '../context/AuthContext'
+import { useNotes } from '../context/NotesContext'
 import { supabase, supabaseEnabled } from '../lib/supabase'
 import AuthModal from '../components/AuthModal'
 
@@ -194,6 +195,7 @@ function PrintReport({ result, allGaps, signals, nextSteps, narrative, topNotice
 export default function Evaluation() {
   const navigate = useNavigate()
   const { result, reset } = useAnalysis()
+  const ctx = useNotes()
 
   if (!result) {
     return (
@@ -441,8 +443,15 @@ export default function Evaluation() {
               onClick={() => navigate('/evaluation/diff')}
             />
           )}
+          <OverviewCard
+            icon={BookMarked}
+            title="Workbook"
+            badge={ctx?.notes?.['general']?.status?.replace('_', ' ') ?? 'Notes'}
+            preview={ctx?.notes?.['general']?.content?.slice(0, 80) || 'Add notes, set filing status, and annotate sections.'}
+            accentBorder="rgba(0,204,106,0.25)"
+            onClick={() => navigate('/workbook')}
+          />
         </div>
-
         {/* Narrative */}
         {narrative && (
           <p className="text-text-dim text-xs leading-relaxed border-t border-border pt-6">
@@ -471,4 +480,8 @@ export default function Evaluation() {
     </div>
   )
 }
+
+
+
+
 

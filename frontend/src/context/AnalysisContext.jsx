@@ -1,18 +1,25 @@
-import { createContext, useContext, useState } from 'react'
+﻿import { createContext, useContext, useState } from 'react'
 
 const AnalysisContext = createContext(null)
 
 export function AnalysisProvider({ children }) {
-  const [result, setResult] = useState(null)
+  const [result, setResultRaw] = useState(null)
   const [jobId, setJobId] = useState(null)
+  const [filingId, setFilingId] = useState(null)
+
+  function setResult(r) {
+    setResultRaw(r)
+    if (r) setFilingId(prev => prev ?? crypto.randomUUID())
+  }
 
   function reset() {
-    setResult(null)
+    setResultRaw(null)
     setJobId(null)
+    setFilingId(null)
   }
 
   return (
-    <AnalysisContext.Provider value={{ result, setResult, jobId, setJobId, reset }}>
+    <AnalysisContext.Provider value={{ result, setResult, jobId, setJobId, filingId, reset }}>
       {children}
     </AnalysisContext.Provider>
   )

@@ -1,5 +1,5 @@
 ﻿import { useEffect, useRef, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { LogOut, ChevronDown } from 'lucide-react'
 import { useAuth } from '../context/AuthContext'
 import { supabaseEnabled } from '../lib/supabase'
@@ -8,9 +8,11 @@ import AuthModal from './AuthModal'
 const STEPS = [
   { label: 'Submit Filing', path: '/' },
   { label: 'Evaluation',    path: '/evaluation' },
+  { label: 'Workbook',      path: '/workbook' },
 ]
 
 function stepIndex(pathname) {
+  if (pathname.includes('workbook')) return 2
   if (pathname.includes('evaluation')) return 1
   return 0
 }
@@ -64,6 +66,7 @@ function UserMenu({ user, signOut }) {
 
 export default function NavBar() {
   const { pathname } = useLocation()
+  const navigate = useNavigate()
   const active = stepIndex(pathname)
   const { user, signOut } = useAuth()
   const [showAuth, setShowAuth] = useState(false)
@@ -80,18 +83,19 @@ export default function NavBar() {
               return (
                 <div key={step.path} className="flex items-center gap-1">
                   {i > 0 && <div className="w-8 h-px" style={{ background: i <= active ? '#00ff88' : '#222222' }} />}
-                  <div
+                  <button
+                    onClick={() => navigate(step.path)}
                     className="flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-medium transition-colors"
-                    style={{ background: state === 'active' ? 'rgba(0,255,136,0.08)' : 'transparent', color: state === 'active' ? '#00ff88' : state === 'done' ? '#aaaaaa' : '#777777' }}
+                    style={{ background: state === 'active' ? 'rgba(0,255,136,0.08)' : 'transparent', color: state === 'active' ? '#00ff88' : state === 'done' ? '#aaaaaa' : '#555555', border: 'none', cursor: 'pointer' }}
                   >
                     <span
                       className="w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold border"
-                      style={{ borderColor: state === 'active' ? '#00ff88' : state === 'done' ? '#555555' : '#3a3a3a', color: state === 'active' ? '#00ff88' : state === 'done' ? '#aaaaaa' : '#666666', background: 'transparent' }}
+                      style={{ borderColor: state === 'active' ? '#00ff88' : state === 'done' ? '#555555' : '#2a2a2a', color: state === 'active' ? '#00ff88' : state === 'done' ? '#aaaaaa' : '#444444', background: 'transparent' }}
                     >
                       {state === 'done' ? '✓' : i + 1}
                     </span>
                     <span className="hidden md:inline">{step.label}</span>
-                  </div>
+                  </button>
                 </div>
               )
             })}
