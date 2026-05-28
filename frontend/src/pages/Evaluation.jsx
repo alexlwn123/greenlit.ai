@@ -1,4 +1,4 @@
-﻿import { useState } from 'react'
+﻿import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   ArrowLeft, RotateCcw, AlertOctagon, AlertTriangle, Minus,
@@ -192,6 +192,44 @@ function PrintReport({ result, allGaps, signals, nextSteps, narrative, topNotice
   )
 }
 
+
+function ScrollHint() {
+  const [visible, setVisible] = useState(true)
+
+  useEffect(() => {
+    function onScroll() {
+      const scrolled = window.scrollY + window.innerHeight
+      const total = document.documentElement.scrollHeight
+      setVisible(scrolled < total - 120)
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    onScroll()
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  if (!visible) return null
+
+  return (
+    <div
+      style={{
+        position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 40,
+        height: '5rem',
+        background: 'linear-gradient(to top, rgba(0,0,0,0.82) 0%, transparent 100%)',
+        display: 'flex', alignItems: 'flex-end', justifyContent: 'center',
+        paddingBottom: '0.875rem',
+        pointerEvents: 'none',
+        transition: 'opacity 0.3s',
+      }}
+    >
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.2rem' }}>
+        <div style={{ width: '1px', height: '18px', background: 'rgba(255,255,255,0.25)', position: 'relative', overflow: 'hidden', borderRadius: '1px' }}>
+          <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', background: 'rgba(255,255,255,0.6)', borderRadius: '1px', animation: 'scrollDrop 1.4s ease-in-out infinite', height: '8px' }} />
+        </div>
+        <span style={{ fontSize: '0.65rem', color: 'rgba(255,255,255,0.3)', letterSpacing: '0.06em', textTransform: 'uppercase' }}>scroll</span>
+      </div>
+    </div>
+  )
+}
 export default function Evaluation() {
   const navigate = useNavigate()
   const { result, reset } = useAnalysis()
@@ -259,6 +297,9 @@ export default function Evaluation() {
           </div>
         )}
 
+        {/* Save nudge */}
+        <SaveNudge result={result} />
+
         {/* Header */}
         {result.engagement_summary?.substance_name && (
           <div>
@@ -278,8 +319,7 @@ export default function Evaluation() {
           </div>
         )}
 
-        {/* Save nudge */}
-        <SaveNudge result={result} />
+        
 
         {/* Gap summary card */}
         <div className="rounded-2xl border border-border bg-surface p-8">
@@ -476,10 +516,15 @@ export default function Evaluation() {
             </button>
           </div>
         </div>
+      <ScrollHint />
       </main>
     </div>
   )
 }
+
+
+
+
 
 
 
