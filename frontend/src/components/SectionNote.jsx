@@ -40,9 +40,6 @@ export default function SectionNoteWidget({ sectionKey }) {
   const textareaBorder = isDark ? 'rgba(255,255,255,0.18)' : '#cccccc'
   const notSignedInColor = isDark ? '#888888' : '#555555'
 
-  const btnNoNoteColor = isDark ? '#aaaaaa' : '#555555'
-  const btnNoNoteBg    = isDark ? 'rgba(18,18,18,0.92)' : 'rgba(255,255,255,0.92)'
-  const btnNoNoteBorder = isDark ? 'rgba(255,255,255,0.15)' : '#cccccc'
 
   useEffect(() => {
     setValue(note?.content ?? '')
@@ -113,16 +110,16 @@ export default function SectionNoteWidget({ sectionKey }) {
         style={{
           display: 'flex', alignItems: 'center', gap: '0.4rem',
           padding: '0.45rem 0.875rem', borderRadius: '2rem',
-          border: `1px solid ${hasNote ? 'rgba(0,204,106,0.45)' : btnNoNoteBorder}`,
-          background: hasNote ? 'rgba(0,204,106,0.1)' : btnNoNoteBg,
-          color: hasNote ? '#00cc6a' : btnNoNoteColor,
-          fontSize: '0.78rem', fontWeight: 600, cursor: 'pointer', backdropFilter: 'blur(8px)',
-          boxShadow: '0 2px 12px rgba(0,0,0,0.2)',
+          border: '1px solid var(--color-accent)',
+          background: hasNote ? 'rgba(0,255,136,0.12)' : 'rgba(0,255,136,0.07)',
+          color: 'var(--color-accent)',
+          fontSize: '0.78rem', fontWeight: 700, cursor: 'pointer', backdropFilter: 'blur(8px)',
+          boxShadow: '0 2px 16px rgba(0,255,136,0.2)',
         }}
       >
         <Notebook size={13} />
         {hasNote ? 'Note' : 'Add note'}
-        {hasNote && <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#00cc6a', flexShrink: 0 }} />}
+        {hasNote && <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--color-accent)', flexShrink: 0 }} />}
       </button>
     </div>
   )
