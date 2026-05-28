@@ -52,8 +52,8 @@ export default function SectionNoteWidget({ sectionKey }) {
   return (
     <div style={{ position: 'fixed', bottom: '1.5rem', right: '1.5rem', zIndex: 80, display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '0.5rem' }}>
       {open && (
-        <div style={{ width: '21rem', borderRadius: '0.875rem', border: '1px solid rgba(255,255,255,0.1)', background: '#111', boxShadow: '0 8px 40px rgba(0,0,0,0.7)', overflow: 'hidden' }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.6rem 1rem', borderBottom: '1px solid rgba(255,255,255,0.07)', background: 'rgba(255,255,255,0.02)' }}>
+        <div style={{ width: '21rem', borderRadius: '0.875rem', border: '1px solid rgba(255,255,255,0.2)', background: '#111', boxShadow: '0 8px 40px rgba(0,0,0,0.7)', overflow: 'hidden' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.6rem 1rem', borderBottom: '1px solid rgba(255,255,255,0.12)', background: 'rgba(255,255,255,0.02)' }}>
             <span style={{ fontSize: '0.75rem', fontWeight: 600, color: '#aaa', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
               {SECTION_LABELS[sectionKey] ?? sectionKey}
             </span>
@@ -69,7 +69,7 @@ export default function SectionNoteWidget({ sectionKey }) {
                 onChange={e => setValue(e.target.value)}
                 placeholder="Notes for this section..."
                 rows={5}
-                style={{ width: '100%', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '0.5rem', color: '#e0e0e0', fontSize: '0.82rem', padding: '0.6rem 0.75rem', resize: 'vertical', outline: 'none', boxSizing: 'border-box', fontFamily: 'inherit', lineHeight: 1.6 }}
+                style={{ width: '100%', background: 'rgba(255,255,255,0.09)', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '0.5rem', color: '#e0e0e0', fontSize: '0.82rem', padding: '0.6rem 0.75rem', resize: 'vertical', outline: 'none', boxSizing: 'border-box', fontFamily: 'inherit', lineHeight: 1.6 }}
                 onFocus={e => e.target.style.borderColor = 'rgba(0,204,106,0.4)'}
                 onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,0.1)'}
                 onKeyDown={e => { if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) handleSave() }}
@@ -109,3 +109,4 @@ export default function SectionNoteWidget({ sectionKey }) {
     </div>
   )
 }
+
