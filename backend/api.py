@@ -18,7 +18,7 @@ load_dotenv()
 if not os.environ.get("OPENAI_API_KEY") and os.environ.get("OPEN_AI_KEY"):
     os.environ["OPENAI_API_KEY"] = os.environ["OPEN_AI_KEY"]
 
-_REQUIRED_ENV = ["ANTHROPIC_API_KEY", "OPENAI_API_KEY"]
+_REQUIRED_ENV = ["ANTHROPIC_API_KEY", "OPENAI_API_KEY", "PINECONE_API_KEY"]
 _missing_env = [k for k in _REQUIRED_ENV if not os.environ.get(k)]
 if _missing_env:
     raise RuntimeError(

@@ -31,3 +31,4 @@ requests
 tiktoken
 uvicorn
 python-docx
+pinecone==6.0.2
