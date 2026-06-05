@@ -10,7 +10,8 @@ Build:
 
 - [ ] Clean `pnpm` TypeScript workspace.
 - [ ] React app deployed on Vercel.
-- [ ] Convex backend for saved work, analysis state, and workbook notes.
+- [ ] Convex backend for saved-work metadata, analysis state, and workbook notes.
+- [ ] Blob/S3-class artifact storage for uploaded PDFs, extracted text, generated outlines, exports, and large result JSON/report payloads that may be many megabytes or larger.
 - [ ] PDF upload and text extraction path.
 - [ ] AI analysis pipeline with structured, reviewable output.
 - [ ] Demo result that works without signing in.
@@ -40,19 +41,38 @@ Do not build yet:
 
 ## Phase 1: Lock The MVP Product Contract
 
-Purpose: decide the smallest complete version of the product before rebuilding.
+Purpose: define the current product surfaces v1 will carry forward so the rewrite does not accidentally drop differentiated behavior.
 
-- [ ] Choose the MVP report sections.
-- [ ] Choose the required screens: submit filing, progress, report overview, findings detail, workbook, history.
+- [ ] Confirm the current product surface list below is complete.
+- [ ] Write acceptance criteria for each surface.
+- [ ] Choose the required MVP screens: submit filing, progress, report overview, findings detail, workbook, history.
+- [ ] Choose the MVP report sections based on the current product surface list.
 - [ ] Choose one demo filing/result to use as the product fixture.
 - [ ] Decide what saved work includes for MVP.
-- [ ] Decide what can be deferred without making the product feel broken.
 - [ ] Write one short acceptance checklist for the end-to-end user flow.
+
+Current product surfaces to include:
+
+- [ ] PDF upload and validation. A valid draft PDF can be accepted and invalid files fail clearly.
+- [ ] Analysis progress. The user sees queued, running, success, and failure states in plain language.
+- [ ] Readiness summary and health score. The report provides a concise readiness signal and enough context to interpret it.
+- [ ] Identified gaps by severity/topic. The user can review the most important issues first.
+- [ ] Comparable filings. The report shows relevant historical comparables with enough rationale to be useful.
+- [ ] Safety signals. Safety-related concerns are separated from general documentation gaps.
+- [ ] Documentation-field benchmarking. Expected filing fields are shown as present, weak, or missing.
+- [ ] Filing diff. The user can compare their draft against a relevant baseline or comparable filing.
+- [ ] PubMed/research references. The report includes relevant research with source context.
+- [ ] Amendment outline download. The user can download a useful remediation outline.
+- [ ] Print/PDF export. The user can export the report in a shareable format.
+- [ ] Saved analyses. Signed-in users can save an analysis.
+- [ ] History. Signed-in users can reload saved analyses.
+- [ ] Workbook notes. Signed-in users can add and revisit follow-up notes.
 
 Done when:
 
 - [ ] A reviewer can read the MVP scope and know exactly what v1 must do.
-- [ ] The team agrees not to add deferred features until the core flow works.
+- [ ] The team agrees not to add new surfaces until the current product surfaces work.
+- [ ] Every current surface has product-level acceptance criteria.
 
 ## Phase 2: Create The Clean App Foundation
 
@@ -96,10 +116,13 @@ Purpose: make the fixture workflow persistent without over-designing the data mo
 
 - [ ] Connect the React app to Convex.
 - [ ] Add authentication for saved work.
-- [ ] Save an analysis result.
+- [ ] Save analysis metadata and summary fields in Convex.
+- [ ] Store large result JSON/report payloads, uploaded files, generated outlines, and extracted text in blob/S3-class storage rather than Convex documents.
+- [ ] Treat artifact access as reference-based and chunk/stream large files instead of assuming they fit in server memory.
 - [ ] Reload saved analyses in history.
 - [ ] Save and reload workbook notes.
 - [ ] Add basic user scoping so saved work is private.
+- [ ] Require authenticated ownership or explicit session binding for upload, status, result, saved report, notes, and outline access.
 - [ ] Keep the persistence shape narrow and easy to change.
 - [ ] Add a manual access-control check.
 
@@ -108,15 +131,19 @@ Done when:
 - [ ] A signed-in user can save a demo analysis and reload it later.
 - [ ] Workbook notes survive refresh.
 - [ ] One user cannot read another user's saved work.
+- [ ] Private artifacts are accessible only through authorized backend-controlled references.
 
 ## Phase 5: Add Real Upload And AI Analysis
 
 Purpose: replace the fixture-only path with the real MVP analysis path.
 
+- [ ] Classify each v0 analysis subsystem as port, wrap, replace, defer, or delete before removing the old path.
 - [ ] Add PDF upload through the backend boundary.
 - [ ] Add basic file validation and useful upload errors.
 - [ ] Extract enough text from the PDF to support the MVP analysis.
+- [ ] Decide whether OCR or heavy PDF processing needs a narrow TypeScript worker.
 - [ ] Run the first staged AI analysis behind the backend boundary.
+- [ ] Pass only needed filing text and selected retrieved chunks to model providers.
 - [ ] Return the AI result through the same report contract used by the fixture.
 - [ ] Save enough run metadata to debug prompt/model changes.
 - [ ] Add deterministic cleanup for display ordering and missing fields.
@@ -129,6 +156,7 @@ Done when:
 - [ ] A real uploaded PDF produces a useful MVP report.
 - [ ] Failed uploads or AI failures produce recoverable user-facing errors.
 - [ ] The team can rerun at least one fixture before changing prompts or models.
+- [ ] Each preserved v0 subsystem has an MVP acceptance check or an intentional replacement.
 
 ## Phase 6: Harden, Deploy, And Cut Over
 

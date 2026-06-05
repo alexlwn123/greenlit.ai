@@ -17,6 +17,8 @@ The v1 MVP should feel like a complete product for this core workflow:
 5. Save the analysis.
 6. Return later and track follow-up notes.
 
+The v1 product contract includes the current differentiated surfaces: comparable filings, safety signals, documentation benchmarking, filing diff, research lookup, amendment outline generation, export, saved analyses, history, and workbook notes. The MVP should keep these surfaces focused and reliable rather than broad or exhaustive.
+
 ## Must-Have Product Outcomes
 
 ### Filing Submission
@@ -31,6 +33,7 @@ The v1 MVP should feel like a complete product for this core workflow:
 - The report gives a concise readiness signal, not just a wall of generated text.
 - The report identifies the most important gaps first.
 - Each major finding explains why it matters and what action is recommended.
+- Comparable filings, safety signals, documentation coverage, research, and diff-style context are part of the report experience.
 - The report separates AI-generated judgment from retrieved evidence, deterministic metadata, and user notes.
 - The report is grounded enough that a regulatory reviewer can decide whether the finding is useful.
 
@@ -45,6 +48,7 @@ The v1 MVP should feel like a complete product for this core workflow:
 
 - Private uploaded filings are not exposed to other users.
 - Secrets and model-provider calls never live in the browser.
+- Upload, status, result, saved report, notes, and outline access are bound to an authenticated user or explicit session before real user uploads.
 - Uploaded-file and generated-report retention are explicit before real users rely on the product.
 - The app avoids presenting AI output as legal or FDA determinations.
 
@@ -85,12 +89,15 @@ The v1 MVP should have a narrow browser client, a typed backend boundary, a stag
 flowchart LR
   U["User"] --> W["React web app"]
   W --> B["Typed backend boundary"]
-  B --> P["Private app state"]
+  B --> P["Private app metadata"]
+  B --> S["Blob/S3-class artifact storage"]
   B --> F["File handling"]
   B --> A["AI analysis pipeline"]
   A --> C["Regulatory corpus and retrieval"]
   A --> M["Model providers"]
   A --> Q["Fixtures, evals, and run metadata"]
+  F --> S
+  C --> S
   P --> W
 ```
 
@@ -100,6 +107,8 @@ flowchart LR
 | --- | --- | --- |
 | React web app | User workflow, upload UI, report display, workbook interactions, local UI state | Secret-bearing calls, direct model-provider calls, persistence rules |
 | Backend boundary | Authorization, persistence, file orchestration, analysis state, AI calls, report generation | Becoming a grab bag of unrelated scripts |
+| Private app metadata | Ownership, status, summary fields, storage keys, checksums, and small queryable records | Large PDFs, extracted text, generated documents, full corpus artifacts, or oversized report blobs |
+| Artifact storage | Uploaded PDFs, extracted text, generated outlines/exports, large reports, and corpus artifacts that may be many megabytes or larger | Access without backend authorization checks, or app code that assumes whole artifacts fit comfortably in memory |
 | File handling | Accept uploads, validate files, extract enough content for MVP analysis | Hiding retention behavior or leaking private filings into public data |
 | AI analysis pipeline | Turn extracted filing content and retrieved context into reviewable findings | One-off prompt calls with no structure, versioning, or eval path |
 | Regulatory corpus and retrieval | Provide relevant comparables and supporting evidence | Mixing public corpus data with private user uploads |
@@ -118,8 +127,15 @@ Use these as architectural choices, not as a detailed implementation recipe:
 - Vercel for web hosting and previews.
 - Vitest for fast TypeScript tests.
 - AI SDK-style patterns for provider abstraction, structured outputs, and testable AI calls.
+- Blob/S3-class storage for large private or generated artifacts, with Convex storing metadata and access-controlled references.
 
 If PDF extraction, OCR, or corpus processing does not fit Convex cleanly, introduce a narrow TypeScript worker. That worker should be an implementation detail behind the backend boundary, not a second product backend.
+
+The blob/S3-class storage choice is intentional because uploaded filings, extracted text, generated exports, and corpus artifacts may be many megabytes and could eventually reach gigabyte scale. The backend should use storage references, checksums, and streaming or chunked processing rather than assuming full artifacts fit inside Convex documents, serverless memory, or model context.
+
+The Convex/serverless path is plausible for MVP if processing is chunked and reference-based. The backend should avoid loading large PDFs, full extracted filings, or the full corpus into memory when a storage reference, selected text slice, or retrieved chunk set is enough.
+
+AI provider calls should receive only the uploaded filing text needed for the step and the selected retrieved chunks. Corpus data should be addressed through vector and storage references, not copied wholesale into request context or server memory.
 
 ## AI Architecture Direction
 
@@ -136,6 +152,28 @@ The MVP pipeline should be staged at a high level:
 
 The exact prompts, schemas, retrieval strategy, scoring, and provider choices should evolve during implementation. The architectural requirement is that changes are observable and evaluatable, not that every detail is fixed upfront.
 
+## Existing Subsystem Compatibility
+
+The rewrite should not assume the current Python/FastAPI analysis engine is wrong, but every subsystem should be intentionally ported, wrapped, replaced, deferred, or deleted. Before removing the v0 path, classify each of these:
+
+- [ ] PDF upload and validation.
+- [ ] PDF text extraction and OCR fallback.
+- [ ] Prompt construction and structured AI output parsing.
+- [ ] Anthropic/OpenAI provider calls.
+- [ ] Pinecone/vector retrieval or replacement.
+- [ ] Public GRAS corpus sidecars and chunk metadata.
+- [ ] Comparable filings generation.
+- [ ] Documentation-field benchmark generation.
+- [ ] Scoring and health-score logic.
+- [ ] Report contract normalization.
+- [ ] PubMed research lookup.
+- [ ] Amendment outline `.docx` generation.
+- [ ] Print/PDF export.
+- [ ] Result retention and deletion.
+- [ ] Run metadata for evals and debugging.
+
+For preserved subsystems, define a product-level acceptance check. For deferred or deleted subsystems, record why that choice does not break the MVP promise.
+
 ## Data Direction
 
 Do not finalize the data model in this document.
@@ -146,6 +184,8 @@ At a high level, v1 needs to keep these concerns separate:
 - Public or curated corpus material: regulatory notices, references, and retrieval inputs.
 - AI run context: enough metadata to understand prompt, model, retrieval, and output changes.
 - Test and eval fixtures: representative examples that protect the MVP workflow.
+
+Large artifacts should not be stored directly inside Convex documents. Uploaded PDFs, extracted filing text, generated `.docx` files, large result JSON/report payloads, and corpus artifacts should live in blob/S3-class storage because they may be many megabytes or larger. Convex should store ownership, status, storage keys, checksums, timestamps, and small summary fields needed by the UI and backend.
 
 The MVP can start with the smallest persistence shape that supports save, reload, notes, upload state, and report display. Add more structure only when the product needs it.
 
