@@ -83,7 +83,7 @@ Safe path:
 - [ ] Keep FastAPI as the analysis engine for the first migration phase.
 - [ ] Add Convex as a pnpm workspace dependency after the monorepo conversion, or do both in one carefully scoped infra PR.
 - [ ] Create a `convex/` directory with schema and functions for saved analyses and filing notes.
-- [ ] Model `analyses` with fields equivalent to current Supabase usage: user identity, `filingId`, `substanceName`, `healthScore`, `resultJson`, and creation time.
+- [ ] Model `analyses` with fields equivalent to current Supabase usage for UI reads: user identity, `filingId`, `substanceName`, `healthScore`, summary fields, artifact storage keys/checksums, and creation time.
 - [ ] Model `filingNotes` with user identity, `filingId`, `section`, `content`, `status`, and update time.
 - [ ] Add indexes for the exact UI reads: analyses by user and created time; notes by user plus filing ID; note by user, filing ID, and section.
 - [ ] Replace `supabase.from('analyses')` calls with Convex queries/mutations behind a small local adapter.
@@ -105,8 +105,9 @@ Data migration plan:
 File and job-state decision:
 
 - [ ] Do not move raw PDF upload flow to Convex in phase 1; keep current FastAPI upload/delete behavior.
-- [ ] Decide later whether generated reports, outlines, or uploaded PDFs should be stored in Convex file storage.
-- [ ] If using Convex file storage, document retention and access rules before storing confidential filing PDFs.
+- [ ] Store large result JSON/report payloads, uploaded PDFs, extracted text, generated outlines, and exports in blob/S3-class storage rather than Convex documents.
+- [ ] Keep Convex responsible for ownership, status, summary fields, storage keys, checksums, and access-controlled references.
+- [ ] Document retention and access rules before storing confidential filing PDFs or generated artifacts.
 - [ ] Consider moving backend job metadata/results from in-memory/disk to Convex only after user identity is settled.
 
 Done when:
