@@ -500,7 +500,8 @@ function DiffSection({ result, onBack }) {
     )
   }
   const cap = s => s && typeof s === 'string' ? s.charAt(0).toUpperCase() + s.slice(1) : s
-  const peerSd = new Set(diffSidecar?.safety_data_available || [])
+  const toArr = v => !v ? [] : Array.isArray(v) ? v : String(v).split(/,\s*/)
+  const peerSd = new Set(toArr(diffSidecar?.safety_data_available))
   const metaRows = [
     { label: 'Notifier',               yours: es.notifier || '-',                                                  peer: topApproved?.notifier || diffSidecar?.notifier || '-' },
     { label: 'Substance Type',          yours: cap(es.substance_type?.replace(/_/g,' ')) || '-',                   peer: cap(diffSidecar?.substance_type?.replace(/_/g,' ')) || '-' },
@@ -508,7 +509,7 @@ function DiffSection({ result, onBack }) {
     { label: 'Production Method',       yours: cap(es.production_method?.replace(/_/g,' ')) || '-',                peer: cap(diffSidecar?.production_method?.replace(/_/g,' ')) || '-' },
     { label: 'Organism Type',           yours: (() => { const s = es.source_organism || ''; return s ? (s.length > 50 ? s.slice(0,47).trimEnd()+'...' : cap(s)) : '-' })(), peer: cap(diffSidecar?.source_organism_type?.replace(/_/g,' ')) || '-' },
     { label: 'Organism Name',           yours: es.source_organism_name || '-',                                     peer: diffSidecar?.source_organism_name || '-' },
-    { label: 'Intended Uses',           yours: (es.intended_uses || []).map(u => cap(u.replace(/_/g,' '))).join(', ') || '-', peer: (diffSidecar?.intended_uses || []).map(u => cap(u.replace(/_/g,' '))).join(', ') || '-' },
+    { label: 'Intended Uses',           yours: toArr(es.intended_uses).map(u => cap(u.replace(/_/g,' '))).join(', ') || '-', peer: toArr(diffSidecar?.intended_uses).map(u => cap(u.replace(/_/g,' '))).join(', ') || '-' },
     { label: 'Target Population',       yours: cap(es.target_population?.replace(/_/g,' ')) || '-',                peer: cap(diffSidecar?.target_population?.replace(/_/g,' ')) || '-' },
     { label: 'Exposure Estimate',       yours: gfp.dietary_exposure_estimate ? 'Included' : 'Missing',            peer: diffSidecar?.exposure_estimate_included ? 'Included' : 'Missing' },
     { label: 'Allergenicity',           yours: gfp.allergenicity_assessment  ? 'Addressed' : 'Missing',           peer: diffSidecar?.allergenicity_addressed    ? 'Addressed' : 'Missing' },
