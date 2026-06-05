@@ -78,6 +78,29 @@ def retrieve(query: str, top_notices: int = 3, chunks_per_status: int = 15) -> d
     }
 
 
+def get_notice_metadata(grn_number: int) -> dict | None:
+    """Fetch notice metadata from Pinecone by GRN number. Returns None if not found."""
+    index, _ = _get_clients()
+    try:
+        ids = []
+        for id_batch in index.list(prefix=f"grn{grn_number}_"):
+            ids.extend(id_batch)
+            break  # only need one chunk
+        if not ids:
+            return None
+        result = index.fetch(ids=[ids[0]])
+        vectors = result.get("vectors") or result.get("records", {})
+        if not vectors:
+            return None
+        meta = next(iter(vectors.values()))["metadata"]
+        meta.pop("text", None)
+        meta.pop("section", None)
+        meta.pop("token_count", None)
+        return meta
+    except Exception:
+        return None
+
+
 if __name__ == "__main__":
     TEST_QUERY = "dietary exposure methodology for precision fermentation derived protein"
     print(f"Query: {TEST_QUERY!r}\n")

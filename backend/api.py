@@ -348,18 +348,12 @@ async def get_outline(job_id: str):
 
 @app.get("/sidecar/{grn_number}")
 async def get_sidecar(grn_number: int):
-    """Return the metadata sidecar for a specific GRN notice (approved or withdrawn)."""
-    import glob, json as _json
-    for status_dir in ["Approved", "Withdrawn"]:
-        pattern = str(Path("data/notices") / status_dir / "*.json")
-        for path in glob.glob(pattern):
-            try:
-                data = _json.loads(Path(path).read_text(encoding="utf-8-sig"))
-                if data.get("grn_number") == grn_number:
-                    return data
-            except Exception:
-                continue
-    raise HTTPException(status_code=404, detail=f"GRN {grn_number} not found")
+    """Return the metadata sidecar for a specific GRN notice (served from Pinecone)."""
+    from backend.retrieve import get_notice_metadata
+    data = get_notice_metadata(grn_number)
+    if data is None:
+        raise HTTPException(status_code=404, detail=f"GRN {grn_number} not found")
+    return data
 
 FRONTEND_DIST = Path(__file__).parent.parent / "frontend" / "dist"
 
