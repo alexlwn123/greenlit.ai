@@ -82,17 +82,21 @@ def get_notice_metadata(grn_number: int) -> dict | None:
     """Fetch notice metadata from Pinecone by GRN number. Returns None if not found."""
     index, _ = _get_clients()
     try:
-        ids = []
-        for id_batch in index.list(prefix=f"grn{grn_number}_"):
-            ids.extend(id_batch)
-            break  # only need one chunk
-        if not ids:
+        first_id = None
+        for batch in index.list(prefix=f"grn{grn_number}_"):
+            items = batch.vectors if hasattr(batch, 'vectors') else batch
+            if items:
+                item = items[0]
+                first_id = item.id if hasattr(item, 'id') else str(item)
+            break
+        if not first_id:
             return None
-        result = index.fetch(ids=[ids[0]])
-        vectors = result.get("vectors") or result.get("records", {})
+        result = index.fetch(ids=[first_id])
+        vectors = getattr(result, 'vectors', None) or getattr(result, 'records', None) or {}
         if not vectors:
             return None
-        meta = next(iter(vectors.values()))["metadata"]
+        record = next(iter(vectors.values()))
+        meta = dict(record.metadata if hasattr(record, 'metadata') else record['metadata'])
         meta.pop("text", None)
         meta.pop("section", None)
         meta.pop("token_count", None)
