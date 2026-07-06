@@ -1,0 +1,30 @@
+{
+  "grn_number": 426,
+  "substance_name": "Rice hull fiber",
+  "status": "withdrawn",
+  "date_filed": "",
+  "date_closed": "May 29, 2012",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0426",
+  "substance_type": "carbohydrate",
+  "production_method": "extraction",
+  "source_organism_type": "plant",
+  "intended_uses": [
+    "beverages",
+    "bakery",
+    "cereals_and_grains",
+    "snacks",
+    "general_food",
+    "sports_nutrition",
+    "meal_replacements",
+    "dietary_supplements"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "history_of_safe_use"
+  ],
+  "dietary_exposure_method": "NHANES",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false
+}

@@ -1,0 +1,27 @@
+{
+  "grn_number": 1081,
+  "substance_name": "Bifidobacterium infantis strain KCTC 11859BP",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Oct 31, 2023",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1081",
+  "substance_type": "probiotic",
+  "production_method": "submerged_fermentation",
+  "source_organism_type": "bacterial",
+  "intended_uses": [
+    "dietary_supplements",
+    "general_food"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "allergenicity_in_vitro",
+    "human_clinical_trial",
+    "in_vitro_toxicity"
+  ],
+  "dietary_exposure_method": "market_share",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true,
+  "source_organism_name": "Bifidobacterium infantis KCTC"
+}

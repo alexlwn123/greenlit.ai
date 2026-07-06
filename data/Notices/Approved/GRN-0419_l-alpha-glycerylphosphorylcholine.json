@@ -1,0 +1,38 @@
+{
+  "grn_number": 419,
+  "substance_name": "L-alpha-glycerylphosphorylcholine",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Nov 20, 2012",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0419",
+  "substance_type": "additive",
+  "production_method": null,
+  "source_organism_type": null,
+  "intended_uses": [
+    "beverages",
+    "dairy_alternatives",
+    "protein_bars",
+    "bakery",
+    "cereals_and_grains",
+    "snacks",
+    "confectionery",
+    "meal_replacements"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "acute_toxicity",
+    "subchronic_toxicity",
+    "chronic_toxicity",
+    "reproductive_toxicity",
+    "developmental_toxicity",
+    "genotoxicity_ames",
+    "genotoxicity_chromosomal",
+    "human_clinical_trial",
+    "metabolic_fate"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false
+}

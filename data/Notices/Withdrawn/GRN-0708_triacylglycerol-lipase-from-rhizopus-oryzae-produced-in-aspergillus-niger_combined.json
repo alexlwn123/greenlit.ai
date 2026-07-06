@@ -1,0 +1,27 @@
+{
+  "grn_number": 708,
+  "substance_name": "Triacylglycerol lipase from Rhizopus oryzae produced in Aspergillus niger",
+  "status": "withdrawn",
+  "date_filed": "",
+  "date_closed": "Oct 10, 2017",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0708",
+  "substance_type": "enzyme",
+  "production_method": "precision_fermentation",
+  "source_organism_type": "fungal",
+  "intended_uses": [
+    "fats_and_oils",
+    "general_food"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "acute_toxicity",
+    "allergenicity_bioinformatic",
+    "metabolic_fate"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true,
+  "source_organism_name": "Rhizopus oryzae"
+}

@@ -1,0 +1,24 @@
+{
+  "grn_number": 704,
+  "substance_name": "Corn oil (by-product of ethanol production)",
+  "status": "withdrawn",
+  "date_filed": "",
+  "date_closed": "Oct 10, 2017",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0704",
+  "substance_type": "lipid",
+  "production_method": "extraction",
+  "source_organism_type": "plant",
+  "intended_uses": [
+    "bakery",
+    "confectionery",
+    "fats_and_oils",
+    "general_food"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [],
+  "dietary_exposure_method": "not_included",
+  "exposure_estimate_included": false,
+  "allergenicity_addressed": false
+}

@@ -1,0 +1,26 @@
+{
+  "grn_number": 456,
+  "substance_name": "Rebaudioside D purified from the leaves of Stevia rebaudiana (Bertoni) Bertoni (rebaudioside D)",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Jul 1, 2013",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0456",
+  "substance_type": "flavoring_agent",
+  "production_method": null,
+  "source_organism_type": null,
+  "intended_uses": [
+    "beverages",
+    "general_food",
+    "condiments",
+    "snacks",
+    "confectionery"
+  ],
+  "target_population": "not_for_infants",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [],
+  "dietary_exposure_method": null,
+  "exposure_estimate_included": false,
+  "allergenicity_addressed": false,
+  "source_organism_name": "Stevia rebaudiana"
+}

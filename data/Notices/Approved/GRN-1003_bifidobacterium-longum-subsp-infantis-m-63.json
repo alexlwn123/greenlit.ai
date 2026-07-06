@@ -1,0 +1,29 @@
+{
+  "grn_number": 1003,
+  "substance_name": "Bifidobacterium longum subsp. infantis M-63",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Apr 26, 2022",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1003",
+  "substance_type": "probiotic",
+  "production_method": "submerged_fermentation",
+  "source_organism_type": "bacterial",
+  "intended_uses": [
+    "general_food",
+    "infant_formula"
+  ],
+  "target_population": "not_for_infants",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "acute_toxicity",
+    "genotoxicity_in_vitro",
+    "allergenicity_in_vitro",
+    "human_clinical_trial",
+    "metabolic_fate"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true,
+  "source_organism_name": "Bifidobacterium longum subsp. infantis"
+}

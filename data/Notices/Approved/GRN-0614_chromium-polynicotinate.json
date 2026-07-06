@@ -1,0 +1,31 @@
+{
+  "grn_number": 614,
+  "substance_name": "Chromium polynicotinate",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Apr 12, 2016",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0614",
+  "substance_type": "mineral",
+  "production_method": "chemical_synthesis",
+  "source_organism_type": null,
+  "intended_uses": [
+    "beverages"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "acute_toxicity",
+    "subchronic_toxicity",
+    "chronic_toxicity",
+    "reproductive_toxicity",
+    "developmental_toxicity",
+    "genotoxicity_ames",
+    "genotoxicity_chromosomal",
+    "human_clinical_trial",
+    "metabolic_fate"
+  ],
+  "dietary_exposure_method": "NHANES",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false
+}

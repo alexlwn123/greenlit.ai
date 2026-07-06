@@ -1,0 +1,28 @@
+{
+  "grn_number": 748,
+  "substance_name": "Tomato powder",
+  "status": "withdrawn",
+  "date_filed": "",
+  "date_closed": "Apr 19, 2018",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0748",
+  "substance_type": "additive",
+  "production_method": "extraction",
+  "source_organism_type": "plant",
+  "intended_uses": [
+    "cereals_and_grains",
+    "soups_and_sauces",
+    "condiments",
+    "snacks",
+    "confectionery",
+    "general_food"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "history_of_safe_use"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false
+}

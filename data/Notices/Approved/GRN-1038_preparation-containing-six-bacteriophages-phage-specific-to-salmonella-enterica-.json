@@ -1,0 +1,24 @@
+{
+  "grn_number": 1038,
+  "substance_name": "Preparation containing six bacteriophages (phage) specific to Salmonella enterica spp. serovars",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "May 11, 2023",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1038",
+  "substance_type": "microorganism",
+  "production_method": "fermentation",
+  "source_organism_type": "bacterial",
+  "intended_uses": [
+    "meat_alternatives"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "allergenicity_bioinformatic",
+    "in_silico_toxicology"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true
+}

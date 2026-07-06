@@ -1,0 +1,28 @@
+{
+  "grn_number": 764,
+  "substance_name": "Rebaudioside D",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Jul 10, 2018",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0764",
+  "substance_type": "additive",
+  "production_method": "enzymatic",
+  "source_organism_type": "bacterial",
+  "intended_uses": [
+    "beverages",
+    "condiments",
+    "general_food"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "genotoxicity_ames",
+    "allergenicity_bioinformatic",
+    "human_clinical_trial",
+    "metabolic_fate"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true
+}

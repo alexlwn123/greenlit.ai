@@ -1,0 +1,26 @@
+{
+  "grn_number": 1137,
+  "substance_name": "Protein-sucrose",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Jan 19, 2024",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1137",
+  "substance_type": "protein",
+  "production_method": null,
+  "source_organism_type": "plant",
+  "intended_uses": [
+    "general_food",
+    "confectionery"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "allergenicity_bioinformatic",
+    "history_of_safe_use",
+    "metabolic_fate"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true
+}

@@ -1,0 +1,34 @@
+{
+  "grn_number": 755,
+  "substance_name": "D-psicose",
+  "status": "withdrawn",
+  "date_filed": "",
+  "date_closed": "May 10, 2018",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0755",
+  "substance_type": "carbohydrate",
+  "production_method": "fermentation",
+  "source_organism_type": "fungal",
+  "intended_uses": [
+    "bakery",
+    "beverages",
+    "cereals_and_grains",
+    "confectionery",
+    "dairy_alternatives",
+    "condiments",
+    "snacks"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "acute_toxicity",
+    "subchronic_toxicity",
+    "genotoxicity_ames",
+    "genotoxicity_chromosomal",
+    "human_clinical_trial",
+    "metabolic_fate"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false
+}

@@ -1,0 +1,31 @@
+{
+  "grn_number": 1194,
+  "substance_name": "Partially hydrolyzed eggshell membrane powder derived from chicken eggs",
+  "status": "withdrawn",
+  "date_filed": "",
+  "date_closed": "Feb 4, 2025",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1194",
+  "substance_type": "protein",
+  "production_method": "hydrolysis",
+  "source_organism_type": "animal",
+  "intended_uses": [
+    "dietary_supplements",
+    "general_food"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "acute_toxicity",
+    "subchronic_toxicity",
+    "genotoxicity_ames",
+    "genotoxicity_chromosomal",
+    "allergenicity_bioinformatic",
+    "human_clinical_trial",
+    "metabolic_fate"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true,
+  "source_organism_name": "Partially hydrolyzed"
+}

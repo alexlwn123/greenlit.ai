@@ -1,0 +1,34 @@
+{
+  "grn_number": 961,
+  "substance_name": "β-glucan derived from Agrobacterium sp. CCTCC No. M2010020",
+  "status": "withdrawn",
+  "date_filed": "",
+  "date_closed": "May 19, 2021",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0961",
+  "substance_type": "carbohydrate",
+  "production_method": "submerged_fermentation",
+  "source_organism_type": "bacterial",
+  "intended_uses": [
+    "beverages",
+    "dairy_alternatives",
+    "protein_bars",
+    "bakery",
+    "snacks",
+    "general_food",
+    "cereals_and_grains",
+    "soups_and_sauces"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "acute_toxicity",
+    "subchronic_toxicity",
+    "genotoxicity_ames",
+    "genotoxicity_chromosomal",
+    "allergenicity_bioinformatic"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true
+}

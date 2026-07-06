@@ -1,0 +1,22 @@
+{
+  "grn_number": 538,
+  "substance_name": "Potassium-rich extract from Saccharum officinarum L. (sugarcane)",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Apr 19, 2015",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0538",
+  "substance_type": "additive",
+  "production_method": "fractionation",
+  "source_organism_type": "plant",
+  "intended_uses": [
+    "beverages"
+  ],
+  "target_population": "not_for_infants",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [],
+  "dietary_exposure_method": "not_included",
+  "exposure_estimate_included": false,
+  "allergenicity_addressed": false,
+  "source_organism_name": "Saccharum officinarum"
+}

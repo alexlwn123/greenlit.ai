@@ -1,0 +1,26 @@
+{
+  "grn_number": 553,
+  "substance_name": "Algal oil (40% docosahexaenoic acid) derived from Schizochytrium sp.",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Jun 19, 2015",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0553",
+  "substance_type": "lipid",
+  "production_method": "extraction",
+  "source_organism_type": "algal",
+  "intended_uses": [
+    "dietary_supplements",
+    "infant_formula"
+  ],
+  "target_population": "not_for_infants",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "subchronic_toxicity",
+    "genotoxicity_ames",
+    "allergenicity_bioinformatic"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true
+}

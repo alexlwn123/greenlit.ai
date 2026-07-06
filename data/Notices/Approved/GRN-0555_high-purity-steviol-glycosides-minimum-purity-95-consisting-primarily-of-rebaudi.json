@@ -1,0 +1,32 @@
+{
+  "grn_number": 555,
+  "substance_name": "High purity steviol glycosides (minimum purity 95%) consisting primarily of rebaudioside A.",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Apr 21, 2015",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0555",
+  "substance_type": "flavoring_agent",
+  "production_method": "extraction",
+  "source_organism_type": "plant",
+  "intended_uses": [
+    "beverages",
+    "general_food",
+    "confectionery",
+    "condiments"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "acute_toxicity",
+    "subchronic_toxicity",
+    "genotoxicity_ames",
+    "genotoxicity_chromosomal",
+    "allergenicity_bioinformatic",
+    "nutritional_impact",
+    "history_of_safe_use"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true
+}

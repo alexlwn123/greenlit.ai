@@ -1,0 +1,27 @@
+{
+  "grn_number": 530,
+  "substance_name": "Extract of Apocynum venetum leaves",
+  "status": "withdrawn",
+  "date_filed": "",
+  "date_closed": "Nov 5, 2014",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0530",
+  "substance_type": "additive",
+  "production_method": "extraction",
+  "source_organism_type": "plant",
+  "intended_uses": [
+    "dietary_supplements",
+    "general_food"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "acute_toxicity",
+    "human_clinical_trial",
+    "history_of_safe_use"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false,
+  "source_organism_name": "Apocynum venetum"
+}

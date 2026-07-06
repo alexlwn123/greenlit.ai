@@ -1,0 +1,37 @@
+{
+  "grn_number": 605,
+  "substance_name": "Fructo-oligosaccharides",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Mar 17, 2016",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0605",
+  "substance_type": "carbohydrate",
+  "production_method": "enzymatic",
+  "source_organism_type": "fungal",
+  "intended_uses": [
+    "beverages",
+    "dairy_alternatives",
+    "protein_bars",
+    "bakery",
+    "condiments",
+    "snacks",
+    "general_food",
+    "cereals_and_grains",
+    "soups_and_sauces",
+    "confectionery",
+    "fermented_foods"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "digestibility_study",
+    "nutritional_impact",
+    "human_clinical_trial",
+    "history_of_safe_use",
+    "metabolic_fate"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false
+}

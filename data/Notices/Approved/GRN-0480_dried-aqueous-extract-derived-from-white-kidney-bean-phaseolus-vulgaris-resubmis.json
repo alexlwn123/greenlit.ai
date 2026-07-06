@@ -1,0 +1,26 @@
+{
+  "grn_number": 480,
+  "substance_name": "Dried aqueous extract derived from white kidney bean ( Phaseolus vulgaris ) (Resubmission of GRN 434 )",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "May 30, 2014",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0480",
+  "substance_type": "additive",
+  "production_method": "extraction",
+  "source_organism_type": "plant",
+  "intended_uses": [
+    "dietary_supplements",
+    "general_food"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "nutritional_impact",
+    "history_of_safe_use"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false,
+  "source_organism_name": "Dried aqueous"
+}

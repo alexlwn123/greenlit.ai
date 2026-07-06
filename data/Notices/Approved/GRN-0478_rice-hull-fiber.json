@@ -1,0 +1,31 @@
+{
+  "grn_number": 478,
+  "substance_name": "Rice hull fiber",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Sep 14, 2015",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0478",
+  "substance_type": "carbohydrate",
+  "production_method": "fractionation",
+  "source_organism_type": "plant",
+  "intended_uses": [
+    "general_food",
+    "cereals_and_grains",
+    "dietary_supplements"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "acute_toxicity",
+    "subchronic_toxicity",
+    "genotoxicity_ames",
+    "genotoxicity_chromosomal",
+    "allergenicity_bioinformatic",
+    "human_clinical_trial",
+    "metabolic_fate"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true
+}

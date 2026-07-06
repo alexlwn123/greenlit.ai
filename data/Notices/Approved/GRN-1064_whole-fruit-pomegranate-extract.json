@@ -1,0 +1,29 @@
+{
+  "grn_number": 1064,
+  "substance_name": "Whole fruit pomegranate extract",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Sep 19, 2023",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1064",
+  "substance_type": "additive",
+  "production_method": "extraction",
+  "source_organism_type": "plant",
+  "intended_uses": [
+    "dairy_alternatives",
+    "beverages",
+    "confectionery"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "acute_toxicity",
+    "chronic_toxicity",
+    "human_clinical_trial",
+    "metabolic_fate"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false,
+  "source_organism_name": "Whole fruit"
+}

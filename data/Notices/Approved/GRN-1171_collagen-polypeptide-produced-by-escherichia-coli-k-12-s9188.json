@@ -1,0 +1,29 @@
+{
+  "grn_number": 1171,
+  "substance_name": "Collagen polypeptide produced by Escherichia coli K-12 S9188",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Oct 22, 2024",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1171",
+  "substance_type": "protein",
+  "production_method": "precision_fermentation",
+  "source_organism_type": "fungal",
+  "intended_uses": [
+    "beverages",
+    "general_food"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "genotoxicity_ames",
+    "allergenicity_bioinformatic",
+    "nutritional_impact",
+    "human_clinical_trial",
+    "metabolic_fate"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true,
+  "source_organism_name": "Escherichia coli"
+}

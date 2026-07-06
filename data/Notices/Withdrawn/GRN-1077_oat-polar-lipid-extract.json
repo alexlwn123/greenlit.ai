@@ -1,0 +1,34 @@
+{
+  "grn_number": 1077,
+  "substance_name": "Oat polar lipid extract",
+  "status": "withdrawn",
+  "date_filed": "",
+  "date_closed": "Jul 7, 2023",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1077",
+  "substance_type": "lipid",
+  "production_method": "extraction",
+  "source_organism_type": "plant",
+  "intended_uses": [
+    "beverages",
+    "dairy_alternatives",
+    "bakery",
+    "condiments",
+    "snacks",
+    "general_food",
+    "cereals_and_grains",
+    "soups_and_sauces",
+    "fats_and_oils"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "allergenicity_bioinformatic",
+    "nutritional_impact",
+    "history_of_safe_use",
+    "metabolic_fate"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true
+}

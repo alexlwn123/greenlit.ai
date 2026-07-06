@@ -1,0 +1,30 @@
+{
+  "grn_number": 1241,
+  "substance_name": "β-lactoglobulin produced by Aspergillus oryzae",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Sep 16, 2025",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1241",
+  "substance_type": "protein",
+  "production_method": "submerged_fermentation",
+  "source_organism_type": "fungal",
+  "intended_uses": [
+    "dairy_alternatives",
+    "bakery",
+    "condiments",
+    "general_food"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "acute_toxicity",
+    "allergenicity_bioinformatic",
+    "digestibility_study",
+    "metabolic_fate"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true,
+  "source_organism_name": "Aspergillus oryzae"
+}

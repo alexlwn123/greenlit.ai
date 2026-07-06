@@ -1,0 +1,31 @@
+{
+  "grn_number": 442,
+  "substance_name": "Volatile oil of mustard (white)",
+  "status": "withdrawn",
+  "date_filed": "",
+  "date_closed": "Jan 3, 2013",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0442",
+  "substance_type": "additive",
+  "production_method": "extraction",
+  "source_organism_type": "plant",
+  "intended_uses": [
+    "beverages",
+    "condiments",
+    "general_food"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "acute_toxicity",
+    "chronic_toxicity",
+    "reproductive_toxicity",
+    "developmental_toxicity",
+    "genotoxicity_ames",
+    "metabolic_fate",
+    "in_vitro_toxicity"
+  ],
+  "dietary_exposure_method": "NHANES",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false
+}

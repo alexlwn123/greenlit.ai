@@ -1,0 +1,28 @@
+{
+  "grn_number": 629,
+  "substance_name": "Siraitia grosvenorii Swingle (Luo Han Guo) fruit extract",
+  "status": "withdrawn",
+  "date_filed": "",
+  "date_closed": "Jul 15, 2016",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0629",
+  "substance_type": "flavoring_agent",
+  "production_method": "extraction",
+  "source_organism_type": "plant",
+  "intended_uses": [
+    "beverages",
+    "condiments",
+    "snacks",
+    "general_food",
+    "confectionery"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "history_of_safe_use"
+  ],
+  "dietary_exposure_method": null,
+  "exposure_estimate_included": false,
+  "allergenicity_addressed": false,
+  "source_organism_name": "Siraitia grosvenorii"
+}

@@ -1,0 +1,25 @@
+{
+  "grn_number": 528,
+  "substance_name": "Preparation containing six bacterial monophages (LIST-36, LMSP-25, LMTA-34, LMTA-57, LMTA-94 and LMTA-148) specific to Listeria monocytogenes",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Dec 23, 2014",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0528",
+  "substance_type": "microorganism",
+  "production_method": "submerged_fermentation",
+  "source_organism_type": "bacterial",
+  "intended_uses": [
+    "meat_alternatives",
+    "general_food"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "history_of_safe_use",
+    "metabolic_fate"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false
+}

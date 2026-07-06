@@ -1,0 +1,27 @@
+{
+  "grn_number": 483,
+  "substance_name": "Aqueous extract of Emblica officinalis (Resubmission of GRN 322 )",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Apr 17, 2014",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0483",
+  "substance_type": "flavoring_agent",
+  "production_method": "extraction",
+  "source_organism_type": "plant",
+  "intended_uses": [
+    "beverages",
+    "general_food"
+  ],
+  "target_population": "not_for_infants",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "acute_toxicity",
+    "nutritional_impact",
+    "history_of_safe_use"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false,
+  "source_organism_name": "Emblica officinalis"
+}

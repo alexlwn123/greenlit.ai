@@ -1,0 +1,30 @@
+{
+  "grn_number": 1191,
+  "substance_name": "Ergothioneine produced by Escherichia coli BL-21 (DE3) expressing ergothioneine synthases from Schizosaccharomyces pombe",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Jan 30, 2025",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1191",
+  "substance_type": "additive",
+  "production_method": "precision_fermentation",
+  "source_organism_type": "bacterial",
+  "intended_uses": [
+    "bakery",
+    "beverages",
+    "confectionery",
+    "snacks"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "acute_toxicity",
+    "history_of_safe_use",
+    "metabolic_fate",
+    "in_silico_toxicology"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true,
+  "source_organism_name": "Escherichia coli BL-21"
+}

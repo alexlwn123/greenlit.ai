@@ -1,0 +1,26 @@
+{
+  "grn_number": 829,
+  "substance_name": "Powdered Aspergillus oryzae grown with one or more added minerals",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Dec 9, 2019",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0829",
+  "substance_type": "mineral",
+  "production_method": "solid_state_fermentation",
+  "source_organism_type": "fungal",
+  "intended_uses": [
+    "general_food",
+    "dietary_supplements"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "acute_toxicity",
+    "nutritional_impact",
+    "history_of_safe_use"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false
+}

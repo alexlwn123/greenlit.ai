@@ -1,0 +1,31 @@
+{
+  "grn_number": 754,
+  "substance_name": "Algal oil (87% oleic acid) derived from Prototheca moriformis strain S6697",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Jul 23, 2018",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0754",
+  "substance_type": "lipid",
+  "production_method": "algal_cultivation",
+  "source_organism_type": "algal",
+  "intended_uses": [
+    "bakery",
+    "confectionery",
+    "meal_replacements",
+    "cereals_and_grains",
+    "dairy_alternatives",
+    "fats_and_oils"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "nutritional_impact",
+    "history_of_safe_use",
+    "metabolic_fate"
+  ],
+  "dietary_exposure_method": "market_share",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false,
+  "source_organism_name": "Prototheca moriformis S6697"
+}

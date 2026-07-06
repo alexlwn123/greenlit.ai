@@ -1,0 +1,40 @@
+{
+  "grn_number": 1260,
+  "substance_name": "Rebaudioside M produced by enzymatic treatment of steviol glycosides purified from the leaves of Stevia rebaudiana (Bertoni) Bertoni",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Nov 18, 2025",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1260",
+  "substance_type": "additive",
+  "production_method": "enzymatic",
+  "source_organism_type": "plant",
+  "intended_uses": [
+    "beverages",
+    "dairy_alternatives",
+    "protein_bars",
+    "bakery",
+    "snacks",
+    "general_food",
+    "cereals_and_grains",
+    "soups_and_sauces",
+    "fats_and_oils",
+    "confectionery",
+    "fermented_foods",
+    "sports_nutrition",
+    "meal_replacements"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "subchronic_toxicity",
+    "allergenicity_bioinformatic",
+    "human_clinical_trial",
+    "history_of_safe_use",
+    "metabolic_fate"
+  ],
+  "dietary_exposure_method": "not_included",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true,
+  "source_organism_name": "Stevia rebaudiana"
+}

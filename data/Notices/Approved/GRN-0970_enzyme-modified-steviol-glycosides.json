@@ -1,0 +1,34 @@
+{
+  "grn_number": 970,
+  "substance_name": "Enzyme-modified steviol glycosides",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Apr 9, 2021",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0970",
+  "substance_type": "additive",
+  "production_method": "enzymatic",
+  "source_organism_type": "plant",
+  "intended_uses": [
+    "beverages",
+    "condiments",
+    "snacks",
+    "general_food",
+    "confectionery"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "acute_toxicity",
+    "chronic_toxicity",
+    "reproductive_toxicity",
+    "developmental_toxicity",
+    "genotoxicity_ames",
+    "genotoxicity_chromosomal",
+    "allergenicity_bioinformatic",
+    "metabolic_fate"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true
+}

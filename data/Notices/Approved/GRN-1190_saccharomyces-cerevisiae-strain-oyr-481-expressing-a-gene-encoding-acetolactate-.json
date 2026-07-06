@@ -1,0 +1,27 @@
+{
+  "grn_number": 1190,
+  "substance_name": "Saccharomyces cerevisiae strain OYR-481 expressing a gene encoding acetolactate decarboxylase from Brevibacillus brevis",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Sep 27, 2024",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1190",
+  "substance_type": "microorganism",
+  "production_method": "submerged_fermentation",
+  "source_organism_type": "yeast",
+  "intended_uses": [
+    "beverages"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "allergenicity_bioinformatic",
+    "history_of_safe_use",
+    "metabolic_fate",
+    "in_silico_toxicology"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true,
+  "source_organism_name": "Brevibacillus brevis"
+}

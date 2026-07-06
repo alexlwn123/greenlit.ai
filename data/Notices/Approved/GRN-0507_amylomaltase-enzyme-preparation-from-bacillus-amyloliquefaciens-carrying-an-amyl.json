@@ -1,0 +1,28 @@
+{
+  "grn_number": 507,
+  "substance_name": "Amylomaltase enzyme preparation from Bacillus amyloliquefaciens carrying an amylomaltase gene from Thermus thermophiles",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Sep 11, 2014",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0507",
+  "substance_type": "enzyme",
+  "production_method": "submerged_fermentation",
+  "source_organism_type": "bacterial",
+  "intended_uses": [
+    "dairy_alternatives",
+    "confectionery",
+    "general_food"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "subchronic_toxicity",
+    "genotoxicity_ames",
+    "allergenicity_bioinformatic"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true,
+  "source_organism_name": "Bacillus amyloliquefaciens"
+}

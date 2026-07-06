@@ -1,0 +1,41 @@
+{
+  "grn_number": 818,
+  "substance_name": "Isomalto-oligosaccharides",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Dec 18, 2019",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0818",
+  "substance_type": "carbohydrate",
+  "production_method": "enzymatic",
+  "source_organism_type": null,
+  "intended_uses": [
+    "beverages",
+    "dairy_alternatives",
+    "protein_bars",
+    "bakery",
+    "meat_alternatives",
+    "dietary_supplements",
+    "condiments",
+    "snacks",
+    "general_food",
+    "cereals_and_grains",
+    "soups_and_sauces",
+    "fats_and_oils",
+    "confectionery",
+    "fermented_foods",
+    "sports_nutrition",
+    "meal_replacements"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "acute_toxicity",
+    "digestibility_study",
+    "nutritional_impact",
+    "human_clinical_trial"
+  ],
+  "dietary_exposure_method": "NHANES",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false
+}

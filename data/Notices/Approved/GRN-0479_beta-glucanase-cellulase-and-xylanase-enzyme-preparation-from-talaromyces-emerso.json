@@ -1,0 +1,31 @@
+{
+  "grn_number": 479,
+  "substance_name": "Beta-glucanase, cellulase, and xylanase enzyme preparation from Talaromyces emersonii",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Mar 7, 2014",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0479",
+  "substance_type": "enzyme",
+  "production_method": "submerged_fermentation",
+  "source_organism_type": "fungal",
+  "intended_uses": [
+    "beverages",
+    "cereals_and_grains",
+    "fermented_foods"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "acute_toxicity",
+    "subchronic_toxicity",
+    "genotoxicity_ames",
+    "allergenicity_bioinformatic",
+    "nutritional_impact",
+    "history_of_safe_use"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true,
+  "source_organism_name": "Talaromyces emersonii"
+}

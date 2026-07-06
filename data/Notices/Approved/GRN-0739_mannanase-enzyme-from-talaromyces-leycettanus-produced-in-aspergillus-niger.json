@@ -1,0 +1,26 @@
+{
+  "grn_number": 739,
+  "substance_name": "Mannanase enzyme from Talaromyces leycettanus produced in Aspergillus niger",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Apr 25, 2018",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0739",
+  "substance_type": "enzyme",
+  "production_method": "precision_fermentation",
+  "source_organism_type": "fungal",
+  "intended_uses": [
+    "beverages"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "allergenicity_bioinformatic",
+    "metabolic_fate",
+    "in_silico_toxicology"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true,
+  "source_organism_name": "Talaromyces leycettanus"
+}

@@ -1,0 +1,26 @@
+{
+  "grn_number": 787,
+  "substance_name": "Quinoa sprout powder (Resubmission of GRN 692 )",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Sep 9, 2018",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0787",
+  "substance_type": "biomass",
+  "production_method": "fractionation",
+  "source_organism_type": "plant",
+  "intended_uses": [
+    "general_food",
+    "dietary_supplements"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "nutritional_impact",
+    "history_of_safe_use"
+  ],
+  "dietary_exposure_method": "USDA_CSFII",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false,
+  "source_organism_name": "Quinoa sprout"
+}

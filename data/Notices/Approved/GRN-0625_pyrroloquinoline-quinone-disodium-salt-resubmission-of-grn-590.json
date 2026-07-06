@@ -1,0 +1,26 @@
+{
+  "grn_number": 625,
+  "substance_name": "Pyrroloquinoline quinone disodium salt (Resubmission of GRN 590 )",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Aug 18, 2016",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0625",
+  "substance_type": "vitamin",
+  "production_method": null,
+  "source_organism_type": null,
+  "intended_uses": [
+    "beverages",
+    "meal_replacements",
+    "dietary_supplements"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "history_of_safe_use"
+  ],
+  "dietary_exposure_method": "NHANES",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false,
+  "source_organism_name": "Pyrroloquinoline quinone"
+}

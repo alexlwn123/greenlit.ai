@@ -1,0 +1,26 @@
+{
+  "grn_number": 525,
+  "substance_name": "Pea fiber",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Sep 24, 2014",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0525",
+  "substance_type": "carbohydrate",
+  "production_method": "extraction",
+  "source_organism_type": "plant",
+  "intended_uses": [
+    "bakery",
+    "beverages",
+    "dairy_alternatives"
+  ],
+  "target_population": "not_for_infants",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "nutritional_impact",
+    "history_of_safe_use"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false
+}

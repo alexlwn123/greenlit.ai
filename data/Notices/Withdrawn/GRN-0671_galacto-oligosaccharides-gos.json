@@ -1,0 +1,30 @@
+{
+  "grn_number": 671,
+  "substance_name": "Galacto-oligosaccharides (GOS)",
+  "status": "withdrawn",
+  "date_filed": "",
+  "date_closed": "Apr 11, 2017",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0671",
+  "substance_type": "carbohydrate",
+  "production_method": "enzymatic",
+  "source_organism_type": "fungal",
+  "intended_uses": [
+    "infant_formula",
+    "beverages",
+    "general_food"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "subchronic_toxicity",
+    "reproductive_toxicity",
+    "developmental_toxicity",
+    "genotoxicity_ames",
+    "allergenicity_bioinformatic",
+    "human_clinical_trial"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true
+}

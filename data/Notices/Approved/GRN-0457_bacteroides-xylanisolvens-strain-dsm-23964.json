@@ -1,0 +1,25 @@
+{
+  "grn_number": 457,
+  "substance_name": "Bacteroides xylanisolvens strain DSM 23964",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Dec 16, 2013",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0457",
+  "substance_type": "microorganism",
+  "production_method": "fermentation",
+  "source_organism_type": "bacterial",
+  "intended_uses": [
+    "dairy_alternatives",
+    "cereals_and_grains",
+    "snacks",
+    "general_food"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [],
+  "dietary_exposure_method": null,
+  "exposure_estimate_included": false,
+  "allergenicity_addressed": false,
+  "source_organism_name": "Bacteroides xylanisolvens DSM"
+}

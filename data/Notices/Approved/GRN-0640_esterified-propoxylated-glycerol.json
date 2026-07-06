@@ -1,0 +1,34 @@
+{
+  "grn_number": 640,
+  "substance_name": "Esterified propoxylated glycerol",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Sep 21, 2016",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0640",
+  "substance_type": "additive",
+  "production_method": "chemical_synthesis",
+  "source_organism_type": null,
+  "intended_uses": [
+    "bakery",
+    "confectionery",
+    "fats_and_oils",
+    "soups_and_sauces",
+    "snacks"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "acute_toxicity",
+    "subchronic_toxicity",
+    "genotoxicity_ames",
+    "genotoxicity_chromosomal",
+    "allergenicity_bioinformatic",
+    "digestibility_study",
+    "metabolic_fate"
+  ],
+  "dietary_exposure_method": "NHANES",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true,
+  "source_organism_name": "Esterified propoxylated"
+}

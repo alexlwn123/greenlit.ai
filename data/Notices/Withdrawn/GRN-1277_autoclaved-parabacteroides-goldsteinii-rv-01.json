@@ -1,0 +1,31 @@
+{
+  "grn_number": 1277,
+  "substance_name": "Autoclaved Parabacteroides goldsteinii RV-01",
+  "status": "withdrawn",
+  "date_filed": "",
+  "date_closed": "Jan 22, 2026",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1277",
+  "substance_type": "microorganism",
+  "production_method": "submerged_fermentation",
+  "source_organism_type": "bacterial",
+  "intended_uses": [
+    "sports_nutrition",
+    "beverages",
+    "cereals_and_grains",
+    "dairy_alternatives",
+    "confectionery",
+    "protein_bars",
+    "snacks"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "allergenicity_bioinformatic",
+    "history_of_safe_use",
+    "metabolic_fate"
+  ],
+  "dietary_exposure_method": "USDA_CSFII",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true
+}

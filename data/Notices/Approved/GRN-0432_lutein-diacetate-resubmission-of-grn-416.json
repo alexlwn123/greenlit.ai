@@ -1,0 +1,32 @@
+{
+  "grn_number": 432,
+  "substance_name": "Lutein diacetate (Resubmission of GRN 416 )",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Nov 14, 2012",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0432",
+  "substance_type": "colorant",
+  "production_method": "extraction",
+  "source_organism_type": "plant",
+  "intended_uses": [
+    "bakery",
+    "cereals_and_grains",
+    "beverages",
+    "dairy_alternatives",
+    "protein_bars",
+    "snacks",
+    "confectionery",
+    "condiments",
+    "soups_and_sauces",
+    "fats_and_oils",
+    "infant_formula",
+    "fermented_foods"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [],
+  "dietary_exposure_method": null,
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false
+}

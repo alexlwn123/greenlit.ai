@@ -1,0 +1,27 @@
+{
+  "grn_number": 883,
+  "substance_name": "Ilex guayusa leaf aqueous extract",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Apr 28, 2020",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0883",
+  "substance_type": "additive",
+  "production_method": "extraction",
+  "source_organism_type": "plant",
+  "intended_uses": [
+    "beverages"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "acute_toxicity",
+    "nutritional_impact",
+    "human_clinical_trial",
+    "metabolic_fate",
+    "in_silico_toxicology"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false
+}

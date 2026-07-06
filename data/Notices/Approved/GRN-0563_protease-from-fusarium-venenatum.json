@@ -1,0 +1,32 @@
+{
+  "grn_number": 563,
+  "substance_name": "Protease from Fusarium venenatum",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Jul 8, 2015",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0563",
+  "substance_type": "enzyme",
+  "production_method": "submerged_fermentation",
+  "source_organism_type": "fungal",
+  "intended_uses": [
+    "beverages",
+    "dairy_alternatives",
+    "bakery",
+    "meat_alternatives",
+    "infant_formula",
+    "dietary_supplements",
+    "general_food"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "allergenicity_bioinformatic",
+    "history_of_safe_use",
+    "metabolic_fate"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true,
+  "source_organism_name": "Fusarium venenatum"
+}

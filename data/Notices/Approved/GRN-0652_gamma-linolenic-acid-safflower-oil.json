@@ -1,0 +1,27 @@
+{
+  "grn_number": 652,
+  "substance_name": "Gamma linolenic acid safflower oil",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Dec 16, 2016",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0652",
+  "substance_type": "lipid",
+  "production_method": "extraction",
+  "source_organism_type": "plant",
+  "intended_uses": [
+    "general_food",
+    "dietary_supplements",
+    "condiments",
+    "fats_and_oils"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "nutritional_impact",
+    "history_of_safe_use"
+  ],
+  "dietary_exposure_method": "not_included",
+  "exposure_estimate_included": false,
+  "allergenicity_addressed": false
+}

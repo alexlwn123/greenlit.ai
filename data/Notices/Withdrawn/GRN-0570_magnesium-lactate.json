@@ -1,0 +1,26 @@
+{
+  "grn_number": 570,
+  "substance_name": "Magnesium lactate",
+  "status": "withdrawn",
+  "date_filed": "",
+  "date_closed": "Jan 26, 2016",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0570",
+  "substance_type": "mineral",
+  "production_method": "chemical_synthesis",
+  "source_organism_type": null,
+  "intended_uses": [
+    "beverages"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "nutritional_impact",
+    "human_clinical_trial",
+    "history_of_safe_use",
+    "in_silico_toxicology"
+  ],
+  "dietary_exposure_method": "NHANES",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false
+}

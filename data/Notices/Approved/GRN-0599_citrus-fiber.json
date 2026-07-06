@@ -1,0 +1,25 @@
+{
+  "grn_number": 599,
+  "substance_name": "Citrus fiber",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Feb 17, 2016",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0599",
+  "substance_type": "carbohydrate",
+  "production_method": "extraction",
+  "source_organism_type": "plant",
+  "intended_uses": [
+    "dairy_alternatives",
+    "condiments",
+    "meat_alternatives",
+    "snacks",
+    "confectionery"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": null,
+  "dietary_exposure_method": null,
+  "exposure_estimate_included": false,
+  "allergenicity_addressed": false
+}

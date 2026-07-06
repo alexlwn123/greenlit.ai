@@ -1,0 +1,31 @@
+{
+  "grn_number": 1175,
+  "substance_name": "Lactiplantibacillus plantarum DSM 23881",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Oct 22, 2024",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1175",
+  "substance_type": "probiotic",
+  "production_method": "submerged_fermentation",
+  "source_organism_type": "bacterial",
+  "intended_uses": [
+    "general_food",
+    "beverages",
+    "dairy_alternatives",
+    "dietary_supplements"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "common_use_prior_1958",
+  "safety_data_available": [
+    "acute_toxicity",
+    "allergenicity_bioinformatic",
+    "human_clinical_trial",
+    "history_of_safe_use",
+    "in_vitro_toxicity"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true,
+  "source_organism_name": "Lactiplantibacillus plantarum DSM"
+}

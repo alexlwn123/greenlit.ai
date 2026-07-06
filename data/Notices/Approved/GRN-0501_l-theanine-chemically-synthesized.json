@@ -1,0 +1,28 @@
+{
+  "grn_number": 501,
+  "substance_name": "L-theanine (chemically synthesized)",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Jul 30, 2014",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0501",
+  "substance_type": "additive",
+  "production_method": "chemical_synthesis",
+  "source_organism_type": null,
+  "intended_uses": [
+    "beverages",
+    "confectionery",
+    "snacks"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "acute_toxicity",
+    "genotoxicity_ames",
+    "history_of_safe_use",
+    "metabolic_fate"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false
+}

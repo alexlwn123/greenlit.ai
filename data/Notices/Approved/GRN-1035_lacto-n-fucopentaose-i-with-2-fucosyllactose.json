@@ -1,0 +1,31 @@
+{
+  "grn_number": 1035,
+  "substance_name": "Lacto- N -fucopentaose I with 2'-fucosyllactose",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Jan 19, 2023",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1035",
+  "substance_type": "carbohydrate",
+  "production_method": "precision_fermentation",
+  "source_organism_type": "bacterial",
+  "intended_uses": [
+    "infant_formula",
+    "beverages",
+    "general_food"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "subchronic_toxicity",
+    "genotoxicity_ames",
+    "genotoxicity_chromosomal",
+    "allergenicity_bioinformatic",
+    "human_clinical_trial",
+    "history_of_safe_use",
+    "metabolic_fate"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true
+}

@@ -1,0 +1,27 @@
+{
+  "grn_number": 1,
+  "substance_name": "Soy isoflavone extract",
+  "status": "withdrawn",
+  "date_filed": "",
+  "date_closed": "Nov 3, 1998",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0001",
+  "substance_type": "vitamin",
+  "production_method": "extraction",
+  "source_organism_type": "plant",
+  "intended_uses": [
+    "dietary_supplements",
+    "general_food"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "common_use_prior_1958",
+  "safety_data_available": [
+    "acute_toxicity",
+    "genotoxicity_ames",
+    "nutritional_impact",
+    "history_of_safe_use"
+  ],
+  "dietary_exposure_method": "not_included",
+  "exposure_estimate_included": false,
+  "allergenicity_addressed": true
+}

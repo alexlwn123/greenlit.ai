@@ -1,0 +1,28 @@
+{
+  "grn_number": 1209,
+  "substance_name": "Algal oil (≥35% docosahexaenoic acid) from Schizochytrium limacinum A2",
+  "status": "withdrawn",
+  "date_filed": "",
+  "date_closed": "May 7, 2025",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1209",
+  "substance_type": "lipid",
+  "production_method": "algal_cultivation",
+  "source_organism_type": "algal",
+  "intended_uses": [
+    "general_food",
+    "infant_formula"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "human_clinical_trial",
+    "history_of_safe_use",
+    "metabolic_fate",
+    "in_silico_toxicology"
+  ],
+  "dietary_exposure_method": "market_share",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true,
+  "source_organism_name": "Schizochytrium limacinum A2"
+}

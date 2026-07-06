@@ -1,0 +1,24 @@
+{
+  "grn_number": 536,
+  "substance_name": "High purity rebaudioside C",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Feb 12, 2015",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0536",
+  "substance_type": "flavoring_agent",
+  "production_method": "extraction",
+  "source_organism_type": "plant",
+  "intended_uses": [
+    "beverages",
+    "confectionery",
+    "general_food",
+    "snacks"
+  ],
+  "target_population": "not_for_infants",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": null,
+  "dietary_exposure_method": null,
+  "exposure_estimate_included": false,
+  "allergenicity_addressed": null
+}

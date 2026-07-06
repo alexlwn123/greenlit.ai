@@ -1,0 +1,29 @@
+{
+  "grn_number": 476,
+  "substance_name": "Asparaginase enzyme preparation produced by genetically modified Bacillus subtilis",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Feb 3, 2014",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0476",
+  "substance_type": "enzyme",
+  "production_method": "submerged_fermentation",
+  "source_organism_type": "bacterial",
+  "intended_uses": [
+    "bakery",
+    "snacks",
+    "cereals_and_grains",
+    "beverages",
+    "confectionery"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "history_of_safe_use",
+    "in_silico_toxicology"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true,
+  "source_organism_name": "Bacillus subtilis"
+}

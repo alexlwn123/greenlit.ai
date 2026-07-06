@@ -1,0 +1,33 @@
+{
+  "grn_number": 554,
+  "substance_name": "Synthetic amorphous silica",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "May 14, 2015",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0554",
+  "substance_type": "additive",
+  "production_method": "chemical_synthesis",
+  "source_organism_type": null,
+  "intended_uses": [
+    "beverages",
+    "general_food",
+    "bakery",
+    "condiments",
+    "confectionery",
+    "soups_and_sauces",
+    "fats_and_oils"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "acute_toxicity",
+    "chronic_toxicity",
+    "genotoxicity_ames",
+    "in_silico_toxicology"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false,
+  "source_organism_name": "Synthetic amorphous"
+}
