@@ -1,0 +1,32 @@
+{
+  "grn_number": 867,
+  "substance_name": "Rebaudioside M",
+  "status": "withdrawn",
+  "date_filed": "",
+  "date_closed": "Sep 3, 2019",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0867",
+  "substance_type": "flavoring_agent",
+  "production_method": "precision_fermentation",
+  "source_organism_type": "fungal",
+  "intended_uses": [
+    "beverages",
+    "general_food"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "subchronic_toxicity",
+    "chronic_toxicity",
+    "reproductive_toxicity",
+    "developmental_toxicity",
+    "genotoxicity_ames",
+    "genotoxicity_chromosomal",
+    "human_clinical_trial",
+    "history_of_safe_use",
+    "metabolic_fate"
+  ],
+  "dietary_exposure_method": "NHANES",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true
+}

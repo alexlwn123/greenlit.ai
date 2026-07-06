@@ -1,0 +1,22 @@
+{
+  "grn_number": 716,
+  "substance_name": "Bovine milk osteopontin",
+  "status": "withdrawn",
+  "date_filed": "",
+  "date_closed": "Feb 1, 2018",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0716",
+  "substance_type": "protein",
+  "production_method": "fractionation",
+  "source_organism_type": "animal",
+  "intended_uses": [
+    "infant_formula",
+    "beverages"
+  ],
+  "target_population": "children",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false
+}

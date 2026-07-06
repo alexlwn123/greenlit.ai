@@ -1,0 +1,34 @@
+{
+  "grn_number": 713,
+  "substance_name": "Hydrolyzed pork cartilage",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Apr 5, 2018",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0713",
+  "substance_type": "protein",
+  "production_method": "hydrolysis",
+  "source_organism_type": "animal",
+  "intended_uses": [
+    "beverages",
+    "dairy_alternatives",
+    "protein_bars",
+    "bakery",
+    "snacks",
+    "general_food",
+    "dietary_supplements",
+    "sports_nutrition"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "allergenicity_bioinformatic",
+    "nutritional_impact",
+    "history_of_safe_use",
+    "metabolic_fate"
+  ],
+  "dietary_exposure_method": "NHANES",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true,
+  "source_organism_name": "Hydrolyzed pork"
+}

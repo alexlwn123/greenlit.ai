@@ -1,0 +1,25 @@
+{
+  "grn_number": 841,
+  "substance_name": "Saccharomyces cerevisiae expressing L-lactate dehydrogenase from Rhizopus oryzae",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Mar 10, 2020",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0841",
+  "substance_type": "enzyme",
+  "production_method": "precision_fermentation",
+  "source_organism_type": "yeast",
+  "intended_uses": [
+    "beverages"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "history_of_safe_use",
+    "in_silico_toxicology"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false,
+  "source_organism_name": "Rhizopus oryzae"
+}

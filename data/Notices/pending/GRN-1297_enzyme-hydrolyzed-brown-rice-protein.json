@@ -1,0 +1,27 @@
+{
+  "grn_number": 1297,
+  "substance_name": "Enzyme-hydrolyzed brown rice protein",
+  "status": "pending",
+  "date_filed": "",
+  "date_closed": "",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1297",
+  "substance_type": "protein",
+  "production_method": "hydrolysis",
+  "source_organism_type": "plant",
+  "intended_uses": [
+    "beverages",
+    "dietary_supplements",
+    "general_food"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "allergenicity_bioinformatic",
+    "nutritional_impact",
+    "history_of_safe_use"
+  ],
+  "dietary_exposure_method": "NHANES",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true
+}

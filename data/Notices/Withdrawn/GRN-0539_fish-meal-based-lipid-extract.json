@@ -1,0 +1,36 @@
+{
+  "grn_number": 539,
+  "substance_name": "Fish meal-based lipid extract",
+  "status": "withdrawn",
+  "date_filed": "",
+  "date_closed": "Jun 15, 2015",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0539",
+  "substance_type": "lipid",
+  "production_method": "extraction",
+  "source_organism_type": "animal",
+  "intended_uses": [
+    "beverages",
+    "dairy_alternatives",
+    "protein_bars",
+    "bakery",
+    "meat_alternatives",
+    "dietary_supplements",
+    "condiments",
+    "snacks",
+    "general_food",
+    "cereals_and_grains",
+    "soups_and_sauces",
+    "fats_and_oils",
+    "confectionery"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "nutritional_impact",
+    "history_of_safe_use"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false
+}

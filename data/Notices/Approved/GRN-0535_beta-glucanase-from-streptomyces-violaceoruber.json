@@ -1,0 +1,26 @@
+{
+  "grn_number": 535,
+  "substance_name": "Beta-glucanase from Streptomyces violaceoruber",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Feb 3, 2015",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0535",
+  "substance_type": "enzyme",
+  "production_method": "submerged_fermentation",
+  "source_organism_type": "bacterial",
+  "intended_uses": [
+    "beverages",
+    "condiments",
+    "fermented_foods"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "history_of_safe_use"
+  ],
+  "dietary_exposure_method": null,
+  "exposure_estimate_included": false,
+  "allergenicity_addressed": false,
+  "source_organism_name": "Streptomyces violaceoruber"
+}

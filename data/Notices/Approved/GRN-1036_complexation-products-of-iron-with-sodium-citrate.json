@@ -1,0 +1,27 @@
+{
+  "grn_number": 1036,
+  "substance_name": "Complexation products of iron with sodium citrate",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Oct 6, 2022",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1036",
+  "substance_type": "additive",
+  "production_method": "chemical_synthesis",
+  "source_organism_type": null,
+  "intended_uses": [
+    "condiments"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "acute_toxicity",
+    "subchronic_toxicity",
+    "nutritional_impact",
+    "metabolic_fate"
+  ],
+  "dietary_exposure_method": "NHANES",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false,
+  "source_organism_name": "Complexation products"
+}

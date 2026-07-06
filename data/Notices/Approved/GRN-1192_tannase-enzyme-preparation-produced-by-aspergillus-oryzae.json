@@ -1,0 +1,25 @@
+{
+  "grn_number": 1192,
+  "substance_name": "Tannase enzyme preparation produced by Aspergillus oryzae",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Mar 14, 2025",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1192",
+  "substance_type": "enzyme",
+  "production_method": "submerged_fermentation",
+  "source_organism_type": "fungal",
+  "intended_uses": [
+    "beverages",
+    "general_food"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "history_of_safe_use"
+  ],
+  "dietary_exposure_method": "NHANES",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false,
+  "source_organism_name": "Aspergillus oryzae"
+}

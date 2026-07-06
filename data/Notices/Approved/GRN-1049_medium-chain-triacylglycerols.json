@@ -1,0 +1,30 @@
+{
+  "grn_number": 1049,
+  "substance_name": "Medium-chain triacylglycerols",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Sep 21, 2022",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1049",
+  "substance_type": "lipid",
+  "production_method": "extraction",
+  "source_organism_type": null,
+  "intended_uses": [
+    "infant_formula"
+  ],
+  "target_population": "not_for_infants",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "acute_toxicity",
+    "chronic_toxicity",
+    "reproductive_toxicity",
+    "developmental_toxicity",
+    "genotoxicity_ames",
+    "allergenicity_bioinformatic",
+    "metabolic_fate",
+    "in_silico_toxicology"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true
+}

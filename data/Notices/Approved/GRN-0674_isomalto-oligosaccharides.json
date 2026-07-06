@@ -1,0 +1,24 @@
+{
+  "grn_number": 674,
+  "substance_name": "Isomalto-oligosaccharides",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Jul 5, 2017",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0674",
+  "substance_type": "carbohydrate",
+  "production_method": null,
+  "source_organism_type": null,
+  "intended_uses": [
+    "general_food"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "nutritional_impact",
+    "metabolic_fate"
+  ],
+  "dietary_exposure_method": null,
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false
+}

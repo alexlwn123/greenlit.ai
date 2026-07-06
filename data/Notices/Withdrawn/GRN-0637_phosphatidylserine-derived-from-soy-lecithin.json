@@ -1,0 +1,25 @@
+{
+  "grn_number": 637,
+  "substance_name": "Phosphatidylserine derived from soy lecithin",
+  "status": "withdrawn",
+  "date_filed": "",
+  "date_closed": "Aug 4, 2016",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0637",
+  "substance_type": "lipid",
+  "production_method": "enzymatic",
+  "source_organism_type": "plant",
+  "intended_uses": [
+    "general_food",
+    "dietary_supplements"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "history_of_safe_use"
+  ],
+  "dietary_exposure_method": null,
+  "exposure_estimate_included": false,
+  "allergenicity_addressed": false,
+  "source_organism_name": "Phosphatidylserine derived"
+}

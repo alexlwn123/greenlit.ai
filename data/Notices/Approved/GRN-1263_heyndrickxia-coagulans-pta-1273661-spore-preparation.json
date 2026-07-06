@@ -1,0 +1,28 @@
+{
+  "grn_number": 1263,
+  "substance_name": "Heyndrickxia coagulans PTA-1273661 spore preparation",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Dec 9, 2025",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1263",
+  "substance_type": "probiotic",
+  "production_method": "submerged_fermentation",
+  "source_organism_type": "bacterial",
+  "intended_uses": [
+    "general_food",
+    "dietary_supplements"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "acute_toxicity",
+    "allergenicity_bioinformatic",
+    "human_clinical_trial",
+    "history_of_safe_use"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true,
+  "source_organism_name": "Heyndrickxia coagulans PTA-1273661"
+}

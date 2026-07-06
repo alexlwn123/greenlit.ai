@@ -1,0 +1,26 @@
+{
+  "grn_number": 1001,
+  "substance_name": "Myoglobin preparation from a strain of Pichia pastoris expressing the myoglobin gene from Bos taurus",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Dec 3, 2021",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1001",
+  "substance_type": "protein",
+  "production_method": "precision_fermentation",
+  "source_organism_type": "yeast",
+  "intended_uses": [
+    "meat_alternatives"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "allergenicity_bioinformatic",
+    "allergenicity_in_vitro",
+    "history_of_safe_use"
+  ],
+  "dietary_exposure_method": "NHANES",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true,
+  "source_organism_name": "Pichia pastoris"
+}

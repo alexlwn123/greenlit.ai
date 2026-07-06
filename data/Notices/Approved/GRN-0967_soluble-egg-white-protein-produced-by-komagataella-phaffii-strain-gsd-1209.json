@@ -1,0 +1,25 @@
+{
+  "grn_number": 967,
+  "substance_name": "Soluble egg-white protein produced by Komagataella phaffii strain GSD-1209",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Sep 9, 2021",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0967",
+  "substance_type": "protein",
+  "production_method": "precision_fermentation",
+  "source_organism_type": "yeast",
+  "intended_uses": [
+    "beverages",
+    "protein_bars",
+    "sports_nutrition",
+    "dietary_supplements"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [],
+  "dietary_exposure_method": "not_included",
+  "exposure_estimate_included": false,
+  "allergenicity_addressed": false,
+  "source_organism_name": "Komagataella phaffii GSD-1209"
+}

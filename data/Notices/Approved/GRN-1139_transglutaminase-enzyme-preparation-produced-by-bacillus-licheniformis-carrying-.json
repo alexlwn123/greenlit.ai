@@ -1,0 +1,33 @@
+{
+  "grn_number": 1139,
+  "substance_name": "Transglutaminase enzyme preparation produced by Bacillus licheniformis carrying a gene encoding transglutaminase from Streptomyces mobaraensis",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Jul 2, 2024",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1139",
+  "substance_type": "enzyme",
+  "production_method": "precision_fermentation",
+  "source_organism_type": "bacterial",
+  "intended_uses": [
+    "dairy_alternatives",
+    "meat_alternatives",
+    "bakery",
+    "cereals_and_grains",
+    "beverages",
+    "general_food"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "acute_toxicity",
+    "allergenicity_bioinformatic",
+    "nutritional_impact",
+    "metabolic_fate",
+    "in_silico_toxicology"
+  ],
+  "dietary_exposure_method": "USDA_CSFII",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true,
+  "source_organism_name": "Bacillus licheniformis"
+}

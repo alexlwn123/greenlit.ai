@@ -1,0 +1,34 @@
+{
+  "grn_number": 743,
+  "substance_name": "β-galactosidase from Papiliotrema terrestris",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Jun 1, 2018",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0743",
+  "substance_type": "enzyme",
+  "production_method": "submerged_fermentation",
+  "source_organism_type": "fungal",
+  "intended_uses": [
+    "infant_formula",
+    "beverages",
+    "dairy_alternatives",
+    "cereals_and_grains",
+    "snacks",
+    "confectionery",
+    "meal_replacements"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "acute_toxicity",
+    "subchronic_toxicity",
+    "genotoxicity_ames",
+    "digestibility_study",
+    "metabolic_fate"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true,
+  "source_organism_name": "Papiliotrema terrestris"
+}

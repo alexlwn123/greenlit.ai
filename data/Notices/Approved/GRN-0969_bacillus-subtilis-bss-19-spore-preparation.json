@@ -1,0 +1,26 @@
+{
+  "grn_number": 969,
+  "substance_name": "Bacillus subtilis Bss-19 spore preparation",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Oct 6, 2021",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0969",
+  "substance_type": "microorganism",
+  "production_method": "submerged_fermentation",
+  "source_organism_type": "bacterial",
+  "intended_uses": [
+    "general_food"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "acute_toxicity",
+    "allergenicity_bioinformatic",
+    "history_of_safe_use"
+  ],
+  "dietary_exposure_method": "not_included",
+  "exposure_estimate_included": false,
+  "allergenicity_addressed": true,
+  "source_organism_name": "Bacillus subtilis"
+}

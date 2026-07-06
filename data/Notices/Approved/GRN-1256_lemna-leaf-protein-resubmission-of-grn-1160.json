@@ -1,0 +1,33 @@
+{
+  "grn_number": 1256,
+  "substance_name": "Lemna leaf protein (Resubmission of GRN 1160 )",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Feb 5, 2026",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1256",
+  "substance_type": "protein",
+  "production_method": "extraction",
+  "source_organism_type": "plant",
+  "intended_uses": [
+    "general_food",
+    "dietary_supplements"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "acute_toxicity",
+    "subchronic_toxicity",
+    "genotoxicity_ames",
+    "allergenicity_bioinformatic",
+    "allergenicity_in_vitro",
+    "digestibility_study",
+    "nutritional_impact",
+    "human_clinical_trial",
+    "metabolic_fate"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true,
+  "source_organism_name": "Lemna leaf"
+}

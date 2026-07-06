@@ -1,0 +1,31 @@
+{
+  "grn_number": 646,
+  "substance_name": "Pecan shell fiber",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Oct 12, 2016",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0646",
+  "substance_type": "carbohydrate",
+  "production_method": "fractionation",
+  "source_organism_type": "plant",
+  "intended_uses": [
+    "bakery",
+    "cereals_and_grains",
+    "confectionery",
+    "snacks",
+    "meal_replacements",
+    "soups_and_sauces"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "subchronic_toxicity",
+    "genotoxicity_ames",
+    "genotoxicity_chromosomal"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true,
+  "source_organism_name": "Pecan shell"
+}

@@ -1,0 +1,24 @@
+{
+  "grn_number": 463,
+  "substance_name": "Lactobacillus acidophilus strain NP 28, Lactobacillus acidophilus strain NP51, Lactobacillus subsp. lactis strain NP7, and Pediococcus acidilactici strain NP3",
+  "status": "withdrawn",
+  "date_filed": "",
+  "date_closed": "Jan 16, 2014",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0463",
+  "substance_type": "microorganism",
+  "production_method": "submerged_fermentation",
+  "source_organism_type": "bacterial",
+  "intended_uses": [
+    "meat_alternatives"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "history_of_safe_use"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false,
+  "source_organism_name": "Lactobacillus acidophilus NP"
+}

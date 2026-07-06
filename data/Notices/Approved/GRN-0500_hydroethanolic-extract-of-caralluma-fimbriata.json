@@ -1,0 +1,27 @@
+{
+  "grn_number": 500,
+  "substance_name": "Hydroethanolic extract of Caralluma fimbriata",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Aug 11, 2014",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0500",
+  "substance_type": "additive",
+  "production_method": "extraction",
+  "source_organism_type": "plant",
+  "intended_uses": [
+    "general_food"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "developmental_toxicity",
+    "genotoxicity_ames",
+    "genotoxicity_chromosomal",
+    "history_of_safe_use"
+  ],
+  "dietary_exposure_method": null,
+  "exposure_estimate_included": false,
+  "allergenicity_addressed": false,
+  "source_organism_name": "Caralluma fimbriata"
+}

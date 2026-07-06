@@ -1,0 +1,31 @@
+{
+  "grn_number": 484,
+  "substance_name": "Galacto-oligosaccharides",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "May 8, 2014",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0484",
+  "substance_type": "carbohydrate",
+  "production_method": null,
+  "source_organism_type": null,
+  "intended_uses": [
+    "beverages",
+    "dairy_alternatives",
+    "dietary_supplements",
+    "general_food"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "acute_toxicity",
+    "subchronic_toxicity",
+    "genotoxicity_ames",
+    "allergenicity_bioinformatic",
+    "nutritional_impact",
+    "history_of_safe_use"
+  ],
+  "dietary_exposure_method": null,
+  "exposure_estimate_included": null,
+  "allergenicity_addressed": true
+}

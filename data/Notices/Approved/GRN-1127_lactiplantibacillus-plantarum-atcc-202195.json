@@ -1,0 +1,34 @@
+{
+  "grn_number": 1127,
+  "substance_name": "Lactiplantibacillus plantarum ATCC-202195",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Feb 1, 2024",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1127",
+  "substance_type": "probiotic",
+  "production_method": "submerged_fermentation",
+  "source_organism_type": "bacterial",
+  "intended_uses": [
+    "infant_formula",
+    "beverages",
+    "dairy_alternatives",
+    "confectionery",
+    "bakery",
+    "snacks",
+    "meal_replacements"
+  ],
+  "target_population": "not_for_infants",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "acute_toxicity",
+    "genotoxicity_ames",
+    "allergenicity_bioinformatic",
+    "human_clinical_trial",
+    "history_of_safe_use"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true,
+  "source_organism_name": "Lactiplantibacillus plantarum ATCC-202195"
+}

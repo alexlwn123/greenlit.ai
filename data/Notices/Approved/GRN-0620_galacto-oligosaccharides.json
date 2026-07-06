@@ -1,0 +1,21 @@
+{
+  "grn_number": 620,
+  "substance_name": "Galacto-oligosaccharides",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Jul 21, 2016",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0620",
+  "substance_type": "carbohydrate",
+  "production_method": null,
+  "source_organism_type": null,
+  "intended_uses": [
+    "infant_formula"
+  ],
+  "target_population": "not_for_infants",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [],
+  "dietary_exposure_method": null,
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false
+}

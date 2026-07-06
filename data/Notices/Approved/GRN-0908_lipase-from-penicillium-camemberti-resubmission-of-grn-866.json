@@ -1,0 +1,27 @@
+{
+  "grn_number": 908,
+  "substance_name": "Lipase from Penicillium camemberti (Resubmission of GRN 866 )",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Feb 5, 2021",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0908",
+  "substance_type": "enzyme",
+  "production_method": "precision_fermentation",
+  "source_organism_type": "fungal",
+  "intended_uses": [
+    "dairy_alternatives",
+    "fats_and_oils"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "subchronic_toxicity",
+    "genotoxicity_ames",
+    "allergenicity_bioinformatic"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true,
+  "source_organism_name": "Penicillium camemberti"
+}

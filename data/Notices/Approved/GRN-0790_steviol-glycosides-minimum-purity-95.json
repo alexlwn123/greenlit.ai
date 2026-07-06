@@ -1,0 +1,28 @@
+{
+  "grn_number": 790,
+  "substance_name": "Steviol glycosides (minimum purity 95%)",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Feb 26, 2019",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0790",
+  "substance_type": "flavoring_agent",
+  "production_method": null,
+  "source_organism_type": "plant",
+  "intended_uses": [
+    "beverages",
+    "bakery",
+    "meat_alternatives",
+    "condiments",
+    "snacks",
+    "general_food",
+    "confectionery"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [],
+  "dietary_exposure_method": null,
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false,
+  "source_organism_name": "Steviol glycosides"
+}

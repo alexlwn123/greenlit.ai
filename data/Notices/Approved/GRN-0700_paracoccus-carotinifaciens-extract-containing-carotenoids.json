@@ -1,0 +1,28 @@
+{
+  "grn_number": 700,
+  "substance_name": "Paracoccus carotinifaciens extract containing carotenoids",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Oct 23, 2017",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0700",
+  "substance_type": "colorant",
+  "production_method": "submerged_fermentation",
+  "source_organism_type": "bacterial",
+  "intended_uses": [
+    "beverages",
+    "dietary_supplements",
+    "general_food"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "acute_toxicity",
+    "genotoxicity_ames",
+    "history_of_safe_use"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false,
+  "source_organism_name": "Paracoccus carotinifaciens"
+}

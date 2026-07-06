@@ -1,0 +1,28 @@
+{
+  "grn_number": 820,
+  "substance_name": "Lactobacillus fermentum CECT5716",
+  "status": "withdrawn",
+  "date_filed": "",
+  "date_closed": "Apr 3, 2019",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0820",
+  "substance_type": "probiotic",
+  "production_method": null,
+  "source_organism_type": "bacterial",
+  "intended_uses": [
+    "general_food"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "allergenicity_bioinformatic",
+    "human_clinical_trial",
+    "history_of_safe_use",
+    "metabolic_fate",
+    "animal_toxicity_studies"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true,
+  "source_organism_name": "Lactobacillus fermentum CECT5716"
+}

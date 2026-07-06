@@ -1,0 +1,28 @@
+{
+  "grn_number": 989,
+  "substance_name": "Bacillus subtilis expressing a modified gene encoding a variant of the wild-type subtilisin from B. clausii",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Jun 30, 2022",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0989",
+  "substance_type": "enzyme",
+  "production_method": "submerged_fermentation",
+  "source_organism_type": "bacterial",
+  "intended_uses": [
+    "general_food"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "acute_toxicity",
+    "allergenicity_bioinformatic",
+    "digestibility_study",
+    "history_of_safe_use",
+    "metabolic_fate"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": true,
+  "source_organism_name": "Bacillus subtilis"
+}

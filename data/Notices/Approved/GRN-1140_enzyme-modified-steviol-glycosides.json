@@ -1,0 +1,35 @@
+{
+  "grn_number": 1140,
+  "substance_name": "Enzyme-modified steviol glycosides",
+  "status": "no_questions",
+  "date_filed": "",
+  "date_closed": "Oct 17, 2023",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1140",
+  "substance_type": "flavoring_agent",
+  "production_method": "enzymatic",
+  "source_organism_type": null,
+  "intended_uses": [
+    "beverages",
+    "dairy_alternatives",
+    "bakery",
+    "condiments",
+    "snacks",
+    "general_food",
+    "confectionery"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [
+    "subchronic_toxicity",
+    "reproductive_toxicity",
+    "developmental_toxicity",
+    "genotoxicity_ames",
+    "genotoxicity_chromosomal",
+    "metabolic_fate",
+    "immunotoxicity"
+  ],
+  "dietary_exposure_method": "theoretical_maximum",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false
+}

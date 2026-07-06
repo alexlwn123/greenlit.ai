@@ -1,0 +1,25 @@
+{
+  "grn_number": 621,
+  "substance_name": "Emulsified algal oil",
+  "status": "withdrawn",
+  "date_filed": "",
+  "date_closed": "May 13, 2016",
+  "notifier": "",
+  "source_pdf_url": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0621",
+  "substance_type": "lipid",
+  "production_method": null,
+  "source_organism_type": "algal",
+  "intended_uses": [
+    "beverages",
+    "meal_replacements",
+    "snacks",
+    "general_food"
+  ],
+  "target_population": "general_population",
+  "gras_basis": "scientific_procedures",
+  "safety_data_available": [],
+  "dietary_exposure_method": "NHANES",
+  "exposure_estimate_included": true,
+  "allergenicity_addressed": false,
+  "source_organism_name": "Emulsified algal"
+}
