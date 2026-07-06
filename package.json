@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "packageManager": "pnpm@10.33.2",
+  "packageManager": "pnpm@11.7.0",
   "scripts": {
-    "dev": "pnpm --filter @greenlit/web dev",
+    "dev": "concurrently -k -n api,web -c blue,green \"pnpm dev:api\" \"pnpm dev:web\"",
+    "dev:api": "pnpm --filter @greenlit/api dev",
     "dev:web": "pnpm --filter @greenlit/web dev",
     "dev:convex": "convex dev",
     "build": "pnpm -r --if-present build",
@@ -16,20 +17,17 @@
     "format": "biome format --write .",
     "check": "pnpm lint && pnpm typecheck && pnpm test && pnpm build"
   },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "esbuild"
-    ]
-  },
   "dependencies": {
     "@ai-sdk/openai": "^3.0.68",
     "@vercel/blob": "^2.4.0",
     "ai": "^6.0.197",
-    "convex": "^1.40.0"
+    "convex": "^1.40.0",
+    "hono": "^4.12.27"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.4.16",
     "@types/node": "^25.9.1",
+    "concurrently": "^10.0.3",
     "tsx": "^4.22.4",
     "typescript": "^6.0.3"
   }

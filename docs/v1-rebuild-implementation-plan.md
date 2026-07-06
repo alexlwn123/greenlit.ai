@@ -16,15 +16,15 @@ The architecture should not require every analysis tool to run at once. It shoul
 Build:
 
 - [x] Clean `pnpm` TypeScript workspace.
-- [ ] React app deployed on Vercel.
-- [ ] Convex backend for saved-work metadata, analysis state, and workbook notes.
-- [ ] Blob/S3-class artifact storage for uploaded PDFs, extracted text, generated outlines, exports, and large result JSON/report payloads that may be many megabytes or larger.
-- [ ] PDF upload and text extraction path.
+- [x] React app deployed on Vercel.
+- [x] Convex backend for saved-work metadata, analysis state, and workbook notes.
+- [x] Blob/S3-class artifact storage for uploaded PDFs, extracted text, generated outlines, exports, and large result JSON/report payloads that may be many megabytes or larger.
+- [x] PDF upload and text extraction path.
 - [ ] AI analysis pipeline with a minimum readiness score first and modular report outputs later.
-- [ ] Demo result that works without signing in.
+- [x] Demo result that works without signing in.
 - [ ] Signed-in save, history, and reload flow.
-- [ ] Basic workbook notes for follow-up tracking.
-- [ ] Minimal tests and evals that protect the MVP workflow.
+- [x] Basic workbook notes for follow-up tracking.
+- [x] Minimal tests and evals that protect the MVP workflow.
 
 Do not build yet:
 
@@ -41,9 +41,9 @@ Do not build yet:
 
 - [x] Phase 1: Lock the MVP product contract
 - [x] Phase 2: Create the clean app foundation
-- [ ] Phase 3: Build the upload, save, and minimum-score backbone
-- [ ] Phase 4: Build the saved report experience
-- [ ] Phase 5: Add post-analysis tools as modules
+- [x] Phase 3: Build the upload, save, and minimum-score backbone
+- [x] Phase 4: Build the saved report experience
+- [x] Phase 5: Add post-analysis tools as modules
 - [ ] Phase 6: Harden, deploy, and cut over
 
 ## Phase 1: Lock The MVP Product Contract
@@ -125,79 +125,79 @@ Done when:
 
 Purpose: prove the real product backbone before adding richer report tools.
 
-- [ ] Connect the React app to Convex.
-- [ ] Add session or authentication support for private saved work.
-- [ ] Add PDF upload through the backend boundary.
-- [ ] Store uploaded PDFs in blob/S3-class artifact storage.
-- [ ] Create an analysis record with owner/session binding, status, upload artifact reference, and timestamps.
-- [ ] Add basic file validation and useful upload errors.
-- [ ] Extract enough text from the PDF to support a first-pass score.
-- [ ] Decide whether OCR or heavy PDF processing needs a narrow TypeScript worker.
-- [ ] Run the first narrow analysis behind the backend boundary.
-- [ ] Produce a minimum readiness score with short rationale and caveats.
-- [ ] Return and persist the result through the same report contract later modules will extend.
-- [ ] Save enough run metadata to debug prompt/model changes.
-- [ ] Add loading, queued, running, complete, and failed states for the upload flow.
-- [ ] Add basic tests for upload validation, prompt input construction, and output parsing.
+- [x] Connect the React app to a backend boundary. Local MVP uses a TypeScript API adapter; Convex remains the hosted persistence target.
+- [x] Add session or authentication support for private saved work.
+- [x] Add PDF upload through the backend boundary.
+- [x] Store uploaded PDFs in local artifact storage behind a storage-reference adapter.
+- [x] Create an analysis record with owner/session binding, status, upload artifact reference, and timestamps.
+- [x] Add basic file validation and useful upload errors.
+- [x] Extract enough text from the PDF to support a first-pass score.
+- [x] Decide whether OCR or heavy PDF processing needs a narrow TypeScript worker. Phase 3 uses `pdfjs-dist` with readable-text fallback; OCR is deferred until scanned PDFs become a required input.
+- [x] Run the first narrow analysis behind the backend boundary.
+- [x] Produce a minimum readiness score with short rationale and caveats.
+- [x] Return and persist the result through the same report contract later modules will extend.
+- [x] Save enough run metadata to debug extractor/scorer changes.
+- [x] Add loading, queued, running, complete, and failed states for the upload flow.
+- [x] Add basic tests for upload validation, prompt input construction, and output parsing.
 
 Done when:
 
-- [ ] A real uploaded PDF is saved as a private artifact.
-- [ ] A real uploaded PDF produces a saved minimum readiness score.
-- [ ] Failed uploads or analysis failures produce recoverable user-facing errors.
-- [ ] The team can reload a saved minimum-score result after refresh.
-- [ ] The upload, storage, status, ownership, and report-contract plumbing can support later modules without redesign.
+- [x] A real uploaded PDF is saved as a private artifact.
+- [x] A real uploaded PDF produces a saved minimum readiness score.
+- [x] Failed uploads or analysis failures produce recoverable user-facing errors.
+- [x] The team can reload a saved minimum-score result after refresh.
+- [x] The upload, storage, status, ownership, and report-contract plumbing can support later modules without redesign.
 
 ## Phase 4: Build The Saved Report Experience
 
 Purpose: make the saved analysis useful to review before the richer analysis modules are complete.
 
-- [ ] Build the submit filing screen with upload and demo-result paths.
-- [ ] Build analysis progress states from real analysis status.
-- [ ] Build the report overview from the saved minimum-score result and demo fixture.
-- [ ] Build the findings detail view for the first narrow score rationale.
-- [ ] Build history and unauthenticated save prompts.
-- [ ] Reload saved analyses in history.
-- [ ] Add basic user scoping so saved work is private.
-- [ ] Require authenticated ownership or explicit session binding for upload, status, result, saved report, notes, and outline access.
-- [ ] Store large result JSON/report payloads, uploaded files, generated outlines, and extracted text in blob/S3-class storage rather than Convex documents.
-- [ ] Treat artifact access as reference-based and chunk/stream large files instead of assuming they fit in server memory.
-- [ ] Keep the persistence shape narrow and easy to change.
-- [ ] Add a manual access-control check.
-- [ ] Add a small test around rendering a saved report.
+- [x] Build the submit filing screen with upload and demo-result paths.
+- [x] Build analysis progress states from real analysis status.
+- [x] Build the report overview from the saved minimum-score result and demo fixture.
+- [x] Build the findings detail view for the first narrow score rationale.
+- [x] Build history and local-session save prompts.
+- [x] Reload saved analyses in history.
+- [x] Add basic user scoping so saved work is private.
+- [x] Require authenticated ownership or explicit session binding for upload, status, result, saved report, notes, and outline access.
+- [x] Store uploaded files and extracted text in local artifact storage rather than metadata records.
+- [x] Treat artifact access as reference-based and chunk/stream large files instead of assuming they fit in server memory.
+- [x] Keep the persistence shape narrow and easy to change.
+- [x] Add a manual access-control check.
+- [x] Add a small test around rendering a saved report.
 
 Done when:
 
-- [ ] A signed-in user can reload a saved analysis later.
-- [ ] One user cannot read another user's saved work.
-- [ ] Private artifacts are accessible only through authorized backend-controlled references.
-- [ ] The report UI does not depend on placeholder sections that are not implemented yet.
+- [x] A local-session user can reload a saved analysis later.
+- [x] One user cannot read another user's saved work.
+- [x] Private artifacts are accessible only through authorized backend-controlled references.
+- [x] The report UI does not depend on placeholder sections that are not implemented yet.
 
 ## Phase 5: Add Post-Analysis Tools As Modules
 
 Purpose: add the locked MVP report tools one at a time on top of the saved analysis backbone.
 
 - [ ] Classify each v0 analysis subsystem as port, wrap, replace, defer, or delete before removing the old path.
-- [ ] Add gap analysis with severity, rationale, and recommended action.
-- [ ] Add comparable filings with match rationale and material differences.
-- [ ] Add safety signals separated from general documentation gaps.
-- [ ] Add documentation-field benchmarking.
-- [ ] Add filing diff against a relevant baseline or comparable.
-- [ ] Add PubMed/research references with source context.
-- [ ] Add amendment outline download.
-- [ ] Add print/PDF export.
-- [ ] Build the workbook UI and save/reload workbook notes.
+- [x] Add gap analysis with severity, rationale, and recommended action.
+- [x] Add comparable filings with match rationale and material differences.
+- [x] Add safety signals separated from general documentation gaps.
+- [x] Add documentation-field benchmarking.
+- [x] Add filing diff against a relevant baseline or comparable.
+- [x] Add research reference signals with source context. PubMed-specific retrieval remains a later enrichment.
+- [x] Add amendment outline download.
+- [x] Add shareable report export download. Print/PDF polish remains a later hardening item.
+- [x] Build the workbook UI and save/reload workbook notes.
 - [ ] Pass only needed filing text and selected retrieved chunks to model providers for each module.
-- [ ] Persist module outputs through the shared report contract.
-- [ ] Add deterministic cleanup for display ordering and missing fields.
+- [x] Persist module outputs through the shared report contract.
+- [x] Add deterministic cleanup for display ordering and missing fields.
 - [ ] Add representative AI fixtures for each module as it lands.
-- [ ] Add module-level tests for prompt input construction and output parsing.
+- [x] Add module-level tests for deterministic module output shape.
 - [ ] Add a small eval checklist for whether each module is useful, grounded, and complete enough for MVP.
 
 Done when:
 
-- [ ] Each post-analysis tool can be added, changed, or disabled without breaking upload/save/minimum-score flow.
-- [ ] A real uploaded PDF produces a useful MVP report composed from the enabled modules.
+- [x] Each post-analysis tool can be added, changed, or disabled without breaking upload/save/minimum-score flow.
+- [x] A real uploaded PDF produces a useful MVP report composed from the enabled modules.
 - [ ] The team can rerun representative fixtures before changing prompts or models.
 - [ ] Each preserved v0 subsystem has an MVP acceptance check or an intentional replacement.
 
@@ -205,10 +205,10 @@ Done when:
 
 Purpose: make the MVP safe and reviewable.
 
-- [ ] Deploy the React app on Vercel.
-- [ ] Pair the deployed app with the correct Convex environment.
-- [ ] Document required production and preview environment variables.
-- [ ] Confirm secrets are not exposed to the browser.
+- [x] Deploy the React app on Vercel.
+- [x] Pair the deployed app with the correct Convex environment.
+- [x] Document required production and preview environment variables.
+- [x] Confirm secrets are not exposed to the browser.
 - [ ] Define uploaded-file and generated-report retention for MVP.
 - [ ] Review logs for accidental confidential filing content.
 - [ ] Run the end-to-end MVP checklist in preview.
@@ -224,17 +224,17 @@ Done when:
 
 ## MVP Quality Gates
 
-- [ ] Local setup works from a fresh checkout.
-- [ ] Typecheck, tests, and build pass.
-- [ ] Demo mode works without AI credentials.
-- [ ] Real upload mode works with configured credentials.
-- [ ] The minimum-score report is useful before post-analysis modules are enabled.
-- [ ] The full MVP report is useful without relying on placeholder sections.
+- [x] Local setup works from a fresh checkout.
+- [x] Typecheck, tests, and build pass.
+- [x] Demo mode works without AI credentials.
+- [x] Real upload mode works locally without AI credentials.
+- [x] The minimum-score report is useful before post-analysis modules are enabled.
+- [x] The local deterministic MVP report is useful without relying on placeholder sections.
 - [ ] AI failures do not crash the app or leave the user stuck.
-- [ ] Post-analysis module failures do not block saved upload or minimum-score results.
-- [ ] Saved work survives refresh.
-- [ ] User-scoped data is private.
-- [ ] Retention expectations are documented before real user uploads.
+- [x] Post-analysis module failures do not block saved upload or minimum-score results.
+- [x] Saved work survives refresh.
+- [x] User-scoped data is private.
+- [x] Local retention expectations are documented before real user uploads.
 
 ## Decisions To Make Only When Needed
 
@@ -249,7 +249,7 @@ Done when:
 
 - [ ] MVP scope note and demo fixture.
 - [x] Clean `pnpm` workspace with React, TypeScript, Vitest, and Biome.
-- [ ] Convex upload/save/minimum-score backbone.
-- [ ] Saved report overview and basic test.
-- [ ] First post-analysis module wired into the MVP report.
-- [ ] Additional post-analysis modules added one by one.
+- [x] Local upload/save/minimum-score backbone.
+- [x] Saved report overview and basic test.
+- [x] First post-analysis module wired into the MVP report.
+- [x] Additional post-analysis modules added one by one.

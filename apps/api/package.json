@@ -1,0 +1,25 @@
+{
+  "name": "@greenlit/api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "start": "tsx src/server.ts",
+    "build": "pnpm typecheck",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "@greenlit/core": "workspace:*",
+    "@hono/node-server": "^2.0.8",
+    "@napi-rs/canvas": "^1.0.2",
+    "@vercel/blob": "^2.4.0",
+    "convex": "^1.40.0",
+    "hono": "^4.12.27",
+    "pdfjs-dist": "^6.1.200"
+  },
+  "devDependencies": {
+    "vitest": "^4.1.8"
+  }
+}

@@ -2,7 +2,16 @@
   "$schema": "https://biomejs.dev/schemas/2.4.16/schema.json",
   "files": {
     "ignoreUnknown": true,
-    "includes": ["**", "!old", "!node_modules", "!dist", "!apps/**/dist", "!convex/_generated"]
+    "includes": [
+      "**",
+      "!.convex",
+      "!.vercel",
+      "!node_modules",
+      "!dist",
+      "!apps/**/dist",
+      "!convex/_generated",
+      "!**/.local-data"
+    ]
   },
   "formatter": {
     "enabled": true,

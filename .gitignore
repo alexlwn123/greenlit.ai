@@ -1,15 +1,18 @@
 node_modules/
 dist/
+.local-data/
+**/.local-data/
 .DS_Store
 .env
 .env.local
 .env.*.local
 
-# Convex local state and generated client bindings.
+# Convex local state. Generated client bindings in convex/_generated are committed.
 .convex/
-convex/_generated/
 
 # Test and build output.
 coverage/
 test-results/
 playwright-report/
+.vercel
+.env*

@@ -9,9 +9,13 @@
   "types": "./src/index.ts",
   "scripts": {
     "build": "pnpm typecheck",
+    "test": "vitest run --passWithNoTests",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
     "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "vitest": "^4.1.8"
   }
 }
