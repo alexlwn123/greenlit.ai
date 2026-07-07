@@ -1,28 +1,34 @@
 {
-  "name": "workspace",
-  "version": "1.0.0",
-  "description": "AI tool for improving, expediting, and evaluating FDA GRAS filings",
-  "main": "index.js",
+  "name": "greenlit-ai",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.7.0",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "concurrently -k -n api,web -c blue,green \"pnpm dev:api\" \"pnpm dev:web\"",
+    "dev:api": "pnpm --filter @greenlit/api dev",
+    "dev:web": "pnpm --filter @greenlit/web dev",
+    "dev:convex": "convex dev",
+    "build": "pnpm -r --if-present build",
+    "typecheck": "pnpm -r --if-present typecheck && tsc -p tsconfig.json --noEmit",
+    "test": "pnpm -r --if-present test",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "format": "biome format --write .",
+    "check": "pnpm lint && pnpm typecheck && pnpm test && pnpm build"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "@eslint/js": "^10.0.1",
-    "@tailwindcss/vite": "^4.3.0",
-    "@vitejs/plugin-react": "^6.0.2",
-    "axios": "^1.16.1",
-    "eslint": "^10.4.0",
-    "eslint-plugin-react-hooks": "^7.1.1",
-    "eslint-plugin-react-refresh": "^0.5.2",
-    "globals": "^17.6.0",
-    "lucide-react": "^1.16.0",
-    "react": "^19.2.6",
-    "react-dom": "^19.2.6",
-    "react-router-dom": "^7.15.1",
-    "tailwindcss": "^4.3.0",
-    "vite": "^8.0.13"
+    "@ai-sdk/openai": "^3.0.68",
+    "@vercel/blob": "^2.4.0",
+    "ai": "^6.0.197",
+    "convex": "^1.40.0",
+    "hono": "^4.12.27"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.16",
+    "@types/node": "^25.9.1",
+    "concurrently": "^10.0.3",
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.3"
   }
 }
