@@ -398,14 +398,13 @@ label {
 .intel-strip {
   width: min(1320px, calc(100% - 64px));
   display: grid;
-  grid-template-columns: repeat(3, 1fr) 1.18fr;
+  grid-template-columns: repeat(3, 1fr);
   margin: 0 auto;
   border-right: 1px solid var(--line);
   border-left: 1px solid var(--line);
 }
 
-.intel-strip > div,
-.intel-strip > button {
+.intel-strip > div {
   min-height: 150px;
   padding: 28px;
   border: 0;
@@ -432,22 +431,6 @@ label {
   color: var(--muted);
   font-size: 0.72rem;
   line-height: 1.5;
-}
-
-.intel-strip > button {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-right: 0;
-  background: var(--green);
-  color: #0c0f0d;
-  cursor: pointer;
-  font-size: 0.8rem;
-  font-weight: 700;
-}
-
-.intel-strip > button svg {
-  width: 19px;
 }
 
 .recent-section {
@@ -795,15 +778,6 @@ label {
   border-color: var(--green);
   background: var(--green);
   color: #0a0d0a;
-}
-
-.sample-tag {
-  padding: 8px 11px;
-  border: 1px solid rgba(57, 255, 20, 0.38);
-  color: var(--green);
-  font-family: "DM Mono", monospace;
-  font-size: 0.58rem;
-  letter-spacing: 0.08em;
 }
 
 .analysis-layout {

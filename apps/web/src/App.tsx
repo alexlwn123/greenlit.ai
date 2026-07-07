@@ -16,7 +16,6 @@ import type {
   SubmissionRecord,
 } from "@greenlit/core"
 import {
-  demoReport,
   getEvidenceMatrixScoreBreakdown,
   renderFactReferences,
   suggestClaimsFromPassage,
@@ -223,11 +222,6 @@ export default function App() {
     navigate({ name: "analysis", id: analysis.id })
   }
 
-  function openDemo() {
-    setActiveAnalysis(null)
-    navigate({ name: "analysis", id: "demo" })
-  }
-
   async function download(kind: "outline" | "export") {
     if (!activeAnalysis?.id) return
     try {
@@ -255,11 +249,8 @@ export default function App() {
   }
 
   const report =
-    route.name === "analysis" && route.id === "demo"
-      ? demoReport
-      : (activeAnalysis?.report ??
-        history.find((analysis) => analysis.id === (route.name === "analysis" ? route.id : ""))
-          ?.report)
+    activeAnalysis?.report ??
+    history.find((analysis) => analysis.id === (route.name === "analysis" ? route.id : ""))?.report
 
   if (route.name === "respond") return <ExternalResponsePage token={route.token} />
   if (route.name === "review") return <ExternalReviewPage token={route.token} />
@@ -280,14 +271,13 @@ export default function App() {
           activeAnalysis={activeAnalysis}
           error={error}
           onUpload={handleUpload}
-          onOpenDemo={openDemo}
           onOpenAnalysis={openAnalysis}
         />
       ) : null}
 
       {route.name === "analysis" ? (
         <AnalysisPage
-          key={activeAnalysis?.id ?? (route.id === "demo" ? "demo" : "missing")}
+          key={activeAnalysis?.id ?? route.id ?? "missing"}
           report={report}
           analysis={activeAnalysis}
           history={history}
@@ -734,7 +724,6 @@ function LandingPage({
   activeAnalysis,
   error,
   onUpload,
-  onOpenDemo,
   onOpenAnalysis,
 }: {
   history: AnalysisRecord[]
@@ -742,7 +731,6 @@ function LandingPage({
   activeAnalysis: AnalysisRecord | null
   error: string | null
   onUpload: (event: ChangeEvent<HTMLInputElement>) => void
-  onOpenDemo: () => void
   onOpenAnalysis: (analysis: AnalysisRecord) => void
 }) {
   const isProcessing = loadState === "uploading" || loadState === "polling"
@@ -802,10 +790,6 @@ function LandingPage({
           <strong>Action plan</strong>
           <p>Resolve the highest-risk gaps first.</p>
         </div>
-        <button type="button" onClick={onOpenDemo}>
-          Explore sample analysis
-          <ArrowRight />
-        </button>
       </section>
 
       <section className="recent-section">
@@ -992,7 +976,6 @@ function AnalysisPage({
   onDelete: () => void
   onDownload: (kind: "outline" | "export") => void
 }) {
-  const modules = report?.modules ?? demoReport.modules
   const [activeSection, setActiveSection] = useState<string>(analysisSections[0].id)
   const [baselineId, setBaselineId] = useState("")
   const [revisionDiff, setRevisionDiff] = useState<FilingDiffItem[] | null>(null)
@@ -1017,9 +1000,6 @@ function AnalysisPage({
       .toString()
       .padStart(2, "0")
   const displayedDiff = revisionDiff ?? []
-  const scoreBreakdown = getEvidenceMatrixScoreBreakdown(modules.evidenceMatrix).sort(
-    (left, right) => scoreImportanceOrder[left.importance] - scoreImportanceOrder[right.importance]
-  )
 
   useEffect(() => {
     function updateActiveSection() {
@@ -1069,6 +1049,11 @@ function AnalysisPage({
     )
   }
 
+  const modules = report.modules
+  const scoreBreakdown = getEvidenceMatrixScoreBreakdown(modules.evidenceMatrix).sort(
+    (left, right) => scoreImportanceOrder[left.importance] - scoreImportanceOrder[right.importance]
+  )
+
   return (
     <main className="analysis-page">
       <div className="analysis-toolbar">
@@ -1095,9 +1080,7 @@ function AnalysisPage({
                 <Download /> Export report
               </button>
             </>
-          ) : (
-            <span className="sample-tag">SAMPLE REPORT</span>
-          )}
+          ) : null}
         </div>
       </div>
 

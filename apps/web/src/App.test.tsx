@@ -22,7 +22,7 @@ beforeEach(() => {
 })
 
 describe("App", () => {
-  it("renders the landing experience and sample analysis", async () => {
+  it("renders the production landing experience without sample analysis", async () => {
     render(<App />)
 
     expect(
@@ -30,18 +30,10 @@ describe("App", () => {
     ).toBeInTheDocument()
     expect(screen.getByLabelText("Choose PDF")).toBeInTheDocument()
     await waitFor(() => expect(screen.getByText("00 FILES")).toBeInTheDocument())
-
-    fireEvent.click(screen.getByRole("button", { name: /explore sample analysis/i }))
-
-    expect(screen.getByRole("heading", { name: "Submission readiness" })).toBeInTheDocument()
-    expect(screen.getByText("SAMPLE REPORT")).toBeInTheDocument()
-    expect(screen.getByRole("heading", { name: "Priority findings" })).toBeInTheDocument()
-    expect(screen.getByRole("heading", { name: "Documentation benchmark" })).toBeInTheDocument()
-    expect(screen.getByRole("heading", { name: "Safety evidence" })).toBeInTheDocument()
-    expect(screen.getByRole("heading", { name: "Comparable filings" })).toBeInTheDocument()
-    expect(screen.queryByRole("heading", { name: "Revision comparison" })).not.toBeInTheDocument()
-    expect(screen.getByRole("heading", { name: "Research references" })).toBeInTheDocument()
-    expect(screen.getByRole("heading", { name: "Amendment plan" })).toBeInTheDocument()
+    expect(
+      screen.queryByRole("button", { name: /explore sample analysis/i })
+    ).not.toBeInTheDocument()
+    expect(screen.queryByText("SAMPLE REPORT")).not.toBeInTheDocument()
   })
 
   it("opens a saved completed report from recent work", async () => {
