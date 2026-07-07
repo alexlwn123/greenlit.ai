@@ -27,23 +27,41 @@ beforeEach(() => {
 })
 
 describe("App", () => {
-  it("renders the upload backbone and demo report path", async () => {
+  it("renders the upload backbone without default demo data", async () => {
     render(<App />)
 
     await waitFor(() => expect(screen.getByText("0 saved")).toBeInTheDocument())
 
-    expect(screen.getByRole("button", { name: "Open demo" })).toBeInTheDocument()
+    expect(screen.queryByRole("button", { name: "Open demo" })).not.toBeInTheDocument()
+    expect(screen.queryByLabelText("Readiness summary")).not.toBeInTheDocument()
     expect(screen.getByLabelText("Choose PDF")).toBeInTheDocument()
-    expect(
-      within(screen.getByLabelText("Readiness summary")).getByText("Readiness score")
-    ).toBeInTheDocument()
+    expect(screen.getByText("Ready for upload")).toBeInTheDocument()
+    expect(screen.getByLabelText("Analysis status")).toHaveTextContent("No report selected")
     const workflow = screen.getByLabelText("Core workflow steps")
-    expect(within(workflow).getByText("Submit filing")).toBeInTheDocument()
-    expect(within(workflow).getByText("Analysis progress")).toBeInTheDocument()
-    expect(within(workflow).getByText("Report overview")).toBeInTheDocument()
-    expect(within(workflow).getByText("Findings detail")).toBeInTheDocument()
-    expect(within(workflow).getByText("Workbook")).toBeInTheDocument()
-    expect(within(workflow).getByText("History")).toBeInTheDocument()
+    expect(within(workflow).getByRole("link", { name: "Submit filing" })).toHaveAttribute(
+      "href",
+      "#submit-filing"
+    )
+    expect(within(workflow).getByRole("link", { name: "Analysis progress" })).toHaveAttribute(
+      "href",
+      "#submit-filing"
+    )
+    expect(within(workflow).getByRole("link", { name: "Report overview" })).toHaveAttribute(
+      "href",
+      "#readiness-report"
+    )
+    expect(within(workflow).getByRole("link", { name: "Findings detail" })).toHaveAttribute(
+      "href",
+      "#readiness-report"
+    )
+    expect(within(workflow).getByRole("link", { name: "Workbook" })).toHaveAttribute(
+      "href",
+      "#workbook-notes"
+    )
+    expect(within(workflow).getByRole("link", { name: "History" })).toHaveAttribute(
+      "href",
+      "#analysis-history"
+    )
   })
 
   it("renders a saved completed report from history", async () => {
