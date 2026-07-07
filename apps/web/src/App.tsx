@@ -1,11 +1,9 @@
 import type { AnalysisRecord, ReadinessReport, WorkbookNote } from "@greenlit/core"
-import { demoReport } from "@greenlit/core"
 import {
   AlertCircle,
   CheckCircle2,
   CircleDashed,
   Download,
-  FileText,
   History,
   ListChecks,
   Loader2,
@@ -25,12 +23,12 @@ import {
 } from "./api"
 
 const workflowItems = [
-  { label: "Submit filing", icon: Upload },
-  { label: "Analysis progress", icon: Loader2 },
-  { label: "Report overview", icon: FileText },
-  { label: "Findings detail", icon: ListChecks },
-  { label: "Workbook", icon: NotebookPen },
-  { label: "History", icon: History },
+  { label: "Submit filing", icon: Upload, targetId: "submit-filing" },
+  { label: "Analysis progress", icon: Loader2, targetId: "submit-filing" },
+  { label: "Report overview", icon: ListChecks, targetId: "readiness-report" },
+  { label: "Findings detail", icon: ListChecks, targetId: "readiness-report" },
+  { label: "Workbook", icon: NotebookPen, targetId: "workbook-notes" },
+  { label: "History", icon: History, targetId: "analysis-history" },
 ]
 
 type LoadState = "idle" | "loading" | "uploading" | "polling"
@@ -40,11 +38,10 @@ export default function App() {
   const [activeAnalysis, setActiveAnalysis] = useState<AnalysisRecord | null>(null)
   const [loadState, setLoadState] = useState<LoadState>("idle")
   const [error, setError] = useState<string | null>(null)
-  const [showDemo, setShowDemo] = useState(true)
   const [notes, setNotes] = useState<WorkbookNote[]>([])
   const [noteDraft, setNoteDraft] = useState("")
 
-  const activeReport = activeAnalysis?.report ?? (showDemo ? demoReport : undefined)
+  const activeReport = activeAnalysis?.report
   const statusLabel = statusText(activeAnalysis)
   const latestCompleted = useMemo(
     () => history.find((analysis) => analysis.status === "complete"),
@@ -110,7 +107,6 @@ export default function App() {
     }
 
     setError(null)
-    setShowDemo(false)
     setLoadState("uploading")
 
     try {
@@ -133,14 +129,7 @@ export default function App() {
     }
   }
 
-  function openDemo() {
-    setShowDemo(true)
-    setActiveAnalysis(null)
-    setError(null)
-  }
-
   function openAnalysis(analysis: AnalysisRecord) {
-    setShowDemo(false)
     setActiveAnalysis(analysis)
     setError(null)
   }
@@ -187,20 +176,16 @@ export default function App() {
             <RefreshCw aria-hidden="true" />
             Reload
           </button>
-          <button type="button" className="secondary-button" onClick={openDemo}>
-            <FileText aria-hidden="true" />
-            Open demo
-          </button>
         </div>
       </header>
 
       <section className="workspace-grid" aria-label="MVP workflow">
-        <div className="submit-panel">
+        <div className="submit-panel" id="submit-filing">
           <div className="panel-copy">
-            <p className="eyebrow">Phase 3 backbone</p>
+            <p className="eyebrow">Live upload flow</p>
             <h2>Upload a draft filing</h2>
             <p>
-              The local backend saves the PDF, extracts text, creates an analysis record, and
+              The hosted backend saves the PDF, extracts text, creates an analysis record, and
               returns a minimum readiness score.
             </p>
             {activeAnalysis ? (
@@ -209,9 +194,9 @@ export default function App() {
                 <span>{statusLabel}</span>
               </div>
             ) : (
-              <div className="status-callout status-demo">
+              <div className="status-callout">
                 <CircleDashed aria-hidden="true" />
-                <span>Demo report loaded</span>
+                <span>Ready for upload</span>
               </div>
             )}
             {error ? (
@@ -249,10 +234,10 @@ export default function App() {
         />
       </section>
 
-      <section className="history-panel" aria-label="Saved analyses">
+      <section className="history-panel" id="analysis-history" aria-label="Saved analyses">
         <div className="section-heading">
           <div>
-            <p className="eyebrow">Saved locally</p>
+            <p className="eyebrow">Saved analyses</p>
             <h2>Analysis history</h2>
           </div>
           <span>{history.length} saved</span>
@@ -294,10 +279,10 @@ export default function App() {
           const Icon = item.icon
 
           return (
-            <div key={item.label} className="workflow-item">
+            <a key={item.label} className="workflow-item" href={`#${item.targetId}`}>
               <Icon aria-hidden="true" />
               <span>{item.label}</span>
-            </div>
+            </a>
           )
         })}
       </nav>
@@ -322,7 +307,7 @@ function ReportPanel({
 }) {
   if (!report) {
     return (
-      <aside className="summary-panel" aria-label="Analysis status">
+      <aside className="summary-panel" id="readiness-report" aria-label="Analysis status">
         <p className="eyebrow">Waiting</p>
         <h2>{fallbackAnalysis?.filingName ?? "No report selected"}</h2>
         <p>
@@ -343,11 +328,9 @@ function ReportPanel({
     )
   }
 
-  const modules = report.modules ?? demoReport.modules
-
   return (
-    <aside className="summary-panel" aria-label="Readiness summary">
-      <p className="eyebrow">{report.status === "demo" ? "Demo report" : "Minimum score"}</p>
+    <aside className="summary-panel" id="readiness-report" aria-label="Readiness summary">
+      <p className="eyebrow">Minimum score</p>
       <div className="score-row">
         <span>{report.readinessScore}</span>
         <span>Readiness score</span>
@@ -419,7 +402,7 @@ function ReportPanel({
 
         <ModuleSection title="Documentation Benchmark">
           <div className="module-list">
-            {modules.documentationBenchmark.map((item) => (
+            {report.modules.documentationBenchmark.map((item) => (
               <div key={item.id} className="module-row">
                 <span className={`status-chip status-${item.status}`}>{item.status}</span>
                 <strong>{item.label}</strong>
@@ -431,7 +414,7 @@ function ReportPanel({
 
         <ModuleSection title="Safety Signals">
           <div className="module-list">
-            {modules.safetySignals.map((signal) => (
+            {report.modules.safetySignals.map((signal) => (
               <div key={signal.id} className="module-row">
                 <span className={`status-chip signal-${signal.level}`}>{signal.level}</span>
                 <strong>{signal.label}</strong>
@@ -443,7 +426,7 @@ function ReportPanel({
 
         <ModuleSection title="Comparable Filings">
           <div className="module-list">
-            {modules.comparableFilings.map((filing) => (
+            {report.modules.comparableFilings.map((filing) => (
               <div key={filing.id} className="module-row">
                 <span className="status-chip">{filing.status}</span>
                 <strong>{filing.name}</strong>
@@ -455,7 +438,7 @@ function ReportPanel({
 
         <ModuleSection title="Filing Diff">
           <div className="module-list">
-            {modules.filingDiff.slice(0, 5).map((item) => (
+            {report.modules.filingDiff.slice(0, 5).map((item) => (
               <div key={item.id} className="module-row">
                 <span className={`status-chip status-${item.status}`}>{item.status}</span>
                 <strong>{item.label}</strong>
@@ -467,7 +450,7 @@ function ReportPanel({
 
         <ModuleSection title="Research References">
           <div className="module-list">
-            {modules.researchReferences.map((reference) => (
+            {report.modules.researchReferences.map((reference) => (
               <div key={reference.id} className="module-row">
                 <span className="status-chip">{reference.year ?? "source"}</span>
                 <strong>{reference.title}</strong>
@@ -479,7 +462,7 @@ function ReportPanel({
 
         <ModuleSection title="Amendment Outline">
           <div className="module-list">
-            {modules.amendmentOutline.map((section) => (
+            {report.modules.amendmentOutline.map((section) => (
               <div key={section.id} className="module-row module-row-full">
                 <strong>{section.title}</strong>
                 <ul>
@@ -519,7 +502,7 @@ function WorkbookPanel({
   onSaveNote: () => void
 }) {
   return (
-    <section className="workbook-panel" aria-label="Workbook notes">
+    <section className="workbook-panel" id="workbook-notes" aria-label="Workbook notes">
       <div className="section-heading">
         <div>
           <p className="eyebrow">Workbook</p>
@@ -562,7 +545,7 @@ function WorkbookPanel({
 
 function statusText(analysis: AnalysisRecord | null) {
   if (!analysis) {
-    return "Demo report loaded"
+    return "Ready for upload"
   }
 
   if (analysis.status === "queued") {

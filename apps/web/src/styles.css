@@ -17,6 +17,10 @@ body {
   min-height: 100vh;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 button,
 input,
 textarea {
@@ -24,6 +28,8 @@ textarea {
 }
 
 button:focus-visible,
+area:focus-visible,
+a:focus-visible,
 input:focus-visible,
 textarea:focus-visible {
   outline: 3px solid #8fb8ff;
@@ -141,6 +147,7 @@ p {
 .workflow-strip,
 .history-panel,
 .workbook-panel {
+  scroll-margin-top: 24px;
   border: 1px solid #d5ddd8;
   border-radius: 8px;
   background: #ffffff;
@@ -534,7 +541,12 @@ p {
   min-height: 68px;
   background: #ffffff;
   color: #33443c;
+  text-decoration: none;
   font-weight: 800;
+}
+
+.workflow-item:hover {
+  color: #214e7a;
 }
 
 .spin {
