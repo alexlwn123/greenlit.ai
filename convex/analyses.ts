@@ -46,11 +46,28 @@ const workbookNote = v.object({
 export const list = query({
   args: {
     ownerId: v.string(),
+    apiSecret: v.string(),
   },
   handler: async (ctx, args) => {
+    requireApiSecret(args.apiSecret)
+
     const analyses = await ctx.db
       .query("analyses")
       .withIndex("by_owner_created_at", (index) => index.eq("ownerId", args.ownerId))
+      .order("desc")
+      .collect()
+
+    return analyses.map(toAnalysisRecord)
+  },
+})
+
+export const listMine = query({
+  args: {},
+  handler: async (ctx) => {
+    const ownerId = await requireCurrentOwnerId(ctx)
+    const analyses = await ctx.db
+      .query("analyses")
+      .withIndex("by_owner_created_at", (index) => index.eq("ownerId", ownerId))
       .order("desc")
       .collect()
 
@@ -62,8 +79,11 @@ export const get = query({
   args: {
     ownerId: v.string(),
     analysisId: v.string(),
+    apiSecret: v.string(),
   },
   handler: async (ctx, args) => {
+    requireApiSecret(args.apiSecret)
+
     const analysis = await getAnalysisDoc(ctx, args.analysisId)
 
     if (!analysis || analysis.ownerId !== args.ownerId) {
@@ -74,11 +94,30 @@ export const get = query({
   },
 })
 
-export const getById = query({
+export const getMine = query({
   args: {
     analysisId: v.string(),
   },
   handler: async (ctx, args) => {
+    const ownerId = await requireCurrentOwnerId(ctx)
+    const analysis = await getAnalysisDoc(ctx, args.analysisId)
+
+    if (!analysis || analysis.ownerId !== ownerId) {
+      return null
+    }
+
+    return toAnalysisRecord(analysis)
+  },
+})
+
+export const getById = query({
+  args: {
+    analysisId: v.string(),
+    apiSecret: v.string(),
+  },
+  handler: async (ctx, args) => {
+    requireApiSecret(args.apiSecret)
+
     const analysis = await getAnalysisDoc(ctx, args.analysisId)
     return analysis ? toAnalysisRecord(analysis) : null
   },
@@ -87,8 +126,11 @@ export const getById = query({
 export const create = mutation({
   args: {
     analysis: analysisRecord,
+    apiSecret: v.string(),
   },
   handler: async (ctx, args) => {
+    requireApiSecret(args.apiSecret)
+
     const existing = await getAnalysisDoc(ctx, args.analysis.id)
 
     if (existing) {
@@ -108,8 +150,11 @@ export const update = mutation({
   args: {
     analysisId: v.string(),
     updates: analysisUpdates,
+    apiSecret: v.string(),
   },
   handler: async (ctx, args) => {
+    requireApiSecret(args.apiSecret)
+
     const analysis = await getAnalysisDoc(ctx, args.analysisId)
 
     if (!analysis) {
@@ -152,8 +197,11 @@ export const listNotes = query({
   args: {
     ownerId: v.string(),
     analysisId: v.string(),
+    apiSecret: v.string(),
   },
   handler: async (ctx, args) => {
+    requireApiSecret(args.apiSecret)
+
     const notes = await ctx.db
       .query("workbookNotes")
       .withIndex("by_owner_analysis_created_at", (index) =>
@@ -166,11 +214,32 @@ export const listNotes = query({
   },
 })
 
+export const listNotesMine = query({
+  args: {
+    analysisId: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const ownerId = await requireCurrentOwnerId(ctx)
+    const notes = await ctx.db
+      .query("workbookNotes")
+      .withIndex("by_owner_analysis_created_at", (index) =>
+        index.eq("ownerId", ownerId).eq("analysisId", args.analysisId)
+      )
+      .order("desc")
+      .collect()
+
+    return notes.map(toWorkbookNote)
+  },
+})
+
 export const createNote = mutation({
   args: {
     note: workbookNote,
+    apiSecret: v.string(),
   },
   handler: async (ctx, args) => {
+    requireApiSecret(args.apiSecret)
+
     await ctx.db.insert("workbookNotes", args.note)
     return args.note
   },
@@ -181,6 +250,25 @@ async function getAnalysisDoc(ctx: QueryCtx | MutationCtx, analysisId: string) {
     .query("analyses")
     .withIndex("by_analysis_id", (index) => index.eq("id", analysisId))
     .first()
+}
+
+async function requireCurrentOwnerId(ctx: QueryCtx | MutationCtx) {
+  const identity = await ctx.auth.getUserIdentity()
+  const subject = identity?.subject
+
+  if (!subject) {
+    throw new Error("Not authenticated")
+  }
+
+  return subject
+}
+
+function requireApiSecret(apiSecret: string) {
+  const expected = process.env.GREENLIT_CONVEX_API_SECRET
+
+  if (!expected || apiSecret !== expected) {
+    throw new Error("Unauthorized")
+  }
 }
 
 function toAnalysisRecord(doc: Doc<"analyses">) {

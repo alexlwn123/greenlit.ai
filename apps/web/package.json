@@ -11,6 +11,7 @@
     "test": "vitest run --passWithNoTests"
   },
   "dependencies": {
+    "@clerk/react": "^6.11.4",
     "@greenlit/core": "workspace:*",
     "convex": "^1.40.0",
     "lucide-react": "^1.17.0",

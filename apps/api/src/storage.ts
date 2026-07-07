@@ -24,29 +24,41 @@ type CreateArtifactInput = {
   mimeType: string
 }
 
+type ApiSecretArgs = {
+  apiSecret: string
+}
+
 const blobAccess = "private" as const
 
 const convexFunctions = {
-  createAnalysis: makeFunctionReference<"mutation", { analysis: AnalysisRecord }, AnalysisRecord>(
-    "analyses:create"
-  ),
-  createNote: makeFunctionReference<"mutation", { note: WorkbookNote }, WorkbookNote>(
-    "analyses:createNote"
-  ),
+  createAnalysis: makeFunctionReference<
+    "mutation",
+    { analysis: AnalysisRecord } & ApiSecretArgs,
+    AnalysisRecord
+  >("analyses:create"),
+  createNote: makeFunctionReference<
+    "mutation",
+    { note: WorkbookNote } & ApiSecretArgs,
+    WorkbookNote
+  >("analyses:createNote"),
   getAnalysis: makeFunctionReference<
     "query",
-    { ownerId: string; analysisId: string },
+    { ownerId: string; analysisId: string } & ApiSecretArgs,
     AnalysisRecord | null
   >("analyses:get"),
-  getAnalysisById: makeFunctionReference<"query", { analysisId: string }, AnalysisRecord | null>(
-    "analyses:getById"
-  ),
-  listAnalyses: makeFunctionReference<"query", { ownerId: string }, AnalysisRecord[]>(
-    "analyses:list"
-  ),
+  getAnalysisById: makeFunctionReference<
+    "query",
+    { analysisId: string } & ApiSecretArgs,
+    AnalysisRecord | null
+  >("analyses:getById"),
+  listAnalyses: makeFunctionReference<
+    "query",
+    { ownerId: string } & ApiSecretArgs,
+    AnalysisRecord[]
+  >("analyses:list"),
   listNotes: makeFunctionReference<
     "query",
-    { ownerId: string; analysisId: string },
+    { ownerId: string; analysisId: string } & ApiSecretArgs,
     WorkbookNote[]
   >("analyses:listNotes"),
   updateAnalysis: makeFunctionReference<
@@ -56,7 +68,7 @@ const convexFunctions = {
       updates: Partial<Pick<AnalysisRecord, "status" | "textArtifact" | "report" | "updatedAt">> & {
         error?: string | null
       }
-    },
+    } & ApiSecretArgs,
     AnalysisRecord
   >("analyses:update"),
 }
@@ -270,6 +282,7 @@ export function createConvexBlobStorage() {
   const client = new ConvexHttpClient(requiredConvexUrl(), {
     logger: false,
   })
+  const apiSecret = requiredConvexApiSecret()
 
   async function createArtifact(input: CreateArtifactInput): Promise<ArtifactReference> {
     const id = randomUUID()
@@ -321,7 +334,11 @@ export function createConvexBlobStorage() {
       updatedAt: now,
     }
 
-    return client.mutation(convexFunctions.createAnalysis, { analysis }, { skipQueue: true })
+    return client.mutation(
+      convexFunctions.createAnalysis,
+      { analysis, apiSecret },
+      { skipQueue: true }
+    )
   }
 
   async function updateAnalysis(
@@ -334,6 +351,7 @@ export function createConvexBlobStorage() {
       convexFunctions.updateAnalysis,
       {
         analysisId,
+        apiSecret,
         updates: toConvexAnalysisUpdates(updates),
       },
       { skipQueue: true }
@@ -354,19 +372,19 @@ export function createConvexBlobStorage() {
   }
 
   async function getAnalysis(ownerId: string, analysisId: string) {
-    return client.query(convexFunctions.getAnalysis, { ownerId, analysisId })
+    return client.query(convexFunctions.getAnalysis, { ownerId, analysisId, apiSecret })
   }
 
   async function getAnalysisById(analysisId: string) {
-    return client.query(convexFunctions.getAnalysisById, { analysisId })
+    return client.query(convexFunctions.getAnalysisById, { analysisId, apiSecret })
   }
 
   async function listAnalyses(ownerId: string) {
-    return client.query(convexFunctions.listAnalyses, { ownerId })
+    return client.query(convexFunctions.listAnalyses, { ownerId, apiSecret })
   }
 
   async function listNotes(ownerId: string, analysisId: string) {
-    return client.query(convexFunctions.listNotes, { ownerId, analysisId })
+    return client.query(convexFunctions.listNotes, { ownerId, analysisId, apiSecret })
   }
 
   async function createNote(input: {
@@ -386,7 +404,7 @@ export function createConvexBlobStorage() {
       updatedAt: now,
     }
 
-    return client.mutation(convexFunctions.createNote, { note }, { skipQueue: true })
+    return client.mutation(convexFunctions.createNote, { note, apiSecret }, { skipQueue: true })
   }
 
   return {
@@ -437,6 +455,16 @@ function requiredConvexUrl() {
   }
 
   return url
+}
+
+function requiredConvexApiSecret() {
+  const secret = process.env.GREENLIT_CONVEX_API_SECRET
+
+  if (!secret) {
+    throw new Error("GREENLIT_METADATA_DRIVER=convex requires GREENLIT_CONVEX_API_SECRET")
+  }
+
+  return secret
 }
 
 function toConvexAnalysisUpdates(

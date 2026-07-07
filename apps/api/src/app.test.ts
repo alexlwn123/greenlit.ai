@@ -51,6 +51,16 @@ describe("local analysis API", () => {
     expect(listBody.analyses).toHaveLength(0)
   })
 
+  it("returns a clear auth error when no local session is present", async () => {
+    const app = createApp({ dataDir })
+    const response = await app.request("/api/analyses")
+
+    expect(response.status).toBe(401)
+    await expect(response.json()).resolves.toMatchObject({
+      error: "Sign in to continue.",
+    })
+  })
+
   it("saves workbook notes and returns outline/report downloads for the owning session", async () => {
     const app = createApp({ dataDir })
     const createdResponse = await uploadTestPdf(app, "notes-session")

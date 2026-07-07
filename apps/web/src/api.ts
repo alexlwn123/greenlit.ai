@@ -1,35 +1,50 @@
 import type { AnalysisRecord, WorkbookNote } from "@greenlit/core"
 
+export type AuthTokenProvider = () => Promise<string | null>
+
+type AuthOptions = {
+  getToken?: AuthTokenProvider
+}
+
 const sessionStorageKey = "greenlit.localSessionId"
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL ?? "/api"
 
-export async function listAnalyses() {
-  const response = await requestJson<{ analyses: AnalysisRecord[] }>("/analyses")
+export async function listAnalyses(auth: AuthOptions = {}) {
+  const response = await requestJson<{ analyses: AnalysisRecord[] }>("/analyses", {}, auth)
   return response.analyses
 }
 
-export async function getAnalysis(analysisId: string) {
-  const response = await requestJson<{ analysis: AnalysisRecord }>(`/analyses/${analysisId}`)
+export async function getAnalysis(analysisId: string, auth: AuthOptions = {}) {
+  const response = await requestJson<{ analysis: AnalysisRecord }>(
+    `/analyses/${analysisId}`,
+    {},
+    auth
+  )
   return response.analysis
 }
 
-export async function createAnalysis(file: File) {
+export async function createAnalysis(file: File, auth: AuthOptions = {}) {
   const body = new FormData()
   body.set("file", file)
 
-  const response = await requestJson<{ analysis: AnalysisRecord }>("/analyses", {
-    body,
-    method: "POST",
-  })
+  const response = await requestJson<{ analysis: AnalysisRecord }>(
+    "/analyses",
+    {
+      body,
+      method: "POST",
+    },
+    auth
+  )
   return response.analysis
 }
 
 export async function waitForAnalysis(
   analysisId: string,
-  onUpdate: (analysis: AnalysisRecord) => void
+  onUpdate: (analysis: AnalysisRecord) => void,
+  auth: AuthOptions = {}
 ) {
   for (let attempt = 0; attempt < 120; attempt += 1) {
-    const analysis = await getAnalysis(analysisId)
+    const analysis = await getAnalysis(analysisId, auth)
     onUpdate(analysis)
 
     if (analysis.status === "complete" || analysis.status === "failed") {
@@ -42,30 +57,40 @@ export async function waitForAnalysis(
   throw new Error("Analysis is still running. Reload history to check the saved result.")
 }
 
-export async function listNotes(analysisId: string) {
-  const response = await requestJson<{ notes: WorkbookNote[] }>(`/analyses/${analysisId}/notes`)
+export async function listNotes(analysisId: string, auth: AuthOptions = {}) {
+  const response = await requestJson<{ notes: WorkbookNote[] }>(
+    `/analyses/${analysisId}/notes`,
+    {},
+    auth
+  )
   return response.notes
 }
 
-export async function createNote(analysisId: string, body: string) {
-  const response = await requestJson<{ note: WorkbookNote }>(`/analyses/${analysisId}/notes`, {
-    body: JSON.stringify({
-      body,
-      status: "open",
-    }),
-    headers: {
-      "Content-Type": "application/json",
+export async function createNote(analysisId: string, body: string, auth: AuthOptions = {}) {
+  const response = await requestJson<{ note: WorkbookNote }>(
+    `/analyses/${analysisId}/notes`,
+    {
+      body: JSON.stringify({
+        body,
+        status: "open",
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "POST",
     },
-    method: "POST",
-  })
+    auth
+  )
   return response.note
 }
 
-export async function downloadAnalysisFile(analysisId: string, kind: "outline" | "export") {
+export async function downloadAnalysisFile(
+  analysisId: string,
+  kind: "outline" | "export",
+  auth: AuthOptions = {}
+) {
   const response = await fetch(`${apiBaseUrl}/analyses/${analysisId}/${kind}`, {
-    headers: {
-      "x-greenlit-session": getSessionId(),
-    },
+    headers: new Headers(await authHeaders(auth)),
   })
 
   if (!response.ok) {
@@ -100,13 +125,17 @@ function getSessionId() {
   return next
 }
 
-async function requestJson<T>(path: string, init: RequestInit = {}) {
+async function requestJson<T>(path: string, init: RequestInit = {}, auth: AuthOptions = {}) {
+  const headers = new Headers(init.headers)
+  const authorizationHeaders = await authHeaders(auth)
+
+  for (const [name, value] of Object.entries(authorizationHeaders)) {
+    headers.set(name, value)
+  }
+
   const response = await fetch(`${apiBaseUrl}${path}`, {
     ...init,
-    headers: {
-      ...init.headers,
-      "x-greenlit-session": getSessionId(),
-    },
+    headers,
   })
 
   if (!response.ok) {
@@ -115,6 +144,20 @@ async function requestJson<T>(path: string, init: RequestInit = {}) {
   }
 
   return (await response.json()) as T
+}
+
+async function authHeaders(auth: AuthOptions): Promise<Record<string, string>> {
+  const token = await auth.getToken?.()
+
+  if (token) {
+    return {
+      Authorization: `Bearer ${token}`,
+    }
+  }
+
+  return {
+    "x-greenlit-session": getSessionId(),
+  }
 }
 
 async function readError(response: Response) {

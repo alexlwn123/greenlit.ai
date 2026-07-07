@@ -53,6 +53,7 @@ textarea:focus-visible {
 .header-actions {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 10px;
   justify-content: flex-end;
 }
@@ -159,6 +160,17 @@ p {
   gap: 24px;
   min-height: 360px;
   padding: 24px;
+}
+
+.auth-panel {
+  min-height: 300px;
+}
+
+.auth-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
 }
 
 .panel-copy {

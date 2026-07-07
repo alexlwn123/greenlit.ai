@@ -33,6 +33,7 @@ describe("App", () => {
     await waitFor(() => expect(screen.getByText("0 saved")).toBeInTheDocument())
 
     expect(screen.queryByRole("button", { name: "Open demo" })).not.toBeInTheDocument()
+    expect(screen.queryByRole("button", { name: "Reload" })).not.toBeInTheDocument()
     expect(screen.queryByLabelText("Readiness summary")).not.toBeInTheDocument()
     expect(screen.getByLabelText("Choose PDF")).toBeInTheDocument()
     expect(screen.getByText("Ready for upload")).toBeInTheDocument()

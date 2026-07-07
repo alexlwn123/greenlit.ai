@@ -1,4 +1,6 @@
+import { SignInButton, SignUpButton, UserButton, useAuth } from "@clerk/react"
 import type { AnalysisRecord, ReadinessReport, WorkbookNote } from "@greenlit/core"
+import { useQuery } from "convex/react"
 import {
   AlertCircle,
   CheckCircle2,
@@ -8,12 +10,13 @@ import {
   ListChecks,
   Loader2,
   NotebookPen,
-  RefreshCw,
   Save,
   Upload,
 } from "lucide-react"
 import { type ChangeEvent, type ReactNode, useCallback, useEffect, useMemo, useState } from "react"
+import { api as convexApi } from "../../../convex/_generated/api"
 import {
+  type AuthTokenProvider,
   createAnalysis,
   createNote,
   downloadAnalysisFile,
@@ -21,6 +24,7 @@ import {
   listNotes,
   waitForAnalysis,
 } from "./api"
+import { isClerkAuthEnabled } from "./auth"
 
 const workflowItems = [
   { label: "Submit filing", icon: Upload, targetId: "submit-filing" },
@@ -34,6 +38,49 @@ const workflowItems = [
 type LoadState = "idle" | "loading" | "uploading" | "polling"
 
 export default function App() {
+  if (isClerkAuthEnabled()) {
+    return <ClerkApp />
+  }
+
+  return <Workspace auth={{}} />
+}
+
+function ClerkApp() {
+  const { getToken, isLoaded, isSignedIn } = useAuth()
+  const auth = useMemo(() => ({ getToken: getToken as AuthTokenProvider }), [getToken])
+  const liveHistory = useQuery(convexApi.analyses.listMine, isSignedIn ? {} : "skip") as
+    | AnalysisRecord[]
+    | undefined
+
+  if (!isLoaded) {
+    return <LoadingShell />
+  }
+
+  if (!isSignedIn) {
+    return <SignedOutShell />
+  }
+
+  return (
+    <Workspace
+      auth={auth}
+      headerActions={<UserButton />}
+      historyLoading={liveHistory === undefined}
+      liveHistory={liveHistory ?? []}
+    />
+  )
+}
+
+function Workspace({
+  auth,
+  headerActions,
+  historyLoading = false,
+  liveHistory,
+}: {
+  auth: { getToken?: AuthTokenProvider }
+  headerActions?: ReactNode
+  historyLoading?: boolean
+  liveHistory?: AnalysisRecord[]
+}) {
   const [history, setHistory] = useState<AnalysisRecord[]>([])
   const [activeAnalysis, setActiveAnalysis] = useState<AnalysisRecord | null>(null)
   const [loadState, setLoadState] = useState<LoadState>("idle")
@@ -41,19 +88,24 @@ export default function App() {
   const [notes, setNotes] = useState<WorkbookNote[]>([])
   const [noteDraft, setNoteDraft] = useState("")
 
+  const visibleHistory = liveHistory ?? history
   const activeReport = activeAnalysis?.report
   const statusLabel = statusText(activeAnalysis)
   const latestCompleted = useMemo(
-    () => history.find((analysis) => analysis.status === "complete"),
-    [history]
+    () => visibleHistory.find((analysis) => analysis.status === "complete"),
+    [visibleHistory]
   )
 
   const refreshHistory = useCallback(async () => {
+    if (liveHistory !== undefined) {
+      return
+    }
+
     setError(null)
     setLoadState((current) => (current === "idle" ? "loading" : current))
 
     try {
-      const analyses = await listAnalyses()
+      const analyses = await listAnalyses(auth)
       setHistory(analyses)
       setActiveAnalysis((current) => {
         if (current) {
@@ -67,11 +119,29 @@ export default function App() {
     } finally {
       setLoadState((current) => (current === "loading" ? "idle" : current))
     }
-  }, [])
+  }, [auth, liveHistory])
 
   useEffect(() => {
+    if (liveHistory !== undefined) {
+      return
+    }
+
     void refreshHistory()
-  }, [refreshHistory])
+  }, [liveHistory, refreshHistory])
+
+  useEffect(() => {
+    if (liveHistory === undefined) {
+      return
+    }
+
+    setActiveAnalysis((current) => {
+      if (current) {
+        return liveHistory.find((analysis) => analysis.id === current.id) ?? current
+      }
+
+      return liveHistory[0] ?? null
+    })
+  }, [liveHistory])
 
   useEffect(() => {
     if (!activeAnalysis?.id || activeAnalysis.status !== "complete") {
@@ -81,7 +151,7 @@ export default function App() {
 
     let isCurrent = true
 
-    listNotes(activeAnalysis.id)
+    listNotes(activeAnalysis.id, auth)
       .then((nextNotes) => {
         if (isCurrent) {
           setNotes(nextNotes)
@@ -96,7 +166,7 @@ export default function App() {
     return () => {
       isCurrent = false
     }
-  }, [activeAnalysis?.id, activeAnalysis?.status])
+  }, [activeAnalysis?.id, activeAnalysis?.status, auth])
 
   async function handleUpload(event: ChangeEvent<HTMLInputElement>) {
     const file = event.currentTarget.files?.[0]
@@ -110,15 +180,19 @@ export default function App() {
     setLoadState("uploading")
 
     try {
-      const created = await createAnalysis(file)
+      const created = await createAnalysis(file, auth)
       setActiveAnalysis(created)
       setHistory((current) => [created, ...current.filter((item) => item.id !== created.id)])
       setLoadState("polling")
 
-      const completed = await waitForAnalysis(created.id, (analysis) => {
-        setActiveAnalysis(analysis)
-        setHistory((current) => [analysis, ...current.filter((item) => item.id !== analysis.id)])
-      })
+      const completed = await waitForAnalysis(
+        created.id,
+        (analysis) => {
+          setActiveAnalysis(analysis)
+          setHistory((current) => [analysis, ...current.filter((item) => item.id !== analysis.id)])
+        },
+        auth
+      )
 
       setActiveAnalysis(completed)
       await refreshHistory()
@@ -142,7 +216,7 @@ export default function App() {
     setError(null)
 
     try {
-      const note = await createNote(activeAnalysis.id, noteDraft)
+      const note = await createNote(activeAnalysis.id, noteDraft, auth)
       setNotes((current) => [note, ...current])
       setNoteDraft("")
     } catch (noteError) {
@@ -158,7 +232,7 @@ export default function App() {
     setError(null)
 
     try {
-      await downloadAnalysisFile(activeAnalysis.id, kind)
+      await downloadAnalysisFile(activeAnalysis.id, kind, auth)
     } catch (downloadError) {
       setError(errorMessage(downloadError))
     }
@@ -171,12 +245,7 @@ export default function App() {
           <p className="eyebrow">greenlit.ai</p>
           <h1>GRAS readiness review</h1>
         </div>
-        <div className="header-actions">
-          <button type="button" className="secondary-button" onClick={refreshHistory}>
-            <RefreshCw aria-hidden="true" />
-            Reload
-          </button>
-        </div>
+        {headerActions ? <div className="header-actions">{headerActions}</div> : null}
       </header>
 
       <section className="workspace-grid" aria-label="MVP workflow">
@@ -240,11 +309,13 @@ export default function App() {
             <p className="eyebrow">Saved analyses</p>
             <h2>Analysis history</h2>
           </div>
-          <span>{history.length} saved</span>
+          <span>{visibleHistory.length} saved</span>
         </div>
-        {history.length > 0 ? (
+        {historyLoading ? (
+          <p className="empty-state">Loading saved analyses...</p>
+        ) : visibleHistory.length > 0 ? (
           <div className="history-list">
-            {history.map((analysis) => (
+            {visibleHistory.map((analysis) => (
               <button
                 type="button"
                 key={analysis.id}
@@ -286,6 +357,53 @@ export default function App() {
           )
         })}
       </nav>
+    </main>
+  )
+}
+
+function LoadingShell() {
+  return (
+    <main className="app-shell">
+      <section className="summary-panel" aria-label="Loading">
+        <p className="eyebrow">greenlit.ai</p>
+        <h1>GRAS readiness review</h1>
+        <div className="status-callout status-running">
+          <Loader2 className="spin" aria-hidden="true" />
+          <span>Loading authentication</span>
+        </div>
+      </section>
+    </main>
+  )
+}
+
+function SignedOutShell() {
+  return (
+    <main className="app-shell">
+      <header className="top-bar">
+        <div>
+          <p className="eyebrow">greenlit.ai</p>
+          <h1>GRAS readiness review</h1>
+        </div>
+      </header>
+      <section className="submit-panel auth-panel" aria-label="Sign in">
+        <div className="panel-copy">
+          <p className="eyebrow">Authentication required</p>
+          <h2>Sign in to review filings</h2>
+          <p>Uploads, analysis history, reports, and workbook notes are saved to your account.</p>
+        </div>
+        <div className="auth-actions">
+          <SignInButton mode="modal">
+            <button type="button" className="secondary-button">
+              Sign in
+            </button>
+          </SignInButton>
+          <SignUpButton mode="modal">
+            <button type="button" className="inline-action">
+              Create account
+            </button>
+          </SignUpButton>
+        </div>
+      </section>
     </main>
   )
 }
@@ -557,7 +675,7 @@ function statusText(analysis: AnalysisRecord | null) {
   }
 
   if (analysis.status === "complete") {
-    return "Minimum score saved and ready to reload."
+    return "Minimum score saved and ready."
   }
 
   return analysis.error ?? "Analysis failed."

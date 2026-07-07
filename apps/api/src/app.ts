@@ -1,3 +1,4 @@
+import { clerkMiddleware, getAuth } from "@hono/clerk-auth"
 import { type Context, Hono } from "hono"
 import { cors } from "hono/cors"
 import {
@@ -13,19 +14,22 @@ type CreateAppOptions = {
   dataDir?: string
 }
 
+type AuthMode = "clerk" | "local-session"
+
 const maxUploadBytes = 40 * 1024 * 1024
 
 export function createApp(options: CreateAppOptions = {}) {
   const storage = createConfiguredStorage(
     options.dataDir ?? process.env.GREENLIT_LOCAL_DATA_DIR ?? defaultDataDir()
   )
+  const authMode = configuredAuthMode()
   const app = new Hono()
 
   app.use(
     "/api/*",
     cors({
       origin: ["http://localhost:5173", "http://127.0.0.1:5173"],
-      allowHeaders: ["Content-Type", "x-greenlit-session"],
+      allowHeaders: ["Authorization", "Content-Type", "x-greenlit-session"],
       allowMethods: ["GET", "POST", "OPTIONS"],
     })
   )
@@ -37,14 +41,27 @@ export function createApp(options: CreateAppOptions = {}) {
     })
   )
 
+  if (authMode === "clerk") {
+    assertClerkEnvironment()
+    app.use("/api/*", clerkMiddleware())
+  }
+
   app.get("/api/analyses", async (context) => {
-    const ownerId = getOwnerId(context.req.header("x-greenlit-session"))
+    const ownerId = getOwnerId(context, authMode)
+    if (!ownerId) {
+      return unauthorized(context)
+    }
+
     const analyses = await storage.listAnalyses(ownerId)
     return context.json({ analyses })
   })
 
   app.get("/api/analyses/:id", async (context) => {
-    const ownerId = getOwnerId(context.req.header("x-greenlit-session"))
+    const ownerId = getOwnerId(context, authMode)
+    if (!ownerId) {
+      return unauthorized(context)
+    }
+
     const analysis = await storage.getAnalysis(ownerId, context.req.param("id"))
 
     if (!analysis) {
@@ -55,7 +72,11 @@ export function createApp(options: CreateAppOptions = {}) {
   })
 
   app.get("/api/analyses/:id/notes", async (context) => {
-    const ownerId = getOwnerId(context.req.header("x-greenlit-session"))
+    const ownerId = getOwnerId(context, authMode)
+    if (!ownerId) {
+      return unauthorized(context)
+    }
+
     const analysis = await storage.getAnalysis(ownerId, context.req.param("id"))
 
     if (!analysis) {
@@ -67,7 +88,11 @@ export function createApp(options: CreateAppOptions = {}) {
   })
 
   app.post("/api/analyses/:id/notes", async (context) => {
-    const ownerId = getOwnerId(context.req.header("x-greenlit-session"))
+    const ownerId = getOwnerId(context, authMode)
+    if (!ownerId) {
+      return unauthorized(context)
+    }
+
     const analysis = await storage.getAnalysis(ownerId, context.req.param("id"))
 
     if (!analysis) {
@@ -95,7 +120,11 @@ export function createApp(options: CreateAppOptions = {}) {
   })
 
   app.get("/api/analyses/:id/outline", async (context) => {
-    const ownerId = getOwnerId(context.req.header("x-greenlit-session"))
+    const ownerId = getOwnerId(context, authMode)
+    if (!ownerId) {
+      return unauthorized(context)
+    }
+
     const analysis = await storage.getAnalysis(ownerId, context.req.param("id"))
 
     if (!analysis?.report) {
@@ -110,7 +139,11 @@ export function createApp(options: CreateAppOptions = {}) {
   })
 
   app.get("/api/analyses/:id/export", async (context) => {
-    const ownerId = getOwnerId(context.req.header("x-greenlit-session"))
+    const ownerId = getOwnerId(context, authMode)
+    if (!ownerId) {
+      return unauthorized(context)
+    }
+
     const analysis = await storage.getAnalysis(ownerId, context.req.param("id"))
 
     if (!analysis?.report) {
@@ -127,7 +160,11 @@ export function createApp(options: CreateAppOptions = {}) {
   })
 
   app.post("/api/analyses", async (context) => {
-    const ownerId = getOwnerId(context.req.header("x-greenlit-session"))
+    const ownerId = getOwnerId(context, authMode)
+    if (!ownerId) {
+      return unauthorized(context)
+    }
+
     const body = await context.req.parseBody()
     const file = body.file
     const validationError = validateUpload(file)
@@ -271,12 +308,46 @@ function safeFileBase(fileName: string) {
     .toLowerCase()
 }
 
-function getOwnerId(ownerId: string | undefined) {
+function configuredAuthMode(): AuthMode {
+  if (process.env.GREENLIT_AUTH_DRIVER === "clerk") {
+    return "clerk"
+  }
+
+  if (process.env.GREENLIT_AUTH_DRIVER === "local-session") {
+    return "local-session"
+  }
+
+  return process.env.CLERK_SECRET_KEY ? "clerk" : "local-session"
+}
+
+function assertClerkEnvironment() {
+  if (!process.env.CLERK_SECRET_KEY) {
+    throw new Error("GREENLIT_AUTH_DRIVER=clerk requires CLERK_SECRET_KEY")
+  }
+
+  if (!process.env.CLERK_PUBLISHABLE_KEY && !process.env.VITE_CLERK_PUBLISHABLE_KEY) {
+    throw new Error(
+      "GREENLIT_AUTH_DRIVER=clerk requires CLERK_PUBLISHABLE_KEY or VITE_CLERK_PUBLISHABLE_KEY"
+    )
+  }
+}
+
+function getOwnerId(context: Context, authMode: AuthMode) {
+  if (authMode === "clerk") {
+    const auth = getAuth(context)
+    return auth?.userId ?? null
+  }
+
+  const ownerId = context.req.header("x-greenlit-session")
   if (!ownerId?.trim()) {
-    throw new Error("Missing x-greenlit-session header")
+    return null
   }
 
   return ownerId
+}
+
+function unauthorized(context: Context) {
+  return context.json({ error: "Sign in to continue." }, 401)
 }
 
 function shouldRunAnalysisInline() {
