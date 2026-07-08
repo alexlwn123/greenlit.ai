@@ -26,7 +26,7 @@ function Root() {
         <section className="summary-panel" aria-label="Configuration error">
           <p className="eyebrow">Configuration required</p>
           <h1>Authentication is not configured</h1>
-          <p>Set VITE_CLERK_PUBLISHABLE_KEY and VITE_CONVEX_URL before enabling Clerk auth.</p>
+          <p>Set CLERK_PUBLISHABLE_KEY and CONVEX_URL before enabling Clerk auth.</p>
         </section>
       </main>
     )
