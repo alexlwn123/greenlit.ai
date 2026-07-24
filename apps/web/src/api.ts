@@ -1,5 +1,5 @@
 import type { AnalysisRecord, WorkbookNote } from "@greenlit/core"
-import { upload } from "@vercel/blob/client"
+import { uploadPresigned } from "@vercel/blob/client"
 
 const sessionStorageKey = "greenlit.localSessionId"
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL ?? "/api"
@@ -33,7 +33,7 @@ async function createAnalysisFromDirectUpload(file: File) {
   validatePdf(file)
   const sessionId = getSessionId()
   const pathname = `greenlit/uploads/${sessionId}/${crypto.randomUUID()}-${safeFileName(file.name)}`
-  const blob = await upload(pathname, file, {
+  const blob = await uploadPresigned(pathname, file, {
     access: "private",
     contentType: file.type || "application/pdf",
     handleUploadUrl: `${apiBaseUrl}/uploads`,

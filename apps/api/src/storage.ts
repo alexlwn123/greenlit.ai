@@ -12,6 +12,7 @@ import type {
   WorkbookNote,
   WorkbookNoteStatus,
 } from "../../../packages/core/src/index.js"
+import { getBlobAuthOptions } from "./blob-auth.js"
 
 type Database = {
   analyses: AnalysisRecord[]
@@ -277,6 +278,7 @@ export function createConvexBlobStorage() {
     const storageKey = `greenlit/artifacts/${id}${extension}`
 
     await put(storageKey, Buffer.from(input.bytes), {
+      ...getBlobAuthOptions(),
       access: blobAccess,
       addRandomSuffix: false,
       allowOverwrite: false,
@@ -295,6 +297,7 @@ export function createConvexBlobStorage() {
 
   async function readArtifact(artifact: ArtifactReference) {
     const result = await get(artifact.storageKey, {
+      ...getBlobAuthOptions(),
       access: blobAccess,
       useCache: false,
     })

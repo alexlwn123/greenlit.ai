@@ -1,5 +1,5 @@
-import { head } from "@vercel/blob"
-import { type HandleUploadBody, handleUpload } from "@vercel/blob/client"
+import { head, issueSignedToken, presignUrl } from "@vercel/blob"
+import type { HandleUploadPresignedBody } from "@vercel/blob/client"
 import { type Context, Hono } from "hono"
 import { cors } from "hono/cors"
 import {
@@ -9,6 +9,7 @@ import {
   type ReadinessReport,
   type WorkbookNote,
 } from "../../../packages/core/src/index.js"
+import { getBlobAuthOptions, hasBlobConfiguration } from "./blob-auth.js"
 import { extractPdfText } from "./pdf.js"
 import { createConfiguredStorage, defaultDataDir } from "./storage.js"
 
@@ -47,32 +48,41 @@ export function createApp(options: CreateAppOptions = {}) {
   )
 
   app.post("/api/uploads", async (context) => {
-    if (!process.env.BLOB_READ_WRITE_TOKEN) {
+    if (!hasBlobConfiguration()) {
       return context.json({ error: "Blob storage is not configured." }, 503)
     }
 
-    const body = (await context.req.json()) as HandleUploadBody
-    const result = await handleUpload({
-      body,
-      request: context.req.raw,
-      onBeforeGenerateToken: async (pathname) => {
-        const ownerId = getOwnerId(context.req.header("x-greenlit-session"))
-        const expectedPrefix = uploadPathPrefix(ownerId)
+    const body = (await context.req.json()) as HandleUploadPresignedBody
+    if (body.type !== "blob.generate-presigned-url") {
+      return context.json({ error: "Unsupported upload event." }, 400)
+    }
 
-        if (!pathname.startsWith(expectedPrefix) || !pathname.toLowerCase().endsWith(".pdf")) {
-          throw new Error("Invalid upload pathname.")
-        }
+    const { pathname } = body.payload
+    const ownerId = getOwnerId(context.req.header("x-greenlit-session"))
+    const expectedPrefix = uploadPathPrefix(ownerId)
 
-        return {
-          allowedContentTypes: ["application/pdf"],
-          maximumSizeInBytes: maxUploadBytes,
-          addRandomSuffix: false,
-          allowOverwrite: false,
-        }
-      },
+    if (!pathname.startsWith(expectedPrefix) || !pathname.toLowerCase().endsWith(".pdf")) {
+      return context.json({ error: "Invalid upload pathname." }, 400)
+    }
+
+    const token = await issueSignedToken({
+      ...getBlobAuthOptions(),
+      allowedContentTypes: ["application/pdf"],
+      maximumSizeInBytes: maxUploadBytes,
+      operations: ["put"],
+      pathname,
+    })
+    const presignedUrlPayload = await presignUrl(token, {
+      access: "private",
+      addRandomSuffix: false,
+      allowOverwrite: false,
+      allowedContentTypes: ["application/pdf"],
+      maximumSizeInBytes: maxUploadBytes,
+      operation: "put",
+      pathname,
     })
 
-    return context.json(result)
+    return context.json({ type: body.type, presignedUrlPayload })
   })
 
   app.get("/api/analyses", async (context) => {
@@ -399,7 +409,9 @@ async function resolveVercelBlobArtifact(
   pathname: string,
   fileName: string
 ): Promise<ArtifactReference> {
-  const blob = await head(pathname)
+  const blob = await head(pathname, {
+    ...getBlobAuthOptions(),
+  })
 
   if (
     blob.contentType !== "application/pdf" ||
