@@ -16,7 +16,7 @@ afterEach(async () => {
 
 describe("local analysis API", () => {
   it("saves an uploaded PDF and produces a minimum readiness score", async () => {
-    const app = createApp({ dataDir })
+    const app = createApp({ dataDir, runAnalysisInline: true })
     const createdResponse = await uploadTestPdf(app, "test-session")
 
     expect(createdResponse.status).toBe(202)
@@ -30,7 +30,7 @@ describe("local analysis API", () => {
   })
 
   it("does not expose saved analyses across sessions", async () => {
-    const app = createApp({ dataDir })
+    const app = createApp({ dataDir, runAnalysisInline: true })
     const createdResponse = await uploadTestPdf(app, "owner-session")
     const created = (await createdResponse.json()) as { analysis: { id: string } }
     await pollAnalysis(app, created.analysis.id, "owner-session")
@@ -52,7 +52,7 @@ describe("local analysis API", () => {
   })
 
   it("saves workbook notes and returns outline/report downloads for the owning session", async () => {
-    const app = createApp({ dataDir })
+    const app = createApp({ dataDir, runAnalysisInline: true })
     const createdResponse = await uploadTestPdf(app, "notes-session")
     const created = (await createdResponse.json()) as { analysis: { id: string } }
     await pollAnalysis(app, created.analysis.id, "notes-session")
@@ -98,7 +98,7 @@ describe("local analysis API", () => {
   })
 
   it("rejects non-PDF uploads clearly", async () => {
-    const app = createApp({ dataDir })
+    const app = createApp({ dataDir, runAnalysisInline: true })
     const formData = new FormData()
     formData.set("file", new File(["not a pdf"], "notice.txt", { type: "text/plain" }))
 

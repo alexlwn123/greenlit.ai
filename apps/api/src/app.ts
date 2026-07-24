@@ -11,6 +11,7 @@ import { createConfiguredStorage, defaultDataDir } from "./storage.js"
 
 type CreateAppOptions = {
   dataDir?: string
+  runAnalysisInline?: boolean
 }
 
 const maxUploadBytes = 40 * 1024 * 1024
@@ -149,7 +150,7 @@ export function createApp(options: CreateAppOptions = {}) {
       upload,
     })
 
-    if (shouldRunAnalysisInline()) {
+    if (shouldRunAnalysisInline(options.runAnalysisInline)) {
       await processAnalysis(analysis.id)
       const completed = await storage.getAnalysisById(analysis.id)
       return context.json({ analysis: completed ?? analysis }, 202)
@@ -190,10 +191,14 @@ export function createApp(options: CreateAppOptions = {}) {
 
       await storage.setReport(analysisId, report, textArtifact)
     } catch (error) {
-      await storage.updateAnalysis(analysisId, {
-        status: "failed",
-        error: error instanceof Error ? error.message : "Analysis failed",
-      })
+      try {
+        await storage.updateAnalysis(analysisId, {
+          status: "failed",
+          error: error instanceof Error ? error.message : "Analysis failed",
+        })
+      } catch {
+        // The local data directory may have been removed while background work was running.
+      }
     }
   }
 
@@ -279,8 +284,8 @@ function getOwnerId(ownerId: string | undefined) {
   return ownerId
 }
 
-function shouldRunAnalysisInline() {
-  return process.env.VERCEL === "1" || process.env.GREENLIT_ANALYSIS_MODE === "inline"
+function shouldRunAnalysisInline(override?: boolean) {
+  return override ?? (process.env.VERCEL === "1" || process.env.GREENLIT_ANALYSIS_MODE === "inline")
 }
 
 function validateUpload(file: FormDataEntryValue | FormDataEntryValue[] | undefined) {
