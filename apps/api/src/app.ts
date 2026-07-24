@@ -1,7 +1,10 @@
+import { head } from "@vercel/blob"
+import { type HandleUploadBody, handleUpload } from "@vercel/blob/client"
 import { type Context, Hono } from "hono"
 import { cors } from "hono/cors"
 import {
   type AnalysisRecord,
+  type ArtifactReference,
   createMinimumReadinessReport,
   type ReadinessReport,
   type WorkbookNote,
@@ -12,6 +15,11 @@ import { createConfiguredStorage, defaultDataDir } from "./storage.js"
 type CreateAppOptions = {
   dataDir?: string
   runAnalysisInline?: boolean
+  resolveUploadedArtifact?: (
+    ownerId: string,
+    pathname: string,
+    fileName: string
+  ) => Promise<ArtifactReference>
 }
 
 const maxUploadBytes = 40 * 1024 * 1024
@@ -37,6 +45,35 @@ export function createApp(options: CreateAppOptions = {}) {
       service: "greenlit-local-api",
     })
   )
+
+  app.post("/api/uploads", async (context) => {
+    if (!process.env.BLOB_READ_WRITE_TOKEN) {
+      return context.json({ error: "Blob storage is not configured." }, 503)
+    }
+
+    const body = (await context.req.json()) as HandleUploadBody
+    const result = await handleUpload({
+      body,
+      request: context.req.raw,
+      onBeforeGenerateToken: async (pathname) => {
+        const ownerId = getOwnerId(context.req.header("x-greenlit-session"))
+        const expectedPrefix = uploadPathPrefix(ownerId)
+
+        if (!pathname.startsWith(expectedPrefix) || !pathname.toLowerCase().endsWith(".pdf")) {
+          throw new Error("Invalid upload pathname.")
+        }
+
+        return {
+          allowedContentTypes: ["application/pdf"],
+          maximumSizeInBytes: maxUploadBytes,
+          addRandomSuffix: false,
+          allowOverwrite: false,
+        }
+      },
+    })
+
+    return context.json(result)
+  })
 
   app.get("/api/analyses", async (context) => {
     const ownerId = getOwnerId(context.req.header("x-greenlit-session"))
@@ -147,6 +184,41 @@ export function createApp(options: CreateAppOptions = {}) {
     const analysis = await storage.createAnalysis({
       ownerId,
       filingName: pdfFile.name,
+      upload,
+    })
+
+    if (shouldRunAnalysisInline(options.runAnalysisInline)) {
+      await processAnalysis(analysis.id)
+      const completed = await storage.getAnalysisById(analysis.id)
+      return context.json({ analysis: completed ?? analysis }, 202)
+    }
+
+    setTimeout(() => {
+      void processAnalysis(analysis.id)
+    }, 0)
+
+    return context.json({ analysis }, 202)
+  })
+
+  app.post("/api/analyses/from-upload", async (context) => {
+    const ownerId = getOwnerId(context.req.header("x-greenlit-session"))
+    const body = (await context.req.json()) as { pathname?: string; fileName?: string }
+    const pathname = body.pathname?.trim()
+    const fileName = body.fileName?.trim()
+
+    if (!pathname || !fileName) {
+      return context.json({ error: "Uploaded PDF metadata is required." }, 400)
+    }
+
+    if (!pathname.startsWith(uploadPathPrefix(ownerId))) {
+      return context.json({ error: "Uploaded PDF does not belong to this session." }, 403)
+    }
+
+    const resolveUploadedArtifact = options.resolveUploadedArtifact ?? resolveVercelBlobArtifact
+    const upload = await resolveUploadedArtifact(ownerId, pathname, fileName)
+    const analysis = await storage.createAnalysis({
+      ownerId,
+      filingName: fileName,
       upload,
     })
 
@@ -316,4 +388,34 @@ function isFile(value: FormDataEntryValue | FormDataEntryValue[] | undefined): v
   return (
     typeof File !== "undefined" && value instanceof File && typeof value.arrayBuffer === "function"
   )
+}
+
+function uploadPathPrefix(ownerId: string) {
+  return `greenlit/uploads/${ownerId}/`
+}
+
+async function resolveVercelBlobArtifact(
+  _ownerId: string,
+  pathname: string,
+  fileName: string
+): Promise<ArtifactReference> {
+  const blob = await head(pathname)
+
+  if (
+    blob.contentType !== "application/pdf" ||
+    blob.size <= 0 ||
+    blob.size > maxUploadBytes ||
+    !blob.pathname.toLowerCase().endsWith(".pdf")
+  ) {
+    throw new Error("Uploaded Blob is not a supported PDF.")
+  }
+
+  return {
+    id: crypto.randomUUID(),
+    fileName,
+    mimeType: blob.contentType,
+    size: blob.size,
+    storageKey: blob.pathname,
+    createdAt: blob.uploadedAt.toISOString(),
+  }
 }

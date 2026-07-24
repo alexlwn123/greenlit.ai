@@ -1,4 +1,5 @@
 import type { AnalysisRecord, WorkbookNote } from "@greenlit/core"
+import { upload } from "@vercel/blob/client"
 
 const sessionStorageKey = "greenlit.localSessionId"
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL ?? "/api"
@@ -14,6 +15,10 @@ export async function getAnalysis(analysisId: string) {
 }
 
 export async function createAnalysis(file: File) {
+  if (import.meta.env.PROD) {
+    return createAnalysisFromDirectUpload(file)
+  }
+
   const body = new FormData()
   body.set("file", file)
 
@@ -21,6 +26,33 @@ export async function createAnalysis(file: File) {
     body,
     method: "POST",
   })
+  return response.analysis
+}
+
+async function createAnalysisFromDirectUpload(file: File) {
+  validatePdf(file)
+  const sessionId = getSessionId()
+  const pathname = `greenlit/uploads/${sessionId}/${crypto.randomUUID()}-${safeFileName(file.name)}`
+  const blob = await upload(pathname, file, {
+    access: "private",
+    contentType: file.type || "application/pdf",
+    handleUploadUrl: `${apiBaseUrl}/uploads`,
+    headers: {
+      "x-greenlit-session": sessionId,
+    },
+    multipart: file.size > 5 * 1024 * 1024,
+  })
+  const response = await requestJson<{ analysis: AnalysisRecord }>("/analyses/from-upload", {
+    body: JSON.stringify({
+      fileName: file.name,
+      pathname: blob.pathname,
+    }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+    method: "POST",
+  })
+
   return response.analysis
 }
 
@@ -128,4 +160,22 @@ async function readError(response: Response) {
 
 function delay(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms))
+}
+
+function validatePdf(file: File) {
+  if (!file.name.toLowerCase().endsWith(".pdf") || (file.type && file.type !== "application/pdf")) {
+    throw new Error("Only PDF uploads are supported for the MVP.")
+  }
+
+  if (file.size <= 0) {
+    throw new Error("The selected PDF is empty.")
+  }
+
+  if (file.size > 40 * 1024 * 1024) {
+    throw new Error("The selected PDF is over the 40 MB MVP limit.")
+  }
+}
+
+function safeFileName(fileName: string) {
+  return fileName.replace(/[^a-z0-9._-]+/gi, "-").replace(/^-+|-+$/g, "") || "filing.pdf"
 }

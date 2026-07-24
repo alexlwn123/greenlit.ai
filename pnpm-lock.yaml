@@ -60,6 +60,9 @@ importers:
       '@greenlit/core':
         specifier: workspace:*
         version: link:../../packages/core
+      '@vercel/blob':
+        specifier: 2.4.0
+        version: 2.4.0
       lucide-react:
         specifier: ^1.17.0
         version: 1.17.0(react@19.2.7)

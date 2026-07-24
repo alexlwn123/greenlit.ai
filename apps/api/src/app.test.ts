@@ -1,4 +1,4 @@
-import { mkdtemp, rm } from "node:fs/promises"
+import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises"
 import { tmpdir } from "node:os"
 import path from "node:path"
 import { afterEach, beforeEach, describe, expect, it } from "vitest"
@@ -114,6 +114,62 @@ describe("local analysis API", () => {
     await expect(response.json()).resolves.toMatchObject({
       error: "Only PDF uploads are supported for the MVP.",
     })
+  })
+
+  it("creates an analysis from a verified direct Blob upload", async () => {
+    const storageKey = "artifacts/direct-upload.pdf"
+    await mkdir(path.join(dataDir, "artifacts"), { recursive: true })
+    await writeFile(
+      path.join(dataDir, storageKey),
+      `%PDF-1.4
+      GRAS notice identity composition intended use manufacturing specifications purity safety
+      toxicology NOAEL dietary exposure references journal Food Chem 2024 doi:10.1000/example`
+    )
+    const app = createApp({
+      dataDir,
+      runAnalysisInline: true,
+      resolveUploadedArtifact: async (_ownerId, _pathname, fileName) => ({
+        id: "blob-artifact",
+        fileName,
+        mimeType: "application/pdf",
+        size: 240,
+        storageKey,
+        createdAt: new Date().toISOString(),
+      }),
+    })
+    const response = await app.request("/api/analyses/from-upload", {
+      body: JSON.stringify({
+        fileName: "notice.pdf",
+        pathname: "greenlit/uploads/blob-session/upload-notice.pdf",
+      }),
+      headers: {
+        "Content-Type": "application/json",
+        "x-greenlit-session": "blob-session",
+      },
+      method: "POST",
+    })
+    const body = (await response.json()) as { analysis: { filingName: string; status: string } }
+
+    expect(response.status).toBe(202)
+    expect(body.analysis.filingName).toBe("notice.pdf")
+    expect(body.analysis.status).toBe("complete")
+  })
+
+  it("rejects direct uploads owned by another session", async () => {
+    const app = createApp({ dataDir })
+    const response = await app.request("/api/analyses/from-upload", {
+      body: JSON.stringify({
+        fileName: "notice.pdf",
+        pathname: "greenlit/uploads/other-session/upload-notice.pdf",
+      }),
+      headers: {
+        "Content-Type": "application/json",
+        "x-greenlit-session": "blob-session",
+      },
+      method: "POST",
+    })
+
+    expect(response.status).toBe(403)
   })
 })
 

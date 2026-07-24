@@ -79,6 +79,8 @@ Required Vercel environment variables for the hosted local-MVP path:
 
 The hosted MVP stores saved-work metadata, analysis state, and workbook notes in Convex. Uploaded PDFs and generated text artifacts remain private Vercel Blob objects referenced from Convex records.
 
+In production, the browser uploads PDFs directly to private Vercel Blob storage using a short-lived, server-authorized upload token. The API verifies the resulting object before creating the analysis. This keeps files up to 40 MB out of the Vercel Function request body and avoids Vercel's function upload-size limit.
+
 ## Local Data And Retention
 
 The local API stores uploads, extracted text, generated reports, and workbook notes on disk under `.local-data` unless `GREENLIT_LOCAL_DATA_DIR` points somewhere else. This data remains until you delete that directory.

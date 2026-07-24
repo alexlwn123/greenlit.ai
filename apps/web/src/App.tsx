@@ -200,7 +200,7 @@ export default function App() {
             <p className="eyebrow">Phase 3 backbone</p>
             <h2>Upload a draft filing</h2>
             <p>
-              The local backend saves the PDF, extracts text, creates an analysis record, and
+              The backend securely saves the PDF, extracts text, creates an analysis record, and
               returns a minimum readiness score.
             </p>
             {activeAnalysis ? (
@@ -252,7 +252,7 @@ export default function App() {
       <section className="history-panel" aria-label="Saved analyses">
         <div className="section-heading">
           <div>
-            <p className="eyebrow">Saved locally</p>
+            <p className="eyebrow">Saved analyses</p>
             <h2>Analysis history</h2>
           </div>
           <span>{history.length} saved</span>
