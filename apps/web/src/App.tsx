@@ -1,69 +1,72 @@
-import type { AnalysisRecord, ReadinessReport, WorkbookNote } from "@greenlit/core"
+import type { AnalysisRecord, ReadinessReport } from "@greenlit/core"
 import { demoReport } from "@greenlit/core"
 import {
-  AlertCircle,
-  CheckCircle2,
-  CircleDashed,
+  ArrowLeft,
+  ArrowRight,
+  Check,
+  ChevronRight,
+  CircleAlert,
+  Clock3,
   Download,
+  FileSearch,
   FileText,
-  History,
-  ListChecks,
-  Loader2,
+  FolderOpen,
+  LoaderCircle,
+  LockKeyhole,
+  Menu,
+  MoreHorizontal,
   NotebookPen,
-  RefreshCw,
-  Save,
+  Plus,
+  Search,
+  ShieldCheck,
+  Sparkles,
   Upload,
+  X,
 } from "lucide-react"
-import { type ChangeEvent, type ReactNode, useCallback, useEffect, useMemo, useState } from "react"
 import {
-  createAnalysis,
-  createNote,
-  downloadAnalysisFile,
-  listAnalyses,
-  listNotes,
-  waitForAnalysis,
-} from "./api"
-
-const workflowItems = [
-  { label: "Submit filing", icon: Upload },
-  { label: "Analysis progress", icon: Loader2 },
-  { label: "Report overview", icon: FileText },
-  { label: "Findings detail", icon: ListChecks },
-  { label: "Workbook", icon: NotebookPen },
-  { label: "History", icon: History },
-]
+  type ChangeEvent,
+  type CSSProperties,
+  type ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react"
+import { createAnalysis, downloadAnalysisFile, listAnalyses, waitForAnalysis } from "./api"
 
 type LoadState = "idle" | "loading" | "uploading" | "polling"
+type Route = { name: "home" } | { name: "analysis"; id?: string } | { name: "workspace" }
+
+const analysisSections = [
+  "Executive summary",
+  "Readiness signals",
+  "Critical findings",
+  "Documentation",
+  "Safety evidence",
+  "Comparable filings",
+  "Amendment plan",
+]
 
 export default function App() {
+  const [route, setRoute] = useState<Route>(() => readRoute())
   const [history, setHistory] = useState<AnalysisRecord[]>([])
   const [activeAnalysis, setActiveAnalysis] = useState<AnalysisRecord | null>(null)
-  const [loadState, setLoadState] = useState<LoadState>("idle")
+  const [loadState, setLoadState] = useState<LoadState>("loading")
   const [error, setError] = useState<string | null>(null)
-  const [showDemo, setShowDemo] = useState(true)
-  const [notes, setNotes] = useState<WorkbookNote[]>([])
-  const [noteDraft, setNoteDraft] = useState("")
-
-  const activeReport = activeAnalysis?.report ?? (showDemo ? demoReport : undefined)
-  const statusLabel = statusText(activeAnalysis)
-  const latestCompleted = useMemo(
-    () => history.find((analysis) => analysis.status === "complete"),
-    [history]
-  )
+  const [mobileNavOpen, setMobileNavOpen] = useState(false)
 
   const refreshHistory = useCallback(async () => {
-    setError(null)
-    setLoadState((current) => (current === "idle" ? "loading" : current))
-
     try {
       const analyses = await listAnalyses()
       setHistory(analyses)
       setActiveAnalysis((current) => {
-        if (current) {
-          return analyses.find((analysis) => analysis.id === current.id) ?? current
-        }
-
-        return analyses[0] ?? null
+        const currentRoute = readRoute()
+        const routeId = currentRoute.name === "analysis" ? currentRoute.id : undefined
+        return (
+          analyses.find((analysis) => analysis.id === routeId) ??
+          analyses.find((analysis) => analysis.id === current?.id) ??
+          current
+        )
       })
     } catch (refreshError) {
       setError(errorMessage(refreshError))
@@ -74,43 +77,24 @@ export default function App() {
 
   useEffect(() => {
     void refreshHistory()
+    const onPopState = () => setRoute(readRoute())
+    window.addEventListener("popstate", onPopState)
+    return () => window.removeEventListener("popstate", onPopState)
   }, [refreshHistory])
 
-  useEffect(() => {
-    if (!activeAnalysis?.id || activeAnalysis.status !== "complete") {
-      setNotes([])
-      return
-    }
-
-    let isCurrent = true
-
-    listNotes(activeAnalysis.id)
-      .then((nextNotes) => {
-        if (isCurrent) {
-          setNotes(nextNotes)
-        }
-      })
-      .catch((notesError) => {
-        if (isCurrent) {
-          setError(errorMessage(notesError))
-        }
-      })
-
-    return () => {
-      isCurrent = false
-    }
-  }, [activeAnalysis?.id, activeAnalysis?.status])
+  const navigate = useCallback((next: Route) => {
+    window.history.pushState({}, "", routePath(next))
+    setRoute(next)
+    setMobileNavOpen(false)
+    window.scrollTo({ top: 0, behavior: "smooth" })
+  }, [])
 
   async function handleUpload(event: ChangeEvent<HTMLInputElement>) {
     const file = event.currentTarget.files?.[0]
     event.currentTarget.value = ""
-
-    if (!file) {
-      return
-    }
+    if (!file) return
 
     setError(null)
-    setShowDemo(false)
     setLoadState("uploading")
 
     try {
@@ -126,6 +110,7 @@ export default function App() {
 
       setActiveAnalysis(completed)
       await refreshHistory()
+      navigate({ name: "analysis", id: completed.id })
     } catch (uploadError) {
       setError(errorMessage(uploadError))
     } finally {
@@ -133,41 +118,18 @@ export default function App() {
     }
   }
 
-  function openDemo() {
-    setShowDemo(true)
-    setActiveAnalysis(null)
-    setError(null)
-  }
-
   function openAnalysis(analysis: AnalysisRecord) {
-    setShowDemo(false)
     setActiveAnalysis(analysis)
-    setError(null)
+    navigate({ name: "analysis", id: analysis.id })
   }
 
-  async function saveNote() {
-    if (!activeAnalysis?.id || !noteDraft.trim()) {
-      return
-    }
-
-    setError(null)
-
-    try {
-      const note = await createNote(activeAnalysis.id, noteDraft)
-      setNotes((current) => [note, ...current])
-      setNoteDraft("")
-    } catch (noteError) {
-      setError(errorMessage(noteError))
-    }
+  function openDemo() {
+    setActiveAnalysis(null)
+    navigate({ name: "analysis", id: "demo" })
   }
 
   async function download(kind: "outline" | "export") {
-    if (!activeAnalysis?.id) {
-      return
-    }
-
-    setError(null)
-
+    if (!activeAnalysis?.id) return
     try {
       await downloadAnalysisFile(activeAnalysis.id, kind)
     } catch (downloadError) {
@@ -175,421 +137,805 @@ export default function App() {
     }
   }
 
-  return (
-    <main className="app-shell">
-      <header className="top-bar">
-        <div>
-          <p className="eyebrow">greenlit.ai</p>
-          <h1>GRAS readiness review</h1>
-        </div>
-        <div className="header-actions">
-          <button type="button" className="secondary-button" onClick={refreshHistory}>
-            <RefreshCw aria-hidden="true" />
-            Reload
-          </button>
-          <button type="button" className="secondary-button" onClick={openDemo}>
-            <FileText aria-hidden="true" />
-            Open demo
-          </button>
-        </div>
-      </header>
+  const report =
+    route.name === "analysis" && route.id === "demo"
+      ? demoReport
+      : (activeAnalysis?.report ??
+        history.find((analysis) => analysis.id === (route.name === "analysis" ? route.id : ""))
+          ?.report)
 
-      <section className="workspace-grid" aria-label="MVP workflow">
-        <div className="submit-panel">
-          <div className="panel-copy">
-            <p className="eyebrow">Phase 3 backbone</p>
-            <h2>Upload a draft filing</h2>
-            <p>
-              The backend securely saves the PDF, extracts text, creates an analysis record, and
-              returns a minimum readiness score.
+  return (
+    <div className="site-frame">
+      <Header
+        route={route}
+        navigate={navigate}
+        mobileNavOpen={mobileNavOpen}
+        setMobileNavOpen={setMobileNavOpen}
+      />
+
+      {route.name === "home" ? (
+        <LandingPage
+          history={history}
+          loadState={loadState}
+          activeAnalysis={activeAnalysis}
+          error={error}
+          onUpload={handleUpload}
+          onOpenDemo={openDemo}
+          onOpenAnalysis={openAnalysis}
+        />
+      ) : null}
+
+      {route.name === "analysis" ? (
+        <AnalysisPage
+          report={report}
+          analysis={activeAnalysis}
+          error={error}
+          onBack={() => navigate({ name: "home" })}
+          onDownload={download}
+        />
+      ) : null}
+
+      {route.name === "workspace" ? (
+        <WorkspacePage
+          history={history}
+          loadState={loadState}
+          onOpenAnalysis={openAnalysis}
+          onUpload={() => navigate({ name: "home" })}
+        />
+      ) : null}
+    </div>
+  )
+}
+
+function Header({
+  route,
+  navigate,
+  mobileNavOpen,
+  setMobileNavOpen,
+}: {
+  route: Route
+  navigate: (route: Route) => void
+  mobileNavOpen: boolean
+  setMobileNavOpen: (open: boolean) => void
+}) {
+  return (
+    <header className="global-header">
+      <button className="brand" type="button" onClick={() => navigate({ name: "home" })}>
+        <span className="brand-mark">G</span>
+        <span>GREENLIT</span>
+      </button>
+
+      <nav className={mobileNavOpen ? "global-nav is-open" : "global-nav"} aria-label="Primary">
+        <button
+          type="button"
+          className={route.name === "home" ? "is-active" : ""}
+          onClick={() => navigate({ name: "home" })}
+        >
+          Analyze
+        </button>
+        <button
+          type="button"
+          className={route.name === "workspace" ? "is-active" : ""}
+          onClick={() => navigate({ name: "workspace" })}
+        >
+          Workspace
+        </button>
+        <span className="nav-divider" />
+        <span className="system-status">
+          <i />
+          Systems operational
+        </span>
+      </nav>
+
+      <div className="header-meta">
+        <span className="private-badge">
+          <LockKeyhole />
+          Private
+        </span>
+        <button
+          type="button"
+          className="icon-button menu-button"
+          aria-label={mobileNavOpen ? "Close navigation" : "Open navigation"}
+          onClick={() => setMobileNavOpen(!mobileNavOpen)}
+        >
+          {mobileNavOpen ? <X /> : <Menu />}
+        </button>
+      </div>
+    </header>
+  )
+}
+
+function LandingPage({
+  history,
+  loadState,
+  activeAnalysis,
+  error,
+  onUpload,
+  onOpenDemo,
+  onOpenAnalysis,
+}: {
+  history: AnalysisRecord[]
+  loadState: LoadState
+  activeAnalysis: AnalysisRecord | null
+  error: string | null
+  onUpload: (event: ChangeEvent<HTMLInputElement>) => void
+  onOpenDemo: () => void
+  onOpenAnalysis: (analysis: AnalysisRecord) => void
+}) {
+  const isProcessing = loadState === "uploading" || loadState === "polling"
+
+  return (
+    <main>
+      <section className="hero-section">
+        <div className="hero-grid">
+          <div className="hero-copy">
+            <p className="kicker">
+              <Sparkles />
+              Regulatory intelligence, accelerated
             </p>
-            {activeAnalysis ? (
-              <div className={`status-callout status-${activeAnalysis.status}`}>
-                {statusIcon(activeAnalysis.status)}
-                <span>{statusLabel}</span>
-              </div>
-            ) : (
-              <div className="status-callout status-demo">
-                <CircleDashed aria-hidden="true" />
-                <span>Demo report loaded</span>
-              </div>
-            )}
-            {error ? (
-              <div className="error-callout" role="alert">
-                <AlertCircle aria-hidden="true" />
-                <span>{error}</span>
-              </div>
-            ) : null}
+            <h1>
+              Know if your filing
+              <br />
+              is ready <em>before they do.</em>
+            </h1>
+            <p className="hero-lede">
+              Upload your draft GRAS notice. Greenlit maps the evidence, surfaces regulatory gaps,
+              and builds a prioritized path to submission.
+            </p>
+            <div className="hero-proof">
+              <span>
+                <ShieldCheck />
+                Confidential by design
+              </span>
+              <span>
+                <Clock3 />
+                Analysis in minutes
+              </span>
+            </div>
           </div>
 
-          <label className="upload-dropzone">
-            {loadState === "uploading" || loadState === "polling" ? (
-              <Loader2 className="spin" aria-hidden="true" />
-            ) : (
-              <Upload aria-hidden="true" />
-            )}
-            <span>{loadState === "uploading" ? "Saving PDF" : "Choose PDF"}</span>
-            <input
-              type="file"
-              accept="application/pdf"
-              onChange={handleUpload}
-              disabled={loadState === "uploading" || loadState === "polling"}
-              aria-label="Choose PDF"
-            />
-          </label>
+          <UploadPanel
+            loadState={loadState}
+            activeAnalysis={activeAnalysis}
+            error={error}
+            onUpload={onUpload}
+          />
         </div>
-
-        <ReportPanel
-          report={activeReport}
-          fallbackAnalysis={activeAnalysis}
-          latestCompleted={latestCompleted}
-          onOpenAnalysis={openAnalysis}
-          onDownload={download}
-          canDownload={Boolean(activeAnalysis?.report)}
-        />
       </section>
 
-      <section className="history-panel" aria-label="Saved analyses">
-        <div className="section-heading">
-          <div>
-            <p className="eyebrow">Saved analyses</p>
-            <h2>Analysis history</h2>
-          </div>
-          <span>{history.length} saved</span>
+      <section className="intel-strip" aria-label="Analysis capabilities">
+        <div>
+          <span>01</span>
+          <strong>Evidence mapping</strong>
+          <p>Trace every safety claim to source support.</p>
         </div>
+        <div>
+          <span>02</span>
+          <strong>Regulatory benchmark</strong>
+          <p>Compare structure against successful filings.</p>
+        </div>
+        <div>
+          <span>03</span>
+          <strong>Action plan</strong>
+          <p>Resolve the highest-risk gaps first.</p>
+        </div>
+        <button type="button" onClick={onOpenDemo}>
+          Explore sample analysis
+          <ArrowRight />
+        </button>
+      </section>
+
+      <section className="recent-section">
+        <div className="section-title-row">
+          <div>
+            <p className="section-label">RECENT WORK</p>
+            <h2>Your latest analyses</h2>
+          </div>
+          <span>{history.length.toString().padStart(2, "0")} FILES</span>
+        </div>
+
         {history.length > 0 ? (
-          <div className="history-list">
-            {history.map((analysis) => (
-              <button
-                type="button"
-                key={analysis.id}
-                className={`history-item ${activeAnalysis?.id === analysis.id ? "is-active" : ""}`}
-                onClick={() => openAnalysis(analysis)}
-              >
+          <div className="recent-table">
+            {history.slice(0, 4).map((analysis) => (
+              <button key={analysis.id} type="button" onClick={() => onOpenAnalysis(analysis)}>
+                <FileText />
                 <span>
                   <strong>{analysis.filingName}</strong>
-                  <small>{new Date(analysis.createdAt).toLocaleString()}</small>
+                  <small>{formatDate(analysis.updatedAt)}</small>
                 </span>
-                <span className={`status-chip status-${analysis.status}`}>{analysis.status}</span>
+                <span className={`state-dot state-${analysis.status}`}>
+                  {analysis.status === "complete"
+                    ? `${analysis.report?.readinessScore ?? "—"} / 100`
+                    : analysis.status}
+                </span>
+                <ChevronRight />
               </button>
             ))}
           </div>
         ) : (
-          <p className="empty-state">
-            No saved analyses yet. Upload a PDF to create the first one.
-          </p>
+          <div className="recent-empty">
+            <FolderOpen />
+            <div>
+              <strong>No analyses yet</strong>
+              <p>Your uploaded filings will appear here.</p>
+            </div>
+          </div>
         )}
       </section>
 
-      <WorkbookPanel
-        activeAnalysis={activeAnalysis}
-        notes={notes}
-        noteDraft={noteDraft}
-        onNoteDraftChange={setNoteDraft}
-        onSaveNote={saveNote}
-      />
-
-      <nav className="workflow-strip" aria-label="Core workflow steps">
-        {workflowItems.map((item) => {
-          const Icon = item.icon
-
-          return (
-            <div key={item.label} className="workflow-item">
-              <Icon aria-hidden="true" />
-              <span>{item.label}</span>
-            </div>
-          )
-        })}
-      </nav>
+      {isProcessing ? <ProcessingOverlay analysis={activeAnalysis} loadState={loadState} /> : null}
     </main>
   )
 }
 
-function ReportPanel({
+function UploadPanel({
+  loadState,
+  activeAnalysis,
+  error,
+  onUpload,
+}: {
+  loadState: LoadState
+  activeAnalysis: AnalysisRecord | null
+  error: string | null
+  onUpload: (event: ChangeEvent<HTMLInputElement>) => void
+}) {
+  const isProcessing = loadState === "uploading" || loadState === "polling"
+
+  return (
+    <div className="upload-card">
+      <div className="upload-card-top">
+        <span>NEW ANALYSIS</span>
+        <span>PDF · MAX 40 MB</span>
+      </div>
+      <label className={isProcessing ? "upload-target is-busy" : "upload-target"}>
+        <span className="upload-icon-wrap">
+          {isProcessing ? <LoaderCircle className="spin" /> : <Upload />}
+        </span>
+        <strong>{isProcessing ? "Analyzing filing" : "Drop your draft filing here"}</strong>
+        <p>
+          {isProcessing
+            ? activeAnalysis?.filingName
+            : "or click to securely select a PDF from your device"}
+        </p>
+        <span className="upload-cta">{isProcessing ? "Processing…" : "Select PDF"}</span>
+        <input
+          type="file"
+          accept="application/pdf"
+          aria-label="Choose PDF"
+          onChange={onUpload}
+          disabled={isProcessing}
+        />
+      </label>
+      <div className="upload-card-bottom">
+        <span>
+          <LockKeyhole />
+          Encrypted in transit
+        </span>
+        <span>Files remain private</span>
+      </div>
+      {error ? (
+        <div className="inline-error" role="alert">
+          <CircleAlert />
+          {error}
+        </div>
+      ) : null}
+    </div>
+  )
+}
+
+function ProcessingOverlay({
+  analysis,
+  loadState,
+}: {
+  analysis: AnalysisRecord | null
+  loadState: LoadState
+}) {
+  const running = loadState === "polling"
+  return (
+    <div className="processing-overlay" role="status" aria-live="polite">
+      <div className="processing-modal">
+        <div className="processing-header">
+          <span className="document-icon">
+            <FileText />
+          </span>
+          <div>
+            <p>ANALYSIS IN PROGRESS</p>
+            <h2>{analysis?.filingName ?? "Securing your document"}</h2>
+          </div>
+          <LoaderCircle className="spin" />
+        </div>
+        <div className="processing-progress">
+          <span style={{ width: running ? "68%" : "28%" }} />
+        </div>
+        <div className="processing-steps">
+          <ProcessStep done label="Document received" meta="Encrypted and stored" />
+          <ProcessStep
+            done={running}
+            active={!running}
+            label="Extracting filing structure"
+            meta="PDF text and section map"
+          />
+          <ProcessStep
+            active={running}
+            label="Evaluating evidence"
+            meta="Claims, sources, and regulatory gaps"
+          />
+          <ProcessStep label="Building readiness report" meta="Scoring and prioritized actions" />
+        </div>
+        <p className="processing-footnote">
+          You can leave this window open. This usually takes under two minutes.
+        </p>
+      </div>
+    </div>
+  )
+}
+
+function ProcessStep({
+  done = false,
+  active = false,
+  label,
+  meta,
+}: {
+  done?: boolean
+  active?: boolean
+  label: string
+  meta: string
+}) {
+  return (
+    <div className={`process-step ${done ? "is-done" : ""} ${active ? "is-active" : ""}`}>
+      <span>{done ? <Check /> : active ? <LoaderCircle className="spin" /> : null}</span>
+      <div>
+        <strong>{label}</strong>
+        <small>{meta}</small>
+      </div>
+    </div>
+  )
+}
+
+function AnalysisPage({
   report,
-  fallbackAnalysis,
-  latestCompleted,
-  onOpenAnalysis,
+  analysis,
+  error,
+  onBack,
   onDownload,
-  canDownload,
 }: {
   report: ReadinessReport | undefined
-  fallbackAnalysis: AnalysisRecord | null
-  latestCompleted: AnalysisRecord | undefined
-  onOpenAnalysis: (analysis: AnalysisRecord) => void
+  analysis: AnalysisRecord | null
+  error: string | null
+  onBack: () => void
   onDownload: (kind: "outline" | "export") => void
-  canDownload: boolean
 }) {
+  const modules = report?.modules ?? demoReport.modules
+  const [activeSection, setActiveSection] = useState(analysisSections[0])
+
   if (!report) {
     return (
-      <aside className="summary-panel" aria-label="Analysis status">
-        <p className="eyebrow">Waiting</p>
-        <h2>{fallbackAnalysis?.filingName ?? "No report selected"}</h2>
+      <main className="empty-report-page">
+        <button type="button" className="back-link" onClick={onBack}>
+          <ArrowLeft /> Back to upload
+        </button>
+        <FileSearch />
+        <h1>{analysis?.filingName ?? "Analysis not found"}</h1>
         <p>
-          {fallbackAnalysis?.status === "failed"
-            ? fallbackAnalysis.error
-            : "Upload a PDF or open a saved completed analysis to view the minimum score."}
+          {analysis?.status === "failed"
+            ? analysis.error
+            : (error ?? "This report is still being prepared or is no longer available.")}
         </p>
-        {latestCompleted ? (
-          <button
-            type="button"
-            className="inline-action"
-            onClick={() => onOpenAnalysis(latestCompleted)}
-          >
-            Open latest completed report
-          </button>
-        ) : null}
-      </aside>
+      </main>
     )
   }
 
-  const modules = report.modules ?? demoReport.modules
-
   return (
-    <aside className="summary-panel" aria-label="Readiness summary">
-      <p className="eyebrow">{report.status === "demo" ? "Demo report" : "Minimum score"}</p>
-      <div className="score-row">
-        <span>{report.readinessScore}</span>
-        <span>Readiness score</span>
-      </div>
-      <h2>{report.filingName}</h2>
-      <p>{report.summary}</p>
-      {canDownload ? (
-        <div className="download-actions">
-          <button type="button" className="inline-action" onClick={() => onDownload("outline")}>
-            <Download aria-hidden="true" />
-            Outline
-          </button>
-          <button type="button" className="inline-action" onClick={() => onDownload("export")}>
-            <Download aria-hidden="true" />
-            Report
-          </button>
+    <main className="analysis-page">
+      <div className="analysis-toolbar">
+        <button type="button" className="back-link" onClick={onBack}>
+          <ArrowLeft /> All analyses
+        </button>
+        <div className="analysis-file">
+          <FileText />
+          <span>
+            <strong>{report.filingName}</strong>
+            <small>Analyzed {formatDate(report.generatedAt)}</small>
+          </span>
         </div>
-      ) : null}
-
-      <div className="signal-grid">
-        {report.signals.map((signal) => (
-          <div key={signal.id} className="signal-item">
-            <span>
-              {signal.score}/{signal.maxScore}
-            </span>
-            <strong>{signal.label}</strong>
-            <small>{signal.summary}</small>
-          </div>
-        ))}
+        <div className="analysis-actions">
+          {analysis?.report ? (
+            <>
+              <button type="button" onClick={() => onDownload("outline")}>
+                <Download /> Outline
+              </button>
+              <button type="button" className="primary-action" onClick={() => onDownload("export")}>
+                <Download /> Export report
+              </button>
+            </>
+          ) : (
+            <span className="sample-tag">SAMPLE REPORT</span>
+          )}
+        </div>
       </div>
 
-      <div className="module-stack">
-        <ModuleSection title="Identified Gaps">
-          <ul className="finding-list">
-            {report.findings.map((finding) => (
-              <li key={finding.id}>
-                <span>{finding.severity}</span>
-                <strong>{finding.title}</strong>
-                <small>{finding.summary}</small>
-                <details>
-                  <summary>Rationale and evidence</summary>
-                  <p>{finding.recommendedAction}</p>
-                  {finding.evidence.length > 0 ? (
+      <div className="analysis-layout">
+        <aside className="analysis-sidebar">
+          <p>REPORT INDEX</p>
+          <nav aria-label="Analysis sections">
+            {analysisSections.map((section, index) => (
+              <button
+                type="button"
+                key={section}
+                className={activeSection === section ? "is-active" : ""}
+                onClick={() => {
+                  setActiveSection(section)
+                  document
+                    .getElementById(section.toLowerCase().replaceAll(" ", "-"))
+                    ?.scrollIntoView({ behavior: "smooth" })
+                }}
+              >
+                <span>{(index + 1).toString().padStart(2, "0")}</span>
+                {section}
+              </button>
+            ))}
+          </nav>
+          <div className="report-meta">
+            <span>PIPELINE</span>
+            <strong>{report.runMetadata.pipelineVersion}</strong>
+            <span>DOCUMENT</span>
+            <strong>
+              {report.textStats.pageCount || "—"} pages ·{" "}
+              {report.textStats.wordCount.toLocaleString()} words
+            </strong>
+          </div>
+        </aside>
+
+        <article className="report-content">
+          <section id="executive-summary" className="report-hero">
+            <div>
+              <p className="section-label">EXECUTIVE SUMMARY</p>
+              <h1>Submission readiness</h1>
+              <p>{report.summary}</p>
+            </div>
+            <ScoreGauge score={report.readinessScore} />
+          </section>
+
+          <section id="readiness-signals" className="report-section">
+            <SectionHeading number="01" title="Readiness signals" aside="Weighted assessment" />
+            <div className="signal-cards">
+              {report.signals.map((signal) => {
+                const percentage = Math.round((signal.score / signal.maxScore) * 100)
+                return (
+                  <div key={signal.id} className="signal-card">
+                    <div>
+                      <span>{signal.label}</span>
+                      <strong>{percentage}%</strong>
+                    </div>
+                    <div className="signal-bar">
+                      <span style={{ width: `${percentage}%` }} />
+                    </div>
+                    <p>{signal.summary}</p>
+                  </div>
+                )
+              })}
+            </div>
+          </section>
+
+          <section id="critical-findings" className="report-section">
+            <SectionHeading
+              number="02"
+              title="Priority findings"
+              aside={`${report.findings.length} items`}
+            />
+            <div className="findings-list">
+              {report.findings.map((finding, index) => (
+                <details
+                  key={finding.id}
+                  className={`finding-row severity-${finding.severity}`}
+                  open={index === 0}
+                >
+                  <summary>
+                    <span className="finding-index">{(index + 1).toString().padStart(2, "0")}</span>
+                    <span className="severity-label">{finding.severity}</span>
+                    <strong>{finding.title}</strong>
+                    <Plus />
+                  </summary>
+                  <div className="finding-detail">
+                    <div>
+                      <span>WHY IT MATTERS</span>
+                      <p>{finding.summary}</p>
+                    </div>
+                    <div>
+                      <span>RECOMMENDED ACTION</span>
+                      <p>{finding.recommendedAction}</p>
+                    </div>
+                    {finding.evidence.length > 0 ? (
+                      <div className="evidence-tags">
+                        {finding.evidence.map((item) => (
+                          <span key={item}>{item}</span>
+                        ))}
+                      </div>
+                    ) : null}
+                  </div>
+                </details>
+              ))}
+            </div>
+          </section>
+
+          <section id="documentation" className="report-section">
+            <SectionHeading number="03" title="Documentation benchmark" aside="Section coverage" />
+            <DataTable
+              headers={["Requirement", "Status", "Assessment"]}
+              rows={modules.documentationBenchmark.map((item) => [
+                item.label,
+                <StatusPill key={`${item.id}-status`} value={item.status} />,
+                item.summary,
+              ])}
+            />
+          </section>
+
+          <section id="safety-evidence" className="report-section">
+            <SectionHeading number="04" title="Safety evidence" aside="Risk signals" />
+            <div className="safety-grid">
+              {modules.safetySignals.map((signal) => (
+                <div key={signal.id}>
+                  <StatusPill value={signal.level} />
+                  <strong>{signal.label}</strong>
+                  <p>{signal.summary}</p>
+                  <small>{signal.evidence.join(" · ")}</small>
+                </div>
+              ))}
+              {modules.safetySignals.length === 0 ? (
+                <p className="muted-empty">No safety signals were generated for this analysis.</p>
+              ) : null}
+            </div>
+          </section>
+
+          <section id="comparable-filings" className="report-section">
+            <SectionHeading number="05" title="Comparable filings" aside="Regulatory context" />
+            <div className="comparable-list">
+              {modules.comparableFilings.map((filing) => (
+                <div key={filing.id}>
+                  <div className="comparable-head">
+                    <span>{filing.status}</span>
+                    <strong>{filing.name}</strong>
+                    <MoreHorizontal />
+                  </div>
+                  <p>{filing.rationale}</p>
+                  <div>
+                    {filing.sharedSignals.map((signal) => (
+                      <span key={signal}>{signal}</span>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section id="amendment-plan" className="report-section">
+            <SectionHeading number="06" title="Amendment plan" aside="Recommended sequence" />
+            <div className="amendment-list">
+              {modules.amendmentOutline.map((section, index) => (
+                <div key={section.id}>
+                  <span>{(index + 1).toString().padStart(2, "0")}</span>
+                  <div>
+                    <strong>{section.title}</strong>
                     <ul>
-                      {finding.evidence.map((evidence) => (
-                        <li key={evidence}>{evidence}</li>
+                      {section.items.map((item) => (
+                        <li key={item}>{item}</li>
                       ))}
                     </ul>
-                  ) : null}
-                </details>
-              </li>
-            ))}
-          </ul>
-        </ModuleSection>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
 
-        <ModuleSection title="Recommended Next Steps">
-          <div className="module-list">
-            {report.findings.map((finding) => (
-              <div key={`next-${finding.id}`} className="module-row">
-                <span className={`status-chip severity-${finding.severity}`}>
-                  {finding.severity}
-                </span>
-                <strong>{finding.title}</strong>
-                <small>{finding.recommendedAction}</small>
-              </div>
-            ))}
-          </div>
-        </ModuleSection>
-
-        <ModuleSection title="Documentation Benchmark">
-          <div className="module-list">
-            {modules.documentationBenchmark.map((item) => (
-              <div key={item.id} className="module-row">
-                <span className={`status-chip status-${item.status}`}>{item.status}</span>
-                <strong>{item.label}</strong>
-                <small>{item.summary}</small>
-              </div>
-            ))}
-          </div>
-        </ModuleSection>
-
-        <ModuleSection title="Safety Signals">
-          <div className="module-list">
-            {modules.safetySignals.map((signal) => (
-              <div key={signal.id} className="module-row">
-                <span className={`status-chip signal-${signal.level}`}>{signal.level}</span>
-                <strong>{signal.label}</strong>
-                <small>{signal.summary}</small>
-              </div>
-            ))}
-          </div>
-        </ModuleSection>
-
-        <ModuleSection title="Comparable Filings">
-          <div className="module-list">
-            {modules.comparableFilings.map((filing) => (
-              <div key={filing.id} className="module-row">
-                <span className="status-chip">{filing.status}</span>
-                <strong>{filing.name}</strong>
-                <small>{filing.rationale}</small>
-              </div>
-            ))}
-          </div>
-        </ModuleSection>
-
-        <ModuleSection title="Filing Diff">
-          <div className="module-list">
-            {modules.filingDiff.slice(0, 5).map((item) => (
-              <div key={item.id} className="module-row">
-                <span className={`status-chip status-${item.status}`}>{item.status}</span>
-                <strong>{item.label}</strong>
-                <small>{item.recommendedAction}</small>
-              </div>
-            ))}
-          </div>
-        </ModuleSection>
-
-        <ModuleSection title="Research References">
-          <div className="module-list">
-            {modules.researchReferences.map((reference) => (
-              <div key={reference.id} className="module-row">
-                <span className="status-chip">{reference.year ?? "source"}</span>
-                <strong>{reference.title}</strong>
-                <small>{reference.relevance}</small>
-              </div>
-            ))}
-          </div>
-        </ModuleSection>
-
-        <ModuleSection title="Amendment Outline">
-          <div className="module-list">
-            {modules.amendmentOutline.map((section) => (
-              <div key={section.id} className="module-row module-row-full">
-                <strong>{section.title}</strong>
-                <ul>
-                  {section.items.map((item) => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </ModuleSection>
+          <footer className="report-disclaimer">
+            <CircleAlert />
+            <p>
+              This analysis is a readiness signal, not a legal or FDA determination. Validate
+              findings with qualified regulatory counsel before submission.
+            </p>
+          </footer>
+        </article>
       </div>
-    </aside>
+    </main>
   )
 }
 
-function ModuleSection({ title, children }: { title: string; children: ReactNode }) {
+function ScoreGauge({ score }: { score: number }) {
   return (
-    <section className="module-section">
-      <h3>{title}</h3>
-      {children}
-    </section>
+    <div className="score-gauge" style={{ "--score": `${score * 3.6}deg` } as CSSProperties}>
+      <div>
+        <strong>{score}</strong>
+        <span>/ 100</span>
+      </div>
+      <p>
+        {score >= 80 ? "Submission ready" : score >= 60 ? "Needs targeted work" : "Material gaps"}
+      </p>
+    </div>
   )
 }
 
-function WorkbookPanel({
-  activeAnalysis,
-  notes,
-  noteDraft,
-  onNoteDraftChange,
-  onSaveNote,
+function SectionHeading({
+  number,
+  title,
+  aside,
 }: {
-  activeAnalysis: AnalysisRecord | null
-  notes: WorkbookNote[]
-  noteDraft: string
-  onNoteDraftChange: (value: string) => void
-  onSaveNote: () => void
+  number: string
+  title: string
+  aside: string
 }) {
   return (
-    <section className="workbook-panel" aria-label="Workbook notes">
-      <div className="section-heading">
-        <div>
-          <p className="eyebrow">Workbook</p>
-          <h2>Follow-up notes</h2>
-        </div>
-        <span>{notes.length} notes</span>
-      </div>
-
-      {activeAnalysis?.status === "complete" ? (
-        <div className="note-composer">
-          <textarea
-            value={noteDraft}
-            onChange={(event) => onNoteDraftChange(event.currentTarget.value)}
-            placeholder="Add a follow-up note"
-            rows={3}
-          />
-          <button type="button" className="secondary-button" onClick={onSaveNote}>
-            <Save aria-hidden="true" />
-            Save note
-          </button>
-        </div>
-      ) : (
-        <p className="empty-state">Open a completed saved analysis to add workbook notes.</p>
-      )}
-
-      {notes.length > 0 ? (
-        <div className="note-list">
-          {notes.map((note) => (
-            <div key={note.id} className="note-item">
-              <span className={`status-chip status-${note.status}`}>{note.status}</span>
-              <p>{note.body}</p>
-              <small>{new Date(note.createdAt).toLocaleString()}</small>
-            </div>
-          ))}
-        </div>
-      ) : null}
-    </section>
+    <div className="report-section-heading">
+      <span>{number}</span>
+      <h2>{title}</h2>
+      <small>{aside}</small>
+    </div>
   )
 }
 
-function statusText(analysis: AnalysisRecord | null) {
-  if (!analysis) {
-    return "Demo report loaded"
-  }
-
-  if (analysis.status === "queued") {
-    return "Upload saved. Analysis is queued."
-  }
-
-  if (analysis.status === "running") {
-    return "Extracting text and generating the minimum score."
-  }
-
-  if (analysis.status === "complete") {
-    return "Minimum score saved and ready to reload."
-  }
-
-  return analysis.error ?? "Analysis failed."
+function DataTable({ headers, rows }: { headers: string[]; rows: ReactNode[][] }) {
+  return (
+    <div className="data-table">
+      <div className="data-row data-head">
+        {headers.map((header) => (
+          <span key={header}>{header}</span>
+        ))}
+      </div>
+      {rows.map((row) => (
+        <div className="data-row" key={String(row[0])}>
+          {row.map((cell, cellIndex) => (
+            <div key={headers[cellIndex]}>{cell}</div>
+          ))}
+        </div>
+      ))}
+    </div>
+  )
 }
 
-function statusIcon(status: AnalysisRecord["status"]) {
-  if (status === "complete") {
-    return <CheckCircle2 aria-hidden="true" />
-  }
+function StatusPill({ value }: { value: string }) {
+  return <span className={`status-pill status-${value}`}>{value.replaceAll("_", " ")}</span>
+}
 
-  if (status === "failed") {
-    return <AlertCircle aria-hidden="true" />
-  }
+function WorkspacePage({
+  history,
+  loadState,
+  onOpenAnalysis,
+  onUpload,
+}: {
+  history: AnalysisRecord[]
+  loadState: LoadState
+  onOpenAnalysis: (analysis: AnalysisRecord) => void
+  onUpload: () => void
+}) {
+  const completed = useMemo(
+    () => history.filter((analysis) => analysis.status === "complete"),
+    [history]
+  )
 
-  return <Loader2 className="spin" aria-hidden="true" />
+  return (
+    <main className="workspace-page">
+      <section className="workspace-heading">
+        <div>
+          <p className="section-label">PERSONAL WORKSPACE</p>
+          <h1>Filings & notes</h1>
+          <p>Your private regulatory review desk.</p>
+        </div>
+        <button type="button" className="primary-action" onClick={onUpload}>
+          <Plus /> New analysis
+        </button>
+      </section>
+
+      <section className="workspace-metrics">
+        <div>
+          <span>TOTAL FILINGS</span>
+          <strong>{history.length.toString().padStart(2, "0")}</strong>
+        </div>
+        <div>
+          <span>COMPLETED</span>
+          <strong>{completed.length.toString().padStart(2, "0")}</strong>
+        </div>
+        <div>
+          <span>AVG. READINESS</span>
+          <strong>
+            {completed.length
+              ? Math.round(
+                  completed.reduce((total, item) => total + (item.report?.readinessScore ?? 0), 0) /
+                    completed.length
+                )
+              : "—"}
+          </strong>
+        </div>
+        <div className="notes-preview">
+          <NotebookPen />
+          <span>
+            <strong>Research notebook</strong>
+            <small>Shared notes and tasks are coming next.</small>
+          </span>
+        </div>
+      </section>
+
+      <section className="workspace-library">
+        <div className="library-toolbar">
+          <div>
+            <h2>Analysis library</h2>
+            <span>{history.length} records</span>
+          </div>
+          <label>
+            <Search />
+            <input type="search" placeholder="Search filings" aria-label="Search filings" />
+          </label>
+        </div>
+
+        {loadState === "loading" ? (
+          <div className="workspace-loading">
+            <LoaderCircle className="spin" /> Loading workspace
+          </div>
+        ) : history.length > 0 ? (
+          <div className="library-table">
+            <div className="library-row library-head">
+              <span>Filing</span>
+              <span>Status</span>
+              <span>Readiness</span>
+              <span>Updated</span>
+              <span />
+            </div>
+            {history.map((analysis) => (
+              <button
+                className="library-row"
+                type="button"
+                key={analysis.id}
+                onClick={() => onOpenAnalysis(analysis)}
+              >
+                <span className="library-file">
+                  <FileText />
+                  <strong>{analysis.filingName}</strong>
+                </span>
+                <span>
+                  <StatusPill value={analysis.status} />
+                </span>
+                <strong>{analysis.report?.readinessScore ?? "—"}</strong>
+                <span>{formatDate(analysis.updatedAt)}</span>
+                <ChevronRight />
+              </button>
+            ))}
+          </div>
+        ) : (
+          <div className="workspace-empty">
+            <FileSearch />
+            <h3>Your library is empty</h3>
+            <p>Upload a draft filing to create your first analysis.</p>
+            <button type="button" onClick={onUpload}>
+              Upload a filing <ArrowRight />
+            </button>
+          </div>
+        )}
+      </section>
+    </main>
+  )
+}
+
+function readRoute(): Route {
+  const path = window.location.pathname
+  if (path.startsWith("/analysis")) {
+    return { name: "analysis", id: path.split("/")[2] }
+  }
+  if (path.startsWith("/workspace")) {
+    return { name: "workspace" }
+  }
+  return { name: "home" }
+}
+
+function routePath(route: Route) {
+  if (route.name === "analysis") return `/analysis/${route.id ?? ""}`
+  if (route.name === "workspace") return "/workspace"
+  return "/"
+}
+
+function formatDate(value: string) {
+  return new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  }).format(new Date(value))
 }
 
 function errorMessage(error: unknown) {

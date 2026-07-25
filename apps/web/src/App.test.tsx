@@ -1,24 +1,18 @@
 import { demoReport } from "@greenlit/core"
-import { render, screen, waitFor, within } from "@testing-library/react"
+import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import App from "./App"
 
 beforeEach(() => {
+  window.history.replaceState({}, "", "/")
   window.localStorage.clear()
+  window.scrollTo = vi.fn()
   vi.stubGlobal(
     "fetch",
     vi.fn(async (input: RequestInfo | URL) => {
       const url = requestUrl(input)
       if (url.endsWith("/analyses")) {
-        return jsonResponse({
-          analyses: [],
-        })
-      }
-
-      if (url.endsWith("/notes")) {
-        return jsonResponse({
-          notes: [],
-        })
+        return jsonResponse({ analyses: [] })
       }
 
       return jsonResponse({}, 404)
@@ -27,26 +21,27 @@ beforeEach(() => {
 })
 
 describe("App", () => {
-  it("renders the upload backbone and demo report path", async () => {
+  it("renders the landing experience and sample analysis", async () => {
     render(<App />)
 
-    await waitFor(() => expect(screen.getByText("0 saved")).toBeInTheDocument())
-
-    expect(screen.getByRole("button", { name: "Open demo" })).toBeInTheDocument()
-    expect(screen.getByLabelText("Choose PDF")).toBeInTheDocument()
     expect(
-      within(screen.getByLabelText("Readiness summary")).getByText("Readiness score")
+      screen.getByRole("heading", { name: /know if your filing\s*is ready before they do/i })
     ).toBeInTheDocument()
-    const workflow = screen.getByLabelText("Core workflow steps")
-    expect(within(workflow).getByText("Submit filing")).toBeInTheDocument()
-    expect(within(workflow).getByText("Analysis progress")).toBeInTheDocument()
-    expect(within(workflow).getByText("Report overview")).toBeInTheDocument()
-    expect(within(workflow).getByText("Findings detail")).toBeInTheDocument()
-    expect(within(workflow).getByText("Workbook")).toBeInTheDocument()
-    expect(within(workflow).getByText("History")).toBeInTheDocument()
+    expect(screen.getByLabelText("Choose PDF")).toBeInTheDocument()
+    await waitFor(() => expect(screen.getByText("00 FILES")).toBeInTheDocument())
+
+    fireEvent.click(screen.getByRole("button", { name: /explore sample analysis/i }))
+
+    expect(screen.getByRole("heading", { name: "Submission readiness" })).toBeInTheDocument()
+    expect(screen.getByText("SAMPLE REPORT")).toBeInTheDocument()
+    expect(screen.getByRole("heading", { name: "Priority findings" })).toBeInTheDocument()
+    expect(screen.getByRole("heading", { name: "Documentation benchmark" })).toBeInTheDocument()
+    expect(screen.getByRole("heading", { name: "Safety evidence" })).toBeInTheDocument()
+    expect(screen.getByRole("heading", { name: "Comparable filings" })).toBeInTheDocument()
+    expect(screen.getByRole("heading", { name: "Amendment plan" })).toBeInTheDocument()
   })
 
-  it("renders a saved completed report from history", async () => {
+  it("opens a saved completed report from recent work", async () => {
     const savedReport = {
       ...demoReport,
       id: "saved-report",
@@ -58,8 +53,7 @@ describe("App", () => {
 
     vi.mocked(fetch).mockImplementation(
       vi.fn(async (input: RequestInfo | URL) => {
-        const url = requestUrl(input)
-        if (url.endsWith("/analyses")) {
+        if (requestUrl(input).endsWith("/analyses")) {
           return jsonResponse({
             analyses: [
               {
@@ -75,33 +69,19 @@ describe("App", () => {
           })
         }
 
-        if (url.endsWith("/notes")) {
-          return jsonResponse({
-            notes: [],
-          })
-        }
-
         return jsonResponse({}, 404)
       })
     )
 
     render(<App />)
 
-    await waitFor(() =>
-      expect(screen.getAllByText("Saved GRAS Notice.pdf").length).toBeGreaterThan(0)
-    )
-    expect(screen.getByText("1 saved")).toBeInTheDocument()
-    expect(within(screen.getByLabelText("Readiness summary")).getByText("81")).toBeInTheDocument()
-    expect(screen.getByText("Identified Gaps")).toBeInTheDocument()
-    expect(screen.getByText("Recommended Next Steps")).toBeInTheDocument()
-    expect(screen.getByText("Documentation Benchmark")).toBeInTheDocument()
-    expect(screen.getByText("Safety Signals")).toBeInTheDocument()
-    expect(screen.getByText("Comparable Filings")).toBeInTheDocument()
-    expect(screen.getByText("Filing Diff")).toBeInTheDocument()
-    expect(screen.getByText("Research References")).toBeInTheDocument()
-    expect(screen.getByText("Amendment Outline")).toBeInTheDocument()
+    const filingButtons = await screen.findAllByRole("button", { name: /saved gras notice\.pdf/i })
+    fireEvent.click(filingButtons[0])
+
+    expect(screen.getByRole("heading", { name: "Submission readiness" })).toBeInTheDocument()
+    expect(screen.getByText("81")).toBeInTheDocument()
     expect(screen.getByRole("button", { name: "Outline" })).toBeInTheDocument()
-    expect(screen.getByRole("button", { name: "Report" })).toBeInTheDocument()
+    expect(screen.getByRole("button", { name: "Export report" })).toBeInTheDocument()
   })
 })
 

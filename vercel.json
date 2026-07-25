@@ -3,6 +3,16 @@
   "installCommand": "pnpm install --frozen-lockfile",
   "buildCommand": "pnpm --filter @greenlit/web build",
   "outputDirectory": "apps/web/dist",
+  "rewrites": [
+    {
+      "source": "/analysis/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/workspace",
+      "destination": "/index.html"
+    }
+  ],
   "functions": {
     "api/**/*.ts": {
       "excludeFiles": ".local-data/**"
