@@ -3,8 +3,10 @@ import type { EvidenceMatrixItem, FilingDiffItem } from "./report.js"
 const statusRank = {
   missing: 0,
   weak: 1,
-  present: 2,
-  not_applicable: 3,
+  substantial_gaps: 1,
+  strong_with_minor_gaps: 2,
+  present: 3,
+  not_applicable: 4,
 } as const
 
 export function compareEvidenceMatrices(
@@ -26,18 +28,26 @@ export function compareEvidenceMatrices(
       sharedEvidenceReconfirmationOnly(baselineItem, draftItem)
     const change = adjusted ? ("unchanged" as const) : rawChange
     const draftStatus = draftItem?.status
+    const changeType = classifyChangeType(baselineItem, draftItem, change)
 
     return {
       id: `diff-${id}`,
       label: draftItem?.requirement ?? baselineItem?.requirement ?? id,
       status:
-        draftStatus === "present" ? "aligned" : draftStatus === "weak" ? "partial" : "missing",
+        draftStatus === "present"
+          ? "aligned"
+          : draftStatus === "missing" || draftStatus === undefined
+            ? "missing"
+            : "partial",
       baselineExpectation: baselineItem?.assessment ?? "No baseline row was available.",
       draftSignal: draftItem?.assessment ?? "No draft row was available.",
       recommendedAction: recommendationFor(change, draftItem),
       baselineStatus: baselineItem?.status,
       draftStatus,
       change,
+      changeType,
+      materiality: materialityFor(changeType, baselineItem, draftItem),
+      changeSummary: summarizeChange(changeType, baselineItem, draftItem),
       baselineCitations: baselineItem?.citations ?? [],
       draftCitations: draftItem?.citations ?? [],
       ...(adjusted
@@ -49,6 +59,90 @@ export function compareEvidenceMatrices(
         : {}),
     }
   })
+}
+
+type MatrixChange = ReturnType<typeof classifyChange>
+type ChangeType =
+  | "support_added"
+  | "support_removed"
+  | "support_strengthened"
+  | "support_weakened"
+  | "support_modified"
+  | "unchanged"
+  | "not_comparable"
+
+function classifyChangeType(
+  baseline: EvidenceMatrixItem | undefined,
+  draft: EvidenceMatrixItem | undefined,
+  change: MatrixChange
+): ChangeType {
+  if (!baseline || !draft || change === "not_comparable") return "not_comparable"
+  if (baseline.citations.length === 0 && draft.citations.length > 0) return "support_added"
+  if (baseline.citations.length > 0 && draft.citations.length === 0) return "support_removed"
+  if (change === "improved") return "support_strengthened"
+  if (change === "regressed") return "support_weakened"
+  if (
+    sameEvidence(baseline, draft) &&
+    normalizedText(baseline.assessment) === normalizedText(draft.assessment)
+  ) {
+    return "unchanged"
+  }
+  return sameEvidence(baseline, draft) ? "unchanged" : "support_modified"
+}
+
+function materialityFor(
+  changeType: ChangeType,
+  baseline: EvidenceMatrixItem | undefined,
+  draft: EvidenceMatrixItem | undefined
+) {
+  if (changeType === "support_removed" || changeType === "support_weakened")
+    return "material" as const
+  if (changeType === "support_added" || changeType === "support_strengthened") {
+    return draft?.status === "present" ? ("material" as const) : ("potentially_material" as const)
+  }
+  if (changeType === "support_modified") {
+    return baseline?.status === "present" || draft?.status === "present"
+      ? ("potentially_material" as const)
+      : ("non_material" as const)
+  }
+  return "non_material" as const
+}
+
+function summarizeChange(
+  changeType: ChangeType,
+  baseline: EvidenceMatrixItem | undefined,
+  draft: EvidenceMatrixItem | undefined
+) {
+  const summaries: Record<ChangeType, string> = {
+    support_added:
+      "The revised filing adds cited support that was absent from the baseline filing.",
+    support_removed:
+      "The revised filing no longer includes cited support present in the baseline filing.",
+    support_strengthened:
+      "The revised filing strengthens the requirement's evidentiary support or adequacy.",
+    support_weakened:
+      "The revised filing weakens the requirement's evidentiary support or adequacy.",
+    support_modified:
+      "The revised filing changes the cited support without a clear status improvement or regression.",
+    unchanged: "The two filings rely on materially the same support for this requirement.",
+    not_comparable: "The requirement cannot be compared reliably across both filings.",
+  }
+  const status = baseline && draft ? ` Status: ${baseline.status} to ${draft.status}.` : ""
+  return `${summaries[changeType]}${status}`
+}
+
+function sameEvidence(baseline: EvidenceMatrixItem, draft: EvidenceMatrixItem) {
+  if (baseline.citations.length === 0 || draft.citations.length === 0) {
+    return baseline.citations.length === draft.citations.length
+  }
+  const matched = baseline.citations.filter((left) =>
+    draft.citations.some((right) => tokenSimilarity(left.excerpt, right.excerpt) >= 0.65)
+  ).length
+  return matched / Math.max(baseline.citations.length, draft.citations.length) >= 0.5
+}
+
+function normalizedText(value: string) {
+  return value.toLowerCase().replace(/\s+/g, " ").trim()
 }
 
 function sharedEvidenceReconfirmationOnly(

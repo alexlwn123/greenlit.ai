@@ -103,6 +103,17 @@ function scoreCandidate(subject: NoticeProfile, candidate: NoticeProfile): Compa
   }
 
   const similarityScore = available > 0 ? Number((earned / available).toFixed(3)) : 0
+  const familyMatch = Boolean(subjectFamily && candidateFamily === subjectFamily)
+  const productionMatch =
+    normalize(subject.productionMethod) === normalize(candidate.productionMethod)
+  const comparisonStrength =
+    similarityScore >= 0.75 ? "strong" : similarityScore >= 0.5 ? "moderate" : "weak"
+  const researchUse =
+    familyMatch && productionMatch
+      ? "evidence_candidate"
+      : similarityScore >= 0.5
+        ? "documentation_analog"
+        : "context_only"
   return {
     id: candidate.grnNumber ? `grn-${candidate.grnNumber}` : slug(candidate.substanceName),
     name: candidate.grnNumber
@@ -119,6 +130,14 @@ function scoreCandidate(subject: NoticeProfile, candidate: NoticeProfile): Compa
     sourceUrl: candidate.sourceUrl,
     similarityScore,
     matchCriteria,
+    comparisonStrength,
+    researchUse,
+    eligibilityRationale:
+      researchUse === "evidence_candidate"
+        ? "Eligible for requirement-specific evidence retrieval because ingredient family and production method both match."
+        : researchUse === "documentation_analog"
+          ? "Eligible as a documentation analog; substantive transferability still requires question-specific assessment."
+          : "Retained for context only because the metadata match is below the evidence-retrieval threshold.",
   }
 }
 

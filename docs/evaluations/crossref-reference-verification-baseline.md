@@ -1,10 +1,10 @@
-# Crossref Reference-Verification Baseline
+# Reference-Verification Baseline
 
 ## Method
 
-Notifier-cited references are verified against Crossref's versioned REST API.
-The verifier uses DOI lookup when a DOI was printed in the filing and a
-bibliographic-title query otherwise.
+Notifier-cited references first receive bibliographic verification against
+Crossref's versioned REST API. The verifier uses DOI lookup when a DOI was
+printed in the filing and a bibliographic-title query otherwise.
 
 The integration:
 
@@ -19,6 +19,17 @@ The integration:
 Crossref verification confirms deposited bibliographic metadata. It does not
 confirm study quality, full-text content, peer-review adequacy, or applicability
 to the filing.
+
+After metadata matching, the source verifier follows a controlled hierarchy:
+
+1. convert a DOI or PMID to a PMCID with NCBI's PMC ID Converter;
+2. verify accessible PMC full text through NCBI's BioC service;
+3. verify a PubMed abstract through BioC when full text is unavailable; and
+4. resolve a DOI landing page when no NCBI source is available.
+
+The report records the access level, resolved identifier, trusted URL, check
+time, and content size. Source access is evidence that a cited record resolves;
+it is not a quality or applicability judgment.
 
 ## GRN 1160 result
 
@@ -38,5 +49,7 @@ citation.
 
 External verification is opt-in through `GREENLIT_VERIFY_REFERENCES=true`.
 `GREENLIT_CROSSREF_MAILTO` can identify the client to Crossref's polite pool.
+`GREENLIT_NCBI_EMAIL` identifies the client to NCBI and falls back to the
+Crossref address when unset.
 If verification is unavailable, the report retains the extracted references and
 the core evidence analysis still completes.

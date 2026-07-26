@@ -12,6 +12,7 @@ import {
   ReadinessReportSchema,
   ResearchReferenceSchema,
   RunMetadataSchema,
+  type SafetySignal,
   SafetySignalSchema,
 } from "./report.js"
 
@@ -72,20 +73,12 @@ export function applyDeepAnalysis(
   minimumReport: ReadinessReport,
   deepInput: DeepAnalysisResult
 ): ReadinessReport {
-  const deep = DeepAnalysisResultSchema.parse(deepInput)
+  const deep = enforceEvidenceIntegrity(DeepAnalysisResultSchema.parse(deepInput))
   const findings = calibrateFindings(deep.findings)
     .sort((left, right) => findingPriority(right) - findingPriority(left))
     .slice(0, 10)
-  const safetySignals = deep.safetySignals.slice(0, 5)
-  const penalty = findings.reduce((total, finding) => {
-    if (finding.severity === "critical") {
-      return total + 10
-    }
-    if (finding.severity === "major") {
-      return total + 5
-    }
-    return total + 1
-  }, 0)
+  const safetySignals = calibrateSafetySignals(deep.safetySignals)
+  const scoring = scoreDeepReadiness(findings, deep.evidenceMatrix)
   const documentationBenchmark = applyAdequacySignals(
     minimumReport.modules.documentationBenchmark,
     findings,
@@ -95,7 +88,7 @@ export function applyDeepAnalysis(
 
   return ReadinessReportSchema.parse({
     ...minimumReport,
-    readinessScore: Math.max(0, 100 - penalty),
+    readinessScore: scoring.score,
     summary: deep.summary,
     caveats: [
       "This report assesses the sufficiency and presentation of evidence; it is not a legal opinion, FDA prediction, or GRAS determination.",
@@ -106,6 +99,7 @@ export function applyDeepAnalysis(
         : []),
     ],
     findings,
+    signals: scoring.signals.length > 0 ? scoring.signals : minimumReport.signals,
     modules: {
       ...minimumReport.modules,
       documentationBenchmark,
@@ -121,13 +115,130 @@ export function applyDeepAnalysis(
     runMetadata: {
       ...minimumReport.runMetadata,
       pipelineVersion: "deep-evidence-v1",
-      scorer: "original-domain-analysis-port-v1",
+      scorer: scoring.method,
       modelProvider: deep.modelProvider,
       modelUsage: deep.modelUsage ?? [],
       estimatedCostUsd: deep.estimatedCostUsd ?? 0,
       cacheHit: deep.cacheHit ?? false,
     },
   })
+}
+
+export const evidenceMatrixImportance: Record<
+  string,
+  { importance: "high" | "medium" | "low"; maxScore: 15 | 10 | 5; rationale: string }
+> = {
+  "identity-composition": {
+    importance: "medium",
+    maxScore: 10,
+    rationale: "Defines the substance to which the rest of the evidence must apply.",
+  },
+  manufacturing: {
+    importance: "medium",
+    maxScore: 10,
+    rationale: "Establishes process consistency and control of process-related hazards.",
+  },
+  "specifications-batch-analysis": {
+    importance: "medium",
+    maxScore: 10,
+    rationale: "Defines the commercial article and verifies representative lot conformity.",
+  },
+  "intended-uses-exposure": {
+    importance: "high",
+    maxScore: 15,
+    rationale: "Directly controls the intake used to interpret the safety evidence.",
+  },
+  "public-pivotal-safety-evidence": {
+    importance: "high",
+    maxScore: 15,
+    rationale: "Determines whether pivotal support can be independently evaluated.",
+  },
+  "independent-evidence-synthesis": {
+    importance: "medium",
+    maxScore: 10,
+    rationale:
+      "Tests whether the filing resolves uncertainties into its own defensible conclusion.",
+  },
+  "test-article-comparability": {
+    importance: "high",
+    maxScore: 15,
+    rationale: "Determines whether pivotal studies apply to the marketed ingredient.",
+  },
+  "self-contained-literature-search": {
+    importance: "low",
+    maxScore: 5,
+    rationale: "Supports completeness and detection of contrary evidence.",
+  },
+  "allergenicity-assessment": {
+    importance: "medium",
+    maxScore: 10,
+    rationale: "Addresses a distinct safety pathway when biologically applicable.",
+  },
+}
+
+export const evidenceMatrixStatusCredit = {
+  present: 1,
+  strong_with_minor_gaps: 0.75,
+  substantial_gaps: 0.25,
+  missing: 0,
+  not_applicable: 0,
+  weak: 0.25,
+} as const
+
+export function getEvidenceMatrixScoreBreakdown(evidenceMatrix: EvidenceMatrixItem[]) {
+  return evidenceMatrix
+    .filter((item) => item.status !== "not_applicable")
+    .map((item) => {
+      const configuration = evidenceMatrixImportance[item.id] ?? {
+        importance: "medium" as const,
+        maxScore: 10 as const,
+        rationale:
+          "Material evidence domain requiring complete and adequately supported documentation.",
+      }
+      const creditRate = evidenceMatrixStatusCredit[item.status]
+      return {
+        ...configuration,
+        id: item.id,
+        label: item.requirement,
+        status: item.status,
+        creditRate,
+        earnedScore: Number((configuration.maxScore * creditRate).toFixed(2)),
+      }
+    })
+}
+
+export function scoreDeepReadiness(findings: DeepFinding[], evidenceMatrix: EvidenceMatrixItem[]) {
+  const applicable = evidenceMatrix.filter((item) => item.status !== "not_applicable")
+  if (applicable.length === 0) {
+    const penalty = findings.reduce(
+      (total, finding) =>
+        total + (finding.severity === "critical" ? 10 : finding.severity === "major" ? 5 : 1),
+      0
+    )
+    return {
+      score: Math.max(0, 100 - penalty),
+      signals: [],
+      method: "legacy-severity-fallback-v1",
+    }
+  }
+
+  const breakdown = getEvidenceMatrixScoreBreakdown(applicable)
+  const weighted = breakdown.map((item) => {
+    return {
+      id: `domain-${item.id}`,
+      label: item.label,
+      score: item.earnedScore,
+      maxScore: item.maxScore,
+      summary: applicable.find((row) => row.id === item.id)?.assessment ?? "",
+    }
+  })
+  const earned = weighted.reduce((total, signal) => total + signal.score, 0)
+  const available = weighted.reduce((total, signal) => total + signal.maxScore, 0)
+  return {
+    score: available === 0 ? 0 : Math.round((earned / available) * 100),
+    signals: weighted,
+    method: "importance-and-evidence-grade-v2",
+  }
 }
 
 export function calibrateFindings(findings: DeepFinding[]) {
@@ -146,13 +257,110 @@ export function calibrateFindings(findings: DeepFinding[]) {
   )) {
     const duplicate = retained.some(
       (candidate) =>
-        finding.category === "incorporation_independent_conclusions" &&
         candidate.category === finding.category &&
-        sharedGrnReferences(candidate, finding)
+        ((finding.category === "incorporation_independent_conclusions" &&
+          sharedGrnReferences(candidate, finding)) ||
+          sharedFindingEvidence(candidate, finding))
     )
     if (!duplicate) retained.push(finding)
   }
   return retained
+}
+
+export function enforceEvidenceIntegrity(deep: DeepAnalysisResult): DeepAnalysisResult {
+  const analyzedPages = new Set(deep.analyzedPages)
+  const validCitation = (citation: { pageNumber: number; excerpt: string }) =>
+    analyzedPages.has(citation.pageNumber) && citation.excerpt.trim().length > 0
+  const findings = deep.findings.filter(
+    (finding) =>
+      finding.citations.length > 0 && finding.citations.every((citation) => validCitation(citation))
+  )
+  const findingIds = new Set(findings.map((finding) => finding.id))
+  const evidenceMatrix = deep.evidenceMatrix.map((item) => {
+    const citations = item.citations.filter(validCitation)
+    const lostRequiredGrounding =
+      item.status !== "missing" && item.status !== "not_applicable" && citations.length === 0
+    return {
+      ...item,
+      status: lostRequiredGrounding ? ("missing" as const) : item.status,
+      assessment: lostRequiredGrounding
+        ? `Evidence grounding failed for the supplied assessment. ${item.assessment}`
+        : item.assessment,
+      citations,
+      unresolvedQuestions: lostRequiredGrounding
+        ? [
+            ...new Set([
+              "Locate and cite filing evidence for this requirement.",
+              ...item.unresolvedQuestions,
+            ]),
+          ]
+        : item.unresolvedQuestions,
+      relatedFindingIds: item.relatedFindingIds.filter((id) => findingIds.has(id)),
+    }
+  })
+  const safetySignals = deep.safetySignals.map((signal) => ({
+    ...signal,
+    citations: (signal.citations ?? []).filter(validCitation),
+  }))
+
+  return { ...deep, findings, evidenceMatrix, safetySignals }
+}
+
+function sharedFindingEvidence(left: DeepFinding, right: DeepFinding) {
+  return left.citations.some((leftCitation) =>
+    right.citations.some(
+      (rightCitation) =>
+        leftCitation.pageNumber === rightCitation.pageNumber &&
+        normalizedEvidence(leftCitation.excerpt) === normalizedEvidence(rightCitation.excerpt)
+    )
+  )
+}
+
+function normalizedEvidence(value: string) {
+  return value
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim()
+}
+
+export function calibrateSafetySignals(signals: SafetySignal[]) {
+  const retained: SafetySignal[] = []
+  const levelRank = { gap: 3, watch: 2, clear: 1 } as const
+  for (const signal of [...signals].sort(
+    (left, right) => levelRank[right.level] - levelRank[left.level]
+  )) {
+    const citations = signal.citations ?? []
+    if ((signal.level === "gap" || signal.level === "watch") && citations.length === 0) {
+      continue
+    }
+    const duplicate = retained.some(
+      (candidate) =>
+        normalizeSignal(candidate.label) === normalizeSignal(signal.label) ||
+        sharedSignalEvidence(candidate, signal)
+    )
+    if (!duplicate) retained.push(signal)
+    if (retained.length === 5) break
+  }
+  return retained
+}
+
+function normalizeSignal(value: string) {
+  return value
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim()
+}
+
+function sharedSignalEvidence(left: SafetySignal, right: SafetySignal) {
+  const leftCitations = left.citations ?? []
+  const rightCitations = right.citations ?? []
+  return leftCitations.some((leftCitation) =>
+    rightCitations.some(
+      (rightCitation) =>
+        leftCitation.pageNumber === rightCitation.pageNumber &&
+        normalizeSignal(leftCitation.excerpt) === normalizeSignal(rightCitation.excerpt)
+    )
+  )
 }
 
 function sharedGrnReferences(left: DeepFinding, right: DeepFinding) {
@@ -282,7 +490,8 @@ function applyAdequacySignals(
       .map((item) => ({
         id: item.id,
         label: item.requirement,
-        status: item.status === "not_applicable" ? "present" : item.status,
+        status:
+          item.status === "present" ? "present" : item.status === "missing" ? "missing" : "weak",
         summary: item.assessment,
         evidence: item.citations.map(
           (citation) => `PDF page ${citation.pageNumber}: ${citation.excerpt}`
@@ -328,9 +537,9 @@ function buildFilingDiff(evidenceMatrix: EvidenceMatrixItem[]) {
       status:
         item.status === "present"
           ? ("aligned" as const)
-          : item.status === "weak"
-            ? "partial"
-            : "missing",
+          : item.status === "missing"
+            ? "missing"
+            : "partial",
       baselineExpectation: item.requirement,
       draftSignal: item.assessment,
       recommendedAction:

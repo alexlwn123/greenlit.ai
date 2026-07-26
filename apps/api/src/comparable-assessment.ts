@@ -81,7 +81,9 @@ export const assessComparableEvidenceWithAnthropic: ComparableAssessor = async (
   const unresolved = evidenceMatrix.filter((item) => item.unresolvedQuestions.length > 0)
   if (unresolved.length === 0) return filings
 
-  const eligibleFilings = filings.filter((filing) => filing.evidenceMatches?.length)
+  const eligibleFilings = filings.filter(
+    (filing) => filing.researchUse !== "context_only" && filing.evidenceMatches?.length
+  )
   if (eligibleFilings.length === 0) return filings
 
   const model = process.env.GREENLIT_ANTHROPIC_MODEL ?? "claude-sonnet-4-6"

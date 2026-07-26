@@ -56,6 +56,9 @@ Local variables:
 - `GREENLIT_ALLOWED_EMAILS`: comma-separated exact email addresses allowed to create private-MVP accounts. Configure this on each Convex deployment.
 - `AUTH_RESEND_KEY`: Resend API key used by Convex Auth for password-reset codes.
 - `AUTH_EMAIL_FROM`: verified sender identity for password-reset email; the Resend onboarding sender can be used during private preview testing.
+- `GREENLIT_VERIFY_REFERENCES`: set to `true` to verify extracted references against Crossref and trusted NCBI sources.
+- `GREENLIT_CROSSREF_MAILTO`: contact email sent to Crossref for its polite API pool.
+- `GREENLIT_NCBI_EMAIL`: contact email sent to NCBI reference services; falls back to `GREENLIT_CROSSREF_MAILTO` when unset.
 
 Reserved for hosted or AI-backed work:
 

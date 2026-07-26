@@ -25,7 +25,9 @@ export async function assessAndSynthesizeComparablesWithAnthropic({
   cacheDir?: string
 }) {
   const unresolved = evidenceMatrix.filter((item) => item.unresolvedQuestions.length > 0)
-  const eligibleFilings = filings.filter((filing) => filing.evidenceMatches?.length)
+  const eligibleFilings = filings.filter(
+    (filing) => filing.researchUse !== "context_only" && filing.evidenceMatches?.length
+  )
   if (unresolved.length === 0 || eligibleFilings.length === 0) {
     return { comparableFilings: filings, comparableActions: [], modelUsage: [] }
   }

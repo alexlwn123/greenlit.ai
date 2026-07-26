@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from "vitest"
 import type { ResearchReference } from "../../../packages/core/src/index.js"
-import { verifyReferencesWithCrossref } from "./crossref.js"
+import { deduplicateReferences, verifyReferencesWithCrossref } from "./crossref.js"
 
 const baseReference: ResearchReference = {
   id: "reference",
@@ -105,6 +105,34 @@ describe("verifyReferencesWithCrossref", () => {
 
     expect(result?.verificationStatus).toBe("extracted_unverified")
     expect(result?.verification).toBeUndefined()
+  })
+
+  it("deduplicates DOI variants and preserves every filing citation page", () => {
+    const references = deduplicateReferences([
+      { ...baseReference, id: "first", doi: "doi:10.1000/example", citedPages: [38] },
+      {
+        ...baseReference,
+        id: "second",
+        doi: "https://doi.org/10.1000/EXAMPLE",
+        citedPages: [42, 38],
+      },
+    ])
+
+    expect(references).toHaveLength(1)
+    expect(references[0]).toMatchObject({
+      citedPages: [38, 42],
+      duplicateCount: 2,
+      duplicateReferenceIds: ["second"],
+    })
+  })
+
+  it("does not merge identical titles from different publication years", () => {
+    const references = deduplicateReferences([
+      { ...baseReference, id: "first", year: "2020" },
+      { ...baseReference, id: "second", year: "2021" },
+    ])
+
+    expect(references).toHaveLength(2)
   })
 })
 

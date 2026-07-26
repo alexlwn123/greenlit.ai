@@ -131,7 +131,6 @@ const sectionRules: SectionRule[] = [
 
 const wordPattern = /[\p{L}\p{N}][\p{L}\p{N}'-]*/gu
 const citationPattern = /\b(?:doi:|pmid:|journal|toxicol|regul|food chem|et al\.|[12][0-9]{3})\b/giu
-const yearPattern = /\b(?:19|20)\d{2}\b/g
 
 export function createMinimumReadinessReport(input: MinimumScoreInput): ReadinessReport {
   const normalizedText = normalizeText(input.extractedText)
@@ -235,7 +234,7 @@ export function createMinimumReadinessReport(input: MinimumScoreInput): Readines
       cacheHit: false,
     },
     findings,
-    modules: buildReportModules(sectionResults, lowerText, normalizedText),
+    modules: buildReportModules(sectionResults, lowerText),
   })
 }
 
@@ -382,8 +381,7 @@ function buildFindings(
 
 function buildReportModules(
   sectionResults: Array<{ rule: SectionRule; matches: string[]; score: number }>,
-  lowerText: string,
-  normalizedText: string
+  lowerText: string
 ): ReportModules {
   const documentationBenchmark = safeModuleOutput(
     () => buildDocumentationBenchmark(sectionResults),
@@ -400,7 +398,7 @@ function buildReportModules(
     ),
     comparableActions: [],
     filingDiff: safeModuleOutput(() => buildFilingDiff(documentationBenchmark), []),
-    researchReferences: safeModuleOutput(() => buildResearchReferences(normalizedText), []),
+    researchReferences: safeModuleOutput(() => buildResearchReferences(), []),
     amendmentOutline: safeModuleOutput(() => buildAmendmentOutline(documentationBenchmark), []),
   }
 }
@@ -572,55 +570,10 @@ function buildFilingDiff(benchmark: DocumentationBenchmarkItem[]): FilingDiffIte
   }))
 }
 
-function buildResearchReferences(normalizedText: string): ResearchReference[] {
-  const years = Array.from(new Set(normalizedText.match(yearPattern) ?? [])).slice(-5)
-  const hasDoi = /\bdoi\s*:/i.test(normalizedText)
-  const hasPmid = /\bpmid\s*:/i.test(normalizedText)
-  const references: ResearchReference[] = []
-
-  if (hasDoi) {
-    references.push({
-      id: "doi-reference-signal",
-      title: "DOI references detected",
-      source: "Uploaded filing",
-      relevance: "The filing appears to include citable scientific support.",
-      evidence: "DOI marker found in extracted text",
-    })
-  }
-
-  if (hasPmid) {
-    references.push({
-      id: "pmid-reference-signal",
-      title: "PubMed references detected",
-      source: "Uploaded filing",
-      relevance: "The filing appears to include PubMed-indexed source support.",
-      evidence: "PMID marker found in extracted text",
-    })
-  }
-
-  for (const year of years) {
-    references.push({
-      id: `year-reference-${year}`,
-      title: `Reference year ${year}`,
-      source: "Uploaded filing",
-      year,
-      relevance: "Detected year-like citation marker for source review.",
-      evidence: `Year marker found: ${year}`,
-    })
-  }
-
-  if (references.length === 0) {
-    references.push({
-      id: "reference-gap",
-      title: "No strong citation markers detected",
-      source: "Minimum local analysis",
-      relevance:
-        "The filing may still contain references, but the local MVP did not detect strong markers.",
-      evidence: "No DOI, PMID, or year marker found in extracted text",
-    })
-  }
-
-  return references.slice(0, 6)
+function buildResearchReferences(): ResearchReference[] {
+  // Citation-like tokens are useful for the minimum readiness signal, but they are not
+  // enough to identify a real work. Only the deep extractor may populate this module.
+  return []
 }
 
 function buildAmendmentOutline(benchmark: DocumentationBenchmarkItem[]): AmendmentOutlineSection[] {

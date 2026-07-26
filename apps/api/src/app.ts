@@ -12,6 +12,7 @@ import {
   type ArtifactReference,
   applyDeepAnalysis,
   type ComparableAction,
+  compareEvidenceMatrices,
   createMinimumReadinessReport,
   mergeComparableActionsIntoOutline,
   type NoticeProfile,
@@ -36,6 +37,7 @@ import { loadConfiguredCorpus } from "./corpus.js"
 import { verifyReferencesWithCrossref } from "./crossref.js"
 import { analyzeNoticeWithAnthropic, type DeepAnalyzer } from "./deep-analysis.js"
 import { extractPdfText } from "./pdf.js"
+import { verifyReferenceSources } from "./source-verification.js"
 import { createConfiguredStorage, defaultDataDir } from "./storage.js"
 
 type CreateAppOptions = {
@@ -151,6 +153,36 @@ export function createApp(options: CreateAppOptions = {}) {
     }
 
     return context.json({ analysis })
+  })
+
+  app.get("/api/analyses/:id/compare/:baselineId", async (context) => {
+    const { ownerId, storage } = await requestScope(context)
+    const [revised, baseline] = await Promise.all([
+      storage.getAnalysis(ownerId, context.req.param("id")),
+      storage.getAnalysis(ownerId, context.req.param("baselineId")),
+    ])
+
+    if (!revised?.report || !baseline?.report) {
+      return context.json({ error: "Two completed analyses are required for comparison." }, 404)
+    }
+
+    const filingDiff = compareEvidenceMatrices(
+      baseline.report.modules.evidenceMatrix,
+      revised.report.modules.evidenceMatrix,
+      { pairAware: true }
+    )
+    if (filingDiff.length === 0) {
+      return context.json(
+        { error: "Both analyses need evidence-matrix results before they can be compared." },
+        422
+      )
+    }
+
+    return context.json({
+      baseline: { id: baseline.id, filingName: baseline.filingName },
+      revised: { id: revised.id, filingName: revised.filingName },
+      filingDiff,
+    })
   })
 
   app.delete("/api/analyses/:id", async (context) => {
@@ -336,6 +368,7 @@ export function createApp(options: CreateAppOptions = {}) {
 
       if (shouldRunDeepAnalysis(options.analysisMode)) {
         try {
+          const moduleCaveats: string[] = []
           const deepAnalyzer = options.deepAnalyzer ?? analyzeNoticeWithAnthropic
           const analyzedResult = await deepAnalyzer({
             filingName: analysis.filingName,
@@ -350,13 +383,20 @@ export function createApp(options: CreateAppOptions = {}) {
             try {
               const verifier =
                 options.referenceVerifier ??
-                ((references: ResearchReference[]) =>
-                  verifyReferencesWithCrossref(references, {
+                (async (references: ResearchReference[]) => {
+                  const metadataVerified = await verifyReferencesWithCrossref(references, {
                     mailto: process.env.GREENLIT_CROSSREF_MAILTO,
-                  }))
+                  })
+                  return verifyReferenceSources(metadataVerified, {
+                    email: process.env.GREENLIT_NCBI_EMAIL ?? process.env.GREENLIT_CROSSREF_MAILTO,
+                  })
+                })
               verifiedReferences = await verifier(verifiedReferences)
             } catch {
               // Verification is additive; preserve extracted references on failure.
+              moduleCaveats.push(
+                "Research-reference metadata verification was unavailable; extracted notifier citations remain unverified."
+              )
             }
           }
           const deepResult = {
@@ -364,90 +404,114 @@ export function createApp(options: CreateAppOptions = {}) {
             researchReferences: verifiedReferences,
           }
           report = applyDeepAnalysis(minimumReport, deepResult)
-          const corpus = options.comparableCorpus ?? (await loadConfiguredCorpus())
-          if (deepResult.filingProfile && corpus.length > 0) {
-            let comparableFilings = await enrichComparableEvidence({
-              filings: rankComparableFilings(deepResult.filingProfile, corpus),
-              profiles: corpus,
-              evidenceMatrix: deepResult.evidenceMatrix,
-            })
-            let comparableActions: ComparableAction[] = []
-            let comparatorModelUsage: ReadinessReport["runMetadata"]["modelUsage"] = []
-            if (!options.comparableAssessor && !options.comparableActionSynthesizer) {
-              try {
-                const combined = await assessAndSynthesizeComparablesWithAnthropic({
-                  subjectProfile: deepResult.filingProfile,
-                  evidenceMatrix: deepResult.evidenceMatrix,
-                  filings: comparableFilings,
-                  cacheDir: path.join(dataDir, "model-cache"),
-                })
-                comparableFilings = combined.comparableFilings
-                comparableActions = combined.comparableActions
-                comparatorModelUsage = combined.modelUsage
-              } catch {
+          try {
+            const corpus = options.comparableCorpus ?? (await loadConfiguredCorpus())
+            if (deepResult.filingProfile && corpus.length > 0) {
+              let comparableFilings = await enrichComparableEvidence({
+                filings: rankComparableFilings(deepResult.filingProfile, corpus),
+                profiles: corpus,
+                evidenceMatrix: deepResult.evidenceMatrix,
+              })
+              let comparableActions: ComparableAction[] = []
+              let comparatorModelUsage: ReadinessReport["runMetadata"]["modelUsage"] = []
+              if (!options.comparableAssessor && !options.comparableActionSynthesizer) {
                 try {
-                  comparableFilings = await assessComparableEvidenceWithAnthropic({
+                  const combined = await assessAndSynthesizeComparablesWithAnthropic({
                     subjectProfile: deepResult.filingProfile,
                     evidenceMatrix: deepResult.evidenceMatrix,
                     filings: comparableFilings,
                     cacheDir: path.join(dataDir, "model-cache"),
                   })
-                  comparableActions = await synthesizeComparableActionsWithAnthropic({
+                  comparableFilings = combined.comparableFilings
+                  comparableActions = combined.comparableActions
+                  comparatorModelUsage = combined.modelUsage
+                } catch {
+                  try {
+                    comparableFilings = await assessComparableEvidenceWithAnthropic({
+                      subjectProfile: deepResult.filingProfile,
+                      evidenceMatrix: deepResult.evidenceMatrix,
+                      filings: comparableFilings,
+                      cacheDir: path.join(dataDir, "model-cache"),
+                    })
+                    comparableActions = await synthesizeComparableActionsWithAnthropic({
+                      evidenceMatrix: deepResult.evidenceMatrix,
+                      filings: comparableFilings,
+                      cacheDir: path.join(dataDir, "model-cache"),
+                    })
+                  } catch {
+                    // All comparator model enrichment is additive; retain retrieved passages.
+                    moduleCaveats.push(
+                      "Comparator transferability assessment and action synthesis were unavailable; retrieved comparator passages remain research waypoints only."
+                    )
+                  }
+                }
+              } else {
+                try {
+                  comparableFilings = await (
+                    options.comparableAssessor ?? assessComparableEvidenceWithAnthropic
+                  )({
+                    subjectProfile: deepResult.filingProfile,
                     evidenceMatrix: deepResult.evidenceMatrix,
                     filings: comparableFilings,
                     cacheDir: path.join(dataDir, "model-cache"),
                   })
                 } catch {
-                  // All comparator model enrichment is additive; retain retrieved passages.
+                  // Assessment is additive; retain cited comparator passages on failure.
+                  moduleCaveats.push(
+                    "Comparator transferability assessment was unavailable; retrieved passages remain unassessed."
+                  )
+                }
+                try {
+                  comparableActions = await (
+                    options.comparableActionSynthesizer ?? synthesizeComparableActionsWithAnthropic
+                  )({
+                    evidenceMatrix: deepResult.evidenceMatrix,
+                    filings: comparableFilings,
+                    cacheDir: path.join(dataDir, "model-cache"),
+                  })
+                } catch {
+                  // Action synthesis is additive; retain comparator assessments on failure.
+                  moduleCaveats.push(
+                    "Comparator-informed action synthesis was unavailable; the amendment plan excludes comparator-derived work packages."
+                  )
                 }
               }
-            } else {
-              try {
-                comparableFilings = await (
-                  options.comparableAssessor ?? assessComparableEvidenceWithAnthropic
-                )({
-                  subjectProfile: deepResult.filingProfile,
-                  evidenceMatrix: deepResult.evidenceMatrix,
-                  filings: comparableFilings,
-                  cacheDir: path.join(dataDir, "model-cache"),
-                })
-              } catch {
-                // Assessment is additive; retain cited comparator passages on failure.
-              }
-              try {
-                comparableActions = await (
-                  options.comparableActionSynthesizer ?? synthesizeComparableActionsWithAnthropic
-                )({
-                  evidenceMatrix: deepResult.evidenceMatrix,
-                  filings: comparableFilings,
-                  cacheDir: path.join(dataDir, "model-cache"),
-                })
-              } catch {
-                // Action synthesis is additive; retain comparator assessments on failure.
-              }
+              report = ReadinessReportSchema.parse({
+                ...report,
+                modules: {
+                  ...report.modules,
+                  comparableFilings,
+                  comparableActions,
+                  amendmentOutline: mergeComparableActionsIntoOutline(
+                    report.modules.amendmentOutline,
+                    comparableActions,
+                    deepResult.evidenceMatrix
+                  ),
+                },
+                runMetadata: {
+                  ...report.runMetadata,
+                  modelUsage: [...report.runMetadata.modelUsage, ...comparatorModelUsage],
+                  estimatedCostUsd: Number(
+                    (
+                      report.runMetadata.estimatedCostUsd +
+                      comparatorModelUsage.reduce(
+                        (total, usage) => total + usage.estimatedCostUsd,
+                        0
+                      )
+                    ).toFixed(6)
+                  ),
+                },
+              })
             }
+          } catch {
+            moduleCaveats.push(
+              "Comparable-filing retrieval was unavailable; the grounded filing analysis remains complete without comparator enrichment."
+            )
+          }
+          if (moduleCaveats.length > 0) {
             report = ReadinessReportSchema.parse({
               ...report,
-              modules: {
-                ...report.modules,
-                comparableFilings,
-                comparableActions,
-                amendmentOutline: mergeComparableActionsIntoOutline(
-                  report.modules.amendmentOutline,
-                  comparableActions,
-                  deepResult.evidenceMatrix
-                ),
-              },
-              runMetadata: {
-                ...report.runMetadata,
-                modelUsage: [...report.runMetadata.modelUsage, ...comparatorModelUsage],
-                estimatedCostUsd: Number(
-                  (
-                    report.runMetadata.estimatedCostUsd +
-                    comparatorModelUsage.reduce((total, usage) => total + usage.estimatedCostUsd, 0)
-                  ).toFixed(6)
-                ),
-              },
+              caveats: [...report.caveats, ...new Set(moduleCaveats)],
             })
           }
         } catch {
@@ -576,6 +640,41 @@ function buildReportMarkdown(
   const safety = report.modules.safetySignals
     .map((item) => `- **${item.label}: ${item.level}** — ${item.summary}`)
     .join("\n")
+  const evidenceMatrix = report.modules.evidenceMatrix
+    .map(
+      (item) =>
+        `### ${item.requirement} — ${item.status}\n\n${item.assessment}\n\n${item.evidenceSummary}\n\n${markdownCitations(item.citations)}${item.unresolvedQuestions.length > 0 ? `\n\n**Unresolved:** ${item.unresolvedQuestions.join("; ")}` : ""}`
+    )
+    .join("\n\n")
+  const comparables = report.modules.comparableFilings
+    .map((filing) => {
+      const evidence = (filing.evidenceMatches ?? [])
+        .map(
+          (match) =>
+            `  - **${match.requirement}** (${Math.round(match.relevanceScore * 100)}% passage match): ${match.rationale}\n${markdownCitations(match.citations, "    ")}`
+        )
+        .join("\n")
+      return `- **${filing.name}** — ${filing.similarityScore === undefined ? "unscored" : `${Math.round(filing.similarityScore * 100)}% match`}; ${filing.comparisonStrength ?? "unclassified"}; ${(filing.researchUse ?? "context_only").replaceAll("_", " ")}\n  ${filing.eligibilityRationale ?? filing.rationale}${evidence ? `\n${evidence}` : ""}`
+    })
+    .join("\n")
+  const filingDiff = report.modules.filingDiff
+    .map(
+      (item) =>
+        `### ${item.label} — ${(item.changeType ?? item.change ?? item.status).replaceAll("_", " ")}\n\n${item.changeSummary ?? item.draftSignal}\n\n**Baseline:** ${item.baselineExpectation}\n\n${markdownCitations(item.baselineCitations ?? [])}\n\n**Revised:** ${item.draftSignal}\n\n${markdownCitations(item.draftCitations ?? [])}\n\n**Action:** ${item.recommendedAction}`
+    )
+    .join("\n\n")
+  const references = report.modules.researchReferences
+    .map(
+      (reference) =>
+        `- **${reference.title}**${reference.year ? ` (${reference.year})` : ""} — ${reference.verificationStatus ?? "unverified"}${reference.sourceVerification ? `; ${reference.sourceVerification.accessLevel.replaceAll("_", " ")} via ${reference.sourceVerification.source.replaceAll("_", " ")}` : ""}${reference.doi ? `; DOI ${reference.doi}` : ""}${reference.citedPages?.length ? `; filing pages ${reference.citedPages.join(", ")}` : ""}${reference.duplicateCount ? `; ${reference.duplicateCount} duplicate entries consolidated` : ""}\n  ${reference.relevance}`
+    )
+    .join("\n")
+  const amendmentPlan = report.modules.amendmentOutline
+    .map(
+      (section, index) =>
+        `${index + 1}. **${section.title}**${section.ownerRole ? ` — owner: ${section.ownerRole}` : ""}\n${section.items.map((item) => `   - ${item}`).join("\n")}`
+    )
+    .join("\n")
   const notesMarkdown =
     notes.length > 0
       ? notes.map((note) => `- **${note.status}** ${note.body}`).join("\n")
@@ -601,10 +700,44 @@ ${benchmark}
 
 ${safety}
 
+## Evidence Matrix
+
+${evidenceMatrix || "No evidence-matrix rows were generated."}
+
+## Comparable Filings
+
+${comparables || "No comparable filings were generated."}
+
+## Filing Diff
+
+${filingDiff || "No filing differences were generated."}
+
+## Research References
+
+${references || "No research references were extracted."}
+
+## Amendment Plan
+
+${amendmentPlan || "No amendment plan was generated."}
+
 ## Workbook Notes
 
 ${notesMarkdown}
 `
+}
+
+function markdownCitations(
+  citations: Array<{ pageNumber: number; excerpt: string; section?: string }>,
+  indent = ""
+) {
+  return citations.length > 0
+    ? citations
+        .map(
+          (citation) =>
+            `${indent}> PDF page ${citation.pageNumber}${citation.section ? `, ${citation.section}` : ""}: “${citation.excerpt}”`
+        )
+        .join("\n")
+    : `${indent}_No source citation available._`
 }
 
 function safeFileBase(fileName: string) {

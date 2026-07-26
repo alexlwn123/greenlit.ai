@@ -35,6 +35,8 @@ describe("pair-aware evidence matrix comparison", () => {
     expect(result?.change).toBe("unchanged")
     expect(result?.consistencyAdjustment).toBe("shared_evidence_regression_suppressed")
     expect(result?.draftStatus).toBe("weak")
+    expect(result?.changeType).toBe("unchanged")
+    expect(result?.materiality).toBe("non_material")
   })
 
   it("retains the raw regression when pair-aware comparison is not requested", () => {
@@ -45,5 +47,42 @@ describe("pair-aware evidence matrix comparison", () => {
 
     expect(result?.change).toBe("regressed")
     expect(result?.consistencyAdjustment).toBeUndefined()
+  })
+
+  it("classifies added and removed cited support as material changes", () => {
+    const withoutCitation = { ...row("weak", "Support is asserted but not cited."), citations: [] }
+    const withCitation = row("present", "The pivotal study is cited and assessed.")
+
+    expect(compareEvidenceMatrices([withoutCitation], [withCitation])[0]).toMatchObject({
+      change: "improved",
+      changeType: "support_added",
+      materiality: "material",
+    })
+    expect(compareEvidenceMatrices([withCitation], [withoutCitation])[0]).toMatchObject({
+      change: "regressed",
+      changeType: "support_removed",
+      materiality: "material",
+    })
+  })
+
+  it("distinguishes changed evidence from an unchanged status", () => {
+    const revised = row("present", "A different pivotal study now supports the requirement.")
+    revised.citations = [
+      {
+        pageNumber: 44,
+        excerpt: "A newly submitted reproductive toxicity study supports the revised assessment.",
+      },
+    ]
+
+    expect(
+      compareEvidenceMatrices(
+        [row("present", "The original study supports the requirement.")],
+        [revised]
+      )[0]
+    ).toMatchObject({
+      change: "unchanged",
+      changeType: "support_modified",
+      materiality: "potentially_material",
+    })
   })
 })

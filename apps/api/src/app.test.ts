@@ -162,6 +162,123 @@ describe("local analysis API", () => {
     )
   })
 
+  it("retains grounded analysis and records optional-module failures", async () => {
+    const app = createApp({
+      analysisMode: "deep",
+      dataDir,
+      runAnalysisInline: true,
+      comparableCorpus: [{ grnNumber: 742 } as never],
+      referenceVerifier: async () => {
+        throw new Error("metadata provider unavailable")
+      },
+      deepAnalyzer: async ({ pages }) => ({
+        summary: "Grounded core analysis completed.",
+        analyzedPages: pages.map((page) => page.pageNumber),
+        truncated: false,
+        modelProvider: "test/provider",
+        filingProfile: {
+          substanceName: "Uploaded ingredient",
+          substanceType: "protein",
+          productionMethod: "extraction",
+          intendedUses: [],
+          targetPopulation: "general_population",
+          grasBasis: "scientific_procedures",
+          safetyDataAvailable: [],
+        },
+        findings: [],
+        evidenceMatrix: [],
+        safetySignals: [],
+        researchReferences: [
+          {
+            id: "notifier-source",
+            title: "Notifier-cited source",
+            source: "Filing",
+            relevance: "Source cited by notifier.",
+            evidence: "Printed reference",
+            origin: "notifier_cited",
+            verificationStatus: "extracted_unverified",
+            citedPages: [1],
+          },
+        ],
+      }),
+    })
+
+    const createdResponse = await uploadTestPdf(app, "module-failure-session")
+    const created = (await createdResponse.json()) as { analysis: { id: string } }
+    const analysis = await pollAnalysis(app, created.analysis.id, "module-failure-session")
+
+    expect(analysis.status).toBe("complete")
+    expect(analysis.report?.summary).toBe("Grounded core analysis completed.")
+    expect(analysis.report?.modules.researchReferences[0]?.verificationStatus).toBe(
+      "extracted_unverified"
+    )
+    expect(analysis.report?.caveats).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("metadata verification was unavailable"),
+        expect.stringContaining("Comparable-filing retrieval was unavailable"),
+      ])
+    )
+    expect(analysis.report?.caveats).not.toContain(
+      "Deep evidence analysis was unavailable; this saved report contains only the minimum structural fallback."
+    )
+  })
+
+  it("compares two completed evidence matrices without exposing another owner's filing", async () => {
+    const app = createApp({
+      analysisMode: "deep",
+      dataDir,
+      runAnalysisInline: true,
+      deepAnalyzer: async () => ({
+        summary: "The filing has one evidence-matrix row.",
+        analyzedPages: [1],
+        truncated: false,
+        modelProvider: "test/provider",
+        researchReferences: [],
+        findings: [],
+        evidenceMatrix: [
+          {
+            id: "identity-composition",
+            domain: "identity_characterization",
+            requirement: "Identity and composition",
+            status: "present",
+            assessment: "Identity and composition are documented.",
+            evidenceSummary: "The ingredient is identified.",
+            citations: [{ pageNumber: 1, excerpt: "Identity and composition are provided." }],
+            unresolvedQuestions: [],
+            relatedFindingIds: [],
+          },
+        ],
+        safetySignals: [],
+      }),
+    })
+    const baselineResponse = await uploadTestPdf(app, "comparison-session")
+    const revisedResponse = await uploadTestPdf(app, "comparison-session")
+    const baseline = (await baselineResponse.json()) as { analysis: { id: string } }
+    const revised = (await revisedResponse.json()) as { analysis: { id: string } }
+
+    const comparison = await app.request(
+      `/api/analyses/${revised.analysis.id}/compare/${baseline.analysis.id}`,
+      { headers: { "x-greenlit-session": "comparison-session" } }
+    )
+    const blocked = await app.request(
+      `/api/analyses/${revised.analysis.id}/compare/${baseline.analysis.id}`,
+      { headers: { "x-greenlit-session": "another-session" } }
+    )
+
+    expect(comparison.status).toBe(200)
+    await expect(comparison.json()).resolves.toMatchObject({
+      filingDiff: [
+        {
+          change: "unchanged",
+          changeType: "unchanged",
+          baselineCitations: [{ pageNumber: 1 }],
+          draftCitations: [{ pageNumber: 1 }],
+        },
+      ],
+    })
+    expect(blocked.status).toBe(404)
+  })
+
   it("does not expose saved analyses across sessions", async () => {
     const app = createApp({ dataDir, runAnalysisInline: true })
     const createdResponse = await uploadTestPdf(app, "owner-session")
@@ -257,7 +374,13 @@ describe("local analysis API", () => {
       ],
     })
     await expect(outlineResponse.text()).resolves.toContain("# Amendment Outline")
-    await expect(exportResponse.text()).resolves.toContain("Check the safety evidence table.")
+    const exported = await exportResponse.text()
+    expect(exported).toContain("Check the safety evidence table.")
+    expect(exported).toContain("## Evidence Matrix")
+    expect(exported).toContain("## Comparable Filings")
+    expect(exported).toContain("## Filing Diff")
+    expect(exported).toContain("## Research References")
+    expect(exported).toContain("## Amendment Plan")
   })
 
   it("rejects non-PDF uploads clearly", async () => {
@@ -410,6 +533,7 @@ async function pollAnalysis(
         textArtifact?: { mimeType: string; storageKey: string }
         report?: {
           readinessScore: number
+          summary: string
           caveats: string[]
           findings: Array<{ citations: Array<{ pageNumber: number }> }>
           modules: {

@@ -197,7 +197,13 @@ export const deepAnalysisOutputSchema = {
           requirement: { type: "string" },
           status: {
             type: "string",
-            enum: ["present", "weak", "missing", "not_applicable"],
+            enum: [
+              "present",
+              "strong_with_minor_gaps",
+              "substantial_gaps",
+              "missing",
+              "not_applicable",
+            ],
           },
           assessment: { type: "string" },
           evidenceSummary: { type: "string" },
@@ -637,7 +643,7 @@ The response must have this shape:
     "id": "stable-requirement-id",
     "domain": "analytical domain",
     "requirement": "specific evidence requirement",
-    "status": "present|weak|missing|not_applicable",
+    "status": "present|strong_with_minor_gaps|substantial_gaps|missing|not_applicable",
     "assessment": "what is present and why it is or is not adequate",
     "evidenceSummary": "concise description of the evidence reviewed",
     "citations": [{"pageNumber": 1, "excerpt": "exact notice excerpt", "section": "printed section or empty string"}],
@@ -667,18 +673,19 @@ Return exactly one evidence-matrix row for each of these requirements:
 
 Matrix rules:
 - present means the requirement is both documented and adequately supported.
-- weak means it is present but incomplete, unclear, internally inconsistent, or inadequately supported.
+- strong_with_minor_gaps means the requirement is substantially supported and usable, with limited corrections that do not undermine the core conclusion.
+- substantial_gaps means relevant material exists, but major omissions, ambiguity, inconsistency, or inadequate support prevents reliance on the requirement as filed.
 - missing means the reviewed filing affirmatively lacks the requirement; do not use missing merely because selected text is truncated.
 - not_applicable requires a filing-specific explanation.
-- Every present or weak row requires at least one exact citation. A missing row cites the nearby section establishing the omission when possible; otherwise use an empty citation array.
+- Every present, strong_with_minor_gaps, or substantial_gaps row requires at least one exact citation. A missing row cites the nearby section establishing the omission when possible; otherwise use an empty citation array.
 - relatedFindingIds must contain only IDs returned in findings.
 - Matrix status measures whether the filing contains and supports the named requirement; it is not a duplicate severity label for every residual scientific concern.
 - public-pivotal-safety-evidence is present when the evidence relied upon as pivotal is public and peer reviewed. An explicitly supportive private study does not downgrade this row.
-- independent-evidence-synthesis is present when incorporated sources and their roles are identified and the filing performs its own analysis and states its own conclusion. Comparator or "substantial equivalence" language alone does not make it weak.
+- independent-evidence-synthesis is present when incorporated sources and their roles are identified and the filing performs its own analysis and states its own conclusion. Comparator or "substantial equivalence" language alone does not establish adequate support.
 - test-article-comparability is present when the filing supplies a structured bridge across identity, composition, processing, impurities, exposure, and biological relevance. A residual disagreement about the bridge's strength may remain a finding without downgrading documentation coverage.
-- specifications-batch-analysis is present when specifications and multiple representative batch results are supplied. Data supplied in a cited appendix count; an in-specification result, proximity to a specification, or lot age alone does not make the row weak.
+- specifications-batch-analysis is present when specifications and multiple representative batch results are supplied. Data supplied in a cited appendix count; an in-specification result, proximity to a specification, or lot age alone does not justify a gap grade.
 
-Return at most 10 findings and 5 safety signals, ordered by materiality. If text is truncated, do not call an unreviewed appendix missing; mark the issue unknown, weak with an explicit selection caveat, or omit the finding.
+Return at most 10 findings and 5 safety signals, ordered by materiality. If text is truncated, do not call an unreviewed appendix missing; use substantial_gaps with an explicit selection caveat or omit the finding.
 Input truncated: ${truncated}
 
 NOTICE:

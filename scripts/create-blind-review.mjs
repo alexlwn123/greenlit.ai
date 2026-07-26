@@ -72,8 +72,24 @@ await writeFile(
   "utf8"
 )
 await writeFile(
+  path.join(outputDir, "finding-labels.csv"),
+  toCsv([
+    [
+      "case_id",
+      "finding_id",
+      "verdict_confirmed_false_positive_missed",
+      "domain",
+      "severity_critical_major_minor",
+      "citation_accuracy_1_to_5",
+      "action_usefulness_1_to_5",
+      "reviewer_notes",
+    ],
+  ]),
+  "utf8"
+)
+await writeFile(
   path.join(outputDir, "README.md"),
-  `# Blind Review ${seed}\n\nGive the reviewer only \`review-cases.csv\` and the listed source PDFs. Keep \`answer-key.csv\` concealed until every case is scored. Generate and attach the Greenlit report for each case without revealing the FDA outcome.\n\nPassing recommendation: no unsupported critical finding; at least 4/5 median citation accuracy and major-gap recall; at least 3/5 median false-positive control and action usefulness; and no systematic outcome leakage.\n`,
+  `# Blind Review ${seed}\n\nGive the reviewer \`review-cases.csv\`, \`finding-labels.csv\`, and the listed source PDFs. Keep \`answer-key.csv\` concealed until every case is scored. Generate and attach the Greenlit report for each case without revealing the FDA outcome.\n\nIn \`finding-labels.csv\`, enter one row for every Greenlit finding. Use verdict \`confirmed\` or \`false_positive\` and preserve its finding ID. Add every material finding Greenlit missed as a separate \`missed\` row with a blank finding ID. Every predicted finding must be reviewed.\n\nPassing recommendation: no unsupported critical finding; at least 75% finding precision and 80% major-gap recall; at least 4/5 median citation accuracy; at least 3/5 median action usefulness; and no systematic outcome leakage.\n`,
   "utf8"
 )
 

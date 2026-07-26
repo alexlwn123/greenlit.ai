@@ -24,7 +24,20 @@ describe("createMinimumReadinessReport", () => {
     expect(report.modules.safetySignals).toHaveLength(3)
     expect(report.modules.comparableFilings).toHaveLength(1)
     expect(report.modules.filingDiff).toHaveLength(7)
+    expect(report.modules.researchReferences).toEqual([])
     expect(report.modules.amendmentOutline.length).toBeGreaterThan(1)
+  })
+
+  it("does not present years or citation markers as research references", () => {
+    const report = createMinimumReadinessReport({
+      analysisId: "analysis-reference-guard",
+      filingName: "Reference markers.pdf",
+      extractedText:
+        "References include a 2024 report, a projected 2095 scenario, PMID:1234, and doi:10.1000/example.",
+      generatedAt: "2026-07-26T00:00:00.000Z",
+    })
+
+    expect(report.modules.researchReferences).toEqual([])
   })
 
   it("emits review findings when critical sections are missing", () => {

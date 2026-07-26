@@ -48,6 +48,12 @@ describe("rankComparableFilings", () => {
     expect(results[0]).toMatchObject({
       grnNumber: 742,
       similarityScore: 1,
+      comparisonStrength: "strong",
+      researchUse: "evidence_candidate",
+    })
+    expect(results[1]).toMatchObject({
+      comparisonStrength: "weak",
+      researchUse: "context_only",
     })
     expect(results[1]?.differences).toContain(
       "production method: extraction vs submerged_fermentation"

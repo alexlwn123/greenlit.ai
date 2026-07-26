@@ -61,6 +61,13 @@ review product.
   schema.
 - A deep-analysis failure preserves the minimum report and records a caveat
   rather than losing the whole analysis.
+- Report construction now rejects finding citations outside the analyzed page
+  set, downgrades unsupported present/weak evidence rows, removes dangling
+  finding links, and prevents ungrounded safety gaps from reaching scoring or
+  display.
+- Research verification and comparator retrieval, assessment, and action
+  synthesis fail independently. A failure retains the grounded core report and
+  adds a visible caveat describing the missing enrichment.
 
 ### Report interface
 
@@ -68,6 +75,9 @@ review product.
 - Filing diff and research references are visible.
 - Comparable-filing differences are visible.
 - All previously visible report modules remain available.
+- Shareable report exports include the evidence matrix, comparator rationale and
+  retrieved passages, filing diff, verified-reference status, amendment plan,
+  and workbook notes.
 
 ## Corpus validation
 
@@ -114,6 +124,11 @@ production, organism, intended-use, population, evidence, and exposure-method
 criteria. Results retain scores, differences, GRN numbers, statuses, and source
 URLs.
 
+Ranked results carry an explicit comparison strength and permitted research use.
+Strong family-and-production matches may enter requirement-specific evidence
+retrieval; moderate matches are labeled as documentation analogs; weak matches
+remain context only and cannot enter model-based transferability assessment.
+
 The top three local comparator PDFs now receive section-level retrieval against
 all nine evidence-matrix requirements. Matches retain exact PDF pages and
 bounded excerpts, and navigation pages are suppressed. The GRN 1256 benchmark
@@ -140,9 +155,12 @@ the same execution metadata.
 
 ### Filing diff
 
-The filing-to-requirement diff is now derived from stable evidence-matrix keys.
-A true revision-to-revision diff still needs source citations on both document
-versions and change classification.
+The filing-to-requirement diff remains available as the default benchmark view.
+Completed saved analyses can now be compared directly against another completed
+filing owned by the same user. The revision comparison uses stable evidence-matrix
+keys, retains exact citations from both documents, and classifies support as added,
+removed, strengthened, weakened, modified, unchanged, or not comparable. Each
+change also receives a materiality label and a plain-language explanation.
 
 ### Research references
 
@@ -156,31 +174,50 @@ preserves notifier metadata, records matched bibliographic metadata separately,
 and exposes conflicts. In the GRN 1160 fixture, all 15 prioritized references
 matched and four metadata differences were retained for review.
 
-Full-text/source verification and deduplication remain future work. Future
-Greenlit-recommended research has a separate origin and must not be mixed with
-notifier-cited evidence.
+Verified and extracted references are now deduplicated by normalized DOI or
+title and publication year. The retained record preserves every filing page on
+which the duplicate citations appeared and records the collapsed reference IDs.
 
-### Documentation benchmark depth
+Source verification now checks PMC full text first, PubMed abstracts second,
+and controlled DOI resolution third. The report distinguishes full text,
+abstract-only access, and landing-page resolution and preserves the resolved
+identifier and trusted source URL. Future Greenlit-recommended research has a
+separate origin and must not be mixed with notifier-cited evidence.
 
-The first deep integration downgrades a small set of benchmark fields. It does
-not yet produce a full evidence matrix with requirement, claim, evidence,
-citation, adequacy rationale, and unresolved question for every domain.
+The minimum fallback no longer turns year-like tokens, DOI markers, or PMID
+markers into synthetic research-reference records. It leaves the module empty
+until a source can be identified by the grounded deep extractor.
+
+### Readiness-score calibration
+
+The readiness score is now calculated from the nine-domain evidence matrix
+rather than only the count of findings. Safety-critical exposure and public
+pivotal-evidence domains carry the largest weights; weak evidence earns partial
+credit; not-applicable domains are excluded and the remaining weights are
+normalized. Reports without an evidence matrix retain the legacy severity
+fallback so minimum analysis remains available.
+
+A blind-review package now includes finding-level expert labels, and the shared
+calibration evaluator reports precision, recall, critical false positives,
+score medians, and domain-level performance. Numerical calibration remains
+provisional until reviewers complete those labels.
 
 ### Safety-signal calibration
 
-The prompt and ranking are improved, but expert review is still required to
+Safety-signal post-processing now rejects ungrounded gap/watch signals,
+deduplicates signals derived from the same cited passage, and prioritizes gaps
+over watch items and clear observations. Expert review is still required to
 establish thresholds for exposure margins, nutrient upper limits, contaminant
 specifications, vulnerable populations, and study-finding relevance.
 
-## Recommended module order
+## Recommended next validation order
 
-1. Add source citations from both sides of a revision-to-revision filing diff.
-2. Rebuild comparable filings using curated corpus retrieval and explicit
-   matching criteria.
-3. Add verified research-reference resolution and deduplication.
-4. Run broader withdrawn/no-questions pairs to calibrate precision, not only
+1. Run broader withdrawn/no-questions pairs to calibrate precision, not only
    recall.
-5. Add domain-expert review labels and use them to tune ranking and suppression.
+2. Complete blind domain-expert labels and tune ranking and suppression against
+   the recorded precision, recall, and critical-false-positive metrics.
+3. Revisit the provisional domain weights only after the labeled review set is
+   large enough to support defensible thresholds.
 
 This order keeps every later module grounded in the same evidence model instead
 of creating separate, inconsistent analyses.

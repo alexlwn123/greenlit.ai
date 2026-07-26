@@ -30,7 +30,53 @@ export async function verifyReferencesWithCrossref(
       verified.push(reference)
     }
   }
-  return verified
+  return deduplicateReferences(verified)
+}
+
+export function deduplicateReferences(references: ResearchReference[]) {
+  const groups = new Map<string, ResearchReference[]>()
+  for (const reference of references) {
+    const key = referenceIdentity(reference)
+    groups.set(key, [...(groups.get(key) ?? []), reference])
+  }
+
+  return [...groups.values()].map((group) => {
+    const primary = [...group].sort(referenceQuality)[0] as ResearchReference
+    if (group.length === 1) return primary
+    const duplicateReferenceIds = group
+      .filter((reference) => reference.id !== primary.id)
+      .map((reference) => reference.id)
+    return {
+      ...primary,
+      citedPages: [...new Set(group.flatMap((reference) => reference.citedPages ?? []))].sort(
+        (left, right) => left - right
+      ),
+      duplicateReferenceIds,
+      duplicateCount: group.length,
+    }
+  })
+}
+
+function referenceIdentity(reference: ResearchReference) {
+  const doi = reference.verification?.matchedDoi || reference.doi
+  if (doi) return `doi:${normalizeDoi(doi)}`
+  const title = normalizedTitle(reference.verification?.matchedTitle || reference.title)
+  const year = reference.verification?.matchedYear || reference.year || ""
+  return `title:${title}|${year}`
+}
+
+function referenceQuality(left: ResearchReference, right: ResearchReference) {
+  const rank = (reference: ResearchReference) =>
+    reference.verificationStatus === "source_verified"
+      ? 3
+      : reference.verificationStatus === "metadata_verified"
+        ? 2
+        : 1
+  return rank(right) - rank(left) || (right.doi ? 1 : 0) - (left.doi ? 1 : 0)
+}
+
+function normalizedTitle(value: string) {
+  return [...tokens(value)].sort().join(" ")
 }
 
 async function verifyReference(

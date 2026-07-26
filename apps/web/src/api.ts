@@ -1,4 +1,4 @@
-import type { AnalysisRecord, WorkbookNote } from "@greenlit/core"
+import type { AnalysisRecord, FilingDiffItem, WorkbookNote } from "@greenlit/core"
 import { uploadPresigned } from "@vercel/blob/client"
 
 const sessionStorageKey = "greenlit.localSessionId"
@@ -17,6 +17,14 @@ export async function listAnalyses() {
 export async function getAnalysis(analysisId: string) {
   const response = await requestJson<{ analysis: AnalysisRecord }>(`/analyses/${analysisId}`)
   return response.analysis
+}
+
+export async function compareAnalyses(analysisId: string, baselineId: string) {
+  return requestJson<{
+    baseline: { id: string; filingName: string }
+    revised: { id: string; filingName: string }
+    filingDiff: FilingDiffItem[]
+  }>(`/analyses/${analysisId}/compare/${baselineId}`)
 }
 
 export async function deleteAnalysis(analysisId: string) {

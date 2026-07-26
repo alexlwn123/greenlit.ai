@@ -102,7 +102,7 @@ export async function enrichComparableEvidence({
 
   return Promise.all(
     filings.map(async (filing, index) => {
-      if (index >= maxFilings || !filing.grnNumber) {
+      if (index >= maxFilings || !filing.grnNumber || filing.researchUse === "context_only") {
         return filing
       }
       const profile = profileByGrn.get(filing.grnNumber)
