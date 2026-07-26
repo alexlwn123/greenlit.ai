@@ -1,3 +1,4 @@
+import { getAuthUserId } from "@convex-dev/auth/server"
 import { v } from "convex/values"
 import type { Doc } from "./_generated/dataModel"
 import type { MutationCtx, QueryCtx } from "./_generated/server"
@@ -24,6 +25,7 @@ const analysisRecord = v.object({
   createdAt: v.string(),
   updatedAt: v.string(),
 })
+const analysisInput = analysisRecord.omit("ownerId")
 
 const analysisUpdates = v.object({
   status: v.optional(analysisStatus),
@@ -42,15 +44,15 @@ const workbookNote = v.object({
   createdAt: v.string(),
   updatedAt: v.string(),
 })
+const workbookNoteInput = workbookNote.omit("ownerId")
 
 export const list = query({
-  args: {
-    ownerId: v.string(),
-  },
-  handler: async (ctx, args) => {
+  args: {},
+  handler: async (ctx) => {
+    const ownerId = await requireUserId(ctx)
     const analyses = await ctx.db
       .query("analyses")
-      .withIndex("by_owner_created_at", (index) => index.eq("ownerId", args.ownerId))
+      .withIndex("by_owner_created_at", (index) => index.eq("ownerId", ownerId))
       .order("desc")
       .collect()
 
@@ -60,13 +62,13 @@ export const list = query({
 
 export const get = query({
   args: {
-    ownerId: v.string(),
     analysisId: v.string(),
   },
   handler: async (ctx, args) => {
+    const ownerId = await requireUserId(ctx)
     const analysis = await getAnalysisDoc(ctx, args.analysisId)
 
-    if (!analysis || analysis.ownerId !== args.ownerId) {
+    if (!analysis || analysis.ownerId !== ownerId) {
       return null
     }
 
@@ -79,16 +81,18 @@ export const getById = query({
     analysisId: v.string(),
   },
   handler: async (ctx, args) => {
+    const ownerId = await requireUserId(ctx)
     const analysis = await getAnalysisDoc(ctx, args.analysisId)
-    return analysis ? toAnalysisRecord(analysis) : null
+    return analysis?.ownerId === ownerId ? toAnalysisRecord(analysis) : null
   },
 })
 
 export const create = mutation({
   args: {
-    analysis: analysisRecord,
+    analysis: analysisInput,
   },
   handler: async (ctx, args) => {
+    const ownerId = await requireUserId(ctx)
     const existing = await getAnalysisDoc(ctx, args.analysis.id)
 
     if (existing) {
@@ -97,10 +101,11 @@ export const create = mutation({
 
     await ctx.db.insert("analyses", {
       ...args.analysis,
+      ownerId,
       readinessScore: readinessScoreFromReport(args.analysis.report),
     })
 
-    return args.analysis
+    return { ...args.analysis, ownerId }
   },
 })
 
@@ -110,9 +115,10 @@ export const update = mutation({
     updates: analysisUpdates,
   },
   handler: async (ctx, args) => {
+    const ownerId = await requireUserId(ctx)
     const analysis = await getAnalysisDoc(ctx, args.analysisId)
 
-    if (!analysis) {
+    if (!analysis || analysis.ownerId !== ownerId) {
       throw new Error(`Analysis not found: ${args.analysisId}`)
     }
 
@@ -150,14 +156,16 @@ export const update = mutation({
 
 export const listNotes = query({
   args: {
-    ownerId: v.string(),
     analysisId: v.string(),
   },
   handler: async (ctx, args) => {
+    const ownerId = await requireUserId(ctx)
+    const analysis = await getAnalysisDoc(ctx, args.analysisId)
+    if (!analysis || analysis.ownerId !== ownerId) throw new Error("Unauthorized")
     const notes = await ctx.db
       .query("workbookNotes")
       .withIndex("by_owner_analysis_created_at", (index) =>
-        index.eq("ownerId", args.ownerId).eq("analysisId", args.analysisId)
+        index.eq("ownerId", ownerId).eq("analysisId", args.analysisId)
       )
       .order("desc")
       .collect()
@@ -168,11 +176,37 @@ export const listNotes = query({
 
 export const createNote = mutation({
   args: {
-    note: workbookNote,
+    note: workbookNoteInput,
   },
   handler: async (ctx, args) => {
-    await ctx.db.insert("workbookNotes", args.note)
-    return args.note
+    const ownerId = await requireUserId(ctx)
+    const analysis = await getAnalysisDoc(ctx, args.note.analysisId)
+    if (!analysis || analysis.ownerId !== ownerId) throw new Error("Unauthorized")
+    const note = { ...args.note, ownerId }
+    await ctx.db.insert("workbookNotes", note)
+    return note
+  },
+})
+
+export const remove = mutation({
+  args: {
+    analysisId: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const ownerId = await requireUserId(ctx)
+    const analysis = await getAnalysisDoc(ctx, args.analysisId)
+    if (!analysis || analysis.ownerId !== ownerId) throw new Error("Analysis not found")
+
+    const notes = await ctx.db
+      .query("workbookNotes")
+      .withIndex("by_owner_analysis_created_at", (index) =>
+        index.eq("ownerId", ownerId).eq("analysisId", args.analysisId)
+      )
+      .collect()
+
+    await Promise.all(notes.map((note) => ctx.db.delete(note._id)))
+    await ctx.db.delete(analysis._id)
+    return { deleted: true }
   },
 })
 
@@ -242,4 +276,10 @@ function readinessScoreFromReport(report: unknown) {
 
   const score = report.readinessScore
   return typeof score === "number" ? score : undefined
+}
+
+async function requireUserId(ctx: QueryCtx | MutationCtx) {
+  const userId = await getAuthUserId(ctx)
+  if (!userId) throw new Error("Not authenticated")
+  return userId
 }

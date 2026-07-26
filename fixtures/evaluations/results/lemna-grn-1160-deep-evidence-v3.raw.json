@@ -1,0 +1,838 @@
+{
+  "summary": "GRN 1160 presents a GRAS determination for Lemna Leaf Protein (LLP) derived from Lemna minor, produced by Plantible Foods. The notice relies substantially on GRN 742 (Parabel LENTEIN™ Complete) as a compositional and safety comparator, supplemented by post-GRN 742 human clinical studies, nonclinical data on related duckweed species, and a dedicated allergenicity assessment. Identity, specifications, and five-batch analytical data are well documented. The manufacturing process is described at a functional level. Dietary exposure is supported by a WWEIA-based EDI assessment. The primary evidentiary strategy is a read-across bridge from GRN 742 to LLP, justified by compositional similarity. Key residual issues include: (1) the notice incorporates GRN 742 safety data by reference and relies on FDA's no-objection outcome rather than independently evaluating the underlying studies; (2) the pivotal toxicology studies (acute and 90-day rat studies with LENTEIN™ Complete) are described as conducted by Parabel and their publication status is not established in the notice; (3) the test-article bridge is partially supported—compositional similarity is documented but the higher protein purity of LLP (~80–89% dw) versus LENTEIN™ Complete (~39–55% dw) and the distinct extraction process (ultrafiltration, microfiltration) are acknowledged but not fully bridged for impurity profile and process-related residuals; (4) one batch (Batch 4) exceeded the aerobic plate count specification of <15,000 CFU/g at 22,000 CFU/g, which is noted in the data but not addressed in the narrative; (5) EFSA's NOAEL reassessment of the Mankai 90-day study (6.5 g/kg bw/day vs. the submitter's 13–15 g/kg bw/day) is acknowledged but the margin-of-exposure calculation uses the submitter's NOAEL rather than EFSA's. The allergenicity assessment is thorough and independently conducted. The notice is generally well-organized and evidence-rich for a novel plant protein, with the most material gaps concentrated in the incorporation/independence and test-article bridge domains.",
+  "filingProfile": {
+    "substanceName": "Lemna Leaf Protein (LLP)",
+    "notifier": "Plantible Foods",
+    "status": "filed",
+    "substanceType": "protein",
+    "productionMethod": "extraction",
+    "sourceOrganismType": "plant",
+    "sourceOrganismName": "Lemna minor",
+    "intendedUses": [
+      "beverages and beverage bases",
+      "breakfast cereals",
+      "frozen dairy desserts and mixes",
+      "grain products and pastas",
+      "milk products",
+      "plant protein products",
+      "processed fruits and fruit juices",
+      "snack foods",
+      "soft candy",
+      "soups and soup mixes",
+      "salad dressings"
+    ],
+    "targetPopulation": "general population (excluding infants and toddlers)",
+    "grasBasis": "scientific procedures; substantial equivalence to LENTEIN™ Complete (GRN 742); expert panel consensus",
+    "safetyDataAvailable": [
+      "acute oral toxicity (OECD 420)",
+      "90-day repeated dose toxicity (OECD 408)",
+      "genotoxicity (Ames assay, in vitro micronucleus)",
+      "cytotoxicity in vitro",
+      "human clinical intervention trials",
+      "allergenicity assessment",
+      "compositional/nutritional analysis",
+      "5-batch specification analysis",
+      "accelerated shelf-life study"
+    ],
+    "dietaryExposureMethod": "Estimated Daily Intake based on WWEIA 2017-2020 pre-pandemic data with intended use levels applied to food categories"
+  },
+  "findings": [
+    {
+      "id": "grn742-incorporation-independence",
+      "severity": "major",
+      "title": "GRN 742 safety data incorporated by reference without independent evaluation of underlying studies",
+      "summary": "The notice states 'the safety data for Lemna protein powder (GRN 742 pages 61 to 106) are incorporated by reference into this document for Plantible's LLP' and relies on FDA's no-objection outcome as a proxy for safety adequacy. The notice describes the GRN 742 studies (acute oral, 14-day, 90-day rat studies) but does not independently evaluate the study designs, dose selections, endpoints, or findings against LLP's specific exposure profile. The expert panel statement similarly characterizes the evaluation as 'largely based on its substantial equivalence to LENTEIN™ Complete.' This approach substitutes another notice's regulatory outcome for an independent evidence synthesis, which may not satisfy the requirement that the notifier independently conclude safety based on the weight of evidence.",
+      "recommendedAction": "Provide an independent, study-level evaluation of each pivotal safety study incorporated from GRN 742, including assessment of dose adequacy relative to LLP's EDI, endpoint coverage, and any limitations. State an independent conclusion derived from that analysis rather than from FDA's prior no-objection letter.",
+      "evidence": [
+        "GRN 742 safety data incorporated by reference (pages 61–106)",
+        "Expert panel reliance on substantial equivalence to LENTEIN™ Complete",
+        "FDA no-objection letter cited as safety support"
+      ],
+      "citations": [
+        {
+          "pageNumber": 32,
+          "excerpt": "Therefore, the safety data for Lemna protein powder (GRN 742 pages 61 to 106) are incorporated by reference into this document for Plantible's LLP.",
+          "section": "6.1 Introduction"
+        },
+        {
+          "pageNumber": 222,
+          "excerpt": "The evaluation of LLP was largely based on its substantial equivalence to another Lemna protein product, LENTEIN TM Complete, described in GRN 742. FDA issued a \"No Objections\" letter to GRN 742 on August 22, 2018.",
+          "section": "Appendix 7 Expert Panel Consensus Statement"
+        }
+      ],
+      "gapType": "adequacy_gap",
+      "domain": "cross-cutting",
+      "confidence": "high",
+      "category": "incorporation_independent_conclusions",
+      "evidenceRole": "pivotal",
+      "availability": "unknown",
+      "supportingMaterial": "GRN 742 (Parabel LENTEIN™ Complete)",
+      "targetMaterial": "Lemna Leaf Protein (LLP) from Lemna minor",
+      "testArticle": "LENTEIN™ Complete (Parabel)",
+      "bridgeAssessment": "partial"
+    },
+    {
+      "id": "pivotal-tox-studies-publication-status",
+      "severity": "major",
+      "title": "Publication status of pivotal toxicology studies (acute and 90-day rat studies with LENTEIN™ Complete) not established",
+      "summary": "The acute oral toxicity study and 90-day subchronic study with LENTEIN™ Complete, which constitute the primary nonclinical safety foundation for LLP, are described as contained in 'GRN 742 Part 3 Appendix O.' The notice does not identify these studies as published in peer-reviewed literature, nor does it provide journal citations. The Mankai 90-day study (Kawamata et al., 2020) is cited with a journal reference (Toxicology Reports) and is peer-reviewed. The LENTEIN™ Complete studies appear to be proprietary studies submitted to FDA within GRN 742 and are not established as publicly available peer-reviewed publications. Because these studies are the pivotal toxicological support for LLP, their non-public status is a material issue for the scientific procedures basis of GRAS.",
+      "recommendedAction": "Clarify whether the LENTEIN™ Complete acute and 90-day rat studies have been published in peer-reviewed literature. If not, identify publicly available peer-reviewed studies that independently support the pivotal safety conclusions, or explain how the GRAS determination satisfies the public availability requirement given reliance on proprietary studies from a third-party GRN.",
+      "evidence": [
+        "Acute oral toxicity study with LENTEIN™ Complete (GRN 742 Appendix O)",
+        "90-day subchronic study with LENTEIN™ Complete (GRN 742)",
+        "Kawamata et al. 2020 (Mankai, Toxicology Reports) – peer-reviewed"
+      ],
+      "citations": [
+        {
+          "pageNumber": 37,
+          "excerpt": "GRN 742 Part 3 Appendix O contains excerpts of the toxicology safety studies conducted with the similar protein extract, LENTEIN™ Complete.",
+          "section": "6.3.3 Toxicology/safety and Feeding Studies"
+        },
+        {
+          "pageNumber": 38,
+          "excerpt": "GRN 742 also reports a 90-day repeat dose oral toxicity study with LENTEIN TM Complete in Wistar rats (10/sex/group). The study followed the OECD Guidelines for testing of chemicals (Number 408).",
+          "section": "6.3.3 Toxicology/safety and Feeding Studies"
+        }
+      ],
+      "gapType": "documentation_gap",
+      "domain": "safety data",
+      "confidence": "high",
+      "category": "public_pivotal_evidence",
+      "evidenceRole": "pivotal",
+      "availability": "unknown",
+      "supportingMaterial": "GRN 742 Appendix O (LENTEIN™ Complete toxicology studies)",
+      "targetMaterial": "Lemna Leaf Protein (LLP)",
+      "testArticle": "LENTEIN™ Complete (Parabel)",
+      "bridgeAssessment": "partial"
+    },
+    {
+      "id": "test-article-bridge-protein-purity-process",
+      "severity": "major",
+      "title": "Test-article bridge incompletely addresses compositional and process differences between LLP and LENTEIN™ Complete",
+      "summary": "LLP contains ≥80% protein on an as-is basis (~89% dw), while LENTEIN™ Complete contains 39–55% protein dw (~50% as-is). The difference is substantial: LLP is a highly purified protein isolate whereas LENTEIN™ Complete is a whole-plant powder retaining 30–45% dietary fiber, up to 12% fat, and up to 10% ash. LLP's manufacturing process includes a 0.2 µm microfiltration step and a 70 kDa ultrafiltration step not present in LENTEIN™ Complete's thermal washing process. The notice acknowledges these differences and provides a compositional similarity table (Table 11), but does not systematically evaluate whether the purification steps alter the impurity profile, remove or concentrate process-related residuals (e.g., calcium chloride used for chlorophyll coagulation), or change the biological matrix in ways relevant to the safety studies conducted with LENTEIN™ Complete. The bridge is asserted rather than demonstrated for impurities and process residuals.",
+      "recommendedAction": "Provide a structured bridge analysis addressing: (1) impurity and process-residual profile of LLP vs. LENTEIN™ Complete given the distinct extraction steps; (2) whether the ultrafiltration/microfiltration steps introduce or remove components of safety relevance; (3) whether the higher protein concentration changes the effective dose of any co-extracted minor components at the proposed use levels.",
+      "evidence": [
+        "Table 11 compositional comparison (LLP vs. LENTEIN™ Complete)",
+        "LLP manufacturing process description including CaCl2 coagulation, 0.2 µm microfiltration, 70 kDa ultrafiltration",
+        "LENTEIN™ Complete thermal washing process (GRN 742)"
+      ],
+      "citations": [
+        {
+          "pageNumber": 32,
+          "excerpt": "Plantible's LLP contains > 80% protein, while the protein content in the product in GRN 742 is 39-55% crude protein (up to ~50% on an 'as is' basis). The difference is made up by fiber, ash and fat components.",
+          "section": "6.1 Introduction"
+        },
+        {
+          "pageNumber": 16,
+          "excerpt": "As part of the purification process, a covalent cation (e.g., calcium chloride) is used to coagulate the chlorophyll. The LLP product is manufactured consistent with current Good Manufacturing Practices (cGMPs) and Risk-based Preventive Controls. Further, Plantible's extraction process incorporates both a 0.2μm microfiltration step as well as an ultrafiltration step using a 70kDa membrane to ensure that contaminants as well as heavy metals are removed from the protein composition prior to drying.",
+          "section": "2.5 Manufacturing Process"
+        }
+      ],
+      "gapType": "adequacy_gap",
+      "domain": "cross-cutting",
+      "confidence": "high",
+      "category": "test_article_bridge",
+      "evidenceRole": "pivotal",
+      "availability": "unknown",
+      "supportingMaterial": "GRN 742 (LENTEIN™ Complete)",
+      "targetMaterial": "Lemna Leaf Protein (LLP)",
+      "testArticle": "LENTEIN™ Complete (Parabel)",
+      "bridgeAssessment": "partial"
+    },
+    {
+      "id": "batch4-apc-exceedance",
+      "severity": "major",
+      "title": "Batch 4 aerobic plate count exceeds specification with no corrective narrative",
+      "summary": "Table 3 reports that Batch 4 (Lot P030122C1) had an aerobic plate count of 22,000 CFU/g against a specification of <15,000 CFU/g. This is the only out-of-specification result across the five batches. The notice does not address this exceedance in the narrative—there is no discussion of root cause, corrective action, whether the batch was released or rejected, or whether the specification is achievable and meaningful. The absence of any explanation for an out-of-specification result in the only batch data set presented materially weakens the manufacturing consistency claim.",
+      "recommendedAction": "Provide a narrative explanation for the Batch 4 APC exceedance, including: root cause investigation findings, disposition of the batch, corrective and preventive actions implemented, and confirmation that the specification is routinely achievable. If the batch was rejected, state so explicitly.",
+      "evidence": [
+        "Table 3 five-batch analysis (Batch 4 APC = 22,000 CFU/g vs. spec <15,000 CFU/g)",
+        "Appendix 1 Certificates of Analysis"
+      ],
+      "citations": [
+        {
+          "pageNumber": 15,
+          "excerpt": "Aerobic plate count <15,000 CFU/g ... 22,000 CFU/g [Batch 4]",
+          "section": "Table 3. Results of 5-batch Analysis of Plantible's LLP"
+        }
+      ],
+      "gapType": "documentation_gap",
+      "domain": "manufacturing process",
+      "confidence": "high",
+      "category": "manufacturing_process",
+      "evidenceRole": "supportive",
+      "availability": "private",
+      "supportingMaterial": "Five-batch CoA data (Appendix 1)",
+      "targetMaterial": "Lemna Leaf Protein (LLP)",
+      "testArticle": null,
+      "bridgeAssessment": "unknown"
+    },
+    {
+      "id": "efsa-noael-discrepancy",
+      "severity": "major",
+      "title": "EFSA's lower NOAEL for Mankai 90-day study acknowledged but not used in margin-of-exposure analysis",
+      "summary": "The notice acknowledges that EFSA reassessed the Kawamata et al. (2020) Mankai 90-day rat study and determined the NOAEL to be 6.5 g/kg bw/day for males (the middle dose), rather than the 13.16/15.03 g/kg bw/day (highest dose) reported by the study authors. The notice quotes EFSA's reasoning ('taking together statistically significant outcomes especially for the high dose groups and the lack of a plausible explanation'). However, the expert panel statement uses the study authors' NOAEL (13.16 g/kg bw/day) to calculate an 8–16-fold margin over the GRN 742 dietary exposure estimate, without addressing the adequacy of the margin if EFSA's lower NOAEL is applied. At EFSA's NOAEL of 6.5 g/kg bw/day and LLP's 90th percentile EDI of 1.0 g/kg bw/day, the margin is approximately 6.5-fold, which warrants explicit discussion.",
+      "recommendedAction": "Recalculate and discuss the margin of exposure using EFSA's NOAEL of 6.5 g/kg bw/day for the Mankai study, and explain why this margin is considered adequate for LLP's intended use. Address whether the treatment-related findings at the high dose in the Mankai study have any relevance to LLP given compositional differences.",
+      "evidence": [
+        "Kawamata et al. 2020 Mankai 90-day study (NOAEL per authors: 13.16/15.03 g/kg bw/day)",
+        "EFSA 2021b reassessment (NOAEL: 6.5 g/kg bw/day for males)",
+        "LLP 90th percentile EDI: 1.0 g/kg bw/day (2+ years)"
+      ],
+      "citations": [
+        {
+          "pageNumber": 38,
+          "excerpt": "EFSA said, 'A number of significant findings were seen in the urinalysis, haematology, blood chemistry and organ weights, in the animals fed with the NF. Most of these findings were considered as treatment-related, but the mode of action cannot be explained... the Panel considers the middle dose tested for males (i.e., 6.5 g/kg bw per day) as the overall no observed adverse effect level (NOAEL) of this study'.",
+          "section": "6.3.3 Toxicology/safety and Feeding Studies"
+        },
+        {
+          "pageNumber": 225,
+          "excerpt": "Regardless, this NOAEL is 8-16 times higher than the estimated dietary exposure to LENTEIN TM Complete of 0.39-0.79 g/kg bw/day (27.8-55.6 g/person/day as reported in FDA's 'No Objections' Letter to GRN 742, and assuming 70 kg bw).",
+          "section": "Appendix 7 Expert Panel Consensus Statement"
+        }
+      ],
+      "gapType": "adequacy_gap",
+      "domain": "safety data",
+      "confidence": "high",
+      "category": "safety_data",
+      "evidenceRole": "pivotal",
+      "availability": "public_peer_reviewed",
+      "supportingMaterial": "Kawamata et al. 2020 (Toxicology Reports); EFSA 2021b opinion",
+      "targetMaterial": "Lemna Leaf Protein (LLP)",
+      "testArticle": "Wolffia globosa Mankai powder",
+      "bridgeAssessment": "partial"
+    },
+    {
+      "id": "fat-not-measured-five-batch",
+      "severity": "minor",
+      "title": "Total fat not measured in five-batch analysis; specification compliance demonstrated only by separate analysis",
+      "summary": "The five-batch analysis (Table 3) does not include total fat measurements for any of the five batches. The notice states 'Fat was not measured as part of the five batch analyses but has been shown in other analyses to meet the specification of not more than 0.5% on a dry weight basis (Appendix 2, data in Table 4).' The fat specification (<0.5% as-is) is part of the food-grade specification table (Table 2), and its omission from the batch analysis set means that specification conformance for fat is not demonstrated across the representative production lots.",
+      "recommendedAction": "Include total fat measurements in the batch analysis data set, or provide a scientifically justified rationale for why fat testing on a periodic rather than per-batch basis is adequate for specification compliance demonstration, with supporting data from additional lots.",
+      "evidence": [
+        "Table 3 five-batch analysis (Total Fat column blank for all batches)",
+        "Table 2 specification: Total Fat <0.5%",
+        "Appendix 2 representative CoA showing 0.35% fat"
+      ],
+      "citations": [
+        {
+          "pageNumber": 14,
+          "excerpt": "Fat was not measured as part of the five batch analyses but has been shown in other analyses to meet the specification of not more than 0.5% on a dry weight basis (Appendix 2, data in Table 4).",
+          "section": "2.4 Specifications and Identity"
+        },
+        {
+          "pageNumber": 15,
+          "excerpt": "Total Fat NMT 0.5% - - - - - [all five batches blank]",
+          "section": "Table 3. Results of 5-batch Analysis of Plantible's LLP"
+        }
+      ],
+      "gapType": "documentation_gap",
+      "domain": "identity and characterization",
+      "confidence": "high",
+      "category": "identity_characterization",
+      "evidenceRole": "supportive",
+      "availability": "private",
+      "supportingMaterial": "Appendix 2 representative CoA",
+      "targetMaterial": "Lemna Leaf Protein (LLP)",
+      "testArticle": null,
+      "bridgeAssessment": "unknown"
+    },
+    {
+      "id": "literature-search-methodology-not-described",
+      "severity": "minor",
+      "title": "Literature search methodology not explicitly described in the notice body",
+      "summary": "The notice references a comprehensive review of safety data and states that GRN 742 'included an extensive global literature search on the potential allergenicity of water lentils.' The allergenicity assessment (Appendix 6) describes specific database searches with search strings and date ranges (2018–October 2022). However, the main narrative does not describe the search strategy, databases, date ranges, or search terms used to identify the safety literature reviewed in Part VI. The self-limiting nature of the literature review methodology is not transparent for the main safety narrative.",
+      "recommendedAction": "Include a description of the literature search methodology used for the main safety narrative (Part VI), including databases searched, search terms, date ranges, and criteria for inclusion or exclusion of studies, consistent with the level of detail provided in the allergenicity assessment.",
+      "evidence": [
+        "Allergenicity assessment (Appendix 6) describes search methodology",
+        "Main narrative (Part VI) does not describe search methodology"
+      ],
+      "citations": [
+        {
+          "pageNumber": 45,
+          "excerpt": "GRN 742 included an extensive global literature search on the potential allergenicity of water lentils and water lentil proteins, and no publications were found that indicated that there was an allergenicity issue.",
+          "section": "6.4.4 Allergenicity"
+        },
+        {
+          "pageNumber": 219,
+          "excerpt": "Three scientific and biomedical literature databases were searched for publications that might discuss the potential allergenicity of Lemna minor. Searches used either the single search string {(lemna OR duckweed) AND (safety OR allergen)} or multiple searches without the Boolean operators. Papers published from 2018 to October 2022 were evaluated to update the information presented in GRN 742.",
+          "section": "Appendix 6 Allergenicity Assessment"
+        }
+      ],
+      "gapType": "documentation_gap",
+      "domain": "general availability",
+      "confidence": "medium",
+      "category": "general_availability",
+      "evidenceRole": "context",
+      "availability": "unknown",
+      "supportingMaterial": null,
+      "targetMaterial": "Lemna Leaf Protein (LLP)",
+      "testArticle": null,
+      "bridgeAssessment": "unknown"
+    }
+  ],
+  "evidenceMatrix": [
+    {
+      "id": "identity-composition",
+      "domain": "identity and characterization",
+      "requirement": "Identity, source, composition, and specifications",
+      "status": "present",
+      "assessment": "LLP is well characterized as a protein isolate from Lemna minor leaves. Taxonomic classification, botanical description, CAS number for Rubisco, protein content (≥80% as-is, ~60% Rubisco by SDS-PAGE), amino acid profile, mineral composition, and food-grade specifications are documented. Specifications cover proximate composition, heavy metals, microbiology, and oxalic acid.",
+      "evidenceSummary": "Table 2 (specifications), Table 4 (representative composition), Table 6 (amino acid profile), Section 2.3 (taxonomy), Section 2.7 (nutritional composition including Rubisco characterization).",
+      "citations": [
+        {
+          "pageNumber": 14,
+          "excerpt": "LLP is standardized to not less than 80% protein on an 'as is' basis. The other major components are ash and fiber, and a small amount of fat.",
+          "section": "2.4 Specifications and Identity"
+        },
+        {
+          "pageNumber": 19,
+          "excerpt": "Plantible's Lemna protein product is a highly purified protein product containing a minimum of 80% protein, of which 60% is Rubisco protein as confirmed through SDS PAGE analysis.",
+          "section": "2.7 Nutritional Composition"
+        }
+      ],
+      "unresolvedQuestions": [],
+      "relatedFindingIds": ["fat-not-measured-five-batch"]
+    },
+    {
+      "id": "manufacturing",
+      "domain": "manufacturing process",
+      "requirement": "Process description and process-related controls",
+      "status": "present",
+      "assessment": "The manufacturing process is described at a functional level: hydroponic cultivation in enclosed greenhouses with potable water, harvest every 2–3 days, maceration, green fraction separation, purification of white fraction using CaCl2 coagulation, 0.2 µm microfiltration, 70 kDa ultrafiltration, and drying. cGMP and HACCP compliance are stated. Figure 2 provides a schematic. The description is adequate for a GRAS notice, though process-related residuals (e.g., calcium chloride) are not quantified in the finished product.",
+      "evidenceSummary": "Section 2.5 and Figure 2 describe the extraction and purification process. Expert panel statement (Appendix 7) reiterates key process steps including filtration.",
+      "citations": [
+        {
+          "pageNumber": 16,
+          "excerpt": "As part of the purification process, a covalent cation (e.g., calcium chloride) is used to coagulate the chlorophyll. The LLP product is manufactured consistent with current Good Manufacturing Practices (cGMPs) and Risk-based Preventive Controls. Further, Plantible's extraction process incorporates both a 0.2μm microfiltration step as well as an ultrafiltration step using a 70kDa membrane to ensure that contaminants as well as heavy metals are removed from the protein composition prior to drying.",
+          "section": "2.5 Manufacturing Process"
+        }
+      ],
+      "unresolvedQuestions": [
+        "Residual calcium chloride or other processing aids in finished product not quantified.",
+        "Process-related impurity profile not compared to LENTEIN™ Complete."
+      ],
+      "relatedFindingIds": ["test-article-bridge-protein-purity-process", "batch4-apc-exceedance"]
+    },
+    {
+      "id": "specifications-batch-analysis",
+      "domain": "identity and characterization",
+      "requirement": "Specifications and representative batch results",
+      "status": "weak",
+      "assessment": "Five-batch analysis is provided (Table 3, Appendix 1) covering proximate composition, heavy metals, microbiology, and oxalic acid. However, total fat was not measured in any of the five batches, and Batch 4 exceeded the aerobic plate count specification (22,000 vs. <15,000 CFU/g) without narrative explanation. These two issues prevent a fully clean demonstration of specification conformance across the batch set.",
+      "evidenceSummary": "Table 3 and Appendix 1 CoAs for five non-consecutive lots. Appendix 2 provides a representative compositional CoA including fat.",
+      "citations": [
+        {
+          "pageNumber": 15,
+          "excerpt": "Aerobic plate count <15,000 CFU/g ... 22,000 CFU/g [Batch 4, Lot P030122C1]",
+          "section": "Table 3. Results of 5-batch Analysis of Plantible's LLP"
+        },
+        {
+          "pageNumber": 14,
+          "excerpt": "Fat was not measured as part of the five batch analyses but has been shown in other analyses to meet the specification of not more than 0.5% on a dry weight basis (Appendix 2, data in Table 4).",
+          "section": "2.4 Specifications and Identity"
+        }
+      ],
+      "unresolvedQuestions": [
+        "Why was total fat omitted from all five batch analyses?",
+        "What is the explanation and disposition for the Batch 4 APC exceedance?"
+      ],
+      "relatedFindingIds": ["batch4-apc-exceedance", "fat-not-measured-five-batch"]
+    },
+    {
+      "id": "intended-uses-exposure",
+      "domain": "dietary exposure",
+      "requirement": "Intended uses, use levels, and dietary exposure",
+      "status": "present",
+      "assessment": "Intended food categories and use levels are specified in Table 9. A WWEIA-based EDI assessment (Appendix 3, Regulatory Connections LLC) using NHANES 2017–2020 pre-pandemic data provides mean and 90th percentile intakes by age group. The 90th percentile for users aged 2+ is 61.1 g/day (1.0 g/kg bw/day). The methodology, including FNDDS recipe fractionation, is documented. Infant formula and USDA-regulated products are excluded.",
+      "evidenceSummary": "Table 9 (use levels), Table 10 (EDI summary), Appendix 3 (full EDI report with methodology, food code mapping, and results tables).",
+      "citations": [
+        {
+          "pageNumber": 28,
+          "excerpt": "For the 2+ age group, the 90th percentile consumption by users is 61.1 g/day or 1.0 g/kg bw/day. The highest intake on a body weight basis is for ages 1-5, which was 2.7 g/kg bw/day.",
+          "section": "3.2.1 Estimated Daily Intake from the Intended Uses"
+        }
+      ],
+      "unresolvedQuestions": [],
+      "relatedFindingIds": []
+    },
+    {
+      "id": "public-pivotal-safety-evidence",
+      "domain": "safety data",
+      "requirement": "Public availability and peer review of pivotal evidence",
+      "status": "weak",
+      "assessment": "The Mankai 90-day study (Kawamata et al. 2020, Toxicology Reports) is publicly available and peer-reviewed. The human clinical studies (Zeinstra 2019, Mes 2022a, 2022b) are peer-reviewed. However, the pivotal nonclinical studies for LLP—the acute oral and 90-day rat studies with LENTEIN™ Complete—are described as contained in GRN 742 Appendix O and are not identified as published in peer-reviewed literature. Their availability status is unknown. Because these studies form the primary rodent toxicology foundation, their non-established public status is material.",
+      "evidenceSummary": "Kawamata et al. 2020 (peer-reviewed); Mes et al. 2022a, 2022b (peer-reviewed); Zeinstra et al. 2019 (peer-reviewed); LENTEIN™ Complete acute and 90-day studies (GRN 742 Appendix O, publication status unknown).",
+      "citations": [
+        {
+          "pageNumber": 37,
+          "excerpt": "GRN 742 Part 3 Appendix O contains excerpts of the toxicology safety studies conducted with the similar protein extract, LENTEIN™ Complete.",
+          "section": "6.3.3 Toxicology/safety and Feeding Studies"
+        }
+      ],
+      "unresolvedQuestions": [
+        "Are the LENTEIN™ Complete acute and 90-day rat studies published in peer-reviewed literature?"
+      ],
+      "relatedFindingIds": ["pivotal-tox-studies-publication-status"]
+    },
+    {
+      "id": "independent-evidence-synthesis",
+      "domain": "cross-cutting",
+      "requirement": "Specific incorporation and independent conclusions",
+      "status": "weak",
+      "assessment": "The notice identifies GRN 742 as the source of incorporated safety data and explains the compositional basis for the read-across. However, the safety data are incorporated by reference to GRN 742 pages rather than through independent study-level evaluation, and the expert panel's conclusion is explicitly framed as based on 'substantial equivalence' to LENTEIN™ Complete with FDA's no-objection letter cited as a key anchor. An independent conclusion is stated, but the analytical pathway relies on the prior notice's outcome rather than an independent synthesis of the underlying evidence.",
+      "evidenceSummary": "Section 6.1 incorporation statement; Table 11 compositional similarity table; Appendix 7 expert panel statement citing substantial equivalence and FDA no-objection letter.",
+      "citations": [
+        {
+          "pageNumber": 32,
+          "excerpt": "Therefore, the safety data for Lemna protein powder (GRN 742 pages 61 to 106) are incorporated by reference into this document for Plantible's LLP.",
+          "section": "6.1 Introduction"
+        },
+        {
+          "pageNumber": 222,
+          "excerpt": "The evaluation of LLP was largely based on its substantial equivalence to another Lemna protein product, LENTEIN TM Complete, described in GRN 742. FDA issued a \"No Objections\" letter to GRN 742 on August 22, 2018.",
+          "section": "Appendix 7 Expert Panel Consensus Statement"
+        }
+      ],
+      "unresolvedQuestions": [
+        "Does the notice perform an independent study-level evaluation of the GRN 742 toxicology studies, or does it rely on FDA's prior no-objection as a safety determination?"
+      ],
+      "relatedFindingIds": ["grn742-incorporation-independence"]
+    },
+    {
+      "id": "test-article-comparability",
+      "domain": "cross-cutting",
+      "requirement": "Target/test-article bridge",
+      "status": "weak",
+      "assessment": "The notice provides a compositional comparison (Table 11) and discusses the similarity in amino acid profiles and source species. The bridge is supported for protein identity (both Lemna-derived, Rubisco-rich) and heavy metal/oxalic acid specifications. However, the bridge is not fully developed for: (1) the substantially different protein purity (80–89% dw vs. 39–55% dw); (2) the distinct extraction process (ultrafiltration/microfiltration vs. thermal washing); (3) impurity and process-residual profiles; and (4) whether the higher protein concentration in LLP changes the effective dose of co-extracted minor components at proposed use levels.",
+      "evidenceSummary": "Table 11 compositional comparison; Section 2.5 manufacturing process; Section 6.1 bridge rationale; Appendix 7 expert panel bridge statement.",
+      "citations": [
+        {
+          "pageNumber": 32,
+          "excerpt": "Plantible has reviewed all safety data included in GRN 742 and has determined that these safety data are also applicable to Plantible's LLP product as the products are compositionally very similar as shown in Table 11. Both products are an extracted and purified form of Lemna protein.",
+          "section": "6.1 Introduction"
+        }
+      ],
+      "unresolvedQuestions": [
+        "Does the ultrafiltration/microfiltration process alter the impurity or minor-component profile relative to LENTEIN™ Complete's thermal washing process?",
+        "Is the effective dose of any co-extracted component changed by LLP's higher protein purity at proposed use levels?"
+      ],
+      "relatedFindingIds": [
+        "test-article-bridge-protein-purity-process",
+        "grn742-incorporation-independence"
+      ]
+    },
+    {
+      "id": "self-contained-literature-search",
+      "domain": "general availability",
+      "requirement": "Search methods, scope, and unfavorable information",
+      "status": "weak",
+      "assessment": "The notice reviews a substantial body of literature on duckweed safety, nutrition, and regulatory status. Unfavorable information (EFSA's manganese concerns for LENTEIN™ Complete and Mankai, EFSA's lower NOAEL for the Mankai study) is acknowledged and addressed. However, the search methodology for the main safety narrative is not described (databases, search terms, date ranges). The allergenicity assessment (Appendix 6) provides explicit search methodology. The absence of a described search strategy for the main narrative limits transparency and reproducibility of the literature review.",
+      "evidenceSummary": "Part VI narrative reviews extensive literature; EFSA opinions acknowledged; Appendix 6 provides explicit search methodology for allergenicity; no equivalent methodology section for main safety literature review.",
+      "citations": [
+        {
+          "pageNumber": 8,
+          "excerpt": "Plantible certifies that, to the best of its knowledge, this GRAS conclusion is based on a complete, representative, and balanced dossier that includes all relevant information, available and obtainable by Plantible, including any favorable or unfavorable information.",
+          "section": "1.9 Certification"
+        }
+      ],
+      "unresolvedQuestions": [
+        "What databases, search terms, and date ranges were used for the main safety literature review in Part VI?"
+      ],
+      "relatedFindingIds": ["literature-search-methodology-not-described"]
+    },
+    {
+      "id": "allergenicity-assessment",
+      "domain": "safety data",
+      "requirement": "Protein allergenicity and cross-reactivity",
+      "status": "present",
+      "assessment": "A dedicated allergenicity assessment (Appendix 6) was conducted by Dr. Steven Gendel, an independent food allergy expert. The assessment covers taxonomic considerations (Lemna unrelated to common food allergens), morphological considerations (vegetative reproduction, no seed/nut proteins), proteomics database searches (four allergen databases, NCBI protein database—514 Lemna minor sequences, none annotated as allergens), literature review (2018–October 2022, no relevant publications found), review of prior regulatory conclusions (GRN 742, EFSA 2021a, 2021b), and consumer exposure data (CAERS search, no adverse reports). The conclusion is that LLP presents no significant food allergy risk. This is a thorough, independently conducted assessment.",
+      "evidenceSummary": "Appendix 6 allergenicity assessment by Dr. Steven Gendel; GRN 742 allergenicity review by Dr. Steven Taylor; EFSA 2021a and 2021b opinions; CAERS search; four allergen database searches; NCBI protein database search.",
+      "citations": [
+        {
+          "pageNumber": 218,
+          "excerpt": "There is no available evidence indicating that Lemna Leaf Protein (LLP) from Lemna minor presents a significant food allergy risk either for currently food-allergic individuals or for the development of new food allergies.",
+          "section": "Appendix 6 Allergenicity Assessment"
+        },
+        {
+          "pageNumber": 45,
+          "excerpt": "Plantible also sought the opinion of a food allergy expert, Dr. Steve Gendel. Dr. Gendel reviewed previous regulatory conclusions and the published literature since 2018 and found no new relevant publications that would alter those conclusions.",
+          "section": "6.4.4 Allergenicity"
+        }
+      ],
+      "unresolvedQuestions": [],
+      "relatedFindingIds": []
+    }
+  ],
+  "researchReferences": [
+    {
+      "id": "ref_001",
+      "title": "Nutritional value of the duckweed species of the genus Wolffia (Lemnaceae) as human food",
+      "source": "Frontiers in Chemistry",
+      "year": "2018",
+      "relevance": "Characterizes nutritional composition (protein, fat, amino acids, minerals, carotenoids) of Wolffia/Lemnaceae species relevant to duckweed safety and nutritional profile supporting LLP GRAS assessment",
+      "evidence": "Cited to support nutritional composition data for Lemnaceae species including protein content (20-30% freeze-dry weight), fatty acid profile (>60% PUFA), essential amino acids, and mineral content; used to support cross-species compositional comparisons",
+      "authors": [
+        "Appenroth K-J.",
+        "Sowjanya Sree K.",
+        "Bog M.",
+        "Ecker J.",
+        "Seeliger C.",
+        "Böhm V.",
+        "Lorkowski S."
+      ],
+      "doi": "",
+      "url": "",
+      "citation": "Appenroth, K-J., Sowjanya Sree, K., Bog, M., Ecker, J., Seeliger, C., Böhm, V., Lorkowski, S. et al. (2018). Nutritional value of the duckweed species of the genus Wolffia (Lemnaceae) as human food. Frontiers in Chemistry, 6:483.",
+      "origin": "notifier_cited",
+      "verificationStatus": "extracted_unverified",
+      "citedPages": [21, 22, 24, 224, 228]
+    },
+    {
+      "id": "ref_002",
+      "title": "The global mass and average rate of rubisco",
+      "source": "PNAS",
+      "year": "2019",
+      "relevance": "Provides quantitative estimate of global Rubisco mass and distribution, supporting the characterization of Rubisco as the most abundant protein on earth and its ubiquitous presence in terrestrial plant leaves",
+      "evidence": "Cited to establish that Rubisco is the most abundant protein on earth (~0.7 Gt total mass) and that >90% is found in leaves of terrestrial plants, accounting for ~3% of total leaf mass; supports safety rationale based on ubiquitous human dietary exposure",
+      "authors": ["Bar-On Y.M.", "Milo R."],
+      "doi": "10.1073/pnas.1816654116",
+      "url": "www.pnas.org/cgi/doi/10.1073/pnas.1816654116",
+      "citation": "Bar-On, Y.M, & Milo, R. (2019). The global mass and average rate of rubisco. PNAS, 116(10):4738–4743.",
+      "origin": "notifier_cited",
+      "verificationStatus": "extracted_unverified",
+      "citedPages": [34, 225, 228]
+    },
+    {
+      "id": "ref_003",
+      "title": "Genotoxicity and repeated-dose toxicity evaluation of dried Wolffia globosa Mankai",
+      "source": "Toxicology Reports",
+      "year": "2020",
+      "relevance": "Pivotal toxicology study providing genotoxicity (Ames, in vitro micronucleus) and 90-day repeated-dose OECD 408 rat study data for closely related Lemnaceae species Wolffia globosa (Mankai), establishing NOAEL and absence of genotoxicity",
+      "evidence": "Cited as key nonclinical safety data: Ames assay and in vitro micronucleus test showed no genotoxicity; 90-day rat study at 0, 5, 10, 20% dietary levels showed NOAEL of 20% (w/w) (13.16/15.03 g/kg/day males/females); minor hematology/urinalysis findings not toxicologically significant; EFSA set NOAEL at middle dose (6.5 g/kg bw/day), still 8-16x above estimated human exposure",
+      "authors": [
+        "Kawamata Y.",
+        "Shibui Y.",
+        "Takumi A.",
+        "Seki T.",
+        "Shimada T.",
+        "Hashimoto M.",
+        "Inoue N.",
+        "Kobayashi H.",
+        "Narita T."
+      ],
+      "doi": "",
+      "url": "",
+      "citation": "Kawamata, Y., Shibui, Y., Takumi, A., Seki, T., Shimada, T., Hashimoto, M., Inoue, N., Kobayashi, H., & Narita, T. (2020). Genotoxicity and repeated-dose toxicity evaluation of dried Wolffia globosa Mankai. Toxicology Reports, 7:1233-1241.",
+      "origin": "notifier_cited",
+      "verificationStatus": "extracted_unverified",
+      "citedPages": [225, 228]
+    },
+    {
+      "id": "ref_004",
+      "title": "Postprandial amino acid, glucose and insulin responses among healthy adults after a single intake of Lemna minor in comparison with green peas: A randomised trial",
+      "source": "Journal of Nutritional Science",
+      "year": "2019",
+      "relevance": "Human clinical study directly with Lemna minor demonstrating postprandial safety and nutritional response; cited as evidence of safe human consumption and protein bioavailability of duckweed",
+      "evidence": "Cited as clinical evidence of safe consumption of Lemna minor in humans; used to support history of use and human safety data; also cited in context of up to 170 g fresh duckweed leaf per day consumed short-term with no adverse effects",
+      "authors": [
+        "Zeinstra G.G.",
+        "Somhorst D.",
+        "Oosterink E.",
+        "Fick H.",
+        "Klopping-Ketelaars I.",
+        "van der Meer I.M.",
+        "Mes J.J."
+      ],
+      "doi": "10.1017/jns.2019.26",
+      "url": "",
+      "citation": "Zeinstra, G.G., Somhorst, D., Oosterink, E., Fick, H., Klopping-Ketelaars, I., van der Meer, I.M., & Mes, J.J. (2019). Postprandial amino acid, glucose and insulin responses among healthy adults after a single intake of Lemna minor in comparison with green peas: A randomised trial. Journal of Nutritional Science, 8,(e28, page 1 of 11). doi:10.1017/jns.2019.26",
+      "origin": "notifier_cited",
+      "verificationStatus": "extracted_unverified",
+      "citedPages": [62, 224, 225, 230]
+    },
+    {
+      "id": "ref_005",
+      "title": "A controlled human intervention trial to study protein quality by amino acid uptake kinetics with the novel Lemna protein concentrate as case study",
+      "source": "International Journal of Food Sciences and Nutrition",
+      "year": "2022",
+      "relevance": "Human clinical intervention trial with Lemna protein concentrate assessing protein quality and amino acid bioavailability, providing direct human safety and nutritional data for Lemna protein",
+      "evidence": "Cited as post-GRN 742 clinical study supporting human safety; part of body of clinical studies showing consumption of duckweed with no adverse effects and potential health benefits",
+      "authors": [
+        "Mes J.J.",
+        "Esser D.",
+        "Oosterink E.",
+        "van den Dool R.T.M.",
+        "Engel J.",
+        "de Jong G.A.H.",
+        "Wehrens R.",
+        "van der Meer I.M."
+      ],
+      "doi": "10.1080/09637486.2021.1960958",
+      "url": "",
+      "citation": "Mes, J.J., Esser, D., Oosterink, E., van den Dool, R.T.M., Engel, J., de Jong, G.A.H., Wehrens, R. & van der Meer, I.M. (2022a). A controlled human intervention trial to study protein quality by amino acid uptake kinetics with the novel Lemna protein concentrate as case study. International Journal of Food Sciences and Nutrition, 73(2):251-262. DOI: 10.1080/09637486.2021.1960958",
+      "origin": "notifier_cited",
+      "verificationStatus": "extracted_unverified",
+      "citedPages": [225, 228, 229]
+    },
+    {
+      "id": "ref_006",
+      "title": "Daily intake of Lemna minor or spinach as vegetable does not show significant difference on health parameters and taste preference",
+      "source": "Plant Foods for Human Nutrition",
+      "year": "2022",
+      "relevance": "Long-term human clinical study comparing daily Lemna minor intake to spinach, providing safety data on repeated human consumption with health biomarker monitoring",
+      "evidence": "Cited as clinical evidence supporting safe long-term consumption; part of body of clinical studies showing up to 100 g duckweed plant per day on 18-month basis with no adverse effects and potential health benefits",
+      "authors": [
+        "Mes J.J.",
+        "Esser D.",
+        "Somhorst D.",
+        "Oosterink E.",
+        "van der Haarl S.",
+        "Ummel M.",
+        "Siebelink E.",
+        "van der Mee I.M."
+      ],
+      "doi": "10.1007/s11130-022-00952-9",
+      "url": "",
+      "citation": "Mes, J.J., Esser, D., Somhorst, D., Oosterink, E., van der Haarl, S., Ummel, M., Siebelink, E., & van der Mee., I.M. (2022b). Daily intake of Lemna minor or spinach as vegetable does not show significant difference on health parameters and taste preference. Plant Foods for Human Nutrition, 77:11–127. https://doi.org/10.1007/s11130-022-00952-9",
+      "origin": "notifier_cited",
+      "verificationStatus": "extracted_unverified",
+      "citedPages": [225, 229]
+    },
+    {
+      "id": "ref_007",
+      "title": "Effect of green-Mediterranean diet on intrahepatic fat: the DIRECT PLUS randomised controlled trial",
+      "source": "Gut",
+      "year": "2021",
+      "relevance": "Human randomized controlled trial including Wolffia globosa (Mankai) duckweed as part of green-Mediterranean diet, providing clinical safety and health outcome data relevant to duckweed consumption in humans",
+      "evidence": "Cited as additional clinical study post-GRN 742 supporting human safety of duckweed consumption; part of body of evidence for human clinical studies with Mankai duckweed",
+      "authors": [
+        "Yaskolka Meir A.",
+        "Rinott E.",
+        "Tsaban G.",
+        "Zelicha H.",
+        "Kaplan A.",
+        "Rosen P.",
+        "Shelef I.",
+        "Youngster I.",
+        "Shalev A.",
+        "Bluher M.",
+        "Ceglarek U.",
+        "Stumvoll M.",
+        "Tuohy K.",
+        "Diotallevi C.",
+        "Vrhovsek U.",
+        "Hu F.",
+        "Stampfer M.",
+        "Shair I."
+      ],
+      "doi": "10.1136/gutjnl-2020-323106",
+      "url": "",
+      "citation": "Yaskolka Meir, A. Rinott, E., Tsaban, G., Zelicha, H., Kaplan, A., Rosen, P., Shelef, I., Youngster, I., Shalev, A., Bluher, M., Ceglarek, U., Stumvoll, M., Tuohy, K., Diotallevi, C., Vrhovsek, U., Hu, F., Stampfer, M., & Shair, I. (2021). Effect of green-Mediterranean diet on intrahepatic fat: the DIRECT PLUS randomised controlled trial. Gut, 70:2085–2095. doi:10.1136/gutjnl-2020-323106",
+      "origin": "notifier_cited",
+      "verificationStatus": "extracted_unverified",
+      "citedPages": [225, 230]
+    },
+    {
+      "id": "ref_008",
+      "title": "Duckweed for human nutrition: No cytotoxic and anti-proliferative effects on human cell lines",
+      "source": "Plant Foods for Human Nutrition",
+      "year": "2019",
+      "relevance": "In vitro safety study testing extracts from seven duckweed species including Lemna minor for cytotoxicity and anti-proliferative activity on human cell lines, providing nonclinical safety data",
+      "evidence": "Cited as in vitro nonclinical safety evidence; extracts from seven duckweed species (including L. minor) tested on HUVEC, K-562, and HeLa cell lines showed no detectable anti-proliferative or cytotoxic effects",
+      "authors": [
+        "Sree K.S.",
+        "Dahse H.M.",
+        "Chandran J.N.",
+        "Schneider B.",
+        "Jahreis G.",
+        "Appenroth K.J."
+      ],
+      "doi": "",
+      "url": "",
+      "citation": "Sree, K.S., Dahse, H.M., Chandran, J.N., Schneider, B., Jahreis, G., & Appenroth, K.J. (2019). Duckweed for human nutrition: No cytotoxic and anti-proliferative effects on human cell lines. Plant Foods Hum Nutr, 74(2):223-4.",
+      "origin": "notifier_cited",
+      "verificationStatus": "extracted_unverified",
+      "citedPages": [225, 229]
+    },
+    {
+      "id": "ref_009",
+      "title": "Analyzing pepsin degradation assay conditions used for allergenicity assessments to ensure that pepsin susceptible and pepsin resistant dietary proteins are distinguishable",
+      "source": "PLoS ONE",
+      "year": "2017",
+      "relevance": "Methodological reference for allergenicity assessment; cited to support the conclusion that Rubisco's rapid pepsin degradation at low pH indicates low allergenic potential",
+      "evidence": "Cited in allergenicity and Rubisco safety sections to support the principle that potential allergenicity of a protein is linked with resistance to degradation by proteases such as pepsin; Rubisco is known to be rapidly and completely degraded at low pH in the presence of pepsin",
+      "authors": [
+        "Wang R.",
+        "Edrington T.C.",
+        "Storrs S.B.",
+        "Crowley K.S.",
+        "Ward J.M.",
+        "Lee T.C."
+      ],
+      "doi": "10.1371/journal.pone.0171926",
+      "url": "",
+      "citation": "Wang, R., Edrington, T.C., Storrs, S.B., Crowley, K.S., Ward, J.M., Lee, T.C., et al. (2017). Analyzing pepsin degradation assay conditions used for allergenicity assessments to ensure that pepsin susceptible and pepsin resistant dietary proteins are distinguishable. PLoS ONE, 12(2): e0171926. doi:10.1371/journal.pone.0171926",
+      "origin": "notifier_cited",
+      "verificationStatus": "extracted_unverified",
+      "citedPages": [34, 225, 229]
+    },
+    {
+      "id": "ref_010",
+      "title": "EFSA Technical Report on the notification of fresh plants of Wolffia arrhiza and Wolffia globosa as a traditional food from a third country pursuant to Article 14 of Regulation (EU) 2015/2283",
+      "source": "EFSA supporting publication",
+      "year": "2021",
+      "relevance": "Authoritative regulatory review by EFSA confirming no safety objections to Wolffia (closely related Lemnaceae genus) as traditional food, supporting the regulatory acceptability and safety of Lemnaceae for human consumption",
+      "evidence": "Cited as regulatory evidence that EFSA recognized fresh Wolffia plants as traditional food from a third country and confirmed cultivation under vertical farming conditions does not raise safety concerns; used to support history of safe use and regulatory status of duckweed",
+      "authors": [],
+      "doi": "10.2903/sp.efsa.2021.EN-6658",
+      "url": "",
+      "citation": "EFSA (European Food Safety Authority). (2021a). Technical Report on the notification of fresh plants of Wolffia arrhiza and Wolffia globosa as a traditional food from a third country pursuant to Article 14 of Regulation (EU) 2015/2283. EFSA supporting publication 2021:EN-6658. 15 pp. doi:10.2903/sp.efsa.2021.EN-6658",
+      "origin": "notifier_cited",
+      "verificationStatus": "extracted_unverified",
+      "citedPages": [10, 201, 224, 228]
+    },
+    {
+      "id": "ref_011",
+      "title": "Scientific Opinion on the safety of Wolffia globosa powder as a Novel food pursuant to Regulation (EU) 2015/2283",
+      "source": "EFSA Journal",
+      "year": "2021",
+      "relevance": "Authoritative EFSA scientific opinion evaluating safety of Wolffia globosa (Mankai) powder as novel food, including review of 90-day toxicity study and manganese safety concern; directly relevant to safety assessment of closely related Lemnaceae protein products",
+      "evidence": "Cited as regulatory safety review; EFSA reviewed Kawamata et al. 2020 90-day study and set NOAEL at middle dose (6.5 g/kg bw/day); EFSA raised manganese safety concern for whole duckweed products but this is addressed in LLP by lower manganese levels; also cited for allergenicity discussion noting protein content could allow allergic reactions but no specific Lemna allergenicity concern",
+      "authors": [],
+      "doi": "10.2903/j.efsa.2021.6938",
+      "url": "https://doi.org/10.2903/j.efsa.2021.6938",
+      "citation": "EFSA NDA Panel (EFSA Panel on Nutrition, Novel Foods, Food Allergens), Turck D, et al. (2021). Scientific Opinion on the safety of Wolffia globosa powder as a Novel food pursuant to Regulation (EU) 2015/2283. EFSA Journal 2021;19(12):6938, 25 pp. https://doi.org/10.2903/j.efsa.2021.6938",
+      "origin": "notifier_cited",
+      "verificationStatus": "extracted_unverified",
+      "citedPages": [203, 204, 219, 225, 226, 228]
+    },
+    {
+      "id": "ref_012",
+      "title": "Scientific Opinion on the safety of water lentil powder from Lemnaceae as a Novel Food pursuant to Regulation (EU) 2015/2283",
+      "source": "EFSA Journal",
+      "year": "2021",
+      "relevance": "Authoritative EFSA scientific opinion on Parabel water lentil powder (same substance as GRN 742 comparator), evaluating safety including manganese concern; directly relevant to regulatory context and safety data for Lemnaceae protein products",
+      "evidence": "Cited as regulatory review of Parabel's water lentil powder novel food application; EFSA concluded manganese intake from the novel food is of safety concern; this is addressed in LLP by significantly lower manganese levels (12.4 vs 245 ppm in LENTEIN Complete)",
+      "authors": [],
+      "doi": "10.2903/j.efsa.2021.6845",
+      "url": "https://doi.org/10.2903/j.efsa.2021.6845",
+      "citation": "EFSA NDA Panel (EFSA Panel on Nutrition, Novel Foods and Food Allergens), Turck D, et al. (2021). Scientific Opinion on the safety of water lentil powder from Lemnaceae as a Novel Food pursuant to Regulation (EU) 2015/2283. EFSA Journal 2021;19(11):6845, 25 pp. https://doi.org/10.2903/j.efsa.2021.6845",
+      "origin": "notifier_cited",
+      "verificationStatus": "extracted_unverified",
+      "citedPages": [202, 219]
+    },
+    {
+      "id": "ref_013",
+      "title": "Taxonomy of duckweeds (Lemnaceae), potential new crop plants",
+      "source": "Emirates Journal of Food and Agriculture",
+      "year": "2016",
+      "relevance": "Authoritative taxonomic reference for Lemnaceae family classification, species identification, and nomenclature updates; used to establish identity and taxonomic classification of source organism Lemna minor",
+      "evidence": "Cited throughout for taxonomic classification of duckweed species, updates to nomenclature, characterization and identification of new species, and to note that earlier articles may have mis-characterized duckweed species; foundational identity reference for the filing",
+      "authors": ["Sree K.S.", "Bog M.", "Appenroth K.J."],
+      "doi": "10.9755/ejfa.2016-01-038",
+      "url": "",
+      "citation": "Sree, K.S., Bog, M., & Appenroth, K.J. (2016). Taxonomy of duckweeds (Lemnaceae), potential new crop plants. Emir. J. Food Agric., 28:291–302. doi: 10.9755/ejfa.2016-01-038",
+      "origin": "notifier_cited",
+      "verificationStatus": "extracted_unverified",
+      "citedPages": [10, 12, 223, 224, 229]
+    },
+    {
+      "id": "ref_014",
+      "title": "Concentration of metabolizable energy and digestibility of energy, phosphorus, and amino acids in lemna protein concentrate fed to growing pigs",
+      "source": "Journal of Animal Science",
+      "year": "2014",
+      "relevance": "Animal feeding study providing digestibility data for Lemna protein concentrate in pigs, used to estimate PDCAAS for LLP and support nutritional value and safety inferences",
+      "evidence": "Cited to provide standard ileal digestibility data for Lemna leaf protein concentrate in pigs (mean 81.70% for all amino acids); used to estimate PDCAAS of LLP at approximately 1.14; also cited as peripheral animal safety data supporting human safety inference",
+      "authors": ["Rojas O.J.", "Liu Y.", "Stein H.H."],
+      "doi": "",
+      "url": "",
+      "citation": "Rojas, O. J., Liu, Y., & Stein, H. H. (2014). Concentration of metabolizable energy and digestibility of energy, phosphorus, and amino acids in lemna protein concentrate fed to growing pigs. Journal of Animal Science, 92(11):5222-5229.",
+      "origin": "notifier_cited",
+      "verificationStatus": "extracted_unverified",
+      "citedPages": [22, 225, 229]
+    },
+    {
+      "id": "ref_015",
+      "title": "Rubiscolytics: fate of Rubisco after its enzymatic function in a cell is terminated",
+      "source": "Journal of Experimental Botany",
+      "year": "2008",
+      "relevance": "Review characterizing Rubisco as the predominant protein in photosynthesizing plant parts and most abundant protein on earth; cited to support the ubiquitous nature of Rubisco and its proportion of soluble leaf protein, underpinning the safety rationale for LLP",
+      "evidence": "Cited to establish that Rubisco accounts for 50% of soluble leaf protein in C3 plants and 30% in C4 plants; supports characterization of Rubisco as ubiquitous dietary protein consumed by all humans from leafy plants, and that no adverse effects have been attributed to its consumption",
+      "authors": ["Feller U.", "Anders I.", "Mae T."],
+      "doi": "10.1093/jxb/erm242",
+      "url": "",
+      "citation": "Feller U., Anders, I., & Mae, T. (2008). Rubiscolytics: fate of Rubisco after its enzymatic function in a cell is terminated. Journal of Experimental Botany, 59(7): 1615–24. doi:10.1093/jxb/erm242. PMID 17975207",
+      "origin": "notifier_cited",
+      "verificationStatus": "extracted_unverified",
+      "citedPages": [34, 225, 228]
+    }
+  ],
+  "safetySignals": [
+    {
+      "id": "efsa-noael-margin-signal",
+      "label": "EFSA-revised NOAEL yields reduced margin of exposure",
+      "level": "watch",
+      "summary": "EFSA reassessed the Kawamata et al. (2020) Mankai 90-day rat study and set the NOAEL at 6.5 g/kg bw/day for males, lower than the study authors' 13.16 g/kg bw/day. The notice uses the authors' NOAEL in its margin calculation (8–16-fold over GRN 742 exposure). Using EFSA's NOAEL and LLP's 90th percentile EDI of 1.0 g/kg bw/day, the margin is approximately 6.5-fold. The notice acknowledges EFSA's position but does not recalculate or discuss adequacy of this reduced margin. This is a documented authoritative disagreement on NOAEL that affects the quantitative safety margin for the primary subchronic study.",
+      "evidence": [
+        "Kawamata et al. 2020 Mankai 90-day study",
+        "EFSA 2021b scientific opinion (NOAEL 6.5 g/kg bw/day for males)",
+        "LLP 90th percentile EDI 1.0 g/kg bw/day (2+ years)"
+      ],
+      "citations": [
+        {
+          "pageNumber": 38,
+          "excerpt": "EFSA said, 'A number of significant findings were seen in the urinalysis, haematology, blood chemistry and organ weights, in the animals fed with the NF. Most of these findings were considered as treatment-related, but the mode of action cannot be explained... the Panel considers the middle dose tested for males (i.e., 6.5 g/kg bw per day) as the overall no observed adverse effect level (NOAEL) of this study'.",
+          "section": "6.3.3 Toxicology/safety and Feeding Studies"
+        }
+      ]
+    },
+    {
+      "id": "batch4-apc-exceedance-signal",
+      "label": "Out-of-specification aerobic plate count in Batch 4",
+      "level": "watch",
+      "summary": "Batch 4 (Lot P030122C1) had an aerobic plate count of 22,000 CFU/g, exceeding the specification of <15,000 CFU/g. This is a documented specification exceedance in the only batch dataset presented. No root cause, corrective action, or batch disposition is provided. While a single exceedance in five batches may not indicate a systemic issue, the absence of any explanation prevents assessment of manufacturing control adequacy.",
+      "evidence": [
+        "Table 3 five-batch analysis (Batch 4 APC = 22,000 CFU/g)",
+        "Appendix 1 Certificate of Analysis for Batch 4"
+      ],
+      "citations": [
+        {
+          "pageNumber": 15,
+          "excerpt": "Aerobic plate count <15,000 CFU/g ... 22,000 CFU/g [Batch 4, Lot P030122C1]",
+          "section": "Table 3. Results of 5-batch Analysis of Plantible's LLP"
+        }
+      ]
+    },
+    {
+      "id": "manganese-lentein-efsa-context",
+      "label": "Manganese safety concern for related products distinguished but not fully bridged",
+      "level": "clear",
+      "summary": "EFSA could not establish safety for LENTEIN™ Complete and Mankai powder primarily due to manganese levels (128–333 ppm and 59.6–292 ppm, respectively). LLP's average manganese is 11.4 ppm, and the notice calculates that the 90th percentile EDI would contribute 10 µg Mn/kg bw/day, well within the US tolerable upper intake level of 11 mg/day for adults. The notice provides a quantitative comparison that effectively distinguishes LLP from the EFSA-flagged products. This signal is resolved for LLP based on the documented compositional difference and exposure calculation.",
+      "evidence": [
+        "LLP average Mn: 11.4 ppm (Appendix 2)",
+        "LENTEIN™ Complete Mn: 128–333 ppm (EFSA 2021b)",
+        "Mankai Mn: 59.6–292 ppm (EFSA 2021c)",
+        "IOM tolerable upper intake: 11 mg/day for adults"
+      ],
+      "citations": [
+        {
+          "pageNumber": 40,
+          "excerpt": "In contrast, the average Mn level in LLP is 11.4 ppm (Appendix 2). At the 90th percentile EDI of 61.1g of LLP/day this would equate to an additional consumption of 10 μg Mn/kg bw/day.",
+          "section": "6.3.3 Presence and Safety of Minor Components"
+        }
+      ]
+    }
+  ],
+  "analyzedPages": [
+    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26,
+    27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50,
+    51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74,
+    75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98,
+    99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117,
+    118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136,
+    137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155,
+    156, 157, 158, 159, 160, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 212, 218, 219, 220,
+    221, 222, 223, 224, 225, 226, 227, 228, 229, 230
+  ],
+  "truncated": true,
+  "modelProvider": "anthropic/claude-sonnet-4-6"
+}

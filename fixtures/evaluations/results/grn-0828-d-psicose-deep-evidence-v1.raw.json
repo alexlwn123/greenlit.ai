@@ -1,0 +1,809 @@
+{
+  "summary": "GRN 828 is a resubmission by Samyang Corp. for D-allulose (D-psicose) produced using a non-GMO Microbacterium foliorum enzyme system, distinguishing it from the prior GRN 693 which used a GMO Corynebacterium glutamicum system. The notice is well-structured and draws on a substantial body of published animal and human safety data. The primary evidentiary strategy is incorporation by reference of GRNs 400, 498, and 693 for the bulk of the safety database, supplemented by new studies published between December 2016 and October 2018 and by unpublished production-organism toxicology. The key cross-cutting issues are: (1) the notice explicitly incorporates prior GRNs by reference without reproducing or independently analyzing the underlying studies, relying instead on FDA's prior 'no question' outcomes; (2) one pivotal acute toxicity study of Samyang's own D-allulose (Lee, 2017) is unpublished and private; (3) the production-organism toxicology package (Kim et al., 2018) is listed as published but its availability status is not confirmed in the notice; (4) the test-article bridge between D-allulose produced by M. foliorum and the material studied in the incorporated prior-GRN safety database is partially but not fully articulated; and (5) the exposure assessment is adopted wholesale from GRN 693 with a noted typographical correction. Specifications and batch data for three product forms are present and adequate. Allergenicity is addressed implicitly through removal of residual protein and DNA. No adverse safety signals are identified in the reviewed literature.",
+  "filingProfile": {
+    "substanceName": "D-allulose (D-psicose)",
+    "notifier": "Samyang Corp. (agent: NutraSource, Inc.)",
+    "status": "GRAS Notice GRN 828, submitted November 20, 2018",
+    "substanceType": "carbohydrate",
+    "productionMethod": "enzymatic",
+    "sourceOrganismType": "bacterium",
+    "sourceOrganismName": "Microbacterium foliorum SYG27B-MF (non-GMO)",
+    "intendedUses": [
+      "sugar substitute in bakery products",
+      "non-alcoholic beverages",
+      "cereals",
+      "chewing gum",
+      "confections and frostings",
+      "frozen dairy desserts",
+      "yogurt and frozen yogurt",
+      "dressings for salads",
+      "gelatins, pudding, and fillings",
+      "hard and soft candies",
+      "jams and jellies",
+      "sugar",
+      "sugar substitutes",
+      "sweet sauces and syrups",
+      "fat-based creams"
+    ],
+    "targetPopulation": "General population aged 2 years and older; excludes infant formula and USDA-regulated meat/poultry/egg products",
+    "grasBasis": "Scientific procedures",
+    "safetyDataAvailable": [
+      "acute oral toxicity studies in rats and dogs",
+      "subchronic toxicity studies in rats and dogs",
+      "chronic toxicity study in rats",
+      "genotoxicity/mutagenicity studies (Ames, micronucleus, chromosome aberration)",
+      "human clinical studies",
+      "animal efficacy studies",
+      "metabolism studies",
+      "production organism safety studies"
+    ],
+    "dietaryExposureMethod": "NHANES 2011-2014 food consumption data; patterned food use model at maximum use levels; naturally occurring EDI estimated from Oshima et al. 2006"
+  },
+  "findings": [
+    {
+      "id": "incorporation-independent-conclusions-prior-grns",
+      "severity": "major",
+      "title": "Safety database incorporated by reference from GRNs 400, 498, and 693 without independent analysis of underlying studies",
+      "summary": "The notice states that 'the metabolism, safety data, and other pertinent information discussed in GRN 400, 498, and 693 are applicable to the safety of D-allulose in this GRAS notice. The information is hereby incorporated by reference to these documents and will not be discussed in detail.' The notice does not reproduce, summarize, or independently evaluate the underlying studies from those prior notices. It relies on FDA's prior 'no question' outcomes as a proxy for safety conclusions rather than performing its own analysis of the incorporated evidence. While the prior GRNs are publicly accessible, the notice does not identify which specific studies are being incorporated, explain their individual roles, or state an independent conclusion derived from reviewing those studies directly.",
+      "recommendedAction": "Identify each study incorporated from GRNs 400, 498, and 693 by citation, describe its role (pivotal or supportive), and provide an independent synthesis of what those studies collectively establish about D-allulose safety under the current conditions of use and with the current production organism.",
+      "evidence": [
+        "Incorporation by reference of GRNs 400, 498, and 693 safety databases",
+        "No independent analysis of incorporated studies",
+        "Reliance on FDA prior 'no question' outcomes as safety conclusions"
+      ],
+      "citations": [
+        {
+          "pageNumber": 24,
+          "excerpt": "the metabolism, safety data, and other pertinent information discussed in GRN 400, 498, and 693 are applicable to the safety of D-allulose in this GRAS notice. The information is hereby incorporated by reference to these documents and will not be discussed in detail.",
+          "section": "6.C. Review of Safety Data"
+        }
+      ],
+      "gapType": "adequacy_gap",
+      "domain": "cross-cutting",
+      "confidence": "high",
+      "category": "incorporation_independent_conclusions",
+      "evidenceRole": "pivotal",
+      "availability": "public_not_peer_reviewed",
+      "supportingMaterial": "GRN 400, GRN 498, GRN 693",
+      "targetMaterial": "D-allulose produced by non-GMO M. foliorum",
+      "testArticle": null,
+      "bridgeAssessment": "partial"
+    },
+    {
+      "id": "unpublished-pivotal-acute-toxicity-samyang",
+      "severity": "major",
+      "title": "Sole acute toxicity study of Samyang's non-GMO M. foliorum-produced D-allulose is unpublished and private",
+      "summary": "The only acute toxicity study conducted on D-allulose produced specifically by Samyang's non-GMO M. foliorum system (Lee, 2017) is listed in Section 7.B as data not generally available. This study is the primary direct safety evidence linking the current production organism and process to the test article. Because it is unpublished and private, it cannot be independently evaluated by qualified experts, which is a requirement for the common-knowledge element of a GRAS determination based on scientific procedures. The notice does not identify any published substitute that directly tests D-allulose from this specific production system.",
+      "recommendedAction": "Either publish the Lee (2017) acute toxicity study in a peer-reviewed journal or provide a detailed, publicly available summary sufficient for independent expert evaluation. Alternatively, provide a fully supported scientific bridge demonstrating that published acute toxicity data on D-allulose from other production systems are applicable to the M. foliorum-produced material.",
+      "evidence": [
+        "Lee 2017 acute toxicity study listed as not generally available",
+        "Only direct safety study of Samyang non-GMO M. foliorum D-allulose",
+        "Section 7.B explicitly identifies this as non-public data"
+      ],
+      "citations": [
+        {
+          "pageNumber": 42,
+          "excerpt": "7.B. Data and Information are Not Generally Available\nReports issued by Lee, 2017. A single-dose oral gavage toxicity study of D-allulose in rats",
+          "section": "7.B. Data and Information are Not Generally Available"
+        },
+        {
+          "pageNumber": 24,
+          "excerpt": "In addition, there is one unpublished study of Samyang Corp.'s D-allulose produced using a non-GMO microorganism, M. foliorum (Table 9).",
+          "section": "6.C.2. Animal Toxicity Studies"
+        }
+      ],
+      "gapType": "evidentiary_gap",
+      "domain": "safety data",
+      "confidence": "high",
+      "category": "public_pivotal_evidence",
+      "evidenceRole": "pivotal",
+      "availability": "private",
+      "supportingMaterial": "Lee, 2017 (unpublished)",
+      "targetMaterial": "D-allulose produced by non-GMO M. foliorum",
+      "testArticle": "D-allulose, single dose 5 g/kg bw, Sprague-Dawley rats",
+      "bridgeAssessment": "missing"
+    },
+    {
+      "id": "test-article-bridge-production-organism-change",
+      "severity": "major",
+      "title": "Bridge between M. foliorum-produced D-allulose and the prior safety database is asserted but not fully documented",
+      "summary": "GRN 828 introduces a new non-GMO production organism (M. foliorum SYG27B-MF) replacing the GMO Corynebacterium glutamicum used in GRN 693. The notice asserts that 'since the specifications for the liquid and powder forms of D-allulose in this notice are similar to those described in previous GRAS notices, the metabolism, safety data, and other pertinent information discussed in GRN 400, 498, and 693 are applicable.' However, the notice does not provide a structured comparative analysis of: (a) impurity profiles between the two production systems, (b) residual enzyme or organism-derived components, or (c) any compositional differences attributable to the change in production organism. The similarity assertion rests on specification comparisons alone without a side-by-side compositional analysis of material produced by M. foliorum versus the prior GMO systems.",
+      "recommendedAction": "Provide a structured test-article bridge document comparing D-allulose produced by M. foliorum to material from prior GRNs across identity, composition, impurity profile (including organism-derived residues), and processing conditions. Demonstrate that the final product composition is equivalent or explain why any differences are toxicologically insignificant.",
+      "evidence": [
+        "New non-GMO production organism M. foliorum vs. prior GMO C. glutamicum",
+        "Bridge asserted on specification similarity alone",
+        "No side-by-side impurity or compositional comparison across production systems"
+      ],
+      "citations": [
+        {
+          "pageNumber": 24,
+          "excerpt": "Since the specifications for the liquid and powder forms of D-allulose in this notice are similar to those described in previous GRAS notices, the metabolism, safety data, and other pertinent information discussed in GRN 400, 498, and 693 are applicable to the safety of D-allulose in this GRAS notice.",
+          "section": "6.C. Review of Safety Data"
+        },
+        {
+          "pageNumber": 11,
+          "excerpt": "Current notice – non-genetically modified organism (non-GMO) production microorganism\nThe neutralized fructose syrup is passed into an immobilized cell system (calcium alginate gel bead) with non-GMO Microbacterium foliorum (non-viable cell) having D-allulose 3-epimerase.",
+          "section": "2.B. Method of Manufacture"
+        }
+      ],
+      "gapType": "adequacy_gap",
+      "domain": "cross-cutting",
+      "confidence": "high",
+      "category": "test_article_bridge",
+      "evidenceRole": "pivotal",
+      "availability": "unknown",
+      "supportingMaterial": "GRN 693 (GMO C. glutamicum), GRN 400, GRN 498",
+      "targetMaterial": "D-allulose produced by non-GMO M. foliorum",
+      "testArticle": "D-allulose produced by GMO C. glutamicum (GRN 693) and other prior systems",
+      "bridgeAssessment": "partial"
+    },
+    {
+      "id": "production-organism-safety-publication-status",
+      "severity": "major",
+      "title": "Publication status of Kim et al. (2018) production-organism toxicology package is not confirmed in the notice",
+      "summary": "The notice relies on Kim et al. (2018) for the entire battery of M. foliorum SYG27B-MF safety studies (acute oral gavage, 90-day subchronic, in vivo micronucleus, bacterial reverse mutation, and in vitro chromosome aberration). The notice cites this as 'Kim HJ, Lee AW, Park CJ. Toxicological evaluation of Microbacterium foliorum. Regul Toxicol Pharmacol. 2018:100, 16-24' in the reference list, suggesting peer-reviewed publication. However, the notice does not explicitly confirm that this paper was published and publicly available at the time of submission (November 2018), and the volume/page citation format is consistent with a 2018 publication. The notice does not list this study in Section 7.B (not generally available), which implies it is considered public, but this is not affirmatively stated.",
+      "recommendedAction": "Confirm in the notice that Kim et al. (2018) was published and publicly available as of the submission date, and provide the full citation including DOI or access information to establish its status as public peer-reviewed evidence.",
+      "evidence": [
+        "Kim et al. 2018 cited for all M. foliorum toxicology studies",
+        "Not listed in Section 7.B (not generally available)",
+        "Publication status not affirmatively confirmed in notice text"
+      ],
+      "citations": [
+        {
+          "pageNumber": 32,
+          "excerpt": "This test evaluated the toxicity of repeated oral administration of the test substance SYG27B-MF (Kim et al., 2018).",
+          "section": "6.C.5.2. Subchronic Toxicity Study of M. foliorum SYG27B-MF in Rats"
+        },
+        {
+          "pageNumber": 39,
+          "excerpt": "Kim HJ, Lee AW, Park CJ. Toxicological evaluation of Microbacterium foliorum. Regul Toxicol Pharmacol. 2018:100, 16-24.",
+          "section": "7.A. Data and Information are Generally Available"
+        }
+      ],
+      "gapType": "documentation_gap",
+      "domain": "safety data",
+      "confidence": "medium",
+      "category": "public_pivotal_evidence",
+      "evidenceRole": "pivotal",
+      "availability": "unknown",
+      "supportingMaterial": "Kim et al., 2018, Regul Toxicol Pharmacol",
+      "targetMaterial": "M. foliorum SYG27B-MF production organism",
+      "testArticle": "M. foliorum SYG27B-MF",
+      "bridgeAssessment": "unknown"
+    },
+    {
+      "id": "exposure-assessment-adopted-from-grn693",
+      "severity": "minor",
+      "title": "Exposure assessment adopted wholesale from GRN 693 with only a typographical correction noted",
+      "summary": "The notice states that 'the intended use of D-allulose is in the same food products and at the same use levels as those described in GRN 693' and that EDI values 'are the same as those described in GRN 693.' The notice acknowledges a typographical error in GRN 693 (bakery products level noted as 10-100% instead of 10%) and confirms EDI calculations were based on 10%. The exposure assessment uses NHANES 2011-2014 data. While the adoption of the prior assessment is reasonable given identical use conditions, the notice does not reproduce the methodology, assumptions, or food consumption data underlying the EDI calculations, making independent verification difficult without access to GRN 693.",
+      "recommendedAction": "Include a summary of the EDI methodology, key assumptions, and food consumption data sources sufficient for independent evaluation, or provide an explicit cross-reference to the specific pages of GRN 693 where the full methodology is documented.",
+      "evidence": [
+        "EDI assessment adopted from GRN 693",
+        "Typographical error in GRN 693 bakery level acknowledged and corrected",
+        "NHANES 2011-2014 dataset referenced but methodology not reproduced"
+      ],
+      "citations": [
+        {
+          "pageNumber": 18,
+          "excerpt": "The intended use of D-allulose is in the same food products and at the same use levels as those described in GRN 693. The results of the EDI assessment are summarized in Tables 6-1 and 6-2.",
+          "section": "3.A. Exposure Estimates for D-Allulose Under the Intended Use"
+        },
+        {
+          "pageNumber": 7,
+          "excerpt": "In GRN 693, the level was accidently noted as 10-100%, instead of 10%. EDI calculations were based on 10%.",
+          "section": "1.C.2. Levels of Use in Such Foods"
+        }
+      ],
+      "gapType": "documentation_gap",
+      "domain": "dietary exposure",
+      "confidence": "medium",
+      "category": "dietary_exposure",
+      "evidenceRole": "supportive",
+      "availability": "public_not_peer_reviewed",
+      "supportingMaterial": "GRN 693 exposure assessment",
+      "targetMaterial": "D-allulose",
+      "testArticle": null,
+      "bridgeAssessment": "unknown"
+    },
+    {
+      "id": "allergenicity-residual-protein-documentation",
+      "severity": "minor",
+      "title": "Allergenicity addressed implicitly through residual protein removal but no formal allergenicity assessment is presented",
+      "summary": "The notice documents removal of residual microorganism, residual DNA (confirmed by PCR), and biogenic amines. Protein specifications are set at ≤1% for all three product forms, and batch data show protein levels of 0.08-0.11% in crystalline product. However, the notice does not include a formal allergenicity assessment addressing whether M. foliorum or its enzyme (D-allulose 3-epimerase) shares homology with known allergens, nor does it address the allergenic potential of residual fructose-derived proteins in the syrup products. The implicit reliance on low residual protein levels as the sole allergenicity control is not accompanied by a structured assessment.",
+      "recommendedAction": "Include a formal allergenicity assessment addressing sequence homology of M. foliorum proteins and D-allulose 3-epimerase to known allergens, and confirm that residual protein levels in all three product forms are below thresholds of concern for sensitization or elicitation.",
+      "evidence": [
+        "Residual DNA confirmed absent by PCR",
+        "Protein specification ≤1% for all product forms",
+        "No formal allergenicity or homology assessment presented",
+        "Biogenic amine analysis conducted and negative"
+      ],
+      "citations": [
+        {
+          "pageNumber": 10,
+          "excerpt": "Any residual microorganism used in the immobilized cell system, if there are any, is efficiently removed by the purification step. The absence of the microorganism and residual protein in the ingredient is also supported by the analysis of residual DNA in batches of the final ingredient.",
+          "section": "2.A.2. Potential Toxicants in the Source of the Notified Substance"
+        },
+        {
+          "pageNumber": 15,
+          "excerpt": "Protein, %, wt/wt ≤1 ≤1 ≤1 AOAC 945.23 0.01",
+          "section": "Table 5. Specifications"
+        }
+      ],
+      "gapType": "documentation_gap",
+      "domain": "identity and characterization",
+      "confidence": "medium",
+      "category": "identity_characterization",
+      "evidenceRole": "supportive",
+      "availability": "unknown",
+      "supportingMaterial": null,
+      "targetMaterial": "D-allulose (all three product forms)",
+      "testArticle": null,
+      "bridgeAssessment": "unknown"
+    }
+  ],
+  "evidenceMatrix": [
+    {
+      "id": "identity-composition",
+      "domain": "identity and characterization",
+      "requirement": "Identity, source, composition, and specifications",
+      "status": "present",
+      "assessment": "The notice provides full chemical identity (CAS, empirical formula, molecular weight, structural formula), biological source, three product forms with composition tables for five non-consecutive batches each, and a specifications table with analytical methods and limits of detection. HPLC identity confirmation against a reference standard is included.",
+      "evidenceSummary": "Chemical identity fully documented. Three product forms (≥98% crystalline, ≥90% syrup, ≥10% syrup) with five-lot batch data and specifications table covering purity, moisture, protein, fat, ash, heavy metals, and microbial parameters. HPLC chromatogram comparison to Carbosynth standard provided.",
+      "citations": [
+        {
+          "pageNumber": 9,
+          "excerpt": "D-allulose is a monosaccharide, an epimer of D-fructose isomerized at C-3 (Karabinos, 1952). D-allulose has 70% of the sweetness of sucrose and has a higher solubility that makes it easy to use for food processing.",
+          "section": "2.A.1.7. Background"
+        },
+        {
+          "pageNumber": 14,
+          "excerpt": "Table 4-1. Composition of Product 1 (≥ 98% Crystalline D-Allulose)\nAllulose*, % 99.93 99.59 99.80 99.70 99.79 99.76",
+          "section": "2.C. Composition and Specifications of D-Allulose"
+        }
+      ],
+      "unresolvedQuestions": [],
+      "relatedFindingIds": ["allergenicity-residual-protein-documentation"]
+    },
+    {
+      "id": "manufacturing",
+      "domain": "manufacturing process",
+      "requirement": "Process description and process-related controls",
+      "status": "present",
+      "assessment": "An eight-step manufacturing process is described in detail, including enzymatic epimerization conditions, decolorization, ion exchange purification, chromatographic separation, concentration, and crystallization. Raw materials and processing aids are listed with CAS numbers. GMP and HACCP compliance are stated. Ion exchange resins are noted to comply with 21 CFR 173.25.",
+      "evidenceSummary": "Detailed step-by-step manufacturing narrative, flow diagram (Figure 2), raw materials table (Table 3), GMP/HACCP statement, and food-grade processing aid confirmation provided.",
+      "citations": [
+        {
+          "pageNumber": 12,
+          "excerpt": "D-allulose is manufactured from fructose in an aqueous solution by enzymatic epimerization in the presence of manganese sulfate or magnesium sulfate. The enzyme used is an immobilized Microbacterium foliorum harboring D-allulose-3-epimerase, which converts D-fructose to D-allulose.",
+          "section": "2.B. Method of Manufacture"
+        },
+        {
+          "pageNumber": 13,
+          "excerpt": "Samyang Corp.'s D-allulose is manufactured under Good Manufacturing Practices (GMP) using common food industry materials and processes in accordance with the applicable parts of 21 CFR, part 110 of the Code of Federal Regulations.",
+          "section": "2.B. Method of Manufacture"
+        }
+      ],
+      "unresolvedQuestions": [],
+      "relatedFindingIds": ["test-article-bridge-production-organism-change"]
+    },
+    {
+      "id": "specifications-batch-analysis",
+      "domain": "identity and characterization",
+      "requirement": "Specifications and representative batch results",
+      "status": "present",
+      "assessment": "Table 5 provides specifications for all three product forms with analytical methods and limits of detection. Tables 4-1 through 4-3 provide five non-consecutive batch results for each product form covering purity, moisture, protein, fat, ash, heavy metals, and microbial parameters. All reported values are within specifications.",
+      "evidenceSummary": "Specifications table with AOAC and HPLC methods for 14 parameters across three product forms. Five-lot batch data for each form. Certificate of Analysis referenced in Appendix A.",
+      "citations": [
+        {
+          "pageNumber": 14,
+          "excerpt": "Analysis of 5 non-consecutive batches of D-allulose ingredients demonstrated that the manufacturing process produces consistent products that are in compliance with the established specifications.",
+          "section": "2.C. Composition and Specifications of D-Allulose"
+        },
+        {
+          "pageNumber": 15,
+          "excerpt": "Table 5. Specifications of Crystalline D-Allulose and D-Allulose Syrups\nAllulose*, %, wt/wt ≥98 ≥90 ≥10 HPLC 0.01",
+          "section": "Table 5"
+        }
+      ],
+      "unresolvedQuestions": [],
+      "relatedFindingIds": []
+    },
+    {
+      "id": "intended-uses-exposure",
+      "domain": "dietary exposure",
+      "requirement": "Intended uses, use levels, and dietary exposure",
+      "status": "present",
+      "assessment": "Table 1 lists 17 food categories with maximum use levels (2-100% w/w). EDI calculations using NHANES 2011-2014 are presented for multiple population subgroups in g/day and g/kg bw/day at mean and 90th percentile. Background dietary exposure from naturally occurring D-allulose is estimated. A typographical error from GRN 693 is acknowledged and corrected.",
+      "evidenceSummary": "Use levels table, EDI tables (Tables 6-1 and 6-2) for six population groups, background exposure estimate from Oshima et al. (2006), and comparison to tolerable intake levels. Methodology adopted from GRN 693 without full reproduction.",
+      "citations": [
+        {
+          "pageNumber": 18,
+          "excerpt": "The mean and 90th percentile EDIs of all users aged 2 years and older were 11.0 and 30.0 g/person/day, respectively. All users had EDIs equal to or below 0.5 g/kg bw/day.",
+          "section": "3.A. Exposure Estimates for D-Allulose Under the Intended Use"
+        }
+      ],
+      "unresolvedQuestions": [
+        "Full EDI methodology and food consumption assumptions not reproduced; requires access to GRN 693 for independent verification."
+      ],
+      "relatedFindingIds": ["exposure-assessment-adopted-from-grn693"]
+    },
+    {
+      "id": "public-pivotal-safety-evidence",
+      "domain": "safety data",
+      "requirement": "Public availability and peer review of pivotal evidence",
+      "status": "weak",
+      "assessment": "The pivotal chronic toxicity study (Yagi and Matsuo, 2009) and 90-day subchronic study (Matsuo et al., 2012) are published in peer-reviewed journals and listed in Section 7.A. The human maximum tolerable dose study (Iida et al., 2007) is also listed as generally available. However, the sole acute toxicity study of Samyang's own non-GMO M. foliorum-produced D-allulose (Lee, 2017) is explicitly listed in Section 7.B as not generally available, and it is the only direct safety evidence for the current production system's product. The publication status of the production-organism toxicology package (Kim et al., 2018) is not affirmatively confirmed in the notice text despite appearing in Section 7.A.",
+      "evidenceSummary": "Most pivotal published safety studies are in Section 7.A. Lee (2017) acute toxicity study of current production system's D-allulose is private. Kim et al. (2018) production-organism battery is cited with journal reference but availability not affirmatively confirmed.",
+      "citations": [
+        {
+          "pageNumber": 42,
+          "excerpt": "7.B. Data and Information are Not Generally Available\nReports issued by Lee, 2017. A single-dose oral gavage toxicity study of D-allulose in rats",
+          "section": "7.B. Data and Information are Not Generally Available"
+        },
+        {
+          "pageNumber": 38,
+          "excerpt": "Yagi K, Matsuo T. The study on long-term toxicity of D-allulose in rats. J Clin Biochem Nutr. 2009;45:271-77.",
+          "section": "7.A. Data and Information are Generally Available"
+        }
+      ],
+      "unresolvedQuestions": [
+        "Is Kim et al. (2018) confirmed as published and publicly available as of November 2018 submission date?",
+        "Can the Lee (2017) acute toxicity study be made publicly available or replaced by a published equivalent?"
+      ],
+      "relatedFindingIds": [
+        "unpublished-pivotal-acute-toxicity-samyang",
+        "production-organism-safety-publication-status"
+      ]
+    },
+    {
+      "id": "independent-evidence-synthesis",
+      "domain": "cross-cutting",
+      "requirement": "Specific incorporation and independent conclusions",
+      "status": "weak",
+      "assessment": "The notice identifies GRNs 400, 498, and 693 as the sources of incorporated safety information and provides URLs for each. However, it does not identify the specific studies incorporated, explain their individual roles, or perform an independent analysis of the incorporated evidence. The safety conclusion relies on FDA's prior 'no question' outcomes rather than an independent synthesis of the underlying data. New studies (2016-2018) are reviewed independently and their findings are described, but the bulk of the safety database is not independently evaluated.",
+      "evidenceSummary": "Prior GRNs identified by number and URL. Incorporation by reference stated explicitly. New studies reviewed with individual summaries. No independent analysis of incorporated prior-GRN studies. Safety conclusion references FDA prior decisions.",
+      "citations": [
+        {
+          "pageNumber": 24,
+          "excerpt": "The information is hereby incorporated by reference to these documents and will not be discussed in detail. We have focused the review on literature that has been published since the FDA's review of GRNs 400, 498, and 693",
+          "section": "6.C. Review of Safety Data"
+        },
+        {
+          "pageNumber": 36,
+          "excerpt": "In the previous GRAS notices (GRNs 400, 498, and 693) to the FDA, the safety of D-allulose has been established in animal toxicity studies and mutagenicity studies, and is further supported by human clinical studies.",
+          "section": "6.D. Safety Determination"
+        }
+      ],
+      "unresolvedQuestions": [
+        "Which specific studies from GRNs 400, 498, and 693 are being incorporated and what is each study's role in the safety determination?",
+        "What is the notifier's independent conclusion from reviewing those studies, separate from FDA's prior decisions?"
+      ],
+      "relatedFindingIds": ["incorporation-independent-conclusions-prior-grns"]
+    },
+    {
+      "id": "test-article-comparability",
+      "domain": "cross-cutting",
+      "requirement": "Target/test-article bridge",
+      "status": "weak",
+      "assessment": "The notice identifies the change in production organism (non-GMO M. foliorum vs. prior GMO C. glutamicum) and provides specifications showing similar composition. The bridge is asserted on the basis of specification similarity. However, no structured comparative analysis of impurity profiles, organism-derived residues, or processing-related differences between the current and prior production systems is provided. The notice documents removal of residual organism and DNA but does not compare these parameters to prior GRN materials.",
+      "evidenceSummary": "Production organism change documented. Specification similarity asserted. Residual organism and DNA removal documented. No side-by-side compositional or impurity comparison between M. foliorum and prior GMO production systems.",
+      "citations": [
+        {
+          "pageNumber": 24,
+          "excerpt": "Since the specifications for the liquid and powder forms of D-allulose in this notice are similar to those described in previous GRAS notices, the metabolism, safety data, and other pertinent information discussed in GRN 400, 498, and 693 are applicable to the safety of D-allulose in this GRAS notice.",
+          "section": "6.C. Review of Safety Data"
+        },
+        {
+          "pageNumber": 11,
+          "excerpt": "Differences in enzyme systems described in various GRNs\nGRN 693 - Samyang Corp. The neutralized fructose syrup is passed into an immobilized cell system (calcium alginate gel bead) with recombinant Corynebacterium glutamicum (non-viable cell) harboring D-allulose 3-epimerase from Clostridium scindens.",
+          "section": "2.B. Method of Manufacture"
+        }
+      ],
+      "unresolvedQuestions": [
+        "Are there any compositional or impurity differences between D-allulose produced by M. foliorum and by prior GMO systems that could affect safety?",
+        "Has a side-by-side analytical comparison been conducted?"
+      ],
+      "relatedFindingIds": [
+        "test-article-bridge-production-organism-change",
+        "incorporation-independent-conclusions-prior-grns"
+      ]
+    },
+    {
+      "id": "self-contained-literature-search",
+      "domain": "safety data",
+      "requirement": "Search methods, scope, and unfavorable information",
+      "status": "weak",
+      "assessment": "The notice describes a literature review covering papers published between December 2016 and October 2018, supplementing prior GRN reviews. It states exclusion criteria (mixture studies excluded). Section 6.F states no information inconsistent with GRAS determination is known. However, the notice does not describe the databases searched, search terms used, or a systematic methodology for the literature review. The scope of the search for the incorporated prior-GRN literature is not described at all.",
+      "evidenceSummary": "Time-bounded literature review described (Dec 2016-Oct 2018). Exclusion criteria stated. No search database, terms, or systematic methodology described. Unfavorable information section present but brief.",
+      "citations": [
+        {
+          "pageNumber": 24,
+          "excerpt": "We have focused the review on literature that has been published since the FDA's review of GRNs 400, 498, and 693 (GRN 400, FDA, 2012; GRN 498, FDA, 2014; GRN 693, FDA, 2017), i.e., papers published between December 2016 and October 2018.",
+          "section": "6.C. Review of Safety Data"
+        },
+        {
+          "pageNumber": 37,
+          "excerpt": "We are not aware of information that would be considered inconsistent with the finding that the proposed use of D-allulose preparations in foods and beverages, meeting appropriate specifications, is GRAS.",
+          "section": "6.F. Discussion of Information Inconsistent with GRAS Determination"
+        }
+      ],
+      "unresolvedQuestions": [
+        "What databases and search terms were used for the 2016-2018 literature review?",
+        "Was a systematic search conducted for the incorporated prior-GRN literature base?"
+      ],
+      "relatedFindingIds": []
+    },
+    {
+      "id": "allergenicity-assessment",
+      "domain": "identity and characterization",
+      "requirement": "Protein allergenicity and cross-reactivity where applicable",
+      "status": "weak",
+      "assessment": "The notice documents removal of residual production organism, residual protein (specification ≤1%, batch data 0.08-0.21%), and residual DNA by validated PCR. Biogenic amine analysis is negative. However, no formal allergenicity assessment addressing sequence homology of M. foliorum proteins or D-allulose 3-epimerase to known allergens is presented. The implicit control relies on low residual protein levels without a structured allergenicity evaluation.",
+      "evidenceSummary": "Residual organism removal documented. Residual DNA confirmed absent by PCR. Protein specifications and batch data provided. No formal allergenicity or homology assessment.",
+      "citations": [
+        {
+          "pageNumber": 10,
+          "excerpt": "The absence of the microorganism and residual protein in the ingredient is also supported by the analysis of residual DNA in batches of the final ingredient. The absence of residual DNA from the microorganism is confirmed by validated PCR methods.",
+          "section": "2.A.2. Potential Toxicants in the Source of the Notified Substance"
+        }
+      ],
+      "unresolvedQuestions": [
+        "Does M. foliorum or its D-allulose 3-epimerase share sequence homology with known food allergens?",
+        "Are residual protein levels in syrup products below thresholds of concern for sensitization?"
+      ],
+      "relatedFindingIds": ["allergenicity-residual-protein-documentation"]
+    }
+  ],
+  "researchReferences": [
+    {
+      "id": "ref_001",
+      "title": "Estimation of maximum non-effective level of D-allulose in causing diarrhea in human subjects",
+      "source": "J Adv Food Ingred",
+      "year": "2007",
+      "relevance": "Establishes the maximum tolerable dose of D-allulose in humans (0.5 g/kg bw/day for males, 0.6 g/kg bw/day for females); used as the key human safety threshold throughout the filing",
+      "evidence": "Cited as the basis for the human NOAEL/maximum tolerable level used in the safety determination; referenced in sections 6.C.4.2 and 6.D",
+      "authors": [
+        "Iida T",
+        "Kishimoto Y",
+        "Yoshikawa Y",
+        "Okuma K",
+        "Yagi K",
+        "Matsuo T",
+        "Izumori K"
+      ],
+      "doi": "",
+      "url": "",
+      "citation": "Iida T, Kishimoto Y, Yoshikawa Y, Okuma K, Yagi K, Matsuo T, Izumori K. Estimation of maximum non-effective level of D-allulose in causing diarrhea in human subjects. J Adv Food Ingred. 2007;10:15-19.",
+      "origin": "notifier_cited",
+      "verificationStatus": "extracted_unverified",
+      "citedPages": [31, 32, 35, 38]
+    },
+    {
+      "id": "ref_002",
+      "title": "The study on long-term toxicity of D-allulose in rats",
+      "source": "J Clin Biochem Nutr",
+      "year": "2009",
+      "relevance": "Provides the chronic (12-18 month) NOAEL of 1,280 mg/kg bw/day in rats, the highest level tested; used as the pivotal chronic toxicity anchor for the safety determination",
+      "evidence": "Cited as the basis for the chronic NOAEL used in the safety determination; referenced in Table 9 and section 6.C.2.2",
+      "authors": ["Yagi K", "Matsuo T"],
+      "doi": "",
+      "url": "",
+      "citation": "Yagi K, Matsuo T. The study on long-term toxicity of D-allulose in rats. J Clin Biochem Nutr. 2009;45:271-77.",
+      "origin": "notifier_cited",
+      "verificationStatus": "extracted_unverified",
+      "citedPages": [25, 26, 40]
+    },
+    {
+      "id": "ref_003",
+      "title": "The 90-day oral toxicity of D-allulose in male Wistar rats",
+      "source": "J Clin Biochem Nutr",
+      "year": "2012",
+      "relevance": "Provides the 90-day subchronic NOAEL of 3% in diet (highest level tested) in rats; key subchronic toxicity anchor for the safety determination",
+      "evidence": "Cited in Table 9 and section 6.C.2.2 as the subchronic NOAEL study; referenced in the safety determination summary",
+      "authors": ["Matsuo T", "Ishii R", "Shirai Y"],
+      "doi": "",
+      "url": "",
+      "citation": "Matsuo T, Ishii R, Shirai Y. The 90-day oral toxicity of D-allulose in male Wistar rats. J Clin Biochem Nutr. 2012;50:158-61.",
+      "origin": "notifier_cited",
+      "verificationStatus": "extracted_unverified",
+      "citedPages": [25, 26, 39]
+    },
+    {
+      "id": "ref_004",
+      "title": "Effects of oral acute administration and subchronic feeding of several levels of D-psicose in rats",
+      "source": "J Nutr Sci Vitaminol",
+      "year": "2002",
+      "relevance": "Provides acute LD50 (16.3 g/kg bw) and subacute (34-day) NOAEL (up to 20% in diet) in rats; foundational acute and subacute toxicity data cited across all prior GRNs and this notice",
+      "evidence": "Cited in Table 9 and section 6.C.2.2 for LD50 and subacute NOAEL; referenced in safety determination",
+      "authors": ["Matsuo T", "Tanaka T", "Hashiguchi M", "Izumori K", "Suzuki H"],
+      "doi": "",
+      "url": "",
+      "citation": "Matsuo T, Tanaka T, Hashiguchi M, Izumori K, Suzuki H. Effects of oral acute administration and subchronic feeding of several levels of D-psicose in rats. J Nutr Sci Vitaminol. 2002;48:512-16.",
+      "origin": "notifier_cited",
+      "verificationStatus": "extracted_unverified",
+      "citedPages": [25, 26, 39]
+    },
+    {
+      "id": "ref_005",
+      "title": "Toxicological evaluation of Microbacterium foliorum",
+      "source": "Regul Toxicol Pharmacol",
+      "year": "2018",
+      "relevance": "Provides the complete toxicological safety dossier for the non-GMO production organism M. foliorum SYG27B-MF, including acute, subchronic, micronucleus, Ames, and chromosome aberration studies; central to the production organism safety section",
+      "evidence": "Cited in sections 6.C.5.1 through 6.C.5.5 as the source for all five production organism safety studies; referenced in Table 9",
+      "authors": ["Kim HJ", "Lee AW", "Park CJ"],
+      "doi": "",
+      "url": "",
+      "citation": "Kim HJ, Lee AW, Park CJ. Toxicological evaluation of Microbacterium foliorum. Regul Toxicol Pharmacol. 2018:100, 16-24.",
+      "origin": "notifier_cited",
+      "verificationStatus": "extracted_unverified",
+      "citedPages": [31, 32, 33, 34, 38]
+    },
+    {
+      "id": "ref_006",
+      "title": "The long-term safety of D-allulose administration in healthy dogs",
+      "source": "J Vet Med Sci",
+      "year": "2017",
+      "relevance": "Provides the 12-week subchronic NOAEL of 200 mg/kg bw/day in beagle dogs; the only new published animal toxicity study reviewed for the first time in this GRAS notice",
+      "evidence": "Cited in section 6.C.2.1 and Table 9 as the new subchronic dog safety study; referenced in the safety determination",
+      "authors": ["Nishii N", "Takashima S", "Kobatake Y", "Tokuda M", "Kitagawa H"],
+      "doi": "",
+      "url": "",
+      "citation": "Nishii N, Takashima S, Kobatake Y, Tokuda M, Kitagawa H. The long-term safety of D-allulose administration in healthy dogs. J Vet Med Sci. 2017;79:1780-1784.",
+      "origin": "notifier_cited",
+      "verificationStatus": "extracted_unverified",
+      "citedPages": [24, 25, 26, 39]
+    },
+    {
+      "id": "ref_007",
+      "title": "A preliminary study for evaluating the dose-dependent effect of D-allulose for fat mass reduction in adult humans: A randomized, double-blind, placebo-controlled trial",
+      "source": "Nutrients",
+      "year": "2018",
+      "relevance": "New human clinical RCT (12 weeks, 121 adults) reviewed for the first time in this notice; reports no treatment-related adverse events at doses of 8 or 14 g/day",
+      "evidence": "Cited in section 6.C.4.1 and Table 11 as a new human clinical study confirming safety; no adverse effects reported",
+      "authors": ["Han Y", "Kwon EY", "Yu MK", "Lee SJ", "Kim HJ", "Kim SB", "Kim YH", "Choi MS"],
+      "doi": "",
+      "url": "",
+      "citation": "Han Y, Kwon EY, Yu MK, Lee SJ, Kim HJ, Kim SB, Kim YH, Choi MS. A preliminary study for evaluating the dose-dependent effect of D-allulose for fat mass reduction in adult humans: A randomized, double-blind, placebo-controlled trial. Nutrients. 2018;10.",
+      "origin": "notifier_cited",
+      "verificationStatus": "extracted_unverified",
+      "citedPages": [24, 30, 31, 38]
+    },
+    {
+      "id": "ref_008",
+      "title": "A double-blind, randomized controlled, acute feeding equivalence trial of small, catalytic doses of fructose and allulose on postprandial blood glucose metabolism in healthy participants: The Fructose and Allulose Catalytic Effects (FACE) trial",
+      "source": "Nutrients",
+      "year": "2018",
+      "relevance": "New human acute crossover RCT reviewed for the first time in this notice; reports no adverse effects of single doses of 5 or 10 g allulose in healthy adults",
+      "evidence": "Cited in section 6.C.4.1 and Table 11 as a new human clinical study; no adverse effects reported",
+      "authors": [
+        "Braunstein CR",
+        "Noronha JC",
+        "Glenn AJ",
+        "Viguiliouk E",
+        "Noseworthy R",
+        "Khan TA",
+        "Au-Yeung F",
+        "Blanco Mejia S",
+        "Wolever TMS",
+        "Josse RG",
+        "Kendall CWC",
+        "Sievenpiper JL"
+      ],
+      "doi": "",
+      "url": "",
+      "citation": "Braunstein CR, Noronha JC, Glenn AJ, Viguiliouk E, Noseworthy R, Khan TA, Au-Yeung F, Blanco Mejia S, Wolever TMS, Josse RG, Kendall CWC, Sievenpiper JL. A double-blind, randomized controlled, acute feeding equivalence trial of small, catalytic doses of fructose and allulose on postprandial blood glucose metabolism in healthy participants: The Fructose and Allulose Catalytic Effects (FACE) trial. Nutrients. 2018;10(6).",
+      "origin": "notifier_cited",
+      "verificationStatus": "extracted_unverified",
+      "citedPages": [24, 30, 31, 38]
+    },
+    {
+      "id": "ref_009",
+      "title": "The effect of small doses of fructose and allulose on postprandial glucose metabolism in type 2 diabetes: A double-blind, randomized, controlled, acute feeding, equivalence trial",
+      "source": "Diabetes Obes Metab",
+      "year": "2018",
+      "relevance": "New human acute RCT in type 2 diabetics reviewed for the first time in this notice; reports no adverse effects of single doses of 5 or 10 g allulose",
+      "evidence": "Cited in section 6.C.4.1 and Table 11 as a new human clinical study; no adverse effects reported",
+      "authors": [
+        "Noronha JC",
+        "Braunstein CR",
+        "Glenn AJ",
+        "Khan TA",
+        "Viguiliouk E",
+        "Noseworthy R",
+        "Blanco Mejia S",
+        "Kendall CWC",
+        "Wolever TMS",
+        "Leiter LA",
+        "Sievenpiper JL"
+      ],
+      "doi": "",
+      "url": "",
+      "citation": "Noronha JC, Braunstein CR, Glenn AJ, Khan TA, Viguiliouk E, Noseworthy R, Blanco Mejia S, Kendall CWC, Wolever TMS, Leiter LA, Sievenpiper JL. The effect of small doses of fructose and allulose on postprandial glucose metabolism in type 2 diabetes: A double-blind, randomized, controlled, acute feeding, equivalence trial. Diabetes Obes Metab. 2018;20:2361-2370.",
+      "origin": "notifier_cited",
+      "verificationStatus": "extracted_unverified",
+      "citedPages": [24, 30, 31, 40]
+    },
+    {
+      "id": "ref_010",
+      "title": "D-allulose contents in various food products and its origin",
+      "source": "Food Sci Technol Res",
+      "year": "2006",
+      "relevance": "Provides the food composition data for naturally occurring D-allulose used to estimate background dietary EDI; Table 7 in the filing is adopted directly from this reference",
+      "evidence": "Cited in sections 3.B and 3.C and Table 7 as the source of naturally occurring D-allulose content in foods; used to calculate background EDI of ~94.8 mg/person/day",
+      "authors": ["Oshima H", "Kimura I", "Izumori K"],
+      "doi": "",
+      "url": "",
+      "citation": "Oshima H, Kimura I, Izumori K. D-allulose contents in various food products and its origin. Food Sci Technol Res. 2006;12:137-43.",
+      "origin": "notifier_cited",
+      "verificationStatus": "extracted_unverified",
+      "citedPages": [18, 19, 20, 40]
+    },
+    {
+      "id": "ref_011",
+      "title": "Failure of D-allulose absorbed in the small intestine to metabolize into energy and its low large intestinal fermentability in humans",
+      "source": "Metabolism",
+      "year": "2010",
+      "relevance": "Provides human metabolism data including energy value prediction (<0.2 kcal/g) and urinary excretion kinetics; supports the non-digestible carbohydrate classification and low calorie characterization",
+      "evidence": "Cited in section 2.A.1.7 for energy value and in section 6.C.1 for metabolism; also cited in Table 11 as a previously reviewed human clinical study",
+      "authors": [
+        "Iida T",
+        "Hayashi N",
+        "Yamada T",
+        "Yoshikawa Y",
+        "Miyazato S",
+        "Kishimoto Y",
+        "Okuma K",
+        "Tokuda M",
+        "Izumori K"
+      ],
+      "doi": "",
+      "url": "",
+      "citation": "Iida T, Hayashi N, Yamada T, Yoshikawa Y, Miyazato S, Kishimoto Y, Okuma K, Tokuda M, Izumori K. Failure of D-allulose absorbed in the small intestine to metabolize into energy and its low large intestinal fermentability in humans. Metabolism. 2010;59:206-14.",
+      "origin": "notifier_cited",
+      "verificationStatus": "extracted_unverified",
+      "citedPages": [9, 23, 32, 39]
+    },
+    {
+      "id": "ref_012",
+      "title": "Intestinal absorption, organ distribution, and urinary excretion of the rare sugar D-allulose",
+      "source": "Drug Design Devel Ther",
+      "year": "2014",
+      "relevance": "Provides detailed pharmacokinetic/metabolism data including blood concentration peak, urinary excretion rates, and organ distribution after oral and IV administration in rats",
+      "evidence": "Cited in section 6.C.1 as the primary metabolism reference describing absorption, distribution, and excretion kinetics of D-allulose",
+      "authors": [
+        "Tsukamoto I",
+        "Hossain A",
+        "Yamaguchi F",
+        "Hirata Y",
+        "Dong Y",
+        "Kamitori K",
+        "Sui L",
+        "Nonaka M",
+        "Ueno M",
+        "Nishimoto K",
+        "Suda H",
+        "Morimoto K",
+        "Shimonishi T",
+        "Saito M",
+        "Song T",
+        "Konishi R",
+        "Tokuda M"
+      ],
+      "doi": "",
+      "url": "",
+      "citation": "Tsukamoto I, Hossain A, Yamaguchi F, Hirata Y, Dong Y, Kamitori K, Sui L, Nonaka M, Ueno M, Nishimoto K, Suda H, Morimoto K, Shimonishi T, Saito M, Song T, Konishi R, Tokuda M. Intestinal absorption, organ distribution, and urinary excretion of the rare sugar D-allulose. Drug Design Devel Ther. 2014;8:1955-64.",
+      "origin": "notifier_cited",
+      "verificationStatus": "extracted_unverified",
+      "citedPages": [23, 40]
+    },
+    {
+      "id": "ref_013",
+      "title": "Hypoglycemic health benefits of D-psicose",
+      "source": "J Agric Food Chem",
+      "year": "2012",
+      "relevance": "Cited as a comprehensive review supporting the common knowledge element of the GRAS determination; used to demonstrate broad-based expert awareness of D-allulose safety",
+      "evidence": "Cited in section 6.E.1 as a comprehensive published review supporting the common knowledge element of the GRAS determination",
+      "authors": ["Chung MY", "Oh DK", "Lee KW"],
+      "doi": "",
+      "url": "",
+      "citation": "Chung MY, Oh DK, Lee KW. Hypoglycemic health benefits of D-psicose. J Agric Food Chem. 2012b;60:863-9.",
+      "origin": "notifier_cited",
+      "verificationStatus": "extracted_unverified",
+      "citedPages": [36, 38]
+    },
+    {
+      "id": "ref_014",
+      "title": "Dietary Reference Intakes for energy, carbohydrates, fiber, fat, fatty acids, cholesterol, protein, and amino acids",
+      "source": "National Academy Press, Washington, DC",
+      "year": "2002",
+      "relevance": "Authoritative IOM reference used to contextualize gastrointestinal discomfort from non-digestible carbohydrates as not toxicologically significant; supports the safety determination for GI side effects",
+      "evidence": "Cited in sections 6.C.4.2 and 6.D to support the conclusion that transient GI discomfort from D-allulose is not of toxicological significance, consistent with other non-digestible carbohydrates",
+      "authors": ["Institute of Medicine (IOM)"],
+      "doi": "",
+      "url": "",
+      "citation": "Institute of Medicine (IOM). 2002. Dietary Reference Intakes for energy, carbohydrates, fiber, fat, fatty acids, cholesterol, protein, and amino acids. National Academy Press, Washington, DC.",
+      "origin": "notifier_cited",
+      "verificationStatus": "extracted_unverified",
+      "citedPages": [31, 35, 39]
+    },
+    {
+      "id": "ref_015",
+      "title": "Study on the postprandial blood glucose suppression effect of D-allulose in borderline diabetes and the safety of long-term ingestion by normal human subjects",
+      "source": "Biosci Biotechnol Biochem",
+      "year": "2010",
+      "relevance": "Previously reviewed human clinical study (12 weeks, 15 g/day) reporting no adverse effects; supports long-term human safety of D-allulose at repeated doses",
+      "evidence": "Cited in section 6.C.4.2 and Table 11 as a previously reviewed human clinical study with no adverse effects noted over 12 weeks",
+      "authors": [
+        "Hayashi N",
+        "Iida T",
+        "Yamada T",
+        "Okuma K",
+        "Takehara I",
+        "Yamamoto T",
+        "Yamada K",
+        "Tokuda M"
+      ],
+      "doi": "",
+      "url": "",
+      "citation": "Hayashi N, Iida T, Yamada T, Okuma K, Takehara I, Yamamoto T, Yamada K, Tokuda M. Study on the postprandial blood glucose suppression effect of D-allulose in borderline diabetes and the safety of long-term ingestion by normal human subjects. Biosci Biotechnol Biochem. 2010;74:510-19.",
+      "origin": "notifier_cited",
+      "verificationStatus": "extracted_unverified",
+      "citedPages": [31, 32, 38]
+    }
+  ],
+  "safetySignals": [
+    {
+      "id": "gi-discomfort-tolerable-dose",
+      "label": "Gastrointestinal discomfort at high doses",
+      "level": "clear",
+      "summary": "The notice documents that the maximum tolerable dose in humans is 0.5 g/kg bw/day for males and 0.6 g/kg bw/day for females (Iida et al., 2007), with gastrointestinal discomfort as the only known side effect at high doses. The 90th percentile EDI for all users (0.42 g/kg bw/day) is below these thresholds. The notice characterizes this as transient and not toxicologically significant, consistent with non-digestible carbohydrates generally.",
+      "evidence": [
+        "Iida et al. 2007 maximum tolerable dose study",
+        "90th percentile EDI 0.42 g/kg bw/day vs. tolerable dose 0.5-0.6 g/kg bw/day",
+        "Watery diarrhea observed in acute rat study at 5 g/kg bw"
+      ],
+      "citations": [
+        {
+          "pageNumber": 31,
+          "excerpt": "A clinical study showed that the maximum tolerable levels in humans were 0.5 g/kg bw/day for males and 0.6 g/kg bw/day for females, with the mean value of 0.55 g/kg bw/day (Iida et al., 2007).",
+          "section": "6.C.4.2. Human Clinical Studies Reviewed in Previous GRAS Notices"
+        },
+        {
+          "pageNumber": 25,
+          "excerpt": "Watery diarrhea was observed in 4 males and 4 females of the test group within one hour after administration. On the same day, a transient watery diarrhea was observed in all of the animals of the test group within six hours after administration.",
+          "section": "6.C.2.1. Toxicity Studies First Reviewed in This GRAS Notice"
+        }
+      ]
+    },
+    {
+      "id": "production-organism-pathogenicity-query",
+      "label": "FDA query on M. foliorum pathogenicity status",
+      "level": "watch",
+      "summary": "FDA's review team requested confirmation of whether M. foliorum is known to be pathogenic and whether it is banked in standard repositories. The notifier responded that M. foliorum is not known to be pathogenic and cited its presence in dairy and fermented foods. The notice itself does not include a formal pathogenicity assessment, and the repository banking status was not confirmed in the response. This is an administrative matter raised during review that was addressed by correspondence but not in the original notice.",
+      "evidence": [
+        "FDA email requesting pathogenicity statement (November 2019)",
+        "Notifier response citing dairy/fermented food presence",
+        "No repository banking confirmation provided",
+        "No formal pathogenicity assessment in original notice"
+      ],
+      "citations": [
+        {
+          "pageNumber": 43,
+          "excerpt": "The review team does have a quick request regarding GRN 828 (D-psicose). For our administrative record, can you please include a brief statement about whether or not the production organism (Microbacterium foliorum) is known to be pathogenic? Also, is the organism 'banked' in any of the usual repositories (like ECGC)?",
+          "section": "FDA correspondence November 2019"
+        },
+        {
+          "pageNumber": 43,
+          "excerpt": "Microbacterium foliorum is not known to be pathogenic. It is present in dairy products and fermented Korean foods (Hone et al., 2012; Quigley, 2011)",
+          "section": "Notifier response November 2019"
+        }
+      ]
+    }
+  ],
+  "analyzedPages": [
+    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26,
+    27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44
+  ],
+  "truncated": false,
+  "modelProvider": "anthropic/claude-sonnet-4-6"
+}

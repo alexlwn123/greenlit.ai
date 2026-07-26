@@ -1,0 +1,52 @@
+{
+  "resultVersion": "1.0.0",
+  "fixtureId": "lemna-grn-1160-1256",
+  "subjectSourceId": "grn-1160-notice",
+  "pipelineVersion": "deep-evidence-v1",
+  "scorer": "original-domain-analysis-port-v1",
+  "modelProvider": "anthropic/claude-sonnet-4-6",
+  "executedAt": "2026-07-24",
+  "inputSha256": "8eff49d11b3d9557018e590866dcb7405026056afe989cf25c3593a728935c78",
+  "pageSelection": {
+    "totalPdfPages": 230,
+    "analyzedPdfPages": 190,
+    "truncated": true,
+    "selectionMode": "page_boundary_character_budget"
+  },
+  "outputCounts": {
+    "findings": 14,
+    "safetySignals": 8
+  },
+  "confirmedFindingEvaluation": {
+    "required": 3,
+    "recovered": 3,
+    "recall": 1,
+    "recoveredIds": [
+      "incorporation-independent-conclusions",
+      "public-pivotal-evidence",
+      "test-article-bridge"
+    ]
+  },
+  "groundingEvaluation": {
+    "confirmedFindingsWithExactExcerpt": 3,
+    "confirmedFindingsWithPdfPage": 3,
+    "passes": true
+  },
+  "recommendationEvaluation": {
+    "confirmedFindingsWithSpecificCorrectiveAction": 3,
+    "passes": true
+  },
+  "verifiedAdditionalFindings": [
+    "Batch 4 aerobic plate count exceeds specification.",
+    "The notice and EFSA use different NOAEL interpretations for the Mankai study.",
+    "The LLP and LENTEIN Complete composition differs materially for read-across.",
+    "The notice acknowledges that digestibility was not measured on LLP itself."
+  ],
+  "followUpCalibrationRisks": [
+    "Eight safety signals may be too broad for a first-pass review.",
+    "Vitamin B12 and potassium contribution signals require expert review before becoming fixture truth.",
+    "Fourteen findings need ranking and deduplication evaluation.",
+    "Page-budget selection omitted the final 40 PDF pages."
+  ],
+  "fixturePass": true
+}

@@ -1,0 +1,602 @@
+{
+  "summary": "GRN 1160 presents a GRAS determination for Lemna Leaf Protein (LLP) derived from Lemna minor, produced by Plantible Foods. The notice relies substantially on GRN 742 (Parabel LENTEIN™ Complete) as the primary safety anchor, supplemented by post-GRN 742 human clinical studies, nonclinical data on related duckweed species, and a compositional bridge argument. Identity, specifications, and batch data are well-documented. The manufacturing process is described at a functional level. Dietary exposure is supported by a WWEIA-based EDI assessment. The allergenicity assessment is thorough. Key evidentiary issues include: (1) the notice incorporates GRN 742 safety data by reference without fully articulating an independent safety conclusion distinct from GRN 742's outcome; (2) the pivotal toxicology studies (acute and 90-day rat studies) were conducted on LENTEIN™ Complete, not LLP, and the compositional bridge, while substantive, has gaps in fat content comparability and process-related impurity characterization; (3) the Mankai (Wolffia globosa) 90-day study is used as supporting evidence despite being a different genus, and EFSA's more conservative NOAEL interpretation is noted but not fully reconciled; (4) the literature search methodology is not explicitly described in the notice body; and (5) one batch (Batch 4) exceeded the aerobic plate count specification of <15,000 CFU/g at 22,000 CFU/g, which is documented but not discussed in the narrative. Overall, the notice is substantively developed but contains addressable gaps in incorporation transparency, test-article bridge documentation, and specification exceedance discussion.",
+  "findings": [
+    {
+      "id": "grn742-incorporation-independent-conclusion",
+      "severity": "major",
+      "title": "GRN 742 safety data incorporated by reference without a fully independent safety conclusion",
+      "summary": "The notice states 'Information in GRN 742 is hereby incorporated by reference into this document' and relies on FDA's 'No Objections' letter to GRN 742 as a primary pillar of the safety determination. The notice does not articulate an independent evaluation of the underlying GRN 742 studies (acute oral toxicity, 14-day, and 90-day rat studies) on their own merits for LLP; instead, it largely adopts GRN 742's outcome. An independent conclusion requires the notifier to evaluate the incorporated data and state why that data supports safety of LLP specifically, not merely that FDA did not object to a related product.",
+      "recommendedAction": "Provide an explicit independent evaluation of each pivotal study incorporated from GRN 742, stating the study findings, the compositional and processing basis for read-across to LLP, and an independent conclusion that the data support safety of LLP at the proposed exposure levels, without relying on FDA's prior no-objection letter as the evidentiary conclusion.",
+      "evidence": [
+        "GRN 742 incorporation by reference statement",
+        "FDA No Objections letter to GRN 742 cited as safety basis",
+        "Expert Panel statement that evaluation 'is largely based on substantial equivalence to LENTEIN™ Complete'"
+      ],
+      "citations": [
+        {
+          "pageNumber": 32,
+          "excerpt": "Information in GRN 742 is hereby incorporated by reference into this document.",
+          "section": "Part VI. Narrative, Section 6.1 Introduction"
+        },
+        {
+          "pageNumber": 32,
+          "excerpt": "Plantible has reviewed all safety data included in GRN 742 and has determined that these safety data are also applicable to Plantible's LLP product as the products are compositionally very similar as shown in Table 11.",
+          "section": "Part VI. Narrative, Section 6.1 Introduction"
+        },
+        {
+          "pageNumber": 222,
+          "excerpt": "The evaluation of LLP was largely based on its substantial equivalence to another Lemna protein product, LENTEIN TM Complete, described in GRN 742. FDA issued a 'No Objections' letter to GRN 742 on August 22, 2018.",
+          "section": "Appendix 7. Expert Panel Consensus Statement"
+        }
+      ],
+      "gapType": "adequacy_gap",
+      "domain": "cross-cutting",
+      "confidence": "high",
+      "category": "incorporation_independent_conclusions",
+      "evidenceRole": "pivotal",
+      "availability": "public_not_peer_reviewed",
+      "supportingMaterial": "GRN 742 (Parabel LENTEIN™ Complete)",
+      "targetMaterial": "Lemna Leaf Protein (LLP)",
+      "testArticle": "LENTEIN™ Complete",
+      "bridgeAssessment": "partial"
+    },
+    {
+      "id": "test-article-bridge-fat-and-fiber-gap",
+      "severity": "major",
+      "title": "Compositional bridge to GRN 742 test article is incomplete for fat and fiber differences",
+      "summary": "LLP contains ≤0.5% fat and ≤15% dietary fiber on an as-is basis, while LENTEIN™ Complete contains up to 12% fat (dw) and 30–45% dietary fiber (dw). The notice presents Table 11 as a compositional similarity table but does not address whether the substantially lower fat and fiber content of LLP could affect the safety profile, bioavailability of other components, or the relevance of the GRN 742 feeding studies conducted at matched gram-per-gram doses. The notice also does not characterize process-related impurities or residuals (e.g., calcium chloride used in coagulation, filtration membrane residuals) that may differ between the two products.",
+      "recommendedAction": "Provide a scientific rationale explaining why the large differences in fat and fiber content between LLP and LENTEIN™ Complete do not affect the applicability of GRN 742 toxicology studies to LLP. Characterize process-related residuals in LLP and confirm their safety or absence at finished-product levels.",
+      "evidence": [
+        "Table 11 compositional comparison showing LLP ≤0.5% fat vs LENTEIN™ Complete up to 12% fat (dw)",
+        "LLP ≤15% dietary fiber vs LENTEIN™ Complete 30–45% dietary fiber (dw)",
+        "Calcium chloride used in coagulation step noted but not characterized in finished product"
+      ],
+      "citations": [
+        {
+          "pageNumber": 32,
+          "excerpt": "Plantible's LLP contains > 80% protein, while the protein content in the product in GRN 742 is 39-55% crude protein (up to ~50% on an 'as is' basis). The difference is made up by fiber, ash and fat components.",
+          "section": "Part VI. Narrative, Section 6.1 Introduction"
+        },
+        {
+          "pageNumber": 33,
+          "excerpt": "Fat NMT 12% dw Maximum 10% on as is basis [Parabel] vs NMT 0.5% as is basis [LLP]; Dietary Fiber 30-45% dw 30-45% on as is basis [Parabel] vs NMT 15% as is basis [LLP]",
+          "section": "Table 11. Compositional Similarity Supporting Incorporation of Safety Data"
+        },
+        {
+          "pageNumber": 16,
+          "excerpt": "As part of the purification process, a covalent cation (e.g., calcium chloride) is used to coagulate the chlorophyll.",
+          "section": "Section 2.5 Manufacturing Process"
+        }
+      ],
+      "gapType": "adequacy_gap",
+      "domain": "test-article comparability",
+      "confidence": "high",
+      "category": "test_article_bridge",
+      "evidenceRole": "pivotal",
+      "availability": "private",
+      "supportingMaterial": "GRN 742 toxicology studies on LENTEIN™ Complete",
+      "targetMaterial": "Lemna Leaf Protein (LLP)",
+      "testArticle": "LENTEIN™ Complete",
+      "bridgeAssessment": "partial"
+    },
+    {
+      "id": "batch4-apc-exceedance-undiscussed",
+      "severity": "major",
+      "title": "Batch 4 aerobic plate count exceeds specification with no narrative discussion",
+      "summary": "Table 3 shows Batch 4 (Lot P030122C1) had an aerobic plate count of 22,000 CFU/g against a specification of <15,000 CFU/g. This is a documented out-of-specification result. The notice does not discuss this exceedance in the narrative, does not provide a root cause investigation, does not explain whether the batch was released or rejected, and does not address what manufacturing controls prevent recurrence. The absence of any discussion of this result is a material gap in the manufacturing and specifications evidence.",
+      "recommendedAction": "Provide a narrative explanation of the Batch 4 APC exceedance, including root cause investigation findings, disposition of the batch, and corrective actions implemented to prevent recurrence. Clarify whether the five batches represent consecutive or non-consecutive production and whether any were commercial releases.",
+      "evidence": [
+        "Table 3 Batch 4 APC result: 22,000 CFU/g vs specification <15,000 CFU/g",
+        "No narrative discussion of this exceedance anywhere in the notice"
+      ],
+      "citations": [
+        {
+          "pageNumber": 15,
+          "excerpt": "Aerobic plate count <15,000 CFU/g ... 22,000 CFU/g [Batch 4]",
+          "section": "Table 3. Results of 5-batch Analysis of Plantible's LLP"
+        },
+        {
+          "pageNumber": 14,
+          "excerpt": "Analytical results from five non-consecutive lots of Plantible's LLP (Appendix 1) demonstrate that it is manufactured consistently and meets the standard food grade specifications (Table 3).",
+          "section": "Section 2.4 Specifications and Identity"
+        }
+      ],
+      "gapType": "documentation_gap",
+      "domain": "manufacturing",
+      "confidence": "high",
+      "category": "manufacturing_process",
+      "evidenceRole": "pivotal",
+      "availability": "private",
+      "supportingMaterial": null,
+      "targetMaterial": "Lemna Leaf Protein (LLP)",
+      "testArticle": null,
+      "bridgeAssessment": "unknown"
+    },
+    {
+      "id": "mankai-noael-efsa-discrepancy",
+      "severity": "major",
+      "title": "EFSA's more conservative NOAEL for Mankai 90-day study is noted but not reconciled with the safety margin analysis",
+      "summary": "The notice reports the Mankai (Wolffia globosa) 90-day rat study NOAEL as 13.16/15.03 g/kg/day (the submitter's determination) but also quotes EFSA's conclusion that the NOAEL should be set at 6.5 g/kg/day for males based on treatment-related findings at the high dose. The notice states this NOAEL is '8-16 times higher than the estimated dietary exposure' but uses the submitter's NOAEL (13.16 g/kg/day), not EFSA's (6.5 g/kg/day), for the margin calculation. Using EFSA's NOAEL, the margin narrows to approximately 8-fold for males at the 90th percentile EDI. The notice does not explain why the submitter's NOAEL is preferred over EFSA's for the safety margin calculation, nor does it address that Mankai is a different genus (Wolffia) from LLP's source (Lemna).",
+      "recommendedAction": "Provide an explicit reconciliation of the two NOAEL determinations for the Mankai study, explain the scientific basis for preferring the submitter's NOAEL over EFSA's, calculate the safety margin using both NOAELs, and address the cross-genus read-across from Wolffia globosa to Lemna minor.",
+      "evidence": [
+        "Kawamata et al. 2020 Mankai 90-day rat study",
+        "EFSA 2021b NOAEL of 6.5 g/kg/day for males",
+        "Submitter NOAEL of 13.16/15.03 g/kg/day",
+        "90th percentile EDI of 1.0 g/kg bw/day for users aged 2+"
+      ],
+      "citations": [
+        {
+          "pageNumber": 38,
+          "excerpt": "EFSA said, 'A number of significant findings were seen in the urinalysis, haematology, blood chemistry and organ weights, in the animals fed with the NF. Most of these findings were considered as treatment-related, but the mode of action cannot be explained... the Panel considers the middle dose tested for males (i.e., 6.5 g/kg bw per day) as the overall no observed adverse effect level (NOAEL) of this study'.",
+          "section": "Section 6.3.3 Toxicology/safety and Feeding Studies"
+        },
+        {
+          "pageNumber": 225,
+          "excerpt": "Regardless, this NOAEL is 8-16 times higher than the estimated dietary exposure to LENTEIN TM Complete of 0.39-0.79 g/kg bw/day (27.8-55.6 g/person/day as reported in FDA's 'No Objections' Letter to GRN 742, and assuming 70 kg bw).",
+          "section": "Appendix 7. Expert Panel Consensus Statement"
+        }
+      ],
+      "gapType": "adequacy_gap",
+      "domain": "safety data",
+      "confidence": "high",
+      "category": "safety_data",
+      "evidenceRole": "supportive",
+      "availability": "public_peer_reviewed",
+      "supportingMaterial": "Kawamata et al. 2020; EFSA 2021b",
+      "targetMaterial": "Lemna Leaf Protein (LLP)",
+      "testArticle": "Wolffia globosa Mankai powder",
+      "bridgeAssessment": "partial"
+    },
+    {
+      "id": "literature-search-methodology-not-described",
+      "severity": "major",
+      "title": "Literature search methodology is not described in the notice body",
+      "summary": "The notice certifies that it includes all relevant favorable and unfavorable information, and the Expert Panel statement references 'a comprehensive search of the scientific literature.' However, the notice does not describe the databases searched, search terms used, date ranges covered, or inclusion/exclusion criteria for the literature review. Without this information, it is not possible to assess whether the search was systematic and complete, or whether unfavorable information may have been missed.",
+      "recommendedAction": "Provide a self-contained description of the literature search methodology, including databases searched (e.g., PubMed, Scopus), search terms, date ranges, and any filters applied. Confirm the date through which the search was conducted and describe how unfavorable information was identified and evaluated.",
+      "evidence": [
+        "Certification statement in Section 1.9",
+        "Expert Panel reference to 'comprehensive search of the scientific literature'",
+        "Allergenicity assessment references PubMed, PubAg, Scopus, Google Scholar but only for allergenicity"
+      ],
+      "citations": [
+        {
+          "pageNumber": 8,
+          "excerpt": "Plantible certifies that, to the best of its knowledge, this GRAS conclusion is based on a complete, representative, and balanced dossier that includes all relevant information, available and obtainable by Plantible, including any favorable or unfavorable information, and pertinent to the evaluation of the safety and GRAS status of the use of LLP.",
+          "section": "Section 1.9 Certification"
+        },
+        {
+          "pageNumber": 222,
+          "excerpt": "The Expert Panel, independently and collectively, critically evaluated a comprehensive package of scientific information and data.",
+          "section": "Appendix 7. Expert Panel Consensus Statement"
+        }
+      ],
+      "gapType": "documentation_gap",
+      "domain": "general availability",
+      "confidence": "high",
+      "category": "general_availability",
+      "evidenceRole": "context",
+      "availability": "unknown",
+      "supportingMaterial": null,
+      "targetMaterial": "Lemna Leaf Protein (LLP)",
+      "testArticle": null,
+      "bridgeAssessment": "unknown"
+    },
+    {
+      "id": "pivotal-toxicology-studies-not-public-peer-reviewed",
+      "severity": "major",
+      "title": "Pivotal acute and subchronic toxicology studies on LENTEIN™ Complete are not confirmed as publicly available or peer reviewed",
+      "summary": "The acute oral toxicity study and 90-day subchronic study conducted with LENTEIN™ Complete (the pivotal test articles for LLP's safety determination) are described as contained in 'GRN 742 Part 3 Appendix O.' GRN 742 is a regulatory submission, not a peer-reviewed publication. The notice does not establish that these studies are publicly available in peer-reviewed literature. The Mankai 90-day study (Kawamata et al. 2020) is published in Toxicology Reports and is peer-reviewed, but it involves a different genus. The pivotal LENTEIN™ Complete studies remain of unknown peer-review status.",
+      "recommendedAction": "Clarify whether the LENTEIN™ Complete acute and 90-day toxicology studies have been published in peer-reviewed literature. If not, explain how the general recognition standard is met given that the pivotal safety studies are contained only in a regulatory submission accessible through FDA's GRAS notice inventory.",
+      "evidence": [
+        "Acute oral toxicity study on LENTEIN™ Complete cited from GRN 742 Part 3 Appendix O",
+        "90-day subchronic study on LENTEIN™ Complete cited from GRN 742",
+        "No peer-reviewed publication identified for these studies in the notice"
+      ],
+      "citations": [
+        {
+          "pageNumber": 37,
+          "excerpt": "GRN 742 Part 3 Appendix O contains excerpts of the toxicology safety studies conducted with the similar protein extract, LENTEIN™ Complete. GRN 742 reports a single dose oral toxicity study conducted with LENTEIN TM Complete in Wistar rats.",
+          "section": "Section 6.3.3 Toxicology/safety and Feeding Studies"
+        },
+        {
+          "pageNumber": 7,
+          "excerpt": "This GRAS determination is based on data generally available in the public domain pertaining to the safety of Lemna Leaf Protein, as discussed herein.",
+          "section": "Section 1.6 Exemption from Premarket Approval Requirements"
+        }
+      ],
+      "gapType": "documentation_gap",
+      "domain": "cross-cutting",
+      "confidence": "high",
+      "category": "public_pivotal_evidence",
+      "evidenceRole": "pivotal",
+      "availability": "unknown",
+      "supportingMaterial": "GRN 742 Appendix O toxicology studies",
+      "targetMaterial": "Lemna Leaf Protein (LLP)",
+      "testArticle": "LENTEIN™ Complete",
+      "bridgeAssessment": "partial"
+    },
+    {
+      "id": "fat-not-measured-five-batch-analysis",
+      "severity": "minor",
+      "title": "Total fat not measured in five-batch analysis despite being a specification parameter",
+      "summary": "Table 2 establishes a specification of <0.5% total fat for LLP. Table 3 shows that total fat was not measured in any of the five batches submitted as the primary batch analysis. The notice states fat 'has been shown in other analyses to meet the specification' and references Appendix 2, but this is a single representative certificate of analysis, not a systematic batch analysis. The absence of fat data from the five-batch analysis creates a traceability gap for this specification parameter.",
+      "recommendedAction": "Include total fat measurements in the five-batch analysis, or provide a scientific justification for why periodic testing is sufficient for this parameter and describe the testing frequency and results to date.",
+      "evidence": [
+        "Table 3 showing Total Fat as '-' for all five batches",
+        "Table 2 specification of NMT 0.5% total fat",
+        "Appendix 2 single representative COA showing 0.35% fat"
+      ],
+      "citations": [
+        {
+          "pageNumber": 15,
+          "excerpt": "Total Fat NMT 0.5% - - - - -",
+          "section": "Table 3. Results of 5-batch Analysis of Plantible's LLP"
+        },
+        {
+          "pageNumber": 14,
+          "excerpt": "Fat was not measured as part of the five batch analyses but has been shown in other analyses to meet the specification of not more than 0.5% on a dry weight basis (Appendix 2, data in Table 4).",
+          "section": "Section 2.4 Specifications and Identity"
+        }
+      ],
+      "gapType": "documentation_gap",
+      "domain": "identity and characterization",
+      "confidence": "high",
+      "category": "identity_characterization",
+      "evidenceRole": "supportive",
+      "availability": "private",
+      "supportingMaterial": null,
+      "targetMaterial": "Lemna Leaf Protein (LLP)",
+      "testArticle": null,
+      "bridgeAssessment": "unknown"
+    },
+    {
+      "id": "digestibility-study-not-conducted-on-llp",
+      "severity": "minor",
+      "title": "PDCAAS estimate relies on digestibility data from a different Lemna protein concentrate tested in pigs",
+      "summary": "The notice estimates LLP's PDCAAS using a digestibility value of 81.70% from a study by Stein (2022) conducted on 'a similar Lemna leaf protein concentrate' in weanling pigs. The notice acknowledges 'a digestibility study has not been conducted on LLP.' The pig ileal digestibility study is used as a proxy for human digestibility. The notice does not characterize the test article in Stein (2022) relative to LLP's composition (particularly the higher protein content of LLP at ≥80% vs. the comparator), and the relevance of pig ileal digestibility to human PDCAAS is not discussed.",
+      "recommendedAction": "Characterize the test article in Stein (2022) relative to LLP's composition and explain the scientific basis for applying pig ileal digestibility data to estimate human PDCAAS for LLP. Alternatively, note this as a limitation of the nutritional quality estimate.",
+      "evidence": [
+        "Stein 2022 pig ileal digestibility study cited for PDCAAS estimation",
+        "Notice acknowledgment that no digestibility study conducted on LLP",
+        "LLP protein content ≥80% vs. unspecified protein content of Stein 2022 test article"
+      ],
+      "citations": [
+        {
+          "pageNumber": 22,
+          "excerpt": "While a digestibility study has not been conducted on LLP, a study with a similar Lemna leaf protein concentrate was tested for standard ileal digestibility in pigs, with a resulting mean value of 81.70% for all amino acids (Stein, 2022). Assuming LLP would have a similar digestibility, the estimated PDCASS is 1.14, i.e., 1.",
+          "section": "Section 2.7 Nutritional Composition"
+        }
+      ],
+      "gapType": "adequacy_gap",
+      "domain": "identity and characterization",
+      "confidence": "medium",
+      "category": "test_article_bridge",
+      "evidenceRole": "supportive",
+      "availability": "public_not_peer_reviewed",
+      "supportingMaterial": "Stein 2022 pig ileal digestibility study",
+      "targetMaterial": "Lemna Leaf Protein (LLP)",
+      "testArticle": "Similar Lemna leaf protein concentrate (unspecified)",
+      "bridgeAssessment": "partial"
+    }
+  ],
+  "evidenceMatrix": [
+    {
+      "id": "identity-composition",
+      "domain": "identity and characterization",
+      "requirement": "Identity, source, composition, and specifications",
+      "status": "present",
+      "assessment": "LLP is well-characterized as a protein concentrate from Lemna minor leaves, with taxonomic classification, CAS number for Rubisco, proximate composition, amino acid profile, mineral content, and food-grade specifications provided. Five-batch analysis confirms consistency for most parameters. Fat is not measured in the five-batch analysis, which is a minor traceability gap.",
+      "evidenceSummary": "Table 2 (specifications), Table 3 (5-batch analysis), Table 4 (representative composition), Table 6 (amino acid profile), Appendix 1 (COAs), Appendix 2 (representative COA). Taxonomic classification in Table 1. Rubisco identified as ~60% of protein by SDS-PAGE.",
+      "citations": [
+        {
+          "pageNumber": 14,
+          "excerpt": "LLP is standardized to not less than 80% protein on an 'as is' basis. The other major components are ash and fiber, and a small amount of fat.",
+          "section": "Section 2.4 Specifications and Identity"
+        },
+        {
+          "pageNumber": 19,
+          "excerpt": "Plantible's Lemna protein product is a highly purified protein product containing a minimum of 80% protein, of which 60% is Rubisco protein as confirmed through SDS PAGE analysis.",
+          "section": "Section 2.7 Nutritional Composition"
+        }
+      ],
+      "unresolvedQuestions": [
+        "Total fat not measured in five-batch analysis despite being a specification parameter",
+        "Protein content of Rubisco fraction not independently verified by method other than SDS-PAGE"
+      ],
+      "relatedFindingIds": ["fat-not-measured-five-batch-analysis"]
+    },
+    {
+      "id": "manufacturing",
+      "domain": "manufacturing",
+      "requirement": "Process description and process-related controls",
+      "status": "weak",
+      "assessment": "The manufacturing process is described at a functional level with a schematic (Figure 2), covering cultivation, harvest, maceration, green fraction separation, purification, and drying. cGMP and HACCP compliance are stated. However, the process description does not characterize process-related residuals (e.g., calcium chloride used in coagulation), does not specify the 0.2μm microfiltration and 70kDa ultrafiltration steps in the main body (only in the Expert Panel statement), and does not address critical process parameters or in-process controls in sufficient detail.",
+      "evidenceSummary": "Section 2.5 and Figure 2 describe the process. Expert Panel statement (Appendix 7) provides additional detail on filtration steps. cGMP and SQF Level 2 compliance stated.",
+      "citations": [
+        {
+          "pageNumber": 16,
+          "excerpt": "As part of the purification process, a covalent cation (e.g., calcium chloride) is used to coagulate the chlorophyll. The LLP product is manufactured consistent with current Good Manufacturing Practices (cGMPs) and Risk-based Preventive Controls.",
+          "section": "Section 2.5 Manufacturing Process"
+        },
+        {
+          "pageNumber": 223,
+          "excerpt": "Plantible's extraction process incorporates both a 0.2μm microfiltration step as well as an ultrafiltration step using a 70kDa membrane to ensure that contaminants as well as heavy metals are removed from the protein composition prior to drying.",
+          "section": "Appendix 7. Expert Panel Consensus Statement"
+        }
+      ],
+      "unresolvedQuestions": [
+        "Process-related residuals (calcium chloride, filtration membrane residuals) not characterized in finished product",
+        "Critical process parameters and in-process controls not described",
+        "Batch 4 APC exceedance not discussed in manufacturing section"
+      ],
+      "relatedFindingIds": [
+        "batch4-apc-exceedance-undiscussed",
+        "test-article-bridge-fat-and-fiber-gap"
+      ]
+    },
+    {
+      "id": "specifications-batch-analysis",
+      "domain": "identity and characterization",
+      "requirement": "Specifications and representative batch results",
+      "status": "weak",
+      "assessment": "Specifications are established for proximate composition, heavy metals, microbial parameters, and oxalic acid. Five-batch analysis is provided. However, Batch 4 exceeds the APC specification (22,000 vs. <15,000 CFU/g) with no narrative discussion. Total fat is not measured in any batch. The notice states batches are 'non-consecutive' but does not provide production dates or lot numbers that would allow assessment of representativeness.",
+      "evidenceSummary": "Table 2 (specifications), Table 3 (5-batch results), Appendix 1 (COAs from Certified Laboratories the Midwest). Batch lot numbers provided: P022822C1, P031522C1, P011022C1, P030122C1, P012222C1.",
+      "citations": [
+        {
+          "pageNumber": 15,
+          "excerpt": "Aerobic plate count <15,000 CFU/g ... 22,000 CFU/g [Batch 4, Lot P030122C1]",
+          "section": "Table 3. Results of 5-batch Analysis of Plantible's LLP"
+        },
+        {
+          "pageNumber": 14,
+          "excerpt": "Fat was not measured as part of the five batch analyses but has been shown in other analyses to meet the specification of not more than 0.5% on a dry weight basis (Appendix 2, data in Table 4).",
+          "section": "Section 2.4 Specifications and Identity"
+        }
+      ],
+      "unresolvedQuestions": [
+        "Batch 4 APC exceedance of 22,000 CFU/g not discussed or explained",
+        "Total fat not measured in any of the five batches",
+        "Whether Batch 4 was released commercially is not stated"
+      ],
+      "relatedFindingIds": [
+        "batch4-apc-exceedance-undiscussed",
+        "fat-not-measured-five-batch-analysis"
+      ]
+    },
+    {
+      "id": "intended-uses-exposure",
+      "domain": "dietary exposure",
+      "requirement": "Intended uses, use levels, and dietary exposure",
+      "status": "present",
+      "assessment": "Intended food categories and use levels are clearly specified in Table 9. A WWEIA-based EDI assessment (Appendix 3) provides mean and 90th percentile estimates by age group. The 90th percentile for users aged 2+ is 61.1 g/day (1.0 g/kg bw/day). The assessment uses NHANES 2017-2020 pre-pandemic data and DaDiet software. The methodology is described in Appendix 3. Infant formula and USDA-regulated products are excluded.",
+      "evidenceSummary": "Table 9 (use categories and levels), Table 10 (EDI summary), Appendix 3 (full EDI report by Regulatory Connections LLC). WWEIA 2017-2020 pre-pandemic data used. Per-user and per-capita estimates provided by age and sex.",
+      "citations": [
+        {
+          "pageNumber": 27,
+          "excerpt": "Table 9. Inclusion Rates of LLP in Target Food Categories... Plant Protein Products NAS reconstituted vegetable protein, meat imitates, dairy imitates, seafood imitates, poultry imitates, egg imitates, protein based nutritional bars 1-20",
+          "section": "Section 3.2 Intended Use Levels and Food Categories"
+        },
+        {
+          "pageNumber": 28,
+          "excerpt": "For the 2+ age group, the 90th percentile consumption by users is 61.1 g/day or 1.0 g/kg bw/day. The highest intake on a body weight basis is for ages 1-5, which was 2.7 g/kg bw/day.",
+          "section": "Section 3.2.1 Estimated Daily Intake from the Intended Uses"
+        }
+      ],
+      "unresolvedQuestions": [
+        "Whether the EDI for children aged 1-5 (2.7 g/kg bw/day at 90th percentile) is adequately addressed in the safety margin analysis relative to the NOAEL"
+      ],
+      "relatedFindingIds": ["mankai-noael-efsa-discrepancy"]
+    },
+    {
+      "id": "public-pivotal-safety-evidence",
+      "domain": "cross-cutting",
+      "requirement": "Public availability and peer review of pivotal evidence",
+      "status": "weak",
+      "assessment": "The pivotal toxicology studies (acute and 90-day rat studies on LENTEIN™ Complete) are contained in GRN 742, a regulatory submission accessible through FDA's GRAS notice inventory, but are not confirmed as published in peer-reviewed literature. The Mankai 90-day study (Kawamata et al. 2020, Toxicology Reports) is peer-reviewed but involves a different genus. Human clinical studies (Zeinstra 2019, Mes 2022a, 2022b) are peer-reviewed and publicly available. The notice claims the GRAS determination is based on 'data generally available in the public domain' but does not establish peer-review status of the pivotal animal studies.",
+      "evidenceSummary": "GRN 742 Appendix O toxicology studies (regulatory submission, availability unknown for peer review); Kawamata et al. 2020 (Toxicology Reports, peer-reviewed); Zeinstra et al. 2019, Mes et al. 2022a/b (peer-reviewed journals).",
+      "citations": [
+        {
+          "pageNumber": 7,
+          "excerpt": "This GRAS determination is based on data generally available in the public domain pertaining to the safety of Lemna Leaf Protein, as discussed herein.",
+          "section": "Section 1.6 Exemption from Premarket Approval Requirements"
+        },
+        {
+          "pageNumber": 37,
+          "excerpt": "GRN 742 Part 3 Appendix O contains excerpts of the toxicology safety studies conducted with the similar protein extract, LENTEIN™ Complete.",
+          "section": "Section 6.3.3 Toxicology/safety and Feeding Studies"
+        }
+      ],
+      "unresolvedQuestions": [
+        "Whether the LENTEIN™ Complete acute and 90-day rat studies have been published in peer-reviewed literature",
+        "Whether GRN 742 regulatory submission constitutes 'generally available' public information sufficient for general recognition"
+      ],
+      "relatedFindingIds": [
+        "pivotal-toxicology-studies-not-public-peer-reviewed",
+        "grn742-incorporation-independent-conclusion"
+      ]
+    },
+    {
+      "id": "independent-evidence-synthesis",
+      "domain": "cross-cutting",
+      "requirement": "Specific incorporation and independent conclusions",
+      "status": "weak",
+      "assessment": "The notice incorporates GRN 742 by reference and draws on FDA's no-objection letter as a safety anchor. The Expert Panel states the evaluation 'is largely based on substantial equivalence to LENTEIN™ Complete.' While the notice provides a compositional bridge (Table 11) and discusses post-GRN 742 studies, it does not articulate a fully independent safety conclusion that evaluates the incorporated studies on their own merits for LLP specifically. The conclusion is substantially derivative of GRN 742's outcome rather than an independent weight-of-evidence determination.",
+      "evidenceSummary": "Section 6.1 incorporation by reference statement; Table 11 compositional bridge; Expert Panel Consensus Statement (Appendix 7); post-GRN 742 clinical studies (Zeinstra 2019, Mes 2022a/b).",
+      "citations": [
+        {
+          "pageNumber": 32,
+          "excerpt": "Information in GRN 742 is hereby incorporated by reference into this document.",
+          "section": "Section 6.1 Introduction"
+        },
+        {
+          "pageNumber": 222,
+          "excerpt": "The evaluation of LLP was largely based on its substantial equivalence to another Lemna protein product, LENTEIN TM Complete, described in GRN 742. FDA issued a 'No Objections' letter to GRN 742 on August 22, 2018.",
+          "section": "Appendix 7. Expert Panel Consensus Statement"
+        }
+      ],
+      "unresolvedQuestions": [
+        "Whether the notice provides an independent evaluation of GRN 742 studies rather than relying on FDA's prior no-objection as the evidentiary conclusion",
+        "Whether the compositional bridge is sufficient to support full read-across given fat and fiber differences"
+      ],
+      "relatedFindingIds": [
+        "grn742-incorporation-independent-conclusion",
+        "test-article-bridge-fat-and-fiber-gap"
+      ]
+    },
+    {
+      "id": "test-article-comparability",
+      "domain": "test-article comparability",
+      "requirement": "Target/test-article bridge",
+      "status": "weak",
+      "assessment": "The notice provides a compositional comparison (Table 11) between LLP and LENTEIN™ Complete and argues substantial equivalence. The bridge is supported by similar protein content (on a protein-adjusted basis), similar amino acid profiles, similar heavy metal specifications, and similar oxalic acid specifications. However, the bridge does not address the large differences in fat (≤0.5% vs. up to 12% dw) and dietary fiber (≤15% vs. 30-45% dw), does not characterize process-related residuals, and does not address whether the higher protein purity of LLP could affect the dose-response relationship in the toxicology studies.",
+      "evidenceSummary": "Table 11 compositional comparison; Section 6.1 narrative bridge argument; Expert Panel statement on substantial equivalence; amino acid profile comparison in Table 6.",
+      "citations": [
+        {
+          "pageNumber": 32,
+          "excerpt": "Plantible has reviewed all safety data included in GRN 742 and has determined that these safety data are also applicable to Plantible's LLP product as the products are compositionally very similar as shown in Table 11. Both products are an extracted and purified form of Lemna protein.",
+          "section": "Section 6.1 Introduction"
+        },
+        {
+          "pageNumber": 33,
+          "excerpt": "Fat NMT 12% dw Maximum 10% on as is basis [Parabel] vs NMT 0.5% as is basis [LLP]; Dietary Fiber 30-45% dw 30-45% on as is basis [Parabel] vs NMT 15% as is basis [LLP]",
+          "section": "Table 11"
+        }
+      ],
+      "unresolvedQuestions": [
+        "Whether fat and fiber differences affect applicability of GRN 742 toxicology studies",
+        "Whether higher protein purity of LLP affects dose-response interpretation",
+        "Whether process-related residuals differ between LLP and LENTEIN™ Complete"
+      ],
+      "relatedFindingIds": [
+        "test-article-bridge-fat-and-fiber-gap",
+        "grn742-incorporation-independent-conclusion"
+      ]
+    },
+    {
+      "id": "self-contained-literature-search",
+      "domain": "general availability",
+      "requirement": "Search methods, scope, and unfavorable information",
+      "status": "weak",
+      "assessment": "The notice certifies inclusion of all favorable and unfavorable information and references a 'comprehensive search of the scientific literature' in the Expert Panel statement. The allergenicity assessment (Appendix 6) describes specific databases (PubMed, PubAg, Scopus, Google Scholar) and search strings for allergenicity. However, the main notice body does not describe the literature search methodology for safety evidence more broadly. EFSA's unfavorable conclusions on manganese for LENTEIN™ Complete and Mankai are discussed and distinguished. The notice does not describe how it identified and evaluated all unfavorable information.",
+      "evidenceSummary": "Section 1.9 certification; Expert Panel statement reference to comprehensive literature search; Appendix 6 allergenicity search methodology; EFSA 2021b and 2021c unfavorable conclusions discussed in Section 6.5.",
+      "citations": [
+        {
+          "pageNumber": 8,
+          "excerpt": "Plantible certifies that, to the best of its knowledge, this GRAS conclusion is based on a complete, representative, and balanced dossier that includes all relevant information, available and obtainable by Plantible, including any favorable or unfavorable information.",
+          "section": "Section 1.9 Certification"
+        },
+        {
+          "pageNumber": 218,
+          "excerpt": "Three scientific and biomedical literature databases were searched for publications that might discuss the potential allergenicity of Lemna minor. Searches used either the single search string {(lemna OR duckweed) AND (safety OR allergen)} or multiple searches without the Boolean operators.",
+          "section": "Appendix 6. Allergenicity Assessment"
+        }
+      ],
+      "unresolvedQuestions": [
+        "Literature search databases, search terms, and date ranges for the main safety review are not described",
+        "Whether the search was conducted systematically or relied on known publications"
+      ],
+      "relatedFindingIds": ["literature-search-methodology-not-described"]
+    },
+    {
+      "id": "allergenicity-assessment",
+      "domain": "allergenicity",
+      "requirement": "Protein allergenicity and cross-reactivity assessment",
+      "status": "present",
+      "assessment": "The allergenicity assessment is thorough. It addresses taxonomic considerations (Lemna is unrelated to common food allergens), morphological considerations (vegetative reproduction, no seed/nut proteins), proteomics database searches (four allergen databases, NCBI protein database with 514 Lemna minor entries, none annotated as allergens), literature review (PubMed, PubAg, Scopus, Google Scholar, 2018-2022), prior regulatory conclusions (GRN 742, EFSA 2021a/b), consumer exposure data (CAERS search negative), and expert opinion (Dr. Steve Gendel). Rubisco's pepsin degradability is noted as relevant to allergenicity assessment.",
+      "evidenceSummary": "Appendix 6 (Dr. Gendel allergenicity assessment); Section 6.4.4 narrative; GRN 742 allergenicity discussion incorporated; EFSA 2021a/b reviewed; CAERS search conducted through October 2022.",
+      "citations": [
+        {
+          "pageNumber": 45,
+          "excerpt": "Plantible also sought the opinion of a food allergy expert, Dr. Steve Gendel. Dr. Gendel reviewed previous regulatory conclusions and the published literature since 2018 and found no new relevant publications that would alter those conclusions.",
+          "section": "Section 6.4.4 Allergenicity"
+        },
+        {
+          "pageNumber": 218,
+          "excerpt": "There is no available evidence indicating that Lemna Leaf Protein (LLP) from Lemna minor presents a significant food allergy risk either for currently food-allergic individuals or for the development of new food allergies.",
+          "section": "Appendix 6. Allergenicity Assessment"
+        }
+      ],
+      "unresolvedQuestions": [],
+      "relatedFindingIds": []
+    }
+  ],
+  "safetySignals": [
+    {
+      "id": "batch4-apc-exceedance-signal",
+      "label": "Batch 4 aerobic plate count specification exceedance",
+      "level": "watch",
+      "summary": "Batch 4 (Lot P030122C1) had an aerobic plate count of 22,000 CFU/g, exceeding the specification of <15,000 CFU/g. This is a documented specification exceedance in the five-batch analysis presented as evidence of consistent manufacturing. The notice does not discuss this result, provide a root cause, or confirm the batch was not released. This represents a concrete specification exceedance requiring explanation.",
+      "evidence": [
+        "Table 3 Batch 4 APC: 22,000 CFU/g vs. specification <15,000 CFU/g",
+        "No narrative discussion of exceedance in notice body"
+      ],
+      "citations": [
+        {
+          "pageNumber": 15,
+          "excerpt": "Aerobic plate count <15,000 CFU/g ... 22,000 CFU/g [Batch 4, Lot P030122C1]",
+          "section": "Table 3. Results of 5-batch Analysis of Plantible's LLP"
+        }
+      ]
+    },
+    {
+      "id": "efsa-noael-discrepancy-signal",
+      "label": "EFSA conservative NOAEL for Mankai study not reconciled in safety margin",
+      "level": "watch",
+      "summary": "EFSA set the NOAEL for the Mankai 90-day rat study at 6.5 g/kg/day for males, lower than the submitter's determination of 13.16 g/kg/day. The notice uses the submitter's NOAEL for the safety margin calculation without reconciling EFSA's interpretation. Using EFSA's NOAEL, the margin over the 90th percentile EDI for children aged 1-5 (2.7 g/kg bw/day) narrows to approximately 2.4-fold, which may be inadequate. This is a concrete authoritative disagreement on NOAEL determination that is noted but not resolved in the notice.",
+      "evidence": [
+        "EFSA 2021b NOAEL of 6.5 g/kg/day for males (Mankai study)",
+        "Submitter NOAEL of 13.16 g/kg/day",
+        "90th percentile EDI for ages 1-5: 2.7 g/kg bw/day"
+      ],
+      "citations": [
+        {
+          "pageNumber": 38,
+          "excerpt": "EFSA said, 'the Panel considers the middle dose tested for males (i.e., 6.5 g/kg bw per day) as the overall no observed adverse effect level (NOAEL) of this study'.",
+          "section": "Section 6.3.3 Toxicology/safety and Feeding Studies"
+        },
+        {
+          "pageNumber": 28,
+          "excerpt": "The highest intake on a body weight basis is for ages 1-5, which was 2.7 g/kg bw/day.",
+          "section": "Section 3.2.1 Estimated Daily Intake from the Intended Uses"
+        }
+      ]
+    },
+    {
+      "id": "manganese-efsa-concern-distinguished",
+      "label": "Manganese concern raised by EFSA for LENTEIN™ Complete and Mankai — distinguished for LLP",
+      "level": "clear",
+      "summary": "EFSA could not establish safety of LENTEIN™ Complete and Mankai powder partly due to manganese levels (128-333 ppm and 59.6-292 ppm respectively). LLP has substantially lower manganese at an average of 11.4 ppm, and the notice calculates that the 90th percentile EDI would contribute approximately 10 μg Mn/kg bw/day, well within the US tolerable upper limit of 11 mg/day for adults. The notice provides a quantitative analysis that adequately distinguishes LLP from the EFSA concern. This signal is resolved by the evidence presented.",
+      "evidence": [
+        "LLP average manganese: 11.4 ppm (Appendix 2)",
+        "LENTEIN™ Complete manganese: 128-333 ppm (EFSA 2021b)",
+        "Mankai manganese: 59.6-292 ppm (EFSA 2021c)",
+        "Calculated Mn contribution from LLP at 90th percentile EDI: 10 μg/kg bw/day vs. UL of ~157 μg/kg bw/day"
+      ],
+      "citations": [
+        {
+          "pageNumber": 40,
+          "excerpt": "In contrast, the average Mn level in LLP is 11.4 ppm (Appendix 2). At the 90th percentile EDI of 61.1g of LLP/day this would equate to an additional consumption of 10 μg Mn/kg bw/day.",
+          "section": "Section 6.3.3 Presence and Safety of Minor Components"
+        },
+        {
+          "pageNumber": 47,
+          "excerpt": "In 2021, EFSA also delivered an opinion on the safety of water lentil powder as a novel food pursuant to Regulation (EU) 2015/2283 (EFSA, 2021b)... Ultimately, because of manganese levels, the safety of the novel food could not be established.",
+          "section": "Section 6.5 Regulatory Status"
+        }
+      ]
+    }
+  ],
+  "analyzedPages": [
+    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26,
+    27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50,
+    51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74,
+    75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98,
+    99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117,
+    118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136,
+    137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155,
+    156, 157, 158, 159, 160, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 212, 218, 219, 220,
+    221, 222, 223, 224, 225, 226, 227, 228, 229, 230
+  ],
+  "truncated": true,
+  "modelProvider": "anthropic/claude-sonnet-4-6"
+}

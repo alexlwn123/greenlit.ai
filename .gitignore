@@ -14,5 +14,8 @@ dist/
 coverage/
 test-results/
 playwright-report/
+.tools/
+tmp/
+.claude/
 .vercel
 .env*

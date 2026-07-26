@@ -20,6 +20,7 @@ import {
   Search,
   ShieldCheck,
   Sparkles,
+  Trash2,
   Upload,
   X,
 } from "lucide-react"
@@ -32,7 +33,13 @@ import {
   useMemo,
   useState,
 } from "react"
-import { createAnalysis, downloadAnalysisFile, listAnalyses, waitForAnalysis } from "./api"
+import {
+  createAnalysis,
+  deleteAnalysis as deleteSavedAnalysis,
+  downloadAnalysisFile,
+  listAnalyses,
+  waitForAnalysis,
+} from "./api"
 
 type LoadState = "idle" | "loading" | "uploading" | "polling"
 type Route = { name: "home" } | { name: "analysis"; id?: string } | { name: "workspace" }
@@ -44,6 +51,7 @@ const analysisSections = [
   "Documentation",
   "Safety evidence",
   "Comparable filings",
+  "Filing diff",
   "Amendment plan",
 ]
 
@@ -58,6 +66,7 @@ export default function App() {
   const refreshHistory = useCallback(async () => {
     try {
       const analyses = await listAnalyses()
+      setError(null)
       setHistory(analyses)
       setActiveAnalysis((current) => {
         const currentRoute = readRoute()
@@ -137,6 +146,23 @@ export default function App() {
     }
   }
 
+  async function removeAnalysis() {
+    if (!activeAnalysis?.id) return
+    const confirmed = window.confirm(
+      `Permanently delete ${activeAnalysis.filingName} and its stored files? This cannot be undone.`
+    )
+    if (!confirmed) return
+
+    try {
+      await deleteSavedAnalysis(activeAnalysis.id)
+      setHistory((current) => current.filter((analysis) => analysis.id !== activeAnalysis.id))
+      setActiveAnalysis(null)
+      navigate({ name: "workspace" })
+    } catch (deleteError) {
+      setError(errorMessage(deleteError))
+    }
+  }
+
   const report =
     route.name === "analysis" && route.id === "demo"
       ? demoReport
@@ -171,6 +197,7 @@ export default function App() {
           analysis={activeAnalysis}
           error={error}
           onBack={() => navigate({ name: "home" })}
+          onDelete={removeAnalysis}
           onDownload={download}
         />
       ) : null}
@@ -385,7 +412,7 @@ function UploadPanel({
     <div className="upload-card">
       <div className="upload-card-top">
         <span>NEW ANALYSIS</span>
-        <span>PDF · MAX 40 MB</span>
+        <span>PDF · MAX 40 MB / 500 PAGES</span>
       </div>
       <label className={isProcessing ? "upload-target is-busy" : "upload-target"}>
         <span className="upload-icon-wrap">
@@ -497,12 +524,14 @@ function AnalysisPage({
   analysis,
   error,
   onBack,
+  onDelete,
   onDownload,
 }: {
   report: ReadinessReport | undefined
   analysis: AnalysisRecord | null
   error: string | null
   onBack: () => void
+  onDelete: () => void
   onDownload: (kind: "outline" | "export") => void
 }) {
   const modules = report?.modules ?? demoReport.modules
@@ -544,6 +573,9 @@ function AnalysisPage({
               <button type="button" onClick={() => onDownload("outline")}>
                 <Download /> Outline
               </button>
+              <button type="button" onClick={onDelete} aria-label="Delete analysis">
+                <Trash2 /> Delete
+              </button>
               <button type="button" className="primary-action" onClick={() => onDownload("export")}>
                 <Download /> Export report
               </button>
@@ -582,6 +614,12 @@ function AnalysisPage({
             <strong>
               {report.textStats.pageCount || "—"} pages ·{" "}
               {report.textStats.wordCount.toLocaleString()} words
+            </strong>
+            <span>MODEL COST</span>
+            <strong>
+              {report.runMetadata.cacheHit
+                ? "Cached · $0.00"
+                : `$${report.runMetadata.estimatedCostUsd.toFixed(2)}`}
             </strong>
           </div>
         </aside>
@@ -652,6 +690,19 @@ function AnalysisPage({
                         ))}
                       </div>
                     ) : null}
+                    {finding.citations?.length ? (
+                      <div className="citation-list">
+                        <span>SOURCE EXCERPTS</span>
+                        {finding.citations.map((citation) => (
+                          <blockquote
+                            key={`${finding.id}-${citation.pageNumber}-${citation.excerpt}`}
+                          >
+                            <strong>PDF page {citation.pageNumber}</strong>
+                            <p>“{citation.excerpt}”</p>
+                          </blockquote>
+                        ))}
+                      </div>
+                    ) : null}
                   </div>
                 </details>
               ))}
@@ -668,6 +719,40 @@ function AnalysisPage({
                 item.summary,
               ])}
             />
+            {(modules.evidenceMatrix ?? []).length > 0 ? (
+              <div className="evidence-matrix">
+                {(modules.evidenceMatrix ?? []).map((item) => (
+                  <details key={item.id}>
+                    <summary>
+                      <StatusPill value={item.status} />
+                      <strong>{item.requirement}</strong>
+                      <span>{item.domain.replaceAll("_", " ")}</span>
+                      <Plus />
+                    </summary>
+                    <div>
+                      <p>{item.assessment}</p>
+                      <small>{item.evidenceSummary}</small>
+                      {item.citations.map((citation) => (
+                        <blockquote key={`${item.id}-${citation.pageNumber}-${citation.excerpt}`}>
+                          <strong>PDF page {citation.pageNumber}</strong>
+                          <p>“{citation.excerpt}”</p>
+                        </blockquote>
+                      ))}
+                      {item.unresolvedQuestions.length > 0 ? (
+                        <>
+                          <h3>Unresolved questions</h3>
+                          <ul>
+                            {item.unresolvedQuestions.map((question) => (
+                              <li key={question}>{question}</li>
+                            ))}
+                          </ul>
+                        </>
+                      ) : null}
+                    </div>
+                  </details>
+                ))}
+              </div>
+            ) : null}
           </section>
 
           <section id="safety-evidence" className="report-section">
@@ -679,6 +764,12 @@ function AnalysisPage({
                   <strong>{signal.label}</strong>
                   <p>{signal.summary}</p>
                   <small>{signal.evidence.join(" · ")}</small>
+                  {signal.citations?.map((citation) => (
+                    <blockquote key={`${signal.id}-${citation.pageNumber}-${citation.excerpt}`}>
+                      <strong>PDF page {citation.pageNumber}</strong>
+                      <p>“{citation.excerpt}”</p>
+                    </blockquote>
+                  ))}
                 </div>
               ))}
               {modules.safetySignals.length === 0 ? (
@@ -694,7 +785,18 @@ function AnalysisPage({
                 <div key={filing.id}>
                   <div className="comparable-head">
                     <span>{filing.status}</span>
-                    <strong>{filing.name}</strong>
+                    {filing.sourceUrl ? (
+                      <a href={filing.sourceUrl} target="_blank" rel="noreferrer">
+                        {filing.name}
+                      </a>
+                    ) : (
+                      <strong>{filing.name}</strong>
+                    )}
+                    <small>
+                      {filing.similarityScore === undefined
+                        ? "unscored"
+                        : `${Math.round(filing.similarityScore * 100)}% match`}
+                    </small>
                     <MoreHorizontal />
                   </div>
                   <p>{filing.rationale}</p>
@@ -703,24 +805,228 @@ function AnalysisPage({
                       <span key={signal}>{signal}</span>
                     ))}
                   </div>
+                  {filing.differences.length > 0 ? (
+                    <ul>
+                      {filing.differences.map((difference) => (
+                        <li key={difference}>{difference}</li>
+                      ))}
+                    </ul>
+                  ) : null}
+                  {filing.evidenceMatches?.length ? (
+                    <div className="comparable-evidence">
+                      {filing.evidenceMatches.map((match) => (
+                        <details key={`${filing.id}-${match.requirementId}`}>
+                          <summary>
+                            <strong>{match.requirement}</strong>
+                            <span>{Math.round(match.relevanceScore * 100)}% passage match</span>
+                            <Plus />
+                          </summary>
+                          <p>{match.rationale}</p>
+                          {match.assessments?.map((assessment) => (
+                            <div
+                              className="comparable-assessment"
+                              key={`${filing.id}-${match.requirementId}-${assessment.question}`}
+                            >
+                              <span>{assessment.conclusion.replaceAll("_", " ")}</span>
+                              <h4>{assessment.question}</h4>
+                              <p>{assessment.rationale}</p>
+                              {assessment.transferableElements.length > 0 ? (
+                                <p>
+                                  <strong>Potentially transferable:</strong>{" "}
+                                  {assessment.transferableElements.join("; ")}
+                                </p>
+                              ) : null}
+                              {assessment.limitations.length > 0 ? (
+                                <p>
+                                  <strong>Limits:</strong> {assessment.limitations.join("; ")}
+                                </p>
+                              ) : null}
+                            </div>
+                          ))}
+                          {match.citations.map((citation) => (
+                            <blockquote
+                              key={`${filing.id}-${match.requirementId}-${citation.pageNumber}-${citation.excerpt}`}
+                            >
+                              <strong>Comparator PDF page {citation.pageNumber}</strong>
+                              <p>“{citation.excerpt}”</p>
+                            </blockquote>
+                          ))}
+                        </details>
+                      ))}
+                    </div>
+                  ) : null}
                 </div>
               ))}
             </div>
           </section>
 
+          {modules.comparableActions.length > 0 ? (
+            <section className="report-section">
+              <SectionHeading
+                number="05A"
+                title="Comparator-informed actions"
+                aside="Amendment and research plan"
+              />
+              <div className="comparable-actions">
+                {modules.comparableActions.map((action) => (
+                  <article key={action.id}>
+                    <header>
+                      <StatusPill value={action.priority} />
+                      <span>{action.requirementId.replaceAll("-", " ")}</span>
+                    </header>
+                    <h3>{action.question}</h3>
+                    <p>{action.synthesis}</p>
+                    <div>
+                      <section>
+                        <h4>Amendment action</h4>
+                        <p>{action.amendmentAction}</p>
+                      </section>
+                      <section>
+                        <h4>Research action</h4>
+                        <p>{action.researchAction}</p>
+                      </section>
+                    </div>
+                    {action.evidenceNeeded.length > 0 ? (
+                      <ul>
+                        {action.evidenceNeeded.map((item) => (
+                          <li key={item}>{item}</li>
+                        ))}
+                      </ul>
+                    ) : null}
+                    <small>
+                      Subject PDF: {action.subjectCitationPages.join(", ")}. Comparator support:{" "}
+                      {action.comparatorSupport
+                        .map(
+                          (support) =>
+                            `${support.filingName}, PDF ${support.pageNumbers.join(", ")} (${support.conclusion.replaceAll("_", " ")})`
+                        )
+                        .join("; ")}
+                    </small>
+                  </article>
+                ))}
+              </div>
+            </section>
+          ) : null}
+
+          <section id="filing-diff" className="report-section">
+            <SectionHeading number="06" title="Filing diff" aside="Expected versus observed" />
+            <DataTable
+              headers={["Requirement", "Status", "Recommended action"]}
+              rows={modules.filingDiff.map((item) => [
+                item.label,
+                <StatusPill key={`${item.id}-status`} value={item.status} />,
+                item.recommendedAction,
+              ])}
+            />
+            {modules.filingDiff.some((item) => item.change) ? (
+              <div className="filing-diff-details">
+                {modules.filingDiff.map((item) => (
+                  <details key={`${item.id}-evidence`}>
+                    <summary>
+                      <span>{item.change?.replaceAll("_", " ")}</span>
+                      <strong>{item.label}</strong>
+                      <small>
+                        {item.baselineStatus ?? "unknown"} → {item.draftStatus ?? "unknown"}
+                      </small>
+                      <Plus />
+                    </summary>
+                    <div>
+                      <section>
+                        <h3>Baseline filing</h3>
+                        <p>{item.baselineExpectation}</p>
+                        {item.baselineCitations?.map((citation) => (
+                          <blockquote
+                            key={`${item.id}-baseline-${citation.pageNumber}-${citation.excerpt}`}
+                          >
+                            <strong>PDF page {citation.pageNumber}</strong>
+                            <p>“{citation.excerpt}”</p>
+                          </blockquote>
+                        ))}
+                      </section>
+                      <section>
+                        <h3>Revised filing</h3>
+                        <p>{item.draftSignal}</p>
+                        {item.draftCitations?.map((citation) => (
+                          <blockquote
+                            key={`${item.id}-draft-${citation.pageNumber}-${citation.excerpt}`}
+                          >
+                            <strong>PDF page {citation.pageNumber}</strong>
+                            <p>“{citation.excerpt}”</p>
+                          </blockquote>
+                        ))}
+                      </section>
+                    </div>
+                  </details>
+                ))}
+              </div>
+            ) : null}
+            {modules.filingDiff.length === 0 ? (
+              <p className="muted-empty">No filing-diff items were generated.</p>
+            ) : null}
+          </section>
+
           <section id="amendment-plan" className="report-section">
-            <SectionHeading number="06" title="Amendment plan" aside="Recommended sequence" />
+            <SectionHeading number="07" title="Amendment plan" aside="Recommended sequence" />
             <div className="amendment-list">
               {modules.amendmentOutline.map((section, index) => (
                 <div key={section.id}>
                   <span>{(index + 1).toString().padStart(2, "0")}</span>
                   <div>
-                    <strong>{section.title}</strong>
+                    <div className="amendment-head">
+                      <strong>{section.title}</strong>
+                      {section.priority ? <StatusPill value={section.priority} /> : null}
+                    </div>
+                    <small>
+                      {[
+                        section.ownerRole ? `Owner: ${section.ownerRole}` : "",
+                        section.domains?.length ? section.domains.join(" · ") : "",
+                      ]
+                        .filter(Boolean)
+                        .join(" · ")}
+                    </small>
                     <ul>
                       {section.items.map((item) => (
                         <li key={item}>{item}</li>
                       ))}
                     </ul>
+                    {section.deliverables?.length ? (
+                      <div className="amendment-deliverables">
+                        <strong>Deliverables</strong>
+                        <ul>
+                          {section.deliverables.map((item) => (
+                            <li key={item}>{item}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    ) : null}
+                    {section.dependencies?.length ? (
+                      <p className="amendment-dependencies">
+                        Depends on: {section.dependencies.join(", ")}
+                      </p>
+                    ) : null}
+                    {section.citations?.length ? (
+                      <div className="amendment-sources">
+                        {section.citations.map((citation) => (
+                          <span
+                            key={`${section.id}-${citation.pageNumber}-${citation.excerpt}`}
+                            title={citation.excerpt}
+                          >
+                            PDF page {citation.pageNumber}
+                          </span>
+                        ))}
+                      </div>
+                    ) : null}
+                    {section.comparatorSources?.length ? (
+                      <div className="amendment-sources">
+                        {section.comparatorSources.map((source) => (
+                          <span
+                            key={`${section.id}-${source.filingName}-${source.pageNumbers.join("-")}`}
+                          >
+                            {source.filingName}: PDF {source.pageNumbers.join(", ")}
+                          </span>
+                        ))}
+                      </div>
+                    ) : null}
                   </div>
                 </div>
               ))}
@@ -806,10 +1112,17 @@ function WorkspacePage({
   onOpenAnalysis: (analysis: AnalysisRecord) => void
   onUpload: () => void
 }) {
+  const [searchQuery, setSearchQuery] = useState("")
   const completed = useMemo(
     () => history.filter((analysis) => analysis.status === "complete"),
     [history]
   )
+  const visibleHistory = useMemo(() => {
+    const query = searchQuery.trim().toLowerCase()
+    return query
+      ? history.filter((analysis) => analysis.filingName.toLowerCase().includes(query))
+      : history
+  }, [history, searchQuery])
 
   return (
     <main className="workspace-page">
@@ -861,7 +1174,13 @@ function WorkspacePage({
           </div>
           <label>
             <Search />
-            <input type="search" placeholder="Search filings" aria-label="Search filings" />
+            <input
+              type="search"
+              placeholder="Search filings"
+              aria-label="Search filings"
+              value={searchQuery}
+              onChange={(event) => setSearchQuery(event.currentTarget.value)}
+            />
           </label>
         </div>
 
@@ -878,7 +1197,7 @@ function WorkspacePage({
               <span>Updated</span>
               <span />
             </div>
-            {history.map((analysis) => (
+            {visibleHistory.map((analysis) => (
               <button
                 className="library-row"
                 type="button"
@@ -897,6 +1216,9 @@ function WorkspacePage({
                 <ChevronRight />
               </button>
             ))}
+            {visibleHistory.length === 0 ? (
+              <p className="muted-empty">No filings match “{searchQuery}”.</p>
+            ) : null}
           </div>
         ) : (
           <div className="workspace-empty">

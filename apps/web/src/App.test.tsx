@@ -38,6 +38,8 @@ describe("App", () => {
     expect(screen.getByRole("heading", { name: "Documentation benchmark" })).toBeInTheDocument()
     expect(screen.getByRole("heading", { name: "Safety evidence" })).toBeInTheDocument()
     expect(screen.getByRole("heading", { name: "Comparable filings" })).toBeInTheDocument()
+    expect(screen.getByRole("heading", { name: "Filing diff" })).toBeInTheDocument()
+    expect(screen.queryByRole("heading", { name: "Research references" })).not.toBeInTheDocument()
     expect(screen.getByRole("heading", { name: "Amendment plan" })).toBeInTheDocument()
   })
 

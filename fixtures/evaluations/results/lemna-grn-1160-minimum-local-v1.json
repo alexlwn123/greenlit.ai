@@ -1,0 +1,85 @@
+{
+  "resultVersion": "1.0.0",
+  "fixtureId": "lemna-grn-1160-1256",
+  "subjectSourceId": "grn-1160-notice",
+  "pipelineVersion": "minimum-local-v1",
+  "extractor": "pdfjs-dist-legacy-with-readable-text-fallback",
+  "scorer": "deterministic-required-section-coverage-v1",
+  "executedAt": "2026-07-24",
+  "inputSha256": "8eff49d11b3d9557018e590866dcb7405026056afe989cf25c3593a728935c78",
+  "extraction": {
+    "pageCount": 230,
+    "characterCountBeforeScorerNormalization": 496452,
+    "normalizedCharacterCount": 474595,
+    "wordCount": 80071
+  },
+  "reportedReadinessScore": 95,
+  "reportedSummary": "The filing appears structurally ready for deeper review, with follow-up focused on evidence quality.",
+  "confirmedFindingEvaluation": {
+    "required": 3,
+    "recovered": 0,
+    "recall": 0,
+    "missedIds": [
+      "incorporation-independent-conclusions",
+      "public-pivotal-evidence",
+      "test-article-bridge"
+    ]
+  },
+  "benchmarkEvaluation": {
+    "fixtureFields": 9,
+    "exactStatusMatches": 3,
+    "exactStatusAccuracy": 0.3333333333,
+    "falseClearIds": ["intended-uses-exposure", "self-contained-literature-search"],
+    "unrepresentedIds": [
+      "public-pivotal-safety-evidence",
+      "independent-evidence-synthesis",
+      "test-article-comparability",
+      "allergenicity-assessment"
+    ]
+  },
+  "safetySignalEvaluation": {
+    "expectedConcepts": 5,
+    "meaningfullyIdentifiedConcepts": 1,
+    "groundedConcepts": 0,
+    "missedConcepts": [
+      "cross-species and cross-product extrapolation",
+      "test-article composition and processing comparability",
+      "potential allergenicity and cross-reactivity",
+      "minor constituent and anti-nutrient controls"
+    ]
+  },
+  "groundingEvaluation": {
+    "findingsWithPdfPageOrExcerpt": 0,
+    "passes": false
+  },
+  "misleadingOutputs": [
+    {
+      "module": "readiness",
+      "description": "A notice with three FDA-confirmed substantive deficiencies received 95 out of 100."
+    },
+    {
+      "module": "comparable_filings",
+      "description": "Returned a generic enzyme-preparation comparator for a plant-derived protein."
+    },
+    {
+      "module": "research_references",
+      "description": "Converted future years 2085, 2095, and 2033 into reference records."
+    },
+    {
+      "module": "filing_diff",
+      "description": "Marked every row aligned without comparing the notice to a selected filing."
+    },
+    {
+      "module": "amendment_outline",
+      "description": "Generated generic revisions not traceable to substantive findings."
+    }
+  ],
+  "passCriteria": {
+    "confirmedFindingRecall": false,
+    "groundedEvidence": false,
+    "specificRecommendations": false,
+    "weakMissingDistinction": false,
+    "mustNotDoRules": false
+  },
+  "fixturePass": false
+}

@@ -1,0 +1,82 @@
+{
+  "resultVersion": "1.0.0",
+  "fixtureId": "lemna-grn-1160-1256",
+  "subjectSourceId": "grn-1160-notice",
+  "pipeline": "original-python-claude-analyzer",
+  "reportVersion": "1.0",
+  "executedAt": "2026-07-24",
+  "inputSha256": "8eff49d11b3d9557018e590866dcb7405026056afe989cf25c3593a728935c78",
+  "input": {
+    "extractedCharacters": 473780,
+    "analysisCharacterLimit": 400000,
+    "truncated": true,
+    "skippedPages": 0
+  },
+  "reportedScores": {
+    "healthScore": 43,
+    "gapScore": 57
+  },
+  "outputCounts": {
+    "consolidatedGaps": 17,
+    "safetySignals": 3,
+    "recommendedNextSteps": 5,
+    "approvedComparables": 5,
+    "withdrawnComparables": 5
+  },
+  "confirmedFindingEvaluation": {
+    "required": 3,
+    "exactlyRecovered": 1,
+    "exactRecall": 0.3333333333,
+    "fullyOrPartiallyCovered": 2,
+    "conceptCoverage": 0.6666666667,
+    "recoveredIds": ["test-article-bridge"],
+    "partiallyCoveredIds": ["public-pivotal-evidence"],
+    "missedIds": ["incorporation-independent-conclusions"]
+  },
+  "verifiedHighValueFindings": [
+    {
+      "id": "test-article-bridge",
+      "description": "LLP differs materially in protein and fiber concentration from the read-across product and lacks product-specific in vivo toxicology."
+    },
+    {
+      "id": "batch-4-apc-oos",
+      "description": "Batch 4 reports 22,000 CFU/g against an aerobic plate-count specification below 15,000 CFU/g."
+    },
+    {
+      "id": "mankai-noael-discrepancy",
+      "description": "The notice reports the high-dose value while EFSA selected the 6.5 g/kg/day middle dose as the NOAEL."
+    }
+  ],
+  "topComparableEvaluation": {
+    "strongApprovedMatches": [1256, 742],
+    "strongWithdrawnMatches": [1160, 1072, 984],
+    "needsRelevanceThreshold": true
+  },
+  "preserve": [
+    "domain-based deep analysis",
+    "evidence-specific gaps",
+    "separate safety signals",
+    "gap-linked recommendations",
+    "corpus retrieval",
+    "section-aware comparable selection",
+    "limitations and caveats"
+  ],
+  "repair": [
+    "first-N-character truncation",
+    "missing excerpt and PDF-page provenance",
+    "missing pivotal-versus-supportive evidence role",
+    "missing incorporation and independent-conclusion analysis",
+    "FDA outcome-prediction language",
+    "binary presence-only benchmarking",
+    "low-relevance comparable tail",
+    "terminal summary KeyError",
+    "historical self-match handling"
+  ],
+  "operationalResult": {
+    "analysisReportWritten": true,
+    "terminalSummarySucceeded": false,
+    "terminalSummaryError": "KeyError: gaps"
+  },
+  "fixturePass": false,
+  "recoveryDecision": "port_and_repair"
+}

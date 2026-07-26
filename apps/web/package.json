@@ -11,8 +11,10 @@
     "test": "vitest run --passWithNoTests"
   },
   "dependencies": {
+    "@convex-dev/auth": "^0.0.94",
     "@greenlit/core": "workspace:*",
     "@vercel/blob": "2.6.1",
+    "convex": "^1.40.0",
     "lucide-react": "^1.17.0",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",

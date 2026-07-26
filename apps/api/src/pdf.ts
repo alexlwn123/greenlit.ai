@@ -1,6 +1,12 @@
 export type ExtractedPdfText = {
   text: string
   pageCount: number
+  pages: ExtractedPdfPage[]
+}
+
+export type ExtractedPdfPage = {
+  pageNumber: number
+  text: string
 }
 
 export async function extractPdfText(bytes: Uint8Array): Promise<ExtractedPdfText> {
@@ -13,7 +19,8 @@ export async function extractPdfText(bytes: Uint8Array): Promise<ExtractedPdfTex
     if (fallbackText.length > 0) {
       return {
         text: fallbackText,
-        pageCount: 0,
+        pageCount: 1,
+        pages: [{ pageNumber: 1, text: fallbackText }],
       }
     }
 
@@ -30,6 +37,7 @@ async function extractWithPdfJs(bytes: Uint8Array): Promise<ExtractedPdfText> {
   })
   const pdf = await loadingTask.promise
   const pageTexts: string[] = []
+  const pages: ExtractedPdfPage[] = []
 
   for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber += 1) {
     const page = await pdf.getPage(pageNumber)
@@ -39,6 +47,7 @@ async function extractWithPdfJs(bytes: Uint8Array): Promise<ExtractedPdfText> {
       .filter(Boolean)
       .join(" ")
     pageTexts.push(text)
+    pages.push({ pageNumber, text })
   }
 
   const text = pageTexts.join("\n\n").trim()
@@ -49,6 +58,7 @@ async function extractWithPdfJs(bytes: Uint8Array): Promise<ExtractedPdfText> {
   return {
     text,
     pageCount: pdf.numPages,
+    pages,
   }
 }
 

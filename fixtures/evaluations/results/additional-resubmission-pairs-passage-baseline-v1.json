@@ -1,0 +1,769 @@
+{
+  "fixtureVersion": "1.0.0",
+  "pairs": [
+    {
+      "id": "d-psicose-755-828",
+      "baselineGrn": 755,
+      "revisedGrn": 828,
+      "baseline": {
+        "pageCount": 37,
+        "characterCount": 69796,
+        "requirements": [
+          {
+            "id": "identity-composition",
+            "topScore": 1,
+            "citations": [
+              {
+                "pageNumber": 12,
+                "excerpt": "D-Allulose (D-Psicose) 11 2.C. Composition and Specifications of D-Allulose As shown in Tables 3-1 to 3-3, the only differences in composition and specification are found in the concentrations of D-allulose, excipients (glucose, fructose, and oligosaccharides), and moisture. Specifications for microbial and heavy metal content are the same for powder and liquid forms. Composition n Method (1 lot) (2 lot) (3 lot) Appearance Clear yellow liquid Visu…"
+              },
+              {
+                "pageNumber": 10,
+                "excerpt": "…on of both strongly acidic and strongly basic resins) to remove any impurities (e.g. calcium, manganese, chloride, and other ionic components, including amino acids, peptides, and proteins). 4. Following ion exchange purification, the D-allulose solution is concentrated with an evaporator to produce allulose syrup ≥ 10%. 5. This concentrated syrup is pumped into a separation chromatography system to separate D-allulose from other sugars (i.e., fructose). 6. Using an evaporator, the solution is concentrated to the final density of ≥ 65 ºBx to produce allulose syrup ≥ 90%. 7. The final concentra…"
+              }
+            ]
+          },
+          {
+            "id": "manufacturing",
+            "topScore": 1,
+            "citations": [
+              {
+                "pageNumber": 10,
+                "excerpt": "D-Allulose (D-Psicose) 9 SamYang’s Manufacturing Process D-allulose is manufactured from fructose in an aqueous solution by enzymatic epimerization in the presence of manganese chloride or calcium chloride. 1. The fructose syrup ( ≥ 75% solids concentration) is diluted with clean water (>50% solids concentration) in a reception tank and then stored in a stock tank. 2. The neutralized fructose syrup is passed into an immobilized cell system (calcium al…"
+              },
+              {
+                "pageNumber": 31,
+                "excerpt": "…AS Determination (Safety Determination) Numerous human and animal studies have reported benefits of D-allulose with no major adverse effects. Samyang Corp. uses a HACCP-controlled manufacturing process and rigorously tests its final production batches to verify adherence to quality control specifications and, thus, are manufactured consistent with cGMP for food (21 CFR Part 110 and Part 117 Subpart B). The raw materials and processing aids used in the manufacturing process are food grade and/or commonly used in fermentation and food manufacturing processes. There is broad-based and widely diss…"
+              }
+            ]
+          },
+          {
+            "id": "specifications-batch-analysis",
+            "topScore": 1,
+            "citations": [
+              {
+                "pageNumber": 12,
+                "excerpt": "D-Allulose (D-Psicose) 11 2.C. Composition and Specifications of D-Allulose As shown in Tables 3-1 to 3-3, the only differences in composition and specification are found in the concentrations of D-allulose, excipients (glucose, fructose, and oligosaccharides), and moisture. Specifications for microbial and heavy metal content are the same for powder and liquid forms. Composition n Method (1 lot) (2 lot) (3 lot) Appearance Clear yellow liquid Visual Clear yellow…"
+              },
+              {
+                "pageNumber": 13,
+                "excerpt": "…a Negative AOAC 989.14 Negative Negative Negative Staphylococcus aureus Negative AOAC 987.09 Negative Negative Negative *Dry wt. basis, wt/wt; CFU=colony forming units. Table 3-3. Specifications and Analytical Values of Product 3 (Crystalline D - allulose, ≥ 98%) Composition Specificatio n Analytical Method COA (1 lot) COA (2 lot) COA (3 lot) Appearance Powder Visual Powder Powder Powder Odor No odor No odor No odor No odor Allulose*, % ≥ 98 HPLC 99.2 99.4 99.3 Moisture, % ≤2 AOAC 941.14 0.15 0.16 0.14 Ash, % ≤0.1 AOAC 900.02 0.00 0.00 0.00 Pb, ppm ≤0.3 AOAC 2015.01 0.0065 0.0054 0.0062 As, pp…"
+              }
+            ]
+          },
+          {
+            "id": "intended-uses-exposure",
+            "topScore": 1,
+            "citations": [
+              {
+                "pageNumber": 6,
+                "excerpt": "…through 7 of this GRAS notice, is not subject to the premarket approval requirements of the FD&C Act based on its conclusion that the substance is GRAS under the conditions of its intended use. 1.A. Name and Address of the Notifier Contact person: Dr. Chong-Jin Park Company name: SamYang Corp. Address: 295 Pangyo-ro, Bundang-gu, Seongnam-si, Gyeonggi-do, Korea Telephone number: +82-2-740-7111 E Mail Address: Chongjin.park@samyang.com 1.B. Common or Trade Name Common name is D-allulose, D-psicose, or pseudo-fructose. 1.C. Applicable Conditions of Use of the Notified Substance 1.C.1. Foods in Wh…"
+              },
+              {
+                "pageNumber": 14,
+                "excerpt": "D-Allulose (D-Psicose) 13 PART 3. DIETARY EXPOSURE 3.A. Exposure Estimates for D-Allulose Under the Intended Use The intended use of D-allulose is in the same food products and at the same use levels to those described in GRN 693. Intended use levels of GRN 693 were adopted from GRNs 400 and 498. The results of the EDI assessment are summarized in the two tables below (Tables 4-1 and 4-2). The first table presents the results of the mean of the popul…"
+              }
+            ]
+          },
+          {
+            "id": "public-pivotal-safety-evidence",
+            "topScore": 0.833,
+            "citations": [
+              {
+                "pageNumber": 22,
+                "excerpt": "D-Allulose (D-Psicose) 21 Table 7. Summary of Animal Toxicity Studies Species Dosage Duration Primary endpoints and NOAEL Reference Unpublished Study of SamYang’s D-allulose Produced by Non-GMO M. foliorum Rats, SD 0 and 5 g/kg bw Single dose, 14 d observation LD50>>5 g/kg bw Kim, 2015 Published Study First Reviewed in This GRAS Notice Dogs, beagle 0 or 200 mg/kg bw 12 weeks Clinical biochemistry, hematology, body weight NOAEL- 200 mg/kg bw/d Nishii et al., 2017 Studies Reviewed in Previous GRAS Notices 400, 498, and 693 Dogs 1 an…"
+              },
+              {
+                "pageNumber": 27,
+                "excerpt": "…study showed that a single dose of 3 g/kg bw did not cause any treatment-related abnormalities in Sprague-Dawley rats. The LD 50 was determined to be far above 3 g/kg bw. A 90 day subchronic toxicity study determined the NOAEL of M. foliorum SYG27B-MF as 2,000 mg/kg bw/day, the highest level tested. 6.C.5.1. A Single-Dose Oral Gavage Toxicity Study of M. foliorum SYG27B-MF in Rats The acute oral toxicities of M. foliorum SYG27B-MF were studied in 8-week old Sprague-Dawley (SD) rats (n=5/group) (Lee, 2016a). Test substance was administered by oral gavage at a single dose of 0 or 3 g/kg bw. Anim…"
+              }
+            ]
+          },
+          {
+            "id": "independent-evidence-synthesis",
+            "topScore": 0.167,
+            "citations": [
+              {
+                "pageNumber": 2,
+                "excerpt": "D-Allulose (D-Psicose) 1 GENERALLY RECOGNIZED AS SAFE (GRAS) NOTICE FOR D-ALLULOSE (D-PSICOSE) AS A FOOD INGREDIENT On behalf of SamYang Corp. 295 Pangyo-ro, Bundang-gu, Seongnam-si Gyeonggi-do, Republic of Korea Prepared by: NutraSource, Inc. 6309 Morning Dew Court Clarksville, MD 21029 Tel: 410-531-3336 Susanscho1@yahoo.com"
+              },
+              {
+                "pageNumber": 6,
+                "excerpt": "D-Allulose (D-Psicose) 5 PART 1. SIGNED STATEMENTS AND A CERTIFICATION Pursuant to 21 C.F.R. Part 170, subpart E, SamYang Corp. submits a Generally Recognized as Safe (GRAS) notice and claims that the use of D-allulose in foods, as described in Parts 2 through 7 of this GRAS notice, is not subject to the premarket approval requirements of the FD&C Act based on its conclusion that the substance is GRAS under the conditions of its intended use. 1.A. Name and Address of the Notifier Contact person: Dr. Chong-Jin Park Company name: SamYang Corp. Address: 2…"
+              }
+            ]
+          },
+          {
+            "id": "test-article-comparability",
+            "topScore": 0.5,
+            "citations": [
+              {
+                "pageNumber": 12,
+                "excerpt": "D-Allulose (D-Psicose) 11 2.C. Composition and Specifications of D-Allulose As shown in Tables 3-1 to 3-3, the only differences in composition and specification are found in the concentrations of D-allulose, excipients (glucose, fructose, and oligosaccharides), and moisture. Specifications for microbial and heavy metal content are the same for powder and liquid forms. Composition n Method (1 lot) (2 lot) (3 lot) Appearance Clear yellow liquid Visu…"
+              },
+              {
+                "pageNumber": 13,
+                "excerpt": "…C 987.09 Negative Negative Negative *Dry wt. basis, wt/wt; CFU=colony forming units. Table 3-3. Specifications and Analytical Values of Product 3 (Crystalline D - allulose, ≥ 98%) Composition Specificatio n Analytical Method COA (1 lot) COA (2 lot) COA (3 lot) Appearance Powder Visual Powder Powder Powder Odor No odor No odor No odor No odor Allulose*, % ≥ 98 HPLC 99.2 99.4 99.3 Moisture, % ≤2 AOAC 941.14 0.15 0.16 0.14 Ash, % ≤0.1 AOAC 900.02 0.00 0.00 0.00 Pb, ppm ≤0.3 AOAC 2015.01 0.0065 0.0054 0.0062 As, ppm ≤0.3 AOAC 2015.01 0.0027 0.0059 0.0017 Cd, ppm ≤0.3 AOAC 2015.01 0.0014 0.0016 0.0…"
+              }
+            ]
+          },
+          {
+            "id": "self-contained-literature-search",
+            "topScore": 0.167,
+            "citations": [
+              {
+                "pageNumber": 7,
+                "excerpt": "…ormation Act, 5 U.S.C. §552. 1.G. Certification We certify that, to the best of our knowledge, our GRAS notice is a complete, representative, and balanced submission that includes unfavorable information, as well as favorable information, available and pertinent to the evaluation of the safety and GRAS status of the use of the substance. ________________ (b) (6) 12/15/2017 _________________ Name; Chong-Jin Park, Ph.D. Date Title: Team leader Please address correspondence to Susan S. Cho, Ph.D. NutraSource, Inc., 6309 Morning Dew Ct, Clarksville, MD 21029 Susanscho1@yahoo.com ; 410-531-3336 (O)…"
+              }
+            ]
+          },
+          {
+            "id": "allergenicity-assessment",
+            "topScore": 0,
+            "citations": []
+          }
+        ]
+      },
+      "revised": {
+        "pageCount": 44,
+        "characterCount": 89857,
+        "requirements": [
+          {
+            "id": "identity-composition",
+            "topScore": 1,
+            "citations": [
+              {
+                "pageNumber": 14,
+                "excerpt": "D-Allulose (D-Psicose) 2.C. Composition and Specifications of D-Allulose As shown in Tables 4-1 to 4-3, the only differences in composition and specification are found in the concentrations of D-allulose, other carbohydrates (glucose, fructose, and oligosaccharides), and moisture. The crystalline D-allulose powder is ≥ 98% pure on a dry weight basis, as measured by high performance liquid chromatography (HPLC; Tables 4-1 and 5). Specifications…"
+              },
+              {
+                "pageNumber": 10,
+                "excerpt": "D-Allulose (D-Psicose) almost white, and non-hygroscopic. D-allulose is a naturally occurring monosaccharide present in small quantities in food products. Standards of Identity In the notice, Samyang Corp. states its intention to use D-allulose in several food categories, including foods for which standards of identity exist, located in Title 21 of the Code of Federal Regulations. We note that an ingredient that is lawfully added to food products may be used in a standardized food only if it is permitted by the applicable standard of identity. 2.A.2. Potential Toxicants in the Sour…"
+              }
+            ]
+          },
+          {
+            "id": "manufacturing",
+            "topScore": 0.833,
+            "citations": [
+              {
+                "pageNumber": 12,
+                "excerpt": "D-Allulose (D-Psicose) Samyang’s Manufacturing Process D-allulose is manufactured from fructose in an aqueous solution by enzymatic epimerization in the presence of manganese sulfate or magnesium sulfate. The enzyme used is an immobilized Microbacterium foliorum harboring D-allulose-3-epimerase, which converts D-fructose to D- allulose. 1. The D-fructose syrup ( ≥ 75% solids concentration) is diluted with clean water (>50% solids concentration) in a…"
+              },
+              {
+                "pageNumber": 13,
+                "excerpt": "…chromatography Decolorization and desalting Concentration Allulose syrup ( ≥ 90% ) Crystallization Drying Crystalline Allulose ( ≥ 98% ) D-Allulose (D-Psicose) specifications. All processing aids used in the manufacturing process are food grade. Process tanks and lines are cleaned with sodium hydroxide and hydrogen peroxide following standard procedures common to the dairy industry. The ion exchange resins used in the manufacturing process are food grade and comply with 21 CFR 173.25. A flow diagram of the manufacturing process is presented in Figure 2. Figure 2. Flow Diagram of Manufacturing…"
+              }
+            ]
+          },
+          {
+            "id": "specifications-batch-analysis",
+            "topScore": 1,
+            "citations": [
+              {
+                "pageNumber": 14,
+                "excerpt": "D-Allulose (D-Psicose) 2.C. Composition and Specifications of D-Allulose As shown in Tables 4-1 to 4-3, the only differences in composition and specification are found in the concentrations of D-allulose, other carbohydrates (glucose, fructose, and oligosaccharides), and moisture. The crystalline D-allulose powder is ≥ 98% pure on a dry weight basis, as measured by high performance liquid chromatography (HPLC; Tables 4-1 and 5). Specifications for microbial an…"
+              },
+              {
+                "pageNumber": 35,
+                "excerpt": "…ustry materials and processes. Samyang Corp. uses a HACCP-controlled manufacturing process and rigorously tests its final production batches to verify adherence to quality control specifications. There is broad-based and widely disseminated knowledge concerning the chemistry of D-allulose. This GRAS determination is based on the data and information generally available and consented opinion about the safety of D-allulose. The literature indicates that D-allulose offers consumers benefits without adverse effects. The following safety evaluation fully considers the composition, intake, and nutri…"
+              }
+            ]
+          },
+          {
+            "id": "intended-uses-exposure",
+            "topScore": 1,
+            "citations": [
+              {
+                "pageNumber": 6,
+                "excerpt": "…through 7 of this GRAS notice, is not subject to the premarket approval requirements of the FD&C Act based on its conclusion that the substance is GRAS under the conditions of its intended use. 1.A. Name and Address of the Notifier Contact person: Dr. Chong-Jin Park Company name: Samyang Corp. Address: 295 Pangyo-ro, Bundang-gu, Seongnam-si, Gyeonggi-do, Korea 1.B. Common or Trade Name Common name is D-allulose, D-psicose, or pseudo-fructose. 1.C. Applicable Conditions of Use of the Notified Substance 1.C.1. Foods in Which the Substance is to be Used The intended use and use levels of Samyang…"
+              },
+              {
+                "pageNumber": 18,
+                "excerpt": "D-Allulose (D-Psicose) PART 3. DIETARY EXPOSURE 3.A. Exposure Estimates for D-Allulose Under the Intended Use The intended use of D-allulose is in the same food products and at the same use levels as those described in GRN 693. The results of the EDI assessment are summarized in Tables 6-1 and 6-2. Table 6-1 presents the results of the mean of the population as well as the 90 th percentile in g/day, and Table 6-2 in g/kg bw/day. The mean and 90 th…"
+              }
+            ]
+          },
+          {
+            "id": "public-pivotal-safety-evidence",
+            "topScore": 0.833,
+            "citations": [
+              {
+                "pageNumber": 26,
+                "excerpt": "Species Dosage Duration Primary endpoints and NOAEL Reference Unpublished Study of Samyang’s D-allulose Produced by Non-GMO M. foliorum Rats, SD 0 and 5 g/kg bw Single dose, 14 d observation LD50>>5 g/kg bw Lee, 2017 Published Study First Reviewed in This GRAS Notice Dogs, beagle 0 or 200 mg/kg bw 12 weeks Clinical biochemistry, hematology, body weight NOAEL- 200 mg/kg bw/d Nishii et al., 2017 Studies Reviewed in Previous GRAS Notices 400, 498, and 693 Dogs 1 an…"
+              },
+              {
+                "pageNumber": 35,
+                "excerpt": "…ulose in rats is 15.8-16.3 g/kg. A chronic toxicity study in rats showed that D-allulose at a dose of 1,280 mg/kg bw/day, the maximum level tested, did not show adverse effects. A 90-day subchronic toxicity study in rats reported the NOAEL for D-allulose as 3% of the diet, the highest level tested. A 90-day subchronic toxicity study in beagle dogs found that 200 mg/kg bw/day, the highest level tested, was well tolerated with no side effects. 4. An acute toxicity study of Samyang’s D-allulose, produced by using a non-GMO production microorganism, was found to be much higher than 5 g/kg bw, the…"
+              }
+            ]
+          },
+          {
+            "id": "independent-evidence-synthesis",
+            "topScore": 0.167,
+            "citations": [
+              {
+                "pageNumber": 1,
+                "excerpt": "…allulose described in the enplosed notification is exempt from the premarket approval requirement of the Federal Food , Drug, and Cosmetic Act because it has been determined to be generally recognized as safe (GRAS) , based on scientific procedures, for addition to foods . We bel eve that this determination and notification are in compliance with Pursuant to 21 C.F .R. Part 170, subpart E. We enclose an original copy of this notification and a CD Rom containing electronic files for your review. Please feel free to contact me if additional informatio n or clarification is needed as you proceed…"
+              },
+              {
+                "pageNumber": 2,
+                "excerpt": "D-Allulose (D-Psicose) GENERALLY RECOGNIZED AS SAFE (GRAS) NOTICE FOR D-ALLULOSE (D-PSICOSE) AS A FOOD INGREDIENT On behalf of Samyang Corp. Prepared by: NutraSource, Inc. 6309 Morning Dew Court Clarksville, MD 21029 Tel: 410-531-3336 Susanscho1@yahoo.com 1"
+              }
+            ]
+          },
+          {
+            "id": "test-article-comparability",
+            "topScore": 0.5,
+            "citations": [
+              {
+                "pageNumber": 14,
+                "excerpt": "D-Allulose (D-Psicose) 2.C. Composition and Specifications of D-Allulose As shown in Tables 4-1 to 4-3, the only differences in composition and specification are found in the concentrations of D-allulose, other carbohydrates (glucose, fructose, and oligosaccharides), and moisture. The crystalline D-allulose powder is ≥ 98% pure on a dry weight basis, as measured by high performance liquid chromatography (HPLC; Tables 4-1 and 5). Specifications…"
+              },
+              {
+                "pageNumber": 5,
+                "excerpt": "…ed Use and Maximum Use Levels of D-Allulose, % (w/w) 5 Table 2. Particle Size and Shape of Samyang’s D-allulose 10 Table 3. List of Raw Materials and Processing Aids 11 Table 4-1. Composition of Product 1 ( ≥ 98% Crystalline D-Allulose) 13 Table 4-2. Analytical Values of Product 2 ( ≥ 90% D-Allulose Syrup) 13 Table 4-3. Composition of Product 3 ( ≥ 10% D-Allulose Syrup) 14 Table 5. Specifications of Crystalline D-Allulose and D-Allulose Syrups 15 Table 6-1. Maximum EDIs of D-Allulose, g/day 17 Table 6-2. Maximum EDIs of D-Allulose, g/kg bw/day 17 Table 7. D-Allulose Content in Foods (adopted f…"
+              }
+            ]
+          },
+          {
+            "id": "self-contained-literature-search",
+            "topScore": 0.167,
+            "citations": [
+              {
+                "pageNumber": 7,
+                "excerpt": "…ormation Act, 5 U.S.C. §552. 1.G. Certification We certify that, to the best of our knowledge, our GRAS notice is a complete, representative, and balanced submission that includes unfavorable information, as well as favorable information, available and pertinent to the evaluation of the safety and GRAS status of the use of the substance. 11/20/2018 _________________ Date ________________ Name; Chong-Jin Park, Ph.D. Title: Vice President 6"
+              }
+            ]
+          },
+          {
+            "id": "allergenicity-assessment",
+            "topScore": 0,
+            "citations": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "rebaudioside-m-867-882",
+      "baselineGrn": 867,
+      "revisedGrn": 882,
+      "baseline": {
+        "pageCount": 62,
+        "characterCount": 221790,
+        "requirements": [
+          {
+            "id": "identity-composition",
+            "topScore": 1,
+            "citations": [
+              {
+                "pageNumber": 17,
+                "excerpt": "Specification Parameter Limit Manufacturing Lot Arsenic (ppm) NMT 1 <0.01 <0.01 <0.01 ~-------- - - - - I Mercury (ppm) NMT 1 <0.005 <0.005 <0.005 Specification Parameter Limit Manufacturing Lot Aerobic place count (CFU/g) NMT 1,000 <10 <10 <10 Yeast (CFU/g) NMT 100 <10 <10 <10 Mold (CFU/g) NMT 100 <10 <10 <10 Coliforms (/g) NMT 3 <3.0 <3.0 <3.0 Salmonella (/25 g) Negative Negative Negative Negative E. coli (/g) Nega…"
+              },
+              {
+                "pageNumber": 37,
+                "excerpt": "The BLAST searches identified sequence matches with 17 to 68% identity with various animal venom proteins and toxins and virulence factors, and associated E ‐ values ranging from 3x10 ‐ 60 to 10.0. E ‐ values greater than 1x10 ‐ 7 suggest that proteins are unlikely to share structural homology (Hileman et al. , 2002). The sequence alignments with low E ‐ values (in the range of 10 ‐ 9 to 10 ‐ 60 ) shared approximately 21 to 31% identity with cytochrome P450 monooxygenases. It s…"
+              }
+            ]
+          },
+          {
+            "id": "manufacturing",
+            "topScore": 0.833,
+            "citations": [
+              {
+                "pageNumber": 11,
+                "excerpt": "…tion Medium §184.1193 Used as an anticaking agent, antimicrobial agent, curing or pickling agent, firming agent, flavor enhancer, humectant, nutrient supplement, pH control agent, processing aid, stabilizer and thickener, surface ‐ active agent, synergist, texturizer in accordance with cGMP. Ferrous sulfate Fermentation Medium §184.1315 Used as a nutrient supplement and processing aid with no limitation other than cGMP. Potassium iodide Fermentation Medium §172.375 As a source of iodine. §184.1634 Used as a nutrient supplement and in table salt (0.01%). Ammonium hydroxide Fermentation Medium §…"
+              },
+              {
+                "pageNumber": 10,
+                "excerpt": "…um GRAS; standard materials used within enzyme industry. Magnesium sulfate Fermentation Medium §184.1443 No limitation other than cGMP as flavor enhancer, nutrient supplement, and processing aid. Potassium sulfate Fermentation Medium §184.1643 GRAS; standard materials used within enzyme industry. Sodium sulfate Fermentation Medium §186.1797 GRAS; standard materials used within enzyme industry. Biotin Fermentation Medium §182.8159 No limitation other than cGMP. Calcium pantothenate Fermentation Medium §184.1212 Used as a nutrient supplement with no limitation other than cGMP. Niacin (nicotinic…"
+              }
+            ]
+          },
+          {
+            "id": "specifications-batch-analysis",
+            "topScore": 1,
+            "citations": [
+              {
+                "pageNumber": 16,
+                "excerpt": "…3 NMT 10 NS FDA ‐ BAM 7 th ed. Salmonella /25 g Negative Negative Negative AOAC ‐ RI100201 E. coli /g Negative Negative Negative USP 62 Specification Parameter Limit Manufacturing Lot Total steviol glycosides (%) NLT 95.0 100.4 99.57 100.14 Identity Appearance Conforms to standard Pass Pass Pass Solubility Slightly soluble in a mixture of Pass Pass Pass ethanol and water (50:50) Odor Conforms to standard Pass Pass Pass pH 4.5 to 7 5.0 4.7 4.7 Purity Ash (%) NMT 1.0 <0.04 <0.04 <0.04 Loss on drying (%) NMT 6.0 0.65 1.09 1.45 Residual ethanol (%) NMT 0.5 0.4682 0.3722 0.3611 Residual methanol (%…"
+              },
+              {
+                "pageNumber": 17,
+                "excerpt": "Specification Parameter Limit Manufacturing Lot Arsenic (ppm) NMT 1 <0.01 <0.01 <0.01 ~-------- - - - - I Mercury (ppm) NMT 1 <0.005 <0.005 <0.005 Specification Parameter Limit Manufacturing Lot Aerobic place count (CFU/g) NMT 1,000 <10 <10 <10 Yeast (CFU/g) NMT 100 <10 <10 <10 Mold (CFU/g) NMT 100 <10 <10 <10 Coliforms (/g) NMT 3 <3.0 <3.0 <3.0 Salmonella (/25 g) Negative Negative Negative Negative E. coli (/g) Negative Negative Negative Negative ~--------- -…"
+              }
+            ]
+          },
+          {
+            "id": "intended-uses-exposure",
+            "topScore": 0.5,
+            "citations": [
+              {
+                "pageNumber": 50,
+                "excerpt": "…convened on 13 May 2019 to conduct a critical and comprehensive evaluation of the available pertinent data and information, and to determine whether Reb M under the conditions of intended use as a general purpose sweetener would be Generally Recognized as Safe (GRAS) based on scientific procedures. The GRAS Panel consisted of the below-signed qualified scientific experts: Michael W. Pariza Ph.D. (University of Wisconsin-Madison), I. Glenn Sipes, Ph.D. (University of Arizona), and Stanley Tarka, Ph.D. (The Pennsylvania State University College of Medicine; The Tarka Group, Inc.). The GRAS Pane…"
+              },
+              {
+                "pageNumber": 52,
+                "excerpt": "INTENDED USE AND ESTIMATED EXPOSURE Reb M is proposed for use as a general purpose sweetener that will be added to a variety of conventional food and beverage products, consistent with the current uses of other related high-intensity sweeteners that are already in the market, including steviol glycosides. Dietary exposure data published by Renwick (2008) for other approved high intensity sweeteners in the U.S. were a…"
+              }
+            ]
+          },
+          {
+            "id": "public-pivotal-safety-evidence",
+            "topScore": 0.5,
+            "citations": [
+              {
+                "pageNumber": 15,
+                "excerpt": "…d Batch Analyses 2.3.1 Physical and Chemical Specifications The physical and chemical specifications for Reb M are presented in Table 2.3.1 ‐ 1 and were established based on those published by JECFA for “Steviol glycosides from Stevia rebaudiana Bertoni” (JECFA, 2017a) and by the Food Chemicals Codex (FCC) for steviol glycosides (FCC, 2018) . Specifications for similar steviol glycoside products, steviol glycosides from S. cerevisiae and steviol glycosides consisting primarily of rebaudioside M produced in Y. lipolytica , are published in GRAS Notifications GRN 000626 and 000759, respectively,…"
+              },
+              {
+                "pageNumber": 16,
+                "excerpt": "…01 <0.001 ~---------- - ~- ~ 2.3.2 Microbiological Specifications The microbiological specifications for Reb M are presented in Table 2.3.2 ‐ 1 and were established based on those published by JECFA for “Steviol glycosides from Stevia rebaudiana Bertoni” (JECFA, 2017a) and by the FCC for steviol glycosides (FCC, 2018). Microbiological specifications for the similar steviol glycoside product, steviol glycosides from S. cerevisiae, were published in GRN 000626. For comparison, the specifications for steviol glycosides from S. rebaudiana Bertoni set by JECFA and the specifications for steviol gly…"
+              }
+            ]
+          },
+          {
+            "id": "independent-evidence-synthesis",
+            "topScore": 1,
+            "citations": [
+              {
+                "pageNumber": 50,
+                "excerpt": "GRAS Panel Consensus Statement Concerning the Generally Recognized as Safe (GRAS) Status of Rebaudioside M for Use as a General Purpose Sweetener 13 May 2019 INTRODUCTION Cargill, Incorporated (Cargill) intends to market a purified steviol glycoside product, primarily containing rebaudioside M (herein referred to as Reb M), obtained from a Yarrowia lipolytica ( Y. lipolytica ) production strain, for use in convention…"
+              },
+              {
+                "pageNumber": 54,
+                "excerpt": "…evaluation for steviol glycosides, GRAS Notification GRN 000768 for stevia leaf extract preparations that received a “no questions” letter from the U.S. FDA, was evaluated by the GRAS Panel. These studies included 2 repeated-dose studies, 1 genotoxicity study, 2 reproductive toxicity studies, and 2 human studies. Barrios-Correa et al . (2018) investigated the brain of mice for changes in the JAK2/STAT3 signaling pathway and changes in appetite and body composition following 6 weeks of exposure to rebaudioside A (approximately 15 mg/kg body weight/day steviol equivalents) and concluded that al…"
+              }
+            ]
+          },
+          {
+            "id": "test-article-comparability",
+            "topScore": 0.5,
+            "citations": [
+              {
+                "pageNumber": 51,
+                "excerpt": "COMPOSITION, MANUFACTURING, AND SPECIFICATIONS The ingredient that is the subject of this GRAS evaluation is a steviol glycoside product, primarily containing rebaudioside M, and referred to as Reb M. Reb M is obtained from a Y. lipolytica production strain and the purified steviol glycoside ingredient primarily contains rebaudioside M in combination with any of the following steviol glycosides: rebaudioside A, B, C,…"
+              },
+              {
+                "pageNumber": 12,
+                "excerpt": "…crystallization in water or mixed with aqueous ethanol or methanol to start crystallization. A second crystallization may be conducted depending upon the desired steviol glycoside composition in final product. Optionally, the eluate may be dried prior to crystallization in the presence of aqueous ethanol or methanol. The mother liquor is separated from the solids and retained for further processing. The crystals are rinsed with water or ethanol (wash added to mother liquor) and optionally evaporated prior to drying. The product is then checked for its final composition using HPLC and released…"
+              }
+            ]
+          },
+          {
+            "id": "self-contained-literature-search",
+            "topScore": 0.167,
+            "citations": [
+              {
+                "pageNumber": 5,
+                "excerpt": "…e Cuellar-Kingston hereby certifies that all data and information presented in this Notice represents a complete, representative, and balanced submission, and which considered all unfavorable as well as favorable information known to Cargill and pertinent to the evaluation of the safety and GRAS status of Reb M as an ingredient for addition to food. Signed, _____ /), _____ _. ____.. ,__~ , ' MG&le Cuellar-Kingston, M.S. 7 Date Principal Scientist, Scientific & Regulatory Affairs Cargill, Incorporated 1.1 Name and Address of Notifier Nicole Cuellar-Kingston Cargill, Incorporated 15407 McGinty R…"
+              }
+            ]
+          },
+          {
+            "id": "allergenicity-assessment",
+            "topScore": 1,
+            "citations": [
+              {
+                "pageNumber": 37,
+                "excerpt": "…protein domains necessary for toxic function. Furthermore, it should be noted that the production strain does not contain any putative pathogenicity ‐ associated proteins, toxins, allergens, or genes, and the DNA incorporated into the production strain’s genome is either synthesized, sourced from biosafety level 1 organisms, or obtained from plant sources with a long history of safe consumption. Evolutionary changes resulting in amino acid substitutions are conservative in which the stability of the protein is maintained; as such, enzymes retain the 3 ‐ dimensional structure and functional cha…"
+              },
+              {
+                "pageNumber": 41,
+                "excerpt": "…sessment [CTA]. (82 nd JECFA CTA). Food and Agriculture Organization of the United Nations (FAO). Available at: http://www.fao.org/3/a ‐ br566e.pdf . FAO/WHO (2001). Evaluation of Allergenicity of Genetically Modified Foods . Report of a Joint FAO/WHO Expert Consultation on Allergenicity of Foods Derived from Biotechnology 22 ‐ 25 January 2001. Rome, Italy: Food and Agriculture Organization of the United Nations (FAO) / Geneva, Switz.: World Health Organization (WHO). Available at: http://www.who.int/foodsafety/publications/gmo ‐ allergenicity/en . FARRP (2019). AllergenOnline Version 19: Home…"
+              }
+            ]
+          }
+        ]
+      },
+      "revised": {
+        "pageCount": 61,
+        "characterCount": 221315,
+        "requirements": [
+          {
+            "id": "identity-composition",
+            "topScore": 1,
+            "citations": [
+              {
+                "pageNumber": 17,
+                "excerpt": "~--------- - - ~- - Table 2.3.3 ‐ 1 Summary of the Physical and Chemical Product Analysis for 3 Lots of Reb M Specification Parameter Limit Manufacturing Lot ~-------- - - Arsenic (ppm) NMT 1 <0.01 <0.01 <0.01 Mercury (ppm) NMT 1 <0.005 <0.005 - - <0.005 I NLT = not less than; NMT = not more than. 2.3.4 Microbiological Batch Analyses Analysis of 3 non ‐ consecutive lots of Reb M demonstrates that the manufacturing process as described in Section 2.2 produces a product that is free of microbiological contamination that meets…"
+              },
+              {
+                "pageNumber": 37,
+                "excerpt": "The BLAST searches identified sequence matches with 17 to 68% identity with various animal venom proteins and toxins and virulence factors, and associated E ‐ values ranging from 3x10 ‐ 60 to 10.0. E ‐ values greater than 1x10 ‐ 7 suggest that proteins are unlikely to share structural homology (Hileman et al. , 2002). The sequence alignments with low E ‐ values (in the range of 10 ‐ 9 to 10 ‐ 60 ) shared approximately 21 to 31% identity with cytochrome P450 monooxygenases. It s…"
+              }
+            ]
+          },
+          {
+            "id": "manufacturing",
+            "topScore": 0.833,
+            "citations": [
+              {
+                "pageNumber": 11,
+                "excerpt": "Table 2.2.2 ‐ 1 Regulatory Status of Raw Materials, Processing Aids, and Equipment Used in the Manufacture of Reb M Raw Material Use Regulatory Status 21 CFR Approved Uses (U.S. FDA, 2018a) Calcium chloride Fermentation Medium §184.1193 Used as an anticaking agent, antimicrobial agent, curing or pickling agent, firming agent, flavor enhancer, humectant, nutrient supplement, pH control agent, processing aid, stabilizer and thickener, surface ‐ active agent, synergist,…"
+              },
+              {
+                "pageNumber": 10,
+                "excerpt": "…um GRAS; standard materials used within enzyme industry. Magnesium sulfate Fermentation Medium §184.1443 No limitation other than cGMP as flavor enhancer, nutrient supplement, and processing aid. Potassium sulfate Fermentation Medium §184.1643 GRAS; standard materials used within enzyme industry. Sodium sulfate Fermentation Medium §186.1797 GRAS; standard materials used within enzyme industry. Biotin Fermentation Medium §182.8159 No limitation other than cGMP. Calcium pantothenate Fermentation Medium §184.1212 Used as a nutrient supplement with no limitation other than cGMP. Niacin (nicotinic…"
+              }
+            ]
+          },
+          {
+            "id": "specifications-batch-analysis",
+            "topScore": 1,
+            "citations": [
+              {
+                "pageNumber": 16,
+                "excerpt": "Specification Parameter Limit Manufacturing Lot Total steviol glycosides (%) NLT 95.0 100.4 99.57 100.14 Identity Appearance Conforms to standard Pass Pass Pass Solubility Slightly soluble in a mixture of Pass Pass Pass ethanol and water (50:50) Odor Conforms to standard Pass Pass Pass pH 4.5 to 7 5.0 4.7 4.7 Purity Ash (%) NMT 1.0 <0.04 <0.04 <0.04 Loss on drying (%) NMT 6.0 0.65 1.09 1.45 Residual ethanol (%) NMT 0.5 0.4682 0.3722 0.3611 Residual methanol (%…"
+              },
+              {
+                "pageNumber": 17,
+                "excerpt": "~--------- - - ~- - Table 2.3.3 ‐ 1 Summary of the Physical and Chemical Product Analysis for 3 Lots of Reb M Specification Parameter Limit Manufacturing Lot ~-------- - - Arsenic (ppm) NMT 1 <0.01 <0.01 <0.01 Mercury (ppm) NMT 1 <0.005 <0.005 - - <0.005 I NLT = not less than; NMT = not more than. 2.3.4 Microbiological Batch Analyses Analysis of 3 non ‐ consecutive lots of Reb M demonstrates that the manufacturing process as described in Section 2.2 produces a product that is free of microbiological contaminati…"
+              }
+            ]
+          },
+          {
+            "id": "intended-uses-exposure",
+            "topScore": 0.5,
+            "citations": [
+              {
+                "pageNumber": 50,
+                "excerpt": "…convened on 13 May 2019 to conduct a critical and comprehensive evaluation of the available pertinent data and information, and to determine whether Reb M under the conditions of intended use as a general purpose sweetener would be Generally Recognized as Safe (GRAS) based on scientific procedures. The GRAS Panel consisted of the below-signed qualified scientific experts: Michael W. Pariza Ph.D. (University of Wisconsin-Madison), I. Glenn Sipes, Ph.D. (University of Arizona), and Stanley Tarka, Ph.D. (The Pennsylvania State University College of Medicine; The Tarka Group, Inc.). The GRAS Pane…"
+              },
+              {
+                "pageNumber": 52,
+                "excerpt": "INTENDED USE AND ESTIMATED EXPOSURE Reb M is proposed for use as a general purpose sweetener that will be added to a variety of conventional food and beverage products, consistent with the current uses of other related high-intensity sweeteners that are already in the market, including steviol glycosides. Dietary exposure data published by Renwick (2008) for other approved high intensity sweeteners in the U.S. were a…"
+              }
+            ]
+          },
+          {
+            "id": "public-pivotal-safety-evidence",
+            "topScore": 0.5,
+            "citations": [
+              {
+                "pageNumber": 15,
+                "excerpt": "…d Batch Analyses 2.3.1 Physical and Chemical Specifications The physical and chemical specifications for Reb M are presented in Table 2.3.1 ‐ 1 and were established based on those published by JECFA for “Steviol glycosides from Stevia rebaudiana Bertoni” (JECFA, 2017a) and by the Food Chemicals Codex (FCC) for steviol glycosides (FCC, 2018) . Specifications for similar steviol glycoside products, steviol glycosides from S. cerevisiae and steviol glycosides consisting primarily of rebaudioside M produced in Y. lipolytica , are published in GRAS Notifications GRN 000626 and 000759, respectively,…"
+              },
+              {
+                "pageNumber": 16,
+                "excerpt": "…ve USP 62 ~---------- - ~- ~ 2.3.2 Microbiological Specifications The microbiological specifications for Reb M are presented in Table 2.3.2 ‐ 1 and were established based on those published by JECFA for “Steviol glycosides from Stevia rebaudiana Bertoni” (JECFA, 2017a) and by the FCC for steviol glycosides (FCC, 2018). Microbiological specifications for the similar steviol glycoside product, steviol glycosides from S. cerevisiae, were published in GRN 000626. For comparison, the specifications for steviol glycosides from S. rebaudiana Bertoni set by JECFA and the specifications for steviol gly…"
+              }
+            ]
+          },
+          {
+            "id": "independent-evidence-synthesis",
+            "topScore": 1,
+            "citations": [
+              {
+                "pageNumber": 50,
+                "excerpt": "GRAS Panel Consensus Statement Concerning the Generally Recognized as Safe (GRAS) Status of Rebaudioside M for Use as a General Purpose Sweetener 13 May 2019 INTRODUCTION Cargill, Incorporated (Cargill) intends to market a purified steviol glycoside product, primarily containing rebaudioside M (herein referred to as Reb M), obtained from a Yarrowia lipolytica ( Y. lipolytica ) production strain, for use in convention…"
+              },
+              {
+                "pageNumber": 54,
+                "excerpt": "…evaluation for steviol glycosides, GRAS Notification GRN 000768 for stevia leaf extract preparations that received a “no questions” letter from the U.S. FDA, was evaluated by the GRAS Panel. These studies included 2 repeated-dose studies, 1 genotoxicity study, 2 reproductive toxicity studies, and 2 human studies. Barrios-Correa et al . (2018) investigated the brain of mice for changes in the JAK2/STAT3 signaling pathway and changes in appetite and body composition following 6 weeks of exposure to rebaudioside A (approximately 15 mg/kg body weight/day steviol equivalents) and concluded that al…"
+              }
+            ]
+          },
+          {
+            "id": "test-article-comparability",
+            "topScore": 0.5,
+            "citations": [
+              {
+                "pageNumber": 51,
+                "excerpt": "COMPOSITION, MANUFACTURING, AND SPECIFICATIONS The ingredient that is the subject of this GRAS evaluation is a steviol glycoside product, primarily containing rebaudioside M, and referred to as Reb M. Reb M is obtained from a Y. lipolytica production strain and the purified steviol glycoside ingredient primarily contains rebaudioside M in combination with any of the following steviol glycosides: rebaudioside A, B, C,…"
+              },
+              {
+                "pageNumber": 12,
+                "excerpt": "…crystallization in water or mixed with aqueous ethanol or methanol to start crystallization. A second crystallization may be conducted depending upon the desired steviol glycoside composition in final product. Optionally, the eluate may be dried prior to crystallization in the presence of aqueous ethanol or methanol. The mother liquor is separated from the solids and retained for further processing. The crystals are rinsed with water or ethanol (wash added to mother liquor) and optionally evaporated prior to drying. The product is then checked for its final composition using HPLC and released…"
+              }
+            ]
+          },
+          {
+            "id": "self-contained-literature-search",
+            "topScore": 0.167,
+            "citations": [
+              {
+                "pageNumber": 5,
+                "excerpt": "…e Cuellar-Kingston hereby certifies that all data and information presented in this Notice represents a complete, representative, and balanced submission, and which considered all unfavorable as well as favorable information known to Cargill and pertinent to the evaluation of the safety and GRAS status of Reb M as an ingredient for addition to food. Signed, _______________ Nicofe Cuellar-Kingston, M.S. Date Principal Scientist, Scientific & Regulatory Affairs Cargill, Incorporated 1.1 Name and Address of Notifier Nicole Cuellar-Kingston Cargill, Incorporated 15407 McGinty Road West, M.S. 163 W…"
+              }
+            ]
+          },
+          {
+            "id": "allergenicity-assessment",
+            "topScore": 1,
+            "citations": [
+              {
+                "pageNumber": 37,
+                "excerpt": "…protein domains necessary for toxic function. Furthermore, it should be noted that the production strain does not contain any putative pathogenicity ‐ associated proteins, toxins, allergens, or genes, and the DNA incorporated into the production strain’s genome is either synthesized, sourced from biosafety level 1 organisms, or obtained from plant sources with a long history of safe consumption. Evolutionary changes resulting in amino acid substitutions are conservative in which the stability of the protein is maintained; as such, enzymes retain the 3 ‐ dimensional structure and functional cha…"
+              },
+              {
+                "pageNumber": 41,
+                "excerpt": "…sessment [CTA]. (82 nd JECFA CTA). Food and Agriculture Organization of the United Nations (FAO). Available at: http://www.fao.org/3/a ‐ br566e.pdf . FAO/WHO (2001). Evaluation of Allergenicity of Genetically Modified Foods . Report of a Joint FAO/WHO Expert Consultation on Allergenicity of Foods Derived from Biotechnology 22 ‐ 25 January 2001. Rome, Italy: Food and Agriculture Organization of the United Nations (FAO) / Geneva, Switz.: World Health Organization (WHO). Available at: http://www.who.int/foodsafety/publications/gmo ‐ allergenicity/en . FARRP (2019). AllergenOnline Version 19: Home…"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "lipase-866-908",
+      "baselineGrn": 866,
+      "revisedGrn": 908,
+      "baseline": {
+        "pageCount": 28,
+        "characterCount": 52211,
+        "requirements": [
+          {
+            "id": "identity-composition",
+            "topScore": 0.667,
+            "citations": [
+              {
+                "pageNumber": 23,
+                "excerpt": "…d no matches in comparing the amino acid sequence of the acylglycerol lipase to the primary sequences of known allergens based on a search of the Structural Database of Allergenic Proteins, including a search for ≥ 35% homology over a sliding “window” of 80 amino acids, and an exact match of 8 contiguous amino acids. Regarding potential impurities, the manufacturing process for the subject lipase enzyme preparations employ standard materials that are routinely used in the enzyme industry. No target protein was detected at a maximum limit of detection of 1.4 ppm in representative batches of Lip…"
+              },
+              {
+                "pageNumber": 9,
+                "excerpt": "Part 2 – Identity, method of manufacture, specifications, and physical or technical effect 2.1 Scientific data and information that identifies the notified substance The trade name for Amano’s Penicillium camemberti enzyme preparation, described below, is Lipase GS “Amano” 250G. The product is a low odor, water soluble granule with a color that is light yellowish brown to light brown. Food grade dextrin is used as a carrier f…"
+              }
+            ]
+          },
+          {
+            "id": "manufacturing",
+            "topScore": 1,
+            "citations": [
+              {
+                "pageNumber": 14,
+                "excerpt": "…in the production of ingredients derived from fats and oils as described in Amano’s GRN 68. (The intended uses of the lipase in this GRAS notice are expanded to include (1) dairy processing (i.e., the production of enzyme-modified cheese) and (2) flavoring production ( i.e. , production of flavor ingredients for a wide variety of foods and drinks) in addition to (3) fats and oil processing ( i.e. , the production of ingredients derived from fats and oils including, but not limited to, gamma linolenic acid (GLA), docosahexaenoic acid (DHA), and eicosapentaenoic acid (EPA)), which is described…"
+              },
+              {
+                "pageNumber": 6,
+                "excerpt": "…nzyme – which is water soluble – is removed from foods or food ingredients such as GLA, DHA, and EPA that are produced with a washing step that follows the enzyme treatment in the manufacturing process. Nevertheless, in calculating the estimated daily intake (EDI) of the lipase, it is assumed that the maximum amount of lipase used in the applications of interest ( i.e. , dairy processing and fats/oils processing) remains in the food ingredient when it is consumed. The use level of the lipase is expressed in terms of the amount of Total Organic Solids (TOS) of P. camemberti enzyme preparation,…"
+              }
+            ]
+          },
+          {
+            "id": "specifications-batch-analysis",
+            "topScore": 1,
+            "citations": [
+              {
+                "pageNumber": 15,
+                "excerpt": "processing aids used in the production of the lipase enzyme preparation, the Company will ensure that all such components are safe and suitable for their intended use. 2.3 Specifications of the food-grade material Specifications for the lipase enzyme are in keeping with the requirements of the Food Chemicals Codex (11 th Edition) and Joint FAO/WHO Expert Committee on Food Additives (JECFA 2006) monographs for enzyme preparations used in food processing. Table 3 below identifies the specifications for the lipase enzyme preparation. Table 3. Specifications for the lipase enzyme preparati…"
+              },
+              {
+                "pageNumber": 27,
+                "excerpt": "…ars J (1979) Cyclopiazonic acid production by Penicillium camemberti Thom and natural occurrence of this mycotoxin in cheese. Appl Environ Microbiol; 38(6):1052-5. Marchisio VF, Sulotto F, Botta GC, Chiesa A, Airaudi D, Anastasi A (1999) Aerobiological analysis in a salami factory: a possible case of extrinsic allergic alveolitis by Penicillium camemberti. Med Mycol;37:285–289. Merget R, Sander I, Rozynek P, Heinze E, Imoehl M, Raulf-Heimsoth M, Bruening T (2008) Occupational Immunoglobulin E-Mediated Asthma due to Penicillium camemberti in a Dry- Sausage Packer. Respiration; 76:109-111. Ostry…"
+              }
+            ]
+          },
+          {
+            "id": "intended-uses-exposure",
+            "topScore": 0.833,
+            "citations": [
+              {
+                "pageNumber": 16,
+                "excerpt": "Part 3 – Dietary exposure As described above in Part 1.4(b), the lipase enzyme preparation is used at levels ranging from 25 to 2,522 mg TOS/kg enzyme-modified food ingredient (EMC); 10 to 1,000 mg TOS/kg flavor ingredient; and 50 to 252 mg TOS/kg fat/oil ingredient. For calculating the Estimated Daily Intake (EDI) of the lipase enzyme preparation, it is assumed that the maximum potential use levels described in Part 1.4(b) a…"
+              },
+              {
+                "pageNumber": 1,
+                "excerpt": "…t limited to, gamma linolenic acid (GLA), docosahexaenoic acid (DHA), and eicosapentaenoic acid (EPA)). The enclosed GRAS notification provides detailed information related to the intended uses, manufacturing, and safety of the enzyme. As described in the enclosed GRAS notice, Amano's lipase is an acylglycerol lipase that was originally developed for production using a non-genetically modified (GM) strain of P. camemberti U-150 (designated internally by Amano as strain AE-LG) and is covered for use in fats and oil processing as described in GRN 68. The lipase may also be produced using a strai…"
+              }
+            ]
+          },
+          {
+            "id": "public-pivotal-safety-evidence",
+            "topScore": 0.667,
+            "citations": [
+              {
+                "pageNumber": 23,
+                "excerpt": "…ination that its lipase enzyme preparation derived from P. camemberti is not mutagenic and presents no safety concerns when used as intended. The no-observed-adverse-effect level (NOAEL) for LGK (the concentrated enzyme) administered by gavage to Sprague-Dawley rats in the 90-day study (discussed in detail in GRN 68) was determined to be the high dose level, 2000 mg/kg body weight. Based on the total organic solids (TOS) content of the LGK ( i.e. , 75.76%), the NOAEL for the lipase enzyme preparation may be expressed as 1515 mg/kg body weight TOS (2000 mg/kg bw x 0.7576 = 1515 mg/kg bw). The s…"
+              },
+              {
+                "pageNumber": 21,
+                "excerpt": "…(1994). 6.2 Safety of enzyme preparation from Penicillium camemberti The pivotal safety data in concluding the intended use of Amano’s lipase enzyme preparation is GRAS are from a 90-day toxicological study of Lipase G Amano 50 (LGK) in rats reported by Kondo et al. (1994), which was provided to FDA in GRN 68 (incorporated here by reference). No adverse toxicological data were located in an updated review of the toxicological literature conducted on August 23, 2018, aside from reports – discussed briefly below – which indicate that cyclopiazonic acid (CPA) is a mycotoxin of potential concern f…"
+              }
+            ]
+          },
+          {
+            "id": "independent-evidence-synthesis",
+            "topScore": 0,
+            "citations": []
+          },
+          {
+            "id": "test-article-comparability",
+            "topScore": 0.333,
+            "citations": [
+              {
+                "pageNumber": 13,
+                "excerpt": "…s. See Table 2 below. Table 2. Comparison of lipases derived from P. camemberti AE-LG (“LG (Non- GM)”) and P. camemberti AE-LGS (self-cloned from P. camemberti AE-LG; “LGS (GM)”). Test article (90 day toxicity study) LGS (GM) LG (Non-GM) Batch No. LGS-Y69-001 LGK-000602 LG-Y64 - 002 LG-Y65 - 001 LG-Y65 - 002 Mean Ash (%) 2.52 22.2* 1.8 3.1 2.6 2.5 Water (%) 4.9 2.04 4.4 4.3 5.1 4.6 TOS (%) 92.58 75.76 93.80 92.60 92.30 92.9 Activity (Units/g) 913,000 100,222 337,000 140,000 304,000 260,333 Units/mg TOS 986.2 132.3 359.3 151.2 329.4 279.9 * The ash content of the test article samples was high b…"
+              },
+              {
+                "pageNumber": 26,
+                "excerpt": "(step 9, which leads to skipping step 10), and the NOAEL for the test article in an appropriate oral study is sufficiently high to ensure safety (step 11, which results in concluding the test article is ACCEPTED). 6.5 Conclusion Based on the documentation provided in this GRAS notification, and as discussed above, Amano has concluded that its lipase enzyme preparation derived from Penicillium camemberti is GRAS via scientific procedures for use as a processing aid in (1) dairy pro…"
+              }
+            ]
+          },
+          {
+            "id": "self-contained-literature-search",
+            "topScore": 0.167,
+            "citations": [
+              {
+                "pageNumber": 7,
+                "excerpt": "…Act per 5 U.S.C. § 552(b)(4). 1.9 Certification We certify that. to the best of our knowledge, our GRAS notice is a complete, representative, and balanced submission that includes unfavorable information, as well as favorable information, known to us and pertinent to the evaluation of the safety and GRAS status of the use of the substance. May29,2019 Name= Tomonari Ogawa Date Title: Director, Quality Assurance Division Page 14"
+              },
+              {
+                "pageNumber": 20,
+                "excerpt": "…sed to give a white felt on the surface of Coulommier and Camembert type cheese, as reported by G. Stanley in Encyclopedia of Food Sciences and Nutrition (Second Edition), 2003. A literature search for published reports of health concerns associated with P. camemberti (conducted August 23, 2018) indicates no concerns for pathogenicity and possibly a low level of potential concern for workplace allergenicity, not related to dietary exposure. In this regard, as discussed at page 9 of GRN 68, Marchisio et al. (1999) reported a possible case of extrinsic allergic alveolitis caused by exposure of a…"
+              }
+            ]
+          },
+          {
+            "id": "allergenicity-assessment",
+            "topScore": 0.833,
+            "citations": [
+              {
+                "pageNumber": 20,
+                "excerpt": "…posure estimate provided in Part 3 above and the information provided in this section on the safety of the production organisms and the safety of the enzyme, including its lack of allergenic and toxigenic potential, provide a basis for Amano’s determination that its lipase enzyme preparation derived from Penicillium camemberti is GRAS for use in dairy processing, flavoring production, and fats and oil processing as discussed in detail below. 6.1 Safety of Penicillium camemberti production strains AE-LG and AE-LGS Although the production organism is not present in the lipase enzyme preparation,…"
+              },
+              {
+                "pageNumber": 23,
+                "excerpt": "…essing, flavoring production, and fats and oil processing. Further, the lack of enzyme activity in the food ingredients further diminishes the risk of any toxicity as well. 6.3 No allergenicity concerns for enzyme preparation from Penicillium camemberti In contrast to most known food allergens, which are naturally present in a narrow range of foods, a wide variety of enzyme classes (and structures), are naturally present in many foods. Further, enzymes have a long history of safe use in food processing, with no indication of adverse effects or reactions. Such is the case with acylglycerol lipa…"
+              }
+            ]
+          }
+        ]
+      },
+      "revised": {
+        "pageCount": 83,
+        "characterCount": 144379,
+        "requirements": [
+          {
+            "id": "identity-composition",
+            "topScore": 0.667,
+            "citations": [
+              {
+                "pageNumber": 24,
+                "excerpt": "…d no matches in comparing the amino acid sequence of the acylglycerol lipase to the primary sequences of known allergens based on a search of the Structural Database of Allergenic Proteins, including a search for ≥ 35% homology over a sliding “window” of 80 amino acids, and an exact match of 8 contiguous amino acids. Regarding potential impurities, the manufacturing process for the subject lipase enzyme preparations employ standard materials that are routinely used in the enzyme industry. No target protein was detected at a maximum limit of detection of 1.4 ppm in representative batches of Lip…"
+              },
+              {
+                "pageNumber": 61,
+                "excerpt": "…aside from a soybean derivative, is derived from a major food allergen. Post-fermentation processing includes filtration to remove cell biomass and large molecules (including soy protein) from the fermentate. Analysis of three non-nonconsecutive batches of the enzyme by a commercially available enzyme-linked immunosorbent assay (ELISA) test kit confirms that soy protein was not detected at the limit of detection (LOD) of 1 ppm. The protein profile of three samples of the lipase derived from the self-cloned strain of P. camemberti (designated internally by Amano as AE-LGS) is illustrated by ch…"
+              }
+            ]
+          },
+          {
+            "id": "manufacturing",
+            "topScore": 1,
+            "citations": [
+              {
+                "pageNumber": 15,
+                "excerpt": "…in the production of ingredients derived from fats and oils as described in Amano’s GRN 68. (The intended uses of the lipase in this GRAS notice are expanded to include (1) dairy processing (i.e., the production of enzyme-modified cheese) and (2) fats and oil processing ( i.e. , the production of ingredients derived from fats and oils including, but not limited to, gamma linolenic acid (GLA), docosahexaenoic acid (DHA), and eicosapentaenoic acid (EPA)), which is described in GRN 68.) P. camemberti AE-LGS contains two genes from P. camemberti AE-LG: (1) native lipase gene, mdlA, and (2) marker…"
+              },
+              {
+                "pageNumber": 60,
+                "excerpt": "…e 4 composition of the raw material in this case can provide a guideline for the use level of the enzyme, and the range in use levels for different raw materials in “fats and oils processing” is more narrow than for “dairy processing” applications. Question 6. As currently written, Section 2.2 of the notice (page 15) includes reference to a previous notice and a statement that “A detailed description of the manufacturing process, which was provided in GRN 68 and is incorporated herein, reflects the current process with the exception of minor changes made to improve process efficiency. See GRN…"
+              }
+            ]
+          },
+          {
+            "id": "specifications-batch-analysis",
+            "topScore": 1,
+            "citations": [
+              {
+                "pageNumber": 16,
+                "excerpt": "processing aids used in the production of the lipase enzyme preparation, the Company will ensure that all such components are safe and suitable for their intended use. 2.3 Specifications of the food-grade material Specifications for the lipase enzyme are in keeping with the requirements of the Food Chemicals Codex (11 th Edition) and Joint FAO/WHO Expert Committee on Food Additives (JECFA 2006) monographs for enzyme preparations used in food processing. Table 3 below identifies the specifications for the lipase enzyme preparation. Table 3. Specifications for the lipase enzyme preparati…"
+              },
+              {
+                "pageNumber": 28,
+                "excerpt": "…ars J (1979) Cyclopiazonic acid production by Penicillium camemberti Thom and natural occurrence of this mycotoxin in cheese. Appl Environ Microbiol; 38(6):1052-5. Marchisio VF, Sulotto F, Botta GC, Chiesa A, Airaudi D, Anastasi A (1999) Aerobiological analysis in a salami factory: a possible case of extrinsic allergic alveolitis by Penicillium camemberti. Med Mycol;37:285–289. Merget R, Sander I, Rozynek P, Heinze E, Imoehl M, Raulf-Heimsoth M, Bruening T (2008) Occupational Immunoglobulin E-Mediated Asthma due to Penicillium camemberti in a Dry- Sausage Packer. Respiration; 76:109-111. Ostry…"
+              }
+            ]
+          },
+          {
+            "id": "intended-uses-exposure",
+            "topScore": 0.833,
+            "citations": [
+              {
+                "pageNumber": 17,
+                "excerpt": "Part 3 – Dietary exposure As described above in Part 1.4(b), the lipase enzyme preparation is used at levels ranging from 25 to 2,522 mg TOS/kg enzyme-modified cheese (EMC) and 50 to 252 mg TOS/kg fat/oil ingredient. For calculating the Estimated Daily Intake (EDI) of the lipase enzyme preparation, it is assumed that the maximum potential use levels described in Part 1.4(b) are always employed for each application. Furthermor…"
+              },
+              {
+                "pageNumber": 63,
+                "excerpt": "…onisins, are based on Association of Official Analytical Chemists (AOAC) and other food industry approved methods that have been deemed fit for the purpose. Question 8. In Part 3, dietary exposure (p. 17), you provide an exposure estimate based on the following assumptions: (a) the enzyme use level differs for the two applications: 2522 mg TOS/kg enzyme- modified cheese; 252 mg/kg edible fats and oils (b) The enzyme modified cheese and fats/oils are used at the following stated levels in final food categories: i) enzyme modified cheese is used in soups, snack foods, and processed cheese at 2%…"
+              }
+            ]
+          },
+          {
+            "id": "public-pivotal-safety-evidence",
+            "topScore": 0.667,
+            "citations": [
+              {
+                "pageNumber": 24,
+                "excerpt": "…ination that its lipase enzyme preparation derived from P. camemberti is not mutagenic and presents no safety concerns when used as intended. The no-observed-adverse-effect level (NOAEL) for LGK (the concentrated enzyme) administered by gavage to Sprague-Dawley rats in the 90-day study (discussed in detail in GRN 68) was determined to be the high dose level, 2000 mg/kg body weight. Based on the total organic solids (TOS) content of the LGK ( i.e. , 75.76%), the NOAEL for the lipase enzyme preparation may be expressed as 1515 mg/kg body weight TOS (2000 mg/kg bw x 0.7576 = 1515 mg/kg bw). The s…"
+              },
+              {
+                "pageNumber": 22,
+                "excerpt": "…(1994). 6.2 Safety of enzyme preparation from Penicillium camemberti The pivotal safety data in concluding the intended use of Amano’s lipase enzyme preparation is GRAS are from a 90-day toxicological study of Lipase G Amano 50 (LGK) in rats reported by Kondo et al. (1994), which was provided to FDA in GRN 68 (incorporated here by reference). No adverse toxicological data were located in an updated review of the toxicological literature conducted on August 23, 2018, aside from reports – discussed briefly below – which indicate that cyclopiazonic acid (CPA) is a mycotoxin of potential concern f…"
+              }
+            ]
+          },
+          {
+            "id": "independent-evidence-synthesis",
+            "topScore": 0.167,
+            "citations": [
+              {
+                "pageNumber": 57,
+                "excerpt": "…of our client, Amano Enzyme, Inc. (Amano), to address the questions posed by the Food and Drug Administration (FDA) that are attached to your November 12, 2020 email regarding the Generally Recognized as Safe (GRAS) notice that we submitted on January 14, 2020 to cover the intended uses of a lipase enzyme preparation derived from Penicillium camemberti . The questions that FDA has recently raised are listed below and followed by our responses. Question 1. Please clarify whether the integration of the introduced DNA was confirmed and specify the method used. Response As noted in GRN 908 (page 2…"
+              },
+              {
+                "pageNumber": 69,
+                "excerpt": "…f of our client, Amano Enzyme Inc. (Amano), to address the questions posed by the Food and Drug Administration (FDA) that are attached to your December 8, 2020 email regarding the Generally Recognized as Safe (GRAS) notice that we submitted on January 14, 2020 to cover the intended uses of a lipase enzyme preparation derived from Penicillium camemberti . We provided clarification on December 3, 2020 in response to previous questions posed by FDA, in a November 12, 2020 email. The questions that FDA has most recently raised are listed below and followed by our responses. Question 1. On pg. 17,…"
+              }
+            ]
+          },
+          {
+            "id": "test-article-comparability",
+            "topScore": 0.333,
+            "citations": [
+              {
+                "pageNumber": 14,
+                "excerpt": "…ble 2 below. Table 2. Comparison of lipases derived from P. camemberti AE-LG (“LG (Non- GM)”) and P. camemberti AE-LGS (self-cloned from P. camemberti AE-LG; “LGS (GM)”). LGS (GM) Test article (90 day toxicity study) LG (Non-GM) Batch No. LGS-Y69-001 LGK-000602 LG-Y64 - 002 LG-Y65 - 001 LG-Y65 - 002 Mean Ash (%) 2.52 22.2* 1.8 3.1 2.6 2.5 Water (%) 4.9 2.04 4.4 4.3 5.1 4.6 TOS (%) 92.58 75.76 93.80 92.60 92.30 92.9 Activity (Units/g) 913,000 100,222 337,000 140,000 304,000 260,333 Units/mg TOS 986.2 132.3 359.3 151.2 329.4 279.9 * The ash content of the test article samples was high because th…"
+              },
+              {
+                "pageNumber": 27,
+                "excerpt": "(step 9, which leads to skipping step 10), and the NOAEL for the test article in an appropriate oral study is sufficiently high to ensure safety (step 11, which results in concluding the test article is ACCEPTED). 6.5 Conclusion Based on the documentation provided in this GRAS notification, and as discussed above, Amano has concluded that its lipase enzyme preparation derived from Penicillium camemberti is GRAS via scientific procedures for use as a processing aid in (1) dairy pro…"
+              }
+            ]
+          },
+          {
+            "id": "self-contained-literature-search",
+            "topScore": 0.5,
+            "citations": [
+              {
+                "pageNumber": 69,
+                "excerpt": "…posed by FDA, in a November 12, 2020 email. The questions that FDA has most recently raised are listed below and followed by our responses. Question 1. On pg. 17, you state that a literature search was conducted on January 3, 2020 to assess health concerns associated with P. camemberti. Yet on pg. 18, you state: “No adverse toxicological data were located in an updated review of the toxicological literature conducted on August 23, 2018, aside from reports … which indicate that cyclopiazonic acid (CPA) is a mycotoxin of potential concern for some strains of Penicillium camemberti under certain…"
+              },
+              {
+                "pageNumber": 8,
+                "excerpt": "…Act per 5 U.S.C. § 552(b)(4). 1.9 Certification We certify that, to the best of our knowledge, our GRAS notice is a complete, representative, and balanced submission that includes unfavorable information, as well as Page | 4"
+              }
+            ]
+          },
+          {
+            "id": "allergenicity-assessment",
+            "topScore": 0.833,
+            "citations": [
+              {
+                "pageNumber": 21,
+                "excerpt": "…posure estimate provided in Part 3 above and the information provided in this section on the safety of the production organisms and the safety of the enzyme, including its lack of allergenic and toxigenic potential, provide a basis for Amano’s determination that its lipase enzyme preparation derived from Penicillium camemberti is GRAS for use in dairy processing and fats/oil processing as discussed in detail below. 6.1 Safety of Penicillium camemberti AE-LGS Although the production organism is not present in the lipase enzyme preparation, Amano follows the best practice of using nonpathogenic…"
+              },
+              {
+                "pageNumber": 24,
+                "excerpt": "…d as intended in dairy processing and fats/oil processing. Further, the lack of enzyme activity in the food ingredients further diminishes the risk of any toxicity as well. 6.3 No allergenicity concerns for enzyme preparation from Penicillium camemberti In contrast to most known food allergens, which are naturally present in a narrow range of foods, a wide variety of enzyme classes (and structures), are naturally present in many foods. Further, enzymes have a long history of safe use in food processing, with no indication of adverse effects or reactions. Such is the case with acylglycerol lipa…"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

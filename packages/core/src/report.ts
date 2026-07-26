@@ -3,6 +3,8 @@ import { z } from "zod"
 export const AnalysisStatusSchema = z.enum(["queued", "running", "complete", "failed"])
 export const ReportStatusSchema = z.enum(["demo", "queued", "running", "complete", "failed"])
 export const FindingSeveritySchema = z.enum(["critical", "major", "minor"])
+export const GapTypeSchema = z.enum(["documentation_gap", "evidentiary_gap", "adequacy_gap"])
+export const FindingConfidenceSchema = z.enum(["high", "medium", "low"])
 
 export const ArtifactReferenceSchema = z.object({
   id: z.string(),
@@ -32,12 +34,40 @@ export const RunMetadataSchema = z.object({
   extractor: z.string(),
   scorer: z.string(),
   modelProvider: z.string().nullable(),
+  modelUsage: z
+    .array(
+      z.object({
+        stage: z.string(),
+        model: z.string(),
+        inputTokens: z.number().int().nonnegative(),
+        outputTokens: z.number().int().nonnegative(),
+        cacheCreationInputTokens: z.number().int().nonnegative().default(0),
+        cacheReadInputTokens: z.number().int().nonnegative().default(0),
+        estimatedCostUsd: z.number().nonnegative(),
+      })
+    )
+    .default([]),
+  estimatedCostUsd: z.number().nonnegative().default(0),
+  cacheHit: z.boolean().default(false),
 })
 
 export const BenchmarkStatusSchema = z.enum(["present", "weak", "missing"])
 export const SafetySignalLevelSchema = z.enum(["clear", "watch", "gap"])
 export const DiffStatusSchema = z.enum(["aligned", "partial", "missing"])
+export const EvidenceMatrixChangeSchema = z.enum([
+  "improved",
+  "unchanged",
+  "regressed",
+  "not_comparable",
+])
 export const WorkbookNoteStatusSchema = z.enum(["open", "in_progress", "done"])
+export const EvidenceMatrixStatusSchema = z.enum(["present", "weak", "missing", "not_applicable"])
+
+export const EvidenceCitationSchema = z.object({
+  pageNumber: z.number().int().positive(),
+  excerpt: z.string(),
+  section: z.string().optional(),
+})
 
 export const FindingSchema = z.object({
   id: z.string(),
@@ -46,6 +76,10 @@ export const FindingSchema = z.object({
   summary: z.string(),
   recommendedAction: z.string(),
   evidence: z.array(z.string()).default([]),
+  citations: z.array(EvidenceCitationSchema).optional(),
+  gapType: GapTypeSchema.optional(),
+  domain: z.string().optional(),
+  confidence: FindingConfidenceSchema.optional(),
 })
 
 export const DocumentationBenchmarkItemSchema = z.object({
@@ -62,6 +96,34 @@ export const SafetySignalSchema = z.object({
   level: SafetySignalLevelSchema,
   summary: z.string(),
   evidence: z.array(z.string()),
+  citations: z.array(EvidenceCitationSchema).optional(),
+})
+
+export const ComparableEvidenceMatchSchema = z.object({
+  requirementId: z.string(),
+  requirement: z.string(),
+  relevanceScore: z.number().min(0).max(1),
+  rationale: z.string(),
+  citations: z.array(EvidenceCitationSchema),
+  assessments: z
+    .array(
+      z.object({
+        question: z.string(),
+        conclusion: z.enum([
+          "directly_supportive",
+          "supportive_with_limitations",
+          "contextual_only",
+          "not_transferable",
+          "conflicting",
+          "insufficient_information",
+        ]),
+        rationale: z.string(),
+        transferableElements: z.array(z.string()),
+        limitations: z.array(z.string()),
+        comparatorCitationPages: z.array(z.number().int().positive()),
+      })
+    )
+    .optional(),
 })
 
 export const ComparableFilingSchema = z.object({
@@ -71,6 +133,38 @@ export const ComparableFilingSchema = z.object({
   rationale: z.string(),
   sharedSignals: z.array(z.string()),
   differences: z.array(z.string()),
+  grnNumber: z.number().int().positive().optional(),
+  sourceUrl: z.string().optional(),
+  similarityScore: z.number().min(0).max(1).optional(),
+  matchCriteria: z.array(z.string()).optional(),
+  evidenceMatches: z.array(ComparableEvidenceMatchSchema).optional(),
+})
+
+export const ComparableActionSchema = z.object({
+  id: z.string(),
+  requirementId: z.string(),
+  question: z.string(),
+  priority: FindingSeveritySchema,
+  synthesis: z.string(),
+  amendmentAction: z.string(),
+  researchAction: z.string(),
+  evidenceNeeded: z.array(z.string()),
+  subjectCitationPages: z.array(z.number().int().positive()),
+  comparatorSupport: z.array(
+    z.object({
+      filingId: z.string(),
+      filingName: z.string(),
+      conclusion: z.enum([
+        "directly_supportive",
+        "supportive_with_limitations",
+        "contextual_only",
+        "not_transferable",
+        "conflicting",
+        "insufficient_information",
+      ]),
+      pageNumbers: z.array(z.number().int().positive()),
+    })
+  ),
 })
 
 export const FilingDiffItemSchema = z.object({
@@ -80,6 +174,13 @@ export const FilingDiffItemSchema = z.object({
   baselineExpectation: z.string(),
   draftSignal: z.string(),
   recommendedAction: z.string(),
+  baselineStatus: EvidenceMatrixStatusSchema.optional(),
+  draftStatus: EvidenceMatrixStatusSchema.optional(),
+  change: EvidenceMatrixChangeSchema.optional(),
+  baselineCitations: z.array(EvidenceCitationSchema).optional(),
+  draftCitations: z.array(EvidenceCitationSchema).optional(),
+  consistencyAdjustment: z.enum(["shared_evidence_regression_suppressed"]).optional(),
+  consistencyReason: z.string().optional(),
 })
 
 export const ResearchReferenceSchema = z.object({
@@ -89,18 +190,73 @@ export const ResearchReferenceSchema = z.object({
   year: z.string().optional(),
   relevance: z.string(),
   evidence: z.string(),
+  authors: z.array(z.string()).optional(),
+  doi: z.string().optional(),
+  url: z.string().optional(),
+  citation: z.string().optional(),
+  origin: z.enum(["notifier_cited", "greenlit_recommended"]).optional(),
+  verificationStatus: z
+    .enum(["extracted_unverified", "metadata_verified", "source_verified"])
+    .optional(),
+  citedPages: z.array(z.number().int().positive()).optional(),
+  verification: z
+    .object({
+      source: z.enum(["crossref"]),
+      checkedAt: z.string(),
+      matchMethod: z.enum(["doi", "title"]),
+      confidence: z.number().min(0).max(1),
+      matchedTitle: z.string(),
+      matchedAuthors: z.array(z.string()),
+      matchedYear: z.string(),
+      matchedDoi: z.string(),
+      matchedUrl: z.string(),
+      conflicts: z.array(z.string()),
+    })
+    .optional(),
 })
 
 export const AmendmentOutlineSectionSchema = z.object({
   id: z.string(),
   title: z.string(),
   items: z.array(z.string()),
+  priority: FindingSeveritySchema.optional(),
+  domains: z.array(z.string()).optional(),
+  relatedFindingIds: z.array(z.string()).optional(),
+  citations: z.array(EvidenceCitationSchema).optional(),
+  sequence: z.number().int().positive().optional(),
+  ownerRole: z.string().optional(),
+  dependencies: z.array(z.string()).optional(),
+  deliverables: z.array(z.string()).optional(),
+  sourceActionIds: z.array(z.string()).optional(),
+  comparatorSources: z
+    .array(
+      z.object({
+        filingName: z.string(),
+        conclusion: z.string(),
+        pageNumbers: z.array(z.number().int().positive()),
+      })
+    )
+    .optional(),
+})
+
+export const EvidenceMatrixItemSchema = z.object({
+  id: z.string(),
+  domain: z.string(),
+  requirement: z.string(),
+  status: EvidenceMatrixStatusSchema,
+  assessment: z.string(),
+  evidenceSummary: z.string(),
+  citations: z.array(EvidenceCitationSchema),
+  unresolvedQuestions: z.array(z.string()),
+  relatedFindingIds: z.array(z.string()),
 })
 
 export const ReportModulesSchema = z.object({
   documentationBenchmark: z.array(DocumentationBenchmarkItemSchema),
+  evidenceMatrix: z.array(EvidenceMatrixItemSchema).default([]),
   safetySignals: z.array(SafetySignalSchema),
   comparableFilings: z.array(ComparableFilingSchema),
+  comparableActions: z.array(ComparableActionSchema).default([]),
   filingDiff: z.array(FilingDiffItemSchema),
   researchReferences: z.array(ResearchReferenceSchema),
   amendmentOutline: z.array(AmendmentOutlineSectionSchema),
@@ -151,11 +307,16 @@ export type TextStats = z.infer<typeof TextStatsSchema>
 export type ScoreSignal = z.infer<typeof ScoreSignalSchema>
 export type RunMetadata = z.infer<typeof RunMetadataSchema>
 export type FindingSeverity = z.infer<typeof FindingSeveritySchema>
+export type GapType = z.infer<typeof GapTypeSchema>
+export type FindingConfidence = z.infer<typeof FindingConfidenceSchema>
+export type EvidenceCitation = z.infer<typeof EvidenceCitationSchema>
 export type WorkbookNoteStatus = z.infer<typeof WorkbookNoteStatusSchema>
 export type Finding = z.infer<typeof FindingSchema>
 export type DocumentationBenchmarkItem = z.infer<typeof DocumentationBenchmarkItemSchema>
+export type EvidenceMatrixItem = z.infer<typeof EvidenceMatrixItemSchema>
 export type SafetySignal = z.infer<typeof SafetySignalSchema>
 export type ComparableFiling = z.infer<typeof ComparableFilingSchema>
+export type ComparableAction = z.infer<typeof ComparableActionSchema>
 export type FilingDiffItem = z.infer<typeof FilingDiffItemSchema>
 export type ResearchReference = z.infer<typeof ResearchReferenceSchema>
 export type AmendmentOutlineSection = z.infer<typeof AmendmentOutlineSectionSchema>
@@ -212,6 +373,9 @@ export const demoReport: ReadinessReport = {
     extractor: "fixture",
     scorer: "fixture",
     modelProvider: null,
+    modelUsage: [],
+    estimatedCostUsd: 0,
+    cacheHit: false,
   },
   findings: [
     {
@@ -262,6 +426,7 @@ export const demoReport: ReadinessReport = {
         evidence: ["Safety studies", "Dietary exposure"],
       },
     ],
+    evidenceMatrix: [],
     safetySignals: [
       {
         id: "safety-mapping",
@@ -281,6 +446,7 @@ export const demoReport: ReadinessReport = {
         differences: ["Exact substance and use pattern must be reviewed by a human."],
       },
     ],
+    comparableActions: [],
     filingDiff: [
       {
         id: "safety-diff",

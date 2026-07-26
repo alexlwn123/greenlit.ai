@@ -1,0 +1,483 @@
+{
+  "summary": "GRN 1256 is a resubmission by Plantible Foods for Lemna Leaf Protein (LLP), a highly purified (≥80% protein) extract from Lemna minor, intended for use as a protein ingredient across 11 food categories. The notice is substantively complete: identity, manufacturing, specifications, compositional comparisons, dietary exposure, allergenicity, and toxicology are addressed with reasonable depth. The pivotal subchronic toxicology evidence rests on a Wolffia globosa (Mankai) 90-day rat study (Kawamata et al., 2020), which is publicly available and peer-reviewed; the bridge from Mankai to LLP is partially but not fully supported given compositional differences and a disputed NOAEL. FDA has explicitly concluded the NOAEL is the mid-dose (6.5 g/kg bw/day for males), yielding a margin of exposure of approximately 7–9x for high-intake children when cumulative Lemnaceae exposure is considered—a residual adequacy concern that the notice addresses but does not fully resolve. The expert panel statement relies substantially on GRN 742 (LENTEIN Complete) as a comparator and draws an independent conclusion, satisfying the incorporation requirement. The unpublished 90-day LENTEIN Complete gavage study is correctly characterized as supportive rather than pivotal. Overall evidence readiness is moderate-to-high for most domains, with the primary residual issue being the adequacy of the margin of safety under FDA's preferred NOAEL and the test-article bridge for the pivotal subchronic study.",
+  "findings": [
+    {
+      "id": "noael-dispute-margin-of-safety",
+      "severity": "major",
+      "title": "Disputed NOAEL from Kawamata et al. (2020) yields a margin of exposure of approximately 7–9x for high-intake children under FDA's preferred interpretation",
+      "summary": "The notice asserts the NOAEL for the pivotal Mankai 90-day rat study is the highest dose tested (13.16/15.03 g/kg bw/day), while FDA's review letter (page 281) concludes the NOAEL is the mid-dose (6.49/7.42 g/kg bw/day for males/females) based on dose-dependent findings in fibrinogen, cholesterol, phospholipids, glucose, inorganic phosphorus, and urinary electrolytes. The notice acknowledges this disagreement and calculates MOS of 23 (ages 2+) and 9 (ages 4–8) using the mid-dose NOAEL. When cumulative Lemnaceae exposure is considered (55.6 g/day budget estimate, 60 kg bw), the MOE is approximately 7x. The notice argues these margins are acceptable because intakes are conservatively estimated and protein metabolism is well understood, but does not provide a formal uncertainty factor analysis or additional bridging data to compensate for the reduced margin.",
+      "recommendedAction": "Provide a formal margin-of-exposure analysis using FDA's preferred mid-dose NOAEL, including explicit uncertainty factor justification for accepting an MOE below 100 for a macronutrient ingredient. Consider whether additional human clinical data at relevant exposure levels or a refined exposure estimate using probabilistic methods would strengthen the adequacy argument.",
+      "evidence": [
+        "Kawamata et al. 2020 90-day Mankai rat study (OECD 408)",
+        "FDA review letter August 2018 GRN 742 budget exposure estimate",
+        "GRN 1256 Section 6.6 margin of safety discussion",
+        "FDA response letter page 281 NOAEL disagreement"
+      ],
+      "citations": [
+        {
+          "pageNumber": 281,
+          "excerpt": "FDA's evaluation of this study concludes that the NOAEL is at the middle dose of 10% Mankai. Please provide a narrative discussing how the mid-dose from this study published study being the NOAEL affects your overall GRAS conclusion.",
+          "section": "FDA Toxicology Question 3"
+        },
+        {
+          "pageNumber": 81,
+          "excerpt": "While Plantible agrees with Kawamata's conclusions for the NOAEL, even if the more conservative 6.5 g/kg bw/day was selected as the NOAEL per EFSA's conclusions, MOS for the ages 2+ and ages 4-8 years are 23 and 9, respectively.",
+          "section": "Section 6.6 Risk Assessment"
+        },
+        {
+          "pageNumber": 281,
+          "excerpt": "Using the high-end intake estimate from GRN 742's budget analysis of 55.6 g/day and an average body weight of 60 kg, the Margin of Exposure (MOE) compared to the mid-dose of Mankai powder in the Kawamata et al. study is 7x.",
+          "section": "FDA Toxicology Question 3 Response"
+        }
+      ],
+      "gapType": "adequacy_gap",
+      "domain": "safety_data",
+      "confidence": "high",
+      "category": "safety_data",
+      "evidenceRole": "pivotal",
+      "availability": "public_peer_reviewed",
+      "supportingMaterial": "Kawamata et al. 2020, Wolffia globosa Mankai 90-day rat study",
+      "targetMaterial": "Lemna Leaf Protein (LLP)",
+      "testArticle": "Dried Wolffia globosa Mankai powder (~43-46% protein dw)",
+      "bridgeAssessment": "partial"
+    },
+    {
+      "id": "test-article-bridge-mankai-to-llp",
+      "severity": "major",
+      "title": "Compositional differences between Mankai (test article) and LLP (target) are partially but not fully bridged for the pivotal subchronic study",
+      "summary": "The pivotal 90-day subchronic study used dried Wolffia globosa Mankai powder (~43-46% protein dw), while LLP is a purified Lemna minor extract with ≥80% protein. The notice bridges these materials on amino acid profile similarity, low oxalic acid, and comparable heavy metal specifications. However, meaningful compositional differences exist: copper is substantially higher in LLP (<41 ppm vs <8.6 ppm in Mankai), sodium is higher in LLP (4.14 g/kg vs 0.25-0.65 g/kg range in Mankai), and the protein concentration is approximately twice as high in LLP. The notice provides quantitative arguments that these differences would not affect a 90-day study outcome (e.g., copper contribution at 20% dietary inclusion would be ~8 ppm, within normal rodent diet range), but the bridge relies on inference rather than direct compositional testing of LLP in a toxicology study. The species difference (Wolffia globosa vs Lemna minor) is addressed through genomic and compositional similarity data.",
+      "recommendedAction": "Strengthen the bridge narrative by providing a side-by-side quantitative comparison of all compositionally relevant parameters (protein, minerals, anti-nutrients, vitamins) at the doses used in the Mankai study and the equivalent LLP doses, explicitly demonstrating that no parameter in LLP would be expected to produce a different toxicological outcome. Clarify whether the copper difference has been evaluated against established dietary copper safety thresholds in rodents.",
+      "evidence": [
+        "Table 5 protein comparison LLP vs Mankai",
+        "Table 14 mineral composition comparison",
+        "Table 18 phytochemical comparison",
+        "Section 6.3.3 bridge narrative for Mankai study"
+      ],
+      "citations": [
+        {
+          "pageNumber": 60,
+          "excerpt": "the amino acid profile of the materials is very similar. In the Kawamata et al. study, the highest dose was 20% Mankai in the diet, contributing 9 g protein/100 g diet assuming at typical rodent diet like Lab Diet 5002, which is ~21% protein.",
+          "section": "Section 6.3.3"
+        },
+        {
+          "pageNumber": 60,
+          "excerpt": "with the exception of copper (<41 ppm vs <8.6 ppm in Mankai) and manganese (<12 ppm vs <250 ppm in Mankai, reduced by ultrafiltration process). These levels would not adversely impact results of a 90-day study as the manganese value is lower in LLP, and the higher level of copper in LLP would still be acceptable in a rodent diet",
+          "section": "Section 6.3.3"
+        },
+        {
+          "pageNumber": 10,
+          "excerpt": "pivotal safety data are published on Mankai, a cultivated strain of the related duckweed Wolffia globosa, and a preparation called Lemna Protein Concentrate (LPC), which is a plant protein concentrate powder produced by Parabel Ltd using a mixture of Lemnaceae aquatic plants.",
+          "section": "Section 2.1"
+        }
+      ],
+      "gapType": "adequacy_gap",
+      "domain": "safety_data",
+      "confidence": "high",
+      "category": "test_article_bridge",
+      "evidenceRole": "pivotal",
+      "availability": "public_peer_reviewed",
+      "supportingMaterial": "Kawamata et al. 2020 Mankai 90-day rat study",
+      "targetMaterial": "Lemna Leaf Protein (LLP) from Lemna minor",
+      "testArticle": "Dried Wolffia globosa Mankai powder",
+      "bridgeAssessment": "partial"
+    },
+    {
+      "id": "unpublished-lentein-90day-study",
+      "severity": "major",
+      "title": "Unpublished 90-day gavage study with LENTEIN Complete is characterized as supportive but its non-public status limits its evidentiary weight",
+      "summary": "The notice references an unpublished 90-day repeat-dose oral toxicity study with LENTEIN Complete in Wistar rats (OECD 408, 0/100/500/1000 mg/kg bw/day by gavage, NOAEL 1000 mg/kg bw/day). The notice correctly characterizes this as 'supportive but not pivotal information.' However, the study is not peer-reviewed and is available only through GRN 742, which is a prior regulatory submission rather than a public scientific publication. The notice does not provide the full study report or sufficient detail to independently evaluate the study design, endpoints, or findings. The study doses (up to 1000 mg/kg bw/day by gavage) are substantially lower than the dietary inclusion doses in the Mankai study, limiting its utility as a bridge.",
+      "recommendedAction": "Either provide the full study report for independent evaluation or explicitly acknowledge that this study contributes only contextual support and that the safety case does not depend on it. Clarify the dose rationale and confirm that the gavage vehicle (corn oil) does not confound interpretation.",
+      "evidence": [
+        "Unpublished Parabel LENTEIN Complete 90-day gavage study referenced in GRN 742",
+        "Section 6.3.3 characterization as supportive"
+      ],
+      "citations": [
+        {
+          "pageNumber": 61,
+          "excerpt": "Parabel reported on an unpublished 90-day repeat dose oral toxicity study with LENTEIN TM Complete in Wistar rats (10/sex/group)... As this information is not published in a peer review journal, it provides supportive but not pivotal information to this safety assessment.",
+          "section": "Section 6.3.3"
+        },
+        {
+          "pageNumber": 61,
+          "excerpt": "Rats were administered LENTEIN TM Complete at the dose levels of 0, 100, 500, and 1000 mg/kg bw for 90 days consecutively orally by gavage. The control group was administered corn oil (vehicle) only for 90 days.",
+          "section": "Section 6.3.3"
+        }
+      ],
+      "gapType": "documentation_gap",
+      "domain": "safety_data",
+      "confidence": "high",
+      "category": "public_pivotal_evidence",
+      "evidenceRole": "supportive",
+      "availability": "private",
+      "supportingMaterial": "Unpublished Parabel LENTEIN Complete 90-day gavage study (GRN 742)",
+      "targetMaterial": "Lemna Leaf Protein (LLP)",
+      "testArticle": "LENTEIN Complete (Parabel, polyculture Lemnaceae)",
+      "bridgeAssessment": "partial"
+    },
+    {
+      "id": "incorporation-grn742-independent-conclusion",
+      "severity": "minor",
+      "title": "Reliance on GRN 742 is identified and an independent conclusion is stated, but the expert panel statement characterizes the evaluation as 'largely based on substantial equivalence to LENTEIN Complete'",
+      "summary": "The notice and expert panel statement both rely substantially on GRN 742 (LENTEIN Complete) for food category selection, inclusion rates, exposure benchmarking, and safety precedent. The expert panel statement (page 257) states: 'The evaluation of LLP is largely based on its substantial equivalence to LENTEIN TM Complete, described in GRN 742.' The notice does identify the underlying information from GRN 742, explains its role, and states an independent conclusion. However, the framing of 'substantial equivalence' as the primary basis, rather than as one supporting element among several, could be read as relying on GRN 742's regulatory outcome rather than independently evaluating the underlying data. The notice does provide independent compositional analysis and an independent expert panel conclusion.",
+      "recommendedAction": "Clarify in the narrative that the GRAS conclusion is based on independent evaluation of the underlying scientific data (compositional analysis, published toxicology studies, human clinical data) and that GRN 742 provides context and a relevant comparator, not the primary evidentiary basis. Ensure the expert panel statement reflects this framing.",
+      "evidence": [
+        "Expert Panel Consensus Statement page 257",
+        "Section 2.1 overview of GRAS approach",
+        "GRN 742 LENTEIN Complete No Questions letter August 2018"
+      ],
+      "citations": [
+        {
+          "pageNumber": 257,
+          "excerpt": "The evaluation of LLP is largely based on its substantial equivalence to another Lemna protein product, LENTEIN TM Complete, described in GRN 742. FDA issued a 'No Objections' letter to GRN 742 on August 22, 2018.",
+          "section": "Expert Panel Consensus Statement Introduction"
+        },
+        {
+          "pageNumber": 7,
+          "excerpt": "This GRAS determination is based on data generally available in the public domain pertaining to the safety of Lemna Leaf Protein, as discussed herein, and on consensus among a panel of experts who are qualified by scientific training and experience to evaluate the safety of the Lemna Leaf Protein as a food ingredient",
+          "section": "Section 1.6"
+        }
+      ],
+      "gapType": "documentation_gap",
+      "domain": "cross-cutting",
+      "confidence": "medium",
+      "category": "incorporation_independent_conclusions",
+      "evidenceRole": "context",
+      "availability": "public_not_peer_reviewed",
+      "supportingMaterial": "GRN 742 LENTEIN Complete GRAS notice",
+      "targetMaterial": "Lemna Leaf Protein (LLP)",
+      "testArticle": null,
+      "bridgeAssessment": "supported"
+    },
+    {
+      "id": "five-batch-analysis-age-of-batches",
+      "severity": "minor",
+      "title": "Five-batch analysis lot numbers suggest batches are from 2022 or earlier; representativeness of current commercial production is not confirmed",
+      "summary": "Table 3 presents five-batch analysis results with lot numbers P022822C1, P031522C1, P011022C1, P030122C1, and P012222C1, which appear to encode dates in 2022. The notice was submitted in March 2025. The notice does not state whether these batches are representative of current commercial-scale production or whether the manufacturing process has changed since 2022. Stability data are from a batch produced in February 2021. While the specifications are met and the compositional data are internally consistent, the temporal gap between batch production and submission could be relevant if process scale-up or optimization has occurred.",
+      "recommendedAction": "Confirm that the five batches are representative of current commercial-scale production and that no material changes to the manufacturing process have occurred since the batches were produced. If process changes have occurred, provide updated batch data from current production.",
+      "evidence": [
+        "Table 3 five-batch analysis lot numbers",
+        "Section 2.6 stability study batch from February 2021",
+        "March 2025 submission date"
+      ],
+      "citations": [
+        {
+          "pageNumber": 14,
+          "excerpt": "Lot/Batch# P022822C1 P031522C1 P011022C1 P030122C1 P012222C1",
+          "section": "Table 3 Results of 5-batch Analysis of Plantible's LLP"
+        },
+        {
+          "pageNumber": 16,
+          "excerpt": "The studies were conducted using 2.5 kilograms of LLP, produced in February 2021.",
+          "section": "Section 2.6 Stability Data"
+        }
+      ],
+      "gapType": "documentation_gap",
+      "domain": "identity_characterization",
+      "confidence": "medium",
+      "category": "identity_characterization",
+      "evidenceRole": "supportive",
+      "availability": "private",
+      "supportingMaterial": null,
+      "targetMaterial": "Lemna Leaf Protein (LLP)",
+      "testArticle": null,
+      "bridgeAssessment": "unknown"
+    },
+    {
+      "id": "copper-exposure-children-1-3",
+      "severity": "minor",
+      "title": "Copper intake assessment for ages 1–3 relies on surrogate data for ages 2–5 due to absence of WWEIA data for ages 1–3",
+      "summary": "Table 34 presents estimated daily copper intake from LLP for ages 1–3 at the 90th percentile (9.1 g/day LLP, 0.37 mg/day copper). The notice acknowledges that WWEIA data for copper intakes for ages 1–3 are not available and uses ages 2–5 data (0.7–0.8 mg/day) as a surrogate. The IOM tolerable upper intake level for ages 1–3 is 1 mg/day. The combined estimate (0.37 + 0.7–0.8 mg/day) approaches but does not exceed the UL. The notice characterizes the EDI as extremely conservative (100% market penetration at maximum inclusion), which is a reasonable qualification, but the surrogate data introduce uncertainty for the most sensitive age group.",
+      "recommendedAction": "Acknowledge the data gap for ages 1–3 copper background intakes explicitly and consider whether a probabilistic exposure assessment or a more refined market penetration assumption would better characterize the realistic copper exposure for this age group.",
+      "evidence": [
+        "Table 34 estimated daily copper intake from LLP",
+        "IOM copper UL for ages 1-3 of 1 mg/day",
+        "WWEIA 2017-March 2020 copper intake data"
+      ],
+      "citations": [
+        {
+          "pageNumber": 84,
+          "excerpt": "Values are not available from WWEIA for copper intakes for ages 1-3. Intakes for ages 2-5 are estimated to be 0.7-0.8 g/day from the diet. It is likely that background diet intakes for ages 1-3 are lower than this. As the EDI is extremely conservative, assuming 100% market penetration at the top inclusion level in each use, this is unlikely to occur.",
+          "section": "Section 6.6 Table 34"
+        }
+      ],
+      "gapType": "adequacy_gap",
+      "domain": "dietary_exposure",
+      "confidence": "medium",
+      "category": "dietary_exposure",
+      "evidenceRole": "supportive",
+      "availability": "public_not_peer_reviewed",
+      "supportingMaterial": "WWEIA 2017-March 2020 NHANES copper intake data",
+      "targetMaterial": "Lemna Leaf Protein (LLP)",
+      "testArticle": null,
+      "bridgeAssessment": "unknown"
+    },
+    {
+      "id": "human-clinical-studies-llp-specific",
+      "severity": "minor",
+      "title": "No human clinical study has been conducted with LLP itself; all human data are from whole Lemna minor plant material or LPC, not the purified protein concentrate",
+      "summary": "Human clinical studies cited (Zeinstra et al. 2019, Mes et al. 2022a, 2022b) used whole L. minor plant material or Lemna protein concentrate (LPC, 64% protein), not Plantible's LLP (≥80% protein). Mankai human studies (Yaskolka Meir et al. 2021, Tsaban et al. 2024) used whole Wolffia globosa plant. The notice acknowledges this and argues that the purification process removes potential bioactives, making LLP a more conservative comparator. This is a reasonable argument for a macronutrient protein ingredient, but the absence of any human data with LLP itself is a documentation gap that the notice does not fully address.",
+      "recommendedAction": "Acknowledge explicitly that no human clinical data exist for LLP specifically and provide a more detailed scientific rationale for why the purification process would not introduce new safety concerns (e.g., concentration of minor proteins, processing aids) while removing potential bioactives from the whole plant.",
+      "evidence": [
+        "Zeinstra et al. 2019 L. minor whole plant human study",
+        "Mes et al. 2022a LPC human crossover study",
+        "Mes et al. 2022b L. minor 11-day tolerance study",
+        "Yaskolka Meir et al. 2021 DIRECT-PLUS Mankai 18-month study"
+      ],
+      "citations": [
+        {
+          "pageNumber": 77,
+          "excerpt": "Zeinstra et al. (2019) fed twelve subjects L. minor or peas (equivalent to 20 g of protein) after an overnight fast... The authors concluded that a single bolus of L. minor grown under controlled conditions did not induce acute adverse effects in humans.",
+          "section": "Section 6.4.1"
+        },
+        {
+          "pageNumber": 77,
+          "excerpt": "Mes et al. (2022a) conducted a similar study comparing Lemna protein concentrate (LPC) to whey. In a cross-over, double-blind, controlled trial, 12 healthy participants received 20 grams of protein from Lemna protein concentrate (64% protein) and whey protein concentrate",
+          "section": "Section 6.4.1"
+        }
+      ],
+      "gapType": "evidentiary_gap",
+      "domain": "safety_data",
+      "confidence": "medium",
+      "category": "safety_data",
+      "evidenceRole": "supportive",
+      "availability": "public_peer_reviewed",
+      "supportingMaterial": "Zeinstra et al. 2019; Mes et al. 2022a; Mes et al. 2022b; Yaskolka Meir et al. 2021",
+      "targetMaterial": "Lemna Leaf Protein (LLP)",
+      "testArticle": "Whole L. minor plant; LPC (64% protein); Mankai whole plant",
+      "bridgeAssessment": "partial"
+    },
+    {
+      "id": "genotoxicity-bridge-mankai-to-llp",
+      "severity": "minor",
+      "title": "Genotoxicity studies conducted with Mankai (Wolffia globosa) are bridged to LLP (Lemna minor) through compositional similarity without LLP-specific genotoxicity data",
+      "summary": "The Ames assay and in vitro micronucleus test were conducted with dried Wolffia globosa Mankai powder (Kawamata et al. 2020), not with LLP. The notice bridges these data to LLP on the basis that macronutrients are not known to be genotoxic, the phytochemical/anti-nutrient profile is similar, and LLP has undergone more purification (removing chlorophyll and other potential bioactives). The bridge is scientifically reasonable for a protein-dominant ingredient, but the notice does not address whether any of the 14 identified minor proteins in LLP have been evaluated for genotoxic potential beyond the ToxinPred2 computational screen.",
+      "recommendedAction": "Confirm that the ToxinPred2 computational toxicity screen covers genotoxic endpoints or supplement with a brief literature review of the 14 identified proteins for any known genotoxic associations. The bridge argument is otherwise adequate for a purified protein ingredient.",
+      "evidence": [
+        "Kawamata et al. 2020 Ames assay and micronucleus test with Mankai",
+        "Section 6.3.1 genotoxicity bridge narrative",
+        "ToxinPred2 computational toxicity screen of 14 LLP proteins"
+      ],
+      "citations": [
+        {
+          "pageNumber": 55,
+          "excerpt": "Given the similarity in the composition of duckweeds and more purified products, it is reasonable to assume that LLP is also not genotoxic... Hence, there is reasonable certainty that LLP is also not genotoxic.",
+          "section": "Section 6.3.1"
+        },
+        {
+          "pageNumber": 55,
+          "excerpt": "A reverse mutation (i.e., Ames) assay was conducted using Mankai with Salmonella typhimurium TA98, TA100, TA1535, and TA1537, and Escherichia coli WP2 uvrA according to OECD Method 471.",
+          "section": "Section 6.3.1"
+        }
+      ],
+      "gapType": "adequacy_gap",
+      "domain": "safety_data",
+      "confidence": "medium",
+      "category": "test_article_bridge",
+      "evidenceRole": "supportive",
+      "availability": "public_peer_reviewed",
+      "supportingMaterial": "Kawamata et al. 2020 genotoxicity studies with Mankai",
+      "targetMaterial": "Lemna Leaf Protein (LLP)",
+      "testArticle": "Dried Wolffia globosa Mankai powder (>40% protein dw)",
+      "bridgeAssessment": "partial"
+    },
+    {
+      "id": "conditions-of-use-infant-exclusion",
+      "severity": "minor",
+      "title": "Exclusion of infant formula and toddler foods is stated but not operationalized in the exposure assessment for ages 1–3",
+      "summary": "The notice states that foods formulated for babies or toddlers are excluded from intended uses. However, the dietary exposure assessment (Table 20) includes age group 1–3 years, and the WWEIA food categories used in the EDI calculation include general food categories (baked goods, cereals, snack foods, milk products) that are consumed by toddlers. The notice does not clarify whether the WWEIA data for ages 1–3 exclude toddler-specific formulated foods or whether the inclusion rates applied to these categories are appropriate for foods consumed by this age group.",
+      "recommendedAction": "Clarify whether the WWEIA food codes used for ages 1–3 in the EDI calculation include any toddler-specific formulated foods that are excluded from intended uses, and confirm that the inclusion rates applied are appropriate for foods in which LLP would actually be used as consumed by this age group.",
+      "evidence": [
+        "Table 20 EDI for ages 1-3",
+        "Section 1.4 exclusion of infant and toddler foods",
+        "Appendix 5 EDI methodology"
+      ],
+      "citations": [
+        {
+          "pageNumber": 7,
+          "excerpt": "Foods that are consumed by infants and toddlers, such as infant formulas or foods formulated for babies or toddlers, and meat and poultry products that come under USDA jurisdiction are excluded from the list of intended food uses of the subject LLP.",
+          "section": "Section 1.4"
+        },
+        {
+          "pageNumber": 43,
+          "excerpt": "It should be noted that the sample sizes for male and female users aged 1-3 and males aged 4-8 at the 90th percentile are small and may not be reliable.",
+          "section": "Section 3.2.1 Table 20"
+        }
+      ],
+      "gapType": "documentation_gap",
+      "domain": "conditions_of_use",
+      "confidence": "medium",
+      "category": "conditions_of_use",
+      "evidenceRole": "context",
+      "availability": "public_not_peer_reviewed",
+      "supportingMaterial": "WWEIA 2021-2023 dietary survey data",
+      "targetMaterial": "Lemna Leaf Protein (LLP)",
+      "testArticle": null,
+      "bridgeAssessment": "unknown"
+    },
+    {
+      "id": "efsa-manganese-concern-llp-distinction",
+      "severity": "minor",
+      "title": "EFSA's manganese-based safety concerns for related duckweed products are distinguished for LLP but the distinction relies on specification compliance rather than measured batch data for all relevant parameters",
+      "summary": "EFSA declined to establish safety for LENTEIN Complete (GRN 742 equivalent, manganese 128-333 ppm), whole L. minor/L. gibba plant material, and Mankai (manganese 59.6-292 ppm) primarily due to manganese intake concerns. The notice distinguishes LLP by citing a manganese specification of <12 ppm and measured batch values of 9.6-12 ppm, which is substantially lower than the EFSA-flagged products. EFSA approved a water lentil protein concentrate from L. minor/L. gibba (ABC Kroos BV) with manganese <100 ppm in April 2023. The LLP manganese levels are well below this approved threshold. The distinction is well-supported by measured data and the EFSA 2023 approval provides general acceptance context. No residual gap is identified for manganese specifically.",
+      "recommendedAction": "No corrective action required for manganese. The notice adequately distinguishes LLP from EFSA-flagged products and cites the EFSA 2023 approval of a comparable product. Consider adding a brief summary table comparing LLP manganese levels to all EFSA-reviewed products to make the distinction more immediately apparent to reviewers.",
+      "evidence": [
+        "Table 14 manganese comparison LLP vs Mankai vs LENTEIN Complete",
+        "EFSA 2021b LENTEIN Complete opinion manganese concern",
+        "EFSA 2022 L. minor/L. gibba whole plant opinion",
+        "EFSA 2023 ABC Kroos BV water lentil protein concentrate approval"
+      ],
+      "citations": [
+        {
+          "pageNumber": 80,
+          "excerpt": "For comparison Parabel's five lot analysis showed manganese levels of 128-333 ppm. In contrast, LLP has much lower levels of <12 ppm.",
+          "section": "Section 6.5 Global Regulatory Status"
+        },
+        {
+          "pageNumber": 81,
+          "excerpt": "EFSA approved a novel food application by ABC Kroos BV for Water lentil protein concentrate made from L. minor and L. Gibba in April 2023. Of note, manganese specifications for this product were set at <100 ppm and EFSA concluded from a risk assessment that contributions of manganese from consumption of the novel food under intended uses was small compared to background intakes.",
+          "section": "Section 6.5 Global Regulatory Status"
+        }
+      ],
+      "gapType": "documentation_gap",
+      "domain": "general_acceptance",
+      "confidence": "high",
+      "category": "general_acceptance",
+      "evidenceRole": "context",
+      "availability": "public_peer_reviewed",
+      "supportingMaterial": "EFSA 2021b, 2022, 2023 opinions on duckweed products",
+      "targetMaterial": "Lemna Leaf Protein (LLP)",
+      "testArticle": null,
+      "bridgeAssessment": "supported"
+    }
+  ],
+  "safetySignals": [
+    {
+      "id": "low-margin-of-exposure-children-4-8",
+      "label": "Margin of exposure of approximately 9x for ages 4–8 under FDA's preferred NOAEL",
+      "level": "watch",
+      "summary": "Using FDA's preferred mid-dose NOAEL of 6.49 g/kg bw/day (males) from Kawamata et al. 2020, and the 90th percentile LLP intake for ages 4–8 of 0.719 g/kg bw/day, the margin of exposure is approximately 9x. When cumulative Lemnaceae exposure is considered using the GRN 742 budget estimate, the MOE is approximately 7x. The notice argues this is acceptable given the conservative nature of the exposure estimate and the macronutrient character of the ingredient, but the margin is below the conventional 100x threshold and the adequacy of the justification is a matter of scientific judgment rather than a resolved question.",
+      "evidence": [
+        "Table 20 EDI ages 4-8 at 90th percentile 0.719 g/kg bw/day",
+        "Kawamata et al. 2020 mid-dose NOAEL 6.49 g/kg bw/day males",
+        "FDA review letter page 281 NOAEL conclusion",
+        "GRN 742 budget exposure estimate 55.6 g/day"
+      ],
+      "citations": [
+        {
+          "pageNumber": 281,
+          "excerpt": "Despite an MOE of less than 100, there is a reasonable certainty of no harm for consumption of LLP under the intended uses. First, these estimated intakes are extremely conservative, assuming that 100% of products in all categories contain LLP at the maximum use level.",
+          "section": "FDA Toxicology Question 3 Response"
+        },
+        {
+          "pageNumber": 81,
+          "excerpt": "For the highest intake level on a body weight basis, which was 0.719 g/kg bw/day for ages 4-8, there is a MOS of 18. While Plantible agrees with Kawamata's conclusions for the NOAEL, even if the more conservative 6.5 g/kg bw/day was selected as the NOAEL per EFSA's conclusions, MOS for the ages 2+ and ages 4-8 years are 23 and 9, respectively.",
+          "section": "Section 6.6"
+        }
+      ]
+    },
+    {
+      "id": "dose-dependent-findings-mankai-90day",
+      "label": "Dose-dependent findings in fibrinogen, cholesterol, phospholipids, glucose, and urinary electrolytes in pivotal 90-day rat study",
+      "level": "watch",
+      "summary": "The Kawamata et al. 2020 study showed statistically significant, dose-dependent changes in fibrinogen (decreased in mid and high dose females), cholesterol (decreased in high dose males), phospholipids (decreased in high dose males), glucose (increased in high dose females), inorganic phosphorus (decreased in high dose males), and urinary sodium, potassium, and chloride (decreased in mid and high dose females). FDA characterized these as indicating electrolyte imbalance and possible prolonged clotting time. The notice disputes the adverse nature of these findings but acknowledges them. These findings are the basis for FDA's mid-dose NOAEL determination and represent a documented adverse observation in the pivotal study.",
+      "evidence": [
+        "Table 27 summary of statistically significant parameters in 90-day Mankai study",
+        "Kawamata et al. 2020 published study",
+        "FDA review letter page 281 characterization of dose-dependent findings",
+        "EFSA 2021c review of Kawamata study"
+      ],
+      "citations": [
+        {
+          "pageNumber": 57,
+          "excerpt": "decreases in total cholesterol, phospholipid, calcium, and inorganic phosphorus in males at 20 % (w/w) Mankai in the diet and increases in glucose and blood urea nitrogen in females at 20 % (w/w) Mankai in the diet were small changes and individual values were generally within the historical control data in the test facility.",
+          "section": "Section 6.3.3"
+        },
+        {
+          "pageNumber": 281,
+          "excerpt": "other endpoints do show dose-dependence, as well as large differences that are well outside the study control levels (blood and serum biomarkers: fibrinogen, cholesterol, phospholipids, glucose, inorganic phosphorous; urinary biomarkers: water consumption, sodium, potassium, and chloride). Though these endpoints do not point to a single mechanism of toxicity, they do indicate effects such as electrolyte imbalance and possible prolonged clotting time",
+          "section": "FDA Toxicology Question 3"
+        }
+      ]
+    },
+    {
+      "id": "copper-intake-near-ul-children",
+      "label": "Copper intake from LLP approaches UL for ages 1–3 under conservative exposure assumptions",
+      "level": "watch",
+      "summary": "At the 90th percentile LLP intake for ages 1–3 (9.1 g/day), copper contribution from LLP is estimated at 0.37 mg/day. Background copper intakes for ages 2–5 are 0.7–0.8 mg/day. Combined, this approaches the IOM UL of 1 mg/day for ages 1–3. The notice characterizes the EDI as extremely conservative (100% market penetration at maximum inclusion) and notes that actual intakes would be lower. No exceedance is documented, but the proximity to the UL under conservative assumptions for the most sensitive age group warrants attention.",
+      "evidence": [
+        "Table 34 copper EDI from LLP",
+        "IOM copper UL ages 1-3 of 1 mg/day",
+        "WWEIA 2017-March 2020 background copper intakes ages 2-5"
+      ],
+      "citations": [
+        {
+          "pageNumber": 84,
+          "excerpt": "At a specificaiton of <75 ppb for lead, LLP is anticipated to contribute less than 1.8 μg lead/day to the diets of children ages 1-8... Estimated intakes combined with current mean intakes are below the UL for all ages 4+. For ages 1-3 years, the intake of copper from LLP is less than the UL.",
+          "section": "Section 6.6 Table 34"
+        },
+        {
+          "pageNumber": 84,
+          "excerpt": "Values are not available from WWEIA for copper intakes for ages 1-3. Intakes for ages 2-5 are estimated to be 0.7-0.8 g/day from the diet. It is likely that background diet intakes for ages 1-3 are lower than this.",
+          "section": "Section 6.6"
+        }
+      ]
+    },
+    {
+      "id": "efsa-authoritative-disagreement-noael",
+      "label": "EFSA and FDA both concluded a lower NOAEL than the study authors for the pivotal subchronic study",
+      "level": "watch",
+      "summary": "Both EFSA (2021c) and FDA (GRN 1256 review) independently concluded that the NOAEL for the Kawamata et al. 2020 Mankai 90-day study is the mid-dose (6.5 g/kg bw/day for males per EFSA; 6.49/7.42 g/kg bw/day per FDA), not the highest dose as concluded by the study authors and the notifier. This represents authoritative disagreement with the notifier's NOAEL interpretation from two independent regulatory bodies, which is a concrete signal requiring resolution in the safety narrative.",
+      "evidence": [
+        "EFSA 2021c scientific opinion on Wolffia globosa Mankai powder",
+        "FDA GRN 1256 review letter page 281",
+        "Kawamata et al. 2020 study authors' NOAEL conclusion",
+        "GRN 1256 Section 6.3.3 notifier's NOAEL interpretation"
+      ],
+      "citations": [
+        {
+          "pageNumber": 59,
+          "excerpt": "EFSA (2021c) reviewed this study as part of a novel food (NF) application. In their analysis EFSA said, 'A number of significant findings were seen in the urinalysis, haematology, blood chemistry and organ weights, in the animals fed with the NF... the Panel considers the middle dose tested for males (i.e., 6.5 g/kg bw per day) as the overall no observed adverse effect level (NOAEL) of this study'.",
+          "section": "Section 6.3.3"
+        },
+        {
+          "pageNumber": 281,
+          "excerpt": "FDA's evaluation of this study concludes that the NOAEL is at the middle dose of 10% Mankai.",
+          "section": "FDA Toxicology Question 3"
+        }
+      ]
+    },
+    {
+      "id": "arsenic-batch-data-near-specification",
+      "label": "Inorganic arsenic batch values cluster near 200 ppb against a specification of <300 ppb",
+      "level": "watch",
+      "summary": "Five-batch analysis shows arsenic values of 199–213 ppb against a specification of <300 ppb (Table 3). All values are within specification, but the batch data cluster at approximately 67–71% of the specification limit with limited variability. The notice states that arsenic intake from LLP is estimated to be 0.08 μg/kg bw/day for all consumers age 2+, well below WHO and ATSDR reference values. No exceedance is documented. The proximity of measured values to the specification midpoint (rather than the upper limit) does not constitute a safety signal, but the specification headroom is limited and the notice does not discuss whether the arsenic specification is set based on achievable manufacturing levels or a risk-based threshold.",
+      "evidence": [
+        "Table 3 five-batch arsenic values 199-213 ppb",
+        "Arsenic specification <300 ppb",
+        "Section 6.6 arsenic intake assessment"
+      ],
+      "citations": [
+        {
+          "pageNumber": 14,
+          "excerpt": "Arsenic <300 ppb 212 ppb 206 ppb 213 ppb 199 ppb 201 ppb",
+          "section": "Table 3 Results of 5-batch Analysis"
+        },
+        {
+          "pageNumber": 84,
+          "excerpt": "At a specification of <300 ppb, intake of inorganic arsenic from LLP is estimated to be 0.08 μg/kg bw/day for all consumers age 2+, much lower than the WHO oral advisory intake value of 3 μg/kg bw/day",
+          "section": "Section 6.6"
+        }
+      ]
+    }
+  ],
+  "analyzedPages": [
+    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26,
+    27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50,
+    51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 68, 69, 72, 76, 77, 78, 79, 80, 81,
+    84, 86, 88, 91, 95, 96, 101, 241, 257, 258, 259, 260, 261, 274, 275, 281, 361, 367, 375, 377,
+    385, 389, 404, 414, 417, 418, 438, 443, 617, 618, 775, 800, 1419, 1420, 1421, 1422, 1423, 1424,
+    1425, 1426, 1427, 1428
+  ],
+  "truncated": true,
+  "modelProvider": "anthropic/claude-sonnet-4-6"
+}

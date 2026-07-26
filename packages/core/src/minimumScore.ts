@@ -230,6 +230,9 @@ export function createMinimumReadinessReport(input: MinimumScoreInput): Readines
       extractor: "pdfjs-dist-legacy-with-readable-text-fallback",
       scorer: "deterministic-required-section-coverage-v1",
       modelProvider: null,
+      modelUsage: [],
+      estimatedCostUsd: 0,
+      cacheHit: false,
     },
     findings,
     modules: buildReportModules(sectionResults, lowerText, normalizedText),
@@ -389,11 +392,13 @@ function buildReportModules(
 
   return {
     documentationBenchmark,
+    evidenceMatrix: [],
     safetySignals: safeModuleOutput(() => buildSafetySignals(sectionResults, lowerText), []),
     comparableFilings: safeModuleOutput(
       () => buildComparableFilings(lowerText, documentationBenchmark),
       []
     ),
+    comparableActions: [],
     filingDiff: safeModuleOutput(() => buildFilingDiff(documentationBenchmark), []),
     researchReferences: safeModuleOutput(() => buildResearchReferences(normalizedText), []),
     amendmentOutline: safeModuleOutput(() => buildAmendmentOutline(documentationBenchmark), []),

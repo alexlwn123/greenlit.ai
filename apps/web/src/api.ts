@@ -3,6 +3,11 @@ import { uploadPresigned } from "@vercel/blob/client"
 
 const sessionStorageKey = "greenlit.localSessionId"
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL ?? "/api"
+let apiAuthToken: string | null = null
+
+export function setApiAuthToken(token: string | null) {
+  apiAuthToken = token
+}
 
 export async function listAnalyses() {
   const response = await requestJson<{ analyses: AnalysisRecord[] }>("/analyses")
@@ -12,6 +17,10 @@ export async function listAnalyses() {
 export async function getAnalysis(analysisId: string) {
   const response = await requestJson<{ analysis: AnalysisRecord }>(`/analyses/${analysisId}`)
   return response.analysis
+}
+
+export async function deleteAnalysis(analysisId: string) {
+  await requestJson<void>(`/analyses/${analysisId}`, { method: "DELETE" })
 }
 
 export async function createAnalysis(file: File) {
@@ -32,12 +41,17 @@ export async function createAnalysis(file: File) {
 async function createAnalysisFromDirectUpload(file: File) {
   validatePdf(file)
   const sessionId = getSessionId()
-  const pathname = `greenlit/uploads/${sessionId}/${crypto.randomUUID()}-${safeFileName(file.name)}`
+  const { pathname } = await requestJson<{ pathname: string }>("/uploads/path", {
+    body: JSON.stringify({ fileName: safeFileName(file.name) }),
+    headers: { "Content-Type": "application/json" },
+    method: "POST",
+  })
   const blob = await uploadPresigned(pathname, file, {
     access: "private",
     contentType: file.type || "application/pdf",
     handleUploadUrl: `${apiBaseUrl}/uploads`,
     headers: {
+      ...(apiAuthToken ? { Authorization: `Bearer ${apiAuthToken}` } : {}),
       "x-greenlit-session": sessionId,
     },
     multipart: file.size > 5 * 1024 * 1024,
@@ -96,6 +110,7 @@ export async function createNote(analysisId: string, body: string) {
 export async function downloadAnalysisFile(analysisId: string, kind: "outline" | "export") {
   const response = await fetch(`${apiBaseUrl}/analyses/${analysisId}/${kind}`, {
     headers: {
+      ...(apiAuthToken ? { Authorization: `Bearer ${apiAuthToken}` } : {}),
       "x-greenlit-session": getSessionId(),
     },
   })
@@ -137,6 +152,7 @@ async function requestJson<T>(path: string, init: RequestInit = {}) {
     ...init,
     headers: {
       ...init.headers,
+      ...(apiAuthToken ? { Authorization: `Bearer ${apiAuthToken}` } : {}),
       "x-greenlit-session": getSessionId(),
     },
   })
@@ -146,6 +162,7 @@ async function requestJson<T>(path: string, init: RequestInit = {}) {
     throw new Error(error)
   }
 
+  if (response.status === 204) return undefined as T
   return (await response.json()) as T
 }
 

@@ -1,0 +1,717 @@
+{
+  "summary": "GRN 908 is a resubmission (replacing GRN 866) covering a lipase enzyme preparation derived from a self-cloned GM strain of Penicillium camemberti (AE-LGS) for use as a processing aid in dairy processing and fats/oils processing. The notice relies heavily on GRN 68 (non-GM strain, AE-LG) by incorporation by reference under 21 C.F.R. § 170.215, with the pivotal safety study (Kondo et al. 1994, 90-day rat gavage) drawn from that prior notice. The notice provides a structured equivalence bridge between AE-LGS and AE-LG through SDS-PAGE, biochemical characterization, and TOS/activity comparisons. FDA raised nine questions during review, all of which were addressed in supplemental responses (December 2020 and January 2021), including clarification of DNA integration confirmation, genetic stability, manufacturing process details, allergen controls, and exposure methodology. The notice is substantively complete; residual issues are primarily documentation and adequacy concerns around the manufacturing description (resolved in part through Q&A), the publication status of the pivotal Kondo et al. study, and the breadth of the test-article bridge given the higher-purity GM product. No critical evidentiary gaps are identified. The notice was closed with a 'no questions' response from FDA in February 2021.",
+  "filingProfile": {
+    "substanceName": "Lipase from Penicillium camemberti",
+    "notifier": "Amano Enzyme, Inc.",
+    "status": "GRN 908 submitted January 14, 2020; filed March 20, 2020; no-questions letter February 8, 2021",
+    "substanceType": "enzyme",
+    "productionMethod": "submerged_fermentation",
+    "sourceOrganismType": "fungus",
+    "sourceOrganismName": "Penicillium camemberti AE-LGS (self-cloned derivative of P. camemberti U-150)",
+    "intendedUses": [
+      "dairy processing (production of enzyme-modified cheese)",
+      "fats and oil processing (production of dietary ingredients derived from fats and oils including GLA, DHA, and EPA)"
+    ],
+    "targetPopulation": "General population consuming enzyme-modified cheese and/or foods and beverages containing ingredients such as DHA, EPA, and GLA",
+    "grasBasis": "Scientific procedures (21 C.F.R. §§ 170.30(a) and (b))",
+    "safetyDataAvailable": [
+      "90-day oral toxicology study in rats (Kondo et al., 1994)",
+      "mycotoxin screening by HPLC/FD, LC-MS/MS, and SPE with LC-MS/MS",
+      "allergenicity assessment including amino acid sequence homology search and ELISA testing",
+      "SDS-PAGE and biochemical equivalence data",
+      "pathogenicity study in mice",
+      "Pariza and Johnson decision tree analysis"
+    ],
+    "dietaryExposureMethod": "Conservative budget method: maximum use levels assumed for all applications, all foods assumed to contain highest TOS level (76 mg TOS/kg food), 3 kg food/day, 60 kg body weight; EDI = 3.8 mg TOS/kg bw/day"
+  },
+  "findings": [
+    {
+      "id": "pivotal-study-publication-status",
+      "severity": "major",
+      "title": "Publication status of pivotal 90-day toxicity study (Kondo et al. 1994) requires verification",
+      "summary": "The notice identifies Kondo et al. (1994) as the pivotal safety data for the GRAS determination. The study is cited as a journal article (Food Chem Toxic 32(8):685-696) and was originally submitted to FDA in GRN 68. The notice does not explicitly confirm that the published journal article is publicly available and peer-reviewed in the current submission; it is referenced as incorporated from GRN 68. The journal Food and Chemical Toxicology is a peer-reviewed publication, but the notice itself does not state this, and the study was conducted on the non-GM test article (LGK, Lipase G Amano 50) rather than the GM product (Lipase GS Amano 250G). The pivotal role of this study and its public peer-reviewed status are not affirmatively stated in GRN 908.",
+      "recommendedAction": "Confirm in the notice body that Kondo et al. (1994) is a publicly available, peer-reviewed publication and that the notifier independently concludes safety based on its data rather than relying on GRN 68's outcome.",
+      "evidence": [
+        "Kondo et al. (1994) identified as pivotal safety data",
+        "Study incorporated by reference from GRN 68",
+        "Journal citation present but public/peer-review status not affirmatively stated in GRN 908"
+      ],
+      "citations": [
+        {
+          "pageNumber": 22,
+          "excerpt": "The pivotal safety data in concluding the intended use of Amano's lipase enzyme preparation is GRAS are from a 90-day toxicological study of Lipase G Amano 50 (LGK) in rats reported by Kondo et al. (1994), which was provided to FDA in GRN 68 (incorporated here by reference).",
+          "section": "Part 6.2 Safety of enzyme preparation from Penicillium camemberti"
+        }
+      ],
+      "gapType": "documentation_gap",
+      "domain": "cross-cutting",
+      "confidence": "medium",
+      "category": "public_pivotal_evidence",
+      "evidenceRole": "pivotal",
+      "availability": "unknown",
+      "supportingMaterial": "Kondo et al. (1994), Food Chem Toxic 32(8):685-696",
+      "targetMaterial": "Lipase GS Amano 250G from P. camemberti AE-LGS",
+      "testArticle": "Lipase G Amano 50 (LGK) from P. camemberti AE-LG",
+      "bridgeAssessment": "partial"
+    },
+    {
+      "id": "manufacturing-process-incorporation-gap",
+      "severity": "major",
+      "title": "Manufacturing process description relies on GRN 68 incorporation without full in-notice summary",
+      "summary": "Section 2.2 of GRN 908 states that 'A detailed description of the manufacturing process, which was provided in GRN 68 and is incorporated herein, reflects the current process with the exception of minor changes made to improve process efficiency.' The actual manufacturing steps are not described in GRN 908 itself. FDA raised this as Question 6 during review, and a detailed process summary was provided in the December 3, 2020 response letter. However, this information was not incorporated into the notice body itself, leaving the notice as filed incomplete with respect to manufacturing description. The response letter clarifies fermentation conditions, filtration sequence, heat treatment, pH adjustment, ethanol precipitation, and diluent identity (maltodextrin, not dextrin as stated in the notice).",
+      "recommendedAction": "Incorporate the manufacturing process summary provided in the December 2020 Q&A response directly into the notice body (Section 2.2) to make the notice self-contained, and correct the diluent identification from dextrin to maltodextrin.",
+      "evidence": [
+        "Section 2.2 defers to GRN 68 Appendix I for manufacturing details",
+        "FDA Question 6 requested manufacturing summary",
+        "December 2020 response provided process details not in notice body",
+        "Notice states dextrin as diluent; Q&A response clarifies maltodextrin is used"
+      ],
+      "citations": [
+        {
+          "pageNumber": 15,
+          "excerpt": "A detailed description of the manufacturing process, which was provided in GRN 68 and is incorporated herein, reflects the current process with the exception of minor changes made to improve process efficiency. See GRN 68 at Appendix I, located at page 13 of GRN 68.",
+          "section": "Part 2.2 Description of the method of manufacture"
+        },
+        {
+          "pageNumber": 6,
+          "excerpt": "The notified substance is lipase derived from Penicillium camemberti...Amano's GM and non-GM P. camemberti enzyme preparations contain dextrin, which is used as a diluent",
+          "section": "Part 1.3 Name of the notified substance"
+        }
+      ],
+      "gapType": "documentation_gap",
+      "domain": "manufacturing process",
+      "confidence": "high",
+      "category": "incorporation_independent_conclusions",
+      "evidenceRole": "supportive",
+      "availability": "unknown",
+      "supportingMaterial": "GRN 68 Appendix I; December 3, 2020 Q&A response letter",
+      "targetMaterial": "Lipase GS Amano 250G from P. camemberti AE-LGS",
+      "testArticle": null,
+      "bridgeAssessment": "unknown"
+    },
+    {
+      "id": "test-article-bridge-activity-difference",
+      "severity": "major",
+      "title": "Higher specific activity of GM-strain product relative to 90-day toxicity test article not fully bridged at the exposure level",
+      "summary": "Table 2 shows that the GM-strain product (LGS-Y69-001) has an activity of 913,000 Units/g (986.2 Units/mg TOS), approximately 3.5-fold higher than the mean of the non-GM batches (279.9 Units/mg TOS) and approximately 7.5-fold higher than the test article (LGK-000602, 132.3 Units/mg TOS). The notice states the lipase from AE-LGS is 'of a higher purity than that derived from non-GM strains as indicated by activity (U/g) assays' and that the products are 'equivalent,' but does not explicitly address whether the higher specific activity of the GM product at the same TOS-based use levels results in meaningfully higher enzymatic exposure in food. The EDI is calculated on a TOS basis, which may understate functional enzyme exposure if the GM product is substantially more active per unit TOS.",
+      "recommendedAction": "Provide an explicit analysis of whether the higher specific activity of the GM-strain product at the same TOS-based use levels results in any meaningful difference in functional enzyme exposure compared to the test article, or confirm that TOS-based dosing in the 90-day study is the appropriate metric for safety bridging.",
+      "evidence": [
+        "Table 2 shows GM product activity 986.2 Units/mg TOS vs. test article 132.3 Units/mg TOS",
+        "Notice states products are 'equivalent' without addressing activity-based exposure",
+        "EDI calculated on TOS basis only"
+      ],
+      "citations": [
+        {
+          "pageNumber": 14,
+          "excerpt": "Lipase derived from Amano's GM strain is of a higher purity than that derived from non-GM strains as indicated by activity (U/g) assays.",
+          "section": "Part 2.1(i) Equivalence of lipase from P. camemberti AE-LGS to lipase from P. camemberti AE-LG"
+        },
+        {
+          "pageNumber": 23,
+          "excerpt": "The no-observed-adverse-effect level (NOAEL) for LGK (the concentrated enzyme) administered by gavage to Sprague-Dawley rats in the 90-day study...was determined to be the high dose level, 2000 mg/kg body weight. Based on the total organic solids (TOS) content of the LGK (i.e., 75.76%), the NOAEL for the lipase enzyme preparation may be expressed as 1515 mg/kg body weight TOS",
+          "section": "Part 6.2 Safety of enzyme preparation from Penicillium camemberti"
+        }
+      ],
+      "gapType": "adequacy_gap",
+      "domain": "cross-cutting",
+      "confidence": "medium",
+      "category": "test_article_bridge",
+      "evidenceRole": "pivotal",
+      "availability": "private",
+      "supportingMaterial": "Table 2 comparative activity data; Kondo et al. (1994) 90-day study",
+      "targetMaterial": "Lipase GS Amano 250G from P. camemberti AE-LGS",
+      "testArticle": "Lipase G Amano 50 (LGK) from P. camemberti AE-LG",
+      "bridgeAssessment": "partial"
+    },
+    {
+      "id": "grn68-incorporation-independent-conclusion",
+      "severity": "minor",
+      "title": "Incorporation of GRN 68 is properly identified but independent conclusion could be more explicitly stated",
+      "summary": "The notice incorporates GRN 68 by reference under 21 C.F.R. § 170.215, identifies the underlying information (manufacturing process, pathogenicity study, mycotoxin screening, pivotal toxicity study), and explains its role. The notice states its own GRAS conclusion for the GM-strain product. However, the narrative in Part 6.2 closely tracks GRN 68's safety analysis and the notice does not explicitly state that its GRAS conclusion is independent of GRN 68's outcome (i.e., the 2001 'no questions' letter). The cover letter notes 'No additional information is provided in the enclosed GRAS notice as compared to GRN 866,' which could be read as relying on the prior review outcome rather than independently evaluating the evidence.",
+      "recommendedAction": "Add an explicit statement in the narrative that the GRAS conclusion for the GM-strain product is based on independent evaluation of the incorporated and new evidence, and is not contingent on the outcome of GRN 68.",
+      "evidence": [
+        "GRN 68 incorporated by reference under 21 C.F.R. § 170.215",
+        "GRN 68 publicly available on FDA GRAS inventory",
+        "Notice states own GRAS conclusion in Part 6.5",
+        "Cover letter states no additional information compared to GRN 866"
+      ],
+      "citations": [
+        {
+          "pageNumber": 15,
+          "excerpt": "Specifically identified data and information are incorporated into Amano's current GRAS notice by reference to GRN 68 as permitted under 21 C.F.R. § 170.215. Amano's GRN 68 is publicly available on FDA's GRAS notice inventory",
+          "section": "Part 2.2 footnote 2"
+        },
+        {
+          "pageNumber": 2,
+          "excerpt": "No additional information is provided in the enclosed GRAS notice as compared to GRN 866.",
+          "section": "Cover letter page 2"
+        }
+      ],
+      "gapType": "documentation_gap",
+      "domain": "cross-cutting",
+      "confidence": "medium",
+      "category": "incorporation_independent_conclusions",
+      "evidenceRole": "context",
+      "availability": "public_peer_reviewed",
+      "supportingMaterial": "GRN 68",
+      "targetMaterial": "Lipase GS Amano 250G from P. camemberti AE-LGS",
+      "testArticle": null,
+      "bridgeAssessment": "supported"
+    },
+    {
+      "id": "cpa-mycotoxin-no-data-for-ae-lgs-strain",
+      "severity": "minor",
+      "title": "CPA production potential of AE-LGS strain not directly characterized; reliance on non-detection in finished product",
+      "summary": "The notice acknowledges that CPA is a mycotoxin of potential concern for some P. camemberti strains and that no published data exist regarding CPA production by P. camemberti U-150 (AE-LG). CPA was not detected in the enzyme preparations from AE-LG (per GRN 68) or AE-LGS (per Figure 4 mycotoxin screening). However, the notice does not characterize whether AE-LGS has been tested for CPA production capacity under fermentation conditions, relying solely on non-detection in the finished product. Ostry et al. (2018) is cited as calling for further chronic toxicity and carcinogenicity studies for CPA, which the notice acknowledges but does not resolve.",
+      "recommendedAction": "Clarify whether AE-LGS has been assessed for CPA production potential under fermentation conditions, or confirm that finished-product non-detection at the stated LOD is the appropriate and sufficient control measure, with reference to the LOD relative to any applicable threshold.",
+      "evidence": [
+        "Figure 4 shows CPA not detected at <7.5 μg/kg LOD in AE-LGS enzyme preparation",
+        "No published data on CPA production by P. camemberti U-150",
+        "Ostry et al. (2018) calls for further chronic toxicity studies on CPA",
+        "Le Bars (1979) and Císarová et al. (2012) document CPA production by P. camemberti strains"
+      ],
+      "citations": [
+        {
+          "pageNumber": 22,
+          "excerpt": "No published data were located regarding production of CPA by P. camemberti U-150. While there are no reports of illness linked to consumption of cheese with CPA produced by P. camemberti, acute toxicity is a recognized hazard for oral exposure to CPA.",
+          "section": "Part 6.2 Safety of enzyme preparation from Penicillium camemberti"
+        },
+        {
+          "pageNumber": 23,
+          "excerpt": "CPA was not detected in the enzyme preparations derived from P. camemberti AE-LG (i.e., U-150), as reported in GRN 68, or in P. camemberti AE-LGS, which was analyzed for a broad range of mycotoxins",
+          "section": "Part 6.2 Safety of enzyme preparation from Penicillium camemberti"
+        }
+      ],
+      "gapType": "adequacy_gap",
+      "domain": "safety data",
+      "confidence": "medium",
+      "category": "safety_data",
+      "evidenceRole": "supportive",
+      "availability": "public_peer_reviewed",
+      "supportingMaterial": "Figure 4 mycotoxin screening; Le Bars (1979); Císarová et al. (2012); Ostry et al. (2018)",
+      "targetMaterial": "Lipase GS Amano 250G from P. camemberti AE-LGS",
+      "testArticle": null,
+      "bridgeAssessment": "partial"
+    }
+  ],
+  "evidenceMatrix": [
+    {
+      "id": "identity-composition",
+      "domain": "identity and characterization",
+      "requirement": "Identity, source, composition, and specifications",
+      "status": "present",
+      "assessment": "The notice provides common name, IUBMB classification, EC number, CASRN, EINECS number, synonyms, enzyme specificity, full amino acid sequence, molecular mass, taxonomic classification of the production strain, and a description of the self-cloning derivation. Equivalence to the non-GM strain is supported by SDS-PAGE, biochemical characterization (optimum temperature, pH stability), and TOS/activity comparisons. The diluent is identified (though mislabeled as dextrin in Part 1.3; corrected to maltodextrin in Q&A). Specifications are provided in Table 3 with three batch results.",
+      "evidenceSummary": "Full amino acid sequence (Figure 1), SDS-PAGE (Figure 2), biochemical equivalence data (Figure 3), Table 2 comparative TOS/activity data, Table 3 specifications with three lots, taxonomic classification in Part 2.1(j).",
+      "citations": [
+        {
+          "pageNumber": 11,
+          "excerpt": "The full amino acid sequence of lipase derived from Penicillium camemberti is provided in Figure 1 below. From the above sequence, the molecular mass of the enzyme protein is calculated to be 32.9kDa.",
+          "section": "Part 2.1(h) Molecular mass and amino acid sequence"
+        },
+        {
+          "pageNumber": 16,
+          "excerpt": "Table 3. Specifications for the lipase enzyme preparation. Item Requirement Lot No. LGSQ0552101GK Lot No. LGSQ0750501GK Lot No. LGSQ1151401GK",
+          "section": "Part 2.3 Specifications of the food-grade material"
+        }
+      ],
+      "unresolvedQuestions": [
+        "Whether the diluent is dextrin (as stated in Part 1.3) or maltodextrin (as clarified in Q&A response) — the notice body contains an internal inconsistency"
+      ],
+      "relatedFindingIds": ["manufacturing-process-incorporation-gap"]
+    },
+    {
+      "id": "manufacturing",
+      "domain": "manufacturing process",
+      "requirement": "Process description and process-related controls",
+      "status": "weak",
+      "assessment": "Section 2.2 incorporates GRN 68 by reference for the detailed manufacturing process and notes only high-level changes (earlier harvest, optimized filtration with diatomaceous earth). The actual process steps are not described in the notice body. A detailed summary was provided in the December 2020 Q&A response but was not incorporated into the notice. CGMP and HARPC compliance are stated. The Q&A response provides fermentation conditions, filtration sequence, heat treatment, pH adjustment, ethanol precipitation, and diluent identity.",
+      "evidenceSummary": "Section 2.2 references GRN 68 Appendix I; notes harvest time change (66h to 40-50h) and filtration optimization; December 2020 Q&A provides full process summary including fermentation conditions (26°C, 125 rpm), filtration steps, heat treatment, pH adjustment (6.4-6.6), ethanol precipitation, and maltodextrin blending.",
+      "citations": [
+        {
+          "pageNumber": 15,
+          "excerpt": "A detailed description of the manufacturing process, which was provided in GRN 68 and is incorporated herein, reflects the current process with the exception of minor changes made to improve process efficiency. See GRN 68 at Appendix I, located at page 13 of GRN 68.",
+          "section": "Part 2.2 Description of the method of manufacture"
+        },
+        {
+          "pageNumber": 60,
+          "excerpt": "The production strain secretes the enzyme into the culture medium during a controlled fermentation of the P. camemberti strain with conditions specified for time, temperature, and rate of rotation. Conditions specified for temperature (26°C) and rotation (125 rpm) are the same as described in GRN 68.",
+          "section": "Q&A Response December 3, 2020, Question 6"
+        }
+      ],
+      "unresolvedQuestions": [
+        "Manufacturing process details remain in Q&A response rather than notice body; food contact material citations provided in Q&A but not in notice"
+      ],
+      "relatedFindingIds": ["manufacturing-process-incorporation-gap"]
+    },
+    {
+      "id": "specifications-batch-analysis",
+      "domain": "identity and characterization",
+      "requirement": "Specifications and representative batch results",
+      "status": "present",
+      "assessment": "Table 3 provides specifications for lead, Salmonella, total coliforms, E. coli, antimicrobial activity, and mycotoxins, with results for three non-consecutive lots (LGSQ0552101GK, LGSQ0750501GK, LGSQ1151401GK). All results are within specification. Figure 4 provides detailed mycotoxin screening results for the same lots. Methods for antimicrobial activity (JECFA Compendium) and mycotoxins (AOAC-based HPLC/FD, LC-MS/MS, SPE-LC-MS/MS) were clarified in Q&A. Table 2 provides TOS and activity data for one GM batch and three non-GM batches.",
+      "evidenceSummary": "Table 3: three-lot specification results for microbiological, heavy metal, antimicrobial, and mycotoxin parameters. Figure 4: detailed mycotoxin screening panel for AE-LGS enzyme preparation. Table 2: TOS, water, ash, and activity data for GM and non-GM batches.",
+      "citations": [
+        {
+          "pageNumber": 16,
+          "excerpt": "Table 3. Specifications for the lipase enzyme preparation. Item Requirement Lot No. LGSQ0552101GK Lot No. LGSQ0750501GK Lot No. LGSQ1151401GK Lead Not more than 5 mg/kg 0.042 mg/kg 0.037 mg/kg 0.047 mg/kg",
+          "section": "Part 2.3 Specifications of the food-grade material"
+        }
+      ],
+      "unresolvedQuestions": [
+        "Activity specification (units/g) is not included in Table 3 specifications, though activity data appear in Table 2"
+      ],
+      "relatedFindingIds": []
+    },
+    {
+      "id": "intended-uses-exposure",
+      "domain": "dietary exposure",
+      "requirement": "Intended uses, use levels, and dietary exposure",
+      "status": "present",
+      "assessment": "Part 1.4 describes intended uses (dairy processing for EMC; fats/oils processing for GLA, DHA, EPA ingredients), use levels (25-2,522 mg TOS/kg for dairy; 50-252 mg TOS/kg for fats/oils), and the population expected to consume the substance. Part 3 provides a conservative EDI calculation (3.8 mg TOS/kg bw/day) using the budget method with worst-case assumptions. The Q&A responses clarified the basis for use level ranges, the ratio of raw material to finished food, and confirmed no beverage uses. The EDI is compared to the NOAEL (1515 mg TOS/kg bw) yielding a 399-fold safety margin.",
+      "evidenceSummary": "Table 4 (maximum TOS levels in finished foods), EDI calculation (3.8 mg TOS/kg bw/day), NOAEL 1515 mg TOS/kg bw, safety margin 399-fold. Q&A responses clarify use level basis and food ratios.",
+      "citations": [
+        {
+          "pageNumber": 17,
+          "excerpt": "Based on this exaggerative assumption, and applying FDA's standard assumption that an average daily diet consists of 3 kilograms (kg) of food per day (including 1.5 kg of beverages) and body weight of 60 kg, the EDI for Amano's lipase enzyme preparation is calculated to be: 3 kg/p/day x 76 mg TOS/kg food ÷ 60 kg bw = 3.8 mg TOS/kg bw/day.",
+          "section": "Part 3 Dietary exposure"
+        }
+      ],
+      "unresolvedQuestions": [
+        "Whether TOS-based EDI adequately captures functional enzyme exposure given the higher specific activity of the GM product compared to the test article"
+      ],
+      "relatedFindingIds": ["test-article-bridge-activity-difference"]
+    },
+    {
+      "id": "public-pivotal-safety-evidence",
+      "domain": "cross-cutting",
+      "requirement": "Public availability and peer review of pivotal evidence",
+      "status": "weak",
+      "assessment": "The pivotal safety study is Kondo et al. (1994), cited as a journal article in Food and Chemical Toxicology (a peer-reviewed journal). The study is incorporated from GRN 68, which is publicly available on FDA's GRAS inventory. However, GRN 908 does not affirmatively state that the Kondo et al. (1994) article is publicly available and peer-reviewed; it is referenced as having been 'provided to FDA in GRN 68.' The publication status is inferable from the journal citation but is not explicitly confirmed in the notice.",
+      "evidenceSummary": "Kondo et al. (1994) cited as Food Chem Toxic 32(8):685-696 (peer-reviewed journal); incorporated from GRN 68 (publicly available); notice does not affirmatively state public/peer-review status.",
+      "citations": [
+        {
+          "pageNumber": 22,
+          "excerpt": "The pivotal safety data in concluding the intended use of Amano's lipase enzyme preparation is GRAS are from a 90-day toxicological study of Lipase G Amano 50 (LGK) in rats reported by Kondo et al. (1994), which was provided to FDA in GRN 68 (incorporated here by reference).",
+          "section": "Part 6.2 Safety of enzyme preparation from Penicillium camemberti"
+        },
+        {
+          "pageNumber": 28,
+          "excerpt": "Kondo M, Ogawa T, Matsubara Y, Mizutani A, Murata S, Kitagawa M (1994) Safety evaluation of lipase G from Penicillium camembertii, Fd Chem Toxic; 32(8) 685-696.",
+          "section": "Part 7.1 References"
+        }
+      ],
+      "unresolvedQuestions": [
+        "Whether Kondo et al. (1994) is confirmed as publicly available and peer-reviewed in the notice itself"
+      ],
+      "relatedFindingIds": ["pivotal-study-publication-status"]
+    },
+    {
+      "id": "independent-evidence-synthesis",
+      "domain": "cross-cutting",
+      "requirement": "Specific incorporation and independent conclusions",
+      "status": "present",
+      "assessment": "GRN 68 is incorporated by reference under 21 C.F.R. § 170.215 with explicit citation to the public URL and identification of the specific sections incorporated (manufacturing process, pathogenicity study, mycotoxin screening, pivotal toxicity study). The notice explains the role of each incorporated element and states its own GRAS conclusion in Part 6.5. The Pariza and Johnson decision tree analysis is performed independently for the GM strain. The notice could more explicitly state that its conclusion is independent of GRN 68's outcome, but the analytical framework is present.",
+      "evidenceSummary": "Section 2.2 footnote 2 cites 21 C.F.R. § 170.215 and GRN 68 URL; Parts 6.1-6.4 perform independent analysis; Part 6.5 states independent GRAS conclusion; Pariza and Johnson decision tree applied to AE-LGS.",
+      "citations": [
+        {
+          "pageNumber": 15,
+          "excerpt": "Specifically identified data and information are incorporated into Amano's current GRAS notice by reference to GRN 68 as permitted under 21 C.F.R. § 170.215. Amano's GRN 68 is publicly available on FDA's GRAS notice inventory at https://www.accessdata.fda.gov/scripts/fdcc/index.cfm?set=GRASNotices&id=68",
+          "section": "Part 2.2 footnote 2"
+        },
+        {
+          "pageNumber": 23,
+          "excerpt": "Based on the documentation provided in this GRAS notification, and as discussed above, Amano has concluded that its lipase enzyme preparation derived from Penicillium camemberti is GRAS via scientific procedures",
+          "section": "Part 6.5 Conclusion"
+        }
+      ],
+      "unresolvedQuestions": [],
+      "relatedFindingIds": ["grn68-incorporation-independent-conclusion"]
+    },
+    {
+      "id": "test-article-comparability",
+      "domain": "cross-cutting",
+      "requirement": "Target/test-article bridge",
+      "status": "present",
+      "assessment": "The notice provides a structured bridge between the GM-strain product (Lipase GS Amano 250G, AE-LGS) and the non-GM test article (Lipase G Amano 50, LGK, AE-LG) across identity (same amino acid sequence, same gene mdlA), composition (SDS-PAGE, TOS equivalence), processing (same fermentation conditions, same purification sequence), and biochemical properties (optimum temperature, pH stability). The higher specific activity of the GM product is noted but not fully addressed in terms of functional exposure equivalence. The bridge is well-supported for identity and composition; partial for functional exposure.",
+      "evidenceSummary": "Figure 2 (SDS-PAGE equivalence), Figure 3 (biochemical equivalence), Table 2 (TOS and activity comparison), Part 2.1(k) (self-cloning description), Part 2.1(i) (equivalence statement), Yamaguchi (1991) for enzyme characterization.",
+      "citations": [
+        {
+          "pageNumber": 11,
+          "excerpt": "Based on the analyses that follow, the lipase from Amano's GM strain (P. camemberti AE-LGS) is deemed to be identical to the lipase from Amano's non-GM strain (P. camemberti AE-LG) that is the subject of GRN 68.",
+          "section": "Part 2.1(i) Equivalence of lipase from P. camemberti AE-LGS to lipase from P. camemberti AE-LG"
+        },
+        {
+          "pageNumber": 14,
+          "excerpt": "Lipase derived from Amano's GM strain is of a higher purity than that derived from non-GM strains as indicated by activity (U/g) assays.",
+          "section": "Part 2.1(i)"
+        }
+      ],
+      "unresolvedQuestions": [
+        "Whether higher specific activity of GM product at same TOS-based use levels results in meaningfully different functional enzyme exposure compared to test article"
+      ],
+      "relatedFindingIds": [
+        "test-article-bridge-activity-difference",
+        "pivotal-study-publication-status"
+      ]
+    },
+    {
+      "id": "self-contained-literature-search",
+      "domain": "safety data",
+      "requirement": "Search methods, scope, and unfavorable information",
+      "status": "present",
+      "assessment": "The notice reports a literature search for P. camemberti health concerns conducted January 3, 2020, and an updated toxicological literature review conducted August 23, 2018 (for GRN 866). The January 2021 Q&A response confirmed the January 3, 2020 search encompassed both the production organism and the lipase enzyme preparation. Unfavorable information (CPA production by P. camemberti strains, occupational allergenicity reports) is identified and addressed. The certification in Part 1.9 attests to a complete, representative, and balanced submission including unfavorable information.",
+      "evidenceSummary": "Literature search dates stated (January 3, 2020; August 23, 2018); unfavorable information on CPA (Le Bars 1979, Císarová 2012, Ostry 2018) and occupational allergenicity (Marchisio 1999, Merget 2008) identified and addressed; Part 1.9 certification.",
+      "citations": [
+        {
+          "pageNumber": 21,
+          "excerpt": "A literature search for published reports of health concerns associated with P. camemberti (conducted January 3, 2020) indicates no concerns for pathogenicity and possibly a low level of potential concern for workplace allergenicity, not related to dietary exposure.",
+          "section": "Part 6.1 Safety of Penicillium camemberti AE-LGS"
+        },
+        {
+          "pageNumber": 22,
+          "excerpt": "No adverse toxicological data were located in an updated review of the toxicological literature conducted on August 23, 2018, aside from reports – discussed briefly below – which indicate that cyclopiazonic acid (CPA) is a mycotoxin of potential concern for some strains of Penicillium camemberti under certain environmental conditions.",
+          "section": "Part 6.2 Safety of enzyme preparation from Penicillium camemberti"
+        }
+      ],
+      "unresolvedQuestions": [
+        "Search methodology (databases, search terms) is not described in the notice"
+      ],
+      "relatedFindingIds": []
+    },
+    {
+      "id": "allergenicity-assessment",
+      "domain": "safety data",
+      "requirement": "Protein allergenicity and cross-reactivity",
+      "status": "present",
+      "assessment": "Part 6.3 provides a comprehensive allergenicity assessment including: amino acid sequence comparison against the Structural Database of Allergenic Proteins (≥35% homology over 80-amino-acid window and 8-contiguous-amino-acid exact match, no matches found); ELISA testing of representative batches for FALCPA major food allergens (no target protein detected at LOD 1.4 ppm); discussion of occupational vs. dietary allergenicity; references to Bindslev-Jensen et al. (2006), AMFEP Working Group, Wüthrich (1996), and others. The Q&A response (Question 6c) clarified that soy protein from fermentation media is removed by filtration and confirmed by ELISA (LOD 1 ppm, not detected in three batches).",
+      "evidenceSummary": "Sequence homology search (SDAP database, no matches); ELISA for FALCPA allergens (LOD 1.4 ppm, not detected); soy protein removal confirmed by ELISA (LOD 1 ppm); literature support for low dietary allergenicity of food enzymes.",
+      "citations": [
+        {
+          "pageNumber": 24,
+          "excerpt": "Amano found no matches in comparing the amino acid sequence of the acylglycerol lipase to the primary sequences of known allergens based on a search of the Structural Database of Allergenic Proteins, including a search for ≥ 35% homology over a sliding 'window' of 80 amino acids, and an exact match of 8 contiguous amino acids.",
+          "section": "Part 6.3 No allergenicity concerns for enzyme preparation from Penicillium camemberti"
+        }
+      ],
+      "unresolvedQuestions": [],
+      "relatedFindingIds": []
+    }
+  ],
+  "researchReferences": [
+    {
+      "id": "ref-01",
+      "title": "Safety evaluation of lipase G from Penicillium camembertii",
+      "source": "Food and Chemical Toxicology",
+      "year": "1994",
+      "relevance": "Pivotal 90-day oral toxicology study providing the NOAEL (2000 mg/kg bw; 1515 mg TOS/kg bw) used to calculate the 399-fold safety margin central to the GRAS determination",
+      "evidence": "Cited as the primary safety data for the enzyme preparation; NOAEL from this study is directly compared to the EDI to establish the safety margin; also cited for pathogenicity testing of P. camemberti AE-LG in mice",
+      "authors": ["Kondo M", "Ogawa T", "Matsubara Y", "Mizutani A", "Murata S", "Kitagawa M"],
+      "doi": "",
+      "url": "",
+      "citation": "Kondo M, Ogawa T, Matsubara Y, Mizutani A, Murata S, Kitagawa M (1994) Safety evaluation of lipase G from Penicillium camembertii, Fd Chem Toxic; 32(8) 685-696.",
+      "origin": "notifier_cited",
+      "verificationStatus": "extracted_unverified",
+      "citedPages": [22, 23, 24, 28]
+    },
+    {
+      "id": "ref-02",
+      "title": "Purification and characterization of mono- and diacylglycerol lipase isolated from Penicillium camembertii U-150",
+      "source": "Applied Microbiology and Biotechnology",
+      "year": "1991",
+      "relevance": "Characterizes the primary and secondary enzymatic activities (monoacylglycerol and diacylglycerol lipase) of the subject enzyme, cited to clarify enzyme specificity in response to FDA questions",
+      "evidence": "Cited in response to FDA Question 2 to confirm that diacylglycerol activity is secondary to monoacylglycerol activity for the lipase from P. camemberti",
+      "authors": ["Yamaguchi S", "Mase T"],
+      "doi": "",
+      "url": "",
+      "citation": "Yamaguchi S, Mase T (1991) Purification and characterization of mono- and diglycerol lipase isolated from Penicillium camembertii U-150; Appl Microbiol Biotechnol; 34:720-725.",
+      "origin": "notifier_cited",
+      "verificationStatus": "extracted_unverified",
+      "citedPages": [70, 73]
+    },
+    {
+      "id": "ref-03",
+      "title": "Cyclopiazonic acid production by Penicillium camemberti Thom and natural occurrence of this mycotoxin in cheese",
+      "source": "Applied and Environmental Microbiology",
+      "year": "1979",
+      "relevance": "Documents CPA production by P. camemberti strains isolated from cheese, cited as part of the mycotoxin safety assessment for the production organism",
+      "evidence": "Cited to show that CPA production by P. camemberti is strain- and condition-dependent; used to contextualize the mycotoxin screening results showing no CPA detected in Amano's enzyme preparations",
+      "authors": ["Le Bars J"],
+      "doi": "",
+      "url": "",
+      "citation": "Le Bars J (1979) Cyclopiazonic acid production by Penicillium camemberti Thom and natural occurrence of this mycotoxin in cheese. Appl Environ Microbiol; 38(6):1052-5.",
+      "origin": "notifier_cited",
+      "verificationStatus": "extracted_unverified",
+      "citedPages": [22, 28]
+    },
+    {
+      "id": "ref-04",
+      "title": "Potential production of cyclopiazonic acid by Penicillium camemberti strains isolated from Camembert type cheese",
+      "source": "Journal of Microbiology, Biotechnology and Food Science",
+      "year": "2012",
+      "relevance": "Documents variable CPA production among P. camemberti strains from cheese, supporting the mycotoxin safety assessment",
+      "evidence": "Cited to show that only 2 of 14 P. camemberti strains did not produce CPA under any conditions, with production varying by strain and temperature; used to contextualize the absence of CPA in Amano's enzyme preparations",
+      "authors": [
+        "Císarová M",
+        "Tančinová D",
+        "Barboráková Z",
+        "Mašková Z",
+        "Felšöciová S",
+        "Kučerková V"
+      ],
+      "doi": "",
+      "url": "",
+      "citation": "Císarová M, Tančinová D, Barboráková Z, Mašková Z, Felšöciová S, Kučerková V (2012) Potential production of cyclopiazonic acid by Penicillium camemberti strains isolated from Camembert type cheese. Journal of Microbiol, Biotechnol and Food Science, 2(2) 434-445.",
+      "origin": "notifier_cited",
+      "verificationStatus": "extracted_unverified",
+      "citedPages": [22, 28]
+    },
+    {
+      "id": "ref-05",
+      "title": "Cyclopiazonic acid: 50th anniversary of its discovery",
+      "source": "World Mycotoxin Journal",
+      "year": "2018",
+      "relevance": "Authoritative review of CPA toxicology cited to characterize the hazard potential of CPA and the need for further chronic toxicity studies",
+      "evidence": "Cited for the conclusion that CPA is a potentially serious mycotoxin warranting further chronic toxicity and carcinogenicity studies; used to frame the mycotoxin risk discussion for P. camemberti-derived enzyme preparations",
+      "authors": ["Ostry V", "Toman J", "Grosse Y", "Malir F"],
+      "doi": "",
+      "url": "",
+      "citation": "Ostry V, Toman J, Grosse Y, Malir F (2018) Cyclopiazonic acid: 50th anniversary of its discovery. World Mycotoxin Journal; 11 (1): 135-148.",
+      "origin": "notifier_cited",
+      "verificationStatus": "extracted_unverified",
+      "citedPages": [22, 28]
+    },
+    {
+      "id": "ref-06",
+      "title": "Aerobiological analysis in a salami factory: a possible case of extrinsic allergic alveolitis by Penicillium camemberti",
+      "source": "Medical Mycology",
+      "year": "1999",
+      "relevance": "Occupational allergenicity case report for P. camemberti cited to characterize the route and context of allergic reactions associated with the production organism",
+      "evidence": "Cited to show that reported allergic reactions to P. camemberti involve inhalation exposure in occupational settings, not dietary exposure, supporting the conclusion that the enzyme preparation poses no allergenicity concern for consumers",
+      "authors": ["Marchisio VF", "Sulotto F", "Botta GC", "Chiesa A", "Airaudi D", "Anastasi A"],
+      "doi": "",
+      "url": "",
+      "citation": "Marchisio VF, Sulotto F, Botta GC, Chiesa A, Airaudi D, Anastasi A (1999) Aerobiological analysis in a salami factory: a possible case of extrinsic allergic alveolitis by Penicillium camemberti. Med Mycol;37:285–289.",
+      "origin": "notifier_cited",
+      "verificationStatus": "extracted_unverified",
+      "citedPages": [21, 28]
+    },
+    {
+      "id": "ref-07",
+      "title": "Occupational Immunoglobulin E-Mediated Asthma due to Penicillium camemberti in a Dry-Sausage Packer",
+      "source": "Respiration",
+      "year": "2008",
+      "relevance": "Occupational IgE-mediated asthma case report for P. camemberti cited to characterize the allergenicity profile of the production organism",
+      "evidence": "Cited to show that work-related asthma and rhinitis from P. camemberti involves inhalation/contact exposure in occupational settings, not dietary exposure; used to support the conclusion that no allergenicity concerns exist for dietary exposure to the enzyme preparation",
+      "authors": [
+        "Merget R",
+        "Sander I",
+        "Rozynek P",
+        "Heinze E",
+        "Imoehl M",
+        "Raulf-Heimsoth M",
+        "Bruening T"
+      ],
+      "doi": "",
+      "url": "",
+      "citation": "Merget R, Sander I, Rozynek P, Heinze E, Imoehl M, Raulf-Heimsoth M, Bruening T (2008) Occupational Immunoglobulin E-Mediated Asthma due to Penicillium camemberti in a Dry-Sausage Packer. Respiration; 76:109-111.",
+      "origin": "notifier_cited",
+      "verificationStatus": "extracted_unverified",
+      "citedPages": [21, 28]
+    },
+    {
+      "id": "ref-08",
+      "title": "Antimicrobial activity of food-related Penicillium sp. against pathogenic bacteria in laboratory media and a cheese model system",
+      "source": "Journal of Applied Microbiology",
+      "year": "1997",
+      "relevance": "Documents antimicrobial activity of P. camemberti strains and its mechanism, cited to address the antimicrobial activity specification for the enzyme preparation",
+      "evidence": "Cited to explain that antimicrobial activity attributed to P. camemberti is due to volatile compounds (ethanol and 3-methylbutanol) that would be vaporized during manufacturing, supporting the negative antimicrobial activity result for Amano's enzyme preparation",
+      "authors": ["Larsen AG", "Knochel S"],
+      "doi": "",
+      "url": "",
+      "citation": "Larsen AG and Knochel S (1997) Antimicrobial activity of food-related Penicillium sp. against pathogenic bacteria in laboratory media and a cheese model system. Journal of Applied Microbiology; 83, 111–119.",
+      "origin": "notifier_cited",
+      "verificationStatus": "extracted_unverified",
+      "citedPages": [23, 28]
+    },
+    {
+      "id": "ref-09",
+      "title": "Presence of cyclopiazonic acid in kodo millet (Paspalum scrobiculatum) causing kodua poisoning in man and its production by associated fungi",
+      "source": "Mycopathologia",
+      "year": "1985",
+      "relevance": "Cited as the only reported incident of possible human toxicity potentially linked to CPA in food, used to contextualize the human health risk of CPA",
+      "evidence": "Cited to note that the only potential human illness linked to CPA involved Aspergillus flavus and Aspergillus tamarii in kodo millet, not P. camemberti, supporting the conclusion that CPA in the enzyme preparation is not a relevant safety concern",
+      "authors": ["Rao LB", "Husain A"],
+      "doi": "",
+      "url": "",
+      "citation": "Rao LB, Husain A (1985) Presence of cyclopiazonic acid in kodo millet (Paspalum scrobiculatum) causing kodua poisoning in man and its production by associated fungi. Mycopathologia 89: 177-180.",
+      "origin": "notifier_cited",
+      "verificationStatus": "extracted_unverified",
+      "citedPages": [22, 28]
+    },
+    {
+      "id": "ref-10",
+      "title": "Safety assessment of food enzymes",
+      "source": "",
+      "year": "2006",
+      "relevance": "Expert study concluding that food allergy is not likely a concern for ingestion of food enzymes, cited as key allergenicity evidence",
+      "evidence": "Cited for the conclusion that food allergy is not likely to be a concern regarding ingestion of food enzymes based on a study of 400 patients with allergies; supports the allergenicity safety conclusion for the lipase preparation",
+      "authors": ["Bindslev-Jensen C"],
+      "doi": "",
+      "url": "",
+      "citation": "Bindslev-Jensen et al. (2006) [full citation not provided in filing]",
+      "origin": "notifier_cited",
+      "verificationStatus": "extracted_unverified",
+      "citedPages": [24]
+    },
+    {
+      "id": "ref-11",
+      "title": "Safety evaluation of enzymes used in food processing (AMFEP Working Group on Consumer Allergy Risk from Enzyme Residues in Food)",
+      "source": "",
+      "year": "",
+      "relevance": "Expert group conclusion that enzyme proteins are not potent allergens by ingestion, cited to support the allergenicity safety assessment",
+      "evidence": "Cited for the conclusion that for exposure by ingestion, enzyme proteins are not potent allergens and sensitization to ingested enzymes is rare",
+      "authors": [],
+      "doi": "",
+      "url": "",
+      "citation": "AMFEP Working Group on Consumer Allergy Risk from Enzyme Residues in Food [full citation not provided in filing]",
+      "origin": "notifier_cited",
+      "verificationStatus": "extracted_unverified",
+      "citedPages": [24]
+    },
+    {
+      "id": "ref-12",
+      "title": "Enzymes as potential allergens",
+      "source": "",
+      "year": "1996",
+      "relevance": "Cited to support the conclusion that enzymes used as digestive aids at much higher doses than food-use levels are not potent allergens by ingestion",
+      "evidence": "Cited for the conclusion that enzymes ingested daily as digestive aids at up to 1 million times the amounts present in food are not potent allergens by ingestion",
+      "authors": ["Wüthrich B"],
+      "doi": "",
+      "url": "",
+      "citation": "Wüthrich (1996) [full citation not provided in filing]",
+      "origin": "notifier_cited",
+      "verificationStatus": "extracted_unverified",
+      "citedPages": [24]
+    },
+    {
+      "id": "ref-13",
+      "title": "Safety evaluation of genetically modified foods using a decision tree paradigm",
+      "source": "",
+      "year": "2001",
+      "relevance": "Provides the decision tree framework used to evaluate the safety of the enzyme preparation from the self-cloned P. camemberti strain",
+      "evidence": "The Pariza and Johnson decision tree is applied step-by-step in Part 6.4 of the filing to conclude that the enzyme preparation from P. camemberti AE-LGS is ACCEPTED for the intended use",
+      "authors": ["Pariza MW", "Johnson EA"],
+      "doi": "",
+      "url": "",
+      "citation": "Pariza and Johnson (2001) [full citation not provided in filing]",
+      "origin": "notifier_cited",
+      "verificationStatus": "extracted_unverified",
+      "citedPages": [25, 26]
+    },
+    {
+      "id": "ref-14",
+      "title": "Cheeses | Starter Cultures Employed in Cheese-Making",
+      "source": "Encyclopedia of Food Sciences and Nutrition (Second Edition)",
+      "year": "2003",
+      "relevance": "Cited to document the long history of safe use of P. camemberti in cheese production, supporting the safety lineage of the production organism",
+      "evidence": "Cited to establish that P. camemberti is well known for its long history of use as a secondary cheese culture for mold surface-ripened cheeses, supporting the conclusion that the production organism is not pathogenic",
+      "authors": ["Stanley G"],
+      "doi": "",
+      "url": "",
+      "citation": "Stanley G. (2003) 'Cheeses | Starter Cultures Employed in Cheese-Making,' Encyclopedia of Food Sciences and Nutrition (Second Edition).",
+      "origin": "notifier_cited",
+      "verificationStatus": "extracted_unverified",
+      "citedPages": [21, 26, 28]
+    },
+    {
+      "id": "ref-15",
+      "title": "The genetic stability of Penicillium chrysogenum transformants in a fermentor",
+      "source": "Applied Microbiology and Biotechnology",
+      "year": "1990",
+      "relevance": "Cited to support the genetic stability of the self-cloned production strain P. camemberti AE-LGS by reference to a congeneric species",
+      "evidence": "Cited in response to FDA Question 2 to support the conclusion that the mdlA gene has been stably inserted into the host genome, based on well-known genetic stability of P. chrysogenum, a congeneric species of P. camemberti",
+      "authors": ["Renno DV", "Saunders G"],
+      "doi": "",
+      "url": "",
+      "citation": "Renno.V. D and Saunders. G. (1990) The genetic stability of Penicillium chrysoyenum transformants in a fermentor, Appl Microbiol Biotechnol 34:364-367.",
+      "origin": "notifier_cited",
+      "verificationStatus": "extracted_unverified",
+      "citedPages": [58]
+    }
+  ],
+  "safetySignals": [
+    {
+      "id": "cpa-mycotoxin-signal",
+      "label": "Cyclopiazonic acid (CPA) production potential by P. camemberti",
+      "level": "watch",
+      "summary": "The notice acknowledges that CPA is a mycotoxin of potential concern for some P. camemberti strains under certain environmental conditions, citing Le Bars (1979) and Císarová et al. (2012). No published data exist on CPA production by P. camemberti U-150 (AE-LG). CPA was not detected in finished enzyme preparations from either AE-LG or AE-LGS at the stated LODs. Ostry et al. (2018) calls for further chronic toxicity and carcinogenicity studies. The signal is mitigated by non-detection in finished product but the absence of strain-specific production data and the acknowledged need for further chronic toxicity data warrant monitoring.",
+      "evidence": [
+        "Le Bars (1979): 20 P. camemberti strains all produced CPA",
+        "Císarová et al. (2012): 12 of 14 P. camemberti strains produced CPA",
+        "CPA not detected in AE-LGS enzyme preparation at <7.5 μg/kg LOD",
+        "Ostry et al. (2018): further chronic toxicity studies warranted for CPA"
+      ],
+      "citations": [
+        {
+          "pageNumber": 22,
+          "excerpt": "Le Bars (1979) reported that each of 20 strains of P. camemberti isolated from cheese produced CPA at levels greatly dependent on the strain and environmental parameters (medium, temperature, and incubation time).",
+          "section": "Part 6.2 Safety of enzyme preparation from Penicillium camemberti"
+        },
+        {
+          "pageNumber": 22,
+          "excerpt": "Based on an exhaustive review of the published research on CPA, Ostry et al. (2018) concluded: CPA is a potentially serious mycotoxin and its toxicity to several animal species warrant further chronic toxicity and carcinogenicity studies.",
+          "section": "Part 6.2 Safety of enzyme preparation from Penicillium camemberti"
+        }
+      ]
+    },
+    {
+      "id": "occupational-allergenicity-signal",
+      "label": "Occupational allergenicity to P. camemberti by inhalation",
+      "level": "clear",
+      "summary": "Two published case reports (Marchisio et al. 1999; Merget et al. 2008) document occupational allergic reactions (extrinsic allergic alveolitis, IgE-mediated asthma) in workers with repeated inhalation exposure to P. camemberti in food manufacturing settings. The notice addresses this signal by distinguishing the route of exposure (inhalation of high levels of the organism vs. dietary exposure to a purified extracellular enzyme preparation not containing the production organism) and concludes no dietary safety concern. The distinction is scientifically supported and the signal is resolved for the intended use.",
+      "evidence": [
+        "Marchisio et al. (1999): possible extrinsic allergic alveolitis by inhalation in salami factory worker",
+        "Merget et al. (2008): IgE-mediated asthma in dry-sausage packer with P. camemberti exposure",
+        "Notice distinguishes inhalation occupational exposure from dietary exposure to purified enzyme"
+      ],
+      "citations": [
+        {
+          "pageNumber": 21,
+          "excerpt": "The circumstances and route of exposure for the reported cases of allergic reactions in workers after repeated contact with high levels of P. camemberti used in finishing dried sausages do not raise safety concerns for dietary exposure to low levels of an extracellular lipase enzyme preparation derived P. camemberti and not containing the production organism.",
+          "section": "Part 6.1 Safety of Penicillium camemberti AE-LGS"
+        }
+      ]
+    },
+    {
+      "id": "higher-activity-gm-product-signal",
+      "label": "Higher specific activity of GM-strain product relative to toxicity test article",
+      "level": "watch",
+      "summary": "The GM-strain product (AE-LGS) has a specific activity approximately 7.5-fold higher per mg TOS than the test article used in the 90-day rat study (LGK). The notice calculates the EDI and NOAEL on a TOS basis, which may not fully capture functional enzyme exposure differences. The notice does not explicitly address whether the higher specific activity at the same TOS-based use levels results in meaningfully different biological activity in food. The 399-fold safety margin provides substantial buffer, but the basis for TOS-equivalence as the appropriate metric for safety bridging is not explicitly justified.",
+      "evidence": [
+        "Table 2: GM product 986.2 Units/mg TOS vs. test article 132.3 Units/mg TOS (7.5-fold difference)",
+        "EDI calculated on TOS basis (3.8 mg TOS/kg bw/day)",
+        "NOAEL expressed as 1515 mg TOS/kg bw (399-fold margin)",
+        "Notice states products are 'equivalent' without addressing activity-based exposure"
+      ],
+      "citations": [
+        {
+          "pageNumber": 14,
+          "excerpt": "Lipase derived from Amano's GM strain is of a higher purity than that derived from non-GM strains as indicated by activity (U/g) assays. See Table 2 below.",
+          "section": "Part 2.1(i) Equivalence of lipase from P. camemberti AE-LGS to lipase from P. camemberti AE-LG"
+        },
+        {
+          "pageNumber": 23,
+          "excerpt": "The safety margin between the NOAEL and the EDI for Amano's lipase (i.e., 3.8 mg TOS/kg bw/day) is calculated to be 399-fold (1515 mg/kg bw NOAEL ÷ 3.8 mg TOS/kg bw/day = 398.7).",
+          "section": "Part 6.2 Safety of enzyme preparation from Penicillium camemberti"
+        }
+      ]
+    }
+  ],
+  "analyzedPages": [
+    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26,
+    27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50,
+    51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74,
+    75, 76, 77, 78, 79, 80, 81, 82, 83
+  ],
+  "truncated": false,
+  "modelProvider": "anthropic/claude-sonnet-4-6"
+}

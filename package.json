@@ -15,7 +15,11 @@
     "lint": "biome check .",
     "lint:fix": "biome check --write .",
     "format": "biome format --write .",
-    "check": "pnpm lint && pnpm typecheck && pnpm test && pnpm build"
+    "check": "pnpm lint && pnpm typecheck && pnpm test && pnpm build",
+    "corpus:validate": "node scripts/corpus-ops.mjs validate",
+    "corpus:refresh": "node scripts/corpus-ops.mjs refresh",
+    "corpus:rollback": "node scripts/corpus-ops.mjs rollback",
+    "review:create-blind": "node scripts/create-blind-review.mjs"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.4.16",
@@ -24,5 +28,11 @@
     "convex": "1.40.0",
     "tsx": "^4.22.4",
     "typescript": "^6.0.3"
+  },
+  "dependencies": {
+    "@auth/core": "0.41.1",
+    "@convex-dev/auth": "^0.0.94",
+    "@oslojs/crypto": "^1.0.1",
+    "resend": "^6.18.0"
   }
 }

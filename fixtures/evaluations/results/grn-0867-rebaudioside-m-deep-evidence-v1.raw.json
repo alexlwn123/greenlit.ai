@@ -1,0 +1,738 @@
+{
+  "summary": "GRN 867 is a withdrawn GRAS notice submitted by Cargill on June 5, 2019, for rebaudioside M (Reb M) produced by a genetically engineered Yarrowia lipolytica strain, voluntarily withdrawn on August 19, 2019, before FDA completed its review. The notifier cited unspecified 'technical language' requiring clarification, stating the GRAS conclusion was unaffected. The notice presents a well-structured safety case built primarily on read-across from the extensive steviol glycoside safety database, with the pivotal metabolic bridge supported by a fecal homogenate study conducted on a compositionally similar S. cerevisiae-derived Reb M (GRN 000626) rather than the Y. lipolytica product itself. Safety data from GRN 000768 are incorporated by reference. Specifications, batch analyses for three non-consecutive lots, residual protein and DNA data, and a GRAS panel consensus statement are present. Key evidentiary gaps include: the metabolic bridge study used a different production organism's material; stability studies on the Y. lipolytica product were not yet completed at submission; and the notice does not disclose what 'technical language' prompted withdrawal, leaving an unresolved documentation question. Overall evidence readiness is moderate-to-strong for a read-across framework but contains addressable gaps in test-article specificity and stability documentation.",
+  "filingProfile": {
+    "substanceName": "Rebaudioside M (Reb M)",
+    "notifier": "Cargill, Incorporated",
+    "status": "withdrawn",
+    "substanceType": "other",
+    "productionMethod": "fermentation",
+    "sourceOrganismType": "yeast",
+    "sourceOrganismName": "Yarrowia lipolytica",
+    "intendedUses": ["general purpose sweetening agent in conventional food and beverage products"],
+    "targetPopulation": "general population",
+    "grasBasis": "scientific procedures",
+    "safetyDataAvailable": [
+      "repeated-dose studies",
+      "genotoxicity studies",
+      "long-term toxicity and carcinogenicity studies",
+      "reproductive and developmental toxicity studies",
+      "human studies",
+      "metabolism and pharmacokinetic studies",
+      "allergenicity assessment"
+    ],
+    "dietaryExposureMethod": "sweetener substitution method (Renwick 2008 paradigm) and conservative sugar replacement estimate"
+  },
+  "findings": [
+    {
+      "id": "test-article-bridge-fermentation-organism",
+      "severity": "major",
+      "title": "Pivotal metabolic bridge study used S. cerevisiae-derived Reb M, not the Y. lipolytica target material",
+      "summary": "The notice acknowledges that microbial metabolism studies have not been conducted with the Y. lipolytica Reb M that is the subject of this application. The fecal homogenate hydrolysis study presented in Section 6.2.1 used steviol glycosides produced by S. cerevisiae (GRN 000626). The bridge relies on compositional similarity (both primarily rebaudioside M and D) and the shared steviol backbone metabolic pathway. While the rationale is scientifically coherent, the test article is from a different production organism, and the notice does not provide organism-specific metabolic data for the Y. lipolytica product.",
+      "recommendedAction": "Conduct or cite a microbial metabolism study using the Y. lipolytica-derived Reb M as the test article, or provide a more detailed compositional and process equivalence analysis demonstrating that any organism-specific differences are toxicologically irrelevant.",
+      "evidence": [
+        "Fecal homogenate study used GRN 000626 S. cerevisiae material",
+        "Notice explicitly states no metabolism studies conducted with Y. lipolytica Reb M",
+        "Bridge justified by compositional similarity and shared steviol backbone"
+      ],
+      "citations": [
+        {
+          "pageNumber": 28,
+          "excerpt": "Although microbial metabolism studies have not yet been conducted with the Reb M preparation that is the subject of this application (i.e., Reb M produced by Y. lipolytica), such studies have been carried out with a Reb M preparation that has a similar individual steviol glycoside profile as Reb M (i.e., steviol glycosides produced by S. cerevisiae, GRN 000626, primarily containing rebaudioside M)",
+          "section": "6.2.1 Microbial Metabolism of Steviol Glycosides Produced by Fermentation"
+        }
+      ],
+      "gapType": "adequacy_gap",
+      "domain": "test-article bridge",
+      "confidence": "high",
+      "category": "test_article_bridge",
+      "evidenceRole": "pivotal",
+      "availability": "unknown",
+      "supportingMaterial": "GRN 000626 S. cerevisiae steviol glycosides fecal homogenate study",
+      "targetMaterial": "Rebaudioside M from Y. lipolytica (GRN 867)",
+      "testArticle": "Steviol glycosides from S. cerevisiae (GRN 000626)",
+      "bridgeAssessment": "partial"
+    },
+    {
+      "id": "incorporation-grn768-safety-data",
+      "severity": "major",
+      "title": "Safety data from GRN 000768 incorporated by reference without reproducing underlying evidence or stating fully independent conclusions",
+      "summary": "Section 6.4 states that safety data summarized in GRN 000768 (stevia leaf extract, FDA 'no questions' August 2018) are 'incorporated by reference' for all literature up to July 2017. The notice does not reproduce the underlying studies, does not identify which specific studies are pivotal versus supportive, and does not articulate an independent analysis of that incorporated body of evidence. The notice states only that new data (July 2017–March 2019) are summarized in Section 6.4. This structure means the evidentiary foundation for the pre-July 2017 safety database is not self-contained.",
+      "recommendedAction": "Either reproduce the key safety studies from GRN 000768 with independent analysis, or provide a structured summary identifying each incorporated study, its role (pivotal/supportive), and an explicit independent conclusion drawn from the full dataset rather than relying on GRN 000768's outcome.",
+      "evidence": [
+        "GRN 000768 incorporated by reference for pre-July 2017 safety data",
+        "No reproduction of underlying studies from GRN 000768",
+        "No explicit independent analysis of incorporated evidence base"
+      ],
+      "citations": [
+        {
+          "pageNumber": 26,
+          "excerpt": "Safety data for steviol glycoside preparations published in the scientific literature were previously summarized by Cargill and reviewed by the U.S. FDA in GRAS Notification GRN 000768 in 2017/2018, therefore these data are incorporated by reference while new safety data pertaining to the safety of steviol glycosides published between 01 July 2017 and 28 March 2019 are summarized in Section 6.4.",
+          "section": "6.1 Introduction"
+        }
+      ],
+      "gapType": "documentation_gap",
+      "domain": "safety data / incorporation",
+      "confidence": "high",
+      "category": "incorporation_independent_conclusions",
+      "evidenceRole": "pivotal",
+      "availability": "unknown",
+      "supportingMaterial": "GRN 000768 (Cargill stevia leaf extract, FDA no-questions August 2018)",
+      "targetMaterial": "Rebaudioside M from Y. lipolytica",
+      "testArticle": null,
+      "bridgeAssessment": "unknown"
+    },
+    {
+      "id": "stability-y-lipolytica-product-incomplete",
+      "severity": "major",
+      "title": "Stability studies on the Y. lipolytica Reb M product not completed at time of submission",
+      "summary": "Section 2.4.2 explicitly states that stability studies have not yet been conducted with the Y. lipolytica Reb M preparation. The conventional and accelerated stability studies presented (Tables 2.4.2-1 and 2.4.2-2) were conducted on S. cerevisiae-derived material (GRN 000626) and were themselves described as 'currently on-going' with only 3-month preliminary data. The stability bridge to the Y. lipolytica product relies on compositional similarity and JECFA's general conclusions for steviol glycosides.",
+      "recommendedAction": "Complete stability studies on the Y. lipolytica-derived Reb M product under both conventional and accelerated conditions, or provide a more detailed scientific justification for why the S. cerevisiae stability data are fully predictive of Y. lipolytica product stability, including any process-related compositional differences that could affect stability.",
+      "evidence": [
+        "No stability studies conducted on Y. lipolytica Reb M",
+        "S. cerevisiae stability studies ongoing with only 3-month data",
+        "Stability bridge relies on compositional similarity argument"
+      ],
+      "citations": [
+        {
+          "pageNumber": 17,
+          "excerpt": "Stability studies have not yet been conducted with the Reb M preparation that is the subject of this Notification (i.e., steviol glycosides produced by Y. lipolytica). Several stability investigations, however, have been carried out with a steviol glycoside preparation produced by fermentation that has a similar individual steviol glycoside profile as Reb M (i.e., steviol glycosides produced by S. cerevisiae, GRN 000626, primarily containing rebaudioside M)",
+          "section": "2.4.2 Stability of Steviol Glycosides Produced by Fermentation"
+        }
+      ],
+      "gapType": "evidentiary_gap",
+      "domain": "manufacturing process / stability",
+      "confidence": "high",
+      "category": "manufacturing_process",
+      "evidenceRole": "supportive",
+      "availability": "private",
+      "supportingMaterial": "GRN 000626 S. cerevisiae stability studies (ongoing)",
+      "targetMaterial": "Rebaudioside M from Y. lipolytica",
+      "testArticle": "Steviol glycosides from S. cerevisiae (GRN 000626)",
+      "bridgeAssessment": "partial"
+    },
+    {
+      "id": "withdrawal-technical-language-unresolved",
+      "severity": "major",
+      "title": "Withdrawal reason ('technical language requiring clarification') is unspecified and leaves an unresolved documentation question",
+      "summary": "The August 19, 2019 withdrawal email states that Cargill identified 'technical language in the Notice that warrants clarification in order to avoid confusion' and that 'the updated clarifications do not affect the GRAS conclusion.' The specific technical language issue is not identified in the notice or the withdrawal communication. This creates an unresolved documentation question about what aspect of the notice was considered deficient by the notifier.",
+      "recommendedAction": "In any resubmission, identify and correct the specific technical language issue and provide a brief explanation of what was clarified and why it does not affect the safety or GRAS conclusion, to ensure the resubmitted notice is self-contained and transparent.",
+      "evidence": [
+        "Withdrawal email cites unspecified technical language issue",
+        "No identification of which section or claim required clarification",
+        "Notifier states GRAS conclusion unaffected"
+      ],
+      "citations": [
+        {
+          "pageNumber": 62,
+          "excerpt": "Cargill has identified technical language in the Notice that warrants clarification in order to avoid confusion. Cargill will plan to resubmit a notification with updated technical language in the near future. The updated clarifications do not affect the GRAS conclusion.",
+          "section": "GRN No. 000867 - Cease to Evaluate Request"
+        }
+      ],
+      "gapType": "documentation_gap",
+      "domain": "regulatory submission",
+      "confidence": "high",
+      "category": "regulatory_submission",
+      "evidenceRole": "unknown",
+      "availability": "unknown",
+      "supportingMaterial": null,
+      "targetMaterial": "Rebaudioside M from Y. lipolytica",
+      "testArticle": null,
+      "bridgeAssessment": "unknown"
+    },
+    {
+      "id": "efsa-2018-metabolic-fate-disagreement",
+      "severity": "major",
+      "title": "EFSA 2018 disagreement on metabolic fate read-across for all steviol glycosides not fully resolved in the notice",
+      "summary": "Section 6.3 discloses that EFSA (2018a) did not agree to expand the definition of steviol glycosides to include all individual steviol glycosides 'because of uncertainties on the rate and extent of the metabolism of the different steviol glycosides to steviol.' The notice acknowledges this authoritative disagreement but does not provide a detailed rebuttal or additional data specifically addressing EFSA's stated uncertainty. The notice's safety case relies centrally on the shared metabolic fate argument that EFSA found insufficiently supported for a broad expansion.",
+      "recommendedAction": "Provide a targeted response to EFSA 2018a's specific concerns about metabolic fate uncertainty, including quantitative hydrolysis rate comparisons for rebaudioside M and D relative to rebaudioside A, and explain why the data presented in Section 6.2.1 are sufficient to address EFSA's stated uncertainties.",
+      "evidence": [
+        "EFSA 2018a declined to expand steviol glycoside definition due to metabolic fate uncertainties",
+        "Notice acknowledges EFSA disagreement without detailed rebuttal",
+        "Safety case relies on shared metabolic fate argument"
+      ],
+      "citations": [
+        {
+          "pageNumber": 31,
+          "excerpt": "EFSA did not agree to expand the definition of steviol glycosides to include all individual steviol glycosides because of uncertainties on the rate and extent of the metabolism of the different steviol glycosides to steviol (EFSA, 2018a).",
+          "section": "6.3 Summary of Safety Opinions by Scientific and Regulatory Authorities"
+        }
+      ],
+      "gapType": "adequacy_gap",
+      "domain": "safety data",
+      "confidence": "high",
+      "category": "safety_data",
+      "evidenceRole": "context",
+      "availability": "public_peer_reviewed",
+      "supportingMaterial": "EFSA 2018a Scientific Opinion on steviol glycoside specification amendment",
+      "targetMaterial": "Rebaudioside M from Y. lipolytica",
+      "testArticle": null,
+      "bridgeAssessment": "partial"
+    },
+    {
+      "id": "dietary-exposure-no-specific-use-levels",
+      "severity": "minor",
+      "title": "Conditions of use reference GRN 000626 use levels without specifying food categories or use levels in the notice itself",
+      "summary": "Section 1.3 states that Reb M is intended for use 'under the same conditions of use as defined for steviol glycosides produced by Saccharomyces cerevisiae in GRN 000626.' The notice does not reproduce the specific food categories or use levels from GRN 000626, requiring the reader to consult an external document to understand the full scope of intended use. The exposure assessment in Section 3.2 uses a sweetener substitution method rather than food-category-specific use levels.",
+      "recommendedAction": "Reproduce or summarize the specific food categories and use levels from GRN 000626 within the notice to make the conditions of use self-contained, and consider whether the sweetener substitution exposure model adequately captures the full range of intended uses.",
+      "evidence": [
+        "Conditions of use defined by reference to GRN 000626",
+        "No food category or use level table in the notice",
+        "Exposure estimated by sweetener substitution method only"
+      ],
+      "citations": [
+        {
+          "pageNumber": 6,
+          "excerpt": "Reb M is a purified steviol glycoside product, primarily containing rebaudioside M, obtained from a Yarrowia lipolytica (Y. lipolytica) production strain and is intended to be used as a general purpose sweetening agent in conventional food and beverage products in accordance with the principles of cGMP, under the same conditions of use as defined for steviol glycosides produced by Saccharomyces cerevisiae (S. cerevisiae) in GRN 000626 (U.S. FDA, 2016a).",
+          "section": "1.3 Conditions of Use"
+        }
+      ],
+      "gapType": "documentation_gap",
+      "domain": "dietary exposure / conditions of use",
+      "confidence": "high",
+      "category": "dietary_exposure",
+      "evidenceRole": "context",
+      "availability": "unknown",
+      "supportingMaterial": "GRN 000626",
+      "targetMaterial": "Rebaudioside M from Y. lipolytica",
+      "testArticle": null,
+      "bridgeAssessment": "unknown"
+    },
+    {
+      "id": "blast-sequence-homology-interpretation",
+      "severity": "minor",
+      "title": "BLAST toxin homology analysis reports matches up to 68% identity without structural analysis to rule out functional homology",
+      "summary": "Section 6.5.1 reports that BLAST searches identified sequence matches with 17 to 68% identity with animal venom proteins and toxins. The notice states that E-values greater than 1×10⁻⁷ suggest proteins are unlikely to share structural homology, and that the low E-value matches (10⁻⁹ to 10⁻⁶⁰) shared 21–31% identity with cytochrome P450 monooxygenases, which are native human enzymes. However, the notice does not provide a structural or functional analysis for the matches with higher identity (up to 68%) that had E-values above the 1×10⁻⁷ threshold, relying solely on the E-value cutoff to dismiss these matches.",
+      "recommendedAction": "For any BLAST matches with identity above 35% or with E-values below 1×10⁻⁷, provide a brief structural or functional analysis explaining why these matches do not indicate toxic or allergenic potential, consistent with FAO/WHO 2001 guidance.",
+      "evidence": [
+        "BLAST matches up to 68% identity with venom proteins reported",
+        "E-value threshold used as sole criterion to dismiss high-identity matches",
+        "No structural analysis for high-identity matches"
+      ],
+      "citations": [
+        {
+          "pageNumber": 37,
+          "excerpt": "The BLAST searches identified sequence matches with 17 to 68% identity with various animal venom proteins and toxins and virulence factors, and associated E-values ranging from 3x10⁻⁶⁰ to 10.0. E-values greater than 1x10⁻⁷ suggest that proteins are unlikely to share structural homology (Hileman et al., 2002).",
+          "section": "6.5.1 Potential Toxicity of the Inserted Gene Sequences"
+        }
+      ],
+      "gapType": "adequacy_gap",
+      "domain": "safety data / production organism",
+      "confidence": "medium",
+      "category": "safety_data",
+      "evidenceRole": "supportive",
+      "availability": "unknown",
+      "supportingMaterial": "BLAST analysis against UniProtKB/Swiss-Prot Tox-Prot and virulence factor databases",
+      "targetMaterial": "Inserted gene sequences in Y. lipolytica production strain",
+      "testArticle": null,
+      "bridgeAssessment": "unknown"
+    }
+  ],
+  "evidenceMatrix": [
+    {
+      "id": "identity-composition",
+      "domain": "identity and characterization",
+      "requirement": "Identity, source, composition, and specifications",
+      "status": "present",
+      "assessment": "The notice provides CAS numbers, molecular formulae, molecular weights, and R-group structures for all steviol glycosides that may be present in Reb M. HPLC retention time data demonstrate chemical identity of fermentation-derived rebaudioside M and D with leaf-extracted standards. The production organism (Y. lipolytica) is identified and characterized. Steviol glycoside composition for three non-consecutive lots is provided.",
+      "evidenceSummary": "Table 2.1.1-1 provides full chemical characterization; Section 2.1.2 provides HPLC identity confirmation; Table 2.3.5-1 provides lot-specific composition data showing 86.4–96.1% rebaudioside M.",
+      "citations": [
+        {
+          "pageNumber": 8,
+          "excerpt": "To demonstrate the equivalence of rebaudiosides M and D present in Reb M obtained from fermentation to rebaudiosides M and D extracted from the leaves of Stevia rebaudiana (S. rebaudiana) Bertoni, high-performance liquid chromatography (HPLC) analyses were conducted... These data demonstrate that rebaudioside M and rebaudioside D produced by fermentation have the same HPLC retention times as rebaudioside M and rebaudioside D from S. rebaudiana Bertoni and establish that steviol glycosides from these 2 sources are chemically identical.",
+          "section": "2.1.2 Equivalence of Reb M Produced by Fermentation to Steviol Glycosides Extracted from the Leaf"
+        }
+      ],
+      "unresolvedQuestions": [],
+      "relatedFindingIds": []
+    },
+    {
+      "id": "manufacturing",
+      "domain": "manufacturing process",
+      "requirement": "Process description and process-related controls",
+      "status": "present",
+      "assessment": "Section 2.2 provides a detailed description of the production microorganism, parental strains, genetic engineering steps, fermentation conditions, heat treatment, biomass removal, purification (ultrafiltration, adsorption chromatography, ion-exchange, activated carbon, crystallization), and drying. A schematic flowchart is provided. Raw materials and processing aids are listed with regulatory status. Antibiotic marker removal is confirmed by PCR and genome sequencing.",
+      "evidenceSummary": "Sections 2.2.1–2.2.3 and Figure 2.2.3-1 describe the full manufacturing process; Table 2.2.2-1 lists all raw materials with CFR regulatory status; Section 2.2.1.2 confirms marker-free production strain.",
+      "citations": [
+        {
+          "pageNumber": 12,
+          "excerpt": "The fermentation broth undergoes heat treatment (75 to 95°C, 5 minutes to 1 hour) to stop fermentation and kill the yeast cells... The product stream may be purified by ultrafiltration to further remove dissolved proteins and other nitrogen-containing compounds.",
+          "section": "2.2.3 Reb M Manufacturing Process"
+        }
+      ],
+      "unresolvedQuestions": [
+        "The specific technical language issue cited in the withdrawal has not been identified; it may relate to manufacturing description."
+      ],
+      "relatedFindingIds": [
+        "stability-y-lipolytica-product-incomplete",
+        "withdrawal-technical-language-unresolved"
+      ]
+    },
+    {
+      "id": "specifications-batch-analysis",
+      "domain": "identity and characterization",
+      "requirement": "Specifications and representative batch results",
+      "status": "present",
+      "assessment": "Physical, chemical, and microbiological specifications are provided in Tables 2.3.1-1 and 2.3.2-1, benchmarked against JECFA 2017 and GRN 000626. Batch analyses for three non-consecutive lots are provided in Tables 2.3.3-1 and 2.3.4-1, all meeting specifications. Steviol glycoside composition, residual protein (BCA and Protein Dot Blot), and residual DNA (PCR) data are provided for the same lots.",
+      "evidenceSummary": "Three non-consecutive lots analyzed for physical/chemical parameters, microbiological parameters, steviol glycoside composition, residual protein (<25 ppm BCA, <1.5 ppm Dot Blot), and residual DNA (<10 ng/g PCR). All results within specification.",
+      "citations": [
+        {
+          "pageNumber": 16,
+          "excerpt": "Analysis of 3 non-consecutive lots of Reb M demonstrates that the manufacturing process as described in Section 2.2 produces a consistent product that meets the defined specifications.",
+          "section": "2.3.3 Physical and Chemical Batch Analyses"
+        }
+      ],
+      "unresolvedQuestions": [],
+      "relatedFindingIds": []
+    },
+    {
+      "id": "intended-uses-exposure",
+      "domain": "dietary exposure",
+      "requirement": "Intended uses, use levels, and dietary exposure",
+      "status": "weak",
+      "assessment": "Intended use is described as a general purpose sweetener under the same conditions as GRN 000626, but specific food categories and use levels are not reproduced in the notice. Dietary exposure is estimated using the Renwick (2008) sweetener substitution method and a conservative sugar-replacement scenario. Predicted intakes for all population groups are below the JECFA ADI of 4 mg/kg bw/day as steviol equivalents. However, the absence of food-category-specific use levels makes the conditions of use not fully self-contained.",
+      "evidenceSummary": "Section 3.2 and Table 3.2-1 provide exposure estimates for non-diabetic adults, diabetic adults, non-diabetic children, and diabetic children using Renwick (2008) methodology. Maximum predicted heavy consumer intake is 1.24 mg/kg bw/day steviol equivalents, below the ADI of 4 mg/kg bw/day.",
+      "citations": [
+        {
+          "pageNumber": 24,
+          "excerpt": "The mean intake of Reb M on a steviol equivalent basis is predicted to range from 0.18 mg/kg body weight/day for non-diabetic adults to 0.84 mg/kg body weight/day for diabetic children. Predicted intakes for heavy consumers on a steviol equivalent basis ranged from 0.48 mg/kg body weight/day for non-diabetic adults to 1.24 mg/kg body weight/day for non-diabetic children.",
+          "section": "3.2 Estimated Consumption of Reb M from Proposed Food Uses"
+        }
+      ],
+      "unresolvedQuestions": [
+        "Specific food categories and use levels from GRN 000626 are not reproduced in this notice."
+      ],
+      "relatedFindingIds": ["dietary-exposure-no-specific-use-levels"]
+    },
+    {
+      "id": "public-pivotal-safety-evidence",
+      "domain": "safety data",
+      "requirement": "Public availability and peer review of pivotal evidence",
+      "status": "present",
+      "assessment": "The notice states that all information used to establish the safety of Reb M is available in the public domain. The pivotal safety database consists of JECFA evaluations (public), EFSA opinions (public), peer-reviewed metabolism studies (Purkayastha et al. 2016, Koyama et al. 2003, Roberts et al. 2016, all published in peer-reviewed journals), and the fecal homogenate study for the fermentation-derived material. The GRAS panel consensus statement is included as Appendix A. Two unpublished pharmacokinetic studies (Geuns and Pietta 2004, Sung 2002) are cited as supportive context within JECFA reviews, not as pivotal evidence in this notice.",
+      "evidenceSummary": "Section 6.1 certifies all information is in the public domain. Pivotal metabolism and toxicology evidence is drawn from published peer-reviewed literature and public JECFA/EFSA/FSANZ/Health Canada evaluations. New safety data (Section 6.4) are all from published peer-reviewed journals.",
+      "citations": [
+        {
+          "pageNumber": 26,
+          "excerpt": "All information used to establish the safety of Reb M is available in the public domain and, as such, there are no data that are exempt from disclosure under the Freedom of Information Act.",
+          "section": "6.1 Introduction"
+        }
+      ],
+      "unresolvedQuestions": [
+        "The content of GRN 000768 incorporated by reference is not reproduced; its pivotal studies are not individually identified in this notice."
+      ],
+      "relatedFindingIds": ["incorporation-grn768-safety-data"]
+    },
+    {
+      "id": "independent-evidence-synthesis",
+      "domain": "safety data / incorporation",
+      "requirement": "Specific incorporation and independent conclusions",
+      "status": "weak",
+      "assessment": "The notice identifies GRN 000768 as the source of pre-July 2017 safety data and incorporates it by reference. It identifies GRN 000626 and GRN 000759 as comparators. New data (July 2017–March 2019) are independently summarized in Section 6.4. The GRAS panel independently evaluated all data and states its own conclusion. However, the notice does not identify which specific studies from GRN 000768 are pivotal versus supportive, and does not reproduce or independently analyze the incorporated safety database, making the synthesis partially dependent on GRN 000768's structure.",
+      "evidenceSummary": "Section 6.4 provides independent analysis of 7 new studies. Section 6.3 provides independent summaries of regulatory authority conclusions. GRN 000768 is incorporated by reference for the pre-July 2017 safety database without study-level identification.",
+      "citations": [
+        {
+          "pageNumber": 26,
+          "excerpt": "Safety data for steviol glycoside preparations published in the scientific literature were previously summarized by Cargill and reviewed by the U.S. FDA in GRAS Notification GRN 000768 in 2017/2018, therefore these data are incorporated by reference while new safety data pertaining to the safety of steviol glycosides published between 01 July 2017 and 28 March 2019 are summarized in Section 6.4.",
+          "section": "6.1 Introduction"
+        }
+      ],
+      "unresolvedQuestions": [
+        "Which specific studies from GRN 000768 are considered pivotal for this notice?",
+        "Is an independent analysis of the pre-July 2017 safety database available?"
+      ],
+      "relatedFindingIds": ["incorporation-grn768-safety-data"]
+    },
+    {
+      "id": "test-article-comparability",
+      "domain": "test-article bridge",
+      "requirement": "Target/test-article bridge across identity, composition, processing, impurities, exposure, and biological relevance",
+      "status": "weak",
+      "assessment": "The notice provides HPLC identity confirmation (Section 2.1.2) and compositional comparison between Y. lipolytica and S. cerevisiae Reb M. The metabolic fate bridge is supported by the shared steviol backbone argument and the S. cerevisiae fecal homogenate study. Residual protein and DNA data confirm purification adequacy. However, the bridge is incomplete because: (1) no metabolism study was conducted with the Y. lipolytica product; (2) stability studies on the Y. lipolytica product are absent; (3) process differences between Y. lipolytica and S. cerevisiae fermentation are not systematically compared for impurity profile implications.",
+      "evidenceSummary": "Section 2.1.2 provides HPLC retention time identity; Section 6.2.1 provides S. cerevisiae fecal homogenate data as bridge; Sections 2.3.6-2.3.7 provide residual protein and DNA data for Y. lipolytica product. No Y. lipolytica-specific metabolism or stability data.",
+      "citations": [
+        {
+          "pageNumber": 28,
+          "excerpt": "Although microbial metabolism studies have not yet been conducted with the Reb M preparation that is the subject of this application (i.e., Reb M produced by Y. lipolytica), such studies have been carried out with a Reb M preparation that has a similar individual steviol glycoside profile as Reb M (i.e., steviol glycosides produced by S. cerevisiae, GRN 000626, primarily containing rebaudioside M)",
+          "section": "6.2.1 Microbial Metabolism of Steviol Glycosides Produced by Fermentation"
+        }
+      ],
+      "unresolvedQuestions": [
+        "Are there organism-specific impurities or process-related compounds in Y. lipolytica fermentation that differ from S. cerevisiae?",
+        "Does the Y. lipolytica product have the same stability profile as the S. cerevisiae product?"
+      ],
+      "relatedFindingIds": [
+        "test-article-bridge-fermentation-organism",
+        "stability-y-lipolytica-product-incomplete"
+      ]
+    },
+    {
+      "id": "self-contained-literature-search",
+      "domain": "safety data",
+      "requirement": "Search methods, scope, and unfavorable information",
+      "status": "present",
+      "assessment": "Section 6.4 describes a comprehensive literature search using ProQuest across 12 databases (AdisInsight, AGRICOLA, AGRIS, Allied & Complementary Medicine, BIOSIS Toxicology, BIOSIS Previews, CAB ABSTRACTS, Embase, Foodline SCIENCE, FSTA, MEDLINE, NTIS, ToxFile) for the period July 1, 2017 to March 28, 2019. Exclusion criteria (purity <95%) are stated. Unfavorable studies (Barrios-Correa 2018, Jiang 2018, Al-Dujaili 2017) are identified and discussed with contextual limitations. The EFSA 2018a and 2018b disagreements are disclosed.",
+      "evidenceSummary": "Section 6.4 describes search methodology, databases, date range, and exclusion criteria. Seven studies identified and all discussed including unfavorable findings. EFSA 2018a metabolic fate uncertainty and EFSA 2018b glucosylated steviol glycoside concerns are disclosed in Section 6.3.",
+      "citations": [
+        {
+          "pageNumber": 30,
+          "excerpt": "New safety data related to steviol glycosides published after July 2017 was obtained through a comprehensive and detailed search of the scientific literature published between 01 July 2017 and 28 March 2019. The literature search was completed using ProQuest and included searches of the following databases for pertinent literature on the safety of steviol glycosides: AdisInsight: Trials, AGRICOLA, AGRIS, Allied & Complementary Medicine™, BIOSIS® Toxicology, BIOSIS Previews®, CAB ABSTRACTS, Embase®, Foodline®: SCIENCE, FSTA®, MEDLINE®, NTIS: National Technical Information Service, and ToxFile®.",
+          "section": "6.4 New Safety Data on Steviol Glycosides"
+        }
+      ],
+      "unresolvedQuestions": [
+        "The literature search covers only July 2017–March 2019; the pre-July 2017 search methodology is not described in this notice (it is in GRN 000768)."
+      ],
+      "relatedFindingIds": ["incorporation-grn768-safety-data"]
+    },
+    {
+      "id": "allergenicity-assessment",
+      "domain": "safety data / allergenicity",
+      "requirement": "Protein allergenicity and cross-reactivity where applicable",
+      "status": "present",
+      "assessment": "Section 6.5.2 provides an allergenicity screen of all heterologous gene sequences inserted in the Y. lipolytica production strain using AllergenOnline version 19 (FARRP, February 2019), following FAO/WHO 2001 and Codex Alimentarius 2009 guidance. Full-length FASTA and 80-amino acid sliding window searches were conducted. No identity matches greater than 35% were identified. Residual protein in the final product is below 25 ppm (BCA) or 1.5 ppm (Protein Dot Blot), and residual DNA is below 10 ng/g (PCR).",
+      "evidenceSummary": "Section 6.5.2 describes AllergenOnline FASTA 35.04 search with full-length and 80-aa sliding window; no matches >35% identity found. Section 2.3.6 confirms no residual protein above LOD in final product. Section 2.3.7 confirms no residual DNA above LOD.",
+      "citations": [
+        {
+          "pageNumber": 37,
+          "excerpt": "Using this search strategy, no identity matches of greater than 35% were identified.",
+          "section": "6.5.2 Potential Allergenicity of the Inserted Gene Sequences"
+        }
+      ],
+      "unresolvedQuestions": [],
+      "relatedFindingIds": []
+    }
+  ],
+  "researchReferences": [
+    {
+      "id": "ref-01",
+      "title": "Stevia glycosides (addendum). Safety Evaluation of Certain Food Additives. Eighty-second Meeting of JECFA, June 7-16, 2016",
+      "source": "WHO Food Additives Series, no 73. WHO/FAO",
+      "year": "2017",
+      "relevance": "Primary authoritative safety review confirming the ADI of 4 mg/kg bw/day as steviol equivalents for steviol glycosides; used to benchmark dietary exposure estimates for Reb M",
+      "evidence": "Notice cites JECFA 2017b as the basis for the confirmed ADI and for the dietary exposure re-assessment using sugar/intense sweetener substitution methods across global jurisdictions",
+      "authors": ["JECFA"],
+      "doi": "",
+      "url": "http://apps.who.int/iris/bitstream/10665/258934/1/9789241660730-eng.pdf?ua=1",
+      "citation": "JECFA (2017b). Stevia glycosides (addendum). In: Safety Evaluation of Certain Food Additives. Eighty-second Meeting of the Joint FAO/WHO Expert Committee on Food Additives (JECFA), June 7-16, 2016. (WHO Food Additives Series, no 73). Geneva, Switz.: WHO / Rome, Italy: FAO, pp. 181-218, 492.",
+      "origin": "notifier_cited",
+      "verificationStatus": "extracted_unverified",
+      "citedPages": [24, 25, 30]
+    },
+    {
+      "id": "ref-02",
+      "title": "Steviol glycosides from Stevia rebaudiana Bertoni [New specifications prepared at the 84th JECFA, 2017]",
+      "source": "Compendium of Food Additive Specifications, FAO JECFA Monographs 20. FAO/WHO",
+      "year": "2017",
+      "relevance": "Establishes the purity specification for steviol glycosides used as the benchmark for Reb M product specifications and defines the broad steviol glycoside class",
+      "evidence": "Notice uses JECFA 2017a specifications as the basis for physical, chemical, and microbiological specifications for Reb M and cites the expanded definition of steviol glycosides",
+      "authors": ["JECFA"],
+      "doi": "",
+      "url": "http://www.fao.org/documents/card/en/c/4b06cdda-3e70-4c80-b7e5-56034601836b/",
+      "citation": "JECFA (2017a). Steviol glycosides from Stevia rebaudiana Bertoni [New specifications prepared at the 84th JECFA, 2017]. In: Compendium of Food Additive Specifications. 84th Meeting, Rome, 6-15 June 2017 (FAO JECFA Monographs 20). FAO/WHO, pp. 50-69.",
+      "origin": "notifier_cited",
+      "verificationStatus": "extracted_unverified",
+      "citedPages": [13, 14, 17, 28, 30]
+    },
+    {
+      "id": "ref-03",
+      "title": "Steviol glycosides (addendum). Safety Evaluation of Certain Food Additives and Contaminants. Sixty-ninth Meeting of JECFA, June 17-26-29, 2008",
+      "source": "WHO Food Additives Series, vol 60. FAO/WHO",
+      "year": "2009",
+      "relevance": "Established the ADI of 0-4 mg/kg bw/day as steviol equivalents for steviol glycosides; foundational safety conclusion underpinning the GRAS determination",
+      "evidence": "Notice cites JECFA 2009 as the source of the ADI used to compare predicted Reb M intakes and as part of the series of JECFA safety reviews supporting GRAS status",
+      "authors": ["JECFA"],
+      "doi": "",
+      "url": "http://whqlibdoc.who.int/publications/2009/9789241660600_eng.pdf",
+      "citation": "JECFA (2009). Steviol glycosides (addendum). In: Safety Evaluation of Certain Food Additives and Contaminants. Sixty-ninth Meeting of JECFA, June 17-26-29, 2008, Geneva, Switz. (WHO Food Additives Series, vol 60). FAO/WHO, pp. 183-220.",
+      "origin": "notifier_cited",
+      "verificationStatus": "extracted_unverified",
+      "citedPages": [24, 30]
+    },
+    {
+      "id": "ref-04",
+      "title": "The use of a sweetener substitution method to predict dietary exposures for the intense sweetener rebaudioside A",
+      "source": "Food and Chemical Toxicology 46(Suppl. 7):S61-S69",
+      "year": "2008",
+      "relevance": "Provides the dietary exposure methodology (sweetener substitution paradigm) directly applied by Cargill to estimate Reb M intakes across population groups",
+      "evidence": "Notice adopts the Renwick 2008 paradigm to generate consumption estimates for Reb M, presenting results in Table 3.2-1 and comparing predicted intakes to the JECFA ADI",
+      "authors": ["Renwick AG"],
+      "doi": "10.1016/j.fct.2008.05.009",
+      "url": "",
+      "citation": "Renwick AG (2008). The use of a sweetener substitution method to predict dietary exposures for the intense sweetener rebaudioside A. Food Chem Toxicol 46(Suppl. 7):S61-S69. DOI:10.1016/j.fct.2008.05.009.",
+      "origin": "notifier_cited",
+      "verificationStatus": "extracted_unverified",
+      "citedPages": [23, 24, 25]
+    },
+    {
+      "id": "ref-05",
+      "title": "Assessment of the carcinogenicity of stevioside in F344 rats",
+      "source": "Food and Chemical Toxicology 35(6):597-603",
+      "year": "1997",
+      "relevance": "Provides the NOAEL of 970 mg stevioside/kg bw/day from the pivotal carcinogenicity study used by JECFA to derive the ADI for steviol glycosides",
+      "evidence": "Notice cites Toyoda et al. 1997 as the basis for the NOAEL from which JECFA calculated the ADI by applying a 100-fold safety factor",
+      "authors": ["Toyoda K", "Matsui H", "Shoda T", "Uneyama C", "Takada K", "Takahashi M"],
+      "doi": "10.1016/S0278-6915(97)00023-9",
+      "url": "",
+      "citation": "Toyoda K, Matsui H, Shoda T, Uneyama C, Takada K, Takahashi M (1997). Assessment of the carcinogenicity of stevioside in F344 rats. Food Chem Toxicol 35(6):597-603. DOI:10.1016/S0278-6915(97)00023-9.",
+      "origin": "notifier_cited",
+      "verificationStatus": "extracted_unverified",
+      "citedPages": [30, 60]
+    },
+    {
+      "id": "ref-06",
+      "title": "Chemical-specific adjustment factors (inter-species toxicokinetics) to establish the ADI for steviol glycosides",
+      "source": "Regulatory Toxicology and Pharmacology 79:91-102",
+      "year": "2016",
+      "relevance": "Comparative pharmacokinetic study in rats and humans characterizing species differences in steviol and steviol glucuronide exposure following oral stevioside dosing; supports toxicokinetic basis of the ADI",
+      "evidence": "Notice describes Roberts et al. 2016 findings on Cmax and AUC differences between rats and humans for steviol and steviol glucuronide, concluding that the extent of glucuronidation is higher in humans",
+      "authors": ["Roberts A", "Lynch B", "Rogerson R", "Renwick A", "Kern H", "Coffee M"],
+      "doi": "10.1016/j.yrtph.2016.05.017",
+      "url": "",
+      "citation": "Roberts A, Lynch B, Rogerson R, Renwick A, Kern H, Coffee M, et al. (2016). Chemical-specific adjustment factors (inter-species toxicokinetics) to establish the ADI for steviol glycosides. Regul Toxicol Pharmacol 79:91-102. DOI:10.1016/j.yrtph.2016.05.017.",
+      "origin": "notifier_cited",
+      "verificationStatus": "extracted_unverified",
+      "citedPages": [28, 46, 60]
+    },
+    {
+      "id": "ref-07",
+      "title": "Scientific Opinion on safety of steviol glycosides for the proposed uses as a food additive",
+      "source": "EFSA Journal 8(4):1537 [85pp]",
+      "year": "2010",
+      "relevance": "Major regulatory safety review by EFSA establishing an ADI of 4 mg/kg bw/day as steviol equivalents; cited as corroborating international regulatory consensus on steviol glycoside safety",
+      "evidence": "Notice cites EFSA 2010 as one of the key regulatory authority opinions that established the same ADI as JECFA, supporting the safety basis for Reb M",
+      "authors": ["EFSA"],
+      "doi": "10.2903/j.efsa.2010.1537",
+      "url": "https://www.efsa.europa.eu/en/efsajournal/pub/1537",
+      "citation": "EFSA (2010). Scientific Opinion on safety of steviol glycosides for the proposed uses as a food additive (EFSA Panel on Food Additives and Nutrient Sources added to food/ANS). EFSA J 8(4):1537. [85pp]. DOI:10.2903/j.efsa.2010.1537.",
+      "origin": "notifier_cited",
+      "verificationStatus": "extracted_unverified",
+      "citedPages": [29, 31, 40, 57]
+    },
+    {
+      "id": "ref-08",
+      "title": "Scientific opinion on the safety of the proposed amendment of the specifications for steviol glycosides (E 960) as a food additive",
+      "source": "EFSA Journal 13(12):4316 [29pp]",
+      "year": "2015",
+      "relevance": "EFSA opinion expanding the steviol glycoside specification to include rebaudiosides D and M, directly relevant to the regulatory status of Reb M in the EU",
+      "evidence": "Notice quotes EFSA 2015 conclusion that extending specifications to include rebaudiosides D and M would not be of safety concern and that the ADI of 4 mg/kg bw/day applies",
+      "authors": ["EFSA"],
+      "doi": "10.2903/j.efsa.2015.4316",
+      "url": "http://www.efsa.europa.eu/en/efsajournal/pub/4316",
+      "citation": "EFSA (2015). Scientific opinion on the safety of the proposed amendment of the specifications for steviol glycosides (E 960) as a food additive. EFSA J 13(12):4316 [29pp]. doi:10.2903/j.efsa.2015.4316.",
+      "origin": "notifier_cited",
+      "verificationStatus": "extracted_unverified",
+      "citedPages": [29, 31]
+    },
+    {
+      "id": "ref-09",
+      "title": "Steviol glycosides in purified stevia leaf extract sharing the same metabolic fate",
+      "source": "Regulatory Toxicology and Pharmacology 77:125-133",
+      "year": "2016",
+      "relevance": "Demonstrates that multiple steviol glycosides share the same metabolic fate (conversion to steviol), supporting the read-across of safety data from rebaudioside A to Reb M",
+      "evidence": "Notice uses Purkayastha et al. 2016 as part of the evidence base that all steviol glycosides are hydrolyzed to steviol and share a common metabolic pathway",
+      "authors": ["Purkayastha S", "Markosayan A", "Prakash I", "Bhusari S", "Pugh G", "Lynch B"],
+      "doi": "10.1016/j.yrtph.2016.02.015",
+      "url": "",
+      "citation": "Purkayastha S, Markosayan A, Prakash I, Bhusari S, Pugh G, Lynch B, et al. (2016). Steviol glycosides in purified stevia leaf extract sharing the same metabolic fate. Regul Toxicol Pharmacol 77:125-133. DOI:10.1016/j.yrtph.2016.02.015.",
+      "origin": "notifier_cited",
+      "verificationStatus": "extracted_unverified",
+      "citedPages": [46, 60]
+    },
+    {
+      "id": "ref-10",
+      "title": "Steviol glycoside safety: are highly purified steviol glycoside sweeteners food allergens?",
+      "source": "Food and Chemical Toxicology 75:71-78",
+      "year": "2015",
+      "relevance": "Directly addresses allergenicity of highly purified steviol glycoside sweeteners; cited in the context of reported adverse reactions and the role of impurities",
+      "evidence": "Notice cites Urban et al. 2015 among limited reports of adverse effects following steviol glycoside consumption, noting that impurities rather than the glycosides themselves were suspected causes",
+      "authors": ["Urban JD", "Carakostas MC", "Taylor SL"],
+      "doi": "10.1016/j.fct.2014.11.011",
+      "url": "",
+      "citation": "Urban JD, Carakostas MC, Taylor SL (2015). Steviol glycoside safety: are highly purified steviol glycoside sweeteners food allergens? Food Chem Toxicol 75:71-78. DOI:10.1016/j.fct.2014.11.011.",
+      "origin": "notifier_cited",
+      "verificationStatus": "extracted_unverified",
+      "citedPages": [21, 46]
+    },
+    {
+      "id": "ref-11",
+      "title": "A research on the genotoxicity of stevia in human lymphocytes",
+      "source": "Drug and Chemical Toxicology 41(2):221-224",
+      "year": "2018",
+      "relevance": "New genotoxicity study (post-July 2017) evaluated in the updated safety data section; chromosome aberration and micronucleus tests in human lymphocytes",
+      "evidence": "Notice describes Uçar et al. 2018 as showing no significant genotoxic effects of steviol glycosides (99% purity) in human lymphocytes at any tested concentration",
+      "authors": ["Uçar A", "Yilmaz S", "Kiliç MS"],
+      "doi": "10.1080/01480545.2017.1349135",
+      "url": "",
+      "citation": "Uçar A, Yilmaz S, Kiliç MS (2018). A research on the genotoxicity of stevia in human lymphocytes. Drug Chem Toxicol 41(2):221-224. DOI:10.1080/01480545.2017.1349135.",
+      "origin": "notifier_cited",
+      "verificationStatus": "extracted_unverified",
+      "citedPages": [31, 46, 60]
+    },
+    {
+      "id": "ref-12",
+      "title": "Yarrowia lipolytica: safety assessment of an oleaginous yeast with a great industrial potential",
+      "source": "Critical Reviews in Microbiology 40(3):187-206",
+      "year": "2014",
+      "relevance": "Safety assessment of the production organism Y. lipolytica; supports the conclusion that the production strain is not toxigenic or pathogenic",
+      "evidence": "Notice relies on Groenewald et al. 2014 to characterize the safety profile of Y. lipolytica as the production organism for Reb M",
+      "authors": [
+        "Groenewald M",
+        "Boekhout T",
+        "Neuvéglise C",
+        "Gaillardin C",
+        "van Dijck PW",
+        "Wyss M"
+      ],
+      "doi": "10.3109/1040841X.2013.770386",
+      "url": "",
+      "citation": "Groenewald M, Boekhout T, Neuvéglise C, Gaillardin C, van Dijck PW, Wyss M (2014). Yarrowia lipolytica: safety assessment of an oleaginous yeast with a great industrial potential. Crit Rev Microbiol 40(3):187-206. DOI:10.3109/1040841X.2013.770386.",
+      "origin": "notifier_cited",
+      "verificationStatus": "extracted_unverified",
+      "citedPages": [42]
+    },
+    {
+      "id": "ref-13",
+      "title": "Evaluation of Allergenicity of Genetically Modified Foods. Report of a Joint FAO/WHO Expert Consultation on Allergenicity of Foods Derived from Biotechnology, 22-25 January 2001",
+      "source": "FAO/WHO, Rome, Italy",
+      "year": "2001",
+      "relevance": "Provides the framework for allergenicity assessment of inserted gene sequences in the genetically engineered Y. lipolytica production strain",
+      "evidence": "Notice cites FAO/WHO 2001 as the methodological basis for evaluating potential allergenicity of the inserted gene sequences used to construct the Reb M production strain",
+      "authors": ["FAO/WHO"],
+      "doi": "",
+      "url": "http://www.who.int/foodsafety/publications/gmo-allergenicity/en",
+      "citation": "FAO/WHO (2001). Evaluation of Allergenicity of Genetically Modified Foods. Report of a Joint FAO/WHO Expert Consultation on Allergenicity of Foods Derived from Biotechnology 22-25 January 2001. Rome, Italy: FAO / Geneva, Switz.: WHO.",
+      "origin": "notifier_cited",
+      "verificationStatus": "extracted_unverified",
+      "citedPages": [41]
+    },
+    {
+      "id": "ref-14",
+      "title": "GRAS Exemption Claim for Steviol Glycosides from Saccharomyces cerevisiae Expressing Steviol Glycoside Biosynthesis Pathway (GRN No. 626)",
+      "source": "U.S. FDA GRAS Notice Inventory, GRN 000626",
+      "year": "2016",
+      "relevance": "Prior GRAS notification for a closely related steviol glycoside product (primarily rebaudioside M from S. cerevisiae) whose safety data, stability data, and metabolic studies are incorporated by reference into this filing",
+      "evidence": "Notice extensively cross-references GRN 000626 for stability data, fecal hydrolysis studies, and conditions of use, treating it as the primary comparator product for Reb M from Y. lipolytica",
+      "authors": ["Cargill"],
+      "doi": "",
+      "url": "http://www.accessdata.fda.gov/scripts/fcn/fcnDetailNavigation.cfm?rpt=grasListing&id=626",
+      "citation": "Cargill (2016). GRAS Exemption Claim for Steviol Glycosides from Saccharomyces cerevisiae Expressing Steviol Glycoside Biosynthesis Pathway. (GRN No. 626). Submitted by: Cargill Incorporated to U.S. FDA, CFSAN, Office of Food Additive Safety.",
+      "origin": "notifier_cited",
+      "verificationStatus": "extracted_unverified",
+      "citedPages": [6, 13, 14, 17, 18, 19, 20, 21, 23, 26, 27, 28, 30, 39]
+    },
+    {
+      "id": "ref-15",
+      "title": "Development of next generation stevia sweetener: rebaudioside M",
+      "source": "Foods 3(1):162-175",
+      "year": "2014",
+      "relevance": "Characterizes the sweetness intensity of Reb M (200-350 times sweeter than sucrose) used to define conditions of use and self-limiting levels in this filing",
+      "evidence": "Notice cites Prakash et al. 2014 for the sweetness potency range of Reb M that underpins the self-limiting use rationale and the dietary exposure calculations",
+      "authors": ["Prakash I", "Markosyan A", "Bunders C"],
+      "doi": "10.3390/foods3010162",
+      "url": "",
+      "citation": "Prakash I, Markosayan A, Bunders C (2014). Development of next generation stevia sweetener: rebaudioside M. Foods 3(1):162-175. DOI:10.3390/foods3010162.",
+      "origin": "notifier_cited",
+      "verificationStatus": "extracted_unverified",
+      "citedPages": [6, 43]
+    }
+  ],
+  "safetySignals": [
+    {
+      "id": "efsa-metabolic-fate-uncertainty-signal",
+      "label": "EFSA 2018 authoritative disagreement on metabolic fate read-across",
+      "level": "watch",
+      "summary": "EFSA (2018a) explicitly declined to expand the steviol glycoside definition to all individual glycosides due to uncertainties about the rate and extent of metabolism to steviol. This represents a documented authoritative disagreement with the notice's central safety argument. The notice discloses this disagreement but does not provide a targeted rebuttal with quantitative data addressing EFSA's specific concerns.",
+      "evidence": [
+        "EFSA 2018a declined expansion due to metabolic fate uncertainties",
+        "Notice's safety case relies on shared metabolic fate argument",
+        "No targeted rebuttal data provided for EFSA's specific concerns"
+      ],
+      "citations": [
+        {
+          "pageNumber": 31,
+          "excerpt": "EFSA did not agree to expand the definition of steviol glycosides to include all individual steviol glycosides because of uncertainties on the rate and extent of the metabolism of the different steviol glycosides to steviol (EFSA, 2018a).",
+          "section": "6.3 Summary of Safety Opinions by Scientific and Regulatory Authorities"
+        }
+      ]
+    },
+    {
+      "id": "jiang-2018-steroidogenesis-signal",
+      "label": "Rebaudioside A-associated disruption of steroidogenesis in weanling rats at suprathreshold doses",
+      "level": "watch",
+      "summary": "Jiang et al. (2018) reported disruption of steroidogenesis and decreased serum progesterone in weanling female rats at doses of approximately 76 and 486 mg/kg bw/day steviol equivalents (19–120 times the ADI upper limit). The notice contextualizes these findings as above-ADI and of limited human relevance. The signal is noted because the test article was rebaudioside A, a component present in Reb M, and the study used a vulnerable developmental population (weanling rats).",
+      "evidence": [
+        "Jiang 2018 reported steroidogenesis disruption at 76–486 mg/kg bw/day steviol equivalents",
+        "Doses 19–120 times above ADI upper limit",
+        "Weanling rat model represents developmental vulnerability"
+      ],
+      "citations": [
+        {
+          "pageNumber": 35,
+          "excerpt": "Given that the doses of rebaudioside A utilized in this study on a steviol equivalent basis are well above the upper limit of the steviol glycoside ADI (about 19 to 120 times higher), the relevance of these data to human exposure to steviol glycosides in food is limited.",
+          "section": "6.4.4 Reproductive and Developmental Toxicity"
+        }
+      ]
+    },
+    {
+      "id": "al-dujaili-cortisol-signal",
+      "label": "Statistically significant changes in urinary cortisol and cortisone in human clinical study",
+      "level": "watch",
+      "summary": "Al-Dujaili et al. (2017) reported statistically significant increases and decreases in urinary concentrations of free cortisol and cortisone following 7 days of stevia consumption in healthy subjects. The notice notes study limitations (small sample size n=8/group, short washout, unvalidated dosage, uncharacterized purity of test article). The signal is noted because it involves a human study with a documented adverse observation, even though the authors concluded further research is needed.",
+      "evidence": [
+        "Al-Dujaili 2017 reported significant urinary cortisol/cortisone changes",
+        "Small sample size (n=8/group) and uncharacterized test article purity",
+        "Authors concluded further research needed"
+      ],
+      "citations": [
+        {
+          "pageNumber": 35,
+          "excerpt": "Significant increases and decreases were observed in urinary concentrations of free cortisol and cortisone, compared to baseline. The authors noted several limitations with the study design, including small sample size, potential for recognition by subjects of difference between placebo and stevia test article, lack of validation of dosage consumed, and a short washout period and as a result, concluded that further research is needed to understand the significance of the observed effects.",
+          "section": "6.4.5 Human Studies"
+        }
+      ]
+    },
+    {
+      "id": "allergic-reactions-impurity-hypothesis",
+      "label": "Reported allergic and hypersensitivity reactions to stevia sweeteners attributed to impurities",
+      "level": "watch",
+      "summary": "Section 3.1 discloses two cases of anaphylaxis/allergic reactions (Japan) and one hypersensitivity case (U.S.) following consumption of stevia sweeteners. The notice attributes these to impurities in products not meeting the JECFA ≥95% purity specification. While the notice's product meets this specification, the signal is noted because the causal attribution to impurities is hypothetical ('suspected by the study authors') and not definitively established.",
+      "evidence": [
+        "Two anaphylaxis cases in Japan (Kimata 2007) and one hypersensitivity case in U.S. (Esmail and Kabadi 2012)",
+        "Impurity hypothesis is attributed to study authors, not confirmed",
+        "Reb M meets ≥95% purity specification"
+      ],
+      "citations": [
+        {
+          "pageNumber": 23,
+          "excerpt": "Two cases from Japan and 1 case from the U.S. have been reported wherein allergic and hypersensitivity reactions, respectively, to stevia sweeteners occurred (Kimata, 2007; Esmail and Kabadi, 2012). In these cases, the purity of the stevia sweeteners was suspected by the study authors to not meet the JECFA specification of ≥95% total steviol glycosides.",
+          "section": "3.1 History of Consumption of Steviol Glycosides"
+        }
+      ]
+    },
+    {
+      "id": "stability-data-gap-signal",
+      "label": "No completed stability data for Y. lipolytica Reb M at time of submission",
+      "level": "gap",
+      "summary": "The notice explicitly states that stability studies have not been conducted on the Y. lipolytica Reb M product. The only stability data presented are for the S. cerevisiae-derived material (GRN 000626) and are themselves preliminary (3-month data from ongoing studies). This represents a gap in the stability evidence base for the specific product being notified.",
+      "evidence": [
+        "No stability studies on Y. lipolytica Reb M",
+        "S. cerevisiae stability studies ongoing with 3-month preliminary data only",
+        "Stability bridge relies on compositional similarity and JECFA general conclusions"
+      ],
+      "citations": [
+        {
+          "pageNumber": 17,
+          "excerpt": "Stability studies have not yet been conducted with the Reb M preparation that is the subject of this Notification (i.e., steviol glycosides produced by Y. lipolytica).",
+          "section": "2.4.2 Stability of Steviol Glycosides Produced by Fermentation"
+        }
+      ]
+    }
+  ],
+  "analyzedPages": [
+    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26,
+    27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50,
+    51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62
+  ],
+  "truncated": false,
+  "modelProvider": "anthropic/claude-sonnet-4-6"
+}

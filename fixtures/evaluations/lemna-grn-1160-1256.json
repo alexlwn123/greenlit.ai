@@ -1,0 +1,269 @@
+{
+  "fixtureVersion": "1.0.0",
+  "id": "lemna-grn-1160-1256",
+  "title": "Lemna leaf protein withdrawn notice and successful resubmission",
+  "purpose": [
+    "identified_gaps",
+    "recommended_next_steps",
+    "documentation_benchmark",
+    "safety_signals"
+  ],
+  "pageNumberConvention": "one_based_pdf_page",
+  "sources": [
+    {
+      "id": "grn-1160-notice",
+      "fileName": "GRN-1160_lemna-leaf-protein.pdf",
+      "grn": 1160,
+      "kind": "notice",
+      "disposition": "evaluation_ceased",
+      "pageCount": 230,
+      "sha256": "8eff49d11b3d9557018e590866dcb7405026056afe989cf25c3593a728935c78"
+    },
+    {
+      "id": "grn-1160-response",
+      "fileName": "gras-notice-grn-1160-agency-response-letter.pdf",
+      "grn": 1160,
+      "kind": "agency_response",
+      "disposition": "evaluation_ceased",
+      "pageCount": 2,
+      "sha256": "41ad4425564a90f750eda1b0e4712a76ecfcaf363d5b216e58c89c626bbe7635"
+    },
+    {
+      "id": "grn-1256-notice",
+      "fileName": "GRN-1256_lemna-leaf-protein-resubmission-of-grn-1160.pdf",
+      "grn": 1256,
+      "kind": "notice",
+      "disposition": "no_questions",
+      "pageCount": 1428,
+      "sha256": "d2494d601188593bd82f021aa78ea17b1fd3f19fad677effc2d81ed5f4a52337"
+    },
+    {
+      "id": "grn-1256-response",
+      "fileName": "gras-notice-grn-1256-agency-response-letter.pdf",
+      "grn": 1256,
+      "kind": "agency_response",
+      "disposition": "no_questions",
+      "pageCount": 5,
+      "sha256": "c9adc43bf17c11bdf3765a5af9829199c9365497193abec17a42102cbc1efbc6"
+    }
+  ],
+  "confirmedFindings": [
+    {
+      "id": "incorporation-independent-conclusions",
+      "appliesTo": "grn-1160-notice",
+      "severity": "major",
+      "title": "Reliance on other GRNs is insufficiently specific and independently synthesized",
+      "basis": "fda_confirmed",
+      "expectedConcepts": [
+        "specific identification of incorporated data",
+        "independent conclusions",
+        "underlying evidence rather than prior outcome"
+      ],
+      "requiredRecommendationConcepts": [
+        "identify each incorporated item",
+        "explain its evidentiary role",
+        "state an independent conclusion"
+      ],
+      "evidence": [
+        {
+          "sourceId": "grn-1160-notice",
+          "pdfPages": [10],
+          "description": "The notice draws on information about LENTEIN Complete in GRN 742 and related materials."
+        },
+        {
+          "sourceId": "grn-1160-response",
+          "pdfPages": [1],
+          "description": "FDA expressly identifies nonspecific incorporation and lack of independent conclusions."
+        }
+      ]
+    },
+    {
+      "id": "public-pivotal-evidence",
+      "appliesTo": "grn-1160-notice",
+      "severity": "critical",
+      "title": "Pivotal safety support is not established as publicly available peer-reviewed evidence",
+      "basis": "fda_confirmed",
+      "expectedConcepts": [
+        "public availability",
+        "peer-reviewed publication",
+        "pivotal versus supportive evidence"
+      ],
+      "requiredRecommendationConcepts": [
+        "provide citable public pivotal evidence",
+        "distinguish pivotal from supportive information"
+      ],
+      "evidence": [
+        {
+          "sourceId": "grn-1160-notice",
+          "pdfPages": [10, 45],
+          "description": "The notice relies in part on evidence and expert analysis presented through GRN 742."
+        },
+        {
+          "sourceId": "grn-1160-response",
+          "pdfPages": [1],
+          "description": "FDA states pivotal safety information must be publicly available and peer reviewed."
+        }
+      ]
+    },
+    {
+      "id": "test-article-bridge",
+      "appliesTo": "grn-1160-notice",
+      "severity": "critical",
+      "title": "Applicability of pivotal safety-study test articles to LLP is not sufficiently demonstrated",
+      "basis": "fda_confirmed",
+      "expectedConcepts": [
+        "test article comparability",
+        "cross-species extrapolation",
+        "composition and processing",
+        "exposure relevance"
+      ],
+      "requiredRecommendationConcepts": [
+        "compare identity",
+        "compare composition",
+        "compare processing and impurities",
+        "connect study dose to intended exposure",
+        "explain biological relevance"
+      ],
+      "evidence": [
+        {
+          "sourceId": "grn-1160-notice",
+          "pdfPages": [35, 38],
+          "description": "The notice applies Mankai genotoxicity and 90-day study results to LLP."
+        },
+        {
+          "sourceId": "grn-1160-response",
+          "pdfPages": [1],
+          "description": "FDA expressly identifies insufficient extrapolation from pivotal study test articles to LLP."
+        }
+      ]
+    }
+  ],
+  "allowedInferredFindings": [
+    {
+      "id": "intended-use-exposure-scope",
+      "appliesTo": "grn-1160-notice",
+      "maximumSeverity": "major",
+      "basis": "analyst_inference",
+      "evidence": [
+        {
+          "sourceId": "grn-1160-notice",
+          "pdfPages": [76, 77, 78],
+          "description": "Broad proposed uses and high-end intake estimate."
+        },
+        {
+          "sourceId": "grn-1256-notice",
+          "pdfPages": [170],
+          "description": "Lower revised users-only exposure estimate based on narrowed uses."
+        },
+        {
+          "sourceId": "grn-1256-response",
+          "pdfPages": [1, 2, 3],
+          "description": "Final use table and exposure summary after amendments."
+        }
+      ]
+    },
+    {
+      "id": "self-contained-literature-allergenicity",
+      "appliesTo": "grn-1160-notice",
+      "maximumSeverity": "major",
+      "basis": "analyst_inference",
+      "evidence": [
+        {
+          "sourceId": "grn-1160-notice",
+          "pdfPages": [45],
+          "description": "The notice relies substantially on the GRN 742 search and expert assessment."
+        },
+        {
+          "sourceId": "grn-1256-notice",
+          "pdfPages": [47, 48, 49],
+          "description": "The resubmission contains a dedicated protein safety and allergenicity assessment."
+        }
+      ]
+    }
+  ],
+  "benchmarkExpectations": [
+    {
+      "id": "identity-composition",
+      "grn1160": "present",
+      "grn1256": "present",
+      "confidence": "high"
+    },
+    {
+      "id": "manufacturing",
+      "grn1160": "present",
+      "grn1256": "present",
+      "confidence": "high"
+    },
+    {
+      "id": "specifications-batch-analysis",
+      "grn1160": "present",
+      "grn1256": "present",
+      "confidence": "high"
+    },
+    {
+      "id": "intended-uses-exposure",
+      "grn1160": "weak",
+      "grn1256": "present",
+      "confidence": "medium"
+    },
+    {
+      "id": "public-pivotal-safety-evidence",
+      "grn1160": "weak",
+      "grn1256": "present",
+      "confidence": "high"
+    },
+    {
+      "id": "independent-evidence-synthesis",
+      "grn1160": "weak",
+      "grn1256": "present",
+      "confidence": "high"
+    },
+    {
+      "id": "test-article-comparability",
+      "grn1160": "weak",
+      "grn1256": "present",
+      "confidence": "high"
+    },
+    {
+      "id": "self-contained-literature-search",
+      "grn1160": "weak",
+      "grn1256": "present",
+      "confidence": "high"
+    },
+    {
+      "id": "allergenicity-assessment",
+      "grn1160": "weak",
+      "grn1256": "present",
+      "confidence": "medium"
+    }
+  ],
+  "safetySignalExpectations": [
+    "cross-species and cross-product extrapolation",
+    "test-article composition and processing comparability",
+    "study-dose relationship to intended exposure",
+    "potential allergenicity and cross-reactivity",
+    "minor constituent and anti-nutrient controls"
+  ],
+  "mustNotDo": [
+    "Treat withdrawal as proof that every report section was deficient.",
+    "Classify a present but incomplete topic as missing.",
+    "State or imply that FDA affirmed LLP as GRAS.",
+    "Predict FDA action.",
+    "Conclude that LLP is safe or unsafe.",
+    "Invent citations, study facts, publication status, page numbers, or regulatory conclusions.",
+    "Treat an FDA response letter as content that was available inside the submitted notice."
+  ],
+  "passCriteria": {
+    "requiredConfirmedFindingIds": [
+      "incorporation-independent-conclusions",
+      "public-pivotal-evidence",
+      "test-article-bridge"
+    ],
+    "minimumConfirmedFindingRecall": 1,
+    "requiresGroundedEvidence": true,
+    "requiresSpecificRecommendation": true,
+    "requiresWeakMissingDistinction": true,
+    "mustNotRepeatConfirmedGapsAsAbsentForGrn1256": true,
+    "mustPassAllMustNotDoRules": true
+  }
+}

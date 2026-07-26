@@ -1,0 +1,35 @@
+{
+  "corpusRecords": 670,
+  "topComparables": [
+    {
+      "grnNumber": 1160,
+      "name": "GRN 1160 — Lemna leaf protein",
+      "similarityScore": 0.929,
+      "differences": 2
+    },
+    {
+      "grnNumber": 1072,
+      "name": "GRN 1072 — Lemnaceae fiber",
+      "similarityScore": 0.664,
+      "differences": 4
+    },
+    {
+      "grnNumber": 1151,
+      "name": "GRN 1151 — Fava bean protein",
+      "similarityScore": 0.646,
+      "differences": 3
+    },
+    {
+      "grnNumber": 742,
+      "name": "GRN 742 — Duckweed (subfamily Lemnoideae) powder",
+      "similarityScore": 0.646,
+      "differences": 4
+    },
+    {
+      "grnNumber": 879,
+      "name": "GRN 879 — Fava bean protein isolate",
+      "similarityScore": 0.638,
+      "differences": 3
+    }
+  ]
+}

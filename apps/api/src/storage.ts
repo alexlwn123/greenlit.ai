@@ -1,8 +1,8 @@
 import { randomUUID } from "node:crypto"
-import { mkdir, readFile, writeFile } from "node:fs/promises"
+import { mkdir, readFile, unlink, writeFile } from "node:fs/promises"
 import path from "node:path"
 import { fileURLToPath } from "node:url"
-import { get, put } from "@vercel/blob"
+import { del, get, put } from "@vercel/blob"
 import { ConvexHttpClient } from "convex/browser"
 import { makeFunctionReference } from "convex/server"
 import type {
@@ -28,28 +28,31 @@ type CreateArtifactInput = {
 const blobAccess = "private" as const
 
 const convexFunctions = {
-  createAnalysis: makeFunctionReference<"mutation", { analysis: AnalysisRecord }, AnalysisRecord>(
-    "analyses:create"
+  createAnalysis: makeFunctionReference<
+    "mutation",
+    { analysis: Omit<AnalysisRecord, "ownerId"> },
+    AnalysisRecord
+  >("analyses:create"),
+  createNote: makeFunctionReference<
+    "mutation",
+    { note: Omit<WorkbookNote, "ownerId"> },
+    WorkbookNote
+  >("analyses:createNote"),
+  deleteAnalysis: makeFunctionReference<"mutation", { analysisId: string }, { deleted: boolean }>(
+    "analyses:remove"
   ),
-  createNote: makeFunctionReference<"mutation", { note: WorkbookNote }, WorkbookNote>(
-    "analyses:createNote"
+  getAnalysis: makeFunctionReference<"query", { analysisId: string }, AnalysisRecord | null>(
+    "analyses:get"
   ),
-  getAnalysis: makeFunctionReference<
-    "query",
-    { ownerId: string; analysisId: string },
-    AnalysisRecord | null
-  >("analyses:get"),
   getAnalysisById: makeFunctionReference<"query", { analysisId: string }, AnalysisRecord | null>(
     "analyses:getById"
   ),
-  listAnalyses: makeFunctionReference<"query", { ownerId: string }, AnalysisRecord[]>(
+  listAnalyses: makeFunctionReference<"query", Record<string, never>, AnalysisRecord[]>(
     "analyses:list"
   ),
-  listNotes: makeFunctionReference<
-    "query",
-    { ownerId: string; analysisId: string },
-    WorkbookNote[]
-  >("analyses:listNotes"),
+  listNotes: makeFunctionReference<"query", { analysisId: string }, WorkbookNote[]>(
+    "analyses:listNotes"
+  ),
   updateAnalysis: makeFunctionReference<
     "mutation",
     {
@@ -66,7 +69,7 @@ export function defaultDataDir() {
   return path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../../..", ".local-data")
 }
 
-export function createConfiguredStorage(dataDir = defaultDataDir()) {
+export function createConfiguredStorage(dataDir = defaultDataDir(), authToken?: string) {
   if (process.env.GREENLIT_METADATA_DRIVER === "convex") {
     if (process.env.GREENLIT_STORAGE_DRIVER !== "vercel-blob") {
       throw new Error(
@@ -74,7 +77,7 @@ export function createConfiguredStorage(dataDir = defaultDataDir()) {
       )
     }
 
-    return createConvexBlobStorage()
+    return createConvexBlobStorage(authToken)
   }
 
   if (process.env.GREENLIT_STORAGE_DRIVER === "vercel-blob") {
@@ -253,10 +256,33 @@ export function createStorage(dataDir = defaultDataDir()) {
     return note
   }
 
+  async function deleteAnalysis(ownerId: string, analysisId: string) {
+    const database = await readDatabase()
+    const analysis = database.analyses.find(
+      (candidate) => candidate.ownerId === ownerId && candidate.id === analysisId
+    )
+    if (!analysis) return false
+
+    for (const artifact of [analysis.upload, analysis.textArtifact]) {
+      if (!artifact) continue
+      try {
+        await unlink(path.join(dataDir, artifact.storageKey))
+      } catch (error) {
+        if (!isNotFound(error)) throw error
+      }
+    }
+
+    database.analyses = database.analyses.filter((candidate) => candidate.id !== analysisId)
+    database.notes = database.notes.filter((note) => note.analysisId !== analysisId)
+    await writeDatabase(database)
+    return true
+  }
+
   return {
     createNote,
     createAnalysis,
     createArtifact,
+    deleteAnalysis,
     getAnalysis,
     getAnalysisById,
     listNotes,
@@ -267,10 +293,11 @@ export function createStorage(dataDir = defaultDataDir()) {
   }
 }
 
-export function createConvexBlobStorage() {
+export function createConvexBlobStorage(authToken?: string) {
   const client = new ConvexHttpClient(requiredConvexUrl(), {
     logger: false,
   })
+  if (authToken) client.setAuth(authToken)
 
   async function createArtifact(input: CreateArtifactInput): Promise<ArtifactReference> {
     const id = randomUUID()
@@ -324,7 +351,12 @@ export function createConvexBlobStorage() {
       updatedAt: now,
     }
 
-    return client.mutation(convexFunctions.createAnalysis, { analysis }, { skipQueue: true })
+    const { ownerId: _ownerId, ...authenticatedAnalysis } = analysis
+    return client.mutation(
+      convexFunctions.createAnalysis,
+      { analysis: authenticatedAnalysis },
+      { skipQueue: true }
+    )
   }
 
   async function updateAnalysis(
@@ -356,20 +388,20 @@ export function createConvexBlobStorage() {
     })
   }
 
-  async function getAnalysis(ownerId: string, analysisId: string) {
-    return client.query(convexFunctions.getAnalysis, { ownerId, analysisId })
+  async function getAnalysis(_ownerId: string, analysisId: string) {
+    return client.query(convexFunctions.getAnalysis, { analysisId })
   }
 
   async function getAnalysisById(analysisId: string) {
     return client.query(convexFunctions.getAnalysisById, { analysisId })
   }
 
-  async function listAnalyses(ownerId: string) {
-    return client.query(convexFunctions.listAnalyses, { ownerId })
+  async function listAnalyses(_ownerId: string) {
+    return client.query(convexFunctions.listAnalyses, {})
   }
 
-  async function listNotes(ownerId: string, analysisId: string) {
-    return client.query(convexFunctions.listNotes, { ownerId, analysisId })
+  async function listNotes(_ownerId: string, analysisId: string) {
+    return client.query(convexFunctions.listNotes, { analysisId })
   }
 
   async function createNote(input: {
@@ -389,13 +421,33 @@ export function createConvexBlobStorage() {
       updatedAt: now,
     }
 
-    return client.mutation(convexFunctions.createNote, { note }, { skipQueue: true })
+    const { ownerId: _ownerId, ...authenticatedNote } = note
+    return client.mutation(
+      convexFunctions.createNote,
+      { note: authenticatedNote },
+      { skipQueue: true }
+    )
+  }
+
+  async function deleteAnalysis(_ownerId: string, analysisId: string) {
+    const analysis = await client.query(convexFunctions.getAnalysis, { analysisId })
+    if (!analysis) return false
+
+    const storageKeys = [analysis.upload?.storageKey, analysis.textArtifact?.storageKey].filter(
+      (storageKey): storageKey is string => typeof storageKey === "string"
+    )
+    if (storageKeys.length > 0) {
+      await del(storageKeys, getBlobAuthOptions())
+    }
+    await client.mutation(convexFunctions.deleteAnalysis, { analysisId }, { skipQueue: true })
+    return true
   }
 
   return {
     createNote,
     createAnalysis,
     createArtifact,
+    deleteAnalysis,
     getAnalysis,
     getAnalysisById,
     listNotes,

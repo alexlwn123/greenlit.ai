@@ -1,2 +1,6 @@
+export * from "./comparableActions.js"
+export * from "./comparables.js"
+export * from "./deepAnalysis.js"
+export * from "./evidenceMatrixDiff.js"
 export * from "./minimumScore.js"
 export * from "./report.js"

@@ -1,0 +1,1178 @@
+{
+  "fixtureVersion": "1.0.0",
+  "comparisons": [
+    {
+      "id": "grn-0755-d-psicose-to-grn-0828-d-psicose",
+      "baseline": {
+        "matrixStatusCounts": {
+          "present": 3,
+          "weak": 6,
+          "missing": 0,
+          "not_applicable": 0
+        },
+        "rawFindingCount": 6,
+        "calibratedFindingCount": 5,
+        "findings": [
+          {
+            "id": "incorporation-independent-conclusions",
+            "category": "incorporation_independent_conclusions",
+            "severity": "major",
+            "title": "Safety synthesis relies on incorporated prior GRNs without fully independent data-level analysis",
+            "pages": [19, 19]
+          },
+          {
+            "id": "test-article-bridge-non-gmo-vs-gmo",
+            "category": "test_article_bridge",
+            "severity": "major",
+            "title": "Bridge between non-GMO M. foliorum product and GMO-derived products studied in prior GRNs is asserted but not fully documented",
+            "pages": [19, 8]
+          },
+          {
+            "id": "dietary-exposure-cumulative-assumption",
+            "category": "dietary_exposure",
+            "severity": "major",
+            "title": "Exposure assessment assumes full replacement of marketed D-allulose without cumulative exposure analysis",
+            "pages": [15, 13]
+          },
+          {
+            "id": "public-pivotal-safety-evidence-iida-2007",
+            "category": "public_pivotal_evidence",
+            "severity": "major",
+            "title": "Pivotal human tolerance study (Iida et al., 2007) publication status not confirmed in notice",
+            "pages": [24, 33]
+          },
+          {
+            "id": "literature-search-scope-documentation",
+            "category": "general_availability",
+            "severity": "minor",
+            "title": "Literature search methodology and scope not explicitly documented",
+            "pages": [19, 19]
+          }
+        ],
+        "safetySignalCount": 3
+      },
+      "revised": {
+        "matrixStatusCounts": {
+          "present": 4,
+          "weak": 5,
+          "missing": 0,
+          "not_applicable": 0
+        },
+        "rawFindingCount": 6,
+        "calibratedFindingCount": 6,
+        "findings": [
+          {
+            "id": "incorporation-independent-conclusions-prior-grns",
+            "category": "incorporation_independent_conclusions",
+            "severity": "major",
+            "title": "Safety database incorporated by reference from GRNs 400, 498, and 693 without independent analysis of underlying studies",
+            "pages": [24]
+          },
+          {
+            "id": "unpublished-pivotal-acute-toxicity-samyang",
+            "category": "public_pivotal_evidence",
+            "severity": "major",
+            "title": "Sole acute toxicity study of Samyang's non-GMO M. foliorum-produced D-allulose is unpublished and private",
+            "pages": [42, 24]
+          },
+          {
+            "id": "test-article-bridge-production-organism-change",
+            "category": "test_article_bridge",
+            "severity": "major",
+            "title": "Bridge between M. foliorum-produced D-allulose and the prior safety database is asserted but not fully documented",
+            "pages": [24, 11]
+          },
+          {
+            "id": "production-organism-safety-publication-status",
+            "category": "public_pivotal_evidence",
+            "severity": "major",
+            "title": "Publication status of Kim et al. (2018) production-organism toxicology package is not confirmed in the notice",
+            "pages": [32, 39]
+          },
+          {
+            "id": "exposure-assessment-adopted-from-grn693",
+            "category": "dietary_exposure",
+            "severity": "minor",
+            "title": "Exposure assessment adopted wholesale from GRN 693 with only a typographical correction noted",
+            "pages": [18, 7]
+          },
+          {
+            "id": "allergenicity-residual-protein-documentation",
+            "category": "identity_characterization",
+            "severity": "minor",
+            "title": "Allergenicity addressed implicitly through residual protein removal but no formal allergenicity assessment is presented",
+            "pages": [10, 15]
+          }
+        ],
+        "safetySignalCount": 2
+      },
+      "matrixDiff": [
+        {
+          "id": "diff-identity-composition",
+          "label": "Identity, source, composition, and specifications",
+          "status": "aligned",
+          "baselineExpectation": "The notice provides chemical name, CAS number, empirical formula, molecular weight, structural formula, and background on D-allulose. Three product forms (two syrups and crystalline) are specified with composition and purity parameters. The substance is identified as a monosaccharide epimer of D-fructose produced by enzymatic epimerization using M. foliorum.",
+          "draftSignal": "The notice provides full chemical identity (CAS, empirical formula, molecular weight, structural formula), biological source, three product forms with composition tables for five non-consecutive batches each, and a specifications table with analytical methods and limits of detection. HPLC identity confirmation against a reference standard is included.",
+          "recommendedAction": "Preserve the cited support in the revised filing.",
+          "baselineStatus": "present",
+          "draftStatus": "present",
+          "change": "unchanged",
+          "baselineCitations": [
+            {
+              "pageNumber": 8,
+              "excerpt": "D-allulose is a monosaccharide, an epimer of D-fructose isomerized at C-3 (Karabinos, 1952). D-allulose has 70% of the sweetness of sucrose and has a higher solubility that makes it easy to use for food processing.",
+              "section": "2.A.1.7. Background"
+            },
+            {
+              "pageNumber": 11,
+              "excerpt": "As shown in Tables 3-1 to 3-3, the only differences in composition and specification are found in the concentrations of D-allulose, excipients (glucose, fructose, and oligosaccharides), and moisture. Specifications for microbial and heavy metal content are the same for powder and liquid forms.",
+              "section": "2.C. Composition and Specifications of D-Allulose"
+            }
+          ],
+          "draftCitations": [
+            {
+              "pageNumber": 9,
+              "excerpt": "D-allulose is a monosaccharide, an epimer of D-fructose isomerized at C-3 (Karabinos, 1952). D-allulose has 70% of the sweetness of sucrose and has a higher solubility that makes it easy to use for food processing.",
+              "section": "2.A.1.7. Background"
+            },
+            {
+              "pageNumber": 14,
+              "excerpt": "Table 4-1. Composition of Product 1 (≥ 98% Crystalline D-Allulose)\nAllulose*, % 99.93 99.59 99.80 99.70 99.79 99.76",
+              "section": "2.C. Composition and Specifications of D-Allulose"
+            }
+          ]
+        },
+        {
+          "id": "diff-manufacturing",
+          "label": "Process description and process-related controls",
+          "status": "aligned",
+          "baselineExpectation": "The notice provides a detailed step-by-step manufacturing process description including raw materials, enzymatic conversion conditions, purification steps (ion exchange, chromatography), concentration, and crystallization. cGMP and HACCP compliance are stated. Processing aids are identified as food grade.",
+          "draftSignal": "An eight-step manufacturing process is described in detail, including enzymatic epimerization conditions, decolorization, ion exchange purification, chromatographic separation, concentration, and crystallization. Raw materials and processing aids are listed with CAS numbers. GMP and HACCP compliance are stated. Ion exchange resins are noted to comply with 21 CFR 173.25.",
+          "recommendedAction": "Preserve the cited support in the revised filing.",
+          "baselineStatus": "present",
+          "draftStatus": "present",
+          "change": "unchanged",
+          "baselineCitations": [
+            {
+              "pageNumber": 9,
+              "excerpt": "D-allulose is manufactured from fructose in an aqueous solution by enzymatic epimerization in the presence of manganese chloride or calcium chloride.",
+              "section": "2.B. Method of Manufacture"
+            },
+            {
+              "pageNumber": 9,
+              "excerpt": "SamYang Corp. utilizes a Hazard Analysis and Critical Control Point (HACCP)-controlled manufacturing process and rigorously tests its final production batches to verify adherence to quality control specifications.",
+              "section": "2.B. Method of Manufacture"
+            }
+          ],
+          "draftCitations": [
+            {
+              "pageNumber": 12,
+              "excerpt": "D-allulose is manufactured from fructose in an aqueous solution by enzymatic epimerization in the presence of manganese sulfate or magnesium sulfate. The enzyme used is an immobilized Microbacterium foliorum harboring D-allulose-3-epimerase, which converts D-fructose to D-allulose.",
+              "section": "2.B. Method of Manufacture"
+            },
+            {
+              "pageNumber": 13,
+              "excerpt": "Samyang Corp.'s D-allulose is manufactured under Good Manufacturing Practices (GMP) using common food industry materials and processes in accordance with the applicable parts of 21 CFR, part 110 of the Code of Federal Regulations.",
+              "section": "2.B. Method of Manufacture"
+            }
+          ]
+        },
+        {
+          "id": "diff-specifications-batch-analysis",
+          "label": "Specifications and representative batch results",
+          "status": "aligned",
+          "baselineExpectation": "Three sets of specifications with three lots each are provided for Product 1 (D-allulose syrup ≥10%), Product 2 (D-allulose syrup ≥90%), and Product 3 (crystalline D-allulose ≥98%). All lots are within specification for all parameters tested including purity, heavy metals, and microbial limits.",
+          "draftSignal": "Table 5 provides specifications for all three product forms with analytical methods and limits of detection. Tables 4-1 through 4-3 provide five non-consecutive batch results for each product form covering purity, moisture, protein, fat, ash, heavy metals, and microbial parameters. All reported values are within specifications.",
+          "recommendedAction": "Preserve the cited support in the revised filing.",
+          "baselineStatus": "present",
+          "draftStatus": "present",
+          "change": "unchanged",
+          "baselineCitations": [
+            {
+              "pageNumber": 11,
+              "excerpt": "Table 3-1. Specifications and Analytical Values of Product 1 (D-allulose Syrup)",
+              "section": "2.C. Composition and Specifications of D-Allulose"
+            },
+            {
+              "pageNumber": 12,
+              "excerpt": "Table 3-3. Specifications and Analytical Values of Product 3 (Crystalline D-allulose, ≥ 98%)",
+              "section": "2.C. Composition and Specifications of D-Allulose"
+            }
+          ],
+          "draftCitations": [
+            {
+              "pageNumber": 14,
+              "excerpt": "Analysis of 5 non-consecutive batches of D-allulose ingredients demonstrated that the manufacturing process produces consistent products that are in compliance with the established specifications.",
+              "section": "2.C. Composition and Specifications of D-Allulose"
+            },
+            {
+              "pageNumber": 15,
+              "excerpt": "Table 5. Specifications of Crystalline D-Allulose and D-Allulose Syrups\nAllulose*, %, wt/wt ≥98 ≥90 ≥10 HPLC 0.01",
+              "section": "Table 5"
+            }
+          ]
+        },
+        {
+          "id": "diff-intended-uses-exposure",
+          "label": "Intended uses, use levels, and dietary exposure",
+          "status": "aligned",
+          "baselineExpectation": "Intended uses and use levels are documented in Table 1 across 16 food categories. EDIs are calculated using NHANES 2007-2010 data for multiple population subgroups. However, the exposure assessment relies on an unsubstantiated assumption that SamYang's product will replace rather than add to existing marketed D-allulose, and does not address cumulative exposure from multiple manufacturers.",
+          "draftSignal": "Table 1 lists 17 food categories with maximum use levels (2-100% w/w). EDI calculations using NHANES 2011-2014 are presented for multiple population subgroups in g/day and g/kg bw/day at mean and 90th percentile. Background dietary exposure from naturally occurring D-allulose is estimated. A typographical error from GRN 693 is acknowledged and corrected.",
+          "recommendedAction": "Preserve the revised support and its source traceability.",
+          "baselineStatus": "weak",
+          "draftStatus": "present",
+          "change": "improved",
+          "baselineCitations": [
+            {
+              "pageNumber": 13,
+              "excerpt": "The mean and 90th percentile EDIs of all users were 11.0 and 30.0 g/person/day, respectively.",
+              "section": "3.A. Exposure Estimates for D-Allulose Under the Intended Use"
+            },
+            {
+              "pageNumber": 15,
+              "excerpt": "The EDI assessments are based on the assumption that Samyang Corp.'s D-allulose will replace currently marketed D-allulose. Thus, cumulative exposures are not expected to change.",
+              "section": "3.C.1. EDI of Other Components Under the Intended Use"
+            }
+          ],
+          "draftCitations": [
+            {
+              "pageNumber": 18,
+              "excerpt": "The mean and 90th percentile EDIs of all users aged 2 years and older were 11.0 and 30.0 g/person/day, respectively. All users had EDIs equal to or below 0.5 g/kg bw/day.",
+              "section": "3.A. Exposure Estimates for D-Allulose Under the Intended Use"
+            }
+          ]
+        },
+        {
+          "id": "diff-public-pivotal-safety-evidence",
+          "label": "Public availability and peer review of pivotal evidence",
+          "status": "partial",
+          "baselineExpectation": "The pivotal human tolerance threshold is based on Iida et al. (2007) in J Adv Food Ingred, listed as generally available but the peer-review status of this journal is not established in the notice. Most other key safety studies (chronic toxicity, subchronic toxicity, LD50) are published in recognized peer-reviewed journals and listed in Part 7.A. Production organism safety studies are private but are supportive rather than pivotal.",
+          "draftSignal": "The pivotal chronic toxicity study (Yagi and Matsuo, 2009) and 90-day subchronic study (Matsuo et al., 2012) are published in peer-reviewed journals and listed in Section 7.A. The human maximum tolerable dose study (Iida et al., 2007) is also listed as generally available. However, the sole acute toxicity study of Samyang's own non-GMO M. foliorum-produced D-allulose (Lee, 2017) is explicitly listed in Section 7.B as not generally available, and it is the only direct safety evidence for the current production system's product. The publication status of the production-organism toxicology package (Kim et al., 2018) is not affirmatively confirmed in the notice text despite appearing in Section 7.A.",
+          "recommendedAction": "Resolve: Is Kim et al. (2018) confirmed as published and publicly available as of November 2018 submission date?; Can the Lee (2017) acute toxicity study be made publicly available or replaced by a published equivalent?",
+          "baselineStatus": "weak",
+          "draftStatus": "weak",
+          "change": "unchanged",
+          "baselineCitations": [
+            {
+              "pageNumber": 24,
+              "excerpt": "A clinical study showed that the maximum tolerable levels in humans were 0.5 g/kg bw/day for males and 0.6 g/kg bw/day for females, with the mean value of 0.55 g/kg bw/day (Iida et al., 2007).",
+              "section": "6.C.4.2. Human Clinical Studies Reviewed in Previous GRAS Notices"
+            },
+            {
+              "pageNumber": 33,
+              "excerpt": "Iida T, Kishimoto Y, Yoshikawa Y, Okuma K, Yagi K, Matsuo T, Izumori K. Estimation of maximum non-effective level of D-allulose in causing diarrhea in human subjects. J Adv Food Ingred. 2007;10:15-19.",
+              "section": "7.A. Data and Information are Generally Available"
+            }
+          ],
+          "draftCitations": [
+            {
+              "pageNumber": 42,
+              "excerpt": "7.B. Data and Information are Not Generally Available\nReports issued by Lee, 2017. A single-dose oral gavage toxicity study of D-allulose in rats",
+              "section": "7.B. Data and Information are Not Generally Available"
+            },
+            {
+              "pageNumber": 38,
+              "excerpt": "Yagi K, Matsuo T. The study on long-term toxicity of D-allulose in rats. J Clin Biochem Nutr. 2009;45:271-77.",
+              "section": "7.A. Data and Information are Generally Available"
+            }
+          ]
+        },
+        {
+          "id": "diff-independent-evidence-synthesis",
+          "label": "Specific incorporation and independent conclusions",
+          "status": "partial",
+          "baselineExpectation": "The notice identifies the incorporated GRNs (400, 498, 693) by number and URL, and states their role. However, the safety synthesis for the bulk of the evidence is not independently performed; the notice defers to prior FDA 'no question' outcomes and incorporates prior GRN content by reference without re-evaluating the underlying studies. The notice does perform independent analysis of studies published December 2016–November 2017.",
+          "draftSignal": "The notice identifies GRNs 400, 498, and 693 as the sources of incorporated safety information and provides URLs for each. However, it does not identify the specific studies incorporated, explain their individual roles, or perform an independent analysis of the incorporated evidence. The safety conclusion relies on FDA's prior 'no question' outcomes rather than an independent synthesis of the underlying data. New studies (2016-2018) are reviewed independently and their findings are described, but the bulk of the safety database is not independently evaluated.",
+          "recommendedAction": "Resolve: Which specific studies from GRNs 400, 498, and 693 are being incorporated and what is each study's role in the safety determination?; What is the notifier's independent conclusion from reviewing those studies, separate from FDA's prior decisions?",
+          "baselineStatus": "weak",
+          "draftStatus": "weak",
+          "change": "unchanged",
+          "baselineCitations": [
+            {
+              "pageNumber": 19,
+              "excerpt": "The information is hereby incorporated by reference in these documents and will not be discussed in detail.",
+              "section": "6.C. Review of Safety Data"
+            },
+            {
+              "pageNumber": 19,
+              "excerpt": "The FDA has had no question on three GRAS notices related to food uses of D-allulose. The FDA did not have questions on the summary of safety, concluding that D-allulose intake up to 0.5 - 0.6 g/kg bw/day is safe.",
+              "section": "6.C. Review of Safety Data"
+            }
+          ],
+          "draftCitations": [
+            {
+              "pageNumber": 24,
+              "excerpt": "The information is hereby incorporated by reference to these documents and will not be discussed in detail. We have focused the review on literature that has been published since the FDA's review of GRNs 400, 498, and 693",
+              "section": "6.C. Review of Safety Data"
+            },
+            {
+              "pageNumber": 36,
+              "excerpt": "In the previous GRAS notices (GRNs 400, 498, and 693) to the FDA, the safety of D-allulose has been established in animal toxicity studies and mutagenicity studies, and is further supported by human clinical studies.",
+              "section": "6.D. Safety Determination"
+            }
+          ]
+        },
+        {
+          "id": "diff-test-article-comparability",
+          "label": "Target/test-article bridge",
+          "status": "partial",
+          "baselineExpectation": "The notice asserts comparability between SamYang's non-GMO M. foliorum-derived D-allulose and the GMO-derived products studied in prior GRNs based on similar final product specifications. A structured bridge addressing processing differences, impurity profiles, and biological relevance of the different production organisms is not provided. The production organism safety studies are specific to M. foliorum but do not address whether the final product differs in safety-relevant ways from GMO-derived products.",
+          "draftSignal": "The notice identifies the change in production organism (non-GMO M. foliorum vs. prior GMO C. glutamicum) and provides specifications showing similar composition. The bridge is asserted on the basis of specification similarity. However, no structured comparative analysis of impurity profiles, organism-derived residues, or processing-related differences between the current and prior production systems is provided. The notice documents removal of residual organism and DNA but does not compare these parameters to prior GRN materials.",
+          "recommendedAction": "Resolve: Are there any compositional or impurity differences between D-allulose produced by M. foliorum and by prior GMO systems that could affect safety?; Has a side-by-side analytical comparison been conducted?",
+          "baselineStatus": "weak",
+          "draftStatus": "weak",
+          "change": "unchanged",
+          "baselineCitations": [
+            {
+              "pageNumber": 8,
+              "excerpt": "Compared to those described in previous GRAS notices, SamYang Corp. employs a unique immobilized enzyme system described below.",
+              "section": "2.B. Method of Manufacture"
+            },
+            {
+              "pageNumber": 19,
+              "excerpt": "Since the specifications for the liquid and powder forms of D-allulose in this notice are similar to those described in previous GRAS notices, the metabolism and safety data and other pertinent information discussed in GRN 400, 498, and 693 are applicable to the safety of D-allulose in this GRAS notice.",
+              "section": "6.C. Review of Safety Data"
+            }
+          ],
+          "draftCitations": [
+            {
+              "pageNumber": 24,
+              "excerpt": "Since the specifications for the liquid and powder forms of D-allulose in this notice are similar to those described in previous GRAS notices, the metabolism, safety data, and other pertinent information discussed in GRN 400, 498, and 693 are applicable to the safety of D-allulose in this GRAS notice.",
+              "section": "6.C. Review of Safety Data"
+            },
+            {
+              "pageNumber": 11,
+              "excerpt": "Differences in enzyme systems described in various GRNs\nGRN 693 - Samyang Corp. The neutralized fructose syrup is passed into an immobilized cell system (calcium alginate gel bead) with recombinant Corynebacterium glutamicum (non-viable cell) harboring D-allulose 3-epimerase from Clostridium scindens.",
+              "section": "2.B. Method of Manufacture"
+            }
+          ]
+        },
+        {
+          "id": "diff-self-contained-literature-search",
+          "label": "Search methods, scope, and unfavorable information",
+          "status": "partial",
+          "baselineExpectation": "The notice states a date-bounded literature review (December 2016–November 2017) and notes exclusion of rare sugar mixture studies. Section 6.F states no inconsistent information was identified. However, no systematic search methodology (databases, search terms) is documented, making it difficult to assess comprehensiveness.",
+          "draftSignal": "The notice describes a literature review covering papers published between December 2016 and October 2018, supplementing prior GRN reviews. It states exclusion criteria (mixture studies excluded). Section 6.F states no information inconsistent with GRAS determination is known. However, the notice does not describe the databases searched, search terms used, or a systematic methodology for the literature review. The scope of the search for the incorporated prior-GRN literature is not described at all.",
+          "recommendedAction": "Resolve: What databases and search terms were used for the 2016-2018 literature review?; Was a systematic search conducted for the incorporated prior-GRN literature base?",
+          "baselineStatus": "weak",
+          "draftStatus": "weak",
+          "change": "unchanged",
+          "baselineCitations": [
+            {
+              "pageNumber": 19,
+              "excerpt": "We have focused on the review of the literature that has been published since the FDA's review of GRNs 400, 498, and 693 (GRN 400, FDA, 2012; GRN 498, FDA, 2014; GRN 693, FDA, 2017), i.e., the papers published between December 2016 and November 2017.",
+              "section": "6.C. Review of Safety Data"
+            },
+            {
+              "pageNumber": 31,
+              "excerpt": "We are not aware of information that would be considered inconsistent with the finding that the proposed use of D-allulose preparations in foods and beverages, meeting appropriate specifications and used according to cGMP, is GRAS.",
+              "section": "6.F. Discussion of Information Inconsistent with GRAS Determination"
+            }
+          ],
+          "draftCitations": [
+            {
+              "pageNumber": 24,
+              "excerpt": "We have focused the review on literature that has been published since the FDA's review of GRNs 400, 498, and 693 (GRN 400, FDA, 2012; GRN 498, FDA, 2014; GRN 693, FDA, 2017), i.e., papers published between December 2016 and October 2018.",
+              "section": "6.C. Review of Safety Data"
+            },
+            {
+              "pageNumber": 37,
+              "excerpt": "We are not aware of information that would be considered inconsistent with the finding that the proposed use of D-allulose preparations in foods and beverages, meeting appropriate specifications, is GRAS.",
+              "section": "6.F. Discussion of Information Inconsistent with GRAS Determination"
+            }
+          ]
+        },
+        {
+          "id": "diff-allergenicity-assessment",
+          "label": "Protein allergenicity and cross-reactivity where applicable",
+          "status": "partial",
+          "baselineExpectation": "The notice states that the ion exchange process removes 'amino acids, peptides, and proteins' and that the final product is highly purified. However, no explicit allergenicity assessment of the production organism M. foliorum or residual proteins is presented. The notice does not address whether M. foliorum or its proteins have known allergenic potential.",
+          "draftSignal": "The notice documents removal of residual production organism, residual protein (specification ≤1%, batch data 0.08-0.21%), and residual DNA by validated PCR. Biogenic amine analysis is negative. However, no formal allergenicity assessment addressing sequence homology of M. foliorum proteins or D-allulose 3-epimerase to known allergens is presented. The implicit control relies on low residual protein levels without a structured allergenicity evaluation.",
+          "recommendedAction": "Resolve: Does M. foliorum or its D-allulose 3-epimerase share sequence homology with known food allergens?; Are residual protein levels in syrup products below thresholds of concern for sensitization?",
+          "baselineStatus": "weak",
+          "draftStatus": "weak",
+          "change": "unchanged",
+          "baselineCitations": [
+            {
+              "pageNumber": 9,
+              "excerpt": "it is treated through an ion exchange process (i.e., a cation column with strongly acidic cation exchange resin; an anion column with intermediate basic anion exchange resin; and a mixed bed column that has a combination of both strongly acidic and strongly basic resins) to remove any impurities (e.g. calcium, manganese, chloride, and other ionic components, including amino acids, peptides, and proteins).",
+              "section": "2.B. Method of Manufacture"
+            }
+          ],
+          "draftCitations": [
+            {
+              "pageNumber": 10,
+              "excerpt": "The absence of the microorganism and residual protein in the ingredient is also supported by the analysis of residual DNA in batches of the final ingredient. The absence of residual DNA from the microorganism is confirmed by validated PCR methods.",
+              "section": "2.A.2. Potential Toxicants in the Source of the Notified Substance"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "grn-0867-rebaudioside-m-to-grn-0882-rebaudioside-m",
+      "baseline": {
+        "matrixStatusCounts": {
+          "present": 6,
+          "weak": 3,
+          "missing": 0,
+          "not_applicable": 0
+        },
+        "rawFindingCount": 7,
+        "calibratedFindingCount": 7,
+        "findings": [
+          {
+            "id": "test-article-bridge-fermentation-organism",
+            "category": "test_article_bridge",
+            "severity": "major",
+            "title": "Pivotal metabolic bridge study used S. cerevisiae-derived Reb M, not the Y. lipolytica target material",
+            "pages": [28]
+          },
+          {
+            "id": "incorporation-grn768-safety-data",
+            "category": "incorporation_independent_conclusions",
+            "severity": "major",
+            "title": "Safety data from GRN 000768 incorporated by reference without reproducing underlying evidence or stating fully independent conclusions",
+            "pages": [26]
+          },
+          {
+            "id": "stability-y-lipolytica-product-incomplete",
+            "category": "manufacturing_process",
+            "severity": "major",
+            "title": "Stability studies on the Y. lipolytica Reb M product not completed at time of submission",
+            "pages": [17]
+          },
+          {
+            "id": "withdrawal-technical-language-unresolved",
+            "category": "regulatory_submission",
+            "severity": "major",
+            "title": "Withdrawal reason ('technical language requiring clarification') is unspecified and leaves an unresolved documentation question",
+            "pages": [62]
+          },
+          {
+            "id": "efsa-2018-metabolic-fate-disagreement",
+            "category": "safety_data",
+            "severity": "major",
+            "title": "EFSA 2018 disagreement on metabolic fate read-across for all steviol glycosides not fully resolved in the notice",
+            "pages": [31]
+          },
+          {
+            "id": "dietary-exposure-no-specific-use-levels",
+            "category": "dietary_exposure",
+            "severity": "minor",
+            "title": "Conditions of use reference GRN 000626 use levels without specifying food categories or use levels in the notice itself",
+            "pages": [6]
+          },
+          {
+            "id": "blast-sequence-homology-interpretation",
+            "category": "safety_data",
+            "severity": "minor",
+            "title": "BLAST toxin homology analysis reports matches up to 68% identity without structural analysis to rule out functional homology",
+            "pages": [37]
+          }
+        ],
+        "safetySignalCount": 5
+      },
+      "revised": {
+        "matrixStatusCounts": {
+          "present": 6,
+          "weak": 3,
+          "missing": 0,
+          "not_applicable": 0
+        },
+        "rawFindingCount": 5,
+        "calibratedFindingCount": 5,
+        "findings": [
+          {
+            "id": "incorporation-grn768-safety-data",
+            "category": "incorporation_independent_conclusions",
+            "severity": "major",
+            "title": "Safety data from GRN 000768 incorporated by reference without reproducing or summarizing the underlying studies",
+            "pages": [26]
+          },
+          {
+            "id": "test-article-bridge-surrogate-metabolism-stability",
+            "category": "test_article_bridge",
+            "severity": "major",
+            "title": "Microbial metabolism and stability studies used to bridge Y. lipolytica Reb M were conducted on S. cerevisiae GRN 000626 material, not the target product",
+            "pages": [28, 19]
+          },
+          {
+            "id": "efsa-2018-read-across-disagreement",
+            "category": "safety_data",
+            "severity": "major",
+            "title": "EFSA 2018 declined to extend the read-across approach to all steviol glycosides due to metabolic fate uncertainties, and this authoritative disagreement is not fully resolved in the notice",
+            "pages": [31]
+          },
+          {
+            "id": "conditions-of-use-use-levels-not-specified",
+            "category": "conditions_of_use",
+            "severity": "major",
+            "title": "Conditions of use rely on self-limiting organoleptic properties without specifying use levels or food categories",
+            "pages": [6]
+          },
+          {
+            "id": "stability-data-ongoing-incomplete",
+            "category": "manufacturing_process",
+            "severity": "minor",
+            "title": "Conventional and accelerated stability studies on the fermentation-derived product are ongoing and only 3-month preliminary data are presented",
+            "pages": [20]
+          }
+        ],
+        "safetySignalCount": 5
+      },
+      "matrixDiff": [
+        {
+          "id": "diff-identity-composition",
+          "label": "Identity, source, composition, and specifications",
+          "status": "aligned",
+          "baselineExpectation": "The notice provides CAS numbers, molecular formulae, molecular weights, and R-group structures for all steviol glycosides that may be present in Reb M. HPLC retention time data demonstrate chemical identity of fermentation-derived rebaudioside M and D with leaf-extracted standards. The production organism (Y. lipolytica) is identified and characterized. Steviol glycoside composition for three non-consecutive lots is provided.",
+          "draftSignal": "Reb M is fully characterized: CAS numbers, molecular formulae, R-group structures, and HPLC retention time equivalence to S. rebaudiana-derived material are provided. Steviol glycoside composition of three non-consecutive lots is tabulated. The source organism (Y. lipolytica) and its genetic construction are described in detail.",
+          "recommendedAction": "Preserve the cited support in the revised filing.",
+          "baselineStatus": "present",
+          "draftStatus": "present",
+          "change": "unchanged",
+          "baselineCitations": [
+            {
+              "pageNumber": 8,
+              "excerpt": "To demonstrate the equivalence of rebaudiosides M and D present in Reb M obtained from fermentation to rebaudiosides M and D extracted from the leaves of Stevia rebaudiana (S. rebaudiana) Bertoni, high-performance liquid chromatography (HPLC) analyses were conducted... These data demonstrate that rebaudioside M and rebaudioside D produced by fermentation have the same HPLC retention times as rebaudioside M and rebaudioside D from S. rebaudiana Bertoni and establish that steviol glycosides from these 2 sources are chemically identical.",
+              "section": "2.1.2 Equivalence of Reb M Produced by Fermentation to Steviol Glycosides Extracted from the Leaf"
+            }
+          ],
+          "draftCitations": [
+            {
+              "pageNumber": 8,
+              "excerpt": "To demonstrate the equivalence of rebaudiosides M and D present in Reb M obtained from fermentation to rebaudiosides M and D extracted from the leaves of Stevia rebaudiana (S. rebaudiana) Bertoni, high-performance liquid chromatography (HPLC) analyses were conducted.",
+              "section": "2.1.2 Equivalence of Reb M Produced by Fermentation to Steviol Glycosides Extracted from the Leaf"
+            },
+            {
+              "pageNumber": 17,
+              "excerpt": "The final purified Reb M product consists primarily of rebaudiosides M (86.4 to 96.1%) and rebaudioside D (3.1 to 11.9%), with small amounts of rebaudioside A (0.86 to 0.92%) and rebaudioside B (0.24 to 0.39%).",
+              "section": "2.3.5 Steviol Glycoside Composition"
+            }
+          ]
+        },
+        {
+          "id": "diff-manufacturing",
+          "label": "Process description and process-related controls",
+          "status": "aligned",
+          "baselineExpectation": "Section 2.2 provides a detailed description of the production microorganism, parental strains, genetic engineering steps, fermentation conditions, heat treatment, biomass removal, purification (ultrafiltration, adsorption chromatography, ion-exchange, activated carbon, crystallization), and drying. A schematic flowchart is provided. Raw materials and processing aids are listed with regulatory status. Antibiotic marker removal is confirmed by PCR and genome sequencing.",
+          "draftSignal": "The manufacturing process is described in detail including fermentation conditions, heat treatment, biomass removal, purification steps (adsorption chromatography, ion exchange, crystallization), and optional drying. A schematic flowchart is provided. Raw materials, processing aids, and equipment are listed with regulatory status. Antibiotic marker removal is confirmed by PCR and antibiotic sensitivity testing.",
+          "recommendedAction": "Resolve: Stability studies specific to Y. lipolytica Reb M product are not yet completed.",
+          "baselineStatus": "present",
+          "draftStatus": "present",
+          "change": "unchanged",
+          "baselineCitations": [
+            {
+              "pageNumber": 12,
+              "excerpt": "The fermentation broth undergoes heat treatment (75 to 95°C, 5 minutes to 1 hour) to stop fermentation and kill the yeast cells... The product stream may be purified by ultrafiltration to further remove dissolved proteins and other nitrogen-containing compounds.",
+              "section": "2.2.3 Reb M Manufacturing Process"
+            }
+          ],
+          "draftCitations": [
+            {
+              "pageNumber": 12,
+              "excerpt": "The fermentation broth undergoes heat treatment (75 to 95°C, 5 minutes to 1 hour) to stop fermentation and kill the yeast cells.",
+              "section": "2.2.3 Reb M Manufacturing Process"
+            },
+            {
+              "pageNumber": 9,
+              "excerpt": "Marker systems were rendered non-functional restoring antibiotic sensitivity to the strain, which was confirmed using polymerase chain reaction (PCR) analysis and by verifying that the strain was sensitive to the relevant antibiotics.",
+              "section": "2.2.1.2 Production Strain"
+            }
+          ]
+        },
+        {
+          "id": "diff-specifications-batch-analysis",
+          "label": "Specifications and representative batch results",
+          "status": "aligned",
+          "baselineExpectation": "Physical, chemical, and microbiological specifications are provided in Tables 2.3.1-1 and 2.3.2-1, benchmarked against JECFA 2017 and GRN 000626. Batch analyses for three non-consecutive lots are provided in Tables 2.3.3-1 and 2.3.4-1, all meeting specifications. Steviol glycoside composition, residual protein (BCA and Protein Dot Blot), and residual DNA (PCR) data are provided for the same lots.",
+          "draftSignal": "Physical, chemical, and microbiological specifications are provided in Tables 2.3.1-1 and 2.3.2-1, benchmarked against JECFA and GRN 000626. Batch analyses for three non-consecutive lots are provided in Tables 2.3.3-1, 2.3.4-1, and 2.3.5-1. Residual protein and DNA analyses are reported. All lots meet specifications.",
+          "recommendedAction": "Preserve the cited support in the revised filing.",
+          "baselineStatus": "present",
+          "draftStatus": "present",
+          "change": "unchanged",
+          "baselineCitations": [
+            {
+              "pageNumber": 16,
+              "excerpt": "Analysis of 3 non-consecutive lots of Reb M demonstrates that the manufacturing process as described in Section 2.2 produces a consistent product that meets the defined specifications.",
+              "section": "2.3.3 Physical and Chemical Batch Analyses"
+            }
+          ],
+          "draftCitations": [
+            {
+              "pageNumber": 16,
+              "excerpt": "Analysis of 3 non-consecutive lots of Reb M demonstrates that the manufacturing process as described in Section 2.2 produces a consistent product that meets the defined specifications.",
+              "section": "2.3.3 Physical and Chemical Batch Analyses"
+            },
+            {
+              "pageNumber": 18,
+              "excerpt": "Overall, no residual protein was detected in any of the Reb M test samples above the limit of detection for the BCA assay (25 ppm) or above 1.5 ppm using the Protein Dot Blot method.",
+              "section": "2.3.6 Residual Protein Analysis"
+            }
+          ]
+        },
+        {
+          "id": "diff-intended-uses-exposure",
+          "label": "Intended uses, use levels, and dietary exposure",
+          "status": "partial",
+          "baselineExpectation": "Intended use is described as a general purpose sweetener under the same conditions as GRN 000626, but specific food categories and use levels are not reproduced in the notice. Dietary exposure is estimated using the Renwick (2008) sweetener substitution method and a conservative sugar-replacement scenario. Predicted intakes for all population groups are below the JECFA ADI of 4 mg/kg bw/day as steviol equivalents. However, the absence of food-category-specific use levels makes the conditions of use not fully self-contained.",
+          "draftSignal": "Intended use as a general purpose sweetener is stated, with conditions of use by reference to GRN 000626. No specific food categories or use levels are enumerated. Dietary exposure is estimated by two methods (sugar substitution and Renwick 2008 sweetener substitution), both yielding estimates below the JECFA ADI. The absence of specific use levels or food categories limits independent verification of the exposure assessment.",
+          "recommendedAction": "Resolve: Specific food categories and use levels are not enumerated in the notice.",
+          "baselineStatus": "weak",
+          "draftStatus": "weak",
+          "change": "unchanged",
+          "baselineCitations": [
+            {
+              "pageNumber": 24,
+              "excerpt": "The mean intake of Reb M on a steviol equivalent basis is predicted to range from 0.18 mg/kg body weight/day for non-diabetic adults to 0.84 mg/kg body weight/day for diabetic children. Predicted intakes for heavy consumers on a steviol equivalent basis ranged from 0.48 mg/kg body weight/day for non-diabetic adults to 1.24 mg/kg body weight/day for non-diabetic children.",
+              "section": "3.2 Estimated Consumption of Reb M from Proposed Food Uses"
+            }
+          ],
+          "draftCitations": [
+            {
+              "pageNumber": 24,
+              "excerpt": "The mean intake of Reb M on a steviol equivalent basis is predicted to range from 0.18 mg/kg body weight/day for non-diabetic adults to 0.84 mg/kg body weight/day for diabetic children.",
+              "section": "3.2 Estimated Consumption of Reb M from Proposed Food Uses"
+            },
+            {
+              "pageNumber": 6,
+              "excerpt": "Reb M is intended to be used as a general purpose sweetening agent in conventional food and beverage products in accordance with the principles of cGMP, under the same conditions of use as defined for steviol glycosides produced by Saccharomyces cerevisiae (S. cerevisiae) in GRN 000626.",
+              "section": "1.3 Conditions of Use"
+            }
+          ]
+        },
+        {
+          "id": "diff-public-pivotal-safety-evidence",
+          "label": "Public availability and peer review of pivotal evidence",
+          "status": "aligned",
+          "baselineExpectation": "The notice states that all information used to establish the safety of Reb M is available in the public domain. The pivotal safety database consists of JECFA evaluations (public), EFSA opinions (public), peer-reviewed metabolism studies (Purkayastha et al. 2016, Koyama et al. 2003, Roberts et al. 2016, all published in peer-reviewed journals), and the fecal homogenate study for the fermentation-derived material. The GRAS panel consensus statement is included as Appendix A. Two unpublished pharmacokinetic studies (Geuns and Pietta 2004, Sung 2002) are cited as supportive context within JECFA reviews, not as pivotal evidence in this notice.",
+          "draftSignal": "The notice states that all information used to establish the safety of Reb M is available in the public domain. The pivotal toxicological database (JECFA evaluations, EFSA opinions, FSANZ assessments, Health Canada reviews, and peer-reviewed studies on steviol glycoside metabolism, genotoxicity, and toxicology) is publicly available and peer reviewed. New studies summarized in Section 6.4 are published in peer-reviewed journals with DOIs provided.",
+          "recommendedAction": "Resolve: The studies incorporated by reference from GRN 000768 are not individually identified in GRN 882, making it impossible to confirm their publication status from the face of this notice.",
+          "baselineStatus": "present",
+          "draftStatus": "present",
+          "change": "unchanged",
+          "baselineCitations": [
+            {
+              "pageNumber": 26,
+              "excerpt": "All information used to establish the safety of Reb M is available in the public domain and, as such, there are no data that are exempt from disclosure under the Freedom of Information Act.",
+              "section": "6.1 Introduction"
+            }
+          ],
+          "draftCitations": [
+            {
+              "pageNumber": 26,
+              "excerpt": "All information used to establish the safety of Reb M is available in the public domain and, as such, there are no data that are exempt from disclosure under the Freedom of Information Act.",
+              "section": "6.1 Introduction"
+            }
+          ]
+        },
+        {
+          "id": "diff-independent-evidence-synthesis",
+          "label": "Specific incorporation and independent conclusions",
+          "status": "partial",
+          "baselineExpectation": "The notice identifies GRN 000768 as the source of pre-July 2017 safety data and incorporates it by reference. It identifies GRN 000626 and GRN 000759 as comparators. New data (July 2017–March 2019) are independently summarized in Section 6.4. The GRAS panel independently evaluated all data and states its own conclusion. However, the notice does not identify which specific studies from GRN 000768 are pivotal versus supportive, and does not reproduce or independently analyze the incorporated safety database, making the synthesis partially dependent on GRN 000768's structure.",
+          "draftSignal": "The notice identifies GRN 000768 as the source of incorporated pre-July 2017 safety data and states an independent GRAS conclusion. However, the individual studies covered by the GRN 000768 incorporation are not identified or summarized, and the notice does not perform its own analysis of those studies. The GRAS Panel consensus statement also relies on the incorporated data without reproducing the underlying study summaries. This limits the ability to assess whether the incorporation is complete and whether the independent conclusion is fully supported.",
+          "recommendedAction": "Resolve: Individual studies covered by GRN 000768 incorporation are not identified in GRN 882.; It is not possible to confirm from GRN 882 alone that the incorporated data are complete and representative.",
+          "baselineStatus": "weak",
+          "draftStatus": "weak",
+          "change": "unchanged",
+          "baselineCitations": [
+            {
+              "pageNumber": 26,
+              "excerpt": "Safety data for steviol glycoside preparations published in the scientific literature were previously summarized by Cargill and reviewed by the U.S. FDA in GRAS Notification GRN 000768 in 2017/2018, therefore these data are incorporated by reference while new safety data pertaining to the safety of steviol glycosides published between 01 July 2017 and 28 March 2019 are summarized in Section 6.4.",
+              "section": "6.1 Introduction"
+            }
+          ],
+          "draftCitations": [
+            {
+              "pageNumber": 26,
+              "excerpt": "Safety data for steviol glycoside preparations published in the scientific literature were previously summarized by Cargill and reviewed by the U.S. FDA in GRAS Notification GRN 000768 in 2017/2018, therefore these data are incorporated by reference while new safety data pertaining to the safety of steviol glycosides published between 01 July 2017 and 28 March 2019 are summarized in Section 6.4.",
+              "section": "6.1 Introduction"
+            }
+          ]
+        },
+        {
+          "id": "diff-test-article-comparability",
+          "label": "Target/test-article bridge",
+          "status": "partial",
+          "baselineExpectation": "The notice provides HPLC identity confirmation (Section 2.1.2) and compositional comparison between Y. lipolytica and S. cerevisiae Reb M. The metabolic fate bridge is supported by the shared steviol backbone argument and the S. cerevisiae fecal homogenate study. Residual protein and DNA data confirm purification adequacy. However, the bridge is incomplete because: (1) no metabolism study was conducted with the Y. lipolytica product; (2) stability studies on the Y. lipolytica product are absent; (3) process differences between Y. lipolytica and S. cerevisiae fermentation are not systematically compared for impurity profile implications.",
+          "draftSignal": "The notice provides HPLC identity equivalence between Y. lipolytica and S. rebaudiana-derived Reb M and Reb D, and a compositional rationale for using S. cerevisiae GRN 000626 material as a surrogate for metabolism and stability studies. The shared metabolic fate argument is supported by Purkayastha et al. (2016) and the in vitro fecal homogenate study. However, the bridge is not structured across all relevant dimensions (processing differences, impurity profiles specific to Y. lipolytica fermentation, and biological relevance of the surrogate), and the notice explicitly acknowledges that product-specific studies have not been conducted.",
+          "recommendedAction": "Resolve: No product-specific metabolism or stability studies for Y. lipolytica Reb M are presented.; Processing-related impurity profile differences between Y. lipolytica and S. cerevisiae fermentation are not explicitly compared.",
+          "baselineStatus": "weak",
+          "draftStatus": "weak",
+          "change": "unchanged",
+          "baselineCitations": [
+            {
+              "pageNumber": 28,
+              "excerpt": "Although microbial metabolism studies have not yet been conducted with the Reb M preparation that is the subject of this application (i.e., Reb M produced by Y. lipolytica), such studies have been carried out with a Reb M preparation that has a similar individual steviol glycoside profile as Reb M (i.e., steviol glycosides produced by S. cerevisiae, GRN 000626, primarily containing rebaudioside M)",
+              "section": "6.2.1 Microbial Metabolism of Steviol Glycosides Produced by Fermentation"
+            }
+          ],
+          "draftCitations": [
+            {
+              "pageNumber": 8,
+              "excerpt": "These data demonstrate that rebaudioside M and rebaudioside D produced by fermentation have the same HPLC retention times as rebaudioside M and rebaudioside D from S. rebaudiana Bertoni and establish that steviol glycosides from these 2 sources are chemically identical.",
+              "section": "2.1.2 Equivalence of Reb M Produced by Fermentation to Steviol Glycosides Extracted from the Leaf"
+            },
+            {
+              "pageNumber": 28,
+              "excerpt": "Although microbial metabolism studies have not yet been conducted with the Reb M preparation that is the subject of this application (i.e., Reb M produced by Y. lipolytica), such studies have been carried out with a Reb M preparation that has a similar individual steviol glycoside profile as Reb M.",
+              "section": "6.2.1 Microbial Metabolism of Steviol Glycosides Produced by Fermentation"
+            }
+          ]
+        },
+        {
+          "id": "diff-self-contained-literature-search",
+          "label": "Search methods, scope, and unfavorable information",
+          "status": "aligned",
+          "baselineExpectation": "Section 6.4 describes a comprehensive literature search using ProQuest across 12 databases (AdisInsight, AGRICOLA, AGRIS, Allied & Complementary Medicine, BIOSIS Toxicology, BIOSIS Previews, CAB ABSTRACTS, Embase, Foodline SCIENCE, FSTA, MEDLINE, NTIS, ToxFile) for the period July 1, 2017 to March 28, 2019. Exclusion criteria (purity <95%) are stated. Unfavorable studies (Barrios-Correa 2018, Jiang 2018, Al-Dujaili 2017) are identified and discussed with contextual limitations. The EFSA 2018a and 2018b disagreements are disclosed.",
+          "draftSignal": "A comprehensive literature search for July 2017–March 2019 is described with named databases (ProQuest, AdisInsight, AGRICOLA, AGRIS, BIOSIS, CAB ABSTRACTS, Embase, Foodline, FSTA, MEDLINE, NTIS, ToxFile). Inclusion/exclusion criteria are stated (purity ≥95%). Unfavorable information is identified and addressed (EFSA 2018a/b disagreements, Jiang et al. 2018 reproductive findings, Al-Dujaili et al. 2017 cortisol findings, Barrios-Correa et al. 2018 brain signaling findings). Pre-July 2017 search is covered by GRN 000768 incorporation.",
+          "recommendedAction": "Resolve: The pre-July 2017 literature search methodology is not described in GRN 882; it is covered by the GRN 000768 incorporation.",
+          "baselineStatus": "present",
+          "draftStatus": "present",
+          "change": "unchanged",
+          "baselineCitations": [
+            {
+              "pageNumber": 30,
+              "excerpt": "New safety data related to steviol glycosides published after July 2017 was obtained through a comprehensive and detailed search of the scientific literature published between 01 July 2017 and 28 March 2019. The literature search was completed using ProQuest and included searches of the following databases for pertinent literature on the safety of steviol glycosides: AdisInsight: Trials, AGRICOLA, AGRIS, Allied & Complementary Medicine™, BIOSIS® Toxicology, BIOSIS Previews®, CAB ABSTRACTS, Embase®, Foodline®: SCIENCE, FSTA®, MEDLINE®, NTIS: National Technical Information Service, and ToxFile®.",
+              "section": "6.4 New Safety Data on Steviol Glycosides"
+            }
+          ],
+          "draftCitations": [
+            {
+              "pageNumber": 30,
+              "excerpt": "New safety data related to steviol glycosides published after July 2017 was obtained through a comprehensive and detailed search of the scientific literature published between 01 July 2017 and 28 March 2019. The literature search was completed using ProQuest and included searches of the following databases for pertinent literature on the safety of steviol glycosides: AdisInsight: Trials, AGRICOLA, AGRIS, Allied & Complementary Medicine™, BIOSIS® Toxicology, BIOSIS Previews®, CAB ABSTRACTS, Embase®, Foodline®: SCIENCE, FSTA®, MEDLINE®, NTIS: National Technical Information Service, and ToxFile®.",
+              "section": "6.4 New Safety Data on Steviol Glycosides"
+            }
+          ]
+        },
+        {
+          "id": "diff-allergenicity-assessment",
+          "label": "Protein allergenicity and cross-reactivity where applicable",
+          "status": "aligned",
+          "baselineExpectation": "Section 6.5.2 provides an allergenicity screen of all heterologous gene sequences inserted in the Y. lipolytica production strain using AllergenOnline version 19 (FARRP, February 2019), following FAO/WHO 2001 and Codex Alimentarius 2009 guidance. Full-length FASTA and 80-amino acid sliding window searches were conducted. No identity matches greater than 35% were identified. Residual protein in the final product is below 25 ppm (BCA) or 1.5 ppm (Protein Dot Blot), and residual DNA is below 10 ng/g (PCR).",
+          "draftSignal": "An allergenicity screen of the heterologous gene sequences inserted in the Y. lipolytica production strain was conducted using AllergenOnline version 19 (FARRP, February 2019) with full-length and 80-amino acid sliding window searches per FAO/WHO 2001 and Codex Alimentarius 2009 criteria. No identity matches greater than 35% were identified. Residual protein in the final product is below 25 ppm (BCA) and 1.5 ppm (Protein Dot Blot), further supporting the absence of allergenic risk from the production organism.",
+          "recommendedAction": "Preserve the cited support in the revised filing.",
+          "baselineStatus": "present",
+          "draftStatus": "present",
+          "change": "unchanged",
+          "baselineCitations": [
+            {
+              "pageNumber": 37,
+              "excerpt": "Using this search strategy, no identity matches of greater than 35% were identified.",
+              "section": "6.5.2 Potential Allergenicity of the Inserted Gene Sequences"
+            }
+          ],
+          "draftCitations": [
+            {
+              "pageNumber": 37,
+              "excerpt": "Using this search strategy, no identity matches of greater than 35% were identified.",
+              "section": "6.5.2 Potential Allergenicity of the Inserted Gene Sequences"
+            },
+            {
+              "pageNumber": 18,
+              "excerpt": "Overall, no residual protein was detected in any of the Reb M test samples above the limit of detection for the BCA assay (25 ppm) or above 1.5 ppm using the Protein Dot Blot method.",
+              "section": "2.3.6 Residual Protein Analysis"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "grn-0866-lipase-to-grn-0908-lipase",
+      "baseline": {
+        "matrixStatusCounts": {
+          "present": 6,
+          "weak": 3,
+          "missing": 0,
+          "not_applicable": 0
+        },
+        "rawFindingCount": 7,
+        "calibratedFindingCount": 7,
+        "findings": [
+          {
+            "id": "incorporation-grn68-manufacturing-process",
+            "category": "incorporation_independent_conclusions",
+            "severity": "major",
+            "title": "Manufacturing process incorporated by reference to GRN 68 without reproduction or adequate description of changes",
+            "pages": [14]
+          },
+          {
+            "id": "pivotal-study-public-availability",
+            "category": "public_pivotal_evidence",
+            "severity": "major",
+            "title": "Pivotal 90-day toxicity study (Kondo et al., 1994) availability and peer-review status not independently confirmed in notice",
+            "pages": [21]
+          },
+          {
+            "id": "test-article-bridge-lgk-to-lgs",
+            "category": "test_article_bridge",
+            "severity": "major",
+            "title": "Pivotal toxicity study used a less-purified non-GM test article (LGK); bridge to GM enzyme preparation (LGS) is partially but not fully established",
+            "pages": [22, 13]
+          },
+          {
+            "id": "flavoring-production-use-conditions",
+            "category": "conditions_of_use",
+            "severity": "major",
+            "title": "Flavoring production use included in conclusion and exposure table but not clearly defined in Part 1.4(a) conditions of use",
+            "pages": [5, 16, 23]
+          },
+          {
+            "id": "dietary-exposure-flavoring-not-in-edc-table",
+            "category": "dietary_exposure",
+            "severity": "major",
+            "title": "Flavoring production use level included in exposure narrative but excluded from the conservative EDI calculation without adequate justification",
+            "pages": [16, 16]
+          },
+          {
+            "id": "cpa-mycotoxin-strain-specific-data-gap",
+            "category": "safety_data",
+            "severity": "minor",
+            "title": "No published data on CPA production by P. camemberti U-150 (AE-LG); reliance on non-detection in finished enzyme preparation",
+            "pages": [21, 21]
+          },
+          {
+            "id": "self-cloning-genetic-modification-characterization",
+            "category": "identity_characterization",
+            "severity": "minor",
+            "title": "Genetic modification characterization of AE-LGS relies on process description without independent molecular verification data in notice body",
+            "pages": [13]
+          }
+        ],
+        "safetySignalCount": 3
+      },
+      "revised": {
+        "matrixStatusCounts": {
+          "present": 7,
+          "weak": 2,
+          "missing": 0,
+          "not_applicable": 0
+        },
+        "rawFindingCount": 5,
+        "calibratedFindingCount": 4,
+        "findings": [
+          {
+            "id": "manufacturing-process-incorporation-gap",
+            "category": "incorporation_independent_conclusions",
+            "severity": "major",
+            "title": "Manufacturing process description relies on GRN 68 incorporation without full in-notice summary",
+            "pages": [15, 6]
+          },
+          {
+            "id": "pivotal-study-publication-status",
+            "category": "public_pivotal_evidence",
+            "severity": "major",
+            "title": "Publication status of pivotal 90-day toxicity study (Kondo et al. 1994) requires verification",
+            "pages": [22]
+          },
+          {
+            "id": "test-article-bridge-activity-difference",
+            "category": "test_article_bridge",
+            "severity": "major",
+            "title": "Higher specific activity of GM-strain product relative to 90-day toxicity test article not fully bridged at the exposure level",
+            "pages": [14, 23]
+          },
+          {
+            "id": "cpa-mycotoxin-no-data-for-ae-lgs-strain",
+            "category": "safety_data",
+            "severity": "minor",
+            "title": "CPA production potential of AE-LGS strain not directly characterized; reliance on non-detection in finished product",
+            "pages": [22, 23]
+          }
+        ],
+        "safetySignalCount": 3
+      },
+      "matrixDiff": [
+        {
+          "id": "diff-identity-composition",
+          "label": "Identity, source, composition, and specifications",
+          "status": "aligned",
+          "baselineExpectation": "The notice provides trade name, IUBMB classification, EC number, CASRN, EINECS number, synonyms, full amino acid sequence, molecular mass, enzyme specificity, taxonomic classification, and a description of the self-cloning derivation of AE-LGS from AE-LG. Equivalence between GM and non-GM enzyme is supported by SDS-PAGE, physicochemical properties, and TOS content comparisons. Three-lot specification data are provided.",
+          "draftSignal": "The notice provides common name, IUBMB classification, EC number, CASRN, EINECS number, synonyms, enzyme specificity, full amino acid sequence, molecular mass, taxonomic classification of the production strain, and a description of the self-cloning derivation. Equivalence to the non-GM strain is supported by SDS-PAGE, biochemical characterization (optimum temperature, pH stability), and TOS/activity comparisons. The diluent is identified (though mislabeled as dextrin in Part 1.3; corrected to maltodextrin in Q&A). Specifications are provided in Table 3 with three batch results.",
+          "recommendedAction": "Resolve: Whether the diluent is dextrin (as stated in Part 1.3) or maltodextrin (as clarified in Q&A response) — the notice body contains an internal inconsistency",
+          "baselineStatus": "present",
+          "draftStatus": "present",
+          "change": "unchanged",
+          "baselineCitations": [
+            {
+              "pageNumber": 9,
+              "excerpt": "The full amino acid sequence of lipase derived from Penicillium camemberti is provided in Figure 1 below. From the above sequence, the molecular mass of the enzyme protein is calculated to be 32.9kDa.",
+              "section": "Part 2.1(h) Molecular mass and amino acid sequence"
+            },
+            {
+              "pageNumber": 10,
+              "excerpt": "Based on the analyses that follow, the lipase from Amano's GM strain (P. camemberti AE-LGS) is deemed to be identical to the lipase from Amano's non-GM strain (P. camemberti AE-LG) that is the subject of GRN 68.",
+              "section": "Part 2.1(i) Equivalence of lipase from P. camemberti AE-LGS to lipase from P. camemberti AE-LG"
+            }
+          ],
+          "draftCitations": [
+            {
+              "pageNumber": 11,
+              "excerpt": "The full amino acid sequence of lipase derived from Penicillium camemberti is provided in Figure 1 below. From the above sequence, the molecular mass of the enzyme protein is calculated to be 32.9kDa.",
+              "section": "Part 2.1(h) Molecular mass and amino acid sequence"
+            },
+            {
+              "pageNumber": 16,
+              "excerpt": "Table 3. Specifications for the lipase enzyme preparation. Item Requirement Lot No. LGSQ0552101GK Lot No. LGSQ0750501GK Lot No. LGSQ1151401GK",
+              "section": "Part 2.3 Specifications of the food-grade material"
+            }
+          ]
+        },
+        {
+          "id": "diff-manufacturing",
+          "label": "Process description and process-related controls",
+          "status": "partial",
+          "baselineExpectation": "The manufacturing process is incorporated by reference to GRN 68 Appendix I rather than reproduced. Minor process changes are described (reduced fermentation hours, lower harvest optical density, added coarse-filtering step, optimized microfiltration) but not systematically evaluated for their impact on the impurity or safety profile. CGMP and HARPC compliance is stated. The notice does not reproduce the full process flow for either AE-LG or AE-LGS.",
+          "draftSignal": "Section 2.2 incorporates GRN 68 by reference for the detailed manufacturing process and notes only high-level changes (earlier harvest, optimized filtration with diatomaceous earth). The actual process steps are not described in the notice body. A detailed summary was provided in the December 2020 Q&A response but was not incorporated into the notice. CGMP and HARPC compliance are stated. The Q&A response provides fermentation conditions, filtration sequence, heat treatment, pH adjustment, ethanol precipitation, and diluent identity.",
+          "recommendedAction": "Resolve: Manufacturing process details remain in Q&A response rather than notice body; food contact material citations provided in Q&A but not in notice",
+          "baselineStatus": "weak",
+          "draftStatus": "weak",
+          "change": "unchanged",
+          "baselineCitations": [
+            {
+              "pageNumber": 14,
+              "excerpt": "A detailed description of the manufacturing process, which was provided in GRN 68 and is incorporated herein, reflects the current process with the exception of minor changes made to improve process efficiency. See GRN 68 at Appendix I, located at page 13 of GRN 68.",
+              "section": "Part 2.2 Description of the method of manufacture"
+            }
+          ],
+          "draftCitations": [
+            {
+              "pageNumber": 15,
+              "excerpt": "A detailed description of the manufacturing process, which was provided in GRN 68 and is incorporated herein, reflects the current process with the exception of minor changes made to improve process efficiency. See GRN 68 at Appendix I, located at page 13 of GRN 68.",
+              "section": "Part 2.2 Description of the method of manufacture"
+            },
+            {
+              "pageNumber": 60,
+              "excerpt": "The production strain secretes the enzyme into the culture medium during a controlled fermentation of the P. camemberti strain with conditions specified for time, temperature, and rate of rotation. Conditions specified for temperature (26°C) and rotation (125 rpm) are the same as described in GRN 68.",
+              "section": "Q&A Response December 3, 2020, Question 6"
+            }
+          ]
+        },
+        {
+          "id": "diff-specifications-batch-analysis",
+          "label": "Specifications and representative batch results",
+          "status": "aligned",
+          "baselineExpectation": "Table 3 provides specifications for lead, Salmonella, total coliforms, E. coli, antimicrobial activity, and mycotoxins, with results for three lots (LGSQ0552101GK, LGSQ0750501GK, LGSQ1151401GK). All lots are in specification. Specifications are aligned with FCC 11th Edition and JECFA 2006 monographs. Mycotoxin screening results for 17 analytes are provided in Figure 4.",
+          "draftSignal": "Table 3 provides specifications for lead, Salmonella, total coliforms, E. coli, antimicrobial activity, and mycotoxins, with results for three non-consecutive lots (LGSQ0552101GK, LGSQ0750501GK, LGSQ1151401GK). All results are within specification. Figure 4 provides detailed mycotoxin screening results for the same lots. Methods for antimicrobial activity (JECFA Compendium) and mycotoxins (AOAC-based HPLC/FD, LC-MS/MS, SPE-LC-MS/MS) were clarified in Q&A. Table 2 provides TOS and activity data for one GM batch and three non-GM batches.",
+          "recommendedAction": "Resolve: Activity specification (units/g) is not included in Table 3 specifications, though activity data appear in Table 2",
+          "baselineStatus": "present",
+          "draftStatus": "present",
+          "change": "unchanged",
+          "baselineCitations": [
+            {
+              "pageNumber": 15,
+              "excerpt": "Table 3. Specifications for the lipase enzyme preparation. Item Requirement Lot No. LGSQ0552101GK Lot No. LGSQ0750501GK Lot No. LGSQ1151401GK Lead Not more than 5 mg/kg 0.042 mg/kg 0.037 mg/kg 0.047 mg/kg",
+              "section": "Part 2.3 Specifications of the food-grade material"
+            }
+          ],
+          "draftCitations": [
+            {
+              "pageNumber": 16,
+              "excerpt": "Table 3. Specifications for the lipase enzyme preparation. Item Requirement Lot No. LGSQ0552101GK Lot No. LGSQ0750501GK Lot No. LGSQ1151401GK Lead Not more than 5 mg/kg 0.042 mg/kg 0.037 mg/kg 0.047 mg/kg",
+              "section": "Part 2.3 Specifications of the food-grade material"
+            }
+          ]
+        },
+        {
+          "id": "diff-intended-uses-exposure",
+          "label": "Intended uses, use levels, and dietary exposure",
+          "status": "aligned",
+          "baselineExpectation": "Use levels are provided for dairy processing (25-2,522 mg TOS/kg), fats/oil processing (50-252 mg TOS/kg), and flavor ingredients (10-1,000 mg TOS/kg). The EDI calculation is conservative and uses the highest finished-food TOS level (76 mg TOS/kg). However, the flavoring production use is not included in the EDI calculation without explanation, and the flavoring use is not defined in Part 1.4(a), creating an internal inconsistency. The EDI of 3.8 mg TOS/kg bw/day yields a 399-fold safety margin over the NOAEL.",
+          "draftSignal": "Part 1.4 describes intended uses (dairy processing for EMC; fats/oils processing for GLA, DHA, EPA ingredients), use levels (25-2,522 mg TOS/kg for dairy; 50-252 mg TOS/kg for fats/oils), and the population expected to consume the substance. Part 3 provides a conservative EDI calculation (3.8 mg TOS/kg bw/day) using the budget method with worst-case assumptions. The Q&A responses clarified the basis for use level ranges, the ratio of raw material to finished food, and confirmed no beverage uses. The EDI is compared to the NOAEL (1515 mg TOS/kg bw) yielding a 399-fold safety margin.",
+          "recommendedAction": "Preserve the revised support and its source traceability.",
+          "baselineStatus": "weak",
+          "draftStatus": "present",
+          "change": "improved",
+          "baselineCitations": [
+            {
+              "pageNumber": 16,
+              "excerpt": "the lipase enzyme preparation is used at levels ranging from 25 to 2,522 mg TOS/kg enzyme-modified food ingredient (EMC); 10 to 1,000 mg TOS/kg flavor ingredient; and 50 to 252 mg TOS/kg fat/oil ingredient.",
+              "section": "Part 3 Dietary exposure"
+            },
+            {
+              "pageNumber": 17,
+              "excerpt": "the EDI for Amano's lipase enzyme preparation is calculated to be: 3 kg/p/day x 76 mg TOS/kg food ÷ 60 kg bw = 3.8 mg TOS/kg bw/day.",
+              "section": "Part 3 Dietary exposure"
+            }
+          ],
+          "draftCitations": [
+            {
+              "pageNumber": 17,
+              "excerpt": "Based on this exaggerative assumption, and applying FDA's standard assumption that an average daily diet consists of 3 kilograms (kg) of food per day (including 1.5 kg of beverages) and body weight of 60 kg, the EDI for Amano's lipase enzyme preparation is calculated to be: 3 kg/p/day x 76 mg TOS/kg food ÷ 60 kg bw = 3.8 mg TOS/kg bw/day.",
+              "section": "Part 3 Dietary exposure"
+            }
+          ]
+        },
+        {
+          "id": "diff-public-pivotal-safety-evidence",
+          "label": "Public availability and peer review of pivotal evidence",
+          "status": "partial",
+          "baselineExpectation": "The pivotal study is Kondo et al. (1994), cited with full journal reference (Food and Chemical Toxicology, 32(8):685-696), which is a peer-reviewed journal. The citation format is consistent with a publicly available peer-reviewed publication. The notice does not reproduce the study data but identifies it as pivotal and provides the NOAEL and safety margin calculation. The study was originally submitted with GRN 68, which is publicly available on FDA's GRAS notice inventory.",
+          "draftSignal": "The pivotal safety study is Kondo et al. (1994), cited as a journal article in Food and Chemical Toxicology (a peer-reviewed journal). The study is incorporated from GRN 68, which is publicly available on FDA's GRAS inventory. However, GRN 908 does not affirmatively state that the Kondo et al. (1994) article is publicly available and peer-reviewed; it is referenced as having been 'provided to FDA in GRN 68.' The publication status is inferable from the journal citation but is not explicitly confirmed in the notice.",
+          "recommendedAction": "Resolve: Whether Kondo et al. (1994) is confirmed as publicly available and peer-reviewed in the notice itself",
+          "baselineStatus": "present",
+          "draftStatus": "weak",
+          "change": "unchanged",
+          "baselineCitations": [
+            {
+              "pageNumber": 21,
+              "excerpt": "The pivotal safety data in concluding the intended use of Amano's lipase enzyme preparation is GRAS are from a 90-day toxicological study of Lipase G Amano 50 (LGK) in rats reported by Kondo et al. (1994), which was provided to FDA in GRN 68 (incorporated here by reference).",
+              "section": "Part 6.2 Safety of enzyme preparation from Penicillium camemberti"
+            },
+            {
+              "pageNumber": 27,
+              "excerpt": "Kondo M, Ogawa T, Matsubara Y, Mizutani A, Murata S, Kitagawa M (1994) Safety evaluation of lipase G from Penicillium camembertii, Fd Chem Toxic; 32(8) 685-696.",
+              "section": "Part 7.1 References"
+            }
+          ],
+          "draftCitations": [
+            {
+              "pageNumber": 22,
+              "excerpt": "The pivotal safety data in concluding the intended use of Amano's lipase enzyme preparation is GRAS are from a 90-day toxicological study of Lipase G Amano 50 (LGK) in rats reported by Kondo et al. (1994), which was provided to FDA in GRN 68 (incorporated here by reference).",
+              "section": "Part 6.2 Safety of enzyme preparation from Penicillium camemberti"
+            },
+            {
+              "pageNumber": 28,
+              "excerpt": "Kondo M, Ogawa T, Matsubara Y, Mizutani A, Murata S, Kitagawa M (1994) Safety evaluation of lipase G from Penicillium camembertii, Fd Chem Toxic; 32(8) 685-696.",
+              "section": "Part 7.1 References"
+            }
+          ],
+          "consistencyAdjustment": "shared_evidence_regression_suppressed",
+          "consistencyReason": "The revision cites materially the same evidence, and the apparent regression is based only on publication or availability not being explicitly reconfirmed."
+        },
+        {
+          "id": "diff-independent-evidence-synthesis",
+          "label": "Specific incorporation and independent conclusions",
+          "status": "aligned",
+          "baselineExpectation": "The notice explicitly identifies GRN 68 as the incorporated source, cites 21 C.F.R. § 170.215 as the basis for incorporation, and states that GRN 68 is publicly available on FDA's GRAS notice inventory. The notice performs its own analysis of the GM strain equivalence, mycotoxin screening, allergenicity, and Pariza and Johnson decision tree, and states an independent GRAS conclusion. The notice does not merely rely on GRN 68's outcome but uses it as a data source while conducting additional analysis for the expanded uses and GM strain.",
+          "draftSignal": "GRN 68 is incorporated by reference under 21 C.F.R. § 170.215 with explicit citation to the public URL and identification of the specific sections incorporated (manufacturing process, pathogenicity study, mycotoxin screening, pivotal toxicity study). The notice explains the role of each incorporated element and states its own GRAS conclusion in Part 6.5. The Pariza and Johnson decision tree analysis is performed independently for the GM strain. The notice could more explicitly state that its conclusion is independent of GRN 68's outcome, but the analytical framework is present.",
+          "recommendedAction": "Preserve the cited support in the revised filing.",
+          "baselineStatus": "present",
+          "draftStatus": "present",
+          "change": "unchanged",
+          "baselineCitations": [
+            {
+              "pageNumber": 14,
+              "excerpt": "Specifically identified data and information are incorporated into Amano's current GRAS notice by reference to GRN 68 as permitted under 21 C.F.R. § 170.215 ('Incorporation into a GRAS notice'). Amano's GRN 68 is publicly available on FDA's GRAS notice inventory at https://www.accessdata.fda.gov/scripts/fdcc/index.cfm?set=GRASNotices&id=68",
+              "section": "Part 2.2 footnote 2"
+            }
+          ],
+          "draftCitations": [
+            {
+              "pageNumber": 15,
+              "excerpt": "Specifically identified data and information are incorporated into Amano's current GRAS notice by reference to GRN 68 as permitted under 21 C.F.R. § 170.215. Amano's GRN 68 is publicly available on FDA's GRAS notice inventory at https://www.accessdata.fda.gov/scripts/fdcc/index.cfm?set=GRASNotices&id=68",
+              "section": "Part 2.2 footnote 2"
+            },
+            {
+              "pageNumber": 23,
+              "excerpt": "Based on the documentation provided in this GRAS notification, and as discussed above, Amano has concluded that its lipase enzyme preparation derived from Penicillium camemberti is GRAS via scientific procedures",
+              "section": "Part 6.5 Conclusion"
+            }
+          ]
+        },
+        {
+          "id": "diff-test-article-comparability",
+          "label": "Target/test-article bridge",
+          "status": "aligned",
+          "baselineExpectation": "The notice provides SDS-PAGE, TOS content, enzymatic activity, optimum temperature, temperature stability, pH stability, and optimum pH comparisons between AE-LG and AE-LGS enzyme preparations. However, the pivotal test article (LGK) was a pre-purification, pre-dilution intermediate with 22.2% ash versus 2.5% for commercial batches. The bridge between LGK and the commercial GM preparation (LGS) is not systematically documented across all relevant dimensions (impurity profile, non-lipase protein content, processing stage). The notice acknowledges LGK was less purified but does not formally evaluate whether this makes the NOAEL conservative or introduces uncertainty.",
+          "draftSignal": "The notice provides a structured bridge between the GM-strain product (Lipase GS Amano 250G, AE-LGS) and the non-GM test article (Lipase G Amano 50, LGK, AE-LG) across identity (same amino acid sequence, same gene mdlA), composition (SDS-PAGE, TOS equivalence), processing (same fermentation conditions, same purification sequence), and biochemical properties (optimum temperature, pH stability). The higher specific activity of the GM product is noted but not fully addressed in terms of functional exposure equivalence. The bridge is well-supported for identity and composition; partial for functional exposure.",
+          "recommendedAction": "Preserve the revised support and its source traceability.",
+          "baselineStatus": "weak",
+          "draftStatus": "present",
+          "change": "improved",
+          "baselineCitations": [
+            {
+              "pageNumber": 13,
+              "excerpt": "Ash (%) 2.52 22.2* 1.8 3.1 2.6 2.5 * The ash content of the test article samples was high because the liquid before alcohol precipitation was freeze-dried.",
+              "section": "Part 2.1(i) Table 2"
+            },
+            {
+              "pageNumber": 22,
+              "excerpt": "toxicological testing reported by Kondo et al. (1994) of Lipase G Amano 50 (LGK) produced by the commercial process without the final purification and dilution steps",
+              "section": "Part 6.2 Safety of enzyme preparation from Penicillium camemberti"
+            }
+          ],
+          "draftCitations": [
+            {
+              "pageNumber": 11,
+              "excerpt": "Based on the analyses that follow, the lipase from Amano's GM strain (P. camemberti AE-LGS) is deemed to be identical to the lipase from Amano's non-GM strain (P. camemberti AE-LG) that is the subject of GRN 68.",
+              "section": "Part 2.1(i) Equivalence of lipase from P. camemberti AE-LGS to lipase from P. camemberti AE-LG"
+            },
+            {
+              "pageNumber": 14,
+              "excerpt": "Lipase derived from Amano's GM strain is of a higher purity than that derived from non-GM strains as indicated by activity (U/g) assays.",
+              "section": "Part 2.1(i)"
+            }
+          ]
+        },
+        {
+          "id": "diff-self-contained-literature-search",
+          "label": "Search methods, scope, and unfavorable information",
+          "status": "aligned",
+          "baselineExpectation": "The notice states that a literature search was conducted on August 23, 2018, and identifies unfavorable information including CPA mycotoxin production by P. camemberti strains (Le Bars 1979, Císarová et al. 2012, Ostry et al. 2018), occupational allergenicity reports (Marchisio et al. 1999, Merget et al. 2008), and antimicrobial activity (Larsen and Knochel 1997). The notice addresses each concern. Search methodology (databases, search terms) is not described in detail, but the certification in Part 1.9 attests to completeness and balance.",
+          "draftSignal": "The notice reports a literature search for P. camemberti health concerns conducted January 3, 2020, and an updated toxicological literature review conducted August 23, 2018 (for GRN 866). The January 2021 Q&A response confirmed the January 3, 2020 search encompassed both the production organism and the lipase enzyme preparation. Unfavorable information (CPA production by P. camemberti strains, occupational allergenicity reports) is identified and addressed. The certification in Part 1.9 attests to a complete, representative, and balanced submission including unfavorable information.",
+          "recommendedAction": "Resolve: Search methodology (databases, search terms) is not described in the notice",
+          "baselineStatus": "present",
+          "draftStatus": "present",
+          "change": "unchanged",
+          "baselineCitations": [
+            {
+              "pageNumber": 20,
+              "excerpt": "A literature search for published reports of health concerns associated with P. camemberti (conducted August 23, 2018) indicates no concerns for pathogenicity and possibly a low level of potential concern for workplace allergenicity, not related to dietary exposure.",
+              "section": "Part 6.1 Safety of Penicillium camemberti production strains AE-LG and AE-LGS"
+            },
+            {
+              "pageNumber": 21,
+              "excerpt": "No adverse toxicological data were located in an updated review of the toxicological literature conducted on August 23, 2018, aside from reports – discussed briefly below – which indicate that cyclopiazonic acid (CPA) is a mycotoxin of potential concern for some strains of Penicillium camemberti under certain environmental conditions.",
+              "section": "Part 6.2 Safety of enzyme preparation from Penicillium camemberti"
+            }
+          ],
+          "draftCitations": [
+            {
+              "pageNumber": 21,
+              "excerpt": "A literature search for published reports of health concerns associated with P. camemberti (conducted January 3, 2020) indicates no concerns for pathogenicity and possibly a low level of potential concern for workplace allergenicity, not related to dietary exposure.",
+              "section": "Part 6.1 Safety of Penicillium camemberti AE-LGS"
+            },
+            {
+              "pageNumber": 22,
+              "excerpt": "No adverse toxicological data were located in an updated review of the toxicological literature conducted on August 23, 2018, aside from reports – discussed briefly below – which indicate that cyclopiazonic acid (CPA) is a mycotoxin of potential concern for some strains of Penicillium camemberti under certain environmental conditions.",
+              "section": "Part 6.2 Safety of enzyme preparation from Penicillium camemberti"
+            }
+          ]
+        },
+        {
+          "id": "diff-allergenicity-assessment",
+          "label": "Protein allergenicity and cross-reactivity",
+          "status": "aligned",
+          "baselineExpectation": "The notice provides a bioinformatic allergenicity assessment (SDAP database search, ≥35% homology over 80 amino acid window, 8 contiguous amino acid exact match) with no matches found. ELISA testing for major food allergens (FALCPA-designated) in representative batches showed no target protein detected at LOD of 1.4 ppm. Supporting literature (Bindslev-Jensen et al. 2006, AMFEP Working Group, Wüthrich 1996, Goodman et al. 2008, WHO 2001) is cited. Occupational allergenicity reports are identified and distinguished from dietary exposure.",
+          "draftSignal": "Part 6.3 provides a comprehensive allergenicity assessment including: amino acid sequence comparison against the Structural Database of Allergenic Proteins (≥35% homology over 80-amino-acid window and 8-contiguous-amino-acid exact match, no matches found); ELISA testing of representative batches for FALCPA major food allergens (no target protein detected at LOD 1.4 ppm); discussion of occupational vs. dietary allergenicity; references to Bindslev-Jensen et al. (2006), AMFEP Working Group, Wüthrich (1996), and others. The Q&A response (Question 6c) clarified that soy protein from fermentation media is removed by filtration and confirmed by ELISA (LOD 1 ppm, not detected in three batches).",
+          "recommendedAction": "Preserve the cited support in the revised filing.",
+          "baselineStatus": "present",
+          "draftStatus": "present",
+          "change": "unchanged",
+          "baselineCitations": [
+            {
+              "pageNumber": 23,
+              "excerpt": "Amano found no matches in comparing the amino acid sequence of the acylglycerol lipase to the primary sequences of known allergens based on a search of the Structural Database of Allergenic Proteins, including a search for ≥ 35% homology over a sliding 'window' of 80 amino acids, and an exact match of 8 contiguous amino acids.",
+              "section": "Part 6.3 No allergenicity concerns for enzyme preparation from Penicillium camemberti"
+            },
+            {
+              "pageNumber": 23,
+              "excerpt": "No target protein was detected at a maximum limit of detection of 1.4 ppm in representative batches of Lipase GS 'Amano' 250G and Lipase G 'Amano' 50 that were tested by enzyme-linked immunosorbent assay (ELISA) for ingredients used in production of the enzymes that contain protein derived from one of the 'major food allergens' designated by the Food Allergen Labeling and Consumer Protection Act (FALCPA)",
+              "section": "Part 6.3 No allergenicity concerns for enzyme preparation from Penicillium camemberti"
+            }
+          ],
+          "draftCitations": [
+            {
+              "pageNumber": 24,
+              "excerpt": "Amano found no matches in comparing the amino acid sequence of the acylglycerol lipase to the primary sequences of known allergens based on a search of the Structural Database of Allergenic Proteins, including a search for ≥ 35% homology over a sliding 'window' of 80 amino acids, and an exact match of 8 contiguous amino acids.",
+              "section": "Part 6.3 No allergenicity concerns for enzyme preparation from Penicillium camemberti"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

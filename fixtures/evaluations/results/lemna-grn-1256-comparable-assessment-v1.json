@@ -1,0 +1,855 @@
+{
+  "fixtureVersion": "1.0.0",
+  "subjectGrn": 1256,
+  "comparables": [
+    {
+      "id": "grn-1160",
+      "name": "GRN 1160 — Lemna leaf protein",
+      "status": "withdrawn",
+      "rationale": "Selected using substance type: protein; production method: extraction; source-organism type: plant; target population: general_population; GRAS basis: scientific_procedures; dietary-exposure method: theoretical_maximum; ingredient family: duckweed; intended-use overlap: 50%; safety-evidence overlap: 90%.",
+      "sharedSignals": [
+        "substance type: protein",
+        "production method: extraction",
+        "source-organism type: plant",
+        "target population: general_population",
+        "GRAS basis: scientific_procedures",
+        "dietary-exposure method: theoretical_maximum",
+        "ingredient family: duckweed",
+        "intended-use overlap: 50%",
+        "safety-evidence overlap: 90%"
+      ],
+      "differences": [
+        "intended-use overlap is partial (50%)",
+        "safety-evidence overlap is partial (90%)"
+      ],
+      "grnNumber": 1160,
+      "sourceUrl": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1160",
+      "similarityScore": 0.929,
+      "matchCriteria": [
+        "substance type: protein",
+        "production method: extraction",
+        "source-organism type: plant",
+        "target population: general_population",
+        "GRAS basis: scientific_procedures",
+        "dietary-exposure method: theoretical_maximum",
+        "ingredient family: duckweed",
+        "intended-use overlap: 50%",
+        "safety-evidence overlap: 90%"
+      ],
+      "evidenceMatches": [
+        {
+          "requirementId": "identity-composition",
+          "requirement": "Identity, source, composition, and specifications",
+          "relevanceScore": 1,
+          "rationale": "Matched comparator passages using the identity, source, composition, and specifications evidence requirement.",
+          "citations": [
+            {
+              "pageNumber": 10,
+              "excerpt": "2. PART II. IDENTITY AND TECHNICAL INFORMATION 2.1. Overview of Approach to GRAS Determination of LLP Plantible has determined LLP to be GRAS through scientific principles, based on the weight of evidence including compositional analysis of LLP and publicly available toxicology data on similar duckweed protein products like Parabel’s LENTEIN TM Complete described in GRN 742. FDA issued a “No Objections” letter to GRN 742 on Augu…"
+            },
+            {
+              "pageNumber": 14,
+              "excerpt": "2.4. Specifications and Identity Food grade specifications of Lemna Leaf Protein (LLP) concentrate manufactured by Plantible are provided in Table 2. LLP is standardized to not less than 80% protein on an ‘as is’ basis. The other major components are ash and fiber, and a small amount of fat. Analytical results from five non- consecutive lots of Plantible’s LLP (Appendix 1) demonstrate that it is manufactured consistently…"
+            }
+          ],
+          "assessments": [
+            {
+              "question": "Whether the LC-MS/MS proteomics characterization was performed on a representative commercial-scale batch or a laboratory preparation",
+              "conclusion": "supportive_with_limitations",
+              "rationale": "GRN 1160 page 14 confirms that five non-consecutive lots of LLP were analyzed to demonstrate consistent manufacture, and page 10 describes the same compositional analysis approach. This documents that multi-lot batch analysis was part of the original filing framework and that the same product (LLP from Plantible) was characterized. However, neither cited passage explicitly addresses whether the LC-MS/MS proteomics specifically (as opposed to proximate composition) was performed on commercial-scale versus laboratory batches. The passage confirms the multi-lot consistency framework but does not resolve the proteomics-specific scale question.",
+              "transferableElements": [
+                "Multi-lot (five non-consecutive lots) analytical framework for LLP consistency is documented in GRN 1160 p.14, establishing that batch representativeness was addressed for proximate composition",
+                "Same substance (LLP, Plantible Foods) and same production method, making the analytical framework directly relevant"
+              ],
+              "limitations": [
+                "Neither passage explicitly states that LC-MS/MS proteomics was performed on commercial-scale batches rather than laboratory preparations",
+                "GRN 1160 is withdrawn, limiting its evidentiary weight as a regulatory anchor",
+                "The passage references Appendix 1 data not supplied in the comparator excerpts, preventing verification of proteomics scope"
+              ],
+              "comparatorCitationPages": [10, 14]
+            }
+          ]
+        },
+        {
+          "requirementId": "manufacturing",
+          "requirement": "Process description and process-related controls",
+          "relevanceScore": 0.833,
+          "rationale": "Matched comparator passages using the process description and process-related controls evidence requirement.",
+          "citations": [
+            {
+              "pageNumber": 16,
+              "excerpt": "…vel of manganese in Plantible’s LLP compared to LENTEIN™ Complete (12.4 vs. 245 ppm). Additional analysis of manganese showed that the average level is 11.4 ppm (Appendix 2). 2.5. Manufacturing Process Plantible’s LLP is produced under controlled conditions in large self-contained tanks/raceway ponds in enclosed greenhouses. The ponds are filled with potable water and a stock solution of Lemna minor plants is added followed by addition of the appropriate nutrients necessary to obtain optimum growth. A slight circulation is maintained throughout the system to distribute the nutrients throughout…"
+            },
+            {
+              "pageNumber": 223,
+              "excerpt": "…rage, the plants are 10-15 days old at time of harvest. The LLP product is described to be manufactured consistent with current Good Manufacturing Practices (cGMPs) and Risk-based Preventive Controls for Human Food. Lemna minor leaves are harvested, macerated to yield a green juice, followed by separation of the green fraction, followed by purification and concentration of the white fraction to yield Plantible’s LLP. As part of the purification process, a covalent cation (e.g., calcium chloride) is used to coagulate the chlorophyll. Further, Plantible’s extraction process incorporates both a 0…"
+            }
+          ]
+        },
+        {
+          "requirementId": "specifications-batch-analysis",
+          "requirement": "Specifications and representative batch results",
+          "relevanceScore": 1,
+          "rationale": "Matched comparator passages using the specifications and representative batch results evidence requirement.",
+          "citations": [
+            {
+              "pageNumber": 14,
+              "excerpt": "2.4. Specifications and Identity Food grade specifications of Lemna Leaf Protein (LLP) concentrate manufactured by Plantible are provided in Table 2. LLP is standardized to not less than 80% protein on an ‘as is’ basis. The other major components are ash and fiber, and a small amount of fat. Analytical results from five non- consecutive lots of Plantible’s LLP (Appendix 1) demonstrate that it is manufactured consistently…"
+            },
+            {
+              "pageNumber": 223,
+              "excerpt": "…gular time schedule and are replenished as necessary to maintain optimum conditions. The water supply is continually monitored for contaminating components including pathogens and heavy metals. Plants grow vegetatively in ponds and are harvested every 2 to 3 days. At time of harvest, ~40-50% of plants are harvested so that the surface of the water remains covered. On average, the plants are 10-15 days old at time of harvest. The LLP product is described to be manufactured consistent with current Good Manufacturing Practices (cGMPs) and Risk-based Preventive Controls for Human Food. Lemna minor…"
+            }
+          ]
+        },
+        {
+          "requirementId": "intended-uses-exposure",
+          "requirement": "Intended uses, use levels, and dietary exposure",
+          "relevanceScore": 1,
+          "rationale": "Matched comparator passages using the intended uses, use levels, and dietary exposure evidence requirement.",
+          "citations": [
+            {
+              "pageNumber": 28,
+              "excerpt": "vegetables, hard candy and jams/jellies). In addition, a few uses in salad dressings and savory sauces are intended for LLP. 3.2.1 Estimated Daily Intake from the Intended Uses The intake profile (amount and frequency) by individuals in USDA’s What We Eat in America (WWEIA) Continuing Survey of Food Intakes by Individuals 2017 (WWEIA, 2017 – 2020 pre - pandemic) was used to calculate the estimated daily intake (EDI) of LLP for individuals consuming the target foods. The full report is found in Appendix 3. Table 10 below shows the EDI levels at t…"
+            },
+            {
+              "pageNumber": 78,
+              "excerpt": "…p Mixes Soups and Soup Mixes 5 Other Salad dressings 5 Savory extracts and sauce ingredients 5 2. Dietary Survey Data Dietary survey data was obtained from What We Eat in America (WWEIA), the dietary interview portion of the NHANES database. NHANES is carried out by the Centers for Disease Control and Prevention (CDC), to characterize the general health and nutritional status of children and adults across the US. The dietary intake survey portion of NHANES is a joint effort between CDC and the US Department of Agriculture (USDA). The NHANES dietary intake data for 2017-2020 pre-pandemic was in…"
+            }
+          ],
+          "assessments": [
+            {
+              "question": "Whether the 100% market penetration assumption adequately bounds upper-tail exposure for ages 1-3 for copper given absence of WWEIA data for that age group",
+              "conclusion": "supportive_with_limitations",
+              "rationale": "GRN 1160 page 28 describes use of WWEIA 2017-2020 pre-pandemic data for EDI calculation and references the full EDI report in Appendix 3. This confirms the same dietary survey methodology was used in the predecessor filing. However, neither supplied passage addresses the specific gap of WWEIA data availability for ages 1-3 or how the 100% market penetration assumption was applied to bound exposure for that age group. The passage documents the methodological framework but does not resolve the specific copper/toddler exposure question.",
+              "transferableElements": [
+                "Same WWEIA-based EDI methodology documented in GRN 1160, confirming the approach is consistent across filings for the same substance",
+                "Same notifier and product, meaning the food category inclusion rates and survey methodology are directly comparable"
+              ],
+              "limitations": [
+                "Neither passage addresses the ages 1-3 WWEIA data gap specifically",
+                "Copper risk assessment for toddlers is not discussed in supplied passages",
+                "GRN 1160 used 2017-2020 WWEIA data while GRN 1256 uses 2021-2023 data; differences in age-group stratification are not addressed",
+                "GRN 1160 is withdrawn, limiting its evidentiary weight"
+              ],
+              "comparatorCitationPages": [28, 78]
+            }
+          ]
+        },
+        {
+          "requirementId": "public-pivotal-safety-evidence",
+          "requirement": "Public availability and peer review of pivotal evidence",
+          "relevanceScore": 1,
+          "rationale": "Matched comparator passages using the public availability and peer review of pivotal evidence evidence requirement.",
+          "citations": [
+            {
+              "pageNumber": 38,
+              "excerpt": "Docusign Envelope ID: E74138CC-C321-4E98-9064-0747C8E15ABF 90-Day Subchronic Toxicology Study in the Rat GRN 742 also reports a 90-day repeat dose oral toxicity study with LENTEIN TM Complete in Wistar rats (10/sex/group). The study followed the OECD Guidelines for testing of chemicals (Number 408). Rats were administered LENTEIN TM Complete at the dose levels of 0, 100, 500, and 1000 mg/kg bw for 90 days consecutively orally by gavage. The control group was administered cor…"
+            },
+            {
+              "pageNumber": 42,
+              "excerpt": "…ty study in rats administered a Lemna protein concentrate by gavage at 2,000 mg/kg body weight (bw), the highest dose tested. No adverse toxicological effects were observed from a subchronic 90-day oral toxicity study in rats administered a Lemna protein concentrate by gavage, up to 1,000 mg/kg bw/day, the highest dose tested. Similarly, no adverse toxicological effects were observed from a subchronic 90-day oral toxicity study in rats administered a related Wolffia globosa protein concentrate in the diet up to 13-15 g/kg bw/day. No adverse effects in feeding studies in a variety of livestock,…"
+            }
+          ]
+        },
+        {
+          "requirementId": "independent-evidence-synthesis",
+          "requirement": "Specific incorporation and independent conclusions",
+          "relevanceScore": 1,
+          "rationale": "Matched comparator passages using the specific incorporation and independent conclusions evidence requirement.",
+          "citations": [
+            {
+              "pageNumber": 222,
+              "excerpt": "-82:1547Ā.7;36893Ā0-)Ā!-//.(%(Ȁ*'/,Ȁ#/-'Ȁ+-%/Ȁ**.$...!&( \" Docusign Envelope ID: E74138CC-C321-4E98-9064-0747C8E15ABF Expert Panel Consensus Statement Concerning the Generally Recognized as Safe (GRAS) Status of Lemna Leaf Protein (LLP) as a Food Ingredient INTRODUCTION Plantible Foods (hereafter referred to as “Plantible”) convened a panel (the “Expert Panel”) of independent scientists, qualified by their scientific training and relevant experience to evaluate the safety of food ingredients, to conduct a critical and comprehensive…"
+            },
+            {
+              "pageNumber": 7,
+              "excerpt": "EVALUATION OF THE GENERALLY RECOGNIZED AS SAFE (GRAS) STATUS OF LEMNA LEAF PROTEIN AS A FOOD INGREDIENT 1. PART I. SIGNED STATEMENT AND CERTIFICATION 1.1. Basis of Conclusion This GRAS conclusion for the use of Lemna Leaf Protein (LLP) in selected food categories has been reached in accordance with the requirements in 21 CFR 170.220. 1.2. Name and Address of Organization Plantible Foods 2600 Sarver Lane San Marcos, CA 92069 1.3. Name…"
+            }
+          ],
+          "assessments": [
+            {
+              "question": "Whether the expert panel's reliance on GRN 742's regulatory outcome as a confidence anchor constitutes an independent conclusion under 21 CFR 170.220",
+              "conclusion": "supportive_with_limitations",
+              "rationale": "GRN 1160 page 7 states the GRAS conclusion was reached in accordance with 21 CFR 170.220, and page 222 describes the expert panel as independent scientists conducting a critical and comprehensive evaluation. This documents that GRN 1160 used the same structural framework (independent expert panel under 21 CFR 170.220) and faced the same underlying question about reliance on GRN 742. However, the supplied passages do not reveal the specific language used in GRN 1160's expert panel statement regarding GRN 742's regulatory outcome, so it is not possible to determine whether GRN 1160 resolved this question more satisfactorily or faced the same framing issue. The comparator is the predecessor filing with the same structural weakness.",
+              "transferableElements": [
+                "Confirms that the 21 CFR 170.220 independent expert panel framework was applied in the predecessor filing for the same substance",
+                "Documents that the expert panel independence claim was made in GRN 1160, providing a parallel documentation example"
+              ],
+              "limitations": [
+                "GRN 1160 is withdrawn; its regulatory outcome does not resolve whether the expert panel framing satisfies 21 CFR 170.220",
+                "Supplied passages do not reveal the specific language used about GRN 742 reliance in GRN 1160's expert panel statement",
+                "The question of whether regulatory outcome reliance constitutes an independent conclusion is a legal/regulatory interpretation question that comparator passages cannot resolve",
+                "GRN 1160 faced the same structural issue, meaning it cannot serve as a positive model for resolving it"
+              ],
+              "comparatorCitationPages": [7, 222]
+            }
+          ]
+        },
+        {
+          "requirementId": "test-article-comparability",
+          "requirement": "Target/test-article bridge across identity, composition, processing, impurities, exposure, and biological relevance",
+          "relevanceScore": 0.5,
+          "rationale": "Matched comparator passages using the target/test-article bridge across identity, composition, processing, impurities, exposure, and biological relevance evidence requirement.",
+          "citations": [
+            {
+              "pageNumber": 21,
+              "excerpt": "…s reference was included to illustrate the typical amino acid profile of protein from water lentils and is not intended to make any health claims. Also, the recommended amino acid composition of protein in human nutrition according to the FAO is given. Table 7 shows that water lentils, milk, soy and beef, but not whole grains, are a full source of protein for human nutrition. Notably, water lentil protein scores much better on essential amino acid content than soy and whole grain protein and is of comparable value to the meat and milk animal proteins. The report notes that the content of branc…"
+            },
+            {
+              "pageNumber": 22,
+              "excerpt": "…rue also for the content of tocopherols, several carotenoids and phytosterols in different species. Data from many studies indicate that the variability of the protein content and composition of Lemna sp. is more related to the nutrient content of the growth media than the species pertaining to the Lemnaceae family (Appenroth et al., 2017, 2018). Landolt and Kandeler (1987) concluded that the protein content of water lentils can be easily controlled by optimizing the cultivation conditions of species, leading to a protein content close to 40%. Many reports support the conclusion that the macro…"
+            }
+          ],
+          "assessments": [
+            {
+              "question": "Whether the purification process (activated carbon, ultrafiltration) could concentrate or generate novel bioactive components not present in Mankai",
+              "conclusion": "supportive_with_limitations",
+              "rationale": "GRN 1160 page 22 addresses variability in duckweed composition across species and notes that protein content and composition are more related to growth media nutrient content than species differences. Page 21 discusses amino acid profiles of water lentil protein. These passages support the general compositional similarity argument across duckweed species but do not address whether the specific purification steps (activated carbon, ultrafiltration) used in LLP manufacturing could concentrate or generate novel bioactive components. The predecessor filing faced the same process-related impurity question and the supplied passages do not resolve it.",
+              "transferableElements": [
+                "Compositional variability data across Lemnaceae species supports the argument that inter-species differences are growth-media dependent rather than species-specific, relevant to the Mankai bridge argument",
+                "Amino acid profile data for water lentil protein provides a baseline for assessing whether purification alters protein composition"
+              ],
+              "limitations": [
+                "Neither passage addresses activated carbon or ultrafiltration process steps or their potential to concentrate novel bioactive components",
+                "GRN 1160 is withdrawn and faced the same unresolved process-related impurity question",
+                "The cross-processing gap (whole plant vs. purified extract) is not addressed in supplied passages",
+                "Mankai-specific bridge argument is not discussed in supplied passages"
+              ],
+              "comparatorCitationPages": [21, 22]
+            },
+            {
+              "question": "Whether the proteomics characterization is representative of commercial-scale production",
+              "conclusion": "insufficient_information",
+              "rationale": "No valid comparator judgment was returned for this question; the retrieved passage is retained for manual review but is not treated as transferable evidence.",
+              "transferableElements": [],
+              "limitations": ["Automated assessment was incomplete."],
+              "comparatorCitationPages": [21]
+            }
+          ]
+        },
+        {
+          "requirementId": "self-contained-literature-search",
+          "requirement": "Search methods, scope, and unfavorable information",
+          "relevanceScore": 0.333,
+          "rationale": "Matched comparator passages using the search methods, scope, and unfavorable information evidence requirement.",
+          "citations": [
+            {
+              "pageNumber": 212,
+              "excerpt": "…events over this period are recorded, this analysis will inevitably be incomplete and will reflect the areas of particular interest to the authors. Rubisco is not really so bad – PubMed https://pubmed.ncbi.nlm.nih.gov/29359811 In this review, we re-examine Rubisco’s catalytic performance by comparison with other chemically related enzymes. We find that Rubisco is not especially slow. Furthermore, considering both the nature and the complexity of the chemical reaction, its kinetic properties are unremarkable. From waste product to food ingredient: The extraction of abundant Plant Protein RuBis…"
+            },
+            {
+              "pageNumber": 214,
+              "excerpt": "…he protein in the chloroplasts making it the most plentiful single enzyme on the Earth. Rubiscolytics: fate of Rubisco after its enzymatic function in a cell is terminated https://pubmed.ncbi.nlm.nih.gov/17975207/ U Feller, I Anders, T Mae – Journal of experimental botany, 2008,59(7):1615-24 Ribulose-1,5-bisphosphate carboxylase/oxygenase (Rubisco) is the predominant protein in photosynthesizing plant parts and the most abundant protein on earth. Amino acids deriving from its net degradation during senescence are transported to sinks (e.g. developing leaves, fruits). Rubisco catabolism is not…"
+            }
+          ]
+        },
+        {
+          "requirementId": "allergenicity-assessment",
+          "requirement": "Protein allergenicity and cross-reactivity assessment",
+          "relevanceScore": 1,
+          "rationale": "Matched comparator passages using the protein allergenicity and cross-reactivity assessment evidence requirement.",
+          "citations": [
+            {
+              "pageNumber": 45,
+              "excerpt": "…on up 170 g of fresh duckweed leaf per day on a short-term basis and up to 100 g of duckweed plant per day on a long- term (18-month) basis with no reported adverse effects. 6.4.4 Allergenicity GRN 742 Page 93-94 discusses the lack of allergenicity concerns with water lentil proteins. In a thorough review (van der Spiegel et al., 2013), the human safety issues associated with popular sources of alternative proteins, including water lentil protein, for use in food were examined. The authors discussed in detail the real possibility of allergenicity issues for several protein sources, but not for…"
+            },
+            {
+              "pageNumber": 61,
+              "excerpt": "…rom Lemna Minor SF Gray. Pharmaceutical Chemistry Journal, 47 (11),599-601. Wang, R., Edrington, T.C., Storrs, S.B., Crowley, K.S., Ward, J.M., Lee, T.C., et al. (2017). Analyzing pepsin degradation assay conditions used for allergenicity assessments to ensure that pepsin susceptible and pepsin resistant dietary proteins are distinguishable. PLoS ONE , 12 (2): e0171926. doi:10.1371/journal.pone.0171926 Wildman, S. G. & Bonner, J. (1947). The proteins of green leaves. 1. Isolation, enzymatic properties and auxin content of spinach cytoplasmic proteins. Archives of Biochemistry , 14 , 381 - 413.…"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "grn-1072",
+      "name": "GRN 1072 — Lemnaceae fiber",
+      "status": "withdrawn",
+      "rationale": "Selected using production method: extraction; source-organism type: plant; target population: general_population; GRAS basis: scientific_procedures; ingredient family: duckweed; intended-use overlap: 40%; safety-evidence overlap: 36%.",
+      "sharedSignals": [
+        "production method: extraction",
+        "source-organism type: plant",
+        "target population: general_population",
+        "GRAS basis: scientific_procedures",
+        "ingredient family: duckweed",
+        "intended-use overlap: 40%",
+        "safety-evidence overlap: 36%"
+      ],
+      "differences": [
+        "substance type: protein vs carbohydrate",
+        "dietary-exposure method: theoretical_maximum vs USDA_CSFII",
+        "intended-use overlap is partial (40%)",
+        "safety-evidence overlap is partial (36%)"
+      ],
+      "grnNumber": 1072,
+      "sourceUrl": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1072",
+      "similarityScore": 0.664,
+      "matchCriteria": [
+        "production method: extraction",
+        "source-organism type: plant",
+        "target population: general_population",
+        "GRAS basis: scientific_procedures",
+        "ingredient family: duckweed",
+        "intended-use overlap: 40%",
+        "safety-evidence overlap: 36%"
+      ],
+      "evidenceMatches": [
+        {
+          "requirementId": "identity-composition",
+          "requirement": "Identity, source, composition, and specifications",
+          "relevanceScore": 1,
+          "rationale": "Matched comparator passages using the identity, source, composition, and specifications evidence requirement.",
+          "citations": [
+            {
+              "pageNumber": 16,
+              "excerpt": "…aceae but are similar in all Alismatales. d) All species belonging to Lemnaceae together form a well-defined unit on morphological, biochemical and habitat bases. II.A.1. Chemical composition of Lemnaceae as reported in the scientific literature Publication by Appenroth et al. (2017) analyzed the chemical composition of six species of water lentils “representing all five genera Spirodela polyrhiza, Landoltia punctata, Lemna gibba, Lemna minor, Wolffiella hyalina, and […] Wolffia microscopica (Sree et al., 2015a).” The derived compositional results indicate the six-species’ dry weight content r…"
+            },
+            {
+              "pageNumber": 18,
+              "excerpt": "…lose, and lignin meet FDA’s definition of dietary fiber (FDA, 2018a). Moreover, LF is minimally processed, thus Lemnature’s manufacturing process does not modify the dietary fiber composition inherent in the crop (including both dietary soluble and insoluble fibers). Moreover, LF contains no sulfites, added flavors, components from an animal source, butylated hydroxyanisole (BHA), butylated hydroxytoluene (BHT), genetically altered plant material, or irradiated material. Lemnature™ Fiber has a high content of total dietary fiber (typically 60% dmb) and protein (typically 20% dmb) as shown in T…"
+            }
+          ],
+          "assessments": [
+            {
+              "question": "Whether the LC-MS/MS proteomics characterization was performed on a representative commercial-scale batch or a laboratory preparation",
+              "conclusion": "contextual_only",
+              "rationale": "GRN 1072 pages 16 and 18 address the chemical composition of Lemnaceae species broadly and describe LF as minimally processed with high fiber content. The substance is a carbohydrate/fiber product, not a protein extract, and no proteomics methodology is discussed. The passages provide useful background on Lemnaceae compositional variability across species but do not address LC-MS/MS proteomics methodology or batch representativeness for a purified protein extract.",
+              "transferableElements": [
+                "Background on Lemnaceae compositional characterization across species provides scientific context for understanding variability in duckweed-derived ingredients"
+              ],
+              "limitations": [
+                "Substance type is fundamentally different (fiber/carbohydrate vs. purified protein extract)",
+                "No proteomics methodology discussed in any supplied passage",
+                "Batch-scale representativeness question is not addressed",
+                "Production method (minimal processing) differs substantially from LLP's ultrafiltration and activated carbon purification"
+              ],
+              "comparatorCitationPages": [16, 18]
+            }
+          ]
+        },
+        {
+          "requirementId": "manufacturing",
+          "requirement": "Process description and process-related controls",
+          "relevanceScore": 0.667,
+          "rationale": "Matched comparator passages using the process description and process-related controls evidence requirement.",
+          "citations": [
+            {
+              "pageNumber": 22,
+              "excerpt": "…cial production site to ensure it does not contain levels of metals that pose a risk for bioaccumulation. From the growth systems, the Lemnaceae are harvested daily to provide the processing system a fresh supply of material. A typical Lemnature facility ranges from one hundred to several hundred hectares of growth systems. After harvesting and entering the processing facility, the water lentils are initially pre-screened for removal of any foreign materials, washed with food grade detergent, and rinsed with clean potable water. The Lemnaceae are then mechanically lysed by a high-shear mixer t…"
+            },
+            {
+              "pageNumber": 21,
+              "excerpt": "…600-1590 mg/100 g), magnesium (280-360 mg/100 g), and zinc (1.1-10 mg/100 g). 1 The estimated exposure to these minerals from the intake of LF is discussed in section III.G. II.D. Manufacturing process As described in GRN 742 (FDA, 2018b), Lemnature's proprietary aquafarming crop growth areas are above the soil and plastic-lined to prevent any lixiviation or contamination of the environment. The plastic liner is impervious and therefore non-leaching. It also provides the unique ability for Lemnature to ‘fertilize’ water lentils without the run-off due to rain or leaching into ground water syst…"
+            }
+          ]
+        },
+        {
+          "requirementId": "specifications-batch-analysis",
+          "requirement": "Specifications and representative batch results",
+          "relevanceScore": 1,
+          "rationale": "Matched comparator passages using the specifications and representative batch results evidence requirement.",
+          "citations": [
+            {
+              "pageNumber": 23,
+              "excerpt": "…quafarms Technology Overview Food-grade Nutrients and Water Solii:ls/Juice Separation .. Lemnature™ Fiber Lemnaceae (water lentil} fiber powder D Growth D Processing II.E. Product specifications Lemnature™ Fiber is a food ingredient mainly composed of water lentil fiber (cellulose, hemicellulose, and lignin) and protein as shown in Table 2. LF is a free-flowing, tan powder that functions as a fiber source as well various technical functions in food. Table 5 provides the product specifications and Table 6 compares five commercial-representative lots against LF product specifications. The result…"
+            },
+            {
+              "pageNumber": 25,
+              "excerpt": "Table 6. Specifications of Lemnature™ Fiber Against Production Lot Results PARAMETER Specifications Lot# LF- 210630-D3- RW Lot# LF- 210709-D3- RW Lot# LF- 201005- COMP Lot# LF- 210915-D3 Lot# LF- 210923-D3 Moisture (%) <10 7.60 5.44 9.1 8.4 8.85 Water activity <0.5 0.100 0.346 0.411 0.344 0.344 Protein (%) (N x 6.25) 16-26 16.11 17.60 23.68 19.76 24.63 Dietary fiber (%) 48-66 60.4 60.8 59.3 48.5 48.9 Total fat (%, AH) <6 3.11…"
+            }
+          ]
+        },
+        {
+          "requirementId": "intended-uses-exposure",
+          "requirement": "Intended uses, use levels, and dietary exposure",
+          "relevanceScore": 1,
+          "rationale": "Matched comparator passages using the intended uses, use levels, and dietary exposure evidence requirement.",
+          "citations": [
+            {
+              "pageNumber": 29,
+              "excerpt": "Table 8. List of proposed food uses and use-levels for Lemnature™ Fiber INTENDED USE MAXIMUM USE LEVEL (%) FOOD CATEGORY LF Baked goods and baking mixes 0.5-5% Bars- Meal replacement/nutritional bars, cereal, and granola bars 0.5-2% Beverages and bases-Protein and nutritional drinks 1-10% Breakfast cereals 1-5% Candy- soft candy 0.5-2% Cheese-vegetarian/imitation cheese and cheese dip 0.5-4% Condiments and spreads 0.5-4% Confections and frostings 0.5-2% Dairy product analogs 1-3% Fats an…"
+            },
+            {
+              "pageNumber": 28,
+              "excerpt": "III. DIETARY EXPOSURE III.A. Intended use Lemnature™ Fiber, manufactured in accordance with cGMP as specified in 21 CFR 110 and 117, is intended for use as a multipurpose food ingredient at inclusion levels ranging 0.5-10% in the food categories listed in Table 8 , as defined in 21 CFR 170.3(n) and USDA’s What We Eat in America Food Categories: 2017-2018 (USDA, 2020) . LF will be used as a substitute for, and/or in conjun…"
+            }
+          ],
+          "assessments": [
+            {
+              "question": "Whether the 100% market penetration assumption adequately bounds upper-tail exposure for ages 1-3 for copper given absence of WWEIA data for that age group",
+              "conclusion": "not_transferable",
+              "rationale": "GRN 1072 pages 28 and 29 describe intended uses and use levels for Lemnature Fiber, a carbohydrate/fiber product using USDA CSFII dietary survey data rather than WWEIA. The substance type, dietary exposure method, and specific nutrient of concern (copper) differ fundamentally from the subject question. The 100% market penetration assumption and toddler age-group data gap are not addressed. The different exposure methodology (CSFII vs. WWEIA) makes this passage unsuitable for answering the subject question.",
+              "transferableElements": [],
+              "limitations": [
+                "Substance type is fiber/carbohydrate, not protein; copper content and associated risk are not relevant",
+                "Dietary exposure method is CSFII, not WWEIA, making methodological comparison inapplicable",
+                "Ages 1-3 WWEIA data gap is not addressed",
+                "100% market penetration assumption is not discussed",
+                "Intended use overlap is only 40%"
+              ],
+              "comparatorCitationPages": [28, 29]
+            }
+          ]
+        },
+        {
+          "requirementId": "public-pivotal-safety-evidence",
+          "requirement": "Public availability and peer review of pivotal evidence",
+          "relevanceScore": 0.5,
+          "rationale": "Matched comparator passages using the public availability and peer review of pivotal evidence evidence requirement.",
+          "citations": [
+            {
+              "pageNumber": 47,
+              "excerpt": "…position of Lemnature’s LF and LC was previously outlined in Table 11 . Based on the similarity between the LF and LC products, no additional toxicity studies were conducted. Both published animal studies and unpublished research conducted by Lemnature suggest there are no safety or toxicity concerns related to the consumption of water lentils or Lemnature’s products. Lemnature has completed four, Good Laboratory Practice (GLP) compliant, comprehensive toxicity studies on Lemnature’s LENTEIN ® Complete (LC) by Shriram Institute for Industrial Research, Delhi India: repeated dose (90 days) oral…"
+            },
+            {
+              "pageNumber": 55,
+              "excerpt": "III.M. Conclusion Lemnature AquaFarms USA, Inc. has critically evaluated the published and unpublished data and information, summarized in this safety evaluation, and concludes that Lemnature™ Fiber derived from Lemnature’s water lentils is GRAS, on the basis of scientific procedures, for use in conventional food products as described in Part I.C. Lemnature™ Fiber is manufactured in accordance with CGMP and is well characterized. LF will be added to food products as a fiber ingredient substit…"
+            }
+          ]
+        },
+        {
+          "requirementId": "independent-evidence-synthesis",
+          "requirement": "Specific incorporation and independent conclusions",
+          "relevanceScore": 1,
+          "rationale": "Matched comparator passages using the specific incorporation and independent conclusions evidence requirement.",
+          "citations": [
+            {
+              "pageNumber": 237,
+              "excerpt": "1 APPENDIX J – EXPERT PANEL REPORT The Generally Recognized as Safe (GRAS) Status of the Proposed Uses of Lemnature AquaFarms USA, Inc. Lemnature™ Fiber ( Lemnaceae Water Lentil Fiber Powder) April 19, 2022 An independent panel of experts (“Expert Panel”) was convened by GRAS Associates, LLC on behalf of Lemnature AquaFarms USA, Inc., (previously Parabel USA, Inc.) to evaluate the safety and Generally Recognized as Safe (GRAS) stat…"
+            },
+            {
+              "pageNumber": 55,
+              "excerpt": "…on of LF would pose an allergenic risk. General recognition of Lemnature's GRAS conclusion is supported by the unanimous consensus rendered by an independent Panel of Experts (the GRAS Panel), qualified by experience and scientific training, to evaluate the use of Lemnature™ Fiber in food, who similarly concluded that the proposed uses of Lemnature™ Fiber are GRAS on the basis of scientific procedures. The Expert Panel report is provided in Appendix J. Lemnature ensured that all reasonable efforts were made to identify and select a balanced Expert Panel with expertise in food safety, toxicolog…"
+            }
+          ],
+          "assessments": [
+            {
+              "question": "Whether the expert panel's reliance on GRN 742's regulatory outcome as a confidence anchor constitutes an independent conclusion under 21 CFR 170.220",
+              "conclusion": "contextual_only",
+              "rationale": "GRN 1072 pages 237 and 55 describe an independent expert panel convened by GRAS Associates for Lemnature Fiber, with the panel concluding GRAS status based on scientific procedures. The passages document that the expert panel independently concluded GRAS status and that the notifier ensured a balanced panel with relevant expertise. This provides a documentation model for how an independent expert panel conclusion can be framed. However, the passages do not address reliance on a prior GRN's regulatory outcome as a confidence anchor, and the substance type differs. The model is useful as context but does not resolve the specific legal/regulatory interpretation question.",
+              "transferableElements": [
+                "Documents an independent expert panel conclusion for a duckweed-family ingredient that does not appear to rely on a prior GRN's regulatory outcome, providing a contrasting documentation model",
+                "Describes panel selection criteria (balanced expertise in food safety, toxicology) relevant to independence requirements"
+              ],
+              "limitations": [
+                "Substance type is fiber, not protein; safety evidence base differs substantially",
+                "No discussion of reliance on prior GRN regulatory outcomes as confidence anchors",
+                "The specific legal question under 21 CFR 170.220 cannot be resolved by a documentation example from a different substance",
+                "GRN 1072 is withdrawn"
+              ],
+              "comparatorCitationPages": [55, 237]
+            }
+          ]
+        },
+        {
+          "requirementId": "test-article-comparability",
+          "requirement": "Target/test-article bridge across identity, composition, processing, impurities, exposure, and biological relevance",
+          "relevanceScore": 0.667,
+          "rationale": "Matched comparator passages using the target/test-article bridge across identity, composition, processing, impurities, exposure, and biological relevance evidence requirement.",
+          "citations": [
+            {
+              "pageNumber": 18,
+              "excerpt": "…lose, and lignin meet FDA’s definition of dietary fiber (FDA, 2018a). Moreover, LF is minimally processed, thus Lemnature’s manufacturing process does not modify the dietary fiber composition inherent in the crop (including both dietary soluble and insoluble fibers). Moreover, LF contains no sulfites, added flavors, components from an animal source, butylated hydroxyanisole (BHA), butylated hydroxytoluene (BHT), genetically altered plant material, or irradiated material. Lemnature™ Fiber has a high content of total dietary fiber (typically 60% dmb) and protein (typically 20% dmb) as shown in T…"
+            },
+            {
+              "pageNumber": 16,
+              "excerpt": "…aceae but are similar in all Alismatales. d) All species belonging to Lemnaceae together form a well-defined unit on morphological, biochemical and habitat bases. II.A.1. Chemical composition of Lemnaceae as reported in the scientific literature Publication by Appenroth et al. (2017) analyzed the chemical composition of six species of water lentils “representing all five genera Spirodela polyrhiza, Landoltia punctata, Lemna gibba, Lemna minor, Wolffiella hyalina, and […] Wolffia microscopica (Sree et al., 2015a).” The derived compositional results indicate the six-species’ dry weight content r…"
+            }
+          ],
+          "assessments": [
+            {
+              "question": "Whether the purification process (activated carbon, ultrafiltration) could concentrate or generate novel bioactive components not present in Mankai",
+              "conclusion": "not_transferable",
+              "rationale": "GRN 1072 pages 16 and 18 address Lemnaceae chemical composition and describe LF as minimally processed. The substance is a fiber product with minimal processing, which is the opposite of LLP's extensive purification process (activated carbon, ultrafiltration). The question specifically concerns whether intensive purification steps could concentrate or generate novel bioactive components, and a minimally processed fiber product provides no relevant evidence on this point. The substance type, processing method, and evidence context are all incompatible.",
+              "transferableElements": [],
+              "limitations": [
+                "Substance type is fiber, not purified protein extract",
+                "Processing is described as minimal, directly contrasting with LLP's intensive purification steps",
+                "Activated carbon and ultrafiltration are not discussed",
+                "Novel bioactive component generation from purification is not addressed",
+                "Mankai bridge argument is not relevant to a fiber product"
+              ],
+              "comparatorCitationPages": [16, 18]
+            },
+            {
+              "question": "Whether the proteomics characterization is representative of commercial-scale production",
+              "conclusion": "not_transferable",
+              "rationale": "GRN 1072 pages 16 and 18 address Lemnaceae chemical composition for a fiber product with minimal processing. No proteomics methodology is discussed, and the substance type, processing method, and analytical approach differ fundamentally from LLP. The question of whether LC-MS/MS proteomics characterization is representative of commercial-scale production cannot be addressed by passages from a minimally processed fiber product filing.",
+              "transferableElements": [],
+              "limitations": [
+                "No proteomics methodology discussed",
+                "Substance type is fiber, not purified protein extract",
+                "Minimal processing contrasts with LLP's purification steps",
+                "Batch-scale representativeness of proteomics not addressed"
+              ],
+              "comparatorCitationPages": [16, 18]
+            }
+          ]
+        },
+        {
+          "requirementId": "self-contained-literature-search",
+          "requirement": "Search methods, scope, and unfavorable information",
+          "relevanceScore": 0.167,
+          "rationale": "Matched comparator passages using the search methods, scope, and unfavorable information evidence requirement.",
+          "citations": [
+            {
+              "pageNumber": 7,
+              "excerpt": "…ditions of intended use. In addition, Lemnature certifies that, to the best of our knowledge, this GRAS notice is a complete, representative, and balanced submission that includes unfavorable information, as well as favorable information, known to Lemnature and pertinent to the evaluation of the safety and GRAS status of the use of the substance Lemnaceae (water lentil) fiber powder as a food ingredient for addition to food products, as described herein. This determination was made in concert with an appropriately convened panel of experts who are qualified by scientific training and experienc…"
+            },
+            {
+              "pageNumber": 9,
+              "excerpt": "…privileged and confidential. (c) (9) Lemnature certifies that, to the best of its knowledge, this GRAS Assessment is a complete, representative, and balanced review that includes unfavorable information, as well as favorable information, known by Lemnature and pertinent to the evaluation of the safety and GRAS status of the use of the substance. (c) (10) Lemnature intends to add Lemnaceae Flour to meat and poultry products that come under FSIS/USDA jurisdiction and authorizes a copy of this notification, including any materials marked as business confidential/trade secret, to be shared with t…"
+            }
+          ]
+        },
+        {
+          "requirementId": "allergenicity-assessment",
+          "requirement": "Protein allergenicity and cross-reactivity assessment",
+          "relevanceScore": 1,
+          "rationale": "Matched comparator passages using the protein allergenicity and cross-reactivity assessment evidence requirement.",
+          "citations": [
+            {
+              "pageNumber": 54,
+              "excerpt": "…DA has approved health claims for psyllium and oat bran and risk reduction of heart disease (FDA, 2008). No safety concerns have been reported for arabinoxylan-rich fibers. III.L. Allergenicity Although water lentils have not been consumed extensively as a human food or food ingredient in the USA, they have a long history of use in Southeast Asia (Bhanthumnavin and McGarry, 1971; Van der Spiegel et al., 2013). To Lemnature’s knowledge, there is no evidence that suggests a high risk of allergenicity from water lentils. In a comprehensive review article focused on the human safety of novel prote…"
+            },
+            {
+              "pageNumber": 55,
+              "excerpt": "…y studies were conducted with LF but safety information from preclinical and clinical studies on “LENTEIN ® ” and other water lentil preparations were evaluated. The potential for allergenicity concerns with the consumption of LF was evaluated and it was determined that it is unlikely that consumption of LF would pose an allergenic risk. General recognition of Lemnature's GRAS conclusion is supported by the unanimous consensus rendered by an independent Panel of Experts (the GRAS Panel), qualified by experience and scientific training, to evaluate the use of Lemnature™ Fiber in food, who simil…"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "grn-1151",
+      "name": "GRN 1151 — Fava bean protein",
+      "status": "no_questions",
+      "rationale": "Selected using substance type: protein; production method: extraction; source-organism type: plant; target population: general_population; GRAS basis: scientific_procedures; dietary-exposure method: theoretical_maximum; intended-use overlap: 50%; safety-evidence overlap: 50%.",
+      "sharedSignals": [
+        "substance type: protein",
+        "production method: extraction",
+        "source-organism type: plant",
+        "target population: general_population",
+        "GRAS basis: scientific_procedures",
+        "dietary-exposure method: theoretical_maximum",
+        "intended-use overlap: 50%",
+        "safety-evidence overlap: 50%"
+      ],
+      "differences": [
+        "ingredient family: duckweed vs fava_bean",
+        "intended-use overlap is partial (50%)",
+        "safety-evidence overlap is partial (50%)"
+      ],
+      "grnNumber": 1151,
+      "sourceUrl": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn1151",
+      "similarityScore": 0.646,
+      "matchCriteria": [
+        "substance type: protein",
+        "production method: extraction",
+        "source-organism type: plant",
+        "target population: general_population",
+        "GRAS basis: scientific_procedures",
+        "dietary-exposure method: theoretical_maximum",
+        "intended-use overlap: 50%",
+        "safety-evidence overlap: 50%"
+      ],
+      "evidenceMatches": [
+        {
+          "requirementId": "identity-composition",
+          "requirement": "Identity, source, composition, and specifications",
+          "relevanceScore": 1,
+          "rationale": "Matched comparator passages using the identity, source, composition, and specifications evidence requirement.",
+          "citations": [
+            {
+              "pageNumber": 9,
+              "excerpt": "§ 170.230 Part 2, Identity, Method of Manufacture, Specifications, and Physical or Technical Effect A. Identity The fava bean protein ingredient is an extract of fava beans consisting of2:83% protein. B. Common or Usual Name Fava bean protein isolate. The ingredient will be referred to as fava bean protein throughout the document. C. CAS Registry Number Not applicable. D. Trade Name The trade name under Cosun Protein, Cooperative Koni…"
+            },
+            {
+              "pageNumber": 12,
+              "excerpt": "The only processing aids employed are safe and suitable for use in production of the fava beal). protein ingredient. They are commonly used in food ingredient manufacturing processes, as described in Table 4. Table 4. Processing aids Processing Aid CAS Number(s) 21 CFR/GRN Citation(s) Sodium bisulfite 7631-90-5 21 CFR §182.3739 Sodium hydroxide (NaOH) 1310-73-2 21 CFR §184.1763 G. Characterization of Vicia faba L. Fava bean (Viciafaba L.), also referred to as broad bean, horse bean, faba bean, and field bean bel…"
+            }
+          ],
+          "assessments": [
+            {
+              "question": "Whether the LC-MS/MS proteomics characterization was performed on a representative commercial-scale batch or a laboratory preparation",
+              "conclusion": "contextual_only",
+              "rationale": "GRN 1151 pages 9 and 12 describe fava bean protein identity, composition, and processing aids. The passages document a structured identity section for a plant-derived protein isolate and reference processing aids with regulatory citations, which is a useful documentation model. However, neither passage addresses LC-MS/MS proteomics methodology or the question of whether proteomics characterization was performed at commercial versus laboratory scale. The source organism, ingredient family, and specific analytical methods differ.",
+              "transferableElements": [
+                "Demonstrates documentation approach for plant protein extract identity including processing aids and compositional tables, which is contextually relevant as a documentation model"
+              ],
+              "limitations": [
+                "No proteomics methodology discussed",
+                "Source organism (fava bean) and ingredient family differ from duckweed",
+                "Batch-scale representativeness of proteomics is not addressed in any supplied passage",
+                "CAS number noted as not applicable for fava bean protein, contrasting with LLP's specific Rubisco CAS number, limiting direct comparability"
+              ],
+              "comparatorCitationPages": [9, 12]
+            }
+          ]
+        },
+        {
+          "requirementId": "manufacturing",
+          "requirement": "Process description and process-related controls",
+          "relevanceScore": 0.667,
+          "rationale": "Matched comparator passages using the process description and process-related controls evidence requirement.",
+          "citations": [
+            {
+              "pageNumber": 12,
+              "excerpt": "The only processing aids employed are safe and suitable for use in production of the fava beal). protein ingredient. They are commonly used in food ingredient manufacturing processes, as described in Table 4. Table 4. Processing aids Processing Aid CAS Number(s) 21 CFR/GRN Citation(s) Sodium bisulfite 7631-90-5 21 CFR §182.3739 Sodium hydroxide (NaOH) 1310-73-2 21 CFR §184.1763 G. Characterization of Vicia faba L. Fava bean (…"
+            },
+            {
+              "pageNumber": 30,
+              "excerpt": "• Fava bean protein is manufactured from commercially available fava beans, following current cGMP for food (21 CFR § Part 110). The raw materials and processing aids used in the manufacturing process are food grade and/or approved for use in food. The fava bean protein product has been characterized appropriately, contains a minimum of 83% protein, and meets appropriate food grade specifications. • Fava beans have been consumed as food (and the protein contained therein) for centuries, along with many other food sources of protein (e.g., meats, dairy, fruits, vege…"
+            }
+          ]
+        },
+        {
+          "requirementId": "specifications-batch-analysis",
+          "requirement": "Specifications and representative batch results",
+          "relevanceScore": 1,
+          "rationale": "Matched comparator passages using the specifications and representative batch results evidence requirement.",
+          "citations": [
+            {
+              "pageNumber": 13,
+              "excerpt": "…U/g) ::::200 ISO 21527-1 E.coli Negative ISO 16649-2 Salmonella Negative ISO 6579 Listeria monocytogenes Negative ISO 11290-1 Table 6. Analytical results for three non-consecutive lots offava bean protein Specification Lot No. 1000413562 Lot No. 1000413891 Lot No. 1000414223 Protein(%) :::::83 87.5 87.5 88.6 Carbohydrates (%, db) ::;;10 7.9 8.4 7.1 Ash(%) ::;;6 4.2 3.8 4.0 Fat(%, db) ::;;2 0.3 0.3 0.3 Moisture (%) s9 5.8 4.9 5.4 pH 7-8 7.7 7.8 7.7 Lead (mg/kg) <0.1 <0.04 <0.04 <0.04 Arsenic (mg/kg) <0.1 <0.04 <0.04 <0.04 Cadmium (mg/kg) <0.1 <0.02 <0.02 <0.02 Mercury (μg/kg) <100 <2 <2 <2 Tota…"
+            },
+            {
+              "pageNumber": 12,
+              "excerpt": "…e that of cereals and several times that of root tubers. Fava bean seeds are a rich source of proteins, carbohydrates, fiber, vitamins, and minerals (Aune et al. 2011). H. Product Specifications Specifications for the product are presented in Table 5. Analytical results from three non consecutive lots are provided in Appendix A. A comparison of four non-consecutive lots of product to the specifications below can be found in Table 6. Table 5. Specifications forJava bean protein Parameter Specification Method Protein (%, db) 2:83 Kjeldahl Carbohydrates (%, db) ::;IO Determined by difference Ash(…"
+            }
+          ]
+        },
+        {
+          "requirementId": "intended-uses-exposure",
+          "requirement": "Intended uses, use levels, and dietary exposure",
+          "relevanceScore": 0.833,
+          "rationale": "Matched comparator passages using the intended uses, use levels, and dietary exposure evidence requirement.",
+          "citations": [
+            {
+              "pageNumber": 74,
+              "excerpt": "3. You also informed us that you wish to remove the “Processed meat products” category from the intended uses of fava bean protein. Please address the impact of this change on the dietary exposure to fava bean protein from the intended uses and provide a revised Table 10 (page 15), excluding “Processed meat products”. Response: See revised Table 10 below. Table 10. Proposed maximum food use levels Maximum Use Level of Fava Bean Food Category Protein (%) as Consumed Bakery products (e.g., breads, rolls, doughnut…"
+            },
+            {
+              "pageNumber": 64,
+              "excerpt": "…inent to the identification, use, and safety of Cosun' s fava bean protein ingredient for use an alternative source of protein in specified foods. We unanimously conclude that the intended use of Cosun' s fava bean protein ingredient, produced consistent with current good manufacturing practice (cGMP) and meeting the appropriate food-grade specifications, as presented in the supporting dossier \"GRAS Determination of Fava Bean Protein for Use as an Ingredient in Human Food\", is safe. We, the members of the GRAS Panel, further unanimously conclude that the intended uses and use levels of Cosun's…"
+            }
+          ],
+          "assessments": [
+            {
+              "question": "Whether the 100% market penetration assumption adequately bounds upper-tail exposure for ages 1-3 for copper given absence of WWEIA data for that age group",
+              "conclusion": "contextual_only",
+              "rationale": "GRN 1151 page 74 shows a revised food use table for fava bean protein after removing processed meat products, and page 64 references the expert panel's safety conclusion. Neither passage addresses the 100% market penetration assumption, WWEIA age-group data gaps, or copper-specific risk assessment for toddlers. The fava bean protein filing used a theoretical maximum exposure method and is a plant protein extract, providing some methodological parallel, but the specific question about toddler copper exposure bounding is not addressed in the supplied passages.",
+              "transferableElements": [
+                "Demonstrates that food category revision and corresponding dietary exposure recalculation is a documented practice in plant protein GRAS filings, providing procedural context"
+              ],
+              "limitations": [
+                "No discussion of 100% market penetration assumption or its adequacy for bounding toddler exposure",
+                "WWEIA age-group data gaps for ages 1-3 not addressed",
+                "Copper-specific risk assessment not discussed",
+                "Source organism and ingredient family differ substantially"
+              ],
+              "comparatorCitationPages": [64, 74]
+            }
+          ]
+        },
+        {
+          "requirementId": "public-pivotal-safety-evidence",
+          "requirement": "Public availability and peer review of pivotal evidence",
+          "relevanceScore": 0.333,
+          "rationale": "Matched comparator passages using the public availability and peer review of pivotal evidence evidence requirement.",
+          "citations": [
+            {
+              "pageNumber": 21,
+              "excerpt": "…ption and general lack of toxicity. As expected for a food that has been consumed by humans for centuries, fava beans and fava bean proteins have not been subjected to traditional toxicology studies. Given the publicly available information and data on the safety of fava beans and fava bean proteins, as well as the efforts to remove anti-nutritional compounds from fava beans and fava bean protein isolates intended for animal and/or human consumption, the conduct of toxicity studies was considered unnecessary and not an ethical use of animals. A summary of available published safety-related inf…"
+            },
+            {
+              "pageNumber": 27,
+              "excerpt": "…ence as is required to obtain approval of a food additive regulation for the ingredient. General recognition of safety through scientific procedures shall ordinarily be based upon published studies, which may be corroborated by unpublished studies and other data and information. These criteria are applied in the analysis below to determine whether the use of the fava bean protein ingredient in specified human foods that is the subject of this GRAS determination is GRAS based on scientific procedures. All data relied upon in this GRAS determination are publicly available and generally known, an…"
+            }
+          ]
+        },
+        {
+          "requirementId": "independent-evidence-synthesis",
+          "requirement": "Specific incorporation and independent conclusions",
+          "relevanceScore": 0.833,
+          "rationale": "Matched comparator passages using the specific incorporation and independent conclusions evidence requirement.",
+          "citations": [
+            {
+              "pageNumber": 56,
+              "excerpt": "OPINION OF A GRAS PANEL ON THE SAFETY AND GENERALLY RECOGNIZED AS SAFE (GRAS) STATUS OF FAVA BEAN PROTEIN FOR USE AS AN INGREDIENT IN HUMAN FOOD Introduction An independent panel of experts (GRAS Panel), qualified by scientific training and experience to evaluate the safety of food and food ingredients, was requested by Cosun to determine the safety and Generally Recognized as Safe (GRAS) status of the use of fava bean protein as…"
+            },
+            {
+              "pageNumber": 64,
+              "excerpt": "Conclusions of the Expert Panel We, the undersigned independent, qualified members of the GRAS Panel, have individually and collectively critically reviewed the published and ancillary information pertinent to the identification, use, and safety of Cosun' s fava bean protein ingredient for use an alternative source of protein in specified foods. We unanimously conclude that the intended use of Cosun' s fava bean protein ingredient, pro…"
+            }
+          ],
+          "assessments": [
+            {
+              "question": "Whether the expert panel's reliance on GRN 742's regulatory outcome as a confidence anchor constitutes an independent conclusion under 21 CFR 170.220",
+              "conclusion": "contextual_only",
+              "rationale": "GRN 1151 pages 56 and 64 describe an independent GRAS panel that individually and collectively critically reviewed published and ancillary information and unanimously concluded GRAS status based on the supporting dossier. The language emphasizes independent critical review and does not reference reliance on a prior GRN's regulatory outcome. This provides a useful documentation model for how an independent expert panel conclusion can be framed without anchoring on a prior regulatory outcome. However, it does not resolve the legal/regulatory interpretation question for GRN 1256 and involves a different ingredient family.",
+              "transferableElements": [
+                "Expert panel language ('individually and collectively critically reviewed') demonstrates a documentation approach that emphasizes independent analysis rather than reliance on prior regulatory outcomes",
+                "GRN 1151 received no questions (approved), suggesting this framing of independent expert panel conclusions was acceptable to FDA"
+              ],
+              "limitations": [
+                "Different ingredient family (fava bean vs. duckweed); safety evidence base differs",
+                "Does not address the specific question of whether referencing a prior GRN's regulatory outcome as a confidence anchor is permissible under 21 CFR 170.220",
+                "Cannot be used to infer that FDA approved the approach or that the subject filing's framing is equivalent",
+                "The legal/regulatory interpretation question requires regulatory guidance, not a documentation example"
+              ],
+              "comparatorCitationPages": [56, 64]
+            }
+          ]
+        },
+        {
+          "requirementId": "test-article-comparability",
+          "requirement": "Target/test-article bridge across identity, composition, processing, impurities, exposure, and biological relevance",
+          "relevanceScore": 0.167,
+          "rationale": "Matched comparator passages using the target/test-article bridge across identity, composition, processing, impurities, exposure, and biological relevance evidence requirement.",
+          "citations": [
+            {
+              "pageNumber": 9,
+              "excerpt": "…AS Registry Number Not applicable. D. Trade Name The trade name under Cosun Protein, Cooperative Koninklijke Cosun U.A. for this fava bean protein is Tendra™. E. Fava Bean Protein Composition Typical nutritional data for the fava bean protein is summarized in Table 1. Table 2 presents the alkaloid concentrations (anti-nutrients components vicine and convicine in three lots of the proposed fava bean protein ingredient. Levodopa, also known as L - DOP A or L-3,4-dihydroxyphenylalanine, naturally occurs in fava beans, but its levels decrease significantly in heated/cooked beans (Carador-Martinez…"
+            },
+            {
+              "pageNumber": 21,
+              "excerpt": "…evels of the test materials were fed for 4 weeks, replacing the same amounts in the control diets. The fava bean protein isolate was fed at dose levels of 20, 40, and 80 g/kg. The composition of the protein isolate was approximately 81 % protein, 6% fat, and 3% carbohydrate. The low dose of 20 g/kg was identified as the no-observed-effect level (NOEL) for female rats consuming the protein 20"
+            }
+          ],
+          "assessments": [
+            {
+              "question": "Whether the purification process (activated carbon, ultrafiltration) could concentrate or generate novel bioactive components not present in Mankai",
+              "conclusion": "contextual_only",
+              "rationale": "GRN 1151 pages 9 and 21 address fava bean protein composition, anti-nutrient levels (vicine, convicine, levodopa), and subchronic toxicity study design. The anti-nutrient characterization approach for a plant protein extract is contextually relevant as a documentation model for how process-related compositional changes can be tracked. However, fava bean protein uses different processing aids (sodium bisulfite, NaOH) and the specific question about activated carbon and ultrafiltration generating novel bioactive components in duckweed protein is not addressed. The ingredient family and processing steps differ substantially.",
+              "transferableElements": [
+                "Demonstrates that anti-nutrient and process-related compositional characterization (vicine, convicine, levodopa) is a documented practice for plant protein extracts, providing a documentation model",
+                "Subchronic toxicity study design for a plant protein isolate at comparable protein concentrations (~81% protein) provides contextual evidence for the type of safety testing appropriate for purified plant proteins"
+              ],
+              "limitations": [
+                "Processing aids and purification steps differ (sodium bisulfite/NaOH vs. activated carbon/ultrafiltration)",
+                "Fava bean-specific anti-nutrients are not relevant to duckweed protein",
+                "Mankai bridge argument is not applicable",
+                "Novel bioactive component generation from activated carbon or ultrafiltration is not addressed",
+                "Ingredient family differs substantially"
+              ],
+              "comparatorCitationPages": [9, 21]
+            },
+            {
+              "question": "Whether the proteomics characterization is representative of commercial-scale production",
+              "conclusion": "contextual_only",
+              "rationale": "GRN 1151 pages 9 and 21 describe fava bean protein composition and a subchronic toxicity study using protein isolate at ~81% protein. The composition table and multi-lot anti-nutrient data (three lots for vicine/convicine) provide a documentation model for batch-level characterization of a plant protein extract. However, no proteomics methodology is discussed, and the question of whether LC-MS/MS characterization was performed at commercial versus laboratory scale is not addressed. The passages are useful as a documentation context but do not supply transferable evidence for the specific proteomics representativeness question.",
+              "transferableElements": [
+                "Three-lot anti-nutrient analysis demonstrates that multi-lot batch characterization is a documented practice for plant protein extracts at the GRAS filing stage",
+                "Composition data at ~81% protein for a plant protein isolate provides a parallel documentation framework"
+              ],
+              "limitations": [
+                "No proteomics methodology discussed",
+                "Source organism and ingredient family differ",
+                "Commercial-scale vs. laboratory-scale distinction for proteomics is not addressed",
+                "Processing steps differ"
+              ],
+              "comparatorCitationPages": [9, 21]
+            }
+          ]
+        },
+        {
+          "requirementId": "self-contained-literature-search",
+          "requirement": "Search methods, scope, and unfavorable information",
+          "relevanceScore": 0.333,
+          "rationale": "Matched comparator passages using the search methods, scope, and unfavorable information evidence requirement.",
+          "citations": [
+            {
+              "pageNumber": 19,
+              "excerpt": "…s, and the protein from these sources, have been commonly consumed as food and feed around the world for decades (Crepon et al., 2010; Schmandke et al., 2010). Safety Introduction Literature searches were performed to identify available safety data on fava beans, fava bean protein, and the associated anti-nutrients (through July 2023) present in them. These included searching sources of information such as publicly available assessments, databases, or reviews from organizations, including EFSA, Joint FAO/WHO Expert Committee on Food Additives (JECFA), U.S. FDA, and the World Health Organizatio…"
+            }
+          ]
+        },
+        {
+          "requirementId": "allergenicity-assessment",
+          "requirement": "Protein allergenicity and cross-reactivity assessment",
+          "relevanceScore": 1,
+          "rationale": "Matched comparator passages using the protein allergenicity and cross-reactivity assessment evidence requirement.",
+          "citations": [
+            {
+              "pageNumber": 25,
+              "excerpt": "to identify pepsin-resistant and IgE-binding proteins. The allergenicity of broad beans was assessed in allergic patients, BALB/c mice, splenocytes, and RBL-2H3 cells. Eight broad-bean proteins of approximate molecular weight 70, 60, 48, 32, 23, 19, 15, and 10 kilodaltons that remained undigested in SGF, showed IgE-binding capacity. Of 127 allergic patients studied, broad-bean allergy was evident in 16 (12%). Mice sensitized wit…"
+            },
+            {
+              "pageNumber": 29,
+              "excerpt": "…Arese et al. (2009) study in which no hemolytic effects were reported. The potential for fava bean proteins to cause an immune response is rare but consistent with similar, known allergens found in other legumes. Although fava beans are not listed as one of eight major allergen groups by the FDA under the Food Allergen Labeling and Consumer Protection Act of 2004 (Public Law 108-282, Title II)), the fact that the allergenicity offava bean protein has been shown clinically (Mur Gimeno et al., 2007; Kumar et al., 2014; Damiani et al., 2011; Jensen et al., 2008) suggests that labeling of the pre…"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "grn-742",
+      "name": "GRN 742 — Duckweed (subfamily Lemnoideae) powder",
+      "status": "no_questions",
+      "rationale": "Selected using substance type: protein; target population: general_population; GRAS basis: scientific_procedures; dietary-exposure method: theoretical_maximum; ingredient family: duckweed; intended-use overlap: 50%; safety-evidence overlap: 50%.",
+      "sharedSignals": [
+        "substance type: protein",
+        "target population: general_population",
+        "GRAS basis: scientific_procedures",
+        "dietary-exposure method: theoretical_maximum",
+        "ingredient family: duckweed",
+        "intended-use overlap: 50%",
+        "safety-evidence overlap: 50%"
+      ],
+      "differences": [
+        "production method: extraction vs algal_cultivation",
+        "source-organism type: plant vs algal",
+        "intended-use overlap is partial (50%)",
+        "safety-evidence overlap is partial (50%)"
+      ],
+      "grnNumber": 742,
+      "sourceUrl": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0742",
+      "similarityScore": 0.646,
+      "matchCriteria": [
+        "substance type: protein",
+        "target population: general_population",
+        "GRAS basis: scientific_procedures",
+        "dietary-exposure method: theoretical_maximum",
+        "ingredient family: duckweed",
+        "intended-use overlap: 50%",
+        "safety-evidence overlap: 50%"
+      ]
+    },
+    {
+      "id": "grn-879",
+      "name": "GRN 879 — Fava bean protein isolate",
+      "status": "no_questions",
+      "rationale": "Selected using substance type: protein; production method: extraction; source-organism type: plant; target population: general_population; GRAS basis: scientific_procedures; dietary-exposure method: theoretical_maximum; intended-use overlap: 50%; safety-evidence overlap: 40%.",
+      "sharedSignals": [
+        "substance type: protein",
+        "production method: extraction",
+        "source-organism type: plant",
+        "target population: general_population",
+        "GRAS basis: scientific_procedures",
+        "dietary-exposure method: theoretical_maximum",
+        "intended-use overlap: 50%",
+        "safety-evidence overlap: 40%"
+      ],
+      "differences": [
+        "ingredient family: duckweed vs fava_bean",
+        "intended-use overlap is partial (50%)",
+        "safety-evidence overlap is partial (40%)"
+      ],
+      "grnNumber": 879,
+      "sourceUrl": "https://www.fda.gov/food/generally-recognized-safe-gras/gras-notice-inventory#grn0879",
+      "similarityScore": 0.638,
+      "matchCriteria": [
+        "substance type: protein",
+        "production method: extraction",
+        "source-organism type: plant",
+        "target population: general_population",
+        "GRAS basis: scientific_procedures",
+        "dietary-exposure method: theoretical_maximum",
+        "intended-use overlap: 50%",
+        "safety-evidence overlap: 40%"
+      ]
+    }
+  ]
+}

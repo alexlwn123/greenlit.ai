@@ -1,0 +1,93 @@
+{
+  "fixtureVersion": "1.0.0",
+  "results": [
+    {
+      "fixtureName": "lemna-grn-1160-deep-evidence-v2.raw.json",
+      "pageCount": 230,
+      "fullCharacters": 399829,
+      "targetedCharacters": 299345,
+      "characterReduction": 0.251,
+      "goldCitationPages": 20,
+      "recalledCitationPages": 20,
+      "citationRecall": 1,
+      "missedPages": []
+    },
+    {
+      "fixtureName": "lemna-grn-1256-deep-evidence-v2.raw.json",
+      "pageCount": 1428,
+      "fullCharacters": 399955,
+      "targetedCharacters": 299978,
+      "characterReduction": 0.25,
+      "goldCitationPages": 24,
+      "recalledCitationPages": 20,
+      "citationRecall": 0.833,
+      "missedPages": [281, 257, 259, 274]
+    },
+    {
+      "fixtureName": "grn-0755-d-psicose-deep-evidence-v1.raw.json",
+      "pageCount": 37,
+      "fullCharacters": 70601,
+      "targetedCharacters": 70601,
+      "characterReduction": 0,
+      "goldCitationPages": 13,
+      "recalledCitationPages": 13,
+      "citationRecall": 1,
+      "missedPages": []
+    },
+    {
+      "fixtureName": "grn-0828-d-psicose-deep-evidence-v1.raw.json",
+      "pageCount": 44,
+      "fullCharacters": 90816,
+      "targetedCharacters": 90816,
+      "characterReduction": 0,
+      "goldCitationPages": 19,
+      "recalledCitationPages": 19,
+      "citationRecall": 1,
+      "missedPages": []
+    },
+    {
+      "fixtureName": "grn-0867-rebaudioside-m-deep-evidence-v1.raw.json",
+      "pageCount": 62,
+      "fullCharacters": 223145,
+      "targetedCharacters": 223145,
+      "characterReduction": 0,
+      "goldCitationPages": 14,
+      "recalledCitationPages": 14,
+      "citationRecall": 1,
+      "missedPages": []
+    },
+    {
+      "fixtureName": "grn-0882-rebaudioside-m-deep-evidence-v1.raw.json",
+      "pageCount": 61,
+      "fullCharacters": 222648,
+      "targetedCharacters": 222648,
+      "characterReduction": 0,
+      "goldCitationPages": 17,
+      "recalledCitationPages": 17,
+      "citationRecall": 1,
+      "missedPages": []
+    },
+    {
+      "fixtureName": "grn-0866-lipase-deep-evidence-v1.raw.json",
+      "pageCount": 28,
+      "fullCharacters": 52818,
+      "targetedCharacters": 52818,
+      "characterReduction": 0,
+      "goldCitationPages": 13,
+      "recalledCitationPages": 13,
+      "citationRecall": 1,
+      "missedPages": []
+    },
+    {
+      "fixtureName": "grn-0908-lipase-deep-evidence-v1.raw.json",
+      "pageCount": 83,
+      "fullCharacters": 146196,
+      "targetedCharacters": 146196,
+      "characterReduction": 0,
+      "goldCitationPages": 13,
+      "recalledCitationPages": 13,
+      "citationRecall": 1,
+      "missedPages": []
+    }
+  ]
+}
