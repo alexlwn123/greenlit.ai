@@ -342,7 +342,7 @@ function ExternalResponsePage({ token }: { token: string }) {
         setStatus("ready")
       })
       .catch((error) => {
-        setMessage(errorMessage(error))
+        setMessage(publicCapabilityError(error, "evidence request"))
         setStatus("error")
       })
   }, [token])
@@ -453,7 +453,7 @@ function ExternalReviewPage({ token }: { token: string }) {
         setStatus("ready")
       })
       .catch((error) => {
-        setMessage(errorMessage(error))
+        setMessage(publicCapabilityError(error, "consultant review"))
         setStatus("error")
       })
   }, [token])
@@ -4765,4 +4765,12 @@ function formatEvidenceGrade(status: string) {
 
 function errorMessage(error: unknown) {
   return error instanceof Error ? error.message : "Something went wrong."
+}
+
+function publicCapabilityError(error: unknown, resource: string) {
+  const message = errorMessage(error)
+  if (/status (404|410)/i.test(message) || /invalid|expired|fulfilled|revoked/i.test(message)) {
+    return `This ${resource} link is invalid, expired, or has already been used. Ask the Greenlit workspace owner for a new link.`
+  }
+  return message
 }
