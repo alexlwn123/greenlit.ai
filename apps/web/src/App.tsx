@@ -1,5 +1,21 @@
-import type { AnalysisRecord, FilingDiffItem, ReadinessReport } from "@greenlit/core"
-import { demoReport, getEvidenceMatrixScoreBreakdown } from "@greenlit/core"
+import type {
+  AnalysisRecord,
+  DossierEvidence,
+  DossierEvidencePassage,
+  DossierIntake,
+  DossierQualityCheck,
+  DossierRecord,
+  DossierSectionVersion,
+  FactBookEntry,
+  FilingDiffItem,
+  ReadinessReport,
+  ReleaseAttestation,
+} from "@greenlit/core"
+import {
+  demoReport,
+  getEvidenceMatrixScoreBreakdown,
+  suggestClaimsFromPassage,
+} from "@greenlit/core"
 import {
   ArrowLeft,
   ArrowRight,
@@ -20,6 +36,7 @@ import {
   Search,
   ShieldCheck,
   Sparkles,
+  TableProperties,
   Trash2,
   Upload,
   X,
@@ -27,6 +44,7 @@ import {
 import {
   type ChangeEvent,
   type CSSProperties,
+  type FormEvent,
   type ReactNode,
   useCallback,
   useEffect,
@@ -34,16 +52,49 @@ import {
   useState,
 } from "react"
 import {
+  assistDossierSection,
   compareAnalyses,
   createAnalysis,
+  createConsultantHandoff,
+  createDossier,
+  createDossierClaim,
+  createEvidenceRequest,
+  createFactBookEntry,
+  createSectionStarter,
+  type DossierWorkspace,
+  deleteDossierEvidence,
+  deleteFactBookEntry,
   deleteAnalysis as deleteSavedAnalysis,
   downloadAnalysisFile,
+  downloadDossierExport,
+  downloadFactBook,
+  downloadSubmissionPackage,
+  getDossier,
+  getDossierQuality,
+  getEvidencePassages,
+  getSectionVersions,
   listAnalyses,
+  listDossiers,
+  lockDossierRelease,
+  restoreSectionVersion,
+  reviewDossierClaim,
+  reviewFactBookEntry,
+  saveDossierSection,
+  signReleaseAttestation,
+  unlockDossierRelease,
+  updateConsultantHandoff,
+  updateEvidenceRequest,
+  uploadDossierEvidence,
+  verifyDossierEvidence,
   waitForAnalysis,
 } from "./api"
 
 type LoadState = "idle" | "loading" | "uploading" | "polling"
-type Route = { name: "home" } | { name: "analysis"; id?: string } | { name: "workspace" }
+type Route =
+  | { name: "home" }
+  | { name: "analysis"; id?: string }
+  | { name: "workspace" }
+  | { name: "dossiers"; id?: string }
 
 const analysisSections = [
   { id: "executive-summary", label: "Executive summary" },
@@ -62,6 +113,8 @@ const scoreImportanceOrder = { high: 0, medium: 1, low: 2 } as const
 export default function App() {
   const [route, setRoute] = useState<Route>(() => readRoute())
   const [history, setHistory] = useState<AnalysisRecord[]>([])
+  const [dossiers, setDossiers] = useState<DossierRecord[]>([])
+  const [activeDossier, setActiveDossier] = useState<DossierWorkspace | null>(null)
   const [activeAnalysis, setActiveAnalysis] = useState<AnalysisRecord | null>(null)
   const [loadState, setLoadState] = useState<LoadState>("loading")
   const [error, setError] = useState<string | null>(null)
@@ -90,6 +143,9 @@ export default function App() {
 
   useEffect(() => {
     void refreshHistory()
+    void listDossiers()
+      .then(setDossiers)
+      .catch(() => undefined)
     const onPopState = () => setRoute(readRoute())
     window.addEventListener("popstate", onPopState)
     return () => window.removeEventListener("popstate", onPopState)
@@ -216,6 +272,24 @@ export default function App() {
           onUpload={() => navigate({ name: "home" })}
         />
       ) : null}
+
+      {route.name === "dossiers" ? (
+        <DossierPage
+          dossierId={route.id}
+          dossiers={dossiers}
+          activeDossier={activeDossier}
+          onLoad={setActiveDossier}
+          onCreated={(result) => {
+            setActiveDossier(result)
+            setDossiers((current) => [
+              result.dossier,
+              ...current.filter((item) => item.id !== result.dossier.id),
+            ])
+            navigate({ name: "dossiers", id: result.dossier.id })
+          }}
+          onOpen={(id) => navigate({ name: "dossiers", id })}
+        />
+      ) : null}
     </div>
   )
 }
@@ -252,6 +326,13 @@ function Header({
           onClick={() => navigate({ name: "workspace" })}
         >
           Workspace
+        </button>
+        <button
+          type="button"
+          className={route.name === "dossiers" ? "is-active" : ""}
+          onClick={() => navigate({ name: "dossiers" })}
+        >
+          Draft
         </button>
         <span className="nav-divider" />
         <span className="system-status">
@@ -1501,6 +1582,1860 @@ function WorkspacePage({
   )
 }
 
+const factTemplates: Record<
+  FactBookEntry["kind"],
+  Array<{ key: string; label: string; placeholder: string }>
+> = {
+  identity: [
+    {
+      key: "substanceName",
+      label: "Substance name",
+      placeholder: "Canonical notified substance name",
+    },
+    { key: "composition", label: "Composition", placeholder: "Defining constituents and ranges" },
+    { key: "casNumber", label: "CAS number", placeholder: "If applicable" },
+  ],
+  manufacturing: [
+    { key: "step", label: "Process step", placeholder: "Fermentation, purification, drying…" },
+    { key: "control", label: "Control", placeholder: "Critical process control" },
+    { key: "location", label: "Manufacturing location", placeholder: "Facility or country" },
+  ],
+  intended_use: [
+    { key: "foodCategory", label: "Food category", placeholder: "e.g. nutrition bars" },
+    { key: "useLevel", label: "Maximum use level", placeholder: "Numeric value" },
+    { key: "unit", label: "Unit", placeholder: "%, mg/serving, g/kg" },
+    { key: "population", label: "Population", placeholder: "General population or subgroup" },
+  ],
+  exposure: [
+    { key: "population", label: "Population", placeholder: "Population analyzed" },
+    { key: "mean", label: "Mean exposure", placeholder: "Numeric value" },
+    { key: "p90", label: "90th percentile", placeholder: "Numeric value" },
+    { key: "unit", label: "Unit", placeholder: "mg/kg bw/day" },
+    { key: "method", label: "Method", placeholder: "Dataset and calculation method" },
+  ],
+  specification: [
+    { key: "parameter", label: "Parameter", placeholder: "Assay, moisture, lead…" },
+    { key: "limit", label: "Acceptance limit", placeholder: "e.g. ≥95 or ≤0.5" },
+    { key: "unit", label: "Unit", placeholder: "%, ppm, CFU/g" },
+    { key: "method", label: "Analytical method", placeholder: "Method identifier" },
+  ],
+  batch_result: [
+    { key: "lot", label: "Lot", placeholder: "Batch or lot identifier" },
+    { key: "parameter", label: "Parameter", placeholder: "Tested specification" },
+    { key: "result", label: "Result", placeholder: "Observed result" },
+    { key: "unit", label: "Unit", placeholder: "%, ppm…" },
+  ],
+  safety_study: [
+    { key: "studyType", label: "Study type", placeholder: "90-day oral toxicity, genotoxicity…" },
+    { key: "testArticle", label: "Test article", placeholder: "Material tested" },
+    { key: "species", label: "Species/system", placeholder: "Rat, mouse, in vitro…" },
+    { key: "noael", label: "NOAEL", placeholder: "If established" },
+    { key: "outcome", label: "Outcome", placeholder: "Key finding and conclusion" },
+  ],
+}
+
+function DossierPage({
+  dossierId,
+  dossiers,
+  activeDossier,
+  onLoad,
+  onCreated,
+  onOpen,
+}: {
+  dossierId?: string
+  dossiers: DossierRecord[]
+  activeDossier: DossierWorkspace | null
+  onLoad: (result: DossierWorkspace) => void
+  onCreated: (result: DossierWorkspace) => void
+  onOpen: (id: string) => void
+}) {
+  const [creating, setCreating] = useState(dossiers.length === 0 && !dossierId)
+  const [saving, setSaving] = useState(false)
+  const [formError, setFormError] = useState<string | null>(null)
+  const [studioTab, setStudioTab] = useState<
+    "evidence" | "facts" | "requests" | "draft" | "quality" | "release" | "activity"
+  >("evidence")
+  const [requirementId, setRequirementId] = useState("auto")
+  const [evidenceCategory, setEvidenceCategory] = useState<DossierEvidence["category"]>("other")
+  const [selectedSectionId, setSelectedSectionId] = useState("")
+  const [draftContent, setDraftContent] = useState("")
+  const [qualityChecks, setQualityChecks] = useState<DossierQualityCheck[]>([])
+  const [claimEvidenceId, setClaimEvidenceId] = useState("")
+  const [claimSectionId, setClaimSectionId] = useState("")
+  const [claimStatement, setClaimStatement] = useState("")
+  const [claimExcerpt, setClaimExcerpt] = useState("")
+  const [claimPage, setClaimPage] = useState(1)
+  const [claimSuggestions, setClaimSuggestions] = useState<string[]>([])
+  const [claimEdits, setClaimEdits] = useState<Record<string, string>>({})
+  const [assistMeta, setAssistMeta] = useState<{
+    provider: string
+    model: string
+    claimCount: number
+  } | null>(null)
+  const [readerEvidence, setReaderEvidence] = useState<DossierEvidence | null>(null)
+  const [readerPassages, setReaderPassages] = useState<DossierEvidencePassage[]>([])
+  const [readerPage, setReaderPage] = useState(1)
+  const [readerSearch, setReaderSearch] = useState("")
+  const [sectionVersions, setSectionVersions] = useState<DossierSectionVersion[]>([])
+  const [signerName, setSignerName] = useState("")
+  const [signerRole, setSignerRole] = useState("")
+  const [consultantName, setConsultantName] = useState("")
+  const [consultantEmail, setConsultantEmail] = useState("")
+  const [handoffScope, setHandoffScope] = useState(
+    "Independent scientific and regulatory review of the complete working dossier, evidence traceability, and unresolved quality controls."
+  )
+  const [handoffDueDate, setHandoffDueDate] = useState("")
+  const [dossierSearch, setDossierSearch] = useState("")
+  const [dossierStatusFilter, setDossierStatusFilter] = useState("all")
+  const [factKind, setFactKind] = useState<FactBookEntry["kind"]>("identity")
+  const [factTitle, setFactTitle] = useState("")
+  const [factFields, setFactFields] = useState<Record<string, string>>({})
+  const [factEvidenceId, setFactEvidenceId] = useState("")
+
+  useEffect(() => {
+    if (!dossierId || activeDossier?.dossier.id === dossierId) return
+    void getDossier(dossierId)
+      .then(onLoad)
+      .catch((error) => setFormError(errorMessage(error)))
+  }, [activeDossier?.dossier.id, dossierId, onLoad])
+
+  async function submit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    const data = new FormData(event.currentTarget)
+    const intake: DossierIntake = {
+      substanceName: String(data.get("substanceName") ?? "").trim(),
+      companyName: String(data.get("companyName") ?? "").trim(),
+      substanceType: String(data.get("substanceType") ?? "other") as DossierIntake["substanceType"],
+      intendedEffect: String(data.get("intendedEffect") ?? "").trim(),
+      intendedUses: String(data.get("intendedUses") ?? "").trim(),
+      manufacturingSummary: String(data.get("manufacturingSummary") ?? "").trim(),
+      targetPopulation: String(data.get("targetPopulation") ?? "").trim(),
+      grasBasis: "scientific_procedures",
+    }
+    if (!intake.substanceName) {
+      setFormError("Substance name is required.")
+      return
+    }
+    setSaving(true)
+    setFormError(null)
+    try {
+      onCreated(await createDossier(intake))
+      setCreating(false)
+    } catch (error) {
+      setFormError(errorMessage(error))
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  const selected =
+    activeDossier?.dossier.id === dossierId
+      ? activeDossier
+      : !dossierId && activeDossier
+        ? activeDossier
+        : null
+
+  const selectedSection =
+    selected?.sections.find((section) => section.id === selectedSectionId) ?? selected?.sections[0]
+  const draftDirty = Boolean(selectedSection && draftContent !== selectedSection.content)
+
+  useEffect(() => {
+    if (!selectedSection) return
+    setSelectedSectionId(selectedSection.id)
+    setDraftContent(selectedSection.content)
+  }, [selectedSection])
+
+  useEffect(() => {
+    if (!draftDirty) return
+    const warn = (event: BeforeUnloadEvent) => event.preventDefault()
+    window.addEventListener("beforeunload", warn)
+    return () => window.removeEventListener("beforeunload", warn)
+  }, [draftDirty])
+
+  useEffect(() => {
+    if (studioTab !== "quality" || !dossierId) return
+    void getDossierQuality(dossierId)
+      .then(setQualityChecks)
+      .catch((error) => setFormError(errorMessage(error)))
+  }, [dossierId, studioTab])
+
+  useEffect(() => {
+    if (studioTab !== "draft" || !dossierId || !selectedSection) return
+    void getSectionVersions(dossierId, selectedSection.id)
+      .then(setSectionVersions)
+      .catch((error) => setFormError(errorMessage(error)))
+  }, [dossierId, selectedSection, studioTab])
+
+  async function restoreVersion(versionId: string) {
+    if (
+      !selected ||
+      !selectedSection ||
+      !window.confirm("Restore this version as a new draft? Current history will be preserved.")
+    )
+      return
+    setSaving(true)
+    try {
+      onLoad(await restoreSectionVersion(selected.dossier.id, selectedSection.id, versionId))
+    } catch (error) {
+      setFormError(errorMessage(error))
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  async function addFact() {
+    if (!selected || !factTitle.trim()) return
+    setSaving(true)
+    setFormError(null)
+    try {
+      onLoad(
+        await createFactBookEntry(selected.dossier.id, {
+          kind: factKind,
+          title: factTitle.trim(),
+          fields: factFields,
+          evidenceId: factEvidenceId || undefined,
+        })
+      )
+      setFactTitle("")
+      setFactFields({})
+      setFactEvidenceId("")
+    } catch (error) {
+      setFormError(errorMessage(error))
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  async function setFactStatus(factId: string, status: FactBookEntry["status"]) {
+    if (!selected) return
+    setSaving(true)
+    try {
+      onLoad(await reviewFactBookEntry(selected.dossier.id, factId, status))
+    } catch (error) {
+      setFormError(errorMessage(error))
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  async function removeFact(factId: string) {
+    if (!selected || !window.confirm("Remove this structured fact? The audit event remains."))
+      return
+    setSaving(true)
+    try {
+      onLoad(await deleteFactBookEntry(selected.dossier.id, factId))
+    } catch (error) {
+      setFormError(errorMessage(error))
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  async function signAttestation(kind: ReleaseAttestation["kind"]) {
+    if (!selected || !signerName.trim() || !signerRole.trim()) return
+    setSaving(true)
+    setFormError(null)
+    try {
+      onLoad(
+        await signReleaseAttestation(selected.dossier.id, {
+          kind,
+          signerName: signerName.trim(),
+          signerRole: signerRole.trim(),
+        })
+      )
+    } catch (error) {
+      setFormError(errorMessage(error))
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  async function lockRelease() {
+    if (!selected) return
+    setSaving(true)
+    setFormError(null)
+    try {
+      onLoad(await lockDossierRelease(selected.dossier.id))
+    } catch (error) {
+      setFormError(errorMessage(error))
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  async function unlockRelease(releaseId: string) {
+    if (
+      !selected ||
+      !window.confirm("Unlock this release for revision? The locked snapshot remains in history.")
+    )
+      return
+    setSaving(true)
+    try {
+      onLoad(await unlockDossierRelease(selected.dossier.id, releaseId))
+    } catch (error) {
+      setFormError(errorMessage(error))
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  async function prepareHandoff() {
+    if (!selected || !consultantName.trim() || !handoffScope.trim()) return
+    setSaving(true)
+    setFormError(null)
+    try {
+      onLoad(
+        await createConsultantHandoff(selected.dossier.id, {
+          consultantName: consultantName.trim(),
+          consultantEmail: consultantEmail.trim() || undefined,
+          scope: handoffScope.trim(),
+          dueDate: handoffDueDate || undefined,
+        })
+      )
+      setConsultantName("")
+      setConsultantEmail("")
+    } catch (error) {
+      setFormError(errorMessage(error))
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  async function setHandoffStatus(
+    handoffId: string,
+    status: "in_review" | "completed" | "cancelled"
+  ) {
+    if (!selected) return
+    setSaving(true)
+    try {
+      onLoad(await updateConsultantHandoff(selected.dossier.id, handoffId, status))
+    } catch (error) {
+      setFormError(errorMessage(error))
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  async function requestEvidence(requirementId: string) {
+    if (!selected) return
+    setSaving(true)
+    setFormError(null)
+    try {
+      onLoad(await createEvidenceRequest(selected.dossier.id, requirementId))
+      setStudioTab("requests")
+    } catch (error) {
+      setFormError(errorMessage(error))
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  async function setRequestStatus(requestId: string, status: "received" | "resolved" | "rejected") {
+    if (!selected) return
+    setSaving(true)
+    try {
+      onLoad(await updateEvidenceRequest(selected.dossier.id, requestId, status))
+    } catch (error) {
+      setFormError(errorMessage(error))
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  async function uploadEvidence(event: ChangeEvent<HTMLInputElement>) {
+    const file = event.currentTarget.files?.[0]
+    event.currentTarget.value = ""
+    if (!file || !selected) return
+    const mappedRequirement = requirementId
+    if (!mappedRequirement) return
+    setSaving(true)
+    setFormError(null)
+    try {
+      onLoad(
+        await uploadDossierEvidence(selected.dossier.id, file, mappedRequirement, evidenceCategory)
+      )
+    } catch (error) {
+      setFormError(errorMessage(error))
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  async function verifyEvidenceItem(evidenceId: string, status: "verified" | "rejected") {
+    if (!selected) return
+    setSaving(true)
+    try {
+      onLoad(await verifyDossierEvidence(selected.dossier.id, evidenceId, status))
+    } catch (error) {
+      setFormError(errorMessage(error))
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  async function removeEvidenceItem(evidence: DossierEvidence) {
+    if (!selected) return
+    const claimCount = selected.claims.filter((claim) => claim.evidenceId === evidence.id).length
+    const confirmed = window.confirm(
+      `Remove ${evidence.title}? This also removes its ${evidence.pageCount} extracted page records${claimCount > 0 ? ` and ${claimCount} linked claims` : ""}. This cannot be undone.`
+    )
+    if (!confirmed) return
+    setSaving(true)
+    try {
+      onLoad(await deleteDossierEvidence(selected.dossier.id, evidence.id))
+      if (readerEvidence?.id === evidence.id) setReaderEvidence(null)
+    } catch (error) {
+      setFormError(errorMessage(error))
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  async function saveSection(status: "draft" | "in_review" | "approved") {
+    if (!selected || !selectedSection) return
+    setSaving(true)
+    try {
+      onLoad(
+        await saveDossierSection(selected.dossier.id, selectedSection.id, draftContent, status)
+      )
+    } catch (error) {
+      setFormError(errorMessage(error))
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  async function generateStarter() {
+    if (!selected || !selectedSection) return
+    setSaving(true)
+    try {
+      onLoad(await createSectionStarter(selected.dossier.id, selectedSection.id))
+    } catch (error) {
+      setFormError(errorMessage(error))
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  async function assistSection() {
+    if (!selected || !selectedSection) return
+    setSaving(true)
+    setFormError(null)
+    try {
+      const { result } = await assistDossierSection(selected.dossier.id, selectedSection.id)
+      setDraftContent(result.draft)
+      setAssistMeta({
+        provider: result.provider,
+        model: result.model,
+        claimCount: result.claimIds.length,
+      })
+    } catch (error) {
+      setFormError(errorMessage(error))
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  function chooseSection(sectionId: string) {
+    if (draftDirty && !window.confirm("Discard unsaved changes to this section?")) return
+    const section = selected?.sections.find((item) => item.id === sectionId)
+    if (!section) return
+    setSelectedSectionId(section.id)
+    setDraftContent(section.content)
+    setAssistMeta(null)
+  }
+
+  function beginClaim(evidence: DossierEvidence, passage?: DossierEvidencePassage) {
+    const requirement = selected?.requirements.find((item) => item.id === evidence.requirementId)
+    const section = selected?.sections.find((item) => item.part === requirement?.section)
+    setClaimEvidenceId(evidence.id)
+    setClaimSectionId(section?.id ?? selected?.sections[0]?.id ?? "")
+    const sourceText = passage?.text || evidence.excerpt
+    const suggestions = requirement ? suggestClaimsFromPassage(sourceText, requirement) : []
+    setClaimSuggestions(suggestions)
+    setClaimStatement(suggestions[0] ?? sourceText.split(/(?<=[.!?])\s/)[0]?.slice(0, 500) ?? "")
+    setClaimExcerpt(sourceText.slice(0, 900))
+    setClaimPage(passage?.pageNumber ?? 1)
+  }
+
+  async function openEvidenceReader(evidence: DossierEvidence) {
+    if (!selected) return
+    setSaving(true)
+    try {
+      const result = await getEvidencePassages(selected.dossier.id, evidence.id)
+      setReaderEvidence(result.evidence)
+      setReaderPassages(result.passages)
+      setReaderPage(result.passages[0]?.pageNumber ?? 1)
+      setReaderSearch("")
+    } catch (error) {
+      setFormError(errorMessage(error))
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  async function submitClaim() {
+    if (!selected || !claimEvidenceId || !claimSectionId) return
+    setSaving(true)
+    try {
+      onLoad(
+        await createDossierClaim(selected.dossier.id, {
+          evidenceId: claimEvidenceId,
+          sectionId: claimSectionId,
+          statement: claimStatement,
+          sourceExcerpt: claimExcerpt,
+          sourcePage: claimPage,
+        })
+      )
+      setClaimEvidenceId("")
+      setClaimStatement("")
+      setClaimExcerpt("")
+      setClaimSuggestions([])
+    } catch (error) {
+      setFormError(errorMessage(error))
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  async function reviewClaim(claimId: string, status: "verified" | "rejected") {
+    if (!selected) return
+    const claim = selected.claims.find((item) => item.id === claimId)
+    if (!claim) return
+    setSaving(true)
+    try {
+      onLoad(
+        await reviewDossierClaim(
+          selected.dossier.id,
+          claimId,
+          claimEdits[claimId] ?? claim.statement,
+          status
+        )
+      )
+    } catch (error) {
+      setFormError(errorMessage(error))
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  if (creating || (!dossierId && dossiers.length === 0)) {
+    return (
+      <main className="dossier-page dossier-intake-page">
+        <section className="dossier-intro">
+          <p className="section-label">NEW DOSSIER</p>
+          <h1>Build the evidence plan before drafting.</h1>
+          <p>
+            Greenlit will turn this regulatory scope into a tailored GRAS notice structure and
+            evidence requirements matrix.
+          </p>
+        </section>
+        <form className="dossier-intake" onSubmit={submit}>
+          <div className="intake-section">
+            <span>01 / IDENTITY</span>
+            <label>
+              Substance name *
+              <input name="substanceName" placeholder="e.g. Fermented pea protein" />
+            </label>
+            <label>
+              Company
+              <input name="companyName" placeholder="Sponsor or notifier" />
+            </label>
+            <label>
+              Substance type
+              <select name="substanceType" defaultValue="fermentation">
+                <option value="fermentation">Fermentation-derived substance</option>
+                <option value="enzyme">Enzyme preparation</option>
+                <option value="protein">Protein ingredient</option>
+                <option value="botanical">Botanical or extract</option>
+                <option value="chemical">Chemical substance</option>
+                <option value="other">Other</option>
+              </select>
+            </label>
+          </div>
+          <div className="intake-section">
+            <span>02 / CONDITIONS OF USE</span>
+            <label>
+              Intended technical effect
+              <textarea
+                name="intendedEffect"
+                placeholder="What function will the substance perform?"
+              />
+            </label>
+            <label>
+              Intended uses and use levels
+              <textarea
+                name="intendedUses"
+                placeholder="Food categories, maximum use levels, and exclusions"
+              />
+            </label>
+            <label>
+              Target population
+              <input name="targetPopulation" defaultValue="General U.S. population" />
+            </label>
+          </div>
+          <div className="intake-section">
+            <span>03 / MANUFACTURING</span>
+            <label>
+              Process summary
+              <textarea
+                name="manufacturingSummary"
+                placeholder="Briefly describe source materials, production, purification, and finishing."
+              />
+            </label>
+            <div className="intake-note">
+              <ShieldCheck />
+              <p>
+                This creates a planning workspace. Greenlit will not infer a GRAS conclusion from
+                intake answers.
+              </p>
+            </div>
+          </div>
+          {formError ? <p className="form-error">{formError}</p> : null}
+          <div className="intake-actions">
+            {dossiers.length > 0 ? (
+              <button type="button" className="secondary-action" onClick={() => setCreating(false)}>
+                Cancel
+              </button>
+            ) : null}
+            <button type="submit" className="primary-action" disabled={saving}>
+              {saving ? <LoaderCircle className="spin" /> : <Sparkles />}
+              Create evidence plan
+            </button>
+          </div>
+        </form>
+      </main>
+    )
+  }
+
+  if (!dossierId || !selected) {
+    const visibleDossiers = dossiers.filter(
+      (dossier) =>
+        (dossierStatusFilter === "all" || dossier.status === dossierStatusFilter) &&
+        `${dossier.name} ${dossier.intake.substanceName} ${dossier.intake.companyName} ${dossier.intake.substanceType}`
+          .toLowerCase()
+          .includes(dossierSearch.trim().toLowerCase())
+    )
+    return (
+      <main className="dossier-page">
+        <section className="workspace-heading">
+          <div>
+            <p className="section-label">DOSSIER WORKSPACES</p>
+            <h1>Drafting studio</h1>
+            <p>Evidence-led GRAS notice planning and drafting.</p>
+          </div>
+          <button type="button" className="primary-action" onClick={() => setCreating(true)}>
+            <Plus /> New dossier
+          </button>
+        </section>
+        <div className="dossier-library-tools">
+          <label className="dossier-library-search">
+            <Search />
+            <input
+              type="search"
+              value={dossierSearch}
+              onChange={(event) => setDossierSearch(event.currentTarget.value)}
+              placeholder="Search dossiers by substance, sponsor, or type"
+            />
+          </label>
+          <select
+            aria-label="Filter dossiers by status"
+            value={dossierStatusFilter}
+            onChange={(event) => setDossierStatusFilter(event.currentTarget.value)}
+          >
+            <option value="all">All workflow stages</option>
+            <option value="planning">Planning</option>
+            <option value="collecting_evidence">Collecting evidence</option>
+            <option value="drafting">Drafting</option>
+            <option value="review">Review</option>
+          </select>
+        </div>
+        <div className="dossier-library">
+          {visibleDossiers.map((dossier) => (
+            <button key={dossier.id} type="button" onClick={() => onOpen(dossier.id)}>
+              <span>
+                <FileText />
+                <strong>{dossier.name}</strong>
+              </span>
+              <StatusPill value={dossier.status} />
+              <small>{dossier.intake.substanceType.replaceAll("_", " ")}</small>
+              <ChevronRight />
+            </button>
+          ))}
+          {visibleDossiers.length === 0 ? (
+            <div className="evidence-empty">
+              <Search />
+              <h3>No matching dossiers</h3>
+              <p>Try a substance, sponsor, or dossier type.</p>
+            </div>
+          ) : null}
+        </div>
+      </main>
+    )
+  }
+
+  const ready = selected.requirements.filter((item) => item.status === "ready").length
+  const currentPassage =
+    readerPassages.find((passage) => passage.pageNumber === readerPage) ?? readerPassages[0]
+  const verifiedClaimCount = selected.claims.filter((claim) => claim.status === "verified").length
+  const approvedSectionCount = selected.sections.filter(
+    (section) => section.status === "approved"
+  ).length
+  const activeRelease = selected.releases.find((release) => release.status === "locked")
+  const nextGate = activeRelease
+    ? `Release v${activeRelease.packageVersion} locked`
+    : selected.evidence.length === 0
+      ? "Evidence collection"
+      : verifiedClaimCount === 0
+        ? "Claim verification"
+        : approvedSectionCount < selected.sections.length
+          ? "Section approval"
+          : "Final quality review"
+  const draftedSectionCount = selected.sections.filter(
+    (section) => section.content.trim().length >= 80
+  ).length
+  const verifiedEvidenceCount = selected.evidence.filter(
+    (evidence) => evidence.verificationStatus === "verified"
+  ).length
+  const progress = Math.round(
+    (ready / Math.max(selected.requirements.length, 1)) * 35 +
+      (verifiedEvidenceCount / Math.max(selected.evidence.length, 1)) * 15 +
+      (draftedSectionCount / Math.max(selected.sections.length, 1)) * 25 +
+      (approvedSectionCount / Math.max(selected.sections.length, 1)) * 25
+  )
+  const visiblePassages = readerSearch.trim()
+    ? readerPassages.filter((passage) =>
+        passage.text.toLowerCase().includes(readerSearch.trim().toLowerCase())
+      )
+    : readerPassages
+  return (
+    <main className="dossier-page">
+      <section className="dossier-header">
+        <button type="button" onClick={() => onOpen("")}>
+          <ArrowLeft /> All dossiers
+        </button>
+        <p className="section-label">GRAS DOSSIER / PLANNING</p>
+        <h1>{selected.dossier.intake.substanceName}</h1>
+        <p>
+          {selected.dossier.intake.companyName || "No sponsor specified"} ·{" "}
+          {selected.dossier.intake.substanceType.replaceAll("_", " ")}
+        </p>
+        <button
+          type="button"
+          className="dossier-export-action"
+          onClick={() =>
+            downloadDossierExport(selected.dossier.id, selected.dossier.intake.substanceName).catch(
+              (error) => setFormError(errorMessage(error))
+            )
+          }
+        >
+          <Download /> Export working dossier
+        </button>
+        <button
+          type="button"
+          className="dossier-export-action package-export-action"
+          onClick={() =>
+            downloadSubmissionPackage(
+              selected.dossier.id,
+              selected.dossier.intake.substanceName
+            ).catch((error) => setFormError(errorMessage(error)))
+          }
+        >
+          <LockKeyhole /> Download package
+        </button>
+      </section>
+      {activeRelease ? (
+        <section className="release-lock-banner">
+          <LockKeyhole />
+          <div>
+            <strong>Controlled release v{activeRelease.packageVersion} is locked</strong>
+            <p>
+              Draft, evidence, claim, and request changes are blocked until the release is
+              explicitly unlocked in the Release center.
+            </p>
+          </div>
+          <button type="button" onClick={() => setStudioTab("release")}>
+            Open release center
+          </button>
+        </section>
+      ) : null}
+      <section className="dossier-progress">
+        <div>
+          <span>REQUIREMENTS</span>
+          <strong>{selected.requirements.length}</strong>
+        </div>
+        <div>
+          <span>READY</span>
+          <strong>{ready}</strong>
+        </div>
+        <div>
+          <span>EVIDENCE ITEMS</span>
+          <strong>{selected.evidence.length}</strong>
+        </div>
+        <div>
+          <span>NEXT GATE</span>
+          <strong>{nextGate}</strong>
+        </div>
+      </section>
+      <section className="dossier-completion" aria-label={`${progress}% dossier workflow complete`}>
+        <div>
+          <span>WORKFLOW COMPLETION</span>
+          <strong>{progress}%</strong>
+        </div>
+        <div className="completion-track">
+          <i style={{ width: `${progress}%` }} />
+        </div>
+        <p>
+          {nextGate} is the next meaningful gate. Progress reflects verified evidence, substantive
+          drafting, and human approvals.
+        </p>
+      </section>
+      <section className="dossier-workbench">
+        <aside>
+          <p>WORKFLOW</p>
+          <button type="button" onClick={() => setStudioTab("evidence")}>
+            <Check /> Scope
+          </button>
+          <button
+            type="button"
+            className={studioTab === "requests" ? "is-current" : ""}
+            onClick={() => setStudioTab("requests")}
+          >
+            <CircleAlert /> Evidence requests
+          </button>
+          <button
+            type="button"
+            className={studioTab === "evidence" ? "is-current" : ""}
+            onClick={() => setStudioTab("evidence")}
+          >
+            <FolderOpen /> Evidence room
+          </button>
+          <button
+            type="button"
+            className={studioTab === "facts" ? "is-current" : ""}
+            onClick={() => setStudioTab("facts")}
+          >
+            <TableProperties /> Fact Book
+          </button>
+          <button
+            type="button"
+            className={studioTab === "draft" ? "is-current" : ""}
+            onClick={() => setStudioTab("draft")}
+          >
+            <FileText /> Draft sections
+          </button>
+          <button
+            type="button"
+            className={studioTab === "quality" ? "is-current" : ""}
+            onClick={() => setStudioTab("quality")}
+          >
+            <ShieldCheck /> Quality review
+          </button>
+          <button
+            type="button"
+            className={studioTab === "release" ? "is-current" : ""}
+            onClick={() => setStudioTab("release")}
+          >
+            <LockKeyhole /> Release center
+          </button>
+          <button
+            type="button"
+            className={studioTab === "activity" ? "is-current" : ""}
+            onClick={() => setStudioTab("activity")}
+          >
+            <Clock3 /> Activity
+          </button>
+        </aside>
+        {studioTab === "evidence" ? (
+          <div className="requirements-panel">
+            <div className="requirements-heading">
+              <div>
+                <p className="section-label">EVIDENCE ROOM</p>
+                <h2>Sources & requirements</h2>
+              </div>
+              <span>
+                <TableProperties /> {selected.requirements.length} requirements
+              </span>
+            </div>
+            <p className="requirements-lede">
+              Upload source PDFs, map each one to a requirement, then verify the extracted record
+              before it can support drafting.
+            </p>
+            <div className="evidence-upload-bar">
+              <select
+                aria-label="Evidence requirement"
+                value={requirementId}
+                onChange={(event) => setRequirementId(event.currentTarget.value)}
+              >
+                <option value="auto">Let Greenlit suggest the best requirement</option>
+                {selected.requirements.map((requirement) => (
+                  <option key={requirement.id} value={requirement.id}>
+                    {requirement.section} · {requirement.title}
+                  </option>
+                ))}
+              </select>
+              <select
+                aria-label="Evidence category"
+                value={evidenceCategory}
+                onChange={(event) =>
+                  setEvidenceCategory(event.currentTarget.value as DossierEvidence["category"])
+                }
+              >
+                <option value="identity">Identity</option>
+                <option value="manufacturing">Manufacturing</option>
+                <option value="specification">Specification</option>
+                <option value="exposure">Exposure</option>
+                <option value="safety_study">Safety study</option>
+                <option value="regulatory">Regulatory</option>
+                <option value="other">Other</option>
+              </select>
+              <label className="primary-action evidence-upload">
+                {saving ? <LoaderCircle className="spin" /> : <Upload />} Upload source
+                <input type="file" accept="application/pdf,.pdf" onChange={uploadEvidence} />
+              </label>
+            </div>
+            {formError ? <p className="form-error">{formError}</p> : null}
+            {readerEvidence && currentPassage ? (
+              <section className="evidence-reader">
+                <div className="evidence-reader-head">
+                  <div>
+                    <p className="section-label">SOURCE READER</p>
+                    <h3>{readerEvidence.title}</h3>
+                  </div>
+                  <label>
+                    <Search />
+                    <input
+                      type="search"
+                      value={readerSearch}
+                      onChange={(event) => setReaderSearch(event.currentTarget.value)}
+                      placeholder="Find in source"
+                      aria-label="Find in evidence source"
+                    />
+                  </label>
+                  <button
+                    type="button"
+                    aria-label="Close evidence reader"
+                    onClick={() => setReaderEvidence(null)}
+                  >
+                    <X />
+                  </button>
+                </div>
+                <div className="evidence-reader-body">
+                  <nav aria-label="Evidence pages">
+                    {visiblePassages.map((passage) => (
+                      <button
+                        type="button"
+                        key={passage.id}
+                        className={
+                          passage.pageNumber === currentPassage.pageNumber ? "is-active" : ""
+                        }
+                        onClick={() => setReaderPage(passage.pageNumber)}
+                      >
+                        Page {passage.pageNumber}
+                        <small>{passage.text.slice(0, 70) || "No readable text"}</small>
+                      </button>
+                    ))}
+                    {visiblePassages.length === 0 ? <p>No pages match this search.</p> : null}
+                  </nav>
+                  <article>
+                    <span>PAGE {currentPassage.pageNumber}</span>
+                    <p>{currentPassage.text || "No readable text was extracted from this page."}</p>
+                    {readerEvidence.verificationStatus === "verified" ? (
+                      <button
+                        type="button"
+                        className="primary-action"
+                        onClick={() => beginClaim(readerEvidence, currentPassage)}
+                      >
+                        <Plus /> Create claim from this page
+                      </button>
+                    ) : (
+                      <small>Verify this source before creating claims from its pages.</small>
+                    )}
+                  </article>
+                </div>
+              </section>
+            ) : null}
+            {selected.evidence.length > 0 ? (
+              <div className="evidence-cards">
+                {selected.evidence.map((evidence) => (
+                  <article key={evidence.id}>
+                    <div className="evidence-card-head">
+                      <span>
+                        <FileText /> {evidence.title}
+                      </span>
+                      <StatusPill value={evidence.verificationStatus} />
+                      <button
+                        type="button"
+                        className="evidence-remove"
+                        aria-label={`Remove ${evidence.title}`}
+                        onClick={() => removeEvidenceItem(evidence)}
+                      >
+                        <Trash2 />
+                      </button>
+                    </div>
+                    <p>{evidence.excerpt || "No readable text was extracted from this source."}</p>
+                    <small>
+                      {evidence.pageCount} pages · {evidence.category.replaceAll("_", " ")} · mapped
+                      to{" "}
+                      {
+                        selected.requirements.find((item) => item.id === evidence.requirementId)
+                          ?.title
+                      }
+                    </small>
+                    {evidence.verificationStatus === "needs_review" ? (
+                      <div className="evidence-actions">
+                        <button type="button" onClick={() => openEvidenceReader(evidence)}>
+                          <Search /> Inspect pages
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => verifyEvidenceItem(evidence.id, "rejected")}
+                        >
+                          <X /> Reject
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => verifyEvidenceItem(evidence.id, "verified")}
+                        >
+                          <Check /> Verify source
+                        </button>
+                      </div>
+                    ) : evidence.verificationStatus === "verified" ? (
+                      <div className="evidence-actions">
+                        <button type="button" onClick={() => openEvidenceReader(evidence)}>
+                          <Search /> Inspect pages
+                        </button>
+                        <button type="button" onClick={() => beginClaim(evidence)}>
+                          <Plus /> Propose supported claim
+                        </button>
+                      </div>
+                    ) : null}
+                  </article>
+                ))}
+              </div>
+            ) : (
+              <div className="evidence-empty">
+                <FolderOpen />
+                <h3>No evidence uploaded yet</h3>
+                <p>
+                  Start with specifications, batch analyses, process descriptions, or pivotal safety
+                  studies.
+                </p>
+              </div>
+            )}
+            {claimEvidenceId ? (
+              <section className="claim-composer">
+                <div className="requirements-heading">
+                  <div>
+                    <p className="section-label">CLAIM LEDGER</p>
+                    <h2>Propose a supported claim</h2>
+                  </div>
+                  <button type="button" onClick={() => setClaimEvidenceId("")}>
+                    <X />
+                  </button>
+                </div>
+                {claimSuggestions.length > 0 ? (
+                  <div className="claim-suggestions">
+                    <span>SUGGESTED FROM THIS PAGE</span>
+                    {claimSuggestions.map((suggestion) => (
+                      <button
+                        type="button"
+                        key={suggestion}
+                        className={claimStatement === suggestion ? "is-selected" : ""}
+                        onClick={() => setClaimStatement(suggestion)}
+                      >
+                        {suggestion}
+                      </button>
+                    ))}
+                  </div>
+                ) : null}
+                <label>
+                  Regulatory statement
+                  <textarea
+                    value={claimStatement}
+                    onChange={(event) => setClaimStatement(event.currentTarget.value)}
+                  />
+                </label>
+                <label>
+                  Exact supporting excerpt
+                  <textarea
+                    value={claimExcerpt}
+                    onChange={(event) => setClaimExcerpt(event.currentTarget.value)}
+                  />
+                </label>
+                <div className="claim-fields">
+                  <label>
+                    Destination section
+                    <select
+                      value={claimSectionId}
+                      onChange={(event) => setClaimSectionId(event.currentTarget.value)}
+                    >
+                      {selected.sections.map((section) => (
+                        <option key={section.id} value={section.id}>
+                          {section.part} · {section.title}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                  <label>
+                    Source page
+                    <input
+                      type="number"
+                      min="1"
+                      value={claimPage}
+                      onChange={(event) => setClaimPage(Number(event.currentTarget.value))}
+                    />
+                  </label>
+                </div>
+                <button
+                  type="button"
+                  className="primary-action"
+                  disabled={saving || !claimStatement.trim() || !claimExcerpt.trim()}
+                  onClick={submitClaim}
+                >
+                  Add proposed claim
+                </button>
+              </section>
+            ) : null}
+            <div className="requirements-table compact-requirements">
+              {selected.requirements.map((requirement) => (
+                <article key={requirement.id}>
+                  <span className="requirement-part">{requirement.section}</span>
+                  <div>
+                    <h3>{requirement.title}</h3>
+                    <p>{requirement.guidance}</p>
+                  </div>
+                  <StatusPill value={requirement.status} />
+                  <strong>{requirement.evidenceCount} sources</strong>
+                  <button
+                    type="button"
+                    disabled={saving}
+                    onClick={() => requestEvidence(requirement.id)}
+                  >
+                    <Plus /> Request evidence
+                  </button>
+                </article>
+              ))}
+            </div>
+          </div>
+        ) : null}
+        {studioTab === "facts" ? (
+          <div className="requirements-panel fact-book">
+            <div className="requirements-heading">
+              <div>
+                <p className="section-label">FACT BOOK</p>
+                <h2>Governed regulatory facts</h2>
+              </div>
+              <button
+                type="button"
+                onClick={() =>
+                  downloadFactBook(
+                    selected.dossier.id,
+                    selected.dossier.intake.substanceName
+                  ).catch((error) => setFormError(errorMessage(error)))
+                }
+              >
+                <Download /> Export CSV
+              </button>
+              <span>
+                {selected.factBookEntries.filter((item) => item.status === "verified").length}{" "}
+                verified
+              </span>
+            </div>
+            <p className="requirements-lede">
+              Capture facts once as structured data, link them to source evidence, and reuse them
+              across drafting, quality review, and package exports.
+            </p>
+            {formError ? <p className="form-error">{formError}</p> : null}
+            <section className="claim-composer">
+              <div className="claim-fields">
+                <label>
+                  Record type
+                  <select
+                    value={factKind}
+                    onChange={(event) => {
+                      setFactKind(event.currentTarget.value as FactBookEntry["kind"])
+                      setFactFields({})
+                    }}
+                  >
+                    {Object.keys(factTemplates).map((kind) => (
+                      <option key={kind} value={kind}>
+                        {kind.replaceAll("_", " ")}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <label>
+                  Record title
+                  <input
+                    value={factTitle}
+                    onChange={(event) => setFactTitle(event.currentTarget.value)}
+                    placeholder="Short, recognizable title"
+                  />
+                </label>
+                <label>
+                  Source evidence
+                  <select
+                    value={factEvidenceId}
+                    onChange={(event) => setFactEvidenceId(event.currentTarget.value)}
+                  >
+                    <option value="">No source linked yet</option>
+                    {selected.evidence.map((item) => (
+                      <option key={item.id} value={item.id}>
+                        {item.title}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              </div>
+              <div className="fact-fields">
+                {factTemplates[factKind].map((field) => (
+                  <label key={field.key}>
+                    {field.label}
+                    <input
+                      value={factFields[field.key] ?? ""}
+                      onChange={(event) =>
+                        setFactFields((current) => ({
+                          ...current,
+                          [field.key]: event.currentTarget.value,
+                        }))
+                      }
+                      placeholder={field.placeholder}
+                    />
+                  </label>
+                ))}
+              </div>
+              <button
+                type="button"
+                className="primary-action"
+                disabled={
+                  saving ||
+                  !factTitle.trim() ||
+                  Object.values(factFields).every((value) => !value.trim())
+                }
+                onClick={addFact}
+              >
+                <Plus /> Add structured record
+              </button>
+            </section>
+            <div className="fact-groups">
+              {Object.keys(factTemplates).map((kind) => {
+                const entries = selected.factBookEntries.filter((item) => item.kind === kind)
+                if (!entries.length) return null
+                return (
+                  <section key={kind}>
+                    <div className="requirements-heading">
+                      <div>
+                        <p className="section-label">{kind.replaceAll("_", " ")}</p>
+                        <h2>{entries.length} records</h2>
+                      </div>
+                    </div>
+                    <div className="evidence-cards">
+                      {entries.map((fact) => (
+                        <article key={fact.id}>
+                          <div className="evidence-card-head">
+                            <span>
+                              <TableProperties /> {fact.title}
+                            </span>
+                            <StatusPill value={fact.status} />
+                          </div>
+                          <dl>
+                            {Object.entries(fact.fields).map(([key, value]) => (
+                              <div key={key}>
+                                <dt>{key.replaceAll("_", " ")}</dt>
+                                <dd>{value}</dd>
+                              </div>
+                            ))}
+                          </dl>
+                          <small>
+                            {fact.evidenceId
+                              ? `Linked to ${selected.evidence.find((item) => item.id === fact.evidenceId)?.title ?? "evidence"}`
+                              : "No evidence linked"}{" "}
+                            · updated {formatDate(fact.updatedAt)}
+                          </small>
+                          <div className="evidence-actions">
+                            {fact.status === "draft" ? (
+                              <button
+                                type="button"
+                                onClick={() => setFactStatus(fact.id, "verified")}
+                              >
+                                <Check /> Verify fact
+                              </button>
+                            ) : (
+                              <button type="button" onClick={() => setFactStatus(fact.id, "draft")}>
+                                Reopen
+                              </button>
+                            )}
+                            <button type="button" onClick={() => removeFact(fact.id)}>
+                              <Trash2 /> Remove
+                            </button>
+                          </div>
+                        </article>
+                      ))}
+                    </div>
+                  </section>
+                )
+              })}
+            </div>
+            {selected.factBookEntries.length === 0 ? (
+              <div className="evidence-empty">
+                <TableProperties />
+                <h3>No structured facts yet</h3>
+                <p>
+                  Start with canonical identity, intended uses, specifications, exposure, or a
+                  pivotal safety study.
+                </p>
+              </div>
+            ) : null}
+          </div>
+        ) : null}
+        {studioTab === "requests" ? (
+          <div className="requirements-panel">
+            <div className="requirements-heading">
+              <div>
+                <p className="section-label">EVIDENCE REQUESTS</p>
+                <h2>Close evidence gaps</h2>
+              </div>
+              <span>{selected.evidenceRequests.length} requests</span>
+            </div>
+            <p className="requirements-lede">
+              Turn missing requirements into a concrete work queue, then track each response through
+              resolution.
+            </p>
+            {formError ? <p className="form-error">{formError}</p> : null}
+            <div className="evidence-cards">
+              {selected.evidenceRequests.map((request) => (
+                <article key={request.id}>
+                  <div className="evidence-card-head">
+                    <span>
+                      <CircleAlert /> {request.title}
+                    </span>
+                    <StatusPill value={request.status} />
+                  </div>
+                  <p>{request.detail}</p>
+                  <small>
+                    {request.priority} priority · updated {formatDate(request.updatedAt)}
+                  </small>
+                  {request.status === "open" ? (
+                    <div className="evidence-actions">
+                      <button
+                        type="button"
+                        onClick={() => setRequestStatus(request.id, "received")}
+                      >
+                        Mark received
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setRequestStatus(request.id, "rejected")}
+                      >
+                        Close unavailable
+                      </button>
+                    </div>
+                  ) : null}
+                  {request.status === "received" ? (
+                    <div className="evidence-actions">
+                      <button
+                        type="button"
+                        onClick={() => setRequestStatus(request.id, "resolved")}
+                      >
+                        <Check /> Resolve request
+                      </button>
+                    </div>
+                  ) : null}
+                </article>
+              ))}
+              {selected.evidenceRequests.length === 0 ? (
+                <div className="evidence-empty">
+                  <CircleAlert />
+                  <h3>No evidence requests</h3>
+                  <p>Create one from any requirement in the evidence room.</p>
+                </div>
+              ) : null}
+            </div>
+          </div>
+        ) : null}
+        {studioTab === "release" ? (
+          <div className="requirements-panel release-center">
+            <div className="requirements-heading">
+              <div>
+                <p className="section-label">RELEASE CENTER</p>
+                <h2>Review, attest & hand off</h2>
+              </div>
+              <LockKeyhole />
+            </div>
+            <p className="requirements-lede">
+              Capture named human accountability, freeze a quality snapshot, and prepare a
+              controlled consultant review package.
+            </p>
+            {formError ? <p className="form-error">{formError}</p> : null}
+            <section className="claim-composer">
+              <div className="requirements-heading">
+                <div>
+                  <p className="section-label">SIGNER</p>
+                  <h2>Release attestations</h2>
+                </div>
+                <span>
+                  {
+                    new Set(
+                      selected.attestations
+                        .filter((item) => item.status === "signed")
+                        .map((item) => item.kind)
+                    ).size
+                  }{" "}
+                  of 4 signed
+                </span>
+              </div>
+              <div className="claim-fields">
+                <label>
+                  Signer name
+                  <input
+                    value={signerName}
+                    onChange={(event) => setSignerName(event.currentTarget.value)}
+                    placeholder="Full name"
+                  />
+                </label>
+                <label>
+                  Role
+                  <input
+                    value={signerRole}
+                    onChange={(event) => setSignerRole(event.currentTarget.value)}
+                    placeholder="Scientific or regulatory role"
+                  />
+                </label>
+              </div>
+              <div className="quality-checks">
+                {(
+                  [
+                    "scientific_accuracy",
+                    "source_traceability",
+                    "regulatory_completeness",
+                    "final_authorization",
+                  ] as ReleaseAttestation["kind"][]
+                ).map((kind) => {
+                  const signed = selected.attestations.find(
+                    (item) => item.kind === kind && item.status === "signed"
+                  )
+                  return (
+                    <article key={kind} className={signed ? "quality-passed" : "quality-warning"}>
+                      <span>{signed ? <Check /> : <CircleAlert />}</span>
+                      <div>
+                        <small>HUMAN ATTESTATION</small>
+                        <h3>{kind.replaceAll("_", " ")}</h3>
+                        <p>
+                          {signed
+                            ? `${signed.signerName}, ${signed.signerRole} · ${formatDate(signed.signedAt)}`
+                            : "A named reviewer must sign this control."}
+                        </p>
+                      </div>
+                      {!signed ? (
+                        <button
+                          type="button"
+                          disabled={saving || !signerName.trim() || !signerRole.trim()}
+                          onClick={() => signAttestation(kind)}
+                        >
+                          Sign
+                        </button>
+                      ) : null}
+                    </article>
+                  )
+                })}
+              </div>
+            </section>
+            <section className="claim-composer">
+              <div className="requirements-heading">
+                <div>
+                  <p className="section-label">CONTROLLED PACKAGE</p>
+                  <h2>Release snapshots</h2>
+                </div>
+                <button
+                  type="button"
+                  className="primary-action"
+                  disabled={saving}
+                  onClick={lockRelease}
+                >
+                  <LockKeyhole /> Lock new release
+                </button>
+              </div>
+              <p>
+                Locking captures the current quality checks and package version. Blocking controls
+                or missing attestations prevent release.
+              </p>
+              <div className="evidence-cards">
+                {selected.releases.map((release) => (
+                  <article key={release.id}>
+                    <div className="evidence-card-head">
+                      <span>Package v{release.packageVersion}</span>
+                      <StatusPill value={release.status} />
+                    </div>
+                    <p>
+                      {release.qualitySnapshot.filter((item) => item.severity === "passed").length}{" "}
+                      controls passed ·{" "}
+                      {release.qualitySnapshot.filter((item) => item.severity === "warning").length}{" "}
+                      warnings
+                    </p>
+                    <small>Locked {formatDate(release.lockedAt)}</small>
+                    {release.status === "locked" ? (
+                      <div className="evidence-actions">
+                        <button
+                          type="button"
+                          onClick={() =>
+                            downloadSubmissionPackage(
+                              selected.dossier.id,
+                              selected.dossier.intake.substanceName
+                            ).catch((error) => setFormError(errorMessage(error)))
+                          }
+                        >
+                          <Download /> Download package
+                        </button>
+                        <button type="button" onClick={() => unlockRelease(release.id)}>
+                          Unlock for revision
+                        </button>
+                      </div>
+                    ) : null}
+                  </article>
+                ))}
+              </div>
+            </section>
+            <section className="claim-composer">
+              <div className="requirements-heading">
+                <div>
+                  <p className="section-label">CONSULTANT HANDOFF</p>
+                  <h2>Prepare independent review</h2>
+                </div>
+              </div>
+              <div className="claim-fields">
+                <label>
+                  Consultant name
+                  <input
+                    value={consultantName}
+                    onChange={(event) => setConsultantName(event.currentTarget.value)}
+                  />
+                </label>
+                <label>
+                  Email (optional)
+                  <input
+                    type="email"
+                    value={consultantEmail}
+                    onChange={(event) => setConsultantEmail(event.currentTarget.value)}
+                  />
+                </label>
+                <label>
+                  Due date
+                  <input
+                    type="date"
+                    value={handoffDueDate}
+                    onChange={(event) => setHandoffDueDate(event.currentTarget.value)}
+                  />
+                </label>
+              </div>
+              <label>
+                Review scope
+                <textarea
+                  value={handoffScope}
+                  onChange={(event) => setHandoffScope(event.currentTarget.value)}
+                />
+              </label>
+              <button
+                type="button"
+                className="primary-action"
+                disabled={saving || !consultantName.trim() || !handoffScope.trim()}
+                onClick={prepareHandoff}
+              >
+                Prepare handoff
+              </button>
+              <div className="evidence-cards">
+                {selected.handoffs.map((handoff) => (
+                  <article key={handoff.id}>
+                    <div className="evidence-card-head">
+                      <span>{handoff.consultantName}</span>
+                      <StatusPill value={handoff.status} />
+                    </div>
+                    <p>{handoff.scope}</p>
+                    <small>
+                      {handoff.consultantEmail || "No email recorded"}
+                      {handoff.dueDate ? ` · due ${handoff.dueDate}` : ""}
+                    </small>
+                    <div className="evidence-actions">
+                      {handoff.status === "prepared" ? (
+                        <button
+                          type="button"
+                          onClick={() => setHandoffStatus(handoff.id, "in_review")}
+                        >
+                          Start review
+                        </button>
+                      ) : null}
+                      {handoff.status === "in_review" ? (
+                        <button
+                          type="button"
+                          onClick={() => setHandoffStatus(handoff.id, "completed")}
+                        >
+                          <Check /> Complete review
+                        </button>
+                      ) : null}
+                      {!(["completed", "cancelled"] as string[]).includes(handoff.status) ? (
+                        <button
+                          type="button"
+                          onClick={() => setHandoffStatus(handoff.id, "cancelled")}
+                        >
+                          Cancel
+                        </button>
+                      ) : null}
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </section>
+          </div>
+        ) : null}
+        {studioTab === "activity" ? (
+          <div className="requirements-panel">
+            <div className="requirements-heading">
+              <div>
+                <p className="section-label">AUDIT TRAIL</p>
+                <h2>Workspace activity</h2>
+              </div>
+              <span>{selected.auditEvents.length} events</span>
+            </div>
+            <p className="requirements-lede">
+              An append-only record of drafting, review, evidence, claim, and request decisions.
+            </p>
+            <div className="quality-checks">
+              {selected.auditEvents.map((event) => (
+                <article key={event.id}>
+                  <span>
+                    <Clock3 />
+                  </span>
+                  <div>
+                    <small>{formatDate(event.createdAt)}</small>
+                    <h3>{event.summary}</h3>
+                    <p>{event.action.replaceAll("_", " ")}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        ) : null}
+        {studioTab === "draft" && selectedSection ? (
+          <div className="drafting-studio">
+            <div className="requirements-heading">
+              <div>
+                <p className="section-label">DRAFTING STUDIO</p>
+                <h2>{selectedSection.part}</h2>
+              </div>
+              <StatusPill value={selectedSection.status} />
+            </div>
+            <div className="draft-layout">
+              <nav>
+                {selected.sections.map((section) => (
+                  <button
+                    type="button"
+                    key={section.id}
+                    className={section.id === selectedSection.id ? "is-active" : ""}
+                    onClick={() => chooseSection(section.id)}
+                  >
+                    <span>{section.part}</span>
+                    <small>{section.status.replaceAll("_", " ")}</small>
+                  </button>
+                ))}
+              </nav>
+              <div className="draft-editor">
+                <h3>{selectedSection.title}</h3>
+                <div className="draft-provenance">
+                  <ShieldCheck /> Only verified workspace evidence is listed in generated starters.
+                  Every section requires human approval.
+                </div>
+                <section className="section-claims">
+                  <div>
+                    <strong>Verified claim ledger</strong>
+                    <small>
+                      {
+                        selected.claims.filter((claim) => claim.sectionId === selectedSection.id)
+                          .length
+                      }{" "}
+                      claims
+                    </small>
+                  </div>
+                  {selected.claims.filter((claim) => claim.sectionId === selectedSection.id)
+                    .length > 0 ? (
+                    selected.claims
+                      .filter((claim) => claim.sectionId === selectedSection.id)
+                      .map((claim) => (
+                        <article key={claim.id}>
+                          {claim.status === "proposed" ? (
+                            <textarea
+                              aria-label={`Review claim ${claim.id}`}
+                              value={claimEdits[claim.id] ?? claim.statement}
+                              onChange={(event) =>
+                                setClaimEdits((current) => ({
+                                  ...current,
+                                  [claim.id]: event.currentTarget.value,
+                                }))
+                              }
+                            />
+                          ) : (
+                            <p>{claim.statement}</p>
+                          )}
+                          <blockquote>“{claim.sourceExcerpt}”</blockquote>
+                          <small>
+                            Page {claim.sourcePage} · [[claim:{claim.id}]]
+                          </small>
+                          {claim.status === "proposed" ? (
+                            <div className="evidence-actions">
+                              <button
+                                type="button"
+                                onClick={() => reviewClaim(claim.id, "rejected")}
+                              >
+                                Reject
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => reviewClaim(claim.id, "verified")}
+                              >
+                                Verify claim
+                              </button>
+                            </div>
+                          ) : (
+                            <StatusPill value={claim.status} />
+                          )}
+                        </article>
+                      ))
+                  ) : (
+                    <p className="claim-empty">No claims are linked to this section yet.</p>
+                  )}
+                </section>
+                <textarea
+                  aria-label="Section draft"
+                  value={draftContent}
+                  onChange={(event) => setDraftContent(event.currentTarget.value)}
+                  placeholder="Create a grounded starter or begin drafting here."
+                />
+                {assistMeta ? (
+                  <p className="assist-meta">
+                    Drafted with {assistMeta.provider} · {assistMeta.model} · constrained to{" "}
+                    {assistMeta.claimCount} verified claims. Review before saving.
+                  </p>
+                ) : null}
+                <p className={`draft-save-state ${draftDirty ? "has-changes" : ""}`}>
+                  {draftDirty
+                    ? "Unsaved changes"
+                    : `Saved ${formatDate(selectedSection.updatedAt)}`}
+                </p>
+                {formError ? <p className="form-error">{formError}</p> : null}
+                <div className="draft-actions">
+                  <button type="button" onClick={assistSection} disabled={saving}>
+                    <Sparkles /> Assist from verified claims
+                  </button>
+                  <button type="button" onClick={generateStarter} disabled={saving}>
+                    <Sparkles /> Create grounded starter
+                  </button>
+                  <button type="button" onClick={() => saveSection("draft")} disabled={saving}>
+                    Save draft
+                  </button>
+                  <button type="button" onClick={() => saveSection("in_review")} disabled={saving}>
+                    Send to review
+                  </button>
+                  <button
+                    type="button"
+                    className="approve-action"
+                    onClick={() => saveSection("approved")}
+                    disabled={saving || draftContent.trim().length < 80}
+                  >
+                    <Check /> Approve
+                  </button>
+                </div>
+                <section className="section-claims">
+                  <div>
+                    <strong>Version history</strong>
+                    <small>{sectionVersions.length} saved versions</small>
+                  </div>
+                  {sectionVersions.slice(0, 8).map((version) => (
+                    <article key={version.id}>
+                      <p>
+                        Version {version.version} · {version.status.replaceAll("_", " ")}
+                      </p>
+                      <small>
+                        {formatDate(version.createdAt)} ·{" "}
+                        {version.content.slice(0, 120) || "Empty draft"}
+                      </small>
+                      <div className="evidence-actions">
+                        <button
+                          type="button"
+                          disabled={saving}
+                          onClick={() => restoreVersion(version.id)}
+                        >
+                          Restore as new draft
+                        </button>
+                      </div>
+                    </article>
+                  ))}
+                </section>
+              </div>
+            </div>
+          </div>
+        ) : null}
+        {studioTab === "quality" ? (
+          <div className="quality-gate">
+            <div className="requirements-heading">
+              <div>
+                <p className="section-label">QUALITY GATE</p>
+                <h2>Submission controls</h2>
+              </div>
+              <ShieldCheck />
+            </div>
+            <p className="requirements-lede">
+              These checks assess workspace completeness and traceability. They do not determine
+              that the substance is GRAS or predict FDA action.
+            </p>
+            <div className="quality-summary">
+              <strong>
+                {qualityChecks.filter((check) => check.severity === "blocker").length}
+              </strong>
+              <span>blocking controls</span>
+              <strong>{qualityChecks.filter((check) => check.severity === "passed").length}</strong>
+              <span>controls passed</span>
+            </div>
+            <div className="quality-checks">
+              {qualityChecks.map((check) => (
+                <article key={check.id} className={`quality-${check.severity}`}>
+                  <span>{check.severity === "passed" ? <Check /> : <CircleAlert />}</span>
+                  <div>
+                    <small>{check.target}</small>
+                    <h3>{check.title}</h3>
+                    <p>{check.detail}</p>
+                  </div>
+                  <div className="quality-action">
+                    <StatusPill value={check.severity} />
+                    {check.severity !== "passed" ? (
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setStudioTab(
+                            check.target === "Evidence room"
+                              ? "evidence"
+                              : check.target === "Fact Book"
+                                ? "facts"
+                                : check.target === "Release center"
+                                  ? "release"
+                                  : check.target === "Evidence requests"
+                                    ? "requests"
+                                    : "draft"
+                          )
+                        }
+                      >
+                        Resolve <ArrowRight />
+                      </button>
+                    ) : null}
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        ) : null}
+      </section>
+    </main>
+  )
+}
+
 function readRoute(): Route {
   const path = window.location.pathname
   if (path.startsWith("/analysis")) {
@@ -1509,12 +3444,16 @@ function readRoute(): Route {
   if (path.startsWith("/workspace")) {
     return { name: "workspace" }
   }
+  if (path.startsWith("/dossiers")) {
+    return { name: "dossiers", id: path.split("/")[2] }
+  }
   return { name: "home" }
 }
 
 function routePath(route: Route) {
   if (route.name === "analysis") return `/analysis/${route.id ?? ""}`
   if (route.name === "workspace") return "/workspace"
+  if (route.name === "dossiers") return route.id ? `/dossiers/${route.id}` : "/dossiers"
   return "/"
 }
 

@@ -34,6 +34,258 @@ describe("local analysis API", () => {
     expect(analysis.report?.readinessScore).toBeGreaterThan(50)
   })
 
+  it("supports the evidence-to-draft dossier workflow", async () => {
+    const app = createApp({ dataDir })
+    const headers = { "Content-Type": "application/json", "x-greenlit-session": "dossier-user" }
+    const createdResponse = await app.request("/api/dossiers", {
+      method: "POST",
+      headers,
+      body: JSON.stringify({
+        substanceName: "Fermented pea protein",
+        companyName: "Example Foods",
+        substanceType: "fermentation",
+        intendedEffect: "Protein source",
+        intendedUses: "Nutrition bars at specified use levels",
+        manufacturingSummary: "Controlled fermentation and purification",
+        targetPopulation: "General U.S. population",
+        grasBasis: "scientific_procedures",
+      }),
+    })
+    expect(createdResponse.status).toBe(201)
+    const created = (await createdResponse.json()) as {
+      dossier: { id: string }
+      requirements: Array<{ id: string }>
+      sections: Array<{ id: string }>
+    }
+
+    const evidenceForm = new FormData()
+    evidenceForm.set("requirementId", "auto")
+    evidenceForm.set("category", "identity")
+    evidenceForm.set(
+      "file",
+      new File(["%PDF-1.4 identity composition analytical characterization"], "identity.pdf", {
+        type: "application/pdf",
+      })
+    )
+    const evidenceResponse = await app.request(`/api/dossiers/${created.dossier.id}/evidence`, {
+      method: "POST",
+      headers: { "x-greenlit-session": "dossier-user" },
+      body: evidenceForm,
+    })
+    expect(evidenceResponse.status).toBe(201)
+    const withEvidence = (await evidenceResponse.json()) as {
+      evidence: Array<{ id: string; verificationStatus: string }>
+    }
+    expect(withEvidence.evidence[0].verificationStatus).toBe("needs_review")
+    expect((withEvidence.evidence[0] as { requirementId?: string }).requirementId).toBe(
+      created.requirements[0].id
+    )
+    const passagesResponse = await app.request(
+      `/api/dossiers/${created.dossier.id}/evidence/${withEvidence.evidence[0].id}/pages`,
+      { headers: { "x-greenlit-session": "dossier-user" } }
+    )
+    expect(passagesResponse.status).toBe(200)
+    await expect(passagesResponse.json()).resolves.toMatchObject({
+      passages: [{ pageNumber: 1, text: expect.stringContaining("analytical characterization") }],
+    })
+
+    const verifiedResponse = await app.request(
+      `/api/dossiers/${created.dossier.id}/evidence/${withEvidence.evidence[0].id}/verify`,
+      { method: "POST", headers, body: JSON.stringify({ status: "verified" }) }
+    )
+    expect(verifiedResponse.status).toBe(200)
+
+    const claimResponse = await app.request(`/api/dossiers/${created.dossier.id}/claims`, {
+      method: "POST",
+      headers,
+      body: JSON.stringify({
+        evidenceId: withEvidence.evidence[0].id,
+        sectionId: created.sections[0].id,
+        statement: "The notified substance is analytically characterized.",
+        sourceExcerpt: "identity composition analytical characterization",
+        sourcePage: 1,
+      }),
+    })
+    expect(claimResponse.status).toBe(201)
+    const withClaim = (await claimResponse.json()) as { claims: Array<{ id: string }> }
+    const claimId = withClaim.claims[0].id
+    const claimReviewResponse = await app.request(
+      `/api/dossiers/${created.dossier.id}/claims/${claimId}/review`,
+      {
+        method: "POST",
+        headers,
+        body: JSON.stringify({
+          statement: "The notified substance is analytically characterized.",
+          status: "verified",
+        }),
+      }
+    )
+    expect(claimReviewResponse.status).toBe(200)
+
+    const starterResponse = await app.request(
+      `/api/dossiers/${created.dossier.id}/sections/${created.sections[0].id}/starter`,
+      { method: "POST", headers }
+    )
+    expect(starterResponse.status).toBe(200)
+    const drafted = (await starterResponse.json()) as {
+      sections: Array<{ content: string; status: string }>
+    }
+    expect(drafted.sections[0].content).toContain("working section")
+    expect(drafted.sections[0].content).toContain(`[[claim:${claimId}]]`)
+
+    const exportResponse = await app.request(`/api/dossiers/${created.dossier.id}/export`, {
+      headers: { "x-greenlit-session": "dossier-user" },
+    })
+    expect(exportResponse.status).toBe(200)
+    const exported = await exportResponse.text()
+    expect(exported).toContain("WORKING DRAFT")
+    expect(exported).toContain("[^1]")
+    expect(exported).toContain("identity.pdf, p. 1")
+    expect(drafted.sections[0].status).toBe("draft")
+
+    const qualityResponse = await app.request(`/api/dossiers/${created.dossier.id}/quality`, {
+      headers: { "x-greenlit-session": "dossier-user" },
+    })
+    expect(qualityResponse.status).toBe(200)
+    await expect(qualityResponse.json()).resolves.toMatchObject({ checks: expect.any(Array) })
+
+    const deleteEvidenceResponse = await app.request(
+      `/api/dossiers/${created.dossier.id}/evidence/${withEvidence.evidence[0].id}`,
+      { method: "DELETE", headers: { "x-greenlit-session": "dossier-user" } }
+    )
+    expect(deleteEvidenceResponse.status).toBe(200)
+    const afterDelete = (await deleteEvidenceResponse.json()) as {
+      evidence: unknown[]
+      claims: unknown[]
+      requirements: Array<{ id: string; evidenceCount: number; status: string }>
+    }
+    expect(afterDelete.evidence).toEqual([])
+    expect(afterDelete.claims).toEqual([])
+    expect(
+      afterDelete.requirements.find((item) => item.id === created.requirements[0].id)
+    ).toMatchObject({
+      evidenceCount: 0,
+      status: "missing",
+    })
+  })
+
+  it("builds a consultant handoff and multi-artifact dossier package", async () => {
+    const app = createApp({ dataDir })
+    const headers = { "Content-Type": "application/json", "x-greenlit-session": "release-user" }
+    const createdResponse = await app.request("/api/dossiers", {
+      method: "POST",
+      headers,
+      body: JSON.stringify({
+        substanceName: "Release ingredient",
+        companyName: "Example Foods",
+        substanceType: "other",
+        intendedEffect: "Technical effect",
+        intendedUses: "Selected foods",
+        manufacturingSummary: "Controlled manufacturing",
+        targetPopulation: "General U.S. population",
+        grasBasis: "scientific_procedures",
+      }),
+    })
+    const created = (await createdResponse.json()) as { dossier: { id: string } }
+    const handoffResponse = await app.request(`/api/dossiers/${created.dossier.id}/handoffs`, {
+      method: "POST",
+      headers,
+      body: JSON.stringify({
+        consultantName: "Dr. Reviewer",
+        consultantEmail: "reviewer@example.com",
+        scope: "Independent scientific review",
+      }),
+    })
+    expect(handoffResponse.status).toBe(201)
+    const handedOff = (await handoffResponse.json()) as {
+      handoffs: Array<{ id: string; status: string }>
+    }
+    expect(handedOff.handoffs[0].status).toBe("prepared")
+    const reviewResponse = await app.request(
+      `/api/dossiers/${created.dossier.id}/handoffs/${handedOff.handoffs[0].id}`,
+      { method: "POST", headers, body: JSON.stringify({ status: "in_review" }) }
+    )
+    expect(reviewResponse.status).toBe(200)
+    const factResponse = await app.request(`/api/dossiers/${created.dossier.id}/facts`, {
+      method: "POST",
+      headers,
+      body: JSON.stringify({
+        kind: "specification",
+        title: "Lead specification",
+        fields: { parameter: "Lead", limit: "≤0.5", unit: "ppm", method: "ICP-MS" },
+      }),
+    })
+    expect(factResponse.status).toBe(201)
+    const withFact = (await factResponse.json()) as {
+      factBookEntries: Array<{ id: string; status: string }>
+    }
+    const verifyFact = await app.request(
+      `/api/dossiers/${created.dossier.id}/facts/${withFact.factBookEntries[0].id}/review`,
+      { method: "POST", headers, body: JSON.stringify({ status: "verified" }) }
+    )
+    expect(verifyFact.status).toBe(200)
+    const packageResponse = await app.request(`/api/dossiers/${created.dossier.id}/package`, {
+      headers: { "x-greenlit-session": "release-user" },
+    })
+    expect(packageResponse.status).toBe(200)
+    expect(packageResponse.headers.get("content-type")).toBe("application/zip")
+    const archive = Buffer.from(await packageResponse.arrayBuffer())
+    expect(archive.subarray(0, 4).toString("hex")).toBe("504b0304")
+    expect(archive.toString("utf8")).toContain("manifest.json")
+    expect(archive.toString("utf8")).toContain("02-claim-ledger.csv")
+    expect(archive.toString("utf8")).toContain("07-fact-book.csv")
+  })
+
+  it("blocks controlled-content edits while a release is locked", async () => {
+    const app = createApp({ dataDir })
+    const headers = { "Content-Type": "application/json", "x-greenlit-session": "locked-user" }
+    const response = await app.request("/api/dossiers", {
+      method: "POST",
+      headers,
+      body: JSON.stringify({
+        substanceName: "Locked ingredient",
+        companyName: "Example",
+        substanceType: "other",
+        intendedEffect: "Effect",
+        intendedUses: "Foods",
+        manufacturingSummary: "Process",
+        targetPopulation: "General population",
+        grasBasis: "scientific_procedures",
+      }),
+    })
+    const created = (await response.json()) as {
+      dossier: { id: string; ownerId: string }
+      sections: Array<{ id: string }>
+    }
+    const databasePath = path.join(dataDir, "db.json")
+    const database = JSON.parse(await readFile(databasePath, "utf8")) as {
+      dossierReleases?: unknown[]
+    }
+    database.dossierReleases = [
+      {
+        id: "release-1",
+        dossierId: created.dossier.id,
+        ownerId: created.dossier.ownerId,
+        status: "locked",
+        qualitySnapshot: [],
+        packageVersion: 1,
+        lockedAt: "2026-07-26T00:00:00.000Z",
+        updatedAt: "2026-07-26T00:00:00.000Z",
+      },
+    ]
+    await writeFile(databasePath, JSON.stringify(database))
+    const edit = await app.request(
+      `/api/dossiers/${created.dossier.id}/sections/${created.sections[0].id}`,
+      {
+        method: "POST",
+        headers,
+        body: JSON.stringify({ content: "Changed controlled content", status: "draft" }),
+      }
+    )
+    expect(edit.status).toBe(423)
+    await expect(edit.json()).resolves.toMatchObject({ error: expect.stringContaining("Unlock") })
+  })
+
   it("enriches the saved report with grounded deep-analysis findings", async () => {
     const app = createApp({
       analysisMode: "deep",

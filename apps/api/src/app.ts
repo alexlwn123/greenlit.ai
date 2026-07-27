@@ -1,4 +1,4 @@
-import { randomUUID } from "node:crypto"
+import { createHash, randomUUID } from "node:crypto"
 import path from "node:path"
 import { head, issueSignedToken, presignUrl } from "@vercel/blob"
 import type { HandleUploadPresignedBody } from "@vercel/blob/client"
@@ -11,17 +11,33 @@ import {
   type AnalysisRecord,
   type ArtifactReference,
   applyDeepAnalysis,
+  buildInitialDossierRequirements,
+  buildInitialDossierSections,
   type ComparableAction,
+  type ConsultantHandoff,
   compareEvidenceMatrices,
   createMinimumReadinessReport,
+  type DossierClaim,
+  type DossierEvidence,
+  DossierIntakeSchema,
+  type DossierRecord,
+  type DossierRelease,
+  type DossierRequirement,
+  type DossierSection,
+  type EvidenceRequest,
+  evaluateDossierQuality,
+  type FactBookEntry,
   mergeComparableActionsIntoOutline,
   type NoticeProfile,
   type ReadinessReport,
   ReadinessReportSchema,
+  type ReleaseAttestation,
   type ResearchReference,
   rankComparableFilings,
+  suggestDossierRequirement,
   type WorkbookNote,
 } from "../../../packages/core/src/index.js"
+import { draftSectionFromVerifiedClaims } from "./assisted-drafting.js"
 import { getBlobAuthOptions, hasBlobConfiguration } from "./blob-auth.js"
 import {
   type ComparableActionSynthesizer,
@@ -142,6 +158,630 @@ export function createApp(options: CreateAppOptions = {}) {
     const { ownerId, storage } = await requestScope(context)
     const analyses = await storage.listAnalyses(ownerId)
     return context.json({ analyses })
+  })
+
+  app.get("/api/dossiers", async (context) => {
+    const { ownerId, storage } = await requestScope(context)
+    return context.json({ dossiers: await storage.listDossiers(ownerId) })
+  })
+
+  app.get("/api/dossiers/:id", async (context) => {
+    const { ownerId, storage } = await requestScope(context)
+    const result = await storage.getDossier(ownerId, context.req.param("id"))
+    if (!result) return context.json({ error: "Dossier not found" }, 404)
+    return context.json(result)
+  })
+
+  app.delete("/api/dossiers/:id", async (context) => {
+    const { ownerId, storage } = await requestScope(context)
+    const deleted = await storage.deleteDossier(ownerId, context.req.param("id"))
+    return deleted ? context.body(null, 204) : context.json({ error: "Dossier not found" }, 404)
+  })
+
+  app.post("/api/dossiers", async (context) => {
+    const { ownerId, storage } = await requestScope(context)
+    const parsed = DossierIntakeSchema.safeParse(await context.req.json())
+    if (!parsed.success) {
+      return context.json({ error: "Complete the required dossier intake fields." }, 400)
+    }
+    const id = randomUUID()
+    const now = new Date().toISOString()
+    const requirements = buildInitialDossierRequirements(id, ownerId, parsed.data, now)
+    const sections = buildInitialDossierSections(id, ownerId, now)
+    const result = await storage.createDossier({
+      ownerId,
+      id,
+      name: `${parsed.data.substanceName} GRAS Notice`,
+      intake: parsed.data,
+      requirements,
+      sections,
+    })
+    return context.json(result, 201)
+  })
+
+  app.post("/api/dossiers/:id/evidence", async (context) => {
+    const { ownerId, storage } = await requestScope(context)
+    const dossier = await storage.getDossier(ownerId, context.req.param("id"))
+    if (!dossier) return context.json({ error: "Dossier not found" }, 404)
+    if (isDossierLocked(dossier))
+      return context.json({ error: "Unlock the controlled release before changing evidence." }, 423)
+    const body = await context.req.parseBody()
+    const uploadError = validateUpload(body.file)
+    if (uploadError) return context.json({ error: uploadError }, 400)
+    const requirementId = String(body.requirementId ?? "")
+    if (
+      requirementId !== "auto" &&
+      !dossier.requirements.some((item) => item.id === requirementId)
+    ) {
+      return context.json({ error: "Choose a valid dossier requirement." }, 400)
+    }
+    const file = body.file as File
+    const bytes = new Uint8Array(await file.arrayBuffer())
+    const artifact = await storage.createArtifact({
+      bytes,
+      fileName: file.name,
+      mimeType: file.type || "application/pdf",
+    })
+    await createEvidenceRecord(storage, {
+      ownerId,
+      dossierId: dossier.dossier.id,
+      requirementId,
+      category: evidenceCategory(body.category),
+      title: file.name,
+      artifact,
+      bytes,
+      requirements: dossier.requirements,
+    })
+    return context.json(await storage.getDossier(ownerId, dossier.dossier.id), 201)
+  })
+
+  app.post("/api/dossiers/:id/evidence/from-upload", async (context) => {
+    const { ownerId, storage } = await requestScope(context)
+    const dossier = await storage.getDossier(ownerId, context.req.param("id"))
+    if (!dossier) return context.json({ error: "Dossier not found" }, 404)
+    if (isDossierLocked(dossier))
+      return context.json({ error: "Unlock the controlled release before changing evidence." }, 423)
+    const body = (await context.req.json()) as {
+      pathname?: string
+      fileName?: string
+      requirementId?: string
+      category?: string
+    }
+    const pathname = body.pathname?.trim()
+    const fileName = body.fileName?.trim()
+    const requirementId = body.requirementId?.trim() ?? ""
+    if (!pathname || !fileName || !pathname.startsWith(uploadPathPrefix(ownerId))) {
+      return context.json({ error: "Uploaded evidence metadata is invalid." }, 400)
+    }
+    if (
+      requirementId !== "auto" &&
+      !dossier.requirements.some((item) => item.id === requirementId)
+    ) {
+      return context.json({ error: "Choose a valid dossier requirement." }, 400)
+    }
+    const artifact = await (options.resolveUploadedArtifact ?? resolveVercelBlobArtifact)(
+      ownerId,
+      pathname,
+      fileName
+    )
+    const bytes = await storage.readArtifact(artifact)
+    await createEvidenceRecord(storage, {
+      ownerId,
+      dossierId: dossier.dossier.id,
+      requirementId,
+      category: evidenceCategory(body.category),
+      title: fileName,
+      artifact,
+      bytes,
+      requirements: dossier.requirements,
+    })
+    return context.json(await storage.getDossier(ownerId, dossier.dossier.id), 201)
+  })
+
+  app.post("/api/dossiers/:id/evidence/:evidenceId/verify", async (context) => {
+    const { ownerId, storage } = await requestScope(context)
+    const dossier = await storage.getDossier(ownerId, context.req.param("id"))
+    if (!dossier) return context.json({ error: "Dossier not found" }, 404)
+    if (isDossierLocked(dossier))
+      return context.json(
+        { error: "Unlock the controlled release before reviewing evidence." },
+        423
+      )
+    const body = (await context.req.json()) as { status?: string }
+    await storage.verifyDossierEvidence(
+      ownerId,
+      context.req.param("evidenceId"),
+      body.status === "rejected" ? "rejected" : "verified"
+    )
+    return context.json(await storage.getDossier(ownerId, dossier.dossier.id))
+  })
+
+  app.post("/api/dossiers/:id/claims", async (context) => {
+    const { ownerId, storage } = await requestScope(context)
+    const dossier = await storage.getDossier(ownerId, context.req.param("id"))
+    if (!dossier) return context.json({ error: "Dossier not found" }, 404)
+    if (isDossierLocked(dossier))
+      return context.json({ error: "Unlock the controlled release before changing claims." }, 423)
+    const body = (await context.req.json()) as {
+      evidenceId?: string
+      sectionId?: string
+      statement?: string
+      sourceExcerpt?: string
+      sourcePage?: number
+    }
+    const evidence = dossier.evidence.find((item) => item.id === body.evidenceId)
+    const section = dossier.sections.find((item) => item.id === body.sectionId)
+    const statement = body.statement?.trim()
+    const sourceExcerpt = body.sourceExcerpt?.trim()
+    if (evidence?.verificationStatus !== "verified" || !section) {
+      return context.json({ error: "Claims require verified evidence and a valid section." }, 400)
+    }
+    if (!statement || !sourceExcerpt) {
+      return context.json(
+        { error: "Claim text and an exact supporting excerpt are required." },
+        400
+      )
+    }
+    const now = new Date().toISOString()
+    const claim: DossierClaim = {
+      id: randomUUID(),
+      dossierId: dossier.dossier.id,
+      ownerId,
+      sectionId: section.id,
+      requirementId: evidence.requirementId,
+      evidenceId: evidence.id,
+      statement,
+      sourceExcerpt,
+      sourcePage:
+        typeof body.sourcePage === "number" && body.sourcePage > 0
+          ? Math.floor(body.sourcePage)
+          : 1,
+      status: "proposed",
+      createdAt: now,
+      updatedAt: now,
+    }
+    await storage.createDossierClaim(claim)
+    return context.json(await storage.getDossier(ownerId, dossier.dossier.id), 201)
+  })
+
+  app.post("/api/dossiers/:id/claims/:claimId/review", async (context) => {
+    const { ownerId, storage } = await requestScope(context)
+    const dossier = await storage.getDossier(ownerId, context.req.param("id"))
+    if (!dossier) return context.json({ error: "Dossier not found" }, 404)
+    if (isDossierLocked(dossier))
+      return context.json({ error: "Unlock the controlled release before reviewing claims." }, 423)
+    const body = (await context.req.json()) as { statement?: string; status?: string }
+    const statement = body.statement?.trim()
+    if (!statement) return context.json({ error: "Claim text is required." }, 400)
+    await storage.reviewDossierClaim(
+      ownerId,
+      context.req.param("claimId"),
+      statement,
+      body.status === "rejected" ? "rejected" : "verified"
+    )
+    return context.json(await storage.getDossier(ownerId, dossier.dossier.id))
+  })
+
+  app.post("/api/dossiers/:id/sections/:sectionId", async (context) => {
+    const { ownerId, storage } = await requestScope(context)
+    const dossier = await storage.getDossier(ownerId, context.req.param("id"))
+    if (!dossier) return context.json({ error: "Dossier not found" }, 404)
+    if (isDossierLocked(dossier))
+      return context.json({ error: "Unlock the controlled release before changing drafts." }, 423)
+    const body = (await context.req.json()) as { content?: string; status?: string }
+    await storage.updateDossierSection({
+      ownerId,
+      sectionId: context.req.param("sectionId"),
+      content: body.content ?? "",
+      status:
+        body.status === "approved"
+          ? "approved"
+          : body.status === "in_review"
+            ? "in_review"
+            : "draft",
+    })
+    return context.json(await storage.getDossier(ownerId, dossier.dossier.id))
+  })
+
+  app.post("/api/dossiers/:id/sections/:sectionId/starter", async (context) => {
+    const { ownerId, storage } = await requestScope(context)
+    const dossier = await storage.getDossier(ownerId, context.req.param("id"))
+    if (!dossier) return context.json({ error: "Dossier not found" }, 404)
+    if (isDossierLocked(dossier))
+      return context.json({ error: "Unlock the controlled release before changing drafts." }, 423)
+    const section = dossier.sections.find((item) => item.id === context.req.param("sectionId"))
+    if (!section) return context.json({ error: "Dossier section not found" }, 404)
+    await storage.updateDossierSection({
+      ownerId,
+      sectionId: section.id,
+      content: buildSectionStarter(section.part, section.title, dossier),
+      status: "draft",
+    })
+    return context.json(await storage.getDossier(ownerId, dossier.dossier.id))
+  })
+
+  app.post("/api/dossiers/:id/sections/:sectionId/assist", async (context) => {
+    const { ownerId, storage } = await requestScope(context)
+    const dossier = await storage.getDossier(ownerId, context.req.param("id"))
+    if (!dossier) return context.json({ error: "Dossier not found" }, 404)
+    const section = dossier.sections.find((item) => item.id === context.req.param("sectionId"))
+    if (!section) return context.json({ error: "Dossier section not found" }, 404)
+    try {
+      return context.json({
+        result: await draftSectionFromVerifiedClaims({ section, claims: dossier.claims }),
+      })
+    } catch (error) {
+      return context.json(
+        { error: error instanceof Error ? error.message : "Assisted drafting failed." },
+        422
+      )
+    }
+  })
+
+  app.get("/api/dossiers/:id/sections/:sectionId/versions", async (context) => {
+    const { ownerId, storage } = await requestScope(context)
+    const dossier = await storage.getDossier(ownerId, context.req.param("id"))
+    if (!dossier) return context.json({ error: "Dossier not found" }, 404)
+    if (!dossier.sections.some((item) => item.id === context.req.param("sectionId")))
+      return context.json({ error: "Dossier section not found" }, 404)
+    return context.json({
+      versions: await storage.listSectionVersions(ownerId, context.req.param("sectionId")),
+    })
+  })
+
+  app.post("/api/dossiers/:id/sections/:sectionId/versions/:versionId/restore", async (context) => {
+    const { ownerId, storage } = await requestScope(context)
+    const dossier = await storage.getDossier(ownerId, context.req.param("id"))
+    if (!dossier) return context.json({ error: "Dossier not found" }, 404)
+    if (isDossierLocked(dossier))
+      return context.json({ error: "Unlock the controlled release before restoring drafts." }, 423)
+    await storage.restoreSectionVersion(
+      ownerId,
+      context.req.param("sectionId"),
+      context.req.param("versionId")
+    )
+    return context.json(await storage.getDossier(ownerId, dossier.dossier.id))
+  })
+
+  app.post("/api/dossiers/:id/requests", async (context) => {
+    const { ownerId, storage } = await requestScope(context)
+    const dossier = await storage.getDossier(ownerId, context.req.param("id"))
+    if (!dossier) return context.json({ error: "Dossier not found" }, 404)
+    if (isDossierLocked(dossier))
+      return context.json(
+        { error: "Unlock the controlled release before creating evidence requests." },
+        423
+      )
+    const body = (await context.req.json()) as Partial<EvidenceRequest>
+    const requirement = dossier.requirements.find((item) => item.id === body.requirementId)
+    if (!requirement) return context.json({ error: "Requirement not found" }, 404)
+    const now = new Date().toISOString()
+    await storage.createEvidenceRequest({
+      id: randomUUID(),
+      dossierId: dossier.dossier.id,
+      ownerId,
+      requirementId: requirement.id,
+      title: body.title?.trim() || `Evidence needed: ${requirement.title}`,
+      detail: body.detail?.trim() || requirement.guidance,
+      priority: body.priority === "blocking" || body.priority === "high" ? body.priority : "normal",
+      status: "open",
+      createdAt: now,
+      updatedAt: now,
+    })
+    return context.json(await storage.getDossier(ownerId, dossier.dossier.id), 201)
+  })
+
+  app.post("/api/dossiers/:id/requests/:requestId", async (context) => {
+    const { ownerId, storage } = await requestScope(context)
+    const dossier = await storage.getDossier(ownerId, context.req.param("id"))
+    if (!dossier) return context.json({ error: "Dossier not found" }, 404)
+    if (isDossierLocked(dossier))
+      return context.json(
+        { error: "Unlock the controlled release before updating evidence requests." },
+        423
+      )
+    const request = dossier.evidenceRequests.find(
+      (item) => item.id === context.req.param("requestId")
+    )
+    if (!request) return context.json({ error: "Evidence request not found" }, 404)
+    const body = (await context.req.json()) as {
+      status?: EvidenceRequest["status"]
+      responseNote?: string
+    }
+    const statuses: EvidenceRequest["status"][] = ["open", "received", "resolved", "rejected"]
+    await storage.updateEvidenceRequest(
+      ownerId,
+      request.id,
+      statuses.includes(body.status as EvidenceRequest["status"])
+        ? (body.status as EvidenceRequest["status"])
+        : "open",
+      body.responseNote?.trim()
+    )
+    return context.json(await storage.getDossier(ownerId, dossier.dossier.id))
+  })
+
+  app.post("/api/dossiers/:id/attestations", async (context) => {
+    const { ownerId, storage } = await requestScope(context)
+    const dossier = await storage.getDossier(ownerId, context.req.param("id"))
+    if (!dossier) return context.json({ error: "Dossier not found" }, 404)
+    if (isDossierLocked(dossier))
+      return context.json(
+        { error: "Unlock the controlled release before changing attestations." },
+        423
+      )
+    const body = (await context.req.json()) as Partial<ReleaseAttestation>
+    const kinds: ReleaseAttestation["kind"][] = [
+      "scientific_accuracy",
+      "source_traceability",
+      "regulatory_completeness",
+      "final_authorization",
+    ]
+    if (
+      !kinds.includes(body.kind as ReleaseAttestation["kind"]) ||
+      !body.signerName?.trim() ||
+      !body.signerRole?.trim()
+    )
+      return context.json({ error: "Attestation type, signer name, and role are required." }, 400)
+    const now = new Date().toISOString()
+    await storage.signReleaseAttestation({
+      id: randomUUID(),
+      dossierId: dossier.dossier.id,
+      ownerId,
+      kind: body.kind as ReleaseAttestation["kind"],
+      signerName: body.signerName.trim(),
+      signerRole: body.signerRole.trim(),
+      statement: attestationStatement(body.kind as ReleaseAttestation["kind"]),
+      status: "signed",
+      signedAt: now,
+      updatedAt: now,
+    })
+    return context.json(await storage.getDossier(ownerId, dossier.dossier.id), 201)
+  })
+
+  app.delete("/api/dossiers/:id/attestations/:attestationId", async (context) => {
+    const { ownerId, storage } = await requestScope(context)
+    const dossier = await storage.getDossier(ownerId, context.req.param("id"))
+    if (!dossier) return context.json({ error: "Dossier not found" }, 404)
+    if (isDossierLocked(dossier))
+      return context.json(
+        { error: "Unlock the controlled release before changing attestations." },
+        423
+      )
+    await storage.revokeReleaseAttestation(ownerId, context.req.param("attestationId"))
+    return context.json(await storage.getDossier(ownerId, dossier.dossier.id))
+  })
+
+  app.post("/api/dossiers/:id/releases", async (context) => {
+    const { ownerId, storage } = await requestScope(context)
+    const dossier = await storage.getDossier(ownerId, context.req.param("id"))
+    if (!dossier) return context.json({ error: "Dossier not found" }, 404)
+    const qualitySnapshot = evaluateDossierQuality(dossier)
+    const now = new Date().toISOString()
+    const version = Math.max(0, ...dossier.releases.map((item) => item.packageVersion)) + 1
+    await storage.lockDossierRelease({
+      id: randomUUID(),
+      dossierId: dossier.dossier.id,
+      ownerId,
+      status: "locked",
+      qualitySnapshot,
+      packageVersion: version,
+      lockedAt: now,
+      updatedAt: now,
+    })
+    return context.json(await storage.getDossier(ownerId, dossier.dossier.id), 201)
+  })
+
+  app.post("/api/dossiers/:id/releases/:releaseId/unlock", async (context) => {
+    const { ownerId, storage } = await requestScope(context)
+    const dossier = await storage.getDossier(ownerId, context.req.param("id"))
+    if (!dossier) return context.json({ error: "Dossier not found" }, 404)
+    await storage.unlockDossierRelease(ownerId, context.req.param("releaseId"))
+    return context.json(await storage.getDossier(ownerId, dossier.dossier.id))
+  })
+
+  app.post("/api/dossiers/:id/handoffs", async (context) => {
+    const { ownerId, storage } = await requestScope(context)
+    const dossier = await storage.getDossier(ownerId, context.req.param("id"))
+    if (!dossier) return context.json({ error: "Dossier not found" }, 404)
+    const body = (await context.req.json()) as Partial<ConsultantHandoff>
+    if (!body.consultantName?.trim() || !body.scope?.trim())
+      return context.json({ error: "Consultant name and review scope are required." }, 400)
+    const now = new Date().toISOString()
+    await storage.createConsultantHandoff({
+      id: randomUUID(),
+      dossierId: dossier.dossier.id,
+      ownerId,
+      consultantName: body.consultantName.trim(),
+      consultantEmail: body.consultantEmail?.trim() || undefined,
+      scope: body.scope.trim(),
+      dueDate: body.dueDate || undefined,
+      status: "prepared",
+      createdAt: now,
+      updatedAt: now,
+    })
+    return context.json(await storage.getDossier(ownerId, dossier.dossier.id), 201)
+  })
+
+  app.post("/api/dossiers/:id/handoffs/:handoffId", async (context) => {
+    const { ownerId, storage } = await requestScope(context)
+    const dossier = await storage.getDossier(ownerId, context.req.param("id"))
+    if (!dossier) return context.json({ error: "Dossier not found" }, 404)
+    const body = (await context.req.json()) as {
+      status?: ConsultantHandoff["status"]
+      responseNote?: string
+    }
+    const statuses: ConsultantHandoff["status"][] = [
+      "prepared",
+      "in_review",
+      "completed",
+      "cancelled",
+    ]
+    if (!statuses.includes(body.status as ConsultantHandoff["status"]))
+      return context.json({ error: "Invalid handoff status." }, 400)
+    await storage.updateConsultantHandoff(
+      ownerId,
+      context.req.param("handoffId"),
+      body.status as ConsultantHandoff["status"],
+      body.responseNote?.trim()
+    )
+    return context.json(await storage.getDossier(ownerId, dossier.dossier.id))
+  })
+
+  app.post("/api/dossiers/:id/facts", async (context) => {
+    const { ownerId, storage } = await requestScope(context)
+    const dossier = await storage.getDossier(ownerId, context.req.param("id"))
+    if (!dossier) return context.json({ error: "Dossier not found" }, 404)
+    if (isDossierLocked(dossier))
+      return context.json(
+        { error: "Unlock the controlled release before changing the Fact Book." },
+        423
+      )
+    const body = (await context.req.json()) as Partial<FactBookEntry>
+    const kinds: FactBookEntry["kind"][] = [
+      "identity",
+      "manufacturing",
+      "intended_use",
+      "exposure",
+      "specification",
+      "batch_result",
+      "safety_study",
+    ]
+    if (
+      !kinds.includes(body.kind as FactBookEntry["kind"]) ||
+      !body.title?.trim() ||
+      !body.fields ||
+      typeof body.fields !== "object"
+    )
+      return context.json({ error: "Fact type, title, and structured fields are required." }, 400)
+    const fields = Object.fromEntries(
+      Object.entries(body.fields)
+        .filter((entry): entry is [string, string] => typeof entry[1] === "string")
+        .map(([key, value]) => [key.trim(), value.trim()])
+        .filter(([key, value]) => key && value)
+    )
+    if (Object.keys(fields).length === 0)
+      return context.json({ error: "Add at least one structured field." }, 400)
+    const now = new Date().toISOString()
+    await storage.createFactBookEntry({
+      id: randomUUID(),
+      dossierId: dossier.dossier.id,
+      ownerId,
+      kind: body.kind as FactBookEntry["kind"],
+      title: body.title.trim(),
+      fields,
+      evidenceId: dossier.evidence.some((item) => item.id === body.evidenceId)
+        ? body.evidenceId
+        : undefined,
+      status: "draft",
+      createdAt: now,
+      updatedAt: now,
+    })
+    return context.json(await storage.getDossier(ownerId, dossier.dossier.id), 201)
+  })
+
+  app.post("/api/dossiers/:id/facts/:factId/review", async (context) => {
+    const { ownerId, storage } = await requestScope(context)
+    const dossier = await storage.getDossier(ownerId, context.req.param("id"))
+    if (!dossier) return context.json({ error: "Dossier not found" }, 404)
+    if (isDossierLocked(dossier))
+      return context.json(
+        { error: "Unlock the controlled release before changing the Fact Book." },
+        423
+      )
+    const body = (await context.req.json()) as { status?: FactBookEntry["status"] }
+    await storage.reviewFactBookEntry(
+      ownerId,
+      context.req.param("factId"),
+      body.status === "verified" ? "verified" : "draft"
+    )
+    return context.json(await storage.getDossier(ownerId, dossier.dossier.id))
+  })
+
+  app.delete("/api/dossiers/:id/facts/:factId", async (context) => {
+    const { ownerId, storage } = await requestScope(context)
+    const dossier = await storage.getDossier(ownerId, context.req.param("id"))
+    if (!dossier) return context.json({ error: "Dossier not found" }, 404)
+    if (isDossierLocked(dossier))
+      return context.json(
+        { error: "Unlock the controlled release before changing the Fact Book." },
+        423
+      )
+    await storage.deleteFactBookEntry(ownerId, context.req.param("factId"))
+    return context.json(await storage.getDossier(ownerId, dossier.dossier.id))
+  })
+
+  app.get("/api/dossiers/:id/facts/export", async (context) => {
+    const { ownerId, storage } = await requestScope(context)
+    const dossier = await storage.getDossier(ownerId, context.req.param("id"))
+    if (!dossier) return context.json({ error: "Dossier not found" }, 404)
+    const csv = buildFactBookCsv(dossier.factBookEntries)
+    return new Response(csv, {
+      headers: {
+        "Content-Type": "text/csv; charset=utf-8",
+        "Content-Disposition": `attachment; filename="${safeFileBase(dossier.dossier.intake.substanceName)}-fact-book.csv"`,
+        "Cache-Control": "private, no-store",
+      },
+    })
+  })
+
+  app.get("/api/dossiers/:id/quality", async (context) => {
+    const { ownerId, storage } = await requestScope(context)
+    const dossier = await storage.getDossier(ownerId, context.req.param("id"))
+    if (!dossier) return context.json({ error: "Dossier not found" }, 404)
+    return context.json({ checks: evaluateDossierQuality(dossier) })
+  })
+
+  app.get("/api/dossiers/:id/evidence/:evidenceId/pages", async (context) => {
+    const { ownerId, storage } = await requestScope(context)
+    const dossier = await storage.getDossier(ownerId, context.req.param("id"))
+    if (!dossier) return context.json({ error: "Dossier not found" }, 404)
+    const evidence = dossier.evidence.find((item) => item.id === context.req.param("evidenceId"))
+    if (!evidence) return context.json({ error: "Evidence not found" }, 404)
+    return context.json({
+      evidence,
+      passages: await storage.listEvidencePassages(ownerId, evidence.id),
+    })
+  })
+
+  app.delete("/api/dossiers/:id/evidence/:evidenceId", async (context) => {
+    const { ownerId, storage } = await requestScope(context)
+    const dossier = await storage.getDossier(ownerId, context.req.param("id"))
+    if (!dossier) return context.json({ error: "Dossier not found" }, 404)
+    if (isDossierLocked(dossier))
+      return context.json({ error: "Unlock the controlled release before removing evidence." }, 423)
+    await storage.deleteDossierEvidence(
+      ownerId,
+      dossier.dossier.id,
+      context.req.param("evidenceId")
+    )
+    return context.json(await storage.getDossier(ownerId, dossier.dossier.id))
+  })
+
+  app.get("/api/dossiers/:id/export", async (context) => {
+    const { ownerId, storage } = await requestScope(context)
+    const dossier = await storage.getDossier(ownerId, context.req.param("id"))
+    if (!dossier) return context.json({ error: "Dossier not found" }, 404)
+    return markdownResponse(
+      context,
+      buildDossierMarkdown(dossier),
+      `${safeFileBase(dossier.dossier.intake.substanceName)}-working-dossier.md`
+    )
+  })
+
+  app.get("/api/dossiers/:id/package", async (context) => {
+    const { ownerId, storage } = await requestScope(context)
+    const dossier = await storage.getDossier(ownerId, context.req.param("id"))
+    if (!dossier) return context.json({ error: "Dossier not found" }, 404)
+    const files = buildSubmissionPackageFiles(dossier)
+    const archive = createZipArchive(files)
+    const fileName = `${safeFileBase(dossier.dossier.intake.substanceName)}-submission-package.zip`
+    return new Response(archive, {
+      headers: {
+        "Content-Disposition": `attachment; filename="${fileName}"`,
+        "Content-Type": "application/zip",
+        "Cache-Control": "private, no-store",
+      },
+    })
   })
 
   app.get("/api/analyses/:id", async (context) => {
@@ -764,6 +1404,335 @@ function requiredConvexUrl() {
 
 function shouldRunAnalysisInline(override?: boolean) {
   return override ?? (process.env.VERCEL === "1" || process.env.GREENLIT_ANALYSIS_MODE === "inline")
+}
+
+type EvidenceCategory = DossierEvidence["category"]
+
+type DossierWorkspaceData = {
+  dossier: DossierRecord
+  requirements: DossierRequirement[]
+  evidence: DossierEvidence[]
+  sections: DossierSection[]
+  claims: DossierClaim[]
+  auditEvents: import("../../../packages/core/src/index.js").DossierAuditEvent[]
+  evidenceRequests: EvidenceRequest[]
+  attestations: ReleaseAttestation[]
+  releases: DossierRelease[]
+  handoffs: ConsultantHandoff[]
+  factBookEntries: FactBookEntry[]
+}
+
+function attestationStatement(kind: ReleaseAttestation["kind"]) {
+  const statements: Record<ReleaseAttestation["kind"], string> = {
+    scientific_accuracy:
+      "I have reviewed the scientific narrative and believe it accurately reflects the cited evidence, limitations, and relevant contrary information.",
+    source_traceability:
+      "I have reviewed the claim ledger and confirm that material assertions are traceable to identified source passages.",
+    regulatory_completeness:
+      "I have reviewed the dossier structure and quality controls for completeness against the intended GRAS notice workflow.",
+    final_authorization:
+      "I authorize this reviewed dossier version to be locked as a release package for controlled handoff or submission preparation.",
+  }
+  return statements[kind]
+}
+
+function isDossierLocked(workspace: DossierWorkspaceData) {
+  return workspace.releases.some((release) => release.status === "locked")
+}
+
+function buildDossierMarkdown(workspace: DossierWorkspaceData) {
+  const checks = evaluateDossierQuality(workspace)
+  const blockers = checks.filter((check) => check.severity === "blocker")
+  const claimNumbers = new Map<string, number>()
+  let nextNumber = 1
+  for (const claim of workspace.claims.filter((item) => item.status === "verified")) {
+    claimNumbers.set(claim.id, nextNumber)
+    nextNumber += 1
+  }
+  const sections = workspace.sections
+    .map((section) => {
+      const content = section.content.trim() || "_Section not yet drafted._"
+      const resolved = content.replace(/\[\[claim:([^\]]+)\]\]/g, (marker, claimId: string) => {
+        const number = claimNumbers.get(claimId)
+        return number ? `[^${number}]` : `${marker} **[UNRESOLVED CLAIM]**`
+      })
+      return `## ${section.part}: ${section.title}\n\n${resolved}\n\n_Section status: ${section.status.replaceAll("_", " ")}_`
+    })
+    .join("\n\n---\n\n")
+  const footnotes = workspace.claims
+    .filter((claim) => claim.status === "verified")
+    .map((claim) => {
+      const number = claimNumbers.get(claim.id)
+      const evidence = workspace.evidence.find((item) => item.id === claim.evidenceId)
+      return `[^${number}]: ${evidence?.title ?? "Unknown source"}, p. ${claim.sourcePage}. Supporting excerpt: “${claim.sourceExcerpt.replace(/\s+/g, " ").trim()}”`
+    })
+    .join("\n\n")
+  const quality = checks
+    .map((check) => `- **${check.severity.toUpperCase()} — ${check.title}:** ${check.detail}`)
+    .join("\n")
+  return `# ${workspace.dossier.name}\n\n> **WORKING DRAFT — NOT A GRAS CONCLUSION OR FDA SUBMISSION**\n>\n> Generated from Greenlit's verified claim ledger. ${blockers.length} blocking quality controls remain. Human scientific and regulatory review is required.\n\n## Workspace quality summary\n\n${quality}\n\n---\n\n${sections}\n\n## Verified source notes\n\n${footnotes || "No verified claim citations are available."}\n`
+}
+
+function buildSubmissionPackageFiles(workspace: DossierWorkspaceData) {
+  const quality = evaluateDossierQuality(workspace)
+  const activeRelease = workspace.releases.find((item) => item.status === "locked")
+  const csv = (value: unknown) => `"${String(value ?? "").replaceAll('"', '""')}"`
+  const claims = [
+    "claim_id,status,section,statement,source_title,source_page,source_excerpt",
+    ...workspace.claims.map((claim) => {
+      const section = workspace.sections.find((item) => item.id === claim.sectionId)
+      const evidence = workspace.evidence.find((item) => item.id === claim.evidenceId)
+      return [
+        claim.id,
+        claim.status,
+        section?.part,
+        claim.statement,
+        evidence?.title,
+        claim.sourcePage,
+        claim.sourceExcerpt,
+      ]
+        .map(csv)
+        .join(",")
+    }),
+  ].join("\r\n")
+  const evidence = [
+    "evidence_id,title,category,verification_status,pages,requirement,created_at",
+    ...workspace.evidence.map((item) =>
+      [
+        item.id,
+        item.title,
+        item.category,
+        item.verificationStatus,
+        item.pageCount,
+        workspace.requirements.find((requirement) => requirement.id === item.requirementId)?.title,
+        item.createdAt,
+      ]
+        .map(csv)
+        .join(",")
+    ),
+  ].join("\r\n")
+  const audit = [
+    "timestamp,action,target_type,target_id,summary",
+    ...workspace.auditEvents.map((item) =>
+      [item.createdAt, item.action, item.targetType, item.targetId, item.summary].map(csv).join(",")
+    ),
+  ].join("\r\n")
+  const facts = buildFactBookCsv(workspace.factBookEntries)
+  const attestations = workspace.attestations
+    .filter((item) => item.status === "signed")
+    .map((item) => ({
+      kind: item.kind,
+      signerName: item.signerName,
+      signerRole: item.signerRole,
+      statement: item.statement,
+      signedAt: item.signedAt,
+    }))
+  const initial = [
+    {
+      name: "README.txt",
+      content: `Greenlit controlled dossier package\n\nSubstance: ${workspace.dossier.intake.substanceName}\nSponsor: ${workspace.dossier.intake.companyName || "Not specified"}\nGenerated: ${new Date().toISOString()}\nRelease: ${activeRelease ? `Locked v${activeRelease.packageVersion}` : "Working package — not release locked"}\n\nThis package supports human scientific and regulatory review. It is not a GRAS conclusion and is not an FDA submission by itself.\n`,
+    },
+    { name: "01-dossier.md", content: buildDossierMarkdown(workspace) },
+    { name: "02-claim-ledger.csv", content: claims },
+    { name: "03-evidence-index.csv", content: evidence },
+    {
+      name: "04-quality-report.json",
+      content: JSON.stringify(
+        {
+          generatedAt: new Date().toISOString(),
+          blockers: quality.filter((item) => item.severity === "blocker").length,
+          checks: quality,
+        },
+        null,
+        2
+      ),
+    },
+    { name: "05-release-attestations.json", content: JSON.stringify(attestations, null, 2) },
+    { name: "06-audit-trail.csv", content: audit },
+    { name: "07-fact-book.csv", content: facts },
+  ]
+  const manifest = {
+    packageFormat: "greenlit-dossier-package",
+    formatVersion: 1,
+    generatedAt: new Date().toISOString(),
+    dossierId: workspace.dossier.id,
+    substanceName: workspace.dossier.intake.substanceName,
+    release: activeRelease
+      ? {
+          id: activeRelease.id,
+          version: activeRelease.packageVersion,
+          lockedAt: activeRelease.lockedAt,
+        }
+      : null,
+    files: initial.map((file) => ({
+      name: file.name,
+      bytes: Buffer.byteLength(file.content),
+      sha256: createHash("sha256").update(file.content).digest("hex"),
+    })),
+  }
+  return [...initial, { name: "manifest.json", content: JSON.stringify(manifest, null, 2) }]
+}
+
+function buildFactBookCsv(entries: FactBookEntry[]) {
+  const csv = (value: unknown) => `"${String(value ?? "").replaceAll('"', '""')}"`
+  return [
+    "fact_id,kind,title,status,field,value,evidence_id",
+    ...entries.flatMap((fact) =>
+      Object.entries(fact.fields).map(([field, value]) =>
+        [fact.id, fact.kind, fact.title, fact.status, field, value, fact.evidenceId]
+          .map(csv)
+          .join(",")
+      )
+    ),
+  ].join("\r\n")
+}
+
+function createZipArchive(files: Array<{ name: string; content: string }>) {
+  const encoder = new TextEncoder()
+  const chunks: Uint8Array[] = []
+  const central: Uint8Array[] = []
+  let offset = 0
+  for (const file of files) {
+    const name = encoder.encode(file.name)
+    const data = encoder.encode(file.content)
+    const crc = crc32(data)
+    const local = zipHeader(0x04034b50, 30 + name.length)
+    const localView = new DataView(local.buffer)
+    localView.setUint16(4, 20, true)
+    localView.setUint16(8, 0, true)
+    localView.setUint32(14, crc, true)
+    localView.setUint32(18, data.length, true)
+    localView.setUint32(22, data.length, true)
+    localView.setUint16(26, name.length, true)
+    local.set(name, 30)
+    chunks.push(local, data)
+    const entry = zipHeader(0x02014b50, 46 + name.length)
+    const view = new DataView(entry.buffer)
+    view.setUint16(4, 20, true)
+    view.setUint16(6, 20, true)
+    view.setUint32(16, crc, true)
+    view.setUint32(20, data.length, true)
+    view.setUint32(24, data.length, true)
+    view.setUint16(28, name.length, true)
+    view.setUint32(42, offset, true)
+    entry.set(name, 46)
+    central.push(entry)
+    offset += local.length + data.length
+  }
+  const centralSize = central.reduce((sum, item) => sum + item.length, 0)
+  const end = zipHeader(0x06054b50, 22)
+  const endView = new DataView(end.buffer)
+  endView.setUint16(8, files.length, true)
+  endView.setUint16(10, files.length, true)
+  endView.setUint32(12, centralSize, true)
+  endView.setUint32(16, offset, true)
+  return Buffer.concat([...chunks, ...central, end])
+}
+
+function zipHeader(signature: number, size: number) {
+  const bytes = new Uint8Array(size)
+  new DataView(bytes.buffer).setUint32(0, signature, true)
+  return bytes
+}
+
+function crc32(bytes: Uint8Array) {
+  let crc = 0xffffffff
+  for (const byte of bytes) {
+    crc ^= byte
+    for (let bit = 0; bit < 8; bit += 1) crc = (crc >>> 1) ^ (crc & 1 ? 0xedb88320 : 0)
+  }
+  return (crc ^ 0xffffffff) >>> 0
+}
+
+function evidenceCategory(value: unknown): EvidenceCategory {
+  const categories: EvidenceCategory[] = [
+    "identity",
+    "manufacturing",
+    "specification",
+    "exposure",
+    "safety_study",
+    "regulatory",
+    "other",
+  ]
+  return categories.includes(value as EvidenceCategory) ? (value as EvidenceCategory) : "other"
+}
+
+async function createEvidenceRecord(
+  storage: ReturnType<typeof createConfiguredStorage>,
+  input: Omit<
+    DossierEvidence,
+    "id" | "verificationStatus" | "excerpt" | "pageCount" | "createdAt" | "updatedAt"
+  > & {
+    bytes: Uint8Array
+    requirements: DossierRequirement[]
+  }
+) {
+  const extracted = await extractPdfText(input.bytes)
+  validatePdfPageCount(extracted.pageCount)
+  const now = new Date().toISOString()
+  const mappedRequirement =
+    input.requirementId === "auto"
+      ? suggestDossierRequirement(extracted.text, input.requirements)
+      : input.requirements.find((requirement) => requirement.id === input.requirementId)
+  if (!mappedRequirement) throw new Error("No dossier requirement is available for this evidence")
+  const evidenceId = randomUUID()
+  const evidence: DossierEvidence = {
+    id: evidenceId,
+    ownerId: input.ownerId,
+    dossierId: input.dossierId,
+    requirementId: mappedRequirement.id,
+    title: input.title,
+    category: input.category,
+    verificationStatus: "needs_review",
+    artifact: input.artifact,
+    excerpt: extracted.text.replace(/\s+/g, " ").trim().slice(0, 1800),
+    pageCount: extracted.pageCount,
+    createdAt: now,
+    updatedAt: now,
+  }
+  return storage.addDossierEvidence(
+    evidence,
+    extracted.pages.map((page) => ({
+      id: `${evidenceId}-page-${page.pageNumber}`,
+      dossierId: input.dossierId,
+      evidenceId,
+      ownerId: input.ownerId,
+      pageNumber: page.pageNumber,
+      text: page.text.slice(0, 12_000),
+      createdAt: now,
+    }))
+  )
+}
+
+function buildSectionStarter(part: string, title: string, dossier: DossierWorkspaceData) {
+  const relevantRequirements = dossier.requirements.filter((item) => item.section === part)
+  const relevantEvidence = dossier.evidence.filter((item) =>
+    relevantRequirements.some((requirement) => requirement.id === item.requirementId)
+  )
+  const citations = relevantEvidence
+    .filter((item) => item.verificationStatus === "verified")
+    .map((item) => `${item.title} (${item.pageCount} pages)`)
+  const verifiedClaims = dossier.claims.filter(
+    (claim) =>
+      claim.sectionId === dossier.sections.find((section) => section.part === part)?.id &&
+      claim.status === "verified"
+  )
+  const intake = dossier.dossier.intake
+  const factContext = dossier.factBookEntries
+    .filter((fact) => fact.status === "verified")
+    .map(
+      (fact) =>
+        `- ${fact.title}: ${Object.entries(fact.fields)
+          .map(([key, value]) => `${key.replaceAll("_", " ")}=${value}`)
+          .join("; ")}`
+    )
+    .join("\n")
+  const baseClaimDraft =
+    verifiedClaims.length > 0
+      ? verifiedClaims.map((claim) => `${claim.statement} [[claim:${claim.id}]]`).join("\n\n")
+      : "No verified claims are currently available for this section. Add and approve claims in the claim ledger before treating this draft as evidence-grounded."
+  const claimDraft = `${baseClaimDraft}\n\n## Verified Fact Book context\n\n${factContext || "- No verified structured facts are available."}`
+  return `# ${part}. ${title}\n\n${claimDraft}\n\n## Drafting context\n\nThe notified substance is ${intake.substanceName}. Its intended technical effect is ${intake.intendedEffect || "to be confirmed"}, and its proposed conditions of use are ${intake.intendedUses || "not yet fully specified"}. This context is intake information, not a verified scientific claim.\n\n## Drafting record\n\nThis working section was initialized from the verified dossier workspace. It requires regulatory-lead review before use.\n\n## Evidence mapped to this part\n\n${citations.length > 0 ? citations.map((citation) => `- ${citation}`).join("\n") : "- No verified evidence is currently mapped to this part."}\n\n## Open requirements\n\n${relevantRequirements.length > 0 ? relevantRequirements.map((item) => `- ${item.title}: ${item.status}`).join("\n") : "- No requirement rows are currently mapped to this part."}`
 }
 
 function validateUpload(file: FormDataEntryValue | FormDataEntryValue[] | undefined) {
