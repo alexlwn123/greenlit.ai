@@ -16,13 +16,18 @@ if (!convexUrl) {
 }
 
 const convex = new ConvexReactClient(convexUrl)
+const isPublicCapabilityRoute = /^\/(respond|review)\/[^/]+\/?$/.test(window.location.pathname)
 
 createRoot(rootElement).render(
   <StrictMode>
     <ConvexAuthProvider client={convex}>
-      <AuthGate>
+      {isPublicCapabilityRoute ? (
         <App />
-      </AuthGate>
+      ) : (
+        <AuthGate>
+          <App />
+        </AuthGate>
+      )}
     </ConvexAuthProvider>
   </StrictMode>
 )
