@@ -1989,6 +1989,125 @@ const factTemplates: Record<
   ],
 }
 
+const sampleWorkflowTabs = [
+  { id: "evidence", label: "Evidence room", icon: FolderOpen },
+  { id: "facts", label: "Fact Book", icon: TableProperties },
+  { id: "draft", label: "Live draft", icon: FileText },
+  { id: "quality", label: "Quality gate", icon: ShieldCheck },
+  { id: "consultant", label: "Consultant review", icon: FileSearch },
+  { id: "submission", label: "Submission lifecycle", icon: LockKeyhole },
+] as const
+
+type SampleWorkflowTab = (typeof sampleWorkflowTabs)[number]["id"]
+
+function SampleDossierPreview({ onClose }: { onClose: () => void }) {
+  const [tab, setTab] = useState<SampleWorkflowTab>("evidence")
+
+  return (
+    <main className="dossier-page sample-dossier">
+      <section className="sample-dossier-banner">
+        <div>
+          <p className="section-label">READ-ONLY SAMPLE · NOTHING IS SAVED</p>
+          <h1>Fermented pea protein isolate</h1>
+          <p>Northstar Nutrition · GRAS notice working dossier</p>
+        </div>
+        <button type="button" className="secondary-action" onClick={onClose}>
+          <ArrowLeft /> Back to your workspace
+        </button>
+      </section>
+      <section className="dossier-metrics">
+        <div><span>REQUIREMENTS</span><strong>18</strong></div>
+        <div><span>READY</span><strong>14</strong></div>
+        <div><span>EVIDENCE ITEMS</span><strong>27</strong></div>
+        <div><span>NEXT GATE</span><strong>Resolve 2 blockers</strong></div>
+      </section>
+      <section className="dossier-completion" aria-label="78% sample dossier workflow complete">
+        <div><span>WORKFLOW COMPLETION</span><strong>78%</strong></div>
+        <div className="completion-track"><i style={{ width: "78%" }} /></div>
+        <p>Two evidence gaps and one consultant finding remain before the release can be locked.</p>
+      </section>
+      <section className="dossier-workbench sample-workbench">
+        <aside>
+          <p>CONNECTED WORKFLOW</p>
+          {sampleWorkflowTabs.map((item) => {
+            const Icon = item.icon
+            return (
+              <button type="button" className={tab === item.id ? "is-current" : ""} onClick={() => setTab(item.id)} key={item.id}>
+                <Icon /> {item.label}
+              </button>
+            )
+          })}
+        </aside>
+        <div className="sample-workspace-panel">
+          <SampleWorkflowPanel tab={tab} />
+        </div>
+      </section>
+    </main>
+  )
+}
+
+function SampleWorkflowPanel({ tab }: { tab: SampleWorkflowTab }) {
+  if (tab === "evidence") return (
+    <>
+      <div className="studio-heading"><div><p className="section-label">EVIDENCE ROOM</p><h2>Source-to-claim traceability</h2></div><span className="status-badge">27 sources</span></div>
+      <div className="sample-grid">
+        <article><small>VERIFIED · IDENTITY</small><h3>Compositional characterization</h3><p>Certificate of analysis · pp. 3–5</p><strong>4 facts extracted</strong></article>
+        <article><small>NEEDS REVIEW · SAFETY</small><h3>90-day oral toxicity study</h3><p>Study report · NOAEL on p. 84</p><strong>2 proposed facts</strong></article>
+        <article className="sample-warning"><small>MISSING · EXPOSURE</small><h3>Children’s intake scenario</h3><p>Requested from exposure consultant</p><strong>High priority</strong></article>
+      </div>
+      <div className="sample-callout"><Sparkles /><p>Greenlit found a NOAEL of 1,000 mg/kg bw/day and proposed it for governed Fact Book review.</p></div>
+    </>
+  )
+  if (tab === "facts") return (
+    <>
+      <div className="studio-heading"><div><p className="section-label">FACT BOOK</p><h2>One governed source of truth</h2></div><span className="status-badge">12 approved</span></div>
+      <div className="sample-table">
+        <div><span>Identity</span><strong>Protein content</strong><p>≥ 82% dry basis</p><small>Used in Parts 2, 3, and 6</small></div>
+        <div><span>Specification</span><strong>Lead limit</strong><p>≤ 0.5 mg/kg</p><small>Used in Parts 2 and 3</small></div>
+        <div><span>Safety</span><strong>90-day NOAEL</strong><p>1,000 mg/kg bw/day</p><small>Draft · awaiting reviewer acceptance</small></div>
+      </div>
+      <div className="sample-callout"><CircleAlert /><p>Changing the protein specification would update three sections and return two approved sections to review.</p></div>
+    </>
+  )
+  if (tab === "draft") return (
+    <>
+      <div className="studio-heading"><div><p className="section-label">LIVE DRAFT</p><h2>Part 6 · Narrative</h2></div><span className="status-badge">In review</span></div>
+      <article className="sample-document"><h3>Safety narrative</h3><p>The pivotal 90-day study established a NOAEL of <mark>1,000 mg/kg bw/day</mark>. Compared with the estimated 90th-percentile intake of <mark>8.4 mg/kg bw/day</mark>, the resulting margin of safety is 119-fold.</p><p>Each highlighted value is rendered from a governed Fact Book reference and updates across every linked section only after impact confirmation.</p></article>
+      <div className="sample-source"><FileText /><span><strong>Linked support</strong> · Study report p. 84 · Exposure assessment p. 19</span></div>
+    </>
+  )
+  if (tab === "quality") return (
+    <>
+      <div className="studio-heading"><div><p className="section-label">QUALITY GATE</p><h2>Release readiness</h2></div><span className="status-badge status-warn">2 blockers</span></div>
+      <div className="sample-checks">
+        <div className="is-passed"><Check /><span><strong>Traceability complete</strong><small>31 claims linked to source pages</small></span></div>
+        <div className="is-passed"><Check /><span><strong>Fact references resolved</strong><small>No broken or stale references</small></span></div>
+        <div className="is-blocked"><CircleAlert /><span><strong>Exposure evidence incomplete</strong><small>Children’s intake scenario is outstanding</small></span></div>
+        <div className="is-blocked"><CircleAlert /><span><strong>Consultant issue open</strong><small>Clarify test-article comparability</small></span></div>
+      </div>
+    </>
+  )
+  if (tab === "consultant") return (
+    <>
+      <div className="studio-heading"><div><p className="section-label">CONSULTANT REVIEW</p><h2>Independent scientific review</h2></div><span className="status-badge">Due Aug 8</span></div>
+      <article className="sample-review-card"><div><strong>Dr. Maya Chen</strong><small>Secure scoped review link · In review</small></div><span>1 open issue</span></article>
+      <article className="sample-issue"><small>BLOCKING · PART 6 · SAFETY</small><h3>Clarify test-article comparability</h3><p>The study batch should be explicitly bridged to the commercial specification before relying on the NOAEL.</p><strong>Open</strong></article>
+    </>
+  )
+  return (
+    <>
+      <div className="studio-heading"><div><p className="section-label">SUBMISSION LIFECYCLE</p><h2>FDA GRAS notice</h2></div><span className="status-badge">Agency questions</span></div>
+      <div className="sample-timeline">
+        <div className="is-done"><Check /><span><strong>Release locked</strong><small>Version 1.0 · immutable package</small></span></div>
+        <div className="is-done"><Check /><span><strong>Submitted</strong><small>GRN 001234 · July 18, 2026</small></span></div>
+        <div className="is-current"><Clock3 /><span><strong>Agency questions</strong><small>Response due August 21</small></span></div>
+        <div><span /><span><strong>Closed</strong><small>Pending FDA review</small></span></div>
+      </div>
+      <article className="sample-issue"><small>HIGH PRIORITY · OPEN</small><h3>Provide updated manufacturing flow diagram</h3><p>Response draft is linked to the locked submission release and its supporting evidence.</p></article>
+    </>
+  )
+}
+
 function DossierPage({
   dossierId,
   dossiers,
@@ -2005,6 +2124,7 @@ function DossierPage({
   onOpen: (id: string) => void
 }) {
   const [creating, setCreating] = useState(dossiers.length === 0 && !dossierId)
+  const [previewingSample, setPreviewingSample] = useState(false)
   const [saving, setSaving] = useState(false)
   const [formError, setFormError] = useState<string | null>(null)
   const [studioTab, setStudioTab] = useState<
@@ -2756,6 +2876,10 @@ function DossierPage({
     }
   }
 
+  if (previewingSample) {
+    return <SampleDossierPreview onClose={() => setPreviewingSample(false)} />
+  }
+
   if (creating || (!dossierId && dossiers.length === 0)) {
     return (
       <main className="dossier-page dossier-intake-page">
@@ -2829,6 +2953,18 @@ function DossierPage({
             </div>
           </div>
           {formError ? <p className="form-error">{formError}</p> : null}
+          <button
+            type="button"
+            className="sample-dossier-launch"
+            onClick={() => setPreviewingSample(true)}
+          >
+            <Sparkles />
+            <span>
+              <strong>Explore a complete sample dossier</strong>
+              Preview every workflow with realistic data. Nothing will be saved.
+            </span>
+            <ArrowRight />
+          </button>
           <div className="intake-actions">
             {dossiers.length > 0 ? (
               <button type="button" className="secondary-action" onClick={() => setCreating(false)}>

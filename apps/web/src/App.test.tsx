@@ -85,6 +85,25 @@ describe("App", () => {
     expect(screen.getByRole("button", { name: "Outline" })).toBeInTheDocument()
     expect(screen.getByRole("button", { name: "Export report" })).toBeInTheDocument()
   })
+
+  it("previews the complete dossier workflow without creating workspace data", async () => {
+    window.history.replaceState({}, "", "/dossiers")
+    render(<App />)
+
+    fireEvent.click(
+      screen.getByRole("button", { name: /explore a complete sample dossier/i })
+    )
+
+    expect(screen.getByText(/read-only sample/i)).toBeInTheDocument()
+    expect(screen.getByRole("heading", { name: "Fermented pea protein isolate" })).toBeInTheDocument()
+    expect(screen.getByRole("heading", { name: "Source-to-claim traceability" })).toBeInTheDocument()
+
+    fireEvent.click(screen.getByRole("button", { name: "Fact Book" }))
+    expect(screen.getByRole("heading", { name: "One governed source of truth" })).toBeInTheDocument()
+
+    fireEvent.click(screen.getByRole("button", { name: "Submission lifecycle" }))
+    expect(screen.getByRole("heading", { name: "FDA GRAS notice" })).toBeInTheDocument()
+  })
 })
 
 function requestUrl(input: RequestInfo | URL) {

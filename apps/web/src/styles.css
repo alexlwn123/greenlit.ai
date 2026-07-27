@@ -3994,3 +3994,134 @@ label {
 .release-center .claim-fields {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
+
+.sample-dossier-launch {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  border: 1px solid color-mix(in srgb, var(--accent) 45%, var(--line));
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--accent) 8%, var(--surface));
+  color: var(--ink);
+  text-align: left;
+}
+.sample-dossier-launch svg { color: var(--accent); }
+.sample-dossier-launch span { display: grid; gap: 3px; color: var(--muted); font-size: 0.78rem; }
+.sample-dossier-launch strong { color: var(--ink); font-size: 0.92rem; }
+.sample-dossier-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  padding: 28px 32px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 10%, var(--surface)), var(--surface));
+}
+.sample-dossier-banner h1 { margin: 5px 0; }
+.sample-workspace-panel { min-width: 0; padding: 28px; }
+.sample-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin: 24px 0;
+}
+.sample-grid article,
+.sample-issue,
+.sample-review-card,
+.sample-document {
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+}
+.sample-grid article { display: grid; gap: 8px; }
+.sample-grid small,
+.sample-issue small {
+  color: var(--muted);
+  font-family: "DM Mono", monospace;
+  font-size: 0.69rem;
+}
+.sample-grid h3,
+.sample-issue h3,
+.sample-document h3 { margin: 0; }
+.sample-warning,
+.sample-issue { border-color: color-mix(in srgb, #d88732 45%, var(--line)) !important; }
+.sample-callout,
+.sample-source {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 15px 17px;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--accent) 8%, var(--surface));
+}
+.sample-callout svg,
+.sample-source svg { flex: 0 0 auto; color: var(--accent); }
+.sample-table {
+  display: grid;
+  margin: 24px 0;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.sample-table > div {
+  display: grid;
+  grid-template-columns: 110px 1.2fr 1fr 1.2fr;
+  align-items: center;
+  gap: 16px;
+  padding: 15px 17px;
+  border-bottom: 1px solid var(--line);
+}
+.sample-table > div:last-child { border-bottom: 0; }
+.sample-table span,
+.sample-table small { color: var(--muted); }
+.sample-document {
+  margin: 24px 0 14px;
+  font-family: Georgia, serif;
+  font-size: 1.02rem;
+  line-height: 1.75;
+}
+.sample-document mark {
+  padding: 2px 4px;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--accent) 20%, transparent);
+  color: inherit;
+}
+.sample-checks,
+.sample-timeline { display: grid; gap: 10px; margin-top: 24px; }
+.sample-checks > div,
+.sample-timeline > div {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 15px 17px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+.sample-checks span,
+.sample-timeline span { display: grid; gap: 3px; }
+.sample-checks small,
+.sample-timeline small { color: var(--muted); }
+.sample-checks .is-passed svg,
+.sample-timeline .is-done svg { color: var(--accent); }
+.sample-checks .is-blocked svg,
+.status-warn { color: #b66618; }
+.sample-review-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 24px 0 14px;
+}
+.sample-review-card div { display: grid; gap: 4px; }
+.sample-review-card small { color: var(--muted); }
+.sample-issue { display: grid; gap: 8px; }
+
+@media (max-width: 900px) {
+  .sample-dossier-banner { flex-direction: column; }
+  .sample-grid { grid-template-columns: 1fr; }
+  .sample-table > div { grid-template-columns: 1fr; gap: 5px; }
+}
