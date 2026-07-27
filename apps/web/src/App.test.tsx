@@ -108,6 +108,86 @@ describe("App", () => {
     fireEvent.click(screen.getByRole("button", { name: "Submission lifecycle" }))
     expect(screen.getByRole("heading", { name: "FDA GRAS notice" })).toBeInTheDocument()
   })
+
+  it("provides document modes, source support, and explicit lifecycle controls", async () => {
+    const dossier = {
+      id: "draft-demo",
+      ownerId: "test-session",
+      name: "Draft demo",
+      status: "drafting",
+      intake: {
+        substanceName: "Fermented protein",
+        companyName: "Example Foods",
+        substanceType: "protein",
+        intendedEffect: "Nutrition",
+        intendedUses: "Selected foods",
+        manufacturingSummary: "Controlled process",
+        targetPopulation: "General U.S. population",
+        grasBasis: "scientific_procedures",
+      },
+      createdAt: "2026-07-27T00:00:00.000Z",
+      updatedAt: "2026-07-27T00:00:00.000Z",
+    }
+    const workspace = {
+      dossier,
+      requirements: [],
+      evidence: [],
+      sections: [
+        {
+          id: "section-1",
+          dossierId: dossier.id,
+          ownerId: dossier.ownerId,
+          part: "Part 1",
+          title: "Signed statements and certification",
+          content:
+            "This section contains a controlled working draft with sufficient detail for review.",
+          status: "draft",
+          createdAt: dossier.createdAt,
+          updatedAt: dossier.updatedAt,
+        },
+      ],
+      claims: [],
+      auditEvents: [],
+      evidenceRequests: [],
+      evidenceRequestLinks: [],
+      attestations: [],
+      releases: [],
+      handoffs: [],
+      reviewIssues: [],
+      reviewLinks: [],
+      submissions: [],
+      agencyQuestions: [],
+      extractionCandidates: [],
+      factBookEntries: [],
+      factBookRevisions: [],
+    }
+
+    window.history.replaceState({}, "", "/dossiers/draft-demo")
+    vi.mocked(fetch).mockImplementation(
+      vi.fn(async (input: RequestInfo | URL) => {
+        const url = requestUrl(input)
+        if (url.endsWith("/analyses")) return jsonResponse({ analyses: [] })
+        if (url.endsWith("/dossiers/draft-demo/sections/section-1/versions")) {
+          return jsonResponse({ versions: [] })
+        }
+        if (url.endsWith("/dossiers/draft-demo")) return jsonResponse(workspace)
+        if (url.endsWith("/dossiers")) return jsonResponse({ dossiers: [dossier] })
+        return jsonResponse({}, 404)
+      })
+    )
+
+    render(<App />)
+    fireEvent.click(await screen.findByRole("button", { name: "Draft sections" }))
+
+    expect(screen.getByRole("group", { name: "Draft view" })).toBeInTheDocument()
+    expect(screen.getByRole("textbox", { name: "Section draft" })).toBeInTheDocument()
+    expect(screen.getByText("All changes saved")).toBeInTheDocument()
+    expect(screen.getByRole("button", { name: "Sources" })).toBeInTheDocument()
+
+    fireEvent.click(screen.getByRole("button", { name: "Read" }))
+    expect(screen.queryByRole("textbox", { name: "Section draft" })).not.toBeInTheDocument()
+    expect(screen.getByText("DOCUMENT VIEW")).toBeInTheDocument()
+  })
 })
 
 function requestUrl(input: RequestInfo | URL) {

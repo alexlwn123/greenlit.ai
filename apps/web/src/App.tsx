@@ -2322,6 +2322,9 @@ function DossierPage({
   const [evidenceCategory, setEvidenceCategory] = useState<DossierEvidence["category"]>("other")
   const [selectedSectionId, setSelectedSectionId] = useState("")
   const [draftContent, setDraftContent] = useState("")
+  const [draftMode, setDraftMode] = useState<"edit" | "read" | "split">("split")
+  const [showLegacyDraftStudio] = useState(false)
+  const [draftSupportTab, setDraftSupportTab] = useState<"sources" | "facts" | "history">("sources")
   const [qualityChecks, setQualityChecks] = useState<DossierQualityCheck[]>([])
   const [claimEvidenceId, setClaimEvidenceId] = useState("")
   const [claimSectionId, setClaimSectionId] = useState("")
@@ -3269,6 +3272,314 @@ function DossierPage({
         passage.text.toLowerCase().includes(readerSearch.trim().toLowerCase())
       )
     : readerPassages
+
+  function renderDocumentStudio() {
+    if (!selected || !selectedSection) return null
+    const sectionClaims = selected.claims.filter((claim) => claim.sectionId === selectedSection.id)
+    const renderedDraft = renderFactReferences(draftContent, selected.factBookEntries)
+    const verifiedFacts = selected.factBookEntries.filter((fact) => fact.status === "verified")
+
+    return (
+      <div className="drafting-studio drafting-studio-v2">
+        <header className="draft-studio-header">
+          <div>
+            <p className="section-label">DRAFTING STUDIO</p>
+            <h2>{selectedSection.part}</h2>
+            <p>{selectedSection.title}</p>
+          </div>
+          <div className="draft-studio-state">
+            <StatusPill value={selectedSection.status} />
+            <span className={draftDirty ? "has-changes" : "is-saved"}>
+              {saving ? "Saving…" : draftDirty ? "Unsaved changes" : "All changes saved"}
+            </span>
+          </div>
+        </header>
+        <div className="draft-layout draft-layout-v2">
+          <nav aria-label="Dossier sections">
+            <div className="draft-outline-heading">
+              <span>DOCUMENT OUTLINE</span>
+              <small>{selected.sections.length} sections</small>
+            </div>
+            {selected.sections.map((section, index) => (
+              <button
+                type="button"
+                key={section.id}
+                className={section.id === selectedSection.id ? "is-active" : ""}
+                onClick={() => chooseSection(section.id)}
+              >
+                <span>
+                  <b>{String(index + 1).padStart(2, "0")}</b>
+                  <strong>{section.part}</strong>
+                </span>
+                <small>{section.title}</small>
+                <em data-status={section.status}>{section.status.replaceAll("_", " ")}</em>
+              </button>
+            ))}
+          </nav>
+          <div className="draft-workspace">
+            <div className="draft-toolbar">
+              <fieldset className="draft-mode-switch" aria-label="Draft view">
+                {(["edit", "split", "read"] as const).map((mode) => (
+                  <button
+                    type="button"
+                    key={mode}
+                    className={draftMode === mode ? "is-active" : ""}
+                    onClick={() => setDraftMode(mode)}
+                  >
+                    {mode === "read" ? "Read" : mode[0].toUpperCase() + mode.slice(1)}
+                  </button>
+                ))}
+              </fieldset>
+              <div className="draft-document-meta">
+                <span>
+                  {draftContent.trim() ? draftContent.trim().split(/\s+/).length : 0} words
+                </span>
+                <span>{sectionClaims.length} sources</span>
+                <span>{formatDate(selectedSection.updatedAt)}</span>
+              </div>
+            </div>
+            <div className="draft-provenance">
+              <ShieldCheck /> Governed facts remain live, and only verified claims appear beside the
+              document. Human approval is always required.
+            </div>
+            <div className="draft-canvas-layout">
+              <div className={`draft-document mode-${draftMode}`}>
+                {draftMode !== "read" ? (
+                  <div className="draft-edit-pane">
+                    <div className="draft-pane-label">
+                      <span>WORKING DRAFT</span>
+                      <small>Governed references supported</small>
+                    </div>
+                    <textarea
+                      aria-label="Section draft"
+                      value={draftContent}
+                      onChange={(event) => setDraftContent(event.currentTarget.value)}
+                      placeholder="Create a section starter or begin drafting here."
+                    />
+                  </div>
+                ) : null}
+                {draftMode !== "edit" ? (
+                  <article className="draft-reading-pane">
+                    <div className="draft-pane-label">
+                      <span>DOCUMENT VIEW</span>
+                      <small>Current Fact Book values</small>
+                    </div>
+                    <div className="draft-paper">
+                      <p className="draft-part">{selectedSection.part}</p>
+                      <h3>{selectedSection.title}</h3>
+                      {renderedDraft.rendered
+                        .split(/\n{2,}/)
+                        .filter(Boolean)
+                        .map((paragraph) => (
+                          <p key={`${selectedSection.id}-${paragraph.slice(0, 80)}`}>{paragraph}</p>
+                        ))}
+                      {!draftContent.trim() ? (
+                        <p className="draft-empty-copy">No draft content yet.</p>
+                      ) : null}
+                    </div>
+                  </article>
+                ) : null}
+              </div>
+              <aside className="draft-support-rail">
+                <div className="draft-support-tabs">
+                  {(["sources", "facts", "history"] as const).map((support) => (
+                    <button
+                      type="button"
+                      key={support}
+                      className={draftSupportTab === support ? "is-active" : ""}
+                      onClick={() => setDraftSupportTab(support)}
+                    >
+                      {support[0].toUpperCase() + support.slice(1)}
+                    </button>
+                  ))}
+                </div>
+                {draftSupportTab === "sources" ? (
+                  <div className="draft-support-list">
+                    {sectionClaims.length ? (
+                      sectionClaims.map((claim, index) => (
+                        <article key={claim.id}>
+                          <div>
+                            <span>[{index + 1}]</span>
+                            <StatusPill value={claim.status} />
+                          </div>
+                          {claim.status === "proposed" ? (
+                            <textarea
+                              aria-label={`Review claim ${claim.id}`}
+                              value={claimEdits[claim.id] ?? claim.statement}
+                              onChange={(event) =>
+                                setClaimEdits((current) => ({
+                                  ...current,
+                                  [claim.id]: event.currentTarget.value,
+                                }))
+                              }
+                            />
+                          ) : (
+                            <p>{claim.statement}</p>
+                          )}
+                          <blockquote>“{claim.sourceExcerpt}”</blockquote>
+                          <small>
+                            {selected.evidence.find((item) => item.id === claim.evidenceId)
+                              ?.title ?? "Workspace evidence"}{" "}
+                            · p. {claim.sourcePage}
+                          </small>
+                          {claim.status === "proposed" ? (
+                            <div className="evidence-actions">
+                              <button
+                                type="button"
+                                onClick={() => reviewClaim(claim.id, "rejected")}
+                              >
+                                Reject
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => reviewClaim(claim.id, "verified")}
+                              >
+                                Verify
+                              </button>
+                            </div>
+                          ) : null}
+                        </article>
+                      ))
+                    ) : (
+                      <div className="draft-support-empty">
+                        <FileSearch />
+                        <p>No claims are linked to this section yet.</p>
+                      </div>
+                    )}
+                  </div>
+                ) : null}
+                {draftSupportTab === "facts" ? (
+                  <div className="draft-support-list fact-insert-list">
+                    {verifiedFacts.length ? (
+                      verifiedFacts.flatMap((fact) =>
+                        Object.entries(fact.fields).map(([field, value]) => (
+                          <button
+                            type="button"
+                            key={`${fact.id}-${field}`}
+                            onClick={() => insertFactReference(fact.id, field)}
+                          >
+                            <span>{fact.title}</span>
+                            <strong>{value}</strong>
+                            <small>{field.replaceAll("_", " ")}</small>
+                            <Plus />
+                          </button>
+                        ))
+                      )
+                    ) : (
+                      <div className="draft-support-empty">
+                        <TableProperties />
+                        <p>No verified facts are ready to insert.</p>
+                      </div>
+                    )}
+                  </div>
+                ) : null}
+                {draftSupportTab === "history" ? (
+                  <div className="draft-support-list version-list">
+                    {sectionVersions.length ? (
+                      sectionVersions.slice(0, 8).map((version) => (
+                        <article key={version.id}>
+                          <div>
+                            <strong>Version {version.version}</strong>
+                            <StatusPill value={version.status} />
+                          </div>
+                          <p>{version.content.slice(0, 110) || "Empty draft"}</p>
+                          <small>{formatDate(version.createdAt)}</small>
+                          <button
+                            type="button"
+                            disabled={saving}
+                            onClick={() => restoreVersion(version.id)}
+                          >
+                            Restore as new draft
+                          </button>
+                        </article>
+                      ))
+                    ) : (
+                      <div className="draft-support-empty">
+                        <Clock3 />
+                        <p>No saved versions yet.</p>
+                      </div>
+                    )}
+                  </div>
+                ) : null}
+              </aside>
+            </div>
+            {renderedDraft.unresolved.length ? (
+              <div className="draft-reference-alert">
+                <CircleAlert />
+                <span>
+                  <strong>
+                    {renderedDraft.unresolved.length} unresolved fact reference
+                    {renderedDraft.unresolved.length === 1 ? "" : "s"}
+                  </strong>
+                  Resolve these references before review or approval.
+                </span>
+                <button type="button" onClick={() => setDraftSupportTab("facts")}>
+                  Review facts
+                </button>
+              </div>
+            ) : null}
+            {assistMeta ? (
+              <p className="assist-meta">
+                Drafted with {assistMeta.provider} · {assistMeta.model} · constrained to{" "}
+                {assistMeta.claimCount} verified claims. Review before saving.
+              </p>
+            ) : null}
+            {formError ? <p className="form-error">{formError}</p> : null}
+            <footer className="draft-save-bar">
+              <div className={`draft-save-state ${draftDirty ? "has-changes" : ""}`}>
+                <span className="save-indicator" />
+                <span>
+                  <strong>
+                    {saving ? "Saving changes" : draftDirty ? "Changes not saved" : "Draft saved"}
+                  </strong>
+                  <small>
+                    {draftDirty
+                      ? "Save before changing sections or starting review."
+                      : `Last updated ${formatDate(selectedSection.updatedAt)}`}
+                  </small>
+                </span>
+              </div>
+              <div className="draft-generation-actions">
+                <button type="button" onClick={assistSection} disabled={saving}>
+                  <NotebookPen /> Draft from claims
+                </button>
+                <button type="button" onClick={generateStarter} disabled={saving}>
+                  <FileText /> Section starter
+                </button>
+              </div>
+              <div className="draft-lifecycle-actions">
+                <button
+                  type="button"
+                  className="save-action"
+                  onClick={() => saveSection("draft")}
+                  disabled={saving || !draftDirty}
+                >
+                  Save draft
+                </button>
+                <button
+                  type="button"
+                  onClick={() => saveSection("in_review")}
+                  disabled={saving || draftContent.trim().length < 80}
+                >
+                  Send to review
+                </button>
+                <button
+                  type="button"
+                  className="approve-action"
+                  onClick={() => saveSection("approved")}
+                  disabled={
+                    saving || draftContent.trim().length < 80 || renderedDraft.unresolved.length > 0
+                  }
+                >
+                  <Check /> Approve
+                </button>
+              </div>
+            </footer>
+          </div>
+        </div>
+      </div>
+    )
+  }
   return (
     <main className="dossier-page">
       <section className="dossier-header">
@@ -4773,7 +5084,8 @@ function DossierPage({
             </div>
           </div>
         ) : null}
-        {studioTab === "draft" && selectedSection ? (
+        {studioTab === "draft" && selectedSection ? renderDocumentStudio() : null}
+        {showLegacyDraftStudio && studioTab === "draft" && selectedSection ? (
           <div className="drafting-studio">
             <div className="requirements-heading">
               <div>
