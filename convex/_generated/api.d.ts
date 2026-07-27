@@ -12,6 +12,7 @@ import type * as GreenlitPassword from "../GreenlitPassword.js";
 import type * as ResendOTPPasswordReset from "../ResendOTPPasswordReset.js";
 import type * as analyses from "../analyses.js";
 import type * as auth from "../auth.js";
+import type * as dossiers from "../dossiers.js";
 import type * as http from "../http.js";
 
 import type {
@@ -25,6 +26,7 @@ declare const fullApi: ApiFromModules<{
   ResendOTPPasswordReset: typeof ResendOTPPasswordReset;
   analyses: typeof analyses;
   auth: typeof auth;
+  dossiers: typeof dossiers;
   http: typeof http;
 }>;
 
