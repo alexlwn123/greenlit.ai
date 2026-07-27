@@ -2068,6 +2068,7 @@ function SampleDossierPreview({ onClose }: { onClose: () => void }) {
 }
 
 function SampleWorkflowPanel({ tab }: { tab: SampleWorkflowTab }) {
+  const [sampleDraftMode, setSampleDraftMode] = useState<"edit" | "read" | "split">("split")
   if (tab === "evidence")
     return (
       <>
@@ -2156,23 +2157,114 @@ function SampleWorkflowPanel({ tab }: { tab: SampleWorkflowTab }) {
           </div>
           <span className="status-badge">In review</span>
         </div>
-        <article className="sample-document">
-          <h3>Safety narrative</h3>
-          <p>
-            The pivotal 90-day study established a NOAEL of <mark>1,000 mg/kg bw/day</mark>.
-            Compared with the estimated 90th-percentile intake of <mark>8.4 mg/kg bw/day</mark>, the
-            resulting margin of safety is 119-fold.
-          </p>
-          <p>
-            Each highlighted value is rendered from a governed Fact Book reference and updates
-            across every linked section only after impact confirmation.
-          </p>
-        </article>
-        <div className="sample-source">
-          <FileText />
-          <span>
-            <strong>Linked support</strong> · Study report p. 84 · Exposure assessment p. 19
-          </span>
+        <div className="draft-workspace sample-draft-workspace">
+          <div className="draft-toolbar">
+            <fieldset className="draft-mode-switch" aria-label="Sample draft view">
+              {(["edit", "split", "read"] as const).map((mode) => (
+                <button
+                  type="button"
+                  key={mode}
+                  className={sampleDraftMode === mode ? "is-active" : ""}
+                  onClick={() => setSampleDraftMode(mode)}
+                >
+                  {mode === "read" ? "Read" : mode[0].toUpperCase() + mode.slice(1)}
+                </button>
+              ))}
+            </fieldset>
+            <div className="draft-document-meta">
+              <span>58 words</span>
+              <span>2 sources</span>
+              <span>Saved</span>
+            </div>
+          </div>
+          <div className="draft-canvas-layout">
+            <div className={`draft-document mode-${sampleDraftMode}`}>
+              {sampleDraftMode !== "read" ? (
+                <div className="draft-edit-pane">
+                  <div className="draft-pane-label">
+                    <span>WORKING DRAFT</span>
+                    <small>Governed references supported</small>
+                  </div>
+                  <textarea
+                    aria-label="Sample section draft"
+                    readOnly
+                    value={
+                      "The pivotal 90-day study established a NOAEL of {{fact:safety-noael.noael}}. Compared with the estimated 90th-percentile intake of {{fact:exposure.p90}}, the resulting margin of safety is 119-fold.\n\nThe evidence supports the intended conditions of use for the general population."
+                    }
+                  />
+                </div>
+              ) : null}
+              {sampleDraftMode !== "edit" ? (
+                <article className="draft-reading-pane">
+                  <div className="draft-pane-label">
+                    <span>DOCUMENT VIEW</span>
+                    <small>Current Fact Book values</small>
+                  </div>
+                  <div className="draft-paper">
+                    <p className="draft-part">Part 6</p>
+                    <h3>Safety narrative</h3>
+                    <p>
+                      The pivotal 90-day study established a NOAEL of 1,000 mg/kg bw/day. Compared
+                      with the estimated 90th-percentile intake of 8.4 mg/kg bw/day, the resulting
+                      margin of safety is 119-fold.
+                    </p>
+                    <p>
+                      The evidence supports the intended conditions of use for the general
+                      population.
+                    </p>
+                  </div>
+                </article>
+              ) : null}
+            </div>
+            <aside className="draft-support-rail">
+              <div className="draft-support-tabs">
+                <button type="button" className="is-active">
+                  Sources
+                </button>
+                <button type="button">Facts</button>
+                <button type="button">History</button>
+              </div>
+              <div className="draft-support-list">
+                <article>
+                  <div>
+                    <span>[1]</span>
+                    <span className="status-badge">Verified</span>
+                  </div>
+                  <p>NOAEL was 1,000 mg/kg bw/day in the pivotal 90-day oral study.</p>
+                  <blockquote>
+                    “No treatment-related adverse effects were observed at the highest dose tested.”
+                  </blockquote>
+                  <small>90-day study report · p. 84</small>
+                </article>
+                <article>
+                  <div>
+                    <span>[2]</span>
+                    <span className="status-badge">Verified</span>
+                  </div>
+                  <p>90th-percentile intake is 8.4 mg/kg bw/day.</p>
+                  <small>Exposure assessment · p. 19</small>
+                </article>
+              </div>
+            </aside>
+          </div>
+          <footer className="draft-save-bar sample-save-bar">
+            <div className="draft-save-state">
+              <span className="save-indicator" />
+              <span>
+                <strong>Draft saved</strong>
+                <small>Read-only sample</small>
+              </span>
+            </div>
+            <div className="draft-lifecycle-actions">
+              <button type="button" disabled>
+                Save draft
+              </button>
+              <button type="button">Send to review</button>
+              <button type="button" className="approve-action">
+                <Check /> Approve
+              </button>
+            </div>
+          </footer>
         </div>
       </>
     )

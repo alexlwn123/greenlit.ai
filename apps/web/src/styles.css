@@ -5004,6 +5004,24 @@ label {
   color: #83ce88;
 }
 
+.sample-draft-workspace {
+  margin-top: 22px;
+}
+
+.sample-draft-workspace .draft-canvas-layout {
+  grid-template-columns: minmax(0, 1fr) 255px;
+  min-height: 510px;
+}
+
+.sample-draft-workspace .draft-edit-pane > textarea,
+.sample-draft-workspace .draft-paper {
+  min-height: 466px;
+}
+
+.sample-save-bar {
+  grid-template-columns: 1fr auto;
+}
+
 @media (max-width: 1180px) {
   .draft-canvas-layout {
     grid-template-columns: minmax(0, 1fr) 240px;
