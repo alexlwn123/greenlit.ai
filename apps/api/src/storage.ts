@@ -6,9 +6,12 @@ import { del, get, put } from "@vercel/blob"
 import { ConvexHttpClient } from "convex/browser"
 import { makeFunctionReference } from "convex/server"
 import type {
+  AgencyQuestion,
   AnalysisRecord,
   ArtifactReference,
   ConsultantHandoff,
+  ConsultantReviewIssue,
+  ConsultantReviewLink,
   DossierAuditEvent,
   DossierClaim,
   DossierEvidence,
@@ -20,12 +23,17 @@ import type {
   DossierSection,
   DossierSectionVersion,
   EvidenceRequest,
+  EvidenceRequestLink,
   FactBookEntry,
+  FactBookRevision,
+  FactExtractionRecord,
   ReadinessReport,
   ReleaseAttestation,
+  SubmissionRecord,
   WorkbookNote,
   WorkbookNoteStatus,
 } from "../../../packages/core/src/index.js"
+import { analyzeFactImpact } from "../../../packages/core/src/index.js"
 import { getBlobAuthOptions } from "./blob-auth.js"
 
 type Database = {
@@ -40,16 +48,39 @@ type Database = {
   dossierAuditEvents: DossierAuditEvent[]
   dossierSectionVersions: DossierSectionVersion[]
   evidenceRequests: EvidenceRequest[]
+  evidenceRequestLinks: EvidenceRequestLink[]
   releaseAttestations: ReleaseAttestation[]
   dossierReleases: DossierRelease[]
   consultantHandoffs: ConsultantHandoff[]
+  consultantReviewIssues: ConsultantReviewIssue[]
+  consultantReviewLinks: ConsultantReviewLink[]
+  submissions: SubmissionRecord[]
+  agencyQuestions: AgencyQuestion[]
   factBookEntries: FactBookEntry[]
+  factBookRevisions: FactBookRevision[]
+  factExtractionCandidates: FactExtractionRecord[]
 }
 
 type CreateArtifactInput = {
   bytes: Uint8Array
   fileName: string
   mimeType: string
+}
+
+export type ExternalConsultantReview = {
+  link: { status: ConsultantReviewLink["status"]; expiresAt: string }
+  dossier: { id: string; name: string; substanceName: string }
+  handoff: Pick<ConsultantHandoff, "id" | "consultantName" | "scope" | "dueDate" | "status">
+  sections: Array<Pick<DossierSection, "id" | "part" | "title" | "content" | "status">>
+  facts: Array<Pick<FactBookEntry, "id" | "title" | "kind" | "fields" | "status">>
+  claims: Array<Pick<DossierClaim, "id" | "statement" | "sourceExcerpt" | "sourcePage" | "status">>
+  evidence: Array<
+    Pick<
+      DossierEvidence,
+      "id" | "title" | "category" | "excerpt" | "pageCount" | "verificationStatus"
+    >
+  >
+  issues: Array<Omit<ConsultantReviewIssue, "ownerId">>
 }
 
 const blobAccess = "private" as const
@@ -60,6 +91,38 @@ const convexFunctions = {
     { fact: Omit<FactBookEntry, "ownerId"> },
     FactBookEntry
   >("dossiers:createFact"),
+  saveExtractionCandidates: makeFunctionReference<
+    "mutation",
+    {
+      dossierId: string
+      evidenceId: string
+      updatedAt: string
+      candidates: Array<
+        Pick<
+          FactExtractionRecord,
+          "id" | "kind" | "title" | "fields" | "sourceExcerpt" | "sourcePage" | "confidence"
+        >
+      >
+    },
+    FactExtractionRecord[]
+  >("dossiers:saveExtractionCandidates"),
+  reviewExtractionCandidate: makeFunctionReference<
+    "mutation",
+    { candidateId: string; action: "accept" | "dismiss"; factId: string; updatedAt: string },
+    { candidate: FactExtractionRecord; fact: FactBookEntry | null }
+  >("dossiers:reviewExtractionCandidate"),
+  updateFactBookEntry: makeFunctionReference<
+    "mutation",
+    {
+      factId: string
+      revisionId: string
+      title: string
+      fields: Record<string, string>
+      confirmImpacts: boolean
+      updatedAt: string
+    },
+    FactBookEntry & { affectedSectionIds: string[] }
+  >("dossiers:updateFact"),
   reviewFactBookEntry: makeFunctionReference<
     "mutation",
     { factId: string; status: FactBookEntry["status"]; updatedAt: string },
@@ -93,6 +156,74 @@ const convexFunctions = {
     { handoff: Omit<ConsultantHandoff, "ownerId" | "responseNote"> },
     ConsultantHandoff
   >("dossiers:createHandoff"),
+  createReviewIssue: makeFunctionReference<
+    "mutation",
+    { issue: Omit<ConsultantReviewIssue, "ownerId" | "resolutionNote" | "resolvedAt"> },
+    ConsultantReviewIssue
+  >("dossiers:createReviewIssue"),
+  createConsultantReviewLink: makeFunctionReference<
+    "mutation",
+    { link: Omit<ConsultantReviewLink, "ownerId"> },
+    ConsultantReviewLink
+  >("dossiers:createConsultantReviewLink"),
+  getExternalConsultantReview: makeFunctionReference<
+    "query",
+    { tokenHash: string },
+    ExternalConsultantReview | null
+  >("dossiers:getExternalConsultantReview"),
+  createExternalReviewIssue: makeFunctionReference<
+    "mutation",
+    {
+      tokenHash: string
+      issue: Pick<
+        ConsultantReviewIssue,
+        "id" | "targetType" | "targetId" | "title" | "body" | "priority" | "createdAt" | "updatedAt"
+      >
+    },
+    ConsultantReviewIssue
+  >("dossiers:createExternalReviewIssue"),
+  updateReviewIssue: makeFunctionReference<
+    "mutation",
+    {
+      issueId: string
+      status: ConsultantReviewIssue["status"]
+      resolutionNote?: string
+      updatedAt: string
+    },
+    ConsultantReviewIssue
+  >("dossiers:updateReviewIssue"),
+  createSubmission: makeFunctionReference<
+    "mutation",
+    { submission: Omit<SubmissionRecord, "ownerId"> },
+    SubmissionRecord
+  >("dossiers:createSubmission"),
+  updateSubmission: makeFunctionReference<
+    "mutation",
+    {
+      submissionId: string
+      status: SubmissionRecord["status"]
+      trackingNumber?: string
+      targetDate?: string
+      updatedAt: string
+    },
+    SubmissionRecord
+  >("dossiers:updateSubmission"),
+  createAgencyQuestion: makeFunctionReference<
+    "mutation",
+    { question: Omit<AgencyQuestion, "ownerId" | "response" | "answeredAt"> },
+    AgencyQuestion
+  >("dossiers:createAgencyQuestion"),
+  updateAgencyQuestion: makeFunctionReference<
+    "mutation",
+    {
+      questionId: string
+      status: AgencyQuestion["status"]
+      response?: string
+      dueDate?: string
+      updatedAt: string
+    },
+    AgencyQuestion
+  >("dossiers:updateAgencyQuestion"),
   updateConsultantHandoff: makeFunctionReference<
     "mutation",
     {
@@ -108,6 +239,39 @@ const convexFunctions = {
     { request: Omit<EvidenceRequest, "ownerId" | "responseNote"> },
     EvidenceRequest
   >("dossiers:createRequest"),
+  createEvidenceRequestLink: makeFunctionReference<
+    "mutation",
+    { link: Omit<EvidenceRequestLink, "ownerId"> },
+    EvidenceRequestLink
+  >("dossiers:createEvidenceRequestLink"),
+  getExternalEvidenceRequest: makeFunctionReference<
+    "query",
+    { tokenHash: string },
+    {
+      link: { id: string; status: EvidenceRequestLink["status"]; expiresAt: string }
+      request: Pick<
+        EvidenceRequest,
+        "id" | "requirementId" | "title" | "detail" | "priority" | "status"
+      >
+      dossier: { id: string; name: string; substanceName: string }
+    } | null
+  >("dossiers:getExternalEvidenceRequest"),
+  receiveExternalEvidenceResponse: makeFunctionReference<
+    "mutation",
+    { tokenHash: string; responseNote: string; updatedAt: string },
+    { dossierId: string; ownerId: string; requestId: string }
+  >("dossiers:receiveExternalEvidenceResponse"),
+  receiveExternalEvidenceUpload: makeFunctionReference<
+    "mutation",
+    {
+      tokenHash: string
+      evidence: Omit<DossierEvidence, "ownerId">
+      passages: Omit<DossierEvidencePassage, "ownerId">[]
+      responseNote: string
+      updatedAt: string
+    },
+    DossierEvidence
+  >("dossiers:receiveExternalEvidenceUpload"),
   createDossierClaim: makeFunctionReference<
     "mutation",
     { claim: Omit<DossierClaim, "ownerId"> },
@@ -136,10 +300,17 @@ const convexFunctions = {
       claims: DossierClaim[]
       auditEvents: DossierAuditEvent[]
       evidenceRequests: EvidenceRequest[]
+      evidenceRequestLinks: EvidenceRequestLink[]
       attestations: ReleaseAttestation[]
       releases: DossierRelease[]
       handoffs: ConsultantHandoff[]
+      reviewIssues: ConsultantReviewIssue[]
+      reviewLinks: ConsultantReviewLink[]
+      submissions: SubmissionRecord[]
+      agencyQuestions: AgencyQuestion[]
       factBookEntries: FactBookEntry[]
+      factBookRevisions: FactBookRevision[]
+      extractionCandidates: FactExtractionRecord[]
     }
   >("dossiers:create"),
   getDossier: makeFunctionReference<
@@ -153,10 +324,17 @@ const convexFunctions = {
       claims: DossierClaim[]
       auditEvents: DossierAuditEvent[]
       evidenceRequests: EvidenceRequest[]
+      evidenceRequestLinks: EvidenceRequestLink[]
       attestations: ReleaseAttestation[]
       releases: DossierRelease[]
       handoffs: ConsultantHandoff[]
+      reviewIssues: ConsultantReviewIssue[]
+      reviewLinks: ConsultantReviewLink[]
+      submissions: SubmissionRecord[]
+      agencyQuestions: AgencyQuestion[]
       factBookEntries: FactBookEntry[]
+      factBookRevisions: FactBookRevision[]
+      extractionCandidates: FactExtractionRecord[]
     } | null
   >("dossiers:get"),
   listDossiers: makeFunctionReference<"query", Record<string, never>, DossierRecord[]>(
@@ -302,10 +480,17 @@ export function createStorage(dataDir = defaultDataDir()) {
         dossierAuditEvents: parsed.dossierAuditEvents ?? [],
         dossierSectionVersions: parsed.dossierSectionVersions ?? [],
         evidenceRequests: parsed.evidenceRequests ?? [],
+        evidenceRequestLinks: parsed.evidenceRequestLinks ?? [],
         releaseAttestations: parsed.releaseAttestations ?? [],
         dossierReleases: parsed.dossierReleases ?? [],
         consultantHandoffs: parsed.consultantHandoffs ?? [],
+        consultantReviewIssues: parsed.consultantReviewIssues ?? [],
+        consultantReviewLinks: parsed.consultantReviewLinks ?? [],
+        submissions: parsed.submissions ?? [],
+        agencyQuestions: parsed.agencyQuestions ?? [],
         factBookEntries: parsed.factBookEntries ?? [],
+        factBookRevisions: parsed.factBookRevisions ?? [],
+        factExtractionCandidates: parsed.factExtractionCandidates ?? [],
       }
     } catch (error) {
       if (isNotFound(error)) {
@@ -321,10 +506,17 @@ export function createStorage(dataDir = defaultDataDir()) {
           dossierAuditEvents: [],
           dossierSectionVersions: [],
           evidenceRequests: [],
+          evidenceRequestLinks: [],
           releaseAttestations: [],
           dossierReleases: [],
           consultantHandoffs: [],
+          consultantReviewIssues: [],
+          consultantReviewLinks: [],
+          submissions: [],
+          agencyQuestions: [],
           factBookEntries: [],
+          factBookRevisions: [],
+          factExtractionCandidates: [],
         }
       }
 
@@ -422,10 +614,17 @@ export function createStorage(dataDir = defaultDataDir()) {
       claims: [],
       auditEvents: database.dossierAuditEvents.filter((event) => event.dossierId === dossier.id),
       evidenceRequests: [],
+      evidenceRequestLinks: [],
       attestations: [],
       releases: [],
       handoffs: [],
+      reviewIssues: [],
+      reviewLinks: [],
+      submissions: [],
+      agencyQuestions: [],
       factBookEntries: [],
+      factBookRevisions: [],
+      extractionCandidates: [],
     }
   }
 
@@ -464,6 +663,10 @@ export function createStorage(dataDir = defaultDataDir()) {
         .filter((request) => request.dossierId === dossierId)
         .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt))
         .slice(0, 200),
+      evidenceRequestLinks: database.evidenceRequestLinks
+        .filter((link) => link.dossierId === dossierId && link.ownerId === ownerId)
+        .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+        .slice(0, 200),
       attestations: database.releaseAttestations
         .filter((item) => item.dossierId === dossierId && item.ownerId === ownerId)
         .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt))
@@ -476,7 +679,31 @@ export function createStorage(dataDir = defaultDataDir()) {
         .filter((item) => item.dossierId === dossierId && item.ownerId === ownerId)
         .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt))
         .slice(0, 100),
+      reviewIssues: database.consultantReviewIssues
+        .filter((item) => item.dossierId === dossierId && item.ownerId === ownerId)
+        .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt))
+        .slice(0, 500),
+      reviewLinks: database.consultantReviewLinks
+        .filter((item) => item.dossierId === dossierId && item.ownerId === ownerId)
+        .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+        .slice(0, 100),
+      submissions: database.submissions
+        .filter((item) => item.dossierId === dossierId && item.ownerId === ownerId)
+        .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt))
+        .slice(0, 100),
+      agencyQuestions: database.agencyQuestions
+        .filter((item) => item.dossierId === dossierId && item.ownerId === ownerId)
+        .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt))
+        .slice(0, 500),
       factBookEntries: database.factBookEntries
+        .filter((item) => item.dossierId === dossierId && item.ownerId === ownerId)
+        .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt))
+        .slice(0, 500),
+      factBookRevisions: database.factBookRevisions
+        .filter((item) => item.dossierId === dossierId && item.ownerId === ownerId)
+        .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+        .slice(0, 500),
+      extractionCandidates: database.factExtractionCandidates
         .filter((item) => item.dossierId === dossierId && item.ownerId === ownerId)
         .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt))
         .slice(0, 500),
@@ -660,6 +887,9 @@ export function createStorage(dataDir = defaultDataDir()) {
     database.evidenceRequests = database.evidenceRequests.filter(
       (item) => item.dossierId !== dossierId
     )
+    database.evidenceRequestLinks = database.evidenceRequestLinks.filter(
+      (item) => item.dossierId !== dossierId
+    )
     database.releaseAttestations = database.releaseAttestations.filter(
       (item) => item.dossierId !== dossierId
     )
@@ -669,7 +899,23 @@ export function createStorage(dataDir = defaultDataDir()) {
     database.consultantHandoffs = database.consultantHandoffs.filter(
       (item) => item.dossierId !== dossierId
     )
+    database.consultantReviewIssues = database.consultantReviewIssues.filter(
+      (item) => item.dossierId !== dossierId
+    )
+    database.consultantReviewLinks = database.consultantReviewLinks.filter(
+      (item) => item.dossierId !== dossierId
+    )
+    database.submissions = database.submissions.filter((item) => item.dossierId !== dossierId)
+    database.agencyQuestions = database.agencyQuestions.filter(
+      (item) => item.dossierId !== dossierId
+    )
     database.factBookEntries = database.factBookEntries.filter(
+      (item) => item.dossierId !== dossierId
+    )
+    database.factBookRevisions = database.factBookRevisions.filter(
+      (item) => item.dossierId !== dossierId
+    )
+    database.factExtractionCandidates = database.factExtractionCandidates.filter(
       (item) => item.dossierId !== dossierId
     )
     await writeDatabase(database)
@@ -743,6 +989,138 @@ export function createStorage(dataDir = defaultDataDir()) {
     )
     await writeDatabase(database)
     return request
+  }
+
+  async function createEvidenceRequestLink(link: EvidenceRequestLink) {
+    const database = await readDatabase()
+    const request = database.evidenceRequests.find(
+      (item) => item.id === link.requestId && item.ownerId === link.ownerId
+    )
+    if (!request || request.dossierId !== link.dossierId)
+      throw new Error("Evidence request not found")
+    for (const existing of database.evidenceRequestLinks.filter(
+      (item) => item.requestId === link.requestId && item.status === "active"
+    )) {
+      existing.status = "revoked"
+      existing.updatedAt = link.updatedAt
+    }
+    database.evidenceRequestLinks.unshift(link)
+    pushAudit(
+      database,
+      link.ownerId,
+      link.dossierId,
+      "request_link_created",
+      "request",
+      link.requestId,
+      `Secure response link created for ${request.title}`
+    )
+    await writeDatabase(database)
+    return link
+  }
+
+  async function getExternalEvidenceRequest(tokenHash: string) {
+    const database = await readDatabase()
+    const link = database.evidenceRequestLinks.find((item) => item.tokenHash === tokenHash)
+    if (!link) return null
+    const request = database.evidenceRequests.find((item) => item.id === link.requestId)
+    const dossier = database.dossiers.find((item) => item.id === link.dossierId)
+    if (!request || !dossier) return null
+    return {
+      link: { id: link.id, status: link.status, expiresAt: link.expiresAt },
+      request: {
+        id: request.id,
+        requirementId: request.requirementId,
+        title: request.title,
+        detail: request.detail,
+        priority: request.priority,
+        status: request.status,
+      },
+      dossier: { id: dossier.id, name: dossier.name, substanceName: dossier.intake.substanceName },
+    }
+  }
+
+  async function receiveExternalEvidenceResponse(tokenHash: string, responseNote: string) {
+    const database = await readDatabase()
+    const now = new Date().toISOString()
+    const link = database.evidenceRequestLinks.find((item) => item.tokenHash === tokenHash)
+    if (!link || link.status !== "active" || link.expiresAt <= now)
+      throw new Error("This response link is invalid or expired")
+    const request = database.evidenceRequests.find((item) => item.id === link.requestId)
+    if (!request) throw new Error("Evidence request not found")
+    request.status = "received"
+    request.responseNote = responseNote
+    request.updatedAt = now
+    link.status = "fulfilled"
+    link.updatedAt = now
+    pushAudit(
+      database,
+      request.ownerId,
+      request.dossierId,
+      "request_response_received",
+      "request",
+      request.id,
+      `External response received for ${request.title}`
+    )
+    await writeDatabase(database)
+    return { dossierId: request.dossierId, ownerId: request.ownerId, requestId: request.id }
+  }
+
+  async function receiveExternalEvidenceUpload(
+    tokenHash: string,
+    evidenceInput: Omit<DossierEvidence, "ownerId">,
+    passages: Omit<DossierEvidencePassage, "ownerId">[],
+    responseNote: string
+  ) {
+    const database = await readDatabase()
+    const now = new Date().toISOString()
+    const link = database.evidenceRequestLinks.find((item) => item.tokenHash === tokenHash)
+    if (!link || link.status !== "active" || link.expiresAt <= now)
+      throw new Error("This response link is invalid or expired")
+    const request = database.evidenceRequests.find((item) => item.id === link.requestId)
+    const requirement = database.dossierRequirements.find(
+      (item) => item.id === request?.requirementId && item.dossierId === request?.dossierId
+    )
+    if (
+      !request ||
+      !requirement ||
+      evidenceInput.dossierId !== request.dossierId ||
+      evidenceInput.requirementId !== request.requirementId
+    )
+      throw new Error("Evidence request does not match this upload")
+    const evidence = { ...evidenceInput, ownerId: request.ownerId }
+    database.dossierEvidence.unshift(evidence)
+    database.dossierEvidencePassages.push(
+      ...passages.map((passage) => ({ ...passage, ownerId: request.ownerId }))
+    )
+    requirement.evidenceCount += 1
+    requirement.status = "partial"
+    requirement.blockingIssue = undefined
+    requirement.updatedAt = now
+    request.status = "received"
+    request.responseNote = responseNote
+    request.updatedAt = now
+    link.status = "fulfilled"
+    link.updatedAt = now
+    pushAudit(
+      database,
+      request.ownerId,
+      request.dossierId,
+      "evidence_added",
+      "evidence",
+      evidence.id,
+      `External evidence received: ${evidence.title}`
+    )
+    pushAudit(
+      database,
+      request.ownerId,
+      request.dossierId,
+      "request_response_received",
+      "request",
+      request.id,
+      `External response received for ${request.title}`
+    )
+    await writeDatabase(database)
+    return evidence
   }
 
   async function listSectionVersions(ownerId: string, sectionId: string) {
@@ -979,6 +1357,155 @@ export function createStorage(dataDir = defaultDataDir()) {
     return fact
   }
 
+  async function saveExtractionCandidates(
+    ownerId: string,
+    dossierId: string,
+    evidenceId: string,
+    candidates: Omit<
+      FactExtractionRecord,
+      | "ownerId"
+      | "dossierId"
+      | "evidenceId"
+      | "status"
+      | "acceptedFactId"
+      | "createdAt"
+      | "updatedAt"
+    >[]
+  ) {
+    const database = await readDatabase()
+    if (
+      !database.dossierEvidence.some(
+        (item) => item.id === evidenceId && item.dossierId === dossierId && item.ownerId === ownerId
+      )
+    )
+      throw new Error("Evidence not found")
+    const now = new Date().toISOString()
+    database.factExtractionCandidates = database.factExtractionCandidates.filter(
+      (item) => !(item.evidenceId === evidenceId && item.status === "proposed")
+    )
+    const saved: FactExtractionRecord[] = candidates.slice(0, 50).map((candidate) => ({
+      ...candidate,
+      dossierId,
+      evidenceId,
+      ownerId,
+      status: "proposed",
+      createdAt: now,
+      updatedAt: now,
+    }))
+    database.factExtractionCandidates.unshift(...saved)
+    await writeDatabase(database)
+    return saved
+  }
+
+  async function reviewExtractionCandidate(
+    ownerId: string,
+    candidateId: string,
+    action: "accept" | "dismiss"
+  ) {
+    const database = await readDatabase()
+    const candidate = database.factExtractionCandidates.find(
+      (item) => item.id === candidateId && item.ownerId === ownerId && item.status === "proposed"
+    )
+    if (!candidate) throw new Error("Extraction candidate not found")
+    const now = new Date().toISOString()
+    if (action === "dismiss") {
+      candidate.status = "dismissed"
+      candidate.updatedAt = now
+      await writeDatabase(database)
+      return { candidate, fact: null }
+    }
+    const fact: FactBookEntry = {
+      id: randomUUID(),
+      dossierId: candidate.dossierId,
+      ownerId,
+      kind: candidate.kind,
+      title: candidate.title,
+      fields: {
+        ...candidate.fields,
+        sourcePage: String(candidate.sourcePage),
+        sourceExcerpt: candidate.sourceExcerpt,
+      },
+      evidenceId: candidate.evidenceId,
+      status: "draft",
+      createdAt: now,
+      updatedAt: now,
+    }
+    database.factBookEntries.unshift(fact)
+    candidate.status = "accepted"
+    candidate.acceptedFactId = fact.id
+    candidate.updatedAt = now
+    pushAudit(
+      database,
+      ownerId,
+      candidate.dossierId,
+      "fact_created",
+      "fact",
+      fact.id,
+      `Accepted extracted fact: ${fact.title}`
+    )
+    await writeDatabase(database)
+    return { candidate, fact }
+  }
+
+  async function updateFactBookEntry(
+    ownerId: string,
+    factId: string,
+    title: string,
+    fields: Record<string, string>,
+    confirmImpacts: boolean
+  ) {
+    const database = await readDatabase()
+    const fact = database.factBookEntries.find(
+      (item) => item.id === factId && item.ownerId === ownerId
+    )
+    if (!fact) throw new Error("Fact not found")
+    const impact = analyzeFactImpact(
+      fact,
+      { title, fields },
+      database.dossierSections.filter(
+        (section) => section.dossierId === fact.dossierId && section.ownerId === ownerId
+      )
+    )
+    if (impact.affectedSectionIds.length > 0 && !confirmImpacts)
+      throw new Error(
+        `${impact.affectedSectionIds.length} dossier sections are affected; confirm propagation before updating this fact`
+      )
+    const now = new Date().toISOString()
+    database.factBookRevisions.unshift({
+      id: randomUUID(),
+      dossierId: fact.dossierId,
+      factId: fact.id,
+      ownerId,
+      previousTitle: fact.title,
+      nextTitle: title,
+      previousFields: fact.fields,
+      nextFields: fields,
+      affectedSectionIds: impact.affectedSectionIds,
+      createdAt: now,
+    })
+    fact.title = title
+    fact.fields = fields
+    fact.status = "draft"
+    fact.updatedAt = now
+    for (const section of database.dossierSections.filter(
+      (item) => impact.affectedSectionIds.includes(item.id) && item.status === "approved"
+    )) {
+      section.status = "in_review"
+      section.updatedAt = now
+    }
+    pushAudit(
+      database,
+      ownerId,
+      fact.dossierId,
+      "fact_updated",
+      "fact",
+      fact.id,
+      `Updated ${title}; ${impact.affectedSectionIds.length} sections affected`
+    )
+    await writeDatabase(database)
+    return { ...fact, affectedSectionIds: impact.affectedSectionIds }
+  }
+
   async function reviewFactBookEntry(
     ownerId: string,
     factId: string,
@@ -1057,6 +1584,297 @@ export function createStorage(dataDir = defaultDataDir()) {
     )
     await writeDatabase(database)
     return handoff
+  }
+
+  async function createReviewIssue(issue: ConsultantReviewIssue) {
+    const database = await readDatabase()
+    if (
+      !database.dossiers.some(
+        (item) => item.id === issue.dossierId && item.ownerId === issue.ownerId
+      )
+    )
+      throw new Error("Dossier not found")
+    database.consultantReviewIssues.unshift(issue)
+    pushAudit(
+      database,
+      issue.ownerId,
+      issue.dossierId,
+      "review_issue_created",
+      "review_issue",
+      issue.id,
+      issue.title
+    )
+    await writeDatabase(database)
+    return issue
+  }
+
+  async function createConsultantReviewLink(link: ConsultantReviewLink) {
+    const database = await readDatabase()
+    const handoff = database.consultantHandoffs.find(
+      (item) =>
+        item.id === link.handoffId &&
+        item.dossierId === link.dossierId &&
+        item.ownerId === link.ownerId
+    )
+    if (!handoff) throw new Error("Handoff not found")
+    for (const prior of database.consultantReviewLinks.filter(
+      (item) => item.handoffId === link.handoffId && item.status === "active"
+    )) {
+      prior.status = "revoked"
+      prior.updatedAt = link.updatedAt
+    }
+    database.consultantReviewLinks.unshift(link)
+    if (handoff.status === "prepared") handoff.status = "in_review"
+    handoff.updatedAt = link.updatedAt
+    pushAudit(
+      database,
+      link.ownerId,
+      link.dossierId,
+      "handoff_started",
+      "handoff",
+      handoff.id,
+      `Secure consultant review opened for ${handoff.consultantName}`
+    )
+    await writeDatabase(database)
+    return link
+  }
+
+  async function getExternalConsultantReview(
+    tokenHash: string
+  ): Promise<ExternalConsultantReview | null> {
+    const database = await readDatabase()
+    const link = database.consultantReviewLinks.find((item) => item.tokenHash === tokenHash)
+    if (!link) return null
+    const dossier = database.dossiers.find((item) => item.id === link.dossierId)
+    const handoff = database.consultantHandoffs.find((item) => item.id === link.handoffId)
+    if (!dossier || !handoff) return null
+    return {
+      link: { status: link.status, expiresAt: link.expiresAt },
+      dossier: { id: dossier.id, name: dossier.name, substanceName: dossier.intake.substanceName },
+      handoff: {
+        id: handoff.id,
+        consultantName: handoff.consultantName,
+        scope: handoff.scope,
+        dueDate: handoff.dueDate,
+        status: handoff.status,
+      },
+      sections: database.dossierSections
+        .filter((item) => item.dossierId === dossier.id)
+        .map(({ id, part, title, content, status }) => ({ id, part, title, content, status })),
+      facts: database.factBookEntries
+        .filter((item) => item.dossierId === dossier.id)
+        .map(({ id, title, kind, fields, status }) => ({ id, title, kind, fields, status })),
+      claims: database.dossierClaims
+        .filter((item) => item.dossierId === dossier.id)
+        .map(({ id, statement, sourceExcerpt, sourcePage, status }) => ({
+          id,
+          statement,
+          sourceExcerpt,
+          sourcePage,
+          status,
+        })),
+      evidence: database.dossierEvidence
+        .filter((item) => item.dossierId === dossier.id)
+        .map(({ id, title, category, excerpt, pageCount, verificationStatus }) => ({
+          id,
+          title,
+          category,
+          excerpt,
+          pageCount,
+          verificationStatus,
+        })),
+      issues: database.consultantReviewIssues
+        .filter((item) => item.handoffId === handoff.id)
+        .map(({ ownerId: _ownerId, ...issue }) => issue),
+    }
+  }
+
+  async function createExternalReviewIssue(
+    tokenHash: string,
+    input: Pick<
+      ConsultantReviewIssue,
+      "id" | "targetType" | "targetId" | "title" | "body" | "priority" | "createdAt" | "updatedAt"
+    >
+  ) {
+    const database = await readDatabase()
+    const link = database.consultantReviewLinks.find((item) => item.tokenHash === tokenHash)
+    if (!link || link.status !== "active" || link.expiresAt <= input.createdAt)
+      throw new Error("This review link is invalid or expired")
+    const targetExists =
+      input.targetType === "dossier"
+        ? input.targetId === link.dossierId
+        : input.targetType === "section"
+          ? database.dossierSections.some(
+              (item) => item.id === input.targetId && item.dossierId === link.dossierId
+            )
+          : input.targetType === "fact"
+            ? database.factBookEntries.some(
+                (item) => item.id === input.targetId && item.dossierId === link.dossierId
+              )
+            : input.targetType === "claim"
+              ? database.dossierClaims.some(
+                  (item) => item.id === input.targetId && item.dossierId === link.dossierId
+                )
+              : database.dossierEvidence.some(
+                  (item) => item.id === input.targetId && item.dossierId === link.dossierId
+                )
+    if (!targetExists) throw new Error("Review target not found")
+    const issue: ConsultantReviewIssue = {
+      ...input,
+      dossierId: link.dossierId,
+      handoffId: link.handoffId,
+      ownerId: link.ownerId,
+      status: "open",
+    }
+    database.consultantReviewIssues.unshift(issue)
+    pushAudit(
+      database,
+      link.ownerId,
+      link.dossierId,
+      "review_issue_created",
+      "review_issue",
+      issue.id,
+      `Consultant finding: ${issue.title}`
+    )
+    await writeDatabase(database)
+    return issue
+  }
+
+  async function updateReviewIssue(
+    ownerId: string,
+    issueId: string,
+    status: ConsultantReviewIssue["status"],
+    resolutionNote?: string
+  ) {
+    const database = await readDatabase()
+    const issue = database.consultantReviewIssues.find(
+      (item) => item.id === issueId && item.ownerId === ownerId
+    )
+    if (!issue) throw new Error("Review issue not found")
+    const now = new Date().toISOString()
+    issue.status = status
+    issue.resolutionNote = resolutionNote
+    issue.resolvedAt = status === "resolved" ? now : undefined
+    issue.updatedAt = now
+    pushAudit(
+      database,
+      ownerId,
+      issue.dossierId,
+      status === "open" ? "review_issue_reopened" : "review_issue_resolved",
+      "review_issue",
+      issue.id,
+      `${issue.title}: ${status}`
+    )
+    await writeDatabase(database)
+    return issue
+  }
+
+  async function createSubmission(submission: SubmissionRecord) {
+    const database = await readDatabase()
+    const release = database.dossierReleases.find(
+      (item) =>
+        item.id === submission.releaseId &&
+        item.ownerId === submission.ownerId &&
+        item.status === "locked"
+    )
+    if (!release) throw new Error("A locked release is required")
+    database.submissions.unshift(submission)
+    pushAudit(
+      database,
+      submission.ownerId,
+      submission.dossierId,
+      "submission_created",
+      "submission",
+      submission.id,
+      `${submission.agency}: ${submission.status}`
+    )
+    await writeDatabase(database)
+    return submission
+  }
+
+  async function updateSubmission(
+    ownerId: string,
+    submissionId: string,
+    status: SubmissionRecord["status"],
+    trackingNumber?: string,
+    targetDate?: string
+  ) {
+    const database = await readDatabase()
+    const submission = database.submissions.find(
+      (item) => item.id === submissionId && item.ownerId === ownerId
+    )
+    if (!submission) throw new Error("Submission not found")
+    const now = new Date().toISOString()
+    submission.status = status
+    submission.trackingNumber = trackingNumber
+    submission.targetDate = targetDate
+    if (status === "submitted" && !submission.submittedAt) submission.submittedAt = now
+    submission.updatedAt = now
+    pushAudit(
+      database,
+      ownerId,
+      submission.dossierId,
+      "submission_status_updated",
+      "submission",
+      submission.id,
+      `${submission.agency}: ${status.replaceAll("_", " ")}`
+    )
+    await writeDatabase(database)
+    return submission
+  }
+
+  async function createAgencyQuestion(question: AgencyQuestion) {
+    const database = await readDatabase()
+    const submission = database.submissions.find(
+      (item) => item.id === question.submissionId && item.ownerId === question.ownerId
+    )
+    if (!submission) throw new Error("Submission not found")
+    database.agencyQuestions.unshift(question)
+    submission.status = "questions"
+    submission.updatedAt = question.updatedAt
+    pushAudit(
+      database,
+      question.ownerId,
+      question.dossierId,
+      "agency_question_added",
+      "agency_question",
+      question.id,
+      question.title
+    )
+    await writeDatabase(database)
+    return question
+  }
+
+  async function updateAgencyQuestion(
+    ownerId: string,
+    questionId: string,
+    status: AgencyQuestion["status"],
+    response?: string,
+    dueDate?: string
+  ) {
+    const database = await readDatabase()
+    const question = database.agencyQuestions.find(
+      (item) => item.id === questionId && item.ownerId === ownerId
+    )
+    if (!question) throw new Error("Agency question not found")
+    const now = new Date().toISOString()
+    question.status = status
+    question.response = response
+    question.dueDate = dueDate
+    if (status === "answered") question.answeredAt = now
+    question.updatedAt = now
+    if (status === "answered" || status === "closed")
+      pushAudit(
+        database,
+        ownerId,
+        question.dossierId,
+        "agency_question_resolved",
+        "agency_question",
+        question.id,
+        `${question.title}: ${status}`
+      )
+    await writeDatabase(database)
+    return question
   }
 
   async function updateAnalysis(
@@ -1174,7 +1992,15 @@ export function createStorage(dataDir = defaultDataDir()) {
     createDossier,
     createDossierClaim,
     createEvidenceRequest,
+    createEvidenceRequestLink,
+    createReviewIssue,
+    createConsultantReviewLink,
+    createExternalReviewIssue,
+    createSubmission,
+    createAgencyQuestion,
     createFactBookEntry,
+    saveExtractionCandidates,
+    reviewExtractionCandidate,
     createNote,
     createAnalysis,
     createArtifact,
@@ -1185,6 +2011,8 @@ export function createStorage(dataDir = defaultDataDir()) {
     getAnalysis,
     getAnalysisById,
     getDossier,
+    getExternalEvidenceRequest,
+    getExternalConsultantReview,
     listNotes,
     listAnalyses,
     listDossiers,
@@ -1192,6 +2020,8 @@ export function createStorage(dataDir = defaultDataDir()) {
     listSectionVersions,
     readArtifact,
     restoreSectionVersion,
+    receiveExternalEvidenceResponse,
+    receiveExternalEvidenceUpload,
     signReleaseAttestation,
     revokeReleaseAttestation,
     lockDossierRelease,
@@ -1200,7 +2030,11 @@ export function createStorage(dataDir = defaultDataDir()) {
     updateAnalysis,
     updateDossierSection,
     updateEvidenceRequest,
+    updateReviewIssue,
+    updateSubmission,
+    updateAgencyQuestion,
     updateConsultantHandoff,
+    updateFactBookEntry,
     verifyDossierEvidence,
     reviewDossierClaim,
     reviewFactBookEntry,
@@ -1310,6 +2144,40 @@ export function createConvexBlobStorage(authToken?: string) {
     )
   }
 
+  async function createEvidenceRequestLink(link: EvidenceRequestLink) {
+    const { ownerId: _ownerId, ...input } = link
+    return client.mutation(
+      convexFunctions.createEvidenceRequestLink,
+      { link: input },
+      { skipQueue: true }
+    )
+  }
+
+  async function getExternalEvidenceRequest(tokenHash: string) {
+    return client.query(convexFunctions.getExternalEvidenceRequest, { tokenHash })
+  }
+
+  async function receiveExternalEvidenceResponse(tokenHash: string, responseNote: string) {
+    return client.mutation(
+      convexFunctions.receiveExternalEvidenceResponse,
+      { tokenHash, responseNote, updatedAt: new Date().toISOString() },
+      { skipQueue: true }
+    )
+  }
+
+  async function receiveExternalEvidenceUpload(
+    tokenHash: string,
+    evidence: Omit<DossierEvidence, "ownerId">,
+    passages: Omit<DossierEvidencePassage, "ownerId">[],
+    responseNote: string
+  ) {
+    return client.mutation(
+      convexFunctions.receiveExternalEvidenceUpload,
+      { tokenHash, evidence, passages, responseNote, updatedAt: new Date().toISOString() },
+      { skipQueue: true }
+    )
+  }
+
   async function updateEvidenceRequest(
     _ownerId: string,
     requestId: string,
@@ -1379,11 +2247,162 @@ export function createConvexBlobStorage(authToken?: string) {
     )
   }
 
+  async function createReviewIssue(issue: ConsultantReviewIssue) {
+    const {
+      ownerId: _ownerId,
+      resolutionNote: _resolutionNote,
+      resolvedAt: _resolvedAt,
+      ...input
+    } = issue
+    return client.mutation(convexFunctions.createReviewIssue, { issue: input }, { skipQueue: true })
+  }
+
+  async function createConsultantReviewLink(link: ConsultantReviewLink) {
+    const { ownerId: _ownerId, ...input } = link
+    return client.mutation(
+      convexFunctions.createConsultantReviewLink,
+      { link: input },
+      { skipQueue: true }
+    )
+  }
+
+  async function getExternalConsultantReview(tokenHash: string) {
+    return client.query(convexFunctions.getExternalConsultantReview, { tokenHash })
+  }
+
+  async function createExternalReviewIssue(
+    tokenHash: string,
+    issue: Pick<
+      ConsultantReviewIssue,
+      "id" | "targetType" | "targetId" | "title" | "body" | "priority" | "createdAt" | "updatedAt"
+    >
+  ) {
+    return client.mutation(
+      convexFunctions.createExternalReviewIssue,
+      { tokenHash, issue },
+      { skipQueue: true }
+    )
+  }
+
+  async function updateReviewIssue(
+    _ownerId: string,
+    issueId: string,
+    status: ConsultantReviewIssue["status"],
+    resolutionNote?: string
+  ) {
+    return client.mutation(
+      convexFunctions.updateReviewIssue,
+      { issueId, status, resolutionNote, updatedAt: new Date().toISOString() },
+      { skipQueue: true }
+    )
+  }
+
+  async function createSubmission(submission: SubmissionRecord) {
+    const { ownerId: _ownerId, ...input } = submission
+    return client.mutation(
+      convexFunctions.createSubmission,
+      { submission: input },
+      { skipQueue: true }
+    )
+  }
+
+  async function updateSubmission(
+    _ownerId: string,
+    submissionId: string,
+    status: SubmissionRecord["status"],
+    trackingNumber?: string,
+    targetDate?: string
+  ) {
+    return client.mutation(
+      convexFunctions.updateSubmission,
+      { submissionId, status, trackingNumber, targetDate, updatedAt: new Date().toISOString() },
+      { skipQueue: true }
+    )
+  }
+
+  async function createAgencyQuestion(question: AgencyQuestion) {
+    const { ownerId: _ownerId, response: _response, answeredAt: _answeredAt, ...input } = question
+    return client.mutation(
+      convexFunctions.createAgencyQuestion,
+      { question: input },
+      { skipQueue: true }
+    )
+  }
+
+  async function updateAgencyQuestion(
+    _ownerId: string,
+    questionId: string,
+    status: AgencyQuestion["status"],
+    response?: string,
+    dueDate?: string
+  ) {
+    return client.mutation(
+      convexFunctions.updateAgencyQuestion,
+      { questionId, status, response, dueDate, updatedAt: new Date().toISOString() },
+      { skipQueue: true }
+    )
+  }
+
   async function createFactBookEntry(fact: FactBookEntry) {
     const { ownerId: _ownerId, ...input } = fact
     return client.mutation(
       convexFunctions.createFactBookEntry,
       { fact: input },
+      { skipQueue: true }
+    )
+  }
+
+  async function saveExtractionCandidates(
+    _ownerId: string,
+    dossierId: string,
+    evidenceId: string,
+    candidates: Omit<
+      FactExtractionRecord,
+      | "ownerId"
+      | "dossierId"
+      | "evidenceId"
+      | "status"
+      | "acceptedFactId"
+      | "createdAt"
+      | "updatedAt"
+    >[]
+  ) {
+    return client.mutation(
+      convexFunctions.saveExtractionCandidates,
+      { dossierId, evidenceId, candidates, updatedAt: new Date().toISOString() },
+      { skipQueue: true }
+    )
+  }
+
+  async function reviewExtractionCandidate(
+    _ownerId: string,
+    candidateId: string,
+    action: "accept" | "dismiss"
+  ) {
+    return client.mutation(
+      convexFunctions.reviewExtractionCandidate,
+      { candidateId, action, factId: randomUUID(), updatedAt: new Date().toISOString() },
+      { skipQueue: true }
+    )
+  }
+
+  async function updateFactBookEntry(
+    _ownerId: string,
+    factId: string,
+    title: string,
+    fields: Record<string, string>,
+    confirmImpacts: boolean
+  ) {
+    return client.mutation(
+      convexFunctions.updateFactBookEntry,
+      {
+        factId,
+        revisionId: randomUUID(),
+        title,
+        fields,
+        confirmImpacts,
+        updatedAt: new Date().toISOString(),
+      },
       { skipQueue: true }
     )
   }
@@ -1614,6 +2633,12 @@ export function createConvexBlobStorage(authToken?: string) {
     createDossier,
     createDossierClaim,
     createEvidenceRequest,
+    createEvidenceRequestLink,
+    createReviewIssue,
+    createConsultantReviewLink,
+    createExternalReviewIssue,
+    createSubmission,
+    createAgencyQuestion,
     createNote,
     createAnalysis,
     createArtifact,
@@ -1623,6 +2648,8 @@ export function createConvexBlobStorage(authToken?: string) {
     getAnalysis,
     getAnalysisById,
     getDossier,
+    getExternalEvidenceRequest,
+    getExternalConsultantReview,
     listNotes,
     listAnalyses,
     listDossiers,
@@ -1630,7 +2657,11 @@ export function createConvexBlobStorage(authToken?: string) {
     readArtifact,
     listSectionVersions,
     restoreSectionVersion,
+    receiveExternalEvidenceResponse,
+    receiveExternalEvidenceUpload,
     createFactBookEntry,
+    saveExtractionCandidates,
+    reviewExtractionCandidate,
     deleteFactBookEntry,
     createConsultantHandoff,
     signReleaseAttestation,
@@ -1641,7 +2672,11 @@ export function createConvexBlobStorage(authToken?: string) {
     updateAnalysis,
     updateDossierSection,
     updateEvidenceRequest,
+    updateReviewIssue,
+    updateSubmission,
+    updateAgencyQuestion,
     updateConsultantHandoff,
+    updateFactBookEntry,
     verifyDossierEvidence,
     reviewDossierClaim,
     reviewFactBookEntry,

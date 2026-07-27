@@ -1,11 +1,63 @@
 import { describe, expect, it } from "vitest"
 import {
+  analyzeFactImpact,
   buildInitialDossierRequirements,
   buildInitialDossierSections,
   evaluateDossierQuality,
+  renderFactReferences,
   suggestClaimsFromPassage,
   suggestDossierRequirement,
 } from "./dossier.js"
+
+describe("governed fact references", () => {
+  const fact = {
+    id: "fact-1",
+    dossierId: "dossier-1",
+    ownerId: "owner-1",
+    kind: "specification" as const,
+    title: "Lead specification",
+    fields: { limit: "0.5", unit: "ppm" },
+    status: "verified" as const,
+    createdAt: "2026-07-27T00:00:00.000Z",
+    updatedAt: "2026-07-27T00:00:00.000Z",
+  }
+
+  it("renders current values and reports unresolved references", () => {
+    const result = renderFactReferences(
+      "Lead must be {{fact:fact-1.limit}} {{fact:fact-1.unit}}; {{fact:missing.value}}.",
+      [fact]
+    )
+
+    expect(result.rendered).toBe("Lead must be 0.5 ppm; {{fact:missing.value}} [UNRESOLVED FACT].")
+    expect(result.used).toEqual([
+      {
+        factId: "fact-1",
+        field: "limit",
+        marker: "{{fact:fact-1.limit}}",
+        value: "0.5",
+      },
+      { factId: "fact-1", field: "unit", marker: "{{fact:fact-1.unit}}", value: "ppm" },
+    ])
+    expect(result.unresolved).toEqual([
+      { factId: "missing", field: "value", marker: "{{fact:missing.value}}" },
+    ])
+  })
+
+  it("limits approval impact to sections that use changed fields", () => {
+    const sections = buildInitialDossierSections("dossier-1", "owner-1", "2026-07-27T00:00:00.000Z")
+    sections[0].content = "Limit: {{fact:fact-1.limit}}"
+    sections[1].content = "Unit: {{fact:fact-1.unit}}"
+
+    const impact = analyzeFactImpact(
+      fact,
+      { title: fact.title, fields: { ...fact.fields, limit: "0.25" } },
+      sections
+    )
+
+    expect(impact.changedFields).toEqual([{ field: "limit", before: "0.5", after: "0.25" }])
+    expect(impact.affectedSectionIds).toEqual([sections[0].id])
+  })
+})
 
 describe("buildInitialDossierRequirements", () => {
   it("adds production-organism requirements for fermentation-derived substances", () => {
@@ -76,6 +128,34 @@ describe("buildInitialDossierRequirements", () => {
 
     expect(checks.find((check) => check.id === "evidence-coverage")?.severity).toBe("blocker")
     expect(checks.find((check) => check.id === "section-completeness")?.severity).toBe("blocker")
+  })
+
+  it("blocks release for an unresolved blocking consultant issue", () => {
+    const now = "2026-07-27T00:00:00.000Z"
+    const checks = evaluateDossierQuality({
+      requirements: [],
+      evidence: [],
+      sections: [],
+      reviewIssues: [
+        {
+          id: "issue-1",
+          dossierId: "dossier-1",
+          ownerId: "owner-1",
+          targetType: "dossier",
+          targetId: "dossier-1",
+          title: "Resolve exposure discrepancy",
+          body: "The stated intake does not match the calculation workbook.",
+          priority: "blocking",
+          status: "open",
+          createdAt: now,
+          updatedAt: now,
+        },
+      ],
+    })
+
+    expect(checks.find((check) => check.id === "consultant-review-issues")?.severity).toBe(
+      "blocker"
+    )
   })
 
   it("suggests a manufacturing requirement from process evidence", () => {

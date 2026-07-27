@@ -11,6 +11,18 @@
     {
       "source": "/workspace",
       "destination": "/index.html"
+    },
+    {
+      "source": "/dossiers/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/respond/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/review/:path*",
+      "destination": "/index.html"
     }
   ],
   "functions": {

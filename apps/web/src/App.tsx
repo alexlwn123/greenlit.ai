@@ -1,5 +1,7 @@
 import type {
+  AgencyQuestion,
   AnalysisRecord,
+  ConsultantReviewIssue,
   DossierEvidence,
   DossierEvidencePassage,
   DossierIntake,
@@ -7,13 +9,16 @@ import type {
   DossierRecord,
   DossierSectionVersion,
   FactBookEntry,
+  FactExtractionRecord,
   FilingDiffItem,
   ReadinessReport,
   ReleaseAttestation,
+  SubmissionRecord,
 } from "@greenlit/core"
 import {
   demoReport,
   getEvidenceMatrixScoreBreakdown,
+  renderFactReferences,
   suggestClaimsFromPassage,
 } from "@greenlit/core"
 import {
@@ -54,13 +59,18 @@ import {
 import {
   assistDossierSection,
   compareAnalyses,
+  createAgencyQuestion,
   createAnalysis,
   createConsultantHandoff,
+  createConsultantReviewLink,
   createDossier,
   createDossierClaim,
   createEvidenceRequest,
+  createEvidenceRequestLink,
   createFactBookEntry,
+  createReviewIssue,
   createSectionStarter,
+  createSubmission,
   type DossierWorkspace,
   deleteDossierEvidence,
   deleteFactBookEntry,
@@ -69,21 +79,36 @@ import {
   downloadDossierExport,
   downloadFactBook,
   downloadSubmissionPackage,
+  type ExternalConsultantReview,
+  type ExternalEvidenceRequest,
+  type FactImpact,
   getDossier,
   getDossierQuality,
   getEvidencePassages,
+  getExternalConsultantReview,
+  getExternalEvidenceRequest,
   getSectionVersions,
   listAnalyses,
   listDossiers,
   lockDossierRelease,
+  previewFactImpact,
   restoreSectionVersion,
   reviewDossierClaim,
+  reviewExtractionCandidate,
   reviewFactBookEntry,
   saveDossierSection,
   signReleaseAttestation,
+  submitExternalEvidenceFile,
+  submitExternalEvidenceResponse,
+  submitExternalReviewIssue,
+  suggestEvidenceFacts,
   unlockDossierRelease,
+  updateAgencyQuestion,
   updateConsultantHandoff,
   updateEvidenceRequest,
+  updateFactBookEntry,
+  updateReviewIssue,
+  updateSubmission,
   uploadDossierEvidence,
   verifyDossierEvidence,
   waitForAnalysis,
@@ -95,6 +120,8 @@ type Route =
   | { name: "analysis"; id?: string }
   | { name: "workspace" }
   | { name: "dossiers"; id?: string }
+  | { name: "respond"; token: string }
+  | { name: "review"; token: string }
 
 const analysisSections = [
   { id: "executive-summary", label: "Executive summary" },
@@ -142,6 +169,7 @@ export default function App() {
   }, [])
 
   useEffect(() => {
+    if (route.name === "respond" || route.name === "review") return
     void refreshHistory()
     void listDossiers()
       .then(setDossiers)
@@ -149,7 +177,7 @@ export default function App() {
     const onPopState = () => setRoute(readRoute())
     window.addEventListener("popstate", onPopState)
     return () => window.removeEventListener("popstate", onPopState)
-  }, [refreshHistory])
+  }, [refreshHistory, route.name])
 
   const navigate = useCallback((next: Route) => {
     window.history.pushState({}, "", routePath(next))
@@ -230,6 +258,9 @@ export default function App() {
         history.find((analysis) => analysis.id === (route.name === "analysis" ? route.id : ""))
           ?.report)
 
+  if (route.name === "respond") return <ExternalResponsePage token={route.token} />
+  if (route.name === "review") return <ExternalReviewPage token={route.token} />
+
   return (
     <div className="site-frame">
       <Header
@@ -291,6 +322,330 @@ export default function App() {
         />
       ) : null}
     </div>
+  )
+}
+
+function ExternalResponsePage({ token }: { token: string }) {
+  const [request, setRequest] = useState<ExternalEvidenceRequest | null>(null)
+  const [note, setNote] = useState("")
+  const [file, setFile] = useState<File | null>(null)
+  const [category, setCategory] = useState<DossierEvidence["category"]>("other")
+  const [status, setStatus] = useState<"loading" | "ready" | "sending" | "sent" | "error">(
+    "loading"
+  )
+  const [message, setMessage] = useState("")
+
+  useEffect(() => {
+    void getExternalEvidenceRequest(token)
+      .then((result) => {
+        setRequest(result)
+        setStatus("ready")
+      })
+      .catch((error) => {
+        setMessage(errorMessage(error))
+        setStatus("error")
+      })
+  }, [token])
+
+  async function submitResponse(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    setStatus("sending")
+    try {
+      if (file) await submitExternalEvidenceFile(token, file, note, category)
+      else await submitExternalEvidenceResponse(token, note)
+      setStatus("sent")
+    } catch (error) {
+      setMessage(errorMessage(error))
+      setStatus("error")
+    }
+  }
+
+  return (
+    <main className="dossier-shell">
+      <section className="requirements-panel">
+        <div className="requirements-heading">
+          <div>
+            <p className="section-label">SECURE EVIDENCE RESPONSE</p>
+            <h1>{request?.request.title ?? "Evidence request"}</h1>
+          </div>
+          <ShieldCheck />
+        </div>
+        {status === "loading" ? <p>Opening secure request…</p> : null}
+        {status === "error" ? <p className="form-error">{message}</p> : null}
+        {status === "sent" ? (
+          <div className="evidence-empty">
+            <Check />
+            <h2>Response received</h2>
+            <p>The Greenlit workspace owner has been notified. This link can no longer be used.</p>
+          </div>
+        ) : null}
+        {request && (status === "ready" || status === "sending") ? (
+          <form className="claim-composer" onSubmit={submitResponse}>
+            <p>
+              <strong>{request.dossier.substanceName}</strong> · {request.dossier.name}
+            </p>
+            <p>{request.request.detail}</p>
+            <small>
+              {request.request.priority} priority · secure link expires{" "}
+              {formatDate(request.link.expiresAt)}
+            </small>
+            <label>
+              Your response
+              <textarea
+                value={note}
+                onChange={(event) => setNote(event.currentTarget.value)}
+                placeholder="Describe the materials supplied, relevant dates, limitations, and anything the regulatory team should know."
+                required
+                minLength={3}
+                maxLength={10000}
+              />
+            </label>
+            <label>
+              Evidence category
+              <select
+                value={category}
+                onChange={(event) =>
+                  setCategory(event.currentTarget.value as DossierEvidence["category"])
+                }
+              >
+                <option value="identity">Identity</option>
+                <option value="manufacturing">Manufacturing</option>
+                <option value="specification">Specification</option>
+                <option value="exposure">Exposure</option>
+                <option value="safety_study">Safety study</option>
+                <option value="regulatory">Regulatory</option>
+                <option value="other">Other</option>
+              </select>
+            </label>
+            <label>
+              Supporting PDF (recommended)
+              <input
+                type="file"
+                accept="application/pdf,.pdf"
+                onChange={(event) => setFile(event.currentTarget.files?.[0] ?? null)}
+              />
+              <small>The file enters Greenlit as unverified evidence for regulatory review.</small>
+            </label>
+            <button className="primary-action" type="submit" disabled={status === "sending"}>
+              {status === "sending" ? <LoaderCircle className="spin" /> : <Check />} Submit response
+            </button>
+          </form>
+        ) : null}
+      </section>
+    </main>
+  )
+}
+
+function ExternalReviewPage({ token }: { token: string }) {
+  const [review, setReview] = useState<ExternalConsultantReview | null>(null)
+  const [status, setStatus] = useState<"loading" | "ready" | "sending" | "error">("loading")
+  const [message, setMessage] = useState("")
+  const [target, setTarget] = useState("")
+  const [title, setTitle] = useState("")
+  const [body, setBody] = useState("")
+  const [priority, setPriority] = useState<ConsultantReviewIssue["priority"]>("normal")
+
+  useEffect(() => {
+    void getExternalConsultantReview(token)
+      .then((result) => {
+        setReview(result)
+        setTarget(`dossier:${result.dossier.id}`)
+        setStatus("ready")
+      })
+      .catch((error) => {
+        setMessage(errorMessage(error))
+        setStatus("error")
+      })
+  }, [token])
+
+  async function submitFinding(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    const [targetType, targetId] = target.split(":", 2) as [
+      ConsultantReviewIssue["targetType"],
+      string,
+    ]
+    if (!targetId) return
+    setStatus("sending")
+    try {
+      setReview(
+        await submitExternalReviewIssue(token, { targetType, targetId, title, body, priority })
+      )
+      setTitle("")
+      setBody("")
+      setStatus("ready")
+    } catch (error) {
+      setMessage(errorMessage(error))
+      setStatus("error")
+    }
+  }
+
+  if (status === "loading")
+    return (
+      <main className="dossier-shell">
+        <p>Opening secure review…</p>
+      </main>
+    )
+  if (!review)
+    return (
+      <main className="dossier-shell">
+        <p className="form-error">{message}</p>
+      </main>
+    )
+  const targets = [
+    { type: "dossier", id: review.dossier.id, label: "Whole dossier" },
+    ...review.sections.map((item) => ({
+      type: "section",
+      id: item.id,
+      label: `${item.part} — ${item.title}`,
+    })),
+    ...review.facts.map((item) => ({ type: "fact", id: item.id, label: `Fact — ${item.title}` })),
+    ...review.claims.map((item) => ({
+      type: "claim",
+      id: item.id,
+      label: `Claim — ${item.statement.slice(0, 80)}`,
+    })),
+    ...review.evidence.map((item) => ({
+      type: "evidence",
+      id: item.id,
+      label: `Evidence — ${item.title}`,
+    })),
+  ]
+  return (
+    <main className="dossier-page">
+      <section className="dossier-header">
+        <p className="section-label">SECURE CONSULTANT REVIEW</p>
+        <h1>{review.dossier.substanceName}</h1>
+        <p>{review.handoff.scope}</p>
+        <small>Review access expires {formatDate(review.link.expiresAt)}</small>
+      </section>
+      <section className="dossier-workbench">
+        <div className="requirements-panel">
+          <div className="requirements-heading">
+            <div>
+              <p className="section-label">DOSSIER CONTENT</p>
+              <h2>Review package</h2>
+            </div>
+          </div>
+          <div className="evidence-cards">
+            {review.sections.map((section) => (
+              <article key={section.id}>
+                <div className="evidence-card-head">
+                  <span>
+                    {section.part} · {section.title}
+                  </span>
+                  <StatusPill value={section.status} />
+                </div>
+                <p>{section.content || "No draft content."}</p>
+              </article>
+            ))}
+            {review.facts.map((fact) => (
+              <article key={fact.id}>
+                <div className="evidence-card-head">
+                  <span>
+                    <TableProperties /> {fact.title}
+                  </span>
+                  <StatusPill value={fact.status} />
+                </div>
+                <p>
+                  {Object.entries(fact.fields)
+                    .map(([key, value]) => `${key}: ${value}`)
+                    .join(" · ")}
+                </p>
+              </article>
+            ))}
+            {review.evidence.map((item) => (
+              <article key={item.id}>
+                <div className="evidence-card-head">
+                  <span>
+                    <FileText /> {item.title}
+                  </span>
+                  <StatusPill value={item.verificationStatus} />
+                </div>
+                <p>{item.excerpt}</p>
+                <small>
+                  {item.pageCount} pages · {item.category}
+                </small>
+              </article>
+            ))}
+          </div>
+          <form className="claim-composer" onSubmit={submitFinding}>
+            <div className="requirements-heading">
+              <div>
+                <p className="section-label">NEW FINDING</p>
+                <h2>Leave a targeted review issue</h2>
+              </div>
+            </div>
+            {status === "error" ? <p className="form-error">{message}</p> : null}
+            <div className="claim-fields">
+              <label>
+                Target
+                <select value={target} onChange={(event) => setTarget(event.currentTarget.value)}>
+                  {targets.map((item) => (
+                    <option key={`${item.type}:${item.id}`} value={`${item.type}:${item.id}`}>
+                      {item.label}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label>
+                Priority
+                <select
+                  value={priority}
+                  onChange={(event) =>
+                    setPriority(event.currentTarget.value as ConsultantReviewIssue["priority"])
+                  }
+                >
+                  <option value="blocking">Blocking</option>
+                  <option value="high">High</option>
+                  <option value="normal">Normal</option>
+                </select>
+              </label>
+              <label>
+                Finding
+                <input
+                  value={title}
+                  onChange={(event) => setTitle(event.currentTarget.value)}
+                  required
+                />
+              </label>
+            </div>
+            <label>
+              Review note
+              <textarea
+                value={body}
+                onChange={(event) => setBody(event.currentTarget.value)}
+                required
+              />
+            </label>
+            <button
+              className="primary-action"
+              type="submit"
+              disabled={status === "sending" || !title.trim() || !body.trim()}
+            >
+              <Plus /> Add finding
+            </button>
+          </form>
+          <section className="section-claims">
+            <div>
+              <strong>Review findings</strong>
+              <small>{review.issues.length} issues</small>
+            </div>
+            {review.issues.map((issue) => (
+              <article key={issue.id}>
+                <div className="evidence-card-head">
+                  <span>{issue.title}</span>
+                  <StatusPill value={issue.status} />
+                </div>
+                <p>{issue.body}</p>
+                <small>
+                  {issue.priority} · {issue.targetType}
+                </small>
+              </article>
+            ))}
+          </section>
+        </div>
+      </section>
+    </main>
   )
 }
 
@@ -1653,7 +2008,7 @@ function DossierPage({
   const [saving, setSaving] = useState(false)
   const [formError, setFormError] = useState<string | null>(null)
   const [studioTab, setStudioTab] = useState<
-    "evidence" | "facts" | "requests" | "draft" | "quality" | "release" | "activity"
+    "evidence" | "facts" | "requests" | "draft" | "quality" | "release" | "submission" | "activity"
   >("evidence")
   const [requirementId, setRequirementId] = useState("auto")
   const [evidenceCategory, setEvidenceCategory] = useState<DossierEvidence["category"]>("other")
@@ -1676,6 +2031,7 @@ function DossierPage({
   const [readerPassages, setReaderPassages] = useState<DossierEvidencePassage[]>([])
   const [readerPage, setReaderPage] = useState(1)
   const [readerSearch, setReaderSearch] = useState("")
+  const [factCandidates, setFactCandidates] = useState<FactExtractionRecord[]>([])
   const [sectionVersions, setSectionVersions] = useState<DossierSectionVersion[]>([])
   const [signerName, setSignerName] = useState("")
   const [signerRole, setSignerRole] = useState("")
@@ -1685,12 +2041,34 @@ function DossierPage({
     "Independent scientific and regulatory review of the complete working dossier, evidence traceability, and unresolved quality controls."
   )
   const [handoffDueDate, setHandoffDueDate] = useState("")
+  const [issueTargetType, setIssueTargetType] =
+    useState<ConsultantReviewIssue["targetType"]>("dossier")
+  const [issueTargetId, setIssueTargetId] = useState("")
+  const [issueTitle, setIssueTitle] = useState("")
+  const [issueBody, setIssueBody] = useState("")
+  const [issuePriority, setIssuePriority] = useState<ConsultantReviewIssue["priority"]>("normal")
+  const [issueResolutionNotes, setIssueResolutionNotes] = useState<Record<string, string>>({})
+  const [submissionAgency, setSubmissionAgency] = useState("FDA")
+  const [submissionReleaseId, setSubmissionReleaseId] = useState("")
+  const [submissionTracking, setSubmissionTracking] = useState("")
+  const [questionSubmissionId, setQuestionSubmissionId] = useState("")
+  const [questionTitle, setQuestionTitle] = useState("")
+  const [questionBody, setQuestionBody] = useState("")
+  const [questionPriority, setQuestionPriority] = useState<AgencyQuestion["priority"]>("normal")
+  const [questionDueDate, setQuestionDueDate] = useState("")
+  const [questionResponses, setQuestionResponses] = useState<Record<string, string>>({})
   const [dossierSearch, setDossierSearch] = useState("")
   const [dossierStatusFilter, setDossierStatusFilter] = useState("all")
   const [factKind, setFactKind] = useState<FactBookEntry["kind"]>("identity")
   const [factTitle, setFactTitle] = useState("")
   const [factFields, setFactFields] = useState<Record<string, string>>({})
   const [factEvidenceId, setFactEvidenceId] = useState("")
+  const [newRequestLinks, setNewRequestLinks] = useState<Record<string, string>>({})
+  const [newHandoffLinks, setNewHandoffLinks] = useState<Record<string, string>>({})
+  const [editingFactId, setEditingFactId] = useState("")
+  const [editingFactTitle, setEditingFactTitle] = useState("")
+  const [editingFactFields, setEditingFactFields] = useState<Record<string, string>>({})
+  const [factImpact, setFactImpact] = useState<FactImpact | null>(null)
 
   useEffect(() => {
     if (!dossierId || activeDossier?.dossier.id === dossierId) return
@@ -1806,6 +2184,46 @@ function DossierPage({
     }
   }
 
+  async function extractFacts() {
+    if (!selected || !readerEvidence) return
+    setSaving(true)
+    setFormError(null)
+    try {
+      const result = await suggestEvidenceFacts(selected.dossier.id, readerEvidence.id)
+      setFactCandidates(result.candidates)
+    } catch (error) {
+      setFormError(errorMessage(error))
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  async function acceptFactCandidate(candidate: FactExtractionRecord) {
+    if (!selected || !readerEvidence) return
+    setSaving(true)
+    try {
+      onLoad(await reviewExtractionCandidate(selected.dossier.id, candidate.id, "accept"))
+      setFactCandidates((current) => current.filter((item) => item.id !== candidate.id))
+    } catch (error) {
+      setFormError(errorMessage(error))
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  async function dismissFactCandidate(candidateId: string) {
+    if (!selected) return
+    setSaving(true)
+    try {
+      onLoad(await reviewExtractionCandidate(selected.dossier.id, candidateId, "dismiss"))
+      setFactCandidates((current) => current.filter((item) => item.id !== candidateId))
+    } catch (error) {
+      setFormError(errorMessage(error))
+    } finally {
+      setSaving(false)
+    }
+  }
+
   async function setFactStatus(factId: string, status: FactBookEntry["status"]) {
     if (!selected) return
     setSaving(true)
@@ -1816,6 +2234,63 @@ function DossierPage({
     } finally {
       setSaving(false)
     }
+  }
+
+  function beginFactEdit(fact: FactBookEntry) {
+    setEditingFactId(fact.id)
+    setEditingFactTitle(fact.title)
+    setEditingFactFields(fact.fields)
+    setFactImpact(null)
+  }
+
+  async function inspectFactImpact() {
+    if (!selected || !editingFactId || !editingFactTitle.trim()) return
+    setSaving(true)
+    setFormError(null)
+    try {
+      const preview = await previewFactImpact(
+        selected.dossier.id,
+        editingFactId,
+        editingFactTitle.trim(),
+        editingFactFields
+      )
+      setFactImpact(preview.impact)
+    } catch (error) {
+      setFormError(errorMessage(error))
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  async function applyFactUpdate() {
+    if (!selected || !editingFactId || !editingFactTitle.trim()) return
+    setSaving(true)
+    setFormError(null)
+    try {
+      onLoad(
+        await updateFactBookEntry(
+          selected.dossier.id,
+          editingFactId,
+          editingFactTitle.trim(),
+          editingFactFields,
+          true
+        )
+      )
+      setEditingFactId("")
+      setFactImpact(null)
+    } catch (error) {
+      setFormError(errorMessage(error))
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  function insertFactReference(factId: string, field: string) {
+    const marker = `{{fact:${factId}.${field}}}`
+    setDraftContent(
+      (current) => `${current}${current.endsWith(" ") || !current ? "" : " "}${marker}`
+    )
+    setStudioTab("draft")
   }
 
   async function removeFact(factId: string) {
@@ -1916,6 +2391,147 @@ function DossierPage({
     }
   }
 
+  async function shareConsultantReview(handoffId: string) {
+    if (!selected) return
+    setSaving(true)
+    try {
+      const result = await createConsultantReviewLink(selected.dossier.id, handoffId)
+      setNewHandoffLinks((current) => ({ ...current, [handoffId]: result.url }))
+      await navigator.clipboard?.writeText(result.url).catch(() => undefined)
+      onLoad(await getDossier(selected.dossier.id))
+    } catch (error) {
+      setFormError(errorMessage(error))
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  async function addReviewIssue() {
+    if (!selected || !issueTitle.trim() || !issueBody.trim()) return
+    const targetId = issueTargetType === "dossier" ? selected.dossier.id : issueTargetId
+    if (!targetId) return
+    setSaving(true)
+    setFormError(null)
+    try {
+      onLoad(
+        await createReviewIssue(selected.dossier.id, {
+          handoffId: selected.handoffs.find((item) => item.status === "in_review")?.id,
+          targetType: issueTargetType,
+          targetId,
+          title: issueTitle.trim(),
+          body: issueBody.trim(),
+          priority: issuePriority,
+        })
+      )
+      setIssueTitle("")
+      setIssueBody("")
+    } catch (error) {
+      setFormError(errorMessage(error))
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  async function setReviewIssueStatus(issueId: string, status: ConsultantReviewIssue["status"]) {
+    if (!selected) return
+    setSaving(true)
+    try {
+      onLoad(
+        await updateReviewIssue(
+          selected.dossier.id,
+          issueId,
+          status,
+          issueResolutionNotes[issueId]?.trim()
+        )
+      )
+    } catch (error) {
+      setFormError(errorMessage(error))
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  async function addSubmission() {
+    if (!selected || !submissionReleaseId || !submissionAgency.trim()) return
+    setSaving(true)
+    try {
+      onLoad(
+        await createSubmission(selected.dossier.id, {
+          releaseId: submissionReleaseId,
+          agency: submissionAgency.trim(),
+          trackingNumber: submissionTracking.trim() || undefined,
+          status: submissionTracking.trim() ? "submitted" : "ready",
+          targetDate: undefined,
+        })
+      )
+      setSubmissionTracking("")
+    } catch (error) {
+      setFormError(errorMessage(error))
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  async function setSubmissionStatus(
+    submission: SubmissionRecord,
+    status: SubmissionRecord["status"]
+  ) {
+    if (!selected) return
+    setSaving(true)
+    try {
+      onLoad(
+        await updateSubmission(selected.dossier.id, submission.id, {
+          status,
+          trackingNumber: submission.trackingNumber,
+          targetDate: submission.targetDate,
+        })
+      )
+    } catch (error) {
+      setFormError(errorMessage(error))
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  async function addAgencyQuestion() {
+    if (!selected || !questionSubmissionId || !questionTitle.trim() || !questionBody.trim()) return
+    setSaving(true)
+    try {
+      onLoad(
+        await createAgencyQuestion(selected.dossier.id, questionSubmissionId, {
+          title: questionTitle.trim(),
+          body: questionBody.trim(),
+          priority: questionPriority,
+          dueDate: questionDueDate || undefined,
+        })
+      )
+      setQuestionTitle("")
+      setQuestionBody("")
+    } catch (error) {
+      setFormError(errorMessage(error))
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  async function answerAgencyQuestion(question: AgencyQuestion, status: AgencyQuestion["status"]) {
+    if (!selected) return
+    setSaving(true)
+    try {
+      onLoad(
+        await updateAgencyQuestion(selected.dossier.id, question.id, {
+          status,
+          response: questionResponses[question.id]?.trim() || question.response,
+          dueDate: question.dueDate,
+        })
+      )
+    } catch (error) {
+      setFormError(errorMessage(error))
+    } finally {
+      setSaving(false)
+    }
+  }
+
   async function requestEvidence(requirementId: string) {
     if (!selected) return
     setSaving(true)
@@ -1923,6 +2539,22 @@ function DossierPage({
     try {
       onLoad(await createEvidenceRequest(selected.dossier.id, requirementId))
       setStudioTab("requests")
+    } catch (error) {
+      setFormError(errorMessage(error))
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  async function shareEvidenceRequest(requestId: string) {
+    if (!selected) return
+    setSaving(true)
+    setFormError(null)
+    try {
+      const result = await createEvidenceRequestLink(selected.dossier.id, requestId)
+      setNewRequestLinks((current) => ({ ...current, [requestId]: result.url }))
+      await navigator.clipboard?.writeText(result.url).catch(() => undefined)
+      onLoad(await getDossier(selected.dossier.id))
     } catch (error) {
       setFormError(errorMessage(error))
     } finally {
@@ -2064,6 +2696,11 @@ function DossierPage({
     try {
       const result = await getEvidencePassages(selected.dossier.id, evidence.id)
       setReaderEvidence(result.evidence)
+      setFactCandidates(
+        selected?.extractionCandidates.filter(
+          (candidate) => candidate.evidenceId === evidence.id && candidate.status === "proposed"
+        ) ?? []
+      )
       setReaderPassages(result.passages)
       setReaderPage(result.passages[0]?.pageNumber ?? 1)
       setReaderSearch("")
@@ -2440,6 +3077,13 @@ function DossierPage({
           </button>
           <button
             type="button"
+            className={studioTab === "submission" ? "is-current" : ""}
+            onClick={() => setStudioTab("submission")}
+          >
+            <ArrowRight /> Submission lifecycle
+          </button>
+          <button
+            type="button"
             className={studioTab === "activity" ? "is-current" : ""}
             onClick={() => setStudioTab("activity")}
           >
@@ -2515,7 +3159,10 @@ function DossierPage({
                   <button
                     type="button"
                     aria-label="Close evidence reader"
-                    onClick={() => setReaderEvidence(null)}
+                    onClick={() => {
+                      setReaderEvidence(null)
+                      setFactCandidates([])
+                    }}
                   >
                     <X />
                   </button>
@@ -2541,16 +3188,59 @@ function DossierPage({
                     <span>PAGE {currentPassage.pageNumber}</span>
                     <p>{currentPassage.text || "No readable text was extracted from this page."}</p>
                     {readerEvidence.verificationStatus === "verified" ? (
-                      <button
-                        type="button"
-                        className="primary-action"
-                        onClick={() => beginClaim(readerEvidence, currentPassage)}
-                      >
-                        <Plus /> Create claim from this page
-                      </button>
+                      <div className="evidence-actions">
+                        <button
+                          type="button"
+                          className="primary-action"
+                          onClick={() => beginClaim(readerEvidence, currentPassage)}
+                        >
+                          <Plus /> Create claim from this page
+                        </button>
+                        <button type="button" onClick={extractFacts} disabled={saving}>
+                          <Sparkles /> Extract proposed facts
+                        </button>
+                      </div>
                     ) : (
                       <small>Verify this source before creating claims from its pages.</small>
                     )}
+                    {factCandidates.length ? (
+                      <section className="section-claims">
+                        <div>
+                          <strong>Extraction review inbox</strong>
+                          <small>
+                            {factCandidates.length} proposals · nothing added automatically
+                          </small>
+                        </div>
+                        {factCandidates.map((candidate) => (
+                          <article key={candidate.id}>
+                            <p>{candidate.title}</p>
+                            <small>
+                              Page {candidate.sourcePage} · {candidate.confidence} confidence ·{" "}
+                              {Object.entries(candidate.fields)
+                                .map(([key, value]) => `${key}: ${value}`)
+                                .join(" · ")}
+                            </small>
+                            <blockquote>“{candidate.sourceExcerpt}”</blockquote>
+                            <div className="evidence-actions">
+                              <button
+                                type="button"
+                                onClick={() => dismissFactCandidate(candidate.id)}
+                              >
+                                Dismiss
+                              </button>
+                              <button
+                                type="button"
+                                className="primary-action"
+                                disabled={saving}
+                                onClick={() => acceptFactCandidate(candidate)}
+                              >
+                                <Check /> Accept as draft fact
+                              </button>
+                            </div>
+                          </article>
+                        ))}
+                      </section>
+                    ) : null}
                   </article>
                 </div>
               </section>
@@ -2839,14 +3529,67 @@ function DossierPage({
                             </span>
                             <StatusPill value={fact.status} />
                           </div>
-                          <dl>
-                            {Object.entries(fact.fields).map(([key, value]) => (
-                              <div key={key}>
-                                <dt>{key.replaceAll("_", " ")}</dt>
-                                <dd>{value}</dd>
-                              </div>
-                            ))}
-                          </dl>
+                          {editingFactId === fact.id ? (
+                            <div className="fact-fields">
+                              <label>
+                                Record title
+                                <input
+                                  value={editingFactTitle}
+                                  onChange={(event) =>
+                                    setEditingFactTitle(event.currentTarget.value)
+                                  }
+                                />
+                              </label>
+                              {Object.entries(editingFactFields).map(([key, value]) => (
+                                <label key={key}>
+                                  {key.replaceAll("_", " ")}
+                                  <input
+                                    value={value}
+                                    onChange={(event) =>
+                                      setEditingFactFields((current) => ({
+                                        ...current,
+                                        [key]: event.currentTarget.value,
+                                      }))
+                                    }
+                                  />
+                                </label>
+                              ))}
+                            </div>
+                          ) : (
+                            <dl>
+                              {Object.entries(fact.fields).map(([key, value]) => (
+                                <div key={key}>
+                                  <dt>{key.replaceAll("_", " ")}</dt>
+                                  <dd>{value}</dd>
+                                  <button
+                                    type="button"
+                                    onClick={() => insertFactReference(fact.id, key)}
+                                  >
+                                    Insert in draft
+                                  </button>
+                                </div>
+                              ))}
+                            </dl>
+                          )}
+                          {editingFactId === fact.id && factImpact ? (
+                            <div className="draft-provenance">
+                              <ShieldCheck />
+                              <span>
+                                {factImpact.changedFields.length
+                                  ? `${factImpact.changedFields.length} changed field${factImpact.changedFields.length === 1 ? "" : "s"}. `
+                                  : "No field changes. "}
+                                {factImpact.affectedSectionIds.length
+                                  ? `${factImpact.affectedSectionIds.length} linked section${factImpact.affectedSectionIds.length === 1 ? "" : "s"} will update and return to review: ${factImpact.affectedSectionIds
+                                      .map(
+                                        (id) =>
+                                          selected.sections.find((section) => section.id === id)
+                                            ?.title ?? id
+                                      )
+                                      .join(", ")}.`
+                                  : "No dossier sections currently reference these changed fields."}
+                              </span>
+                            </div>
+                          ) : null}
                           <small>
                             {fact.evidenceId
                               ? `Linked to ${selected.evidence.find((item) => item.id === fact.evidenceId)?.title ?? "evidence"}`
@@ -2854,6 +3597,25 @@ function DossierPage({
                             · updated {formatDate(fact.updatedAt)}
                           </small>
                           <div className="evidence-actions">
+                            {editingFactId === fact.id ? (
+                              <>
+                                <button type="button" onClick={() => setEditingFactId("")}>
+                                  Cancel
+                                </button>
+                                <button type="button" onClick={inspectFactImpact} disabled={saving}>
+                                  Preview impact
+                                </button>
+                                {factImpact ? (
+                                  <button type="button" onClick={applyFactUpdate} disabled={saving}>
+                                    <Check /> Apply governed update
+                                  </button>
+                                ) : null}
+                              </>
+                            ) : (
+                              <button type="button" onClick={() => beginFactEdit(fact)}>
+                                Edit
+                              </button>
+                            )}
                             {fact.status === "draft" ? (
                               <button
                                 type="button"
@@ -2887,6 +3649,29 @@ function DossierPage({
                 </p>
               </div>
             ) : null}
+            {selected.factBookRevisions.length ? (
+              <section className="section-claims">
+                <div>
+                  <strong>Governed change history</strong>
+                  <small>{selected.factBookRevisions.length} revisions</small>
+                </div>
+                {selected.factBookRevisions.slice(0, 10).map((revision) => (
+                  <article key={revision.id}>
+                    <p>
+                      {revision.previousTitle}{" "}
+                      {revision.previousTitle !== revision.nextTitle
+                        ? `→ ${revision.nextTitle}`
+                        : "updated"}
+                    </p>
+                    <small>
+                      {formatDate(revision.createdAt)} · {revision.affectedSectionIds.length}{" "}
+                      affected section
+                      {revision.affectedSectionIds.length === 1 ? "" : "s"}
+                    </small>
+                  </article>
+                ))}
+              </section>
+            ) : null}
           </div>
         ) : null}
         {studioTab === "requests" ? (
@@ -2916,8 +3701,27 @@ function DossierPage({
                   <small>
                     {request.priority} priority · updated {formatDate(request.updatedAt)}
                   </small>
+                  {request.responseNote ? <blockquote>“{request.responseNote}”</blockquote> : null}
+                  {newRequestLinks[request.id] ? (
+                    <label>
+                      Secure one-time response link
+                      <input
+                        value={newRequestLinks[request.id]}
+                        readOnly
+                        onFocus={(event) => event.currentTarget.select()}
+                      />
+                      <small>Copied when created. Share only with the intended respondent.</small>
+                    </label>
+                  ) : null}
                   {request.status === "open" ? (
                     <div className="evidence-actions">
+                      <button
+                        type="button"
+                        onClick={() => shareEvidenceRequest(request.id)}
+                        disabled={saving}
+                      >
+                        <ShieldCheck /> Create secure response link
+                      </button>
                       <button
                         type="button"
                         onClick={() => setRequestStatus(request.id, "received")}
@@ -3155,7 +3959,29 @@ function DossierPage({
                       {handoff.consultantEmail || "No email recorded"}
                       {handoff.dueDate ? ` · due ${handoff.dueDate}` : ""}
                     </small>
+                    {newHandoffLinks[handoff.id] ? (
+                      <label>
+                        Secure consultant review link
+                        <input
+                          value={newHandoffLinks[handoff.id]}
+                          readOnly
+                          onFocus={(event) => event.currentTarget.select()}
+                        />
+                        <small>
+                          Copied when created. This link exposes the scoped review package.
+                        </small>
+                      </label>
+                    ) : null}
                     <div className="evidence-actions">
+                      {handoff.status === "prepared" || handoff.status === "in_review" ? (
+                        <button
+                          type="button"
+                          onClick={() => shareConsultantReview(handoff.id)}
+                          disabled={saving}
+                        >
+                          <ShieldCheck /> Create review link
+                        </button>
+                      ) : null}
                       {handoff.status === "prepared" ? (
                         <button
                           type="button"
@@ -3181,6 +4007,409 @@ function DossierPage({
                         </button>
                       ) : null}
                     </div>
+                  </article>
+                ))}
+              </div>
+            </section>
+            <section className="claim-composer">
+              <div className="requirements-heading">
+                <div>
+                  <p className="section-label">REVIEW ISSUES</p>
+                  <h2>Targeted findings & resolution</h2>
+                </div>
+                <span>
+                  {selected.reviewIssues.filter((issue) => issue.status === "open").length} open
+                </span>
+              </div>
+              <div className="claim-fields">
+                <label>
+                  Applies to
+                  <select
+                    value={issueTargetType}
+                    onChange={(event) => {
+                      setIssueTargetType(
+                        event.currentTarget.value as ConsultantReviewIssue["targetType"]
+                      )
+                      setIssueTargetId("")
+                    }}
+                  >
+                    <option value="dossier">Whole dossier</option>
+                    <option value="section">Section</option>
+                    <option value="fact">Fact Book record</option>
+                    <option value="claim">Claim</option>
+                    <option value="evidence">Evidence</option>
+                  </select>
+                </label>
+                {issueTargetType !== "dossier" ? (
+                  <label>
+                    Target
+                    <select
+                      value={issueTargetId}
+                      onChange={(event) => setIssueTargetId(event.currentTarget.value)}
+                    >
+                      <option value="">Choose target</option>
+                      {(issueTargetType === "section"
+                        ? selected.sections.map((item) => ({
+                            id: item.id,
+                            label: `${item.part} — ${item.title}`,
+                          }))
+                        : issueTargetType === "fact"
+                          ? selected.factBookEntries.map((item) => ({
+                              id: item.id,
+                              label: item.title,
+                            }))
+                          : issueTargetType === "claim"
+                            ? selected.claims.map((item) => ({
+                                id: item.id,
+                                label: item.statement.slice(0, 90),
+                              }))
+                            : selected.evidence.map((item) => ({ id: item.id, label: item.title }))
+                      ).map((item) => (
+                        <option key={item.id} value={item.id}>
+                          {item.label}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                ) : null}
+                <label>
+                  Priority
+                  <select
+                    value={issuePriority}
+                    onChange={(event) =>
+                      setIssuePriority(
+                        event.currentTarget.value as ConsultantReviewIssue["priority"]
+                      )
+                    }
+                  >
+                    <option value="blocking">Blocking</option>
+                    <option value="high">High</option>
+                    <option value="normal">Normal</option>
+                  </select>
+                </label>
+                <label>
+                  Finding
+                  <input
+                    value={issueTitle}
+                    onChange={(event) => setIssueTitle(event.currentTarget.value)}
+                    placeholder="Concise review finding"
+                  />
+                </label>
+              </div>
+              <label>
+                Review note
+                <textarea
+                  value={issueBody}
+                  onChange={(event) => setIssueBody(event.currentTarget.value)}
+                  placeholder="Explain the concern, expected correction, and regulatory significance."
+                />
+              </label>
+              <button
+                type="button"
+                className="primary-action"
+                disabled={
+                  saving ||
+                  !issueTitle.trim() ||
+                  !issueBody.trim() ||
+                  (issueTargetType !== "dossier" && !issueTargetId)
+                }
+                onClick={addReviewIssue}
+              >
+                <Plus /> Add review issue
+              </button>
+              <div className="evidence-cards">
+                {selected.reviewIssues.map((issue) => (
+                  <article key={issue.id}>
+                    <div className="evidence-card-head">
+                      <span>
+                        <CircleAlert /> {issue.title}
+                      </span>
+                      <StatusPill value={issue.status} />
+                    </div>
+                    <p>{issue.body}</p>
+                    <small>
+                      {issue.priority} · {issue.targetType} · updated {formatDate(issue.updatedAt)}
+                    </small>
+                    {issue.resolutionNote ? (
+                      <blockquote>“{issue.resolutionNote}”</blockquote>
+                    ) : null}
+                    {issue.status === "open" ? (
+                      <>
+                        <label>
+                          Resolution note
+                          <textarea
+                            value={issueResolutionNotes[issue.id] ?? ""}
+                            onChange={(event) =>
+                              setIssueResolutionNotes((current) => ({
+                                ...current,
+                                [issue.id]: event.currentTarget.value,
+                              }))
+                            }
+                            placeholder="Describe what changed and why the finding is resolved."
+                          />
+                        </label>
+                        <div className="evidence-actions">
+                          <button
+                            type="button"
+                            onClick={() => setReviewIssueStatus(issue.id, "dismissed")}
+                          >
+                            Dismiss
+                          </button>
+                          <button
+                            type="button"
+                            disabled={!issueResolutionNotes[issue.id]?.trim()}
+                            onClick={() => setReviewIssueStatus(issue.id, "resolved")}
+                          >
+                            <Check /> Resolve
+                          </button>
+                        </div>
+                      </>
+                    ) : (
+                      <button type="button" onClick={() => setReviewIssueStatus(issue.id, "open")}>
+                        Reopen
+                      </button>
+                    )}
+                  </article>
+                ))}
+              </div>
+            </section>
+          </div>
+        ) : null}
+        {studioTab === "submission" ? (
+          <div className="requirements-panel release-center">
+            <div className="requirements-heading">
+              <div>
+                <p className="section-label">SUBMISSION LIFECYCLE</p>
+                <h2>From locked package through agency closeout</h2>
+              </div>
+              <span>{selected.submissions.length} submissions</span>
+            </div>
+            <p className="requirements-lede">
+              Register the exact locked package sent to an agency, track status and identifiers, and
+              manage every agency question through a documented response.
+            </p>
+            {formError ? <p className="form-error">{formError}</p> : null}
+            <section className="claim-composer">
+              <div className="claim-fields">
+                <label>
+                  Locked release
+                  <select
+                    value={submissionReleaseId}
+                    onChange={(event) => setSubmissionReleaseId(event.currentTarget.value)}
+                  >
+                    <option value="">Choose package</option>
+                    {selected.releases
+                      .filter((item) => item.status === "locked")
+                      .map((item) => (
+                        <option key={item.id} value={item.id}>
+                          Package v{item.packageVersion}
+                        </option>
+                      ))}
+                  </select>
+                </label>
+                <label>
+                  Agency
+                  <input
+                    value={submissionAgency}
+                    onChange={(event) => setSubmissionAgency(event.currentTarget.value)}
+                  />
+                </label>
+                <label>
+                  Tracking number (if already filed)
+                  <input
+                    value={submissionTracking}
+                    onChange={(event) => setSubmissionTracking(event.currentTarget.value)}
+                  />
+                </label>
+              </div>
+              <button
+                type="button"
+                className="primary-action"
+                disabled={saving || !submissionReleaseId || !submissionAgency.trim()}
+                onClick={addSubmission}
+              >
+                <Plus /> Register submission
+              </button>
+            </section>
+            <div className="evidence-cards">
+              {selected.submissions.map((submission) => (
+                <article key={submission.id}>
+                  <div className="evidence-card-head">
+                    <span>
+                      {submission.agency} ·{" "}
+                      {selected.releases.find((item) => item.id === submission.releaseId)
+                        ?.packageVersion
+                        ? `Package v${selected.releases.find((item) => item.id === submission.releaseId)?.packageVersion}`
+                        : "Locked package"}
+                    </span>
+                    <StatusPill value={submission.status} />
+                  </div>
+                  <p>
+                    {submission.trackingNumber
+                      ? `Tracking ${submission.trackingNumber}`
+                      : "Tracking number not recorded"}
+                  </p>
+                  <small>
+                    {submission.submittedAt
+                      ? `Submitted ${formatDate(submission.submittedAt)}`
+                      : `Created ${formatDate(submission.createdAt)}`}
+                  </small>
+                  <div className="evidence-actions">
+                    {submission.status === "ready" ? (
+                      <button
+                        type="button"
+                        onClick={() => setSubmissionStatus(submission, "submitted")}
+                      >
+                        Mark submitted
+                      </button>
+                    ) : null}
+                    {submission.status === "submitted" ? (
+                      <button
+                        type="button"
+                        onClick={() => setSubmissionStatus(submission, "under_review")}
+                      >
+                        Agency review started
+                      </button>
+                    ) : null}
+                    {submission.status === "questions" || submission.status === "under_review" ? (
+                      <button
+                        type="button"
+                        onClick={() => setSubmissionStatus(submission, "closed")}
+                      >
+                        <Check /> Close lifecycle
+                      </button>
+                    ) : null}
+                  </div>
+                </article>
+              ))}
+            </div>
+            <section className="claim-composer">
+              <div className="requirements-heading">
+                <div>
+                  <p className="section-label">AGENCY QUESTIONS</p>
+                  <h2>Response work queue</h2>
+                </div>
+              </div>
+              <div className="claim-fields">
+                <label>
+                  Submission
+                  <select
+                    value={questionSubmissionId}
+                    onChange={(event) => setQuestionSubmissionId(event.currentTarget.value)}
+                  >
+                    <option value="">Choose submission</option>
+                    {selected.submissions
+                      .filter((item) => !["closed", "withdrawn"].includes(item.status))
+                      .map((item) => (
+                        <option key={item.id} value={item.id}>
+                          {item.agency} · {item.trackingNumber || item.id.slice(0, 8)}
+                        </option>
+                      ))}
+                  </select>
+                </label>
+                <label>
+                  Priority
+                  <select
+                    value={questionPriority}
+                    onChange={(event) =>
+                      setQuestionPriority(event.currentTarget.value as AgencyQuestion["priority"])
+                    }
+                  >
+                    <option value="blocking">Blocking</option>
+                    <option value="high">High</option>
+                    <option value="normal">Normal</option>
+                  </select>
+                </label>
+                <label>
+                  Due date
+                  <input
+                    type="date"
+                    value={questionDueDate}
+                    onChange={(event) => setQuestionDueDate(event.currentTarget.value)}
+                  />
+                </label>
+                <label>
+                  Question title
+                  <input
+                    value={questionTitle}
+                    onChange={(event) => setQuestionTitle(event.currentTarget.value)}
+                  />
+                </label>
+              </div>
+              <label>
+                Agency question
+                <textarea
+                  value={questionBody}
+                  onChange={(event) => setQuestionBody(event.currentTarget.value)}
+                />
+              </label>
+              <button
+                type="button"
+                className="primary-action"
+                disabled={
+                  saving || !questionSubmissionId || !questionTitle.trim() || !questionBody.trim()
+                }
+                onClick={addAgencyQuestion}
+              >
+                <Plus /> Add question
+              </button>
+              <div className="evidence-cards">
+                {selected.agencyQuestions.map((question) => (
+                  <article key={question.id}>
+                    <div className="evidence-card-head">
+                      <span>
+                        <CircleAlert /> {question.title}
+                      </span>
+                      <StatusPill value={question.status} />
+                    </div>
+                    <p>{question.body}</p>
+                    <small>
+                      {question.priority}
+                      {question.dueDate ? ` · due ${question.dueDate}` : ""}
+                    </small>
+                    {question.status !== "closed" ? (
+                      <>
+                        <label>
+                          Response
+                          <textarea
+                            value={questionResponses[question.id] ?? question.response ?? ""}
+                            onChange={(event) =>
+                              setQuestionResponses((current) => ({
+                                ...current,
+                                [question.id]: event.currentTarget.value,
+                              }))
+                            }
+                          />
+                        </label>
+                        <div className="evidence-actions">
+                          <button
+                            type="button"
+                            onClick={() => answerAgencyQuestion(question, "drafting")}
+                          >
+                            Save response draft
+                          </button>
+                          <button
+                            type="button"
+                            disabled={
+                              !(questionResponses[question.id]?.trim() || question.response?.trim())
+                            }
+                            onClick={() => answerAgencyQuestion(question, "answered")}
+                          >
+                            <Check /> Mark answered
+                          </button>
+                          {question.status === "answered" ? (
+                            <button
+                              type="button"
+                              onClick={() => answerAgencyQuestion(question, "closed")}
+                            >
+                              Close question
+                            </button>
+                          ) : null}
+                        </div>
+                      </>
+                    ) : question.response ? (
+                      <blockquote>“{question.response}”</blockquote>
+                    ) : null}
                   </article>
                 ))}
               </div>
@@ -3309,6 +4538,52 @@ function DossierPage({
                   onChange={(event) => setDraftContent(event.currentTarget.value)}
                   placeholder="Create a grounded starter or begin drafting here."
                 />
+                {selected.factBookEntries.some((fact) => fact.status === "verified") ? (
+                  <section className="section-claims">
+                    <div>
+                      <strong>Insert a governed fact</strong>
+                      <small>Values stay connected to the Fact Book</small>
+                    </div>
+                    {selected.factBookEntries
+                      .filter((fact) => fact.status === "verified")
+                      .flatMap((fact) =>
+                        Object.entries(fact.fields).map(([field, value]) => (
+                          <button
+                            type="button"
+                            key={`${fact.id}-${field}`}
+                            onClick={() => insertFactReference(fact.id, field)}
+                          >
+                            <Plus /> {fact.title}: {field.replaceAll("_", " ")} ({value})
+                          </button>
+                        ))
+                      )}
+                  </section>
+                ) : null}
+                {draftContent.includes("{{fact:") ? (
+                  <section className="section-claims">
+                    <div>
+                      <strong>Live document preview</strong>
+                      <small>Current verified Fact Book values</small>
+                    </div>
+                    <article>
+                      <p>{renderFactReferences(draftContent, selected.factBookEntries).rendered}</p>
+                      {renderFactReferences(draftContent, selected.factBookEntries).unresolved
+                        .length ? (
+                        <small className="form-error">
+                          {
+                            renderFactReferences(draftContent, selected.factBookEntries).unresolved
+                              .length
+                          }{" "}
+                          unresolved fact reference
+                          {renderFactReferences(draftContent, selected.factBookEntries).unresolved
+                            .length === 1
+                            ? ""
+                            : "s"}
+                        </small>
+                      ) : null}
+                    </article>
+                  </section>
+                ) : null}
                 {assistMeta ? (
                   <p className="assist-meta">
                     Drafted with {assistMeta.provider} · {assistMeta.model} · constrained to{" "}
@@ -3438,6 +4713,12 @@ function DossierPage({
 
 function readRoute(): Route {
   const path = window.location.pathname
+  if (path.startsWith("/respond/")) {
+    return { name: "respond", token: path.split("/")[2] ?? "" }
+  }
+  if (path.startsWith("/review/")) {
+    return { name: "review", token: path.split("/")[2] ?? "" }
+  }
   if (path.startsWith("/analysis")) {
     return { name: "analysis", id: path.split("/")[2] }
   }
@@ -3451,6 +4732,8 @@ function readRoute(): Route {
 }
 
 function routePath(route: Route) {
+  if (route.name === "respond") return `/respond/${route.token}`
+  if (route.name === "review") return `/review/${route.token}`
   if (route.name === "analysis") return `/analysis/${route.id ?? ""}`
   if (route.name === "workspace") return "/workspace"
   if (route.name === "dossiers") return route.id ? `/dossiers/${route.id}` : "/dossiers"

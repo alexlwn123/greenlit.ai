@@ -137,6 +137,8 @@ export const DossierAuditEventSchema = z.object({
     "section_approved",
     "section_restored",
     "request_created",
+    "request_link_created",
+    "request_response_received",
     "request_resolved",
     "attestation_signed",
     "attestation_revoked",
@@ -146,7 +148,15 @@ export const DossierAuditEventSchema = z.object({
     "handoff_started",
     "handoff_completed",
     "handoff_cancelled",
+    "review_issue_created",
+    "review_issue_resolved",
+    "review_issue_reopened",
+    "submission_created",
+    "submission_status_updated",
+    "agency_question_added",
+    "agency_question_resolved",
     "fact_created",
+    "fact_updated",
     "fact_verified",
     "fact_reopened",
     "fact_removed",
@@ -159,6 +169,9 @@ export const DossierAuditEventSchema = z.object({
     "request",
     "attestation",
     "handoff",
+    "review_issue",
+    "submission",
+    "agency_question",
     "fact",
   ]),
   targetId: z.string(),
@@ -178,6 +191,77 @@ export const EvidenceRequestSchema = z.object({
   responseNote: z.string().optional(),
   createdAt: z.string(),
   updatedAt: z.string(),
+})
+
+export const EvidenceRequestLinkSchema = z.object({
+  id: z.string(),
+  dossierId: z.string(),
+  requestId: z.string(),
+  ownerId: z.string(),
+  tokenHash: z.string(),
+  status: z.enum(["active", "revoked", "fulfilled"]),
+  expiresAt: z.string(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+})
+
+export const ConsultantReviewIssueSchema = z.object({
+  id: z.string(),
+  dossierId: z.string(),
+  handoffId: z.string().optional(),
+  ownerId: z.string(),
+  targetType: z.enum(["section", "fact", "claim", "evidence", "dossier"]),
+  targetId: z.string(),
+  title: z.string(),
+  body: z.string(),
+  priority: z.enum(["blocking", "high", "normal"]),
+  status: z.enum(["open", "resolved", "dismissed"]),
+  resolutionNote: z.string().optional(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+  resolvedAt: z.string().optional(),
+})
+
+export const ConsultantReviewLinkSchema = z.object({
+  id: z.string(),
+  dossierId: z.string(),
+  handoffId: z.string(),
+  ownerId: z.string(),
+  tokenHash: z.string(),
+  status: z.enum(["active", "revoked"]),
+  expiresAt: z.string(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+})
+
+export const SubmissionRecordSchema = z.object({
+  id: z.string(),
+  dossierId: z.string(),
+  releaseId: z.string(),
+  ownerId: z.string(),
+  agency: z.string(),
+  trackingNumber: z.string().optional(),
+  status: z.enum(["ready", "submitted", "under_review", "questions", "closed", "withdrawn"]),
+  submittedAt: z.string().optional(),
+  targetDate: z.string().optional(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+})
+
+export const AgencyQuestionSchema = z.object({
+  id: z.string(),
+  dossierId: z.string(),
+  submissionId: z.string(),
+  ownerId: z.string(),
+  title: z.string(),
+  body: z.string(),
+  priority: z.enum(["blocking", "high", "normal"]),
+  status: z.enum(["open", "drafting", "answered", "closed"]),
+  response: z.string().optional(),
+  dueDate: z.string().optional(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+  answeredAt: z.string().optional(),
 })
 
 export const ReleaseAttestationSchema = z.object({
@@ -253,6 +337,19 @@ export const FactBookEntrySchema = z.object({
   updatedAt: z.string(),
 })
 
+export const FactBookRevisionSchema = z.object({
+  id: z.string(),
+  dossierId: z.string(),
+  factId: z.string(),
+  ownerId: z.string(),
+  previousTitle: z.string(),
+  nextTitle: z.string(),
+  previousFields: z.record(z.string(), z.string()),
+  nextFields: z.record(z.string(), z.string()),
+  affectedSectionIds: z.array(z.string()),
+  createdAt: z.string(),
+})
+
 export const DossierQualityCheckSchema = z.object({
   id: z.string(),
   severity: z.enum(["blocker", "warning", "passed"]),
@@ -266,15 +363,108 @@ export type DossierRecord = z.infer<typeof DossierRecordSchema>
 export type DossierRequirement = z.infer<typeof DossierRequirementSchema>
 export type DossierEvidence = z.infer<typeof DossierEvidenceSchema>
 export type DossierEvidencePassage = z.infer<typeof DossierEvidencePassageSchema>
+
+export type FactExtractionCandidate = {
+  id: string
+  kind: FactBookEntry["kind"]
+  title: string
+  fields: Record<string, string>
+  sourceExcerpt: string
+  sourcePage: number
+  confidence: "high" | "medium"
+}
+
+export const FactExtractionRecordSchema = z.object({
+  id: z.string(),
+  dossierId: z.string(),
+  evidenceId: z.string(),
+  ownerId: z.string(),
+  kind: FactBookEntrySchema.shape.kind,
+  title: z.string(),
+  fields: z.record(z.string(), z.string()),
+  sourceExcerpt: z.string(),
+  sourcePage: z.number().int().positive(),
+  confidence: z.enum(["high", "medium"]),
+  status: z.enum(["proposed", "accepted", "dismissed"]),
+  acceptedFactId: z.string().optional(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+})
+
+export type FactExtractionRecord = z.infer<typeof FactExtractionRecordSchema>
+
+export function suggestFactsFromPassages(
+  evidenceTitle: string,
+  passages: Pick<DossierEvidencePassage, "pageNumber" | "text">[]
+): FactExtractionCandidate[] {
+  const candidates: FactExtractionCandidate[] = []
+  const seen = new Set<string>()
+  const add = (candidate: Omit<FactExtractionCandidate, "id">) => {
+    const key = `${candidate.kind}:${Object.values(candidate.fields).join(":").toLowerCase()}`
+    if (seen.has(key)) return
+    seen.add(key)
+    candidates.push({ ...candidate, id: `extracted-${candidates.length + 1}` })
+  }
+
+  for (const passage of passages) {
+    const sentences = passage.text.split(/(?<=[.!?])\s+/).filter((item) => item.length >= 15)
+    for (const sentence of sentences) {
+      const excerpt = sentence.trim().slice(0, 500)
+      const noael = sentence.match(/\bNOAEL\b[^\d]{0,40}([\d,.]+)\s*(mg\/kg(?:\s*bw)?(?:\/day)?)/i)
+      if (noael)
+        add({
+          kind: "safety_study",
+          title: `NOAEL reported in ${evidenceTitle}`,
+          fields: { noael: `${noael[1]} ${noael[2]}`, outcome: excerpt },
+          sourceExcerpt: excerpt,
+          sourcePage: passage.pageNumber,
+          confidence: "high",
+        })
+
+      const percentile = sentence.match(
+        /\b(90th percentile|p90)\b[^\d]{0,50}([\d,.]+)\s*(mg\/kg(?:\s*bw)?(?:\/day)?|mg\/day)/i
+      )
+      if (percentile)
+        add({
+          kind: "exposure",
+          title: `High-percentile exposure from ${evidenceTitle}`,
+          fields: { p90: percentile[2], unit: percentile[3] },
+          sourceExcerpt: excerpt,
+          sourcePage: passage.pageNumber,
+          confidence: "high",
+        })
+
+      const spec = sentence.match(
+        /\b(lead|arsenic|mercury|cadmium|assay|moisture)\b[^\d]{0,35}(?:≤|>=|<=|<|>|not more than|at least)?\s*([\d,.]+)\s*(%|ppm|ppb|mg\/kg|cfu\/g)/i
+      )
+      if (spec)
+        add({
+          kind: "specification",
+          title: `${spec[1]} specification from ${evidenceTitle}`,
+          fields: { parameter: spec[1], limit: spec[2], unit: spec[3] },
+          sourceExcerpt: excerpt,
+          sourcePage: passage.pageNumber,
+          confidence: /(?:≤|>=|<=|<|>|not more than|at least)/i.test(sentence) ? "high" : "medium",
+        })
+    }
+  }
+  return candidates.slice(0, 50)
+}
 export type DossierSection = z.infer<typeof DossierSectionSchema>
 export type DossierClaim = z.infer<typeof DossierClaimSchema>
 export type DossierSectionVersion = z.infer<typeof DossierSectionVersionSchema>
 export type DossierAuditEvent = z.infer<typeof DossierAuditEventSchema>
 export type EvidenceRequest = z.infer<typeof EvidenceRequestSchema>
+export type EvidenceRequestLink = z.infer<typeof EvidenceRequestLinkSchema>
+export type ConsultantReviewIssue = z.infer<typeof ConsultantReviewIssueSchema>
+export type ConsultantReviewLink = z.infer<typeof ConsultantReviewLinkSchema>
+export type SubmissionRecord = z.infer<typeof SubmissionRecordSchema>
+export type AgencyQuestion = z.infer<typeof AgencyQuestionSchema>
 export type ReleaseAttestation = z.infer<typeof ReleaseAttestationSchema>
 export type DossierRelease = z.infer<typeof DossierReleaseSchema>
 export type ConsultantHandoff = z.infer<typeof ConsultantHandoffSchema>
 export type FactBookEntry = z.infer<typeof FactBookEntrySchema>
+export type FactBookRevision = z.infer<typeof FactBookRevisionSchema>
 export type DossierQualityCheck = z.infer<typeof DossierQualityCheckSchema>
 
 const baseRequirements: ReadonlyArray<readonly [string, string, string]> = [
@@ -404,6 +594,7 @@ export function evaluateDossierQuality(input: {
   evidenceRequests?: EvidenceRequest[]
   attestations?: ReleaseAttestation[]
   handoffs?: ConsultantHandoff[]
+  reviewIssues?: ConsultantReviewIssue[]
   factBookEntries?: FactBookEntry[]
 }): DossierQualityCheck[] {
   const checks: DossierQualityCheck[] = []
@@ -467,6 +658,20 @@ export function evaluateDossierQuality(input: {
       incompleteStructured > 0
         ? `${incompleteStructured} use, specification, or safety records lack required fields.`
         : "Structured use, specification, and safety records contain their required fields.",
+    target: "Fact Book",
+  })
+  const unresolvedFactReferences = input.sections.reduce(
+    (count, section) => count + renderFactReferences(section.content, facts).unresolved.length,
+    0
+  )
+  checks.push({
+    id: "fact-reference-integrity",
+    severity: unresolvedFactReferences > 0 ? "blocker" : "passed",
+    title: "Dynamic fact references",
+    detail:
+      unresolvedFactReferences > 0
+        ? `${unresolvedFactReferences} dossier references point to a missing fact or field.`
+        : "Every dynamic fact reference resolves to a governed Fact Book value.",
     target: "Fact Book",
   })
   const identityNames = new Set(
@@ -544,6 +749,21 @@ export function evaluateDossierQuality(input: {
     detail: activeHandoffs.some((item) => item.status === "in_review")
       ? "A consultant review is still in progress."
       : "No consultant review is currently in progress.",
+    target: "Release center",
+  })
+  const openReviewIssues = (input.reviewIssues ?? []).filter((item) => item.status === "open")
+  checks.push({
+    id: "consultant-review-issues",
+    severity: openReviewIssues.some((item) => item.priority === "blocking")
+      ? "blocker"
+      : openReviewIssues.length > 0
+        ? "warning"
+        : "passed",
+    title: "Consultant review issues",
+    detail:
+      openReviewIssues.length > 0
+        ? `${openReviewIssues.length} consultant review issue${openReviewIssues.length === 1 ? " remains" : "s remain"} open.`
+        : "All consultant review issues are resolved or dismissed.",
     target: "Release center",
   })
   const openRequests = (input.evidenceRequests ?? []).filter(
@@ -684,6 +904,58 @@ export function suggestClaimsFromPassage(text: string, requirement: DossierRequi
     .sort((a, b) => b.score - a.score || a.index - b.index)
     .slice(0, 3)
     .map((item) => item.sentence)
+}
+
+export const factReferencePattern = /\{\{fact:([^}.]+)\.([^}]+)\}\}/g
+
+export function factReference(factId: string, field: string) {
+  return `{{fact:${factId}.${field}}}`
+}
+
+export function renderFactReferences(content: string, facts: FactBookEntry[]) {
+  const factMap = new Map(facts.map((fact) => [fact.id, fact]))
+  const unresolved: Array<{ marker: string; factId: string; field: string }> = []
+  const used: Array<{ marker: string; factId: string; field: string; value: string }> = []
+  const rendered = content.replace(
+    factReferencePattern,
+    (marker, factId: string, field: string) => {
+      const value = factMap.get(factId)?.fields[field]
+      if (!value) {
+        unresolved.push({ marker, factId, field })
+        return `${marker} [UNRESOLVED FACT]`
+      }
+      used.push({ marker, factId, field, value })
+      return value
+    }
+  )
+  return { rendered, unresolved, used }
+}
+
+export function analyzeFactImpact(
+  fact: FactBookEntry,
+  next: Pick<FactBookEntry, "title" | "fields">,
+  sections: DossierSection[]
+) {
+  const changedFields = [...new Set([...Object.keys(fact.fields), ...Object.keys(next.fields)])]
+    .filter((field) => fact.fields[field] !== next.fields[field])
+    .map((field) => ({ field, before: fact.fields[field], after: next.fields[field] }))
+  const references = sections.flatMap((section) =>
+    changedFields
+      .filter((change) => section.content.includes(factReference(fact.id, change.field)))
+      .map((change) => ({
+        sectionId: section.id,
+        sectionPart: section.part,
+        sectionTitle: section.title,
+        sectionStatus: section.status,
+        ...change,
+      }))
+  )
+  return {
+    titleChanged: fact.title !== next.title,
+    changedFields,
+    references,
+    affectedSectionIds: [...new Set(references.map((reference) => reference.sectionId))],
+  }
 }
 
 function meaningfulWords(value: string) {

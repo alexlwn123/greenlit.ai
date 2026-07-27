@@ -20,6 +20,188 @@ describe("local analysis API", () => {
     expect(() => validatePdfPageCount(501)).toThrow(/supports filings up to 500 pages/)
   })
 
+  it("issues one-time external evidence response links", async () => {
+    const app = createApp({ dataDir })
+    const headers = { "Content-Type": "application/json", "x-greenlit-session": "link-user" }
+    const createdResponse = await app.request("/api/dossiers", {
+      method: "POST",
+      headers,
+      body: JSON.stringify({
+        substanceName: "Test ingredient",
+        companyName: "Example Foods",
+        substanceType: "other",
+        intendedEffect: "Technical effect",
+        intendedUses: "Selected foods",
+        manufacturingSummary: "Controlled process",
+        targetPopulation: "General population",
+        grasBasis: "scientific_procedures",
+      }),
+    })
+    const created = (await createdResponse.json()) as {
+      dossier: { id: string }
+      requirements: Array<{ id: string }>
+    }
+    const requestResponse = await app.request(`/api/dossiers/${created.dossier.id}/requests`, {
+      method: "POST",
+      headers,
+      body: JSON.stringify({ requirementId: created.requirements[0].id }),
+    })
+    const workspace = (await requestResponse.json()) as {
+      evidenceRequests: Array<{ id: string; status: string; responseNote?: string }>
+    }
+    const requestId = workspace.evidenceRequests[0].id
+    const linkResponse = await app.request(
+      `/api/dossiers/${created.dossier.id}/requests/${requestId}/link`,
+      { method: "POST", headers, body: JSON.stringify({ expiresInDays: 7 }) }
+    )
+    expect(linkResponse.status).toBe(201)
+    const link = (await linkResponse.json()) as { url: string; expiresAt: string }
+    const token = new URL(link.url).pathname.split("/").at(-1) ?? ""
+    expect(token).toHaveLength(64)
+
+    const publicRequest = await app.request(`/api/respond/${token}`)
+    expect(publicRequest.status).toBe(200)
+    const response = await app.request(`/api/respond/${token}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ responseNote: "Certificate and batch records are available." }),
+    })
+    expect(response.status).toBe(200)
+    expect(await response.json()).toEqual({ received: true })
+    expect((await app.request(`/api/respond/${token}`)).status).toBe(410)
+
+    const reused = await app.request(`/api/respond/${token}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ responseNote: "Second response must fail." }),
+    })
+    expect(reused.status).toBe(410)
+
+    const uploadLinkResponse = await app.request(
+      `/api/dossiers/${created.dossier.id}/requests/${requestId}/link`,
+      { method: "POST", headers, body: JSON.stringify({ expiresInDays: 7 }) }
+    )
+    const uploadLink = (await uploadLinkResponse.json()) as { url: string }
+    const uploadToken = new URL(uploadLink.url).pathname.split("/").at(-1) ?? ""
+    const uploadBody = new FormData()
+    uploadBody.set(
+      "file",
+      new File(["%PDF-1.4 certificate of analysis lead not more than 0.5 ppm"], "coa.pdf", {
+        type: "application/pdf",
+      })
+    )
+    uploadBody.set("category", "specification")
+    uploadBody.set("responseNote", "Current certificate of analysis attached.")
+    const uploadResponse = await app.request(`/api/respond/${uploadToken}/evidence`, {
+      method: "POST",
+      body: uploadBody,
+    })
+    expect(uploadResponse.status).toBe(201)
+    const updated = (await (
+      await app.request(`/api/dossiers/${created.dossier.id}`, { headers })
+    ).json()) as {
+      evidence: Array<{ id: string; title: string; verificationStatus: string }>
+      evidenceRequests: Array<{ id: string; status: string }>
+    }
+    expect(updated.evidence).toContainEqual(
+      expect.objectContaining({ title: "coa.pdf", verificationStatus: "needs_review" })
+    )
+    expect(updated.evidenceRequests.find((item) => item.id === requestId)?.status).toBe("received")
+    const uploadedEvidence = updated.evidence.find((item) => item.title === "coa.pdf") as {
+      id: string
+    }
+    const suggestionsResponse = await app.request(
+      `/api/dossiers/${created.dossier.id}/evidence/${uploadedEvidence.id}/fact-suggestions`,
+      { method: "POST", headers }
+    )
+    expect(suggestionsResponse.status).toBe(200)
+    const suggestions = (await suggestionsResponse.json()) as {
+      candidates: Array<{ id: string; status: string; kind: string }>
+    }
+    expect(suggestions.candidates).toContainEqual(
+      expect.objectContaining({ status: "proposed", kind: "specification" })
+    )
+    const candidateId = suggestions.candidates[0].id
+    const acceptedResponse = await app.request(
+      `/api/dossiers/${created.dossier.id}/extraction-candidates/${candidateId}`,
+      { method: "POST", headers, body: JSON.stringify({ action: "accept" }) }
+    )
+    expect(acceptedResponse.status).toBe(200)
+    const accepted = (await acceptedResponse.json()) as {
+      extractionCandidates: Array<{ id: string; status: string; acceptedFactId?: string }>
+      factBookEntries: Array<{ id: string; status: string }>
+    }
+    const candidate = accepted.extractionCandidates.find((item) => item.id === candidateId)
+    expect(candidate).toMatchObject({ status: "accepted", acceptedFactId: expect.any(String) })
+    expect(accepted.factBookEntries).toContainEqual(
+      expect.objectContaining({ id: candidate?.acceptedFactId, status: "draft" })
+    )
+  })
+
+  it("provides a secure consultant review portal with targeted findings", async () => {
+    const app = createApp({ dataDir })
+    const headers = { "Content-Type": "application/json", "x-greenlit-session": "review-user" }
+    const createdResponse = await app.request("/api/dossiers", {
+      method: "POST",
+      headers,
+      body: JSON.stringify({
+        substanceName: "Review ingredient",
+        companyName: "Example",
+        substanceType: "other",
+        intendedEffect: "Effect",
+        intendedUses: "Foods",
+        manufacturingSummary: "Process",
+        targetPopulation: "General population",
+        grasBasis: "scientific_procedures",
+      }),
+    })
+    const created = (await createdResponse.json()) as {
+      dossier: { id: string }
+      sections: Array<{ id: string }>
+    }
+    const handoffResponse = await app.request(`/api/dossiers/${created.dossier.id}/handoffs`, {
+      method: "POST",
+      headers,
+      body: JSON.stringify({ consultantName: "Dr. Reviewer", scope: "Independent dossier review" }),
+    })
+    const handedOff = (await handoffResponse.json()) as { handoffs: Array<{ id: string }> }
+    const linkResponse = await app.request(
+      `/api/dossiers/${created.dossier.id}/handoffs/${handedOff.handoffs[0].id}/link`,
+      {
+        method: "POST",
+        headers,
+        body: JSON.stringify({ expiresInDays: 5 }),
+      }
+    )
+    expect(linkResponse.status).toBe(201)
+    const link = (await linkResponse.json()) as { url: string }
+    const token = new URL(link.url).pathname.split("/").at(-1) ?? ""
+    const portalResponse = await app.request(`/api/review/${token}`)
+    expect(portalResponse.status).toBe(200)
+    const issueResponse = await app.request(`/api/review/${token}/issues`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        targetType: "section",
+        targetId: created.sections[0].id,
+        title: "Certification needs revision",
+        body: "Clarify the signatory authority.",
+        priority: "blocking",
+      }),
+    })
+    expect(issueResponse.status).toBe(201)
+    const reviewed = (await issueResponse.json()) as {
+      issues: Array<{ title: string; status: string; priority: string }>
+    }
+    expect(reviewed.issues).toContainEqual(
+      expect.objectContaining({
+        title: "Certification needs revision",
+        status: "open",
+        priority: "blocking",
+      })
+    )
+  })
+
   it("saves an uploaded PDF and produces a minimum readiness score", async () => {
     const app = createApp({ dataDir, runAnalysisInline: true })
     const createdResponse = await uploadTestPdf(app, "test-session")
@@ -284,6 +466,62 @@ describe("local analysis API", () => {
     )
     expect(edit.status).toBe(423)
     await expect(edit.json()).resolves.toMatchObject({ error: expect.stringContaining("Unlock") })
+
+    const submissionResponse = await app.request(
+      `/api/dossiers/${created.dossier.id}/submissions`,
+      {
+        method: "POST",
+        headers,
+        body: JSON.stringify({
+          releaseId: "release-1",
+          agency: "FDA",
+          status: "submitted",
+          trackingNumber: "GRN-TEST",
+        }),
+      }
+    )
+    expect(submissionResponse.status).toBe(201)
+    const submitted = (await submissionResponse.json()) as {
+      submissions: Array<{ id: string; status: string }>
+    }
+    const submissionId = submitted.submissions[0].id
+    const questionResponse = await app.request(
+      `/api/dossiers/${created.dossier.id}/submissions/${submissionId}/questions`,
+      {
+        method: "POST",
+        headers,
+        body: JSON.stringify({
+          title: "Clarify specifications",
+          body: "Provide supporting batch data.",
+          priority: "blocking",
+        }),
+      }
+    )
+    expect(questionResponse.status).toBe(201)
+    const questioned = (await questionResponse.json()) as {
+      agencyQuestions: Array<{ id: string; status: string }>
+      submissions: Array<{ id: string; status: string }>
+    }
+    expect(questioned.submissions.find((item) => item.id === submissionId)?.status).toBe(
+      "questions"
+    )
+    const questionId = questioned.agencyQuestions[0].id
+    const answeredResponse = await app.request(
+      `/api/dossiers/${created.dossier.id}/questions/${questionId}`,
+      {
+        method: "POST",
+        headers,
+        body: JSON.stringify({
+          status: "answered",
+          response: "Three representative batch records are attached.",
+        }),
+      }
+    )
+    expect(answeredResponse.status).toBe(200)
+    const answered = (await answeredResponse.json()) as {
+      agencyQuestions: Array<{ id: string; status: string }>
+    }
+    expect(answered.agencyQuestions.find((item) => item.id === questionId)?.status).toBe("answered")
   })
 
   it("enriches the saved report with grounded deep-analysis findings", async () => {

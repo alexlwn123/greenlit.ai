@@ -1,6 +1,9 @@
 import type {
+  AgencyQuestion,
   AnalysisRecord,
   ConsultantHandoff,
+  ConsultantReviewIssue,
+  ConsultantReviewLink,
   DossierAuditEvent,
   DossierClaim,
   DossierEvidence,
@@ -13,9 +16,13 @@ import type {
   DossierSection,
   DossierSectionVersion,
   EvidenceRequest,
+  EvidenceRequestLink,
   FactBookEntry,
+  FactBookRevision,
+  FactExtractionRecord,
   FilingDiffItem,
   ReleaseAttestation,
+  SubmissionRecord,
   WorkbookNote,
 } from "@greenlit/core"
 import { uploadPresigned } from "@vercel/blob/client"
@@ -58,10 +65,81 @@ export type DossierWorkspace = {
   claims: DossierClaim[]
   auditEvents: DossierAuditEvent[]
   evidenceRequests: EvidenceRequest[]
+  evidenceRequestLinks: EvidenceRequestLink[]
   attestations: ReleaseAttestation[]
   releases: DossierRelease[]
   handoffs: ConsultantHandoff[]
+  reviewIssues: ConsultantReviewIssue[]
+  reviewLinks: ConsultantReviewLink[]
+  submissions: SubmissionRecord[]
+  agencyQuestions: AgencyQuestion[]
+  extractionCandidates: FactExtractionRecord[]
   factBookEntries: FactBookEntry[]
+  factBookRevisions: FactBookRevision[]
+}
+
+export type FactImpact = {
+  titleChanged: boolean
+  changedFields: Array<{ field: string; before?: string; after?: string }>
+  references: Array<{
+    sectionId: string
+    sectionPart: string
+    sectionTitle: string
+    sectionStatus: string
+    field: string
+    before?: string
+    after?: string
+  }>
+  affectedSectionIds: string[]
+}
+
+export async function previewFactImpact(
+  dossierId: string,
+  factId: string,
+  title: string,
+  fields: Record<string, string>
+) {
+  return requestJson<{ impact: FactImpact }>(`/dossiers/${dossierId}/facts/${factId}/impact`, {
+    body: JSON.stringify({ title, fields }),
+    headers: { "Content-Type": "application/json" },
+    method: "POST",
+  })
+}
+
+export async function updateFactBookEntry(
+  dossierId: string,
+  factId: string,
+  title: string,
+  fields: Record<string, string>,
+  confirmImpacts: boolean
+) {
+  return requestJson<DossierWorkspace>(`/dossiers/${dossierId}/facts/${factId}`, {
+    body: JSON.stringify({ title, fields, confirmImpacts }),
+    headers: { "Content-Type": "application/json" },
+    method: "PUT",
+  })
+}
+
+export async function suggestEvidenceFacts(dossierId: string, evidenceId: string) {
+  return requestJson<{ candidates: FactExtractionRecord[]; evidenceId: string }>(
+    `/dossiers/${dossierId}/evidence/${evidenceId}/fact-suggestions`,
+    { method: "POST" }
+  )
+}
+
+export async function reviewExtractionCandidate(
+  dossierId: string,
+  candidateId: string,
+  action: "accept" | "dismiss"
+) {
+  return requestJson<DossierWorkspace>(
+    `/dossiers/${dossierId}/extraction-candidates/${candidateId}`,
+    {
+      body: JSON.stringify({ action }),
+      headers: { "Content-Type": "application/json" },
+      method: "POST",
+    }
+  )
 }
 
 export async function createFactBookEntry(
@@ -144,6 +222,129 @@ export async function updateConsultantHandoff(
   })
 }
 
+export async function createReviewIssue(
+  dossierId: string,
+  input: Pick<
+    ConsultantReviewIssue,
+    "handoffId" | "targetType" | "targetId" | "title" | "body" | "priority"
+  >
+) {
+  return requestJson<DossierWorkspace>(`/dossiers/${dossierId}/review-issues`, {
+    body: JSON.stringify(input),
+    headers: { "Content-Type": "application/json" },
+    method: "POST",
+  })
+}
+
+export async function createConsultantReviewLink(
+  dossierId: string,
+  handoffId: string,
+  expiresInDays = 14
+) {
+  return requestJson<{ url: string; expiresAt: string }>(
+    `/dossiers/${dossierId}/handoffs/${handoffId}/link`,
+    {
+      body: JSON.stringify({ expiresInDays }),
+      headers: { "Content-Type": "application/json" },
+      method: "POST",
+    }
+  )
+}
+
+export type ExternalConsultantReview = {
+  link: { status: ConsultantReviewLink["status"]; expiresAt: string }
+  dossier: { id: string; name: string; substanceName: string }
+  handoff: Pick<ConsultantHandoff, "id" | "consultantName" | "scope" | "dueDate" | "status">
+  sections: Array<Pick<DossierSection, "id" | "part" | "title" | "content" | "status">>
+  facts: Array<Pick<FactBookEntry, "id" | "title" | "kind" | "fields" | "status">>
+  claims: Array<Pick<DossierClaim, "id" | "statement" | "sourceExcerpt" | "sourcePage" | "status">>
+  evidence: Array<
+    Pick<
+      DossierEvidence,
+      "id" | "title" | "category" | "excerpt" | "pageCount" | "verificationStatus"
+    >
+  >
+  issues: Array<Omit<ConsultantReviewIssue, "ownerId">>
+}
+
+export function getExternalConsultantReview(token: string) {
+  return publicRequestJson<ExternalConsultantReview>(`/review/${token}`)
+}
+
+export function submitExternalReviewIssue(
+  token: string,
+  input: Pick<ConsultantReviewIssue, "targetType" | "targetId" | "title" | "body" | "priority">
+) {
+  return publicRequestJson<ExternalConsultantReview>(`/review/${token}/issues`, {
+    body: JSON.stringify(input),
+    headers: { "Content-Type": "application/json" },
+    method: "POST",
+  })
+}
+
+export async function updateReviewIssue(
+  dossierId: string,
+  issueId: string,
+  status: ConsultantReviewIssue["status"],
+  resolutionNote?: string
+) {
+  return requestJson<DossierWorkspace>(`/dossiers/${dossierId}/review-issues/${issueId}`, {
+    body: JSON.stringify({ status, resolutionNote }),
+    headers: { "Content-Type": "application/json" },
+    method: "POST",
+  })
+}
+
+export async function createSubmission(
+  dossierId: string,
+  input: Pick<SubmissionRecord, "releaseId" | "agency" | "trackingNumber" | "status" | "targetDate">
+) {
+  return requestJson<DossierWorkspace>(`/dossiers/${dossierId}/submissions`, {
+    body: JSON.stringify(input),
+    headers: { "Content-Type": "application/json" },
+    method: "POST",
+  })
+}
+
+export async function updateSubmission(
+  dossierId: string,
+  submissionId: string,
+  input: Pick<SubmissionRecord, "status" | "trackingNumber" | "targetDate">
+) {
+  return requestJson<DossierWorkspace>(`/dossiers/${dossierId}/submissions/${submissionId}`, {
+    body: JSON.stringify(input),
+    headers: { "Content-Type": "application/json" },
+    method: "POST",
+  })
+}
+
+export async function createAgencyQuestion(
+  dossierId: string,
+  submissionId: string,
+  input: Pick<AgencyQuestion, "title" | "body" | "priority" | "dueDate">
+) {
+  return requestJson<DossierWorkspace>(
+    `/dossiers/${dossierId}/submissions/${submissionId}/questions`,
+    {
+      body: JSON.stringify(input),
+      headers: { "Content-Type": "application/json" },
+      method: "POST",
+    }
+  )
+}
+
+export async function updateAgencyQuestion(
+  dossierId: string,
+  questionId: string,
+  input: Pick<AgencyQuestion, "status" | "response" | "dueDate">
+) {
+  return requestJson<DossierWorkspace>(`/dossiers/${dossierId}/questions/${questionId}`, {
+    body: JSON.stringify(input),
+    headers: { "Content-Type": "application/json" },
+    method: "POST",
+  })
+}
+
 export async function createEvidenceRequest(dossierId: string, requirementId: string) {
   return requestJson<DossierWorkspace>(`/dossiers/${dossierId}/requests`, {
     body: JSON.stringify({ requirementId }),
@@ -161,6 +362,59 @@ export async function updateEvidenceRequest(
   return requestJson<DossierWorkspace>(`/dossiers/${dossierId}/requests/${requestId}`, {
     body: JSON.stringify({ status, responseNote }),
     headers: { "Content-Type": "application/json" },
+    method: "POST",
+  })
+}
+
+export async function createEvidenceRequestLink(
+  dossierId: string,
+  requestId: string,
+  expiresInDays = 14
+) {
+  return requestJson<{ url: string; expiresAt: string }>(
+    `/dossiers/${dossierId}/requests/${requestId}/link`,
+    {
+      body: JSON.stringify({ expiresInDays }),
+      headers: { "Content-Type": "application/json" },
+      method: "POST",
+    }
+  )
+}
+
+export type ExternalEvidenceRequest = {
+  link: { id: string; status: EvidenceRequestLink["status"]; expiresAt: string }
+  request: Pick<
+    EvidenceRequest,
+    "id" | "requirementId" | "title" | "detail" | "priority" | "status"
+  >
+  dossier: { id: string; name: string; substanceName: string }
+}
+
+export function getExternalEvidenceRequest(token: string) {
+  return publicRequestJson<ExternalEvidenceRequest>(`/respond/${token}`)
+}
+
+export function submitExternalEvidenceResponse(token: string, responseNote: string) {
+  return publicRequestJson<{ received: boolean }>(`/respond/${token}`, {
+    body: JSON.stringify({ responseNote }),
+    headers: { "Content-Type": "application/json" },
+    method: "POST",
+  })
+}
+
+export function submitExternalEvidenceFile(
+  token: string,
+  file: File,
+  responseNote: string,
+  category: DossierEvidence["category"]
+) {
+  validatePdf(file)
+  const body = new FormData()
+  body.set("file", file)
+  body.set("responseNote", responseNote)
+  body.set("category", category)
+  return publicRequestJson<{ received: boolean }>(`/respond/${token}/evidence`, {
+    body,
     method: "POST",
   })
 }
@@ -527,6 +781,12 @@ async function requestJson<T>(path: string, init: RequestInit = {}) {
   }
 
   if (response.status === 204) return undefined as T
+  return (await response.json()) as T
+}
+
+async function publicRequestJson<T>(path: string, init: RequestInit = {}) {
+  const response = await fetch(`${apiBaseUrl}${path}`, init)
+  if (!response.ok) throw new Error(await readError(response))
   return (await response.json()) as T
 }
 

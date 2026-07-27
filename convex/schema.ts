@@ -205,6 +205,20 @@ export default defineSchema({
   })
     .index("by_request_id", ["id"])
     .index("by_dossier_id_and_updated_at", ["dossierId", "updatedAt"]),
+  evidenceRequestLinks: defineTable({
+    id: v.string(),
+    dossierId: v.string(),
+    requestId: v.string(),
+    ownerId: v.string(),
+    tokenHash: v.string(),
+    status: v.union(v.literal("active"), v.literal("revoked"), v.literal("fulfilled")),
+    expiresAt: v.string(),
+    createdAt: v.string(),
+    updatedAt: v.string(),
+  })
+    .index("by_token_hash", ["tokenHash"])
+    .index("by_request_id_and_created_at", ["requestId", "createdAt"])
+    .index("by_dossier_id_and_created_at", ["dossierId", "createdAt"]),
   releaseAttestations: defineTable({
     id: v.string(),
     dossierId: v.string(),
@@ -259,6 +273,90 @@ export default defineSchema({
     createdAt: v.string(),
     updatedAt: v.string(),
   }).index("by_dossier_id_and_updated_at", ["dossierId", "updatedAt"]),
+  consultantReviewIssues: defineTable({
+    id: v.string(),
+    dossierId: v.string(),
+    handoffId: v.optional(v.string()),
+    ownerId: v.string(),
+    targetType: v.union(
+      v.literal("section"),
+      v.literal("fact"),
+      v.literal("claim"),
+      v.literal("evidence"),
+      v.literal("dossier")
+    ),
+    targetId: v.string(),
+    title: v.string(),
+    body: v.string(),
+    priority: v.union(v.literal("blocking"), v.literal("high"), v.literal("normal")),
+    status: v.union(v.literal("open"), v.literal("resolved"), v.literal("dismissed")),
+    resolutionNote: v.optional(v.string()),
+    createdAt: v.string(),
+    updatedAt: v.string(),
+    resolvedAt: v.optional(v.string()),
+  })
+    .index("by_issue_id", ["id"])
+    .index("by_dossier_id_and_updated_at", ["dossierId", "updatedAt"])
+    .index("by_target_id_and_updated_at", ["targetId", "updatedAt"]),
+  consultantReviewLinks: defineTable({
+    id: v.string(),
+    dossierId: v.string(),
+    handoffId: v.string(),
+    ownerId: v.string(),
+    tokenHash: v.string(),
+    status: v.union(v.literal("active"), v.literal("revoked")),
+    expiresAt: v.string(),
+    createdAt: v.string(),
+    updatedAt: v.string(),
+  })
+    .index("by_token_hash", ["tokenHash"])
+    .index("by_handoff_id_and_created_at", ["handoffId", "createdAt"])
+    .index("by_dossier_id_and_created_at", ["dossierId", "createdAt"]),
+  submissions: defineTable({
+    id: v.string(),
+    dossierId: v.string(),
+    releaseId: v.string(),
+    ownerId: v.string(),
+    agency: v.string(),
+    trackingNumber: v.optional(v.string()),
+    status: v.union(
+      v.literal("ready"),
+      v.literal("submitted"),
+      v.literal("under_review"),
+      v.literal("questions"),
+      v.literal("closed"),
+      v.literal("withdrawn")
+    ),
+    submittedAt: v.optional(v.string()),
+    targetDate: v.optional(v.string()),
+    createdAt: v.string(),
+    updatedAt: v.string(),
+  })
+    .index("by_submission_id", ["id"])
+    .index("by_dossier_id_and_updated_at", ["dossierId", "updatedAt"]),
+  agencyQuestions: defineTable({
+    id: v.string(),
+    dossierId: v.string(),
+    submissionId: v.string(),
+    ownerId: v.string(),
+    title: v.string(),
+    body: v.string(),
+    priority: v.union(v.literal("blocking"), v.literal("high"), v.literal("normal")),
+    status: v.union(
+      v.literal("open"),
+      v.literal("drafting"),
+      v.literal("answered"),
+      v.literal("closed")
+    ),
+    response: v.optional(v.string()),
+    dueDate: v.optional(v.string()),
+    createdAt: v.string(),
+    updatedAt: v.string(),
+    answeredAt: v.optional(v.string()),
+  })
+    .index("by_question_id", ["id"])
+    .index("by_submission_id_and_updated_at", ["submissionId", "updatedAt"])
+    .index("by_dossier_id_and_updated_at", ["dossierId", "updatedAt"]),
   factBookEntries: defineTable({
     id: v.string(),
     dossierId: v.string(),
@@ -279,4 +377,45 @@ export default defineSchema({
     createdAt: v.string(),
     updatedAt: v.string(),
   }).index("by_dossier_id_and_updated_at", ["dossierId", "updatedAt"]),
+  factBookRevisions: defineTable({
+    id: v.string(),
+    dossierId: v.string(),
+    factId: v.string(),
+    ownerId: v.string(),
+    previousTitle: v.string(),
+    nextTitle: v.string(),
+    previousFields: v.record(v.string(), v.string()),
+    nextFields: v.record(v.string(), v.string()),
+    affectedSectionIds: v.array(v.string()),
+    createdAt: v.string(),
+  })
+    .index("by_dossier_id_and_created_at", ["dossierId", "createdAt"])
+    .index("by_fact_id_and_created_at", ["factId", "createdAt"]),
+  factExtractionCandidates: defineTable({
+    id: v.string(),
+    dossierId: v.string(),
+    evidenceId: v.string(),
+    ownerId: v.string(),
+    kind: v.union(
+      v.literal("identity"),
+      v.literal("manufacturing"),
+      v.literal("intended_use"),
+      v.literal("exposure"),
+      v.literal("specification"),
+      v.literal("batch_result"),
+      v.literal("safety_study")
+    ),
+    title: v.string(),
+    fields: v.record(v.string(), v.string()),
+    sourceExcerpt: v.string(),
+    sourcePage: v.number(),
+    confidence: v.union(v.literal("high"), v.literal("medium")),
+    status: v.union(v.literal("proposed"), v.literal("accepted"), v.literal("dismissed")),
+    acceptedFactId: v.optional(v.string()),
+    createdAt: v.string(),
+    updatedAt: v.string(),
+  })
+    .index("by_candidate_id", ["id"])
+    .index("by_dossier_id_and_updated_at", ["dossierId", "updatedAt"])
+    .index("by_evidence_id_and_updated_at", ["evidenceId", "updatedAt"]),
 })

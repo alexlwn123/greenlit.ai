@@ -8,13 +8,17 @@ import { type Context, Hono } from "hono"
 import { cors } from "hono/cors"
 import { secureHeaders } from "hono/secure-headers"
 import {
+  type AgencyQuestion,
   type AnalysisRecord,
   type ArtifactReference,
+  analyzeFactImpact,
   applyDeepAnalysis,
   buildInitialDossierRequirements,
   buildInitialDossierSections,
   type ComparableAction,
   type ConsultantHandoff,
+  type ConsultantReviewIssue,
+  type ConsultantReviewLink,
   compareEvidenceMatrices,
   createMinimumReadinessReport,
   type DossierClaim,
@@ -25,8 +29,11 @@ import {
   type DossierRequirement,
   type DossierSection,
   type EvidenceRequest,
+  type EvidenceRequestLink,
   evaluateDossierQuality,
   type FactBookEntry,
+  type FactBookRevision,
+  type FactExtractionRecord,
   mergeComparableActionsIntoOutline,
   type NoticeProfile,
   type ReadinessReport,
@@ -34,7 +41,10 @@ import {
   type ReleaseAttestation,
   type ResearchReference,
   rankComparableFilings,
+  renderFactReferences,
+  type SubmissionRecord,
   suggestDossierRequirement,
+  suggestFactsFromPassages,
   type WorkbookNote,
 } from "../../../packages/core/src/index.js"
 import { draftSectionFromVerifiedClaims } from "./assisted-drafting.js"
@@ -98,7 +108,7 @@ export function createApp(options: CreateAppOptions = {}) {
     cors({
       origin: ["http://localhost:5173", "http://127.0.0.1:5173"],
       allowHeaders: ["Authorization", "Content-Type", "x-greenlit-session"],
-      allowMethods: ["DELETE", "GET", "POST", "OPTIONS"],
+      allowMethods: ["DELETE", "GET", "POST", "PUT", "OPTIONS"],
     })
   )
 
@@ -500,6 +510,133 @@ export function createApp(options: CreateAppOptions = {}) {
     return context.json(await storage.getDossier(ownerId, dossier.dossier.id))
   })
 
+  app.post("/api/dossiers/:id/requests/:requestId/link", async (context) => {
+    const { ownerId, storage } = await requestScope(context)
+    const dossier = await storage.getDossier(ownerId, context.req.param("id"))
+    if (!dossier) return context.json({ error: "Dossier not found" }, 404)
+    if (isDossierLocked(dossier))
+      return context.json({ error: "Unlock the controlled release before sharing requests." }, 423)
+    const request = dossier.evidenceRequests.find(
+      (item) => item.id === context.req.param("requestId")
+    )
+    if (!request) return context.json({ error: "Evidence request not found" }, 404)
+    const body = (await context.req.json().catch(() => ({}))) as { expiresInDays?: number }
+    const expiresInDays = Math.min(Math.max(Math.floor(body.expiresInDays ?? 14), 1), 90)
+    const token = `${randomUUID().replaceAll("-", "")}${randomUUID().replaceAll("-", "")}`
+    const tokenHash = createHash("sha256").update(token).digest("hex")
+    const now = new Date()
+    const expiresAt = new Date(now.getTime() + expiresInDays * 86_400_000).toISOString()
+    await storage.createEvidenceRequestLink({
+      id: randomUUID(),
+      dossierId: dossier.dossier.id,
+      requestId: request.id,
+      ownerId,
+      tokenHash,
+      status: "active",
+      expiresAt,
+      createdAt: now.toISOString(),
+      updatedAt: now.toISOString(),
+    })
+    const origin = new URL(context.req.url).origin
+    return context.json({ url: `${origin}/respond/${token}`, expiresAt }, 201)
+  })
+
+  app.get("/api/respond/:token", async (context) => {
+    const tokenHash = hashResponseToken(context.req.param("token"))
+    if (!tokenHash) return context.json({ error: "Invalid response link." }, 404)
+    const result = await createConfiguredStorage(dataDir).getExternalEvidenceRequest(tokenHash)
+    if (
+      !result ||
+      result.link.status !== "active" ||
+      result.link.expiresAt <= new Date().toISOString()
+    )
+      return context.json(
+        { error: "This response link is invalid, expired, or already used." },
+        410
+      )
+    return context.json(result)
+  })
+
+  app.post("/api/respond/:token", async (context) => {
+    const tokenHash = hashResponseToken(context.req.param("token"))
+    if (!tokenHash) return context.json({ error: "Invalid response link." }, 404)
+    const body = (await context.req.json()) as { responseNote?: unknown }
+    const responseNote = typeof body.responseNote === "string" ? body.responseNote.trim() : ""
+    if (responseNote.length < 3 || responseNote.length > 10_000)
+      return context.json({ error: "Add a response between 3 and 10,000 characters." }, 400)
+    try {
+      await createConfiguredStorage(dataDir).receiveExternalEvidenceResponse(
+        tokenHash,
+        responseNote
+      )
+      return context.json({ received: true })
+    } catch (error) {
+      return context.json(
+        { error: error instanceof Error ? error.message : "Response failed." },
+        410
+      )
+    }
+  })
+
+  app.post("/api/respond/:token/evidence", async (context) => {
+    const tokenHash = hashResponseToken(context.req.param("token"))
+    if (!tokenHash) return context.json({ error: "Invalid response link." }, 404)
+    const storage = createConfiguredStorage(dataDir)
+    const external = await storage.getExternalEvidenceRequest(tokenHash)
+    if (
+      !external ||
+      external.link.status !== "active" ||
+      external.link.expiresAt <= new Date().toISOString()
+    )
+      return context.json(
+        { error: "This response link is invalid, expired, or already used." },
+        410
+      )
+    const body = await context.req.parseBody()
+    const uploadError = validateUpload(body.file)
+    if (uploadError) return context.json({ error: uploadError }, 400)
+    const responseNote = String(body.responseNote ?? "").trim()
+    if (responseNote.length > 10_000)
+      return context.json({ error: "Response notes cannot exceed 10,000 characters." }, 400)
+    const file = body.file as File
+    const bytes = new Uint8Array(await file.arrayBuffer())
+    const extracted = await extractPdfText(bytes)
+    validatePdfPageCount(extracted.pageCount)
+    const artifact = await storage.createArtifact({
+      bytes,
+      fileName: file.name,
+      mimeType: file.type || "application/pdf",
+    })
+    const now = new Date().toISOString()
+    const evidenceId = randomUUID()
+    await storage.receiveExternalEvidenceUpload(
+      tokenHash,
+      {
+        id: evidenceId,
+        dossierId: external.dossier.id,
+        requirementId: external.request.requirementId,
+        title: file.name,
+        category: evidenceCategory(body.category),
+        verificationStatus: "needs_review",
+        artifact,
+        excerpt: extracted.text.replace(/\s+/g, " ").trim().slice(0, 1800),
+        pageCount: extracted.pageCount,
+        createdAt: now,
+        updatedAt: now,
+      },
+      extracted.pages.map((page) => ({
+        id: `${evidenceId}-page-${page.pageNumber}`,
+        dossierId: external.dossier.id,
+        evidenceId,
+        pageNumber: page.pageNumber,
+        text: page.text.slice(0, 12_000),
+        createdAt: now,
+      })),
+      responseNote || `External evidence supplied: ${file.name}`
+    )
+    return context.json({ received: true }, 201)
+  })
+
   app.post("/api/dossiers/:id/attestations", async (context) => {
     const { ownerId, storage } = await requestScope(context)
     const dossier = await storage.getDossier(ownerId, context.req.param("id"))
@@ -627,6 +764,239 @@ export function createApp(options: CreateAppOptions = {}) {
     return context.json(await storage.getDossier(ownerId, dossier.dossier.id))
   })
 
+  app.post("/api/dossiers/:id/review-issues", async (context) => {
+    const { ownerId, storage } = await requestScope(context)
+    const dossier = await storage.getDossier(ownerId, context.req.param("id"))
+    if (!dossier) return context.json({ error: "Dossier not found" }, 404)
+    if (isDossierLocked(dossier))
+      return context.json(
+        { error: "Unlock the controlled release before changing review issues." },
+        423
+      )
+    const body = (await context.req.json()) as Partial<ConsultantReviewIssue>
+    const targetType = body.targetType ?? "dossier"
+    const targetId = body.targetId?.trim() || dossier.dossier.id
+    if (!reviewTargetExists(dossier, targetType, targetId))
+      return context.json({ error: "Review target not found." }, 404)
+    if (!body.title?.trim() || !body.body?.trim())
+      return context.json({ error: "Issue title and review note are required." }, 400)
+    const now = new Date().toISOString()
+    await storage.createReviewIssue({
+      id: randomUUID(),
+      dossierId: dossier.dossier.id,
+      handoffId: dossier.handoffs.some((item) => item.id === body.handoffId)
+        ? body.handoffId
+        : undefined,
+      ownerId,
+      targetType,
+      targetId,
+      title: body.title.trim(),
+      body: body.body.trim(),
+      priority: body.priority === "blocking" || body.priority === "high" ? body.priority : "normal",
+      status: "open",
+      createdAt: now,
+      updatedAt: now,
+    })
+    return context.json(await storage.getDossier(ownerId, dossier.dossier.id), 201)
+  })
+
+  app.post("/api/dossiers/:id/handoffs/:handoffId/link", async (context) => {
+    const { ownerId, storage } = await requestScope(context)
+    const dossier = await storage.getDossier(ownerId, context.req.param("id"))
+    if (!dossier) return context.json({ error: "Dossier not found" }, 404)
+    const handoff = dossier.handoffs.find((item) => item.id === context.req.param("handoffId"))
+    if (!handoff) return context.json({ error: "Handoff not found" }, 404)
+    const body = (await context.req.json().catch(() => ({}))) as { expiresInDays?: number }
+    const days = Math.min(Math.max(Math.floor(body.expiresInDays ?? 14), 1), 90)
+    const token = `${randomUUID().replaceAll("-", "")}${randomUUID().replaceAll("-", "")}`
+    const now = new Date()
+    const expiresAt = new Date(now.getTime() + days * 86_400_000).toISOString()
+    await storage.createConsultantReviewLink({
+      id: randomUUID(),
+      dossierId: dossier.dossier.id,
+      handoffId: handoff.id,
+      ownerId,
+      tokenHash: createHash("sha256").update(token).digest("hex"),
+      status: "active",
+      expiresAt,
+      createdAt: now.toISOString(),
+      updatedAt: now.toISOString(),
+    })
+    return context.json(
+      { url: `${new URL(context.req.url).origin}/review/${token}`, expiresAt },
+      201
+    )
+  })
+
+  app.get("/api/review/:token", async (context) => {
+    const tokenHash = hashResponseToken(context.req.param("token"))
+    if (!tokenHash) return context.json({ error: "Invalid review link." }, 404)
+    const result = await createConfiguredStorage(dataDir).getExternalConsultantReview(tokenHash)
+    if (
+      !result ||
+      result.link.status !== "active" ||
+      result.link.expiresAt <= new Date().toISOString()
+    )
+      return context.json({ error: "This review link is invalid or expired." }, 410)
+    return context.json(result)
+  })
+
+  app.post("/api/review/:token/issues", async (context) => {
+    const tokenHash = hashResponseToken(context.req.param("token"))
+    if (!tokenHash) return context.json({ error: "Invalid review link." }, 404)
+    const body = (await context.req.json()) as Partial<ConsultantReviewIssue>
+    if (!body.title?.trim() || !body.body?.trim() || !body.targetType || !body.targetId?.trim())
+      return context.json({ error: "Target, title, and review note are required." }, 400)
+    const now = new Date().toISOString()
+    try {
+      const storage = createConfiguredStorage(dataDir)
+      await storage.createExternalReviewIssue(tokenHash, {
+        id: randomUUID(),
+        targetType: body.targetType,
+        targetId: body.targetId.trim(),
+        title: body.title.trim(),
+        body: body.body.trim(),
+        priority:
+          body.priority === "blocking" || body.priority === "high" ? body.priority : "normal",
+        createdAt: now,
+        updatedAt: now,
+      })
+      return context.json(await storage.getExternalConsultantReview(tokenHash), 201)
+    } catch (error) {
+      return context.json(
+        { error: error instanceof Error ? error.message : "Review finding failed." },
+        410
+      )
+    }
+  })
+
+  app.post("/api/dossiers/:id/review-issues/:issueId", async (context) => {
+    const { ownerId, storage } = await requestScope(context)
+    const dossier = await storage.getDossier(ownerId, context.req.param("id"))
+    if (!dossier) return context.json({ error: "Dossier not found" }, 404)
+    const issue = dossier.reviewIssues.find((item) => item.id === context.req.param("issueId"))
+    if (!issue) return context.json({ error: "Review issue not found" }, 404)
+    const body = (await context.req.json()) as {
+      status?: ConsultantReviewIssue["status"]
+      resolutionNote?: string
+    }
+    const status = body.status === "resolved" || body.status === "dismissed" ? body.status : "open"
+    if (status === "resolved" && !body.resolutionNote?.trim())
+      return context.json({ error: "Explain how the issue was resolved." }, 400)
+    await storage.updateReviewIssue(ownerId, issue.id, status, body.resolutionNote?.trim())
+    return context.json(await storage.getDossier(ownerId, dossier.dossier.id))
+  })
+
+  app.post("/api/dossiers/:id/submissions", async (context) => {
+    const { ownerId, storage } = await requestScope(context)
+    const dossier = await storage.getDossier(ownerId, context.req.param("id"))
+    if (!dossier) return context.json({ error: "Dossier not found" }, 404)
+    const body = (await context.req.json()) as Partial<SubmissionRecord>
+    const release = dossier.releases.find(
+      (item) => item.id === body.releaseId && item.status === "locked"
+    )
+    if (!release) return context.json({ error: "Choose a locked release." }, 400)
+    if (!body.agency?.trim()) return context.json({ error: "Agency is required." }, 400)
+    const now = new Date().toISOString()
+    await storage.createSubmission({
+      id: randomUUID(),
+      dossierId: dossier.dossier.id,
+      releaseId: release.id,
+      ownerId,
+      agency: body.agency.trim(),
+      trackingNumber: body.trackingNumber?.trim() || undefined,
+      status: body.status === "submitted" ? "submitted" : "ready",
+      submittedAt: body.status === "submitted" ? now : undefined,
+      targetDate: body.targetDate,
+      createdAt: now,
+      updatedAt: now,
+    })
+    return context.json(await storage.getDossier(ownerId, dossier.dossier.id), 201)
+  })
+
+  app.post("/api/dossiers/:id/submissions/:submissionId", async (context) => {
+    const { ownerId, storage } = await requestScope(context)
+    const dossier = await storage.getDossier(ownerId, context.req.param("id"))
+    if (!dossier) return context.json({ error: "Dossier not found" }, 404)
+    const submission = dossier.submissions.find(
+      (item) => item.id === context.req.param("submissionId")
+    )
+    if (!submission) return context.json({ error: "Submission not found" }, 404)
+    const body = (await context.req.json()) as Partial<SubmissionRecord>
+    const statuses: SubmissionRecord["status"][] = [
+      "ready",
+      "submitted",
+      "under_review",
+      "questions",
+      "closed",
+      "withdrawn",
+    ]
+    const status = statuses.includes(body.status as SubmissionRecord["status"])
+      ? (body.status as SubmissionRecord["status"])
+      : submission.status
+    await storage.updateSubmission(
+      ownerId,
+      submission.id,
+      status,
+      body.trackingNumber?.trim(),
+      body.targetDate
+    )
+    return context.json(await storage.getDossier(ownerId, dossier.dossier.id))
+  })
+
+  app.post("/api/dossiers/:id/submissions/:submissionId/questions", async (context) => {
+    const { ownerId, storage } = await requestScope(context)
+    const dossier = await storage.getDossier(ownerId, context.req.param("id"))
+    if (!dossier) return context.json({ error: "Dossier not found" }, 404)
+    const submission = dossier.submissions.find(
+      (item) => item.id === context.req.param("submissionId")
+    )
+    if (!submission) return context.json({ error: "Submission not found" }, 404)
+    const body = (await context.req.json()) as Partial<AgencyQuestion>
+    if (!body.title?.trim() || !body.body?.trim())
+      return context.json({ error: "Question title and text are required." }, 400)
+    const now = new Date().toISOString()
+    await storage.createAgencyQuestion({
+      id: randomUUID(),
+      dossierId: dossier.dossier.id,
+      submissionId: submission.id,
+      ownerId,
+      title: body.title.trim(),
+      body: body.body.trim(),
+      priority: body.priority === "blocking" || body.priority === "high" ? body.priority : "normal",
+      status: "open",
+      dueDate: body.dueDate,
+      createdAt: now,
+      updatedAt: now,
+    })
+    return context.json(await storage.getDossier(ownerId, dossier.dossier.id), 201)
+  })
+
+  app.post("/api/dossiers/:id/questions/:questionId", async (context) => {
+    const { ownerId, storage } = await requestScope(context)
+    const dossier = await storage.getDossier(ownerId, context.req.param("id"))
+    if (!dossier) return context.json({ error: "Dossier not found" }, 404)
+    const question = dossier.agencyQuestions.find(
+      (item) => item.id === context.req.param("questionId")
+    )
+    if (!question) return context.json({ error: "Agency question not found" }, 404)
+    const body = (await context.req.json()) as Partial<AgencyQuestion>
+    const statuses: AgencyQuestion["status"][] = ["open", "drafting", "answered", "closed"]
+    const status = statuses.includes(body.status as AgencyQuestion["status"])
+      ? (body.status as AgencyQuestion["status"])
+      : question.status
+    if (status === "answered" && !body.response?.trim())
+      return context.json({ error: "A response is required before marking answered." }, 400)
+    await storage.updateAgencyQuestion(
+      ownerId,
+      question.id,
+      status,
+      body.response?.trim(),
+      body.dueDate
+    )
+    return context.json(await storage.getDossier(ownerId, dossier.dossier.id))
+  })
+
   app.post("/api/dossiers/:id/facts", async (context) => {
     const { ownerId, storage } = await requestScope(context)
     const dossier = await storage.getDossier(ownerId, context.req.param("id"))
@@ -677,6 +1047,59 @@ export function createApp(options: CreateAppOptions = {}) {
       updatedAt: now,
     })
     return context.json(await storage.getDossier(ownerId, dossier.dossier.id), 201)
+  })
+
+  app.post("/api/dossiers/:id/facts/:factId/impact", async (context) => {
+    const { ownerId, storage } = await requestScope(context)
+    const dossier = await storage.getDossier(ownerId, context.req.param("id"))
+    if (!dossier) return context.json({ error: "Dossier not found" }, 404)
+    const fact = dossier.factBookEntries.find((item) => item.id === context.req.param("factId"))
+    if (!fact) return context.json({ error: "Fact not found" }, 404)
+    const body = (await context.req.json()) as { title?: string; fields?: Record<string, unknown> }
+    const fields = normalizedFactFields(body.fields)
+    if (!body.title?.trim() || Object.keys(fields).length === 0)
+      return context.json({ error: "Title and structured fields are required." }, 400)
+    return context.json({
+      impact: analyzeFactImpact(fact, { title: body.title.trim(), fields }, dossier.sections),
+    })
+  })
+
+  app.put("/api/dossiers/:id/facts/:factId", async (context) => {
+    const { ownerId, storage } = await requestScope(context)
+    const dossier = await storage.getDossier(ownerId, context.req.param("id"))
+    if (!dossier) return context.json({ error: "Dossier not found" }, 404)
+    if (isDossierLocked(dossier))
+      return context.json(
+        { error: "Unlock the controlled release before changing the Fact Book." },
+        423
+      )
+    const fact = dossier.factBookEntries.find((item) => item.id === context.req.param("factId"))
+    if (!fact) return context.json({ error: "Fact not found" }, 404)
+    const body = (await context.req.json()) as {
+      title?: string
+      fields?: Record<string, unknown>
+      confirmImpacts?: boolean
+    }
+    const fields = normalizedFactFields(body.fields)
+    if (!body.title?.trim() || Object.keys(fields).length === 0)
+      return context.json({ error: "Title and structured fields are required." }, 400)
+    const impact = analyzeFactImpact(fact, { title: body.title.trim(), fields }, dossier.sections)
+    if (impact.affectedSectionIds.length > 0 && body.confirmImpacts !== true)
+      return context.json(
+        {
+          error: "Confirm the affected dossier sections before applying this fact change.",
+          impact,
+        },
+        409
+      )
+    await storage.updateFactBookEntry(
+      ownerId,
+      fact.id,
+      body.title.trim(),
+      fields,
+      body.confirmImpacts === true
+    )
+    return context.json(await storage.getDossier(ownerId, dossier.dossier.id))
   })
 
   app.post("/api/dossiers/:id/facts/:factId/review", async (context) => {
@@ -741,6 +1164,43 @@ export function createApp(options: CreateAppOptions = {}) {
       evidence,
       passages: await storage.listEvidencePassages(ownerId, evidence.id),
     })
+  })
+
+  app.post("/api/dossiers/:id/evidence/:evidenceId/fact-suggestions", async (context) => {
+    const { ownerId, storage } = await requestScope(context)
+    const dossier = await storage.getDossier(ownerId, context.req.param("id"))
+    if (!dossier) return context.json({ error: "Dossier not found" }, 404)
+    const evidence = dossier.evidence.find((item) => item.id === context.req.param("evidenceId"))
+    if (!evidence) return context.json({ error: "Evidence not found" }, 404)
+    const passages = await storage.listEvidencePassages(ownerId, evidence.id)
+    const suggestions = suggestFactsFromPassages(evidence.title, passages).map((candidate) => ({
+      ...candidate,
+      id: randomUUID(),
+    }))
+    const candidates = await storage.saveExtractionCandidates(
+      ownerId,
+      dossier.dossier.id,
+      evidence.id,
+      suggestions
+    )
+    return context.json({ candidates, evidenceId: evidence.id })
+  })
+
+  app.post("/api/dossiers/:id/extraction-candidates/:candidateId", async (context) => {
+    const { ownerId, storage } = await requestScope(context)
+    const dossier = await storage.getDossier(ownerId, context.req.param("id"))
+    if (!dossier) return context.json({ error: "Dossier not found" }, 404)
+    const candidate = dossier.extractionCandidates.find(
+      (item) => item.id === context.req.param("candidateId")
+    )
+    if (!candidate) return context.json({ error: "Extraction candidate not found" }, 404)
+    const body = (await context.req.json()) as { action?: "accept" | "dismiss" }
+    await storage.reviewExtractionCandidate(
+      ownerId,
+      candidate.id,
+      body.action === "accept" ? "accept" : "dismiss"
+    )
+    return context.json(await storage.getDossier(ownerId, dossier.dossier.id))
   })
 
   app.delete("/api/dossiers/:id/evidence/:evidenceId", async (context) => {
@@ -1215,6 +1675,23 @@ async function resolveConvexOwner(token: string) {
   return await client.query(currentUserId, {})
 }
 
+function hashResponseToken(token: string) {
+  if (!/^[a-f0-9]{64}$/i.test(token)) return null
+  return createHash("sha256").update(token).digest("hex")
+}
+
+function reviewTargetExists(
+  dossier: DossierWorkspaceData,
+  targetType: ConsultantReviewIssue["targetType"],
+  targetId: string
+) {
+  if (targetType === "dossier") return dossier.dossier.id === targetId
+  if (targetType === "section") return dossier.sections.some((item) => item.id === targetId)
+  if (targetType === "fact") return dossier.factBookEntries.some((item) => item.id === targetId)
+  if (targetType === "claim") return dossier.claims.some((item) => item.id === targetId)
+  return dossier.evidence.some((item) => item.id === targetId)
+}
+
 function shouldRunDeepAnalysis(mode?: "minimum" | "deep") {
   return (mode ?? process.env.GREENLIT_ANALYSIS_MODE) === "deep"
 }
@@ -1416,10 +1893,17 @@ type DossierWorkspaceData = {
   claims: DossierClaim[]
   auditEvents: import("../../../packages/core/src/index.js").DossierAuditEvent[]
   evidenceRequests: EvidenceRequest[]
+  evidenceRequestLinks: EvidenceRequestLink[]
   attestations: ReleaseAttestation[]
   releases: DossierRelease[]
   handoffs: ConsultantHandoff[]
+  reviewIssues: ConsultantReviewIssue[]
+  reviewLinks: ConsultantReviewLink[]
+  submissions: SubmissionRecord[]
+  agencyQuestions: AgencyQuestion[]
+  extractionCandidates: FactExtractionRecord[]
   factBookEntries: FactBookEntry[]
+  factBookRevisions: FactBookRevision[]
 }
 
 function attestationStatement(kind: ReleaseAttestation["kind"]) {
@@ -1440,6 +1924,15 @@ function isDossierLocked(workspace: DossierWorkspaceData) {
   return workspace.releases.some((release) => release.status === "locked")
 }
 
+function normalizedFactFields(fields: Record<string, unknown> | undefined) {
+  return Object.fromEntries(
+    Object.entries(fields ?? {})
+      .filter((entry): entry is [string, string] => typeof entry[1] === "string")
+      .map(([key, value]) => [key.trim(), value.trim()])
+      .filter(([key, value]) => key.length > 0 && value.length > 0)
+  )
+}
+
 function buildDossierMarkdown(workspace: DossierWorkspaceData) {
   const checks = evaluateDossierQuality(workspace)
   const blockers = checks.filter((check) => check.severity === "blocker")
@@ -1456,7 +1949,8 @@ function buildDossierMarkdown(workspace: DossierWorkspaceData) {
         const number = claimNumbers.get(claimId)
         return number ? `[^${number}]` : `${marker} **[UNRESOLVED CLAIM]**`
       })
-      return `## ${section.part}: ${section.title}\n\n${resolved}\n\n_Section status: ${section.status.replaceAll("_", " ")}_`
+      const factResolved = renderFactReferences(resolved, workspace.factBookEntries).rendered
+      return `## ${section.part}: ${section.title}\n\n${factResolved}\n\n_Section status: ${section.status.replaceAll("_", " ")}_`
     })
     .join("\n\n---\n\n")
   const footnotes = workspace.claims
