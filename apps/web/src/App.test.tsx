@@ -90,16 +90,20 @@ describe("App", () => {
     window.history.replaceState({}, "", "/dossiers")
     render(<App />)
 
-    fireEvent.click(
-      screen.getByRole("button", { name: /explore a complete sample dossier/i })
-    )
+    fireEvent.click(screen.getByRole("button", { name: /explore a complete sample dossier/i }))
 
     expect(screen.getByText(/read-only sample/i)).toBeInTheDocument()
-    expect(screen.getByRole("heading", { name: "Fermented pea protein isolate" })).toBeInTheDocument()
-    expect(screen.getByRole("heading", { name: "Source-to-claim traceability" })).toBeInTheDocument()
+    expect(
+      screen.getByRole("heading", { name: "Fermented pea protein isolate" })
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole("heading", { name: "Source-to-claim traceability" })
+    ).toBeInTheDocument()
 
     fireEvent.click(screen.getByRole("button", { name: "Fact Book" }))
-    expect(screen.getByRole("heading", { name: "One governed source of truth" })).toBeInTheDocument()
+    expect(
+      screen.getByRole("heading", { name: "One governed source of truth" })
+    ).toBeInTheDocument()
 
     fireEvent.click(screen.getByRole("button", { name: "Submission lifecycle" }))
     expect(screen.getByRole("heading", { name: "FDA GRAS notice" })).toBeInTheDocument()
