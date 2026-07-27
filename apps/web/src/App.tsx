@@ -40,7 +40,6 @@ import {
   Plus,
   Search,
   ShieldCheck,
-  Sparkles,
   TableProperties,
   Trash2,
   Upload,
@@ -739,7 +738,7 @@ function LandingPage({
         <div className="hero-grid">
           <div className="hero-copy">
             <p className="kicker">
-              <Sparkles />
+              <ShieldCheck />
               Regulatory intelligence, accelerated
             </p>
             <h1>
@@ -2015,7 +2014,7 @@ function SampleDossierPreview({ onClose }: { onClose: () => void }) {
           <ArrowLeft /> Back to your workspace
         </button>
       </section>
-      <section className="dossier-metrics">
+      <section className="dossier-progress">
         <div>
           <span>REQUIREMENTS</span>
           <strong>18</strong>
@@ -2100,7 +2099,7 @@ function SampleWorkflowPanel({ tab }: { tab: SampleWorkflowTab }) {
           </article>
         </div>
         <div className="sample-callout">
-          <Sparkles />
+          <TableProperties />
           <p>
             Greenlit found a NOAEL of 1,000 mg/kg bw/day and proposed it for governed Fact Book
             review.
@@ -3147,7 +3146,7 @@ function DossierPage({
             className="sample-dossier-launch"
             onClick={() => setPreviewingSample(true)}
           >
-            <Sparkles />
+            <FileSearch />
             <span>
               <strong>Explore a complete sample dossier</strong>
               Preview every workflow with realistic data. Nothing will be saved.
@@ -3161,7 +3160,7 @@ function DossierPage({
               </button>
             ) : null}
             <button type="submit" className="primary-action" disabled={saving}>
-              {saving ? <LoaderCircle className="spin" /> : <Sparkles />}
+              {saving ? <LoaderCircle className="spin" /> : <Plus />}
               Create evidence plan
             </button>
           </div>
@@ -3273,38 +3272,43 @@ function DossierPage({
   return (
     <main className="dossier-page">
       <section className="dossier-header">
-        <button type="button" onClick={() => onOpen("")}>
-          <ArrowLeft /> All dossiers
-        </button>
-        <p className="section-label">GRAS DOSSIER / PLANNING</p>
-        <h1>{selected.dossier.intake.substanceName}</h1>
-        <p>
-          {selected.dossier.intake.companyName || "No sponsor specified"} ·{" "}
-          {selected.dossier.intake.substanceType.replaceAll("_", " ")}
-        </p>
-        <button
-          type="button"
-          className="dossier-export-action"
-          onClick={() =>
-            downloadDossierExport(selected.dossier.id, selected.dossier.intake.substanceName).catch(
-              (error) => setFormError(errorMessage(error))
-            )
-          }
-        >
-          <Download /> Export working dossier
-        </button>
-        <button
-          type="button"
-          className="dossier-export-action package-export-action"
-          onClick={() =>
-            downloadSubmissionPackage(
-              selected.dossier.id,
-              selected.dossier.intake.substanceName
-            ).catch((error) => setFormError(errorMessage(error)))
-          }
-        >
-          <LockKeyhole /> Download package
-        </button>
+        <div className="dossier-header-toolbar">
+          <button type="button" onClick={() => onOpen("")}>
+            <ArrowLeft /> All dossiers
+          </button>
+          <div className="dossier-header-actions">
+            <button
+              type="button"
+              onClick={() =>
+                downloadDossierExport(
+                  selected.dossier.id,
+                  selected.dossier.intake.substanceName
+                ).catch((error) => setFormError(errorMessage(error)))
+              }
+            >
+              <Download /> Export draft
+            </button>
+            <button
+              type="button"
+              onClick={() =>
+                downloadSubmissionPackage(
+                  selected.dossier.id,
+                  selected.dossier.intake.substanceName
+                ).catch((error) => setFormError(errorMessage(error)))
+              }
+            >
+              <LockKeyhole /> Submission package
+            </button>
+          </div>
+        </div>
+        <div className="dossier-title-block">
+          <p className="section-label">GRAS DOSSIER</p>
+          <h1>{selected.dossier.intake.substanceName}</h1>
+          <p>
+            {selected.dossier.intake.companyName || "No sponsor specified"} ·{" "}
+            {selected.dossier.intake.substanceType.replaceAll("_", " ")}
+          </p>
+        </div>
       </section>
       {activeRelease ? (
         <section className="release-lock-banner">
@@ -3522,7 +3526,7 @@ function DossierPage({
                           <Plus /> Create claim from this page
                         </button>
                         <button type="button" onClick={extractFacts} disabled={saving}>
-                          <Sparkles /> Extract proposed facts
+                          <TableProperties /> Extract proposed facts
                         </button>
                       </div>
                     ) : (
@@ -4923,10 +4927,10 @@ function DossierPage({
                 {formError ? <p className="form-error">{formError}</p> : null}
                 <div className="draft-actions">
                   <button type="button" onClick={assistSection} disabled={saving}>
-                    <Sparkles /> Assist from verified claims
+                    <NotebookPen /> Draft from verified claims
                   </button>
                   <button type="button" onClick={generateStarter} disabled={saving}>
-                    <Sparkles /> Create grounded starter
+                    <FileText /> Create section starter
                   </button>
                   <button type="button" onClick={() => saveSection("draft")} disabled={saving}>
                     Save draft
