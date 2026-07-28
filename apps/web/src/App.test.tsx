@@ -6,6 +6,7 @@ import App from "./App"
 beforeEach(() => {
   window.history.replaceState({}, "", "/")
   window.localStorage.clear()
+  window.sessionStorage.clear()
   window.scrollTo = vi.fn()
   vi.stubGlobal(
     "fetch",
@@ -178,6 +179,14 @@ describe("App", () => {
     }
 
     window.history.replaceState({}, "", "/dossiers/draft-demo")
+    window.sessionStorage.setItem(
+      "greenlit:draft-recovery:draft-demo:section-1",
+      JSON.stringify({
+        content: "Recovered unsaved section content from this browser tab.",
+        savedAt: "2026-07-27T00:05:00.000Z",
+        baseUpdatedAt: dossier.updatedAt,
+      })
+    )
     vi.mocked(fetch).mockImplementation(
       vi.fn(async (input: RequestInfo | URL) => {
         const url = requestUrl(input)
@@ -201,10 +210,12 @@ describe("App", () => {
 
     expect(screen.getByRole("group", { name: "Draft view" })).toBeInTheDocument()
     expect(screen.getByRole("textbox", { name: "Section draft" })).toBeInTheDocument()
-    expect(screen.getByText("All changes saved").parentElement).toHaveAttribute(
-      "aria-live",
-      "polite"
+    expect(screen.getByRole("region", { name: "Unsaved draft recovery" })).toBeInTheDocument()
+    fireEvent.click(screen.getByRole("button", { name: "Restore draft" }))
+    expect(screen.getByRole("textbox", { name: "Section draft" })).toHaveValue(
+      "Recovered unsaved section content from this browser tab."
     )
+    expect(screen.getByText("Unsaved changes").parentElement).toHaveAttribute("aria-live", "polite")
     expect(screen.getByRole("button", { name: "Sources" })).toBeInTheDocument()
     expect(screen.getAllByRole("button", { name: /add the first source/i })).not.toHaveLength(0)
     expect(

@@ -2676,6 +2676,31 @@ function preserveDraftFactReferences(
   return nextCanonicalContent
 }
 
+type LocalDraftRecovery = {
+  content: string
+  savedAt: string
+  baseUpdatedAt: string
+}
+
+function draftRecoveryKey(dossierId: string, sectionId: string) {
+  return `greenlit:draft-recovery:${dossierId}:${sectionId}`
+}
+
+function readDraftRecovery(dossierId: string, sectionId: string): LocalDraftRecovery | null {
+  try {
+    const value = window.sessionStorage.getItem(draftRecoveryKey(dossierId, sectionId))
+    if (!value) return null
+    const parsed = JSON.parse(value) as Partial<LocalDraftRecovery>
+    return typeof parsed.content === "string" &&
+      typeof parsed.savedAt === "string" &&
+      typeof parsed.baseUpdatedAt === "string"
+      ? (parsed as LocalDraftRecovery)
+      : null
+  } catch {
+    return null
+  }
+}
+
 function DossierPage({
   dossierId,
   dossiers,
@@ -2710,6 +2735,7 @@ function DossierPage({
   const [evidenceCategory, setEvidenceCategory] = useState<DossierEvidence["category"]>("other")
   const [selectedSectionId, setSelectedSectionId] = useState("")
   const [draftContent, setDraftContent] = useState("")
+  const [localDraftRecovery, setLocalDraftRecovery] = useState<LocalDraftRecovery | null>(null)
   const [draftMode, setDraftMode] = useState<"edit" | "read" | "split">("split")
   const [showLegacyDraftStudio] = useState(false)
   const [draftSupportTab, setDraftSupportTab] = useState<"sources" | "facts" | "history">("sources")
@@ -2823,11 +2849,37 @@ function DossierPage({
     onOpen("")
   }
 
+  function updateDraftContent(content: string) {
+    setLocalDraftRecovery(null)
+    if (selected && selectedSection && content === selectedSection.content) {
+      window.sessionStorage.removeItem(draftRecoveryKey(selected.dossier.id, selectedSection.id))
+    }
+    setDraftContent(content)
+  }
+
   useEffect(() => {
     if (!selectedSection) return
     setSelectedSectionId(selectedSection.id)
     setDraftContent(selectedSection.content)
-  }, [selectedSection])
+    const recovery = selected ? readDraftRecovery(selected.dossier.id, selectedSection.id) : null
+    setLocalDraftRecovery(
+      recovery && recovery.content !== selectedSection.content ? recovery : null
+    )
+  }, [selected, selectedSection])
+
+  useEffect(() => {
+    if (!selected || !selectedSection) return
+    if (!draftDirty) return
+    const recovery: LocalDraftRecovery = {
+      content: draftContent,
+      savedAt: new Date().toISOString(),
+      baseUpdatedAt: selectedSection.updatedAt,
+    }
+    window.sessionStorage.setItem(
+      draftRecoveryKey(selected.dossier.id, selectedSection.id),
+      JSON.stringify(recovery)
+    )
+  }, [draftContent, draftDirty, selected, selectedSection])
 
   useEffect(() => {
     if (!draftDirty) return
@@ -2993,6 +3045,7 @@ function DossierPage({
 
   function insertFactReference(factId: string, field: string) {
     const marker = `{{fact:${factId}.${field}}}`
+    setLocalDraftRecovery(null)
     setDraftContent(
       (current) => `${current}${current.endsWith(" ") || !current ? "" : " "}${marker}`
     )
@@ -3333,9 +3386,15 @@ function DossierPage({
     if (!selected || !selectedSection) return
     setSaving(true)
     try {
-      onLoad(
-        await saveDossierSection(selected.dossier.id, selectedSection.id, draftContent, status)
+      const result = await saveDossierSection(
+        selected.dossier.id,
+        selectedSection.id,
+        draftContent,
+        status
       )
+      window.sessionStorage.removeItem(draftRecoveryKey(selected.dossier.id, selectedSection.id))
+      setLocalDraftRecovery(null)
+      onLoad(result)
     } catch (error) {
       setFormError(errorMessage(error))
     } finally {
@@ -3361,7 +3420,7 @@ function DossierPage({
     setFormError(null)
     try {
       const { result } = await assistDossierSection(selected.dossier.id, selectedSection.id)
-      setDraftContent(result.draft)
+      updateDraftContent(result.draft)
       setAssistMeta({
         provider: result.provider,
         model: result.model,
@@ -3885,6 +3944,42 @@ function DossierPage({
               <ShieldCheck /> Governed facts remain live, and only verified claims appear beside the
               document. Human approval is always required.
             </div>
+            {localDraftRecovery ? (
+              <section className="draft-recovery-banner" aria-label="Unsaved draft recovery">
+                <Clock3 />
+                <div>
+                  <strong>Unsaved draft found in this tab</strong>
+                  <p>
+                    Recovered from {formatDate(localDraftRecovery.savedAt)}.
+                    {localDraftRecovery.baseUpdatedAt !== selectedSection.updatedAt
+                      ? " The saved section changed afterward, so review before saving."
+                      : " The saved section is unchanged."}
+                  </p>
+                </div>
+                <div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setDraftContent(localDraftRecovery.content)
+                      setLocalDraftRecovery(null)
+                    }}
+                  >
+                    Restore draft
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      window.sessionStorage.removeItem(
+                        draftRecoveryKey(selected.dossier.id, selectedSection.id)
+                      )
+                      setLocalDraftRecovery(null)
+                    }}
+                  >
+                    Discard
+                  </button>
+                </div>
+              </section>
+            ) : null}
             <div className="draft-canvas-layout">
               <div className={`draft-document mode-${draftMode}`}>
                 {draftMode !== "read" ? (
@@ -3897,7 +3992,7 @@ function DossierPage({
                       aria-label="Section draft"
                       value={renderedDraft.rendered}
                       onChange={(event) =>
-                        setDraftContent(
+                        updateDraftContent(
                           preserveDraftFactReferences(
                             event.currentTarget.value,
                             draftContent,
@@ -5921,7 +6016,7 @@ function DossierPage({
                 <textarea
                   aria-label="Section draft"
                   value={draftContent}
-                  onChange={(event) => setDraftContent(event.currentTarget.value)}
+                  onChange={(event) => updateDraftContent(event.currentTarget.value)}
                   placeholder="Create a grounded starter or begin drafting here."
                 />
                 {selected.factBookEntries.some((fact) => fact.status === "verified") ? (
