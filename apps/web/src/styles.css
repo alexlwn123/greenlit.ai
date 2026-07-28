@@ -4135,6 +4135,13 @@ label {
   background: color-mix(in srgb, var(--green) 16%, var(--panel));
   color: #dff1df;
 }
+
+.demo-guide-actions .secondary-action {
+  border-color: #4b544d;
+  background: #171c18;
+  color: #f2f5f1;
+}
+
 .demo-guide-actions svg,
 .inline-action svg {
   width: 14px;
