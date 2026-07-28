@@ -28,7 +28,7 @@ describe("governed fact references", () => {
       [fact]
     )
 
-    expect(result.rendered).toBe("Lead must be 0.5 ppm; {{fact:missing.value}} [UNRESOLVED FACT].")
+    expect(result.rendered).toBe("Lead must be 0.5 ppm; [Missing fact: missing.value].")
     expect(result.used).toEqual([
       {
         factId: "fact-1",

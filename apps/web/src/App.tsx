@@ -2193,7 +2193,7 @@ function SampleWorkflowPanel({
   const [sampleDraftMode, setSampleDraftMode] = useState<"edit" | "read" | "split">("split")
   const [supportTab, setSupportTab] = useState<"sources" | "facts" | "history">("sources")
   const [sampleDraft, setSampleDraft] = useState(
-    "The pivotal 90-day study established a NOAEL of {{fact:safety-noael.noael}}. Compared with the estimated 90th-percentile intake of {{fact:exposure.p90}}, the resulting margin of safety is 119-fold.\n\nThe evidence supports the intended conditions of use for the general population."
+    "The pivotal 90-day study established a NOAEL of 1,000 mg/kg bw/day. Compared with the estimated 90th-percentile intake of 8.4 mg/kg bw/day, the resulting margin of safety is 119-fold.\n\nThe evidence supports the intended conditions of use for the general population."
   )
   if (tab === "evidence")
     return (
@@ -2327,7 +2327,7 @@ function SampleWorkflowPanel({
                 <div className="draft-edit-pane">
                   <div className="draft-pane-label">
                     <span>WORKING DRAFT</span>
-                    <small>Governed references supported</small>
+                    <small>Linked to approved Fact Book values</small>
                   </div>
                   <textarea
                     aria-label="Sample section draft"
@@ -2345,15 +2345,9 @@ function SampleWorkflowPanel({
                   <div className="draft-paper">
                     <p className="draft-part">Part 6</p>
                     <h3>Safety narrative</h3>
-                    <p>
-                      The pivotal 90-day study established a NOAEL of 1,000 mg/kg bw/day. Compared
-                      with the estimated 90th-percentile intake of 8.4 mg/kg bw/day, the resulting
-                      margin of safety is 119-fold.
-                    </p>
-                    <p>
-                      The evidence supports the intended conditions of use for the general
-                      population.
-                    </p>
+                    {sampleDraft.split(/\n\s*\n/).map((paragraph) => (
+                      <p key={paragraph}>{paragraph}</p>
+                    ))}
                   </div>
                 </article>
               ) : null}
@@ -2641,6 +2635,30 @@ function SampleWorkflowPanel({
       </article>
     </>
   )
+}
+
+function preserveDraftFactReferences(
+  nextVisibleContent: string,
+  canonicalContent: string,
+  facts: FactBookEntry[]
+) {
+  const factMap = new Map(facts.map((fact) => [fact.id, fact]))
+  let nextCanonicalContent = nextVisibleContent
+  let searchFrom = 0
+
+  for (const match of canonicalContent.matchAll(/\{\{fact:([^}.]+)\.([^}]+)\}\}/g)) {
+    const [marker, factId, field] = match
+    const visibleValue = factMap.get(factId)?.fields[field] ?? `[Missing fact: ${factId}.${field}]`
+    const visibleIndex = nextCanonicalContent.indexOf(visibleValue, searchFrom)
+    if (visibleIndex < 0) continue
+    nextCanonicalContent =
+      nextCanonicalContent.slice(0, visibleIndex) +
+      marker +
+      nextCanonicalContent.slice(visibleIndex + visibleValue.length)
+    searchFrom = visibleIndex + marker.length
+  }
+
+  return nextCanonicalContent
 }
 
 function DossierPage({
@@ -3699,8 +3717,16 @@ function DossierPage({
                     </div>
                     <textarea
                       aria-label="Section draft"
-                      value={draftContent}
-                      onChange={(event) => setDraftContent(event.currentTarget.value)}
+                      value={renderedDraft.rendered}
+                      onChange={(event) =>
+                        setDraftContent(
+                          preserveDraftFactReferences(
+                            event.currentTarget.value,
+                            draftContent,
+                            selected.factBookEntries
+                          )
+                        )
+                      }
                       placeholder="Create a section starter or begin drafting here."
                     />
                   </div>

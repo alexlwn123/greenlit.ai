@@ -922,7 +922,7 @@ export function renderFactReferences(content: string, facts: FactBookEntry[]) {
       const value = factMap.get(factId)?.fields[field]
       if (!value) {
         unresolved.push({ marker, factId, field })
-        return `${marker} [UNRESOLVED FACT]`
+        return `[Missing fact: ${factId}.${field}]`
       }
       used.push({ marker, factId, field, value })
       return value
