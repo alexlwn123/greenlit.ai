@@ -34,7 +34,6 @@ const publicEvidence = new Set([
   "docs/confidential-processing.md",
   "docs/trust-center",
   ".github/workflows/ci.yml",
-  ".github/workflows/codeql.yml",
   ".github/dependabot.yml",
   "package.json",
   ...matrix.controls.flatMap((control) => control.evidence),

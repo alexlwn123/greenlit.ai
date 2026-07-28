@@ -27,6 +27,7 @@ if (process.env.CI === "true" && status.length > 0) {
   throw new Error("Release evidence must be generated from a clean CI source tree")
 }
 const rootPackage = JSON.parse(await readFile(path.join(root, "package.json"), "utf8"))
+const workflowPaths = [".github/workflows/ci.yml", ".github/dependabot.yml"]
 const manifest = {
   schemaVersion: 1,
   generatedAt: new Date().toISOString(),
@@ -46,6 +47,12 @@ const manifest = {
       sha256: await sha256File(path.join(root, "pnpm-lock.yaml")),
     },
     sbom: { path: "sbom.cdx.json", sha256: await sha256File(sbomPath) },
+    automation: await Promise.all(
+      workflowPaths.map(async (workflowPath) => ({
+        path: workflowPath,
+        sha256: await sha256File(path.join(root, workflowPath)),
+      }))
+    ),
   },
 }
 await writeFile(

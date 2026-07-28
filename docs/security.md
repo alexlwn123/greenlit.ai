@@ -43,8 +43,9 @@ review links as primary security boundaries.
   redirect-blocked webhook. Console emission remains the fallback if delivery fails.
 - The deployment applies a Content Security Policy, anti-framing controls, MIME sniffing
   protection, strict transport security, a restrictive permissions policy, and no-referrer policy.
-- GitHub runs CodeQL's extended security queries on pushes, pull requests, and a weekly schedule.
-  Dependabot opens grouped weekly dependency updates to keep remediation work reviewable.
+- GitHub runs the complete validation suite on pushes and pull requests. Dependabot opens grouped
+  weekly package and immutable-action updates to keep remediation work reviewable. CodeQL is not
+  scheduled because code scanning is not enabled for this private repository.
 - CSV cells that could be interpreted as spreadsheet formulas are neutralized before export.
 - Authenticated operators can inspect `/api/privacy/security-controls` for a secret-free summary of
   upload scanning, SIEM delivery, deletion-receipt signing, and model-processing configuration. It

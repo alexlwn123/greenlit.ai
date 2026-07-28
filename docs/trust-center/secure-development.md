@@ -3,11 +3,15 @@
 ## Implemented repository controls
 
 - CI runs linting, trust-register validation, typechecking, tests, and production builds on changes.
-- CodeQL runs extended JavaScript/TypeScript security queries on pushes, pull requests, and weekly.
+- Biome static analysis and the full validation suite run on pushes and pull requests. GitHub CodeQL
+  is not currently enabled because code scanning is unavailable for this private repository's plan;
+  the former failing scheduled workflow was removed rather than represented as an operating control.
 - Dependabot proposes grouped weekly dependency updates.
+- Every third-party CI action is pinned to an immutable commit, checkout credentials are not persisted, jobs have bounded execution time, and Dependabot proposes reviewed action-revision updates.
 - Production secrets remain server-side; test fixtures must not contain customer data.
 - Security boundaries are regression-tested, including production authentication, owner isolation, capability links, upload validation, privacy gating, model sanitization, and secret-free status output.
-- CI generates a CycloneDX 1.6 inventory of every locked package and a release-evidence manifest binding the SBOM and lockfile hashes to the exact commit and workflow run. The evidence bundle is retained as a CI artifact for 90 days.
+- CI generates a CycloneDX 1.6 inventory of every locked package and a release-evidence manifest binding the SBOM, lockfile, and automation configuration hashes to the exact commit and workflow run. The evidence bundle is retained as a CI artifact for 90 days.
+- `pnpm security:validate-workflows` blocks movable third-party action tags, persisted checkout credentials, unbounded jobs, implicit permissions, broad write access, and unreviewed `pull_request_target` use.
 
 ## Required change process
 
@@ -24,6 +28,6 @@ These become external commitments only after ownership, monitoring, exception ap
 
 ## Release evidence still required
 
-Pin and review CI actions; enable repository secret scanning/push protection and protected production environments; add cryptographic signing or SLSA-compatible provenance beyond the current hash-linked release manifest; retain approvals and deployed commit identity; measure remediation performance; commission annual third-party penetration testing.
+Enable repository secret scanning/push protection and protected production environments; add cryptographic signing or SLSA-compatible provenance beyond the current hash-linked release manifest; retain approvals and deployed commit identity; measure remediation performance; commission annual third-party penetration testing.
 
-The dependency-review workflow requires GitHub's dependency graph and, for a private repository, GitHub Code Security or Advanced Security. Confirm licensing and enable the repository feature before making the workflow a required check.
+GitHub CodeQL and dependency review require repository security features that are not currently enabled for this private repository. Confirm licensing before reintroducing either workflow. Until then, Dependabot is the implemented dependency-update signal; vulnerability scanning and remediation metrics remain incomplete controls.

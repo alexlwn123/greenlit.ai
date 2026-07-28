@@ -110,8 +110,8 @@
       "evidence": [
         "docs/trust-center/secure-development.md",
         ".github/workflows/ci.yml",
-        ".github/workflows/codeql.yml",
-        ".github/dependabot.yml"
+        ".github/dependabot.yml",
+        "scripts/validate-workflows.mjs"
       ],
       "gap": null
     },

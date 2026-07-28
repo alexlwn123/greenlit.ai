@@ -50,7 +50,7 @@ The browser receives authenticated access and uses short-lived signed grants to 
 
 ## Security control environment
 
-Implemented controls include production fail-closed authentication, server-derived ownership, persistence-layer authorization, private objects, bounded upload/requests, secure headers, expiring hashed capability links, privacy-safe errors, audit history, external-model gating, sanitization, CI/testing, CodeQL, Dependabot, and a vulnerability disclosure policy. The control matrix identifies incomplete management, privileged-access, monitoring, recovery-testing, personnel, vendor, and retention controls.
+Implemented controls include production fail-closed authentication, server-derived ownership, persistence-layer authorization, private objects, bounded upload/requests, secure headers, expiring hashed capability links, privacy-safe errors, audit history, external-model gating, sanitization, CI/testing, immutable workflow validation, Dependabot, and a vulnerability disclosure policy. The control matrix identifies licensed/independent vulnerability scanning and incomplete management, privileged-access, monitoring, recovery-testing, personnel, vendor, and retention controls.
 
 An authenticated control-status endpoint exposes a secret-free production configuration summary for the model-processing boundary, PDF quarantine/scanner, security-event delivery, and deletion-receipt signing. The response supports configuration review and audit evidence; it does not prove that a third-party endpoint retained an event, that an alert was reviewed, or that vendor backups expired.
 

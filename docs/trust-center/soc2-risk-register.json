@@ -96,7 +96,7 @@
       "likelihood": 3,
       "impact": 4,
       "inherentScore": 12,
-      "treatment": "CI, CodeQL, Dependabot, dependency review, tests; add protected releases, SBOM/provenance and remediation metrics",
+      "treatment": "CI, static checks, Dependabot, immutable actions, tests and SBOM; add licensed/independent vulnerability scanning, protected releases, provenance and remediation metrics",
       "residualScore": 6,
       "owner": "System owner",
       "approval": "pending"

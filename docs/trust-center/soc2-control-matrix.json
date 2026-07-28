@@ -93,7 +93,12 @@
       "frequency": "Every change",
       "owner": "System owner",
       "designStatus": "implemented",
-      "evidence": [".github/workflows/ci.yml", ".github/workflows/codeql.yml", "package.json"]
+      "evidence": [
+        ".github/workflows/ci.yml",
+        ".github/dependabot.yml",
+        "scripts/validate-workflows.mjs",
+        "package.json"
+      ]
     },
     {
       "id": "SOC-SDLC-02",

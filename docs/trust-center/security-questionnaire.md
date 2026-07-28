@@ -20,7 +20,7 @@ These are concise diligence answers as of 2026-07-28. Validate them against the 
 
 ## Assurance and operations
 
-- **SDLC:** Pull/push CI runs formatting/lint, trust-register validation, typechecks, tests, and builds. CodeQL extended queries and Dependabot are configured.
+- **SDLC:** Pull/push CI runs formatting/lint, trust-register and workflow-security validation, typechecks, tests, builds, and commit-bound release evidence. Dependabot covers packages and immutable CI actions. CodeQL is not enabled on the current private-repository plan.
 - **Vulnerabilities:** Reports are accepted through the published security policy. Formal remediation SLA metrics, SBOM/provenance, independent penetration testing, and SOC 2 are open items.
 - **Logging:** Dossier workflow actions are auditable and application errors avoid confidential details. Central SIEM-style security monitoring and immutable retention are pending.
 - **Incidents:** A severity and response playbook exists. Named rota, counsel/forensics contacts, annual tabletop, and evidence of execution are required before enterprise claims.

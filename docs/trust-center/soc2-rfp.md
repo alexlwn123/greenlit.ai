@@ -22,7 +22,7 @@ Disabled optional integrations and customer-controlled systems beyond the docume
 
 ## Current readiness materials
 
-Greenlit maintains a system description, SOC 2 control matrix, risk and remediation registers, evidence plan, security/privacy policies, data and vendor inventories, incident and continuity procedures, AI governance, automated control tests, CodeQL/Dependabot, a CycloneDX SBOM, and commit-bound release evidence. Organizational approvals, access review, monitoring integration, vendor evidence, exercises, and penetration testing are tracked as open remediation.
+Greenlit maintains a system description, SOC 2 control matrix, risk and remediation registers, evidence plan, security/privacy policies, data and vendor inventories, incident and continuity procedures, AI governance, automated control tests, Dependabot, immutable CI actions, a CycloneDX SBOM, and commit-bound release evidence. Licensed/independent vulnerability scanning, organizational approvals, access review, monitoring integration, vendor evidence, exercises, and penetration testing are tracked as open remediation.
 
 ## Auditor response requested
 

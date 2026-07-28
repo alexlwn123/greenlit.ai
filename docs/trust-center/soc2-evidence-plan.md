@@ -20,7 +20,7 @@ Export user/role/MFA status from GitHub, Vercel, Convex, Resend, DNS/domain/emai
 - Production authentication and owner-isolation code/tests.
 - Private upload/storage and deletion code/tests.
 - Security headers, bounded inputs, privacy-safe errors, capability-link controls, and model gateway tests.
-- CI, CodeQL, Dependabot, dependency review, branch/release configuration, and recent successful runs.
+- CI, workflow-security validation, Dependabot, branch/release configuration, and recent successful runs; licensed/independent vulnerability scanning remains required.
 - Vulnerability register, remediation tickets, exception approvals, penetration-test executive report, and retest evidence.
 
 ## Operational evidence—must be performed
