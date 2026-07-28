@@ -1021,7 +1021,7 @@ export function createStorage(dataDir = defaultDataDir()) {
   async function getExternalEvidenceRequest(tokenHash: string) {
     const database = await readDatabase()
     const link = database.evidenceRequestLinks.find((item) => item.tokenHash === tokenHash)
-    if (!link) return null
+    if (!link || link.status !== "active" || link.expiresAt <= new Date().toISOString()) return null
     const request = database.evidenceRequests.find((item) => item.id === link.requestId)
     const dossier = database.dossiers.find((item) => item.id === link.dossierId)
     if (!request || !dossier) return null
@@ -1644,7 +1644,7 @@ export function createStorage(dataDir = defaultDataDir()) {
   ): Promise<ExternalConsultantReview | null> {
     const database = await readDatabase()
     const link = database.consultantReviewLinks.find((item) => item.tokenHash === tokenHash)
-    if (!link) return null
+    if (!link || link.status !== "active" || link.expiresAt <= new Date().toISOString()) return null
     const dossier = database.dossiers.find((item) => item.id === link.dossierId)
     const handoff = database.consultantHandoffs.find((item) => item.id === link.handoffId)
     if (!dossier || !handoff) return null

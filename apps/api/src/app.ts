@@ -5,6 +5,7 @@ import type { HandleUploadPresignedBody } from "@vercel/blob/client"
 import { ConvexHttpClient } from "convex/browser"
 import { makeFunctionReference } from "convex/server"
 import { type Context, Hono } from "hono"
+import { bodyLimit } from "hono/body-limit"
 import { cors } from "hono/cors"
 import { secureHeaders } from "hono/secure-headers"
 import {
@@ -84,23 +85,57 @@ type CreateAppOptions = {
 }
 
 const maxUploadBytes = 40 * 1024 * 1024
+const maxRequestBytes = maxUploadBytes + 1024 * 1024
+const maxJsonBytes = 256 * 1024
+const publicReadLimit = 120
+const publicWriteLimit = 20
+const publicRateLimitWindowMs = 15 * 60 * 1000
 export const maxPdfPages = 500
 
 export function createApp(options: CreateAppOptions = {}) {
   const dataDir = options.dataDir ?? process.env.GREENLIT_LOCAL_DATA_DIR ?? defaultDataDir()
   const app = new Hono()
+  const publicRequestCounts = new Map<string, { count: number; resetAt: number }>()
 
   app.use("/api/*", secureHeaders())
+  app.use(
+    "/api/*",
+    bodyLimit({
+      maxSize: maxRequestBytes,
+      onError: (context) => context.json({ error: "Request body is too large." }, 413),
+    })
+  )
+  app.use("/api/*", async (context, next) => {
+    const contentType = context.req.header("content-type")?.toLowerCase() ?? ""
+    const contentLength = Number(context.req.header("content-length") ?? 0)
+    if (
+      contentType.includes("application/json") &&
+      Number.isFinite(contentLength) &&
+      contentLength > maxJsonBytes
+    ) {
+      return context.json({ error: "JSON request body is too large." }, 413)
+    }
+    await next()
+  })
+  app.use("/api/respond/*", publicLinkRateLimit(publicRequestCounts))
+  app.use("/api/review/*", publicLinkRateLimit(publicRequestCounts))
   app.use("/api/*", async (context, next) => {
     await next()
     context.header("Cache-Control", "no-store")
+    context.header("Pragma", "no-cache")
+    context.header("Referrer-Policy", "no-referrer")
   })
 
   app.onError((error, context) => {
     if (error.message === "Not authenticated") {
       return context.json({ error: "Not authenticated" }, 401)
     }
-    throw error
+    console.error("Unhandled API request failure", {
+      method: context.req.method,
+      path: new URL(context.req.url).pathname,
+      error: error instanceof Error ? error.message : "Unknown error",
+    })
+    return context.json({ error: "The request could not be completed." }, 500)
   })
 
   app.use(
@@ -600,6 +635,8 @@ export function createApp(options: CreateAppOptions = {}) {
       return context.json({ error: "Response notes cannot exceed 10,000 characters." }, 400)
     const file = body.file as File
     const bytes = new Uint8Array(await file.arrayBuffer())
+    if (!hasPdfSignature(bytes))
+      return context.json({ error: "The uploaded file is not a valid PDF." }, 400)
     const extracted = await extractPdfText(bytes)
     validatePdfPageCount(extracted.pageCount)
     const artifact = await storage.createArtifact({
@@ -845,8 +882,15 @@ export function createApp(options: CreateAppOptions = {}) {
     const tokenHash = hashResponseToken(context.req.param("token"))
     if (!tokenHash) return context.json({ error: "Invalid review link." }, 404)
     const body = (await context.req.json()) as Partial<ConsultantReviewIssue>
-    if (!body.title?.trim() || !body.body?.trim() || !body.targetType || !body.targetId?.trim())
+    const title = body.title?.trim() ?? ""
+    const reviewNote = body.body?.trim() ?? ""
+    if (!title || !reviewNote || !body.targetType || !body.targetId?.trim())
       return context.json({ error: "Target, title, and review note are required." }, 400)
+    if (title.length > 200 || reviewNote.length > 10_000)
+      return context.json(
+        { error: "Finding titles cannot exceed 200 characters and notes cannot exceed 10,000." },
+        400
+      )
     const now = new Date().toISOString()
     try {
       const storage = createConfiguredStorage(dataDir)
@@ -854,8 +898,8 @@ export function createApp(options: CreateAppOptions = {}) {
         id: randomUUID(),
         targetType: body.targetType,
         targetId: body.targetId.trim(),
-        title: body.title.trim(),
-        body: body.body.trim(),
+        title,
+        body: reviewNote,
         priority:
           body.priority === "blocking" || body.priority === "high" ? body.priority : "normal",
         createdAt: now,
@@ -1376,6 +1420,8 @@ export function createApp(options: CreateAppOptions = {}) {
 
     const pdfFile = file as File
     const bytes = new Uint8Array(await pdfFile.arrayBuffer())
+    if (!hasPdfSignature(bytes))
+      return context.json({ error: "The uploaded file is not a valid PDF." }, 400)
     const upload = await storage.createArtifact({
       bytes,
       fileName: pdfFile.name,
@@ -1642,7 +1688,9 @@ export function createApp(options: CreateAppOptions = {}) {
 
   async function requestScope(context: Context) {
     const requiresAuth =
-      process.env.GREENLIT_METADATA_DRIVER === "convex" || options.resolveAuthenticatedOwner
+      isHostedRuntime() ||
+      process.env.GREENLIT_METADATA_DRIVER === "convex" ||
+      options.resolveAuthenticatedOwner
     if (!requiresAuth) {
       return {
         ownerId: getOwnerId(context.req.header("x-greenlit-session")),
@@ -1678,6 +1726,48 @@ async function resolveConvexOwner(token: string) {
 function hashResponseToken(token: string) {
   if (!/^[a-f0-9]{64}$/i.test(token)) return null
   return createHash("sha256").update(token).digest("hex")
+}
+
+function isHostedRuntime() {
+  return process.env.VERCEL === "1" || process.env.NODE_ENV === "production"
+}
+
+function publicLinkRateLimit(counts: Map<string, { count: number; resetAt: number }>) {
+  return async (context: Context, next: () => Promise<void>) => {
+    if (context.req.method === "OPTIONS") return next()
+    const tokenCandidate = new URL(context.req.url).pathname.split("/")[3] ?? ""
+    const token = /^[a-f0-9]{64}$/i.test(tokenCandidate) ? tokenCandidate : "invalid"
+    const tokenKey = createHash("sha256").update(token).digest("hex").slice(0, 24)
+    const key = `${context.req.method === "GET" ? "read" : "write"}:${tokenKey}`
+    const now = Date.now()
+    const limit = context.req.method === "GET" ? publicReadLimit : publicWriteLimit
+    if (counts.size >= 5_000 && !counts.has(key)) {
+      for (const [existingKey, value] of counts) {
+        if (value.resetAt <= now) counts.delete(existingKey)
+      }
+      while (counts.size >= 5_000) {
+        const oldestKey = counts.keys().next().value
+        if (typeof oldestKey !== "string") break
+        counts.delete(oldestKey)
+      }
+    }
+    const current = counts.get(key)
+    const bucket =
+      !current || current.resetAt <= now
+        ? { count: 0, resetAt: now + publicRateLimitWindowMs }
+        : current
+    bucket.count += 1
+    counts.set(key, bucket)
+    const remaining = Math.max(0, limit - bucket.count)
+    context.header("X-RateLimit-Limit", String(limit))
+    context.header("X-RateLimit-Remaining", String(remaining))
+    context.header("X-RateLimit-Reset", String(Math.ceil(bucket.resetAt / 1000)))
+    if (bucket.count > limit) {
+      context.header("Retry-After", String(Math.ceil((bucket.resetAt - now) / 1000)))
+      return context.json({ error: "Too many requests. Try again later." }, 429)
+    }
+    await next()
+  }
 }
 
 function reviewTargetExists(
@@ -2238,6 +2328,10 @@ function validateUpload(file: FormDataEntryValue | FormDataEntryValue[] | undefi
     return "Only PDF uploads are supported for the MVP."
   }
 
+  if (file.name.length > 255 || [...file.name].some((character) => character.charCodeAt(0) < 32)) {
+    return "The PDF filename is invalid or too long."
+  }
+
   if (file.type && file.type !== "application/pdf") {
     return "The selected file must be a PDF."
   }
@@ -2256,6 +2350,17 @@ function validateUpload(file: FormDataEntryValue | FormDataEntryValue[] | undefi
 function isFile(value: FormDataEntryValue | FormDataEntryValue[] | undefined): value is File {
   return (
     typeof File !== "undefined" && value instanceof File && typeof value.arrayBuffer === "function"
+  )
+}
+
+function hasPdfSignature(bytes: Uint8Array) {
+  return (
+    bytes.byteLength >= 5 &&
+    bytes[0] === 0x25 &&
+    bytes[1] === 0x50 &&
+    bytes[2] === 0x44 &&
+    bytes[3] === 0x46 &&
+    bytes[4] === 0x2d
   )
 }
 

@@ -99,6 +99,9 @@ API responses containing private workspace data are marked `no-store`, private o
 
 For confidential local work, use a trusted machine and remove `.local-data` when the review is done. Never commit `.env.local`, `.local-data`, provider keys, uploaded filings, or generated reports.
 
+The application trust boundaries, implemented protections, and production follow-ups are documented
+in [`docs/security.md`](docs/security.md).
+
 ## Corpus Operations
 
 Validate the packaged comparator index before a release:

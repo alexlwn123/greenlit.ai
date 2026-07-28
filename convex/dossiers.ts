@@ -691,7 +691,7 @@ export const getExternalEvidenceRequest = query({
       .query("evidenceRequestLinks")
       .withIndex("by_token_hash", (q) => q.eq("tokenHash", args.tokenHash))
       .unique()
-    if (!link) return null
+    if (!link || link.status !== "active" || link.expiresAt <= new Date().toISOString()) return null
     const request = await ctx.db
       .query("evidenceRequests")
       .withIndex("by_request_id", (q) => q.eq("id", link.requestId))
@@ -1157,7 +1157,7 @@ export const getExternalConsultantReview = query({
       .query("consultantReviewLinks")
       .withIndex("by_token_hash", (q) => q.eq("tokenHash", args.tokenHash))
       .unique()
-    if (!link) return null
+    if (!link || link.status !== "active" || link.expiresAt <= new Date().toISOString()) return null
     const dossier = await getDossier(ctx, link.dossierId)
     if (!dossier) return null
     const handoff = await ctx.db

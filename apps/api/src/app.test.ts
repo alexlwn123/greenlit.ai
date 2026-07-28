@@ -1,7 +1,7 @@
 import { mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises"
 import { tmpdir } from "node:os"
 import path from "node:path"
-import { afterEach, beforeEach, describe, expect, it } from "vitest"
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 import { createApp, validatePdfPageCount } from "./app"
 
 let dataDir: string
@@ -11,6 +11,7 @@ beforeEach(async () => {
 })
 
 afterEach(async () => {
+  vi.unstubAllEnvs()
   await rm(dataDir, { force: true, recursive: true })
 })
 
@@ -974,6 +975,102 @@ describe("authenticated analysis API", () => {
       pathname: expect.stringMatching(
         /^greenlit\/uploads\/auth-user-1\/[\w-]+-unsafe-filing\.pdf$/
       ),
+    })
+  })
+})
+
+describe("API security boundaries", () => {
+  it("fails closed in hosted environments instead of trusting a browser session header", async () => {
+    vi.stubEnv("VERCEL", "1")
+    const app = createApp({ dataDir })
+
+    const response = await app.request("/api/analyses", {
+      headers: { "x-greenlit-session": "attacker-selected-owner" },
+    })
+
+    expect(response.status).toBe(401)
+    await expect(response.json()).resolves.toEqual({ error: "Not authenticated" })
+  })
+
+  it("rejects oversized JSON before parsing it", async () => {
+    const app = createApp({ dataDir })
+    const response = await app.request("/api/dossiers", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Content-Length": String(256 * 1024 + 1),
+        "x-greenlit-session": "size-test",
+      },
+      body: "{}",
+    })
+
+    expect(response.status).toBe(413)
+    await expect(response.json()).resolves.toEqual({ error: "JSON request body is too large." })
+  })
+
+  it("rejects files that claim to be PDFs without a PDF signature", async () => {
+    const app = createApp({ dataDir })
+    const formData = new FormData()
+    formData.set("file", new File(["not a pdf"], "filing.pdf", { type: "application/pdf" }))
+
+    const response = await app.request("/api/analyses", {
+      method: "POST",
+      headers: { "x-greenlit-session": "signature-test" },
+      body: formData,
+    })
+
+    expect(response.status).toBe(400)
+    await expect(response.json()).resolves.toEqual({
+      error: "The uploaded file is not a valid PDF.",
+    })
+  })
+
+  it("marks API responses private and applies browser hardening headers", async () => {
+    const response = await createApp({ dataDir }).request("/api/health")
+
+    expect(response.headers.get("cache-control")).toBe("no-store")
+    expect(response.headers.get("pragma")).toBe("no-cache")
+    expect(response.headers.get("referrer-policy")).toBe("no-referrer")
+    expect(response.headers.get("x-content-type-options")).toBe("nosniff")
+  })
+
+  it("throttles repeated writes against public bearer links", async () => {
+    const app = createApp({ dataDir })
+    const token = "a".repeat(64)
+    for (let attempt = 0; attempt < 20; attempt += 1) {
+      const response = await app.request(`/api/respond/${token}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: "{}",
+      })
+      expect(response.status).toBe(400)
+    }
+
+    const blocked = await app.request(`/api/respond/${token}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: "{}",
+    })
+    expect(blocked.status).toBe(429)
+    expect(blocked.headers.get("retry-after")).toBeTruthy()
+    await expect(blocked.json()).resolves.toEqual({ error: "Too many requests. Try again later." })
+  })
+
+  it("bounds public review content before it reaches storage", async () => {
+    const response = await createApp({ dataDir }).request(`/api/review/${"b".repeat(64)}/issues`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        targetType: "dossier",
+        targetId: "dossier-id",
+        title: "x".repeat(201),
+        body: "Review note",
+      }),
+    })
+
+    expect(response.status).toBe(400)
+    await expect(response.json()).resolves.toEqual({
+      error: "Finding titles cannot exceed 200 characters and notes cannot exceed 10,000.",
     })
   })
 })
