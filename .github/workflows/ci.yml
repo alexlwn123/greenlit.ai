@@ -24,10 +24,14 @@ jobs:
         with:
           node-version: 22
           cache: pnpm
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm check
-      - run: pnpm evidence:release
-      - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6, Node 24
+      - name: Install locked dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Generate release evidence from clean source
+        run: pnpm evidence:release
+      - name: Run complete validation suite
+        run: pnpm check
+      - name: Upload release evidence
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6, Node 24
         with:
           name: release-evidence-${{ github.sha }}
           path: .artifacts/

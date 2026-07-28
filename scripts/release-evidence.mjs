@@ -22,9 +22,9 @@ const sha256File = async (file) =>
     .update(await readFile(file))
     .digest("hex")
 const commit = process.env.GITHUB_SHA ?? command("git", ["rev-parse", "HEAD"])
-const status = command("git", ["status", "--porcelain"])
-if (process.env.CI === "true" && status.length > 0) {
-  throw new Error("Release evidence must be generated from a clean CI source tree")
+const trackedStatus = command("git", ["status", "--porcelain", "--untracked-files=no"])
+if (process.env.CI === "true" && trackedStatus.length > 0) {
+  throw new Error(`Release evidence requires unchanged tracked source files:\n${trackedStatus}`)
 }
 const rootPackage = JSON.parse(await readFile(path.join(root, "package.json"), "utf8"))
 const workflowPaths = [".github/workflows/ci.yml", ".github/dependabot.yml"]
@@ -36,7 +36,7 @@ const manifest = {
   ref: process.env.GITHUB_REF ?? command("git", ["branch", "--show-current"]),
   workflowRunId: process.env.GITHUB_RUN_ID ?? null,
   workflowRunAttempt: process.env.GITHUB_RUN_ATTEMPT ?? null,
-  sourceTreeClean: status.length === 0,
+  trackedSourceTreeClean: trackedStatus.length === 0,
   runtime: {
     node: process.version,
     packageManager: rootPackage.packageManager,

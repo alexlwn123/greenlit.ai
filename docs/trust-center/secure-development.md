@@ -10,7 +10,7 @@
 - Every third-party CI action is pinned to an immutable commit, checkout credentials are not persisted, jobs have bounded execution time, and Dependabot proposes reviewed action-revision updates.
 - Production secrets remain server-side; test fixtures must not contain customer data.
 - Security boundaries are regression-tested, including production authentication, owner isolation, capability links, upload validation, privacy gating, model sanitization, and secret-free status output.
-- CI generates a CycloneDX 1.6 inventory of every locked package and a release-evidence manifest binding the SBOM, lockfile, and automation configuration hashes to the exact commit and workflow run. The evidence bundle is retained as a CI artifact for 90 days.
+- CI generates a CycloneDX 1.6 inventory from unchanged tracked source before build outputs exist, then runs the complete validation suite. A release-evidence manifest binds the SBOM, lockfile, and automation configuration hashes to the exact commit and workflow run; it is uploaded only after validation succeeds and retained for 90 days.
 - `pnpm security:validate-workflows` blocks movable third-party action tags, persisted checkout credentials, unbounded jobs, implicit permissions, broad write access, and unreviewed `pull_request_target` use.
 
 ## Required change process
