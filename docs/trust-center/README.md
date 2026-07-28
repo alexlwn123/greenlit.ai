@@ -27,6 +27,7 @@ Greenlit is **not currently represented here as SOC 2 certified, independently p
 - [SOC 2 system description](soc2-system-description.md): draft auditor narrative and boundary.
 - [SOC 2 evidence plan](soc2-evidence-plan.md): management, access, technical, and operational evidence.
 - [SOC 2 audit-room index](soc2-audit-room-index.md): restricted evidence structure, IDs, provenance, and auditor handoff rules.
+- [SOC 2 PBC register](soc2-pbc-register.json): validated auditor-request ownership, control/remediation coverage, evidence IDs, and fieldwork status.
 - [SOC 2 remediation register](soc2-remediation-register.json): prioritized owners, statuses, and exit evidence.
 - [SOC 2 exception register](soc2-exception-register.json): auditor-traceable control deviations, risk acceptance, corrective actions, and closure.
 - [SOC 2 RFP](soc2-rfp.md): comparable auditor, platform, and penetration-test requirements.

@@ -13,13 +13,14 @@ const countBy = (items, key) => {
 }
 
 export async function assessSoc2Readiness(root = process.cwd()) {
-  const [program, matrix, remediation, risks, intake, exceptions] = await Promise.all([
+  const [program, matrix, remediation, risks, intake, exceptions, pbc] = await Promise.all([
     readJson(root, "soc2-program.json"),
     readJson(root, "soc2-control-matrix.json"),
     readJson(root, "soc2-remediation-register.json"),
     readJson(root, "soc2-risk-register.json"),
     readJson(root, "soc2-management-intake.json"),
     readJson(root, "soc2-exception-register.json"),
+    readJson(root, "soc2-pbc-register.json"),
   ])
 
   const missingDecisions = [
@@ -55,12 +56,16 @@ export async function assessSoc2Readiness(root = process.cwd()) {
     ],
   ].filter(([, value]) => !value)
   const unresolvedExceptions = exceptions.items.filter((item) => item.status !== "closed")
+  const incompletePbc = pbc.requests.filter(
+    (request) => !["ready_for_auditor", "provided", "accepted"].includes(request.status)
+  )
   const ready =
     missingDecisions.length === 0 &&
     intakeChecks.length === 0 &&
     pendingRisks.length === 0 &&
     openP0.length === 0 &&
-    unresolvedExceptions.length === 0
+    unresolvedExceptions.length === 0 &&
+    incompletePbc.length === 0
 
   return {
     assessedAt: new Date().toISOString(),
@@ -73,6 +78,7 @@ export async function assessSoc2Readiness(root = process.cwd()) {
       pendingRisks: pendingRisks.length,
       openP0: openP0.length,
       unresolvedExceptions: unresolvedExceptions.length,
+      incompletePbc: incompletePbc.length,
     },
     blockers: {
       missingManagementDecisions: missingDecisions.map(([label]) => label),
@@ -80,6 +86,7 @@ export async function assessSoc2Readiness(root = process.cwd()) {
       pendingRiskIds: pendingRisks.map((risk) => risk.id),
       openP0Ids: openP0.map((item) => item.id),
       unresolvedExceptionIds: unresolvedExceptions.map((item) => item.id),
+      incompletePbcIds: incompletePbc.map((request) => request.id),
     },
     decision: ready
       ? "READY_FOR_INDEPENDENT_AUDITOR_CONFIRMATION"
@@ -99,6 +106,7 @@ export function readinessLines(assessment) {
     `Missing management decisions: ${assessment.blockers.missingManagementDecisions.join(", ")}`,
     `Incomplete management intake: ${assessment.blockers.incompleteManagementIntake.join(", ")}`,
     `Unresolved control exceptions: ${assessment.counts.unresolvedExceptions}`,
+    `Incomplete auditor requests: ${assessment.counts.incompletePbc}`,
     `Readiness decision: ${assessment.decision.replaceAll("_", " ")}`,
   ]
 }

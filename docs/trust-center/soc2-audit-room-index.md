@@ -44,6 +44,8 @@ Each evidence item must record:
 - Samples can be traced from auditor request to original source, reviewer, hash, and any exception.
 - The final index is exported read-only and retained with the issued report and representation letter.
 
+Track preparation and fieldwork in `soc2-pbc-register.json`. Every request maps to its SOC 2 controls, related remediation, owner, audit-room folder, timing, required contents, and evidence IDs. Do not mark a request `ready_for_auditor` until its population is complete, source evidence is uploaded, hashes and reviewer are recorded, and known deviations are in the exception register. Replace or reconcile this management-prepared list with the engaged CPA firm's official request list; do not assume numbering or samples will remain identical.
+
 ## Reproducible public evidence pack
 
 Run `pnpm soc2:evidence-pack` from a clean, reviewed commit. It creates a secret-free package under `.artifacts/soc2-evidence-pack` containing the public control documentation and referenced source evidence, machine-readable readiness result, control-to-evidence map, source commit, and a SHA-256 manifest of every included file. Run `pnpm soc2:evidence-verify` after copying or uploading the directory to detect missing, added, or modified files. Use `pnpm soc2:evidence-pack -- --strict` when the package must fail unless all readiness gates have been satisfied.

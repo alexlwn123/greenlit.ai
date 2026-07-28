@@ -29,6 +29,9 @@ const exceptionRegister = JSON.parse(
 const program = JSON.parse(
   await readFile(path.join(root, "docs", "trust-center", "soc2-program.json"), "utf8")
 )
+const pbcRegister = JSON.parse(
+  await readFile(path.join(root, "docs", "trust-center", "soc2-pbc-register.json"), "utf8")
+)
 
 if (!/^\d{4}-\d{2}-\d{2}$/.test(register.lastReviewed ?? "")) {
   errors.push("lastReviewed must use YYYY-MM-DD")
@@ -165,13 +168,54 @@ for (const item of exceptionRegister.items ?? []) {
   }
 }
 
+const pbcIds = new Set()
+const coveredSoc2Ids = new Set()
+const coveredRemediationIds = new Set()
+for (const request of pbcRegister.requests ?? []) {
+  if (!/^PBC-\d{3}$/.test(request.id ?? "")) errors.push(`invalid PBC id: ${request.id}`)
+  if (pbcIds.has(request.id)) errors.push(`duplicate PBC id: ${request.id}`)
+  pbcIds.add(request.id)
+  if (!pbcRegister.statuses.includes(request.status)) errors.push(`${request.id}: invalid status`)
+  if (!request.title || !request.owner || !request.auditRoomFolder || !request.requiredContents) {
+    errors.push(
+      `${request.id}: title, owner, audit-room folder, and required contents are required`
+    )
+  }
+  for (const controlId of request.controlIds ?? []) {
+    if (!soc2Ids.has(controlId)) errors.push(`${request.id}: unknown control ${controlId}`)
+    coveredSoc2Ids.add(controlId)
+  }
+  for (const remediationId of request.remediationIds ?? []) {
+    if (!remediationIds.has(remediationId))
+      errors.push(`${request.id}: unknown remediation ${remediationId}`)
+    coveredRemediationIds.add(remediationId)
+  }
+  for (const evidenceId of request.evidenceIds ?? []) {
+    if (
+      !/^GL-\d{4}-(GOV|IAM|HR|RISK|VEND|SDLC|LOG|IR|BCP|DATA|APP|AUDIT|LEGAL)-\d{3}$/.test(
+        evidenceId
+      )
+    ) {
+      errors.push(`${request.id}: invalid evidence id ${evidenceId}`)
+    }
+  }
+}
+for (const controlId of soc2Ids) {
+  if (!coveredSoc2Ids.has(controlId)) errors.push(`PBC register does not cover ${controlId}`)
+}
+for (const remediationId of remediationIds) {
+  if (!coveredRemediationIds.has(remediationId)) {
+    errors.push(`PBC register does not cover ${remediationId}`)
+  }
+}
+
 if (errors.length) {
   console.error(errors.join("\n"))
   process.exitCode = 1
 } else {
   const counts = Object.groupBy(register.controls, (control) => control.status)
   console.log(
-    `Trust center validated: ${register.controls.length} enterprise controls, ${soc2Ids.size} SOC 2 controls, ${riskIds.size} risks, ${remediationIds.size} remediation items, ${exceptionIds.size} exceptions (${Object.entries(
+    `Trust center validated: ${register.controls.length} enterprise controls, ${soc2Ids.size} SOC 2 controls, ${riskIds.size} risks, ${remediationIds.size} remediation items, ${pbcIds.size} PBC requests, ${exceptionIds.size} exceptions (${Object.entries(
       counts
     )
       .map(([status, controls]) => `${status}=${controls.length}`)
