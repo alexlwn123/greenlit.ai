@@ -9,6 +9,7 @@
       "!node_modules",
       "!dist",
       "!apps/**/dist",
+      "!.artifacts",
       "!convex/_generated",
       "!**/.local-data"
     ]

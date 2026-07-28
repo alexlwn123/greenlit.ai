@@ -40,3 +40,5 @@ Type I tests design at an as-of date, but the auditor will still request evidenc
 ## Restricted audit room
 
 Store corporate, personnel, vendor reports, screenshots, contracts, insurance, access exports, incident materials, and the final SOC report in a restricted diligence room. This repository should contain templates and non-sensitive technical evidence only.
+
+Generate the repository-safe portion with `pnpm soc2:evidence-pack`. Retain its manifest with the uploaded package so every public evidence file is bound to the exact source commit and can be integrity-checked during the examination. The generator reports unresolved readiness blockers and never converts missing operational evidence into a passing result.

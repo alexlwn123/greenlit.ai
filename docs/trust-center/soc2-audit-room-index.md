@@ -43,3 +43,9 @@ Each evidence item must record:
 - Population exports reconcile to the workforce, access, vendor, and production-system inventories.
 - Samples can be traced from auditor request to original source, reviewer, hash, and any exception.
 - The final index is exported read-only and retained with the issued report and representation letter.
+
+## Reproducible public evidence pack
+
+Run `pnpm soc2:evidence-pack` from a clean, reviewed commit. It creates a secret-free package under `.artifacts/soc2-evidence-pack` containing the public control documentation and referenced source evidence, machine-readable readiness result, control-to-evidence map, source commit, and a SHA-256 manifest of every included file. Run `pnpm soc2:evidence-verify` after copying or uploading the directory to detect missing, added, or modified files. Use `pnpm soc2:evidence-pack -- --strict` when the package must fail unless all readiness gates have been satisfied.
+
+The generated package deliberately excludes restricted evidence. Upload it alongside—not in place of—the original source exports, approvals, personnel records, contracts, penetration-test report, and other protected artifacts in the audit room. A package hash demonstrates integrity after collection; it does not establish completeness or auditor acceptance.
