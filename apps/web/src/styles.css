@@ -4007,6 +4007,9 @@ label {
   border: 1px solid #cbd2c5;
   border-radius: 999px;
   background: #fff;
+  color: #17221a;
+  cursor: pointer;
+  font-weight: 600;
 }
 
 .release-center .claim-composer {
