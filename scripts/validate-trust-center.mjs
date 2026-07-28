@@ -17,6 +17,9 @@ const riskRegister = JSON.parse(
 const remediationRegister = JSON.parse(
   await readFile(path.join(root, "docs", "trust-center", "soc2-remediation-register.json"), "utf8")
 )
+const vendorScorecard = JSON.parse(
+  await readFile(path.join(root, "docs", "trust-center", "soc2-vendor-scorecard.json"), "utf8")
+)
 
 if (!/^\d{4}-\d{2}-\d{2}$/.test(register.lastReviewed ?? "")) {
   errors.push("lastReviewed must use YYYY-MM-DD")
@@ -90,6 +93,21 @@ for (const item of remediationRegister.items ?? []) {
   for (const controlId of item.controlIds ?? []) {
     if (!soc2Ids.has(controlId)) errors.push(`${item.id}: unknown control ${controlId}`)
   }
+}
+
+const selectionIds = new Set()
+let totalSelectionWeight = 0
+for (const criterion of vendorScorecard.criteria ?? []) {
+  if (!/^SEL-\d{2}$/.test(criterion.id ?? "")) errors.push(`invalid selection id: ${criterion.id}`)
+  if (selectionIds.has(criterion.id)) errors.push(`duplicate selection id: ${criterion.id}`)
+  selectionIds.add(criterion.id)
+  if (!Number.isInteger(criterion.weight) || criterion.weight < 1 || criterion.weight > 5) {
+    errors.push(`${criterion.id}: weight must be an integer from 1-5`)
+  }
+  totalSelectionWeight += criterion.weight
+}
+if (selectionIds.size < 8 || totalSelectionWeight < 30) {
+  errors.push("vendor scorecard must contain a materially weighted selection model")
 }
 
 if (errors.length) {

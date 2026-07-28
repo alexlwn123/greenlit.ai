@@ -1,0 +1,65 @@
+{
+  "version": 1,
+  "scoring": "Score each criterion 0-5. Weighted score is score multiplied by weight. Mandatory failures disqualify regardless of total.",
+  "mandatory": [
+    "CPA proposal is issued by an independent licensed CPA firm",
+    "Written confidentiality and secure evidence-transfer terms",
+    "Written disclosure of referral and commercial relationships",
+    "No guaranteed pass or backdated evidence",
+    "Complete pricing, assumptions, exclusions, and renewal terms",
+    "Type II continuation path without an evidence gap"
+  ],
+  "criteria": [
+    {
+      "id": "SEL-01",
+      "criterion": "Auditor independence, licensing, peer-review evidence, and responsible partner quality",
+      "weight": 5
+    },
+    {
+      "id": "SEL-02",
+      "criterion": "Appropriate Security + Confidentiality scope judgment and customer-gateway treatment",
+      "weight": 5
+    },
+    {
+      "id": "SEL-03",
+      "criterion": "Relevant small-SaaS, AI, Vercel, Convex, GitHub, and confidential-data experience",
+      "weight": 4
+    },
+    {
+      "id": "SEL-04",
+      "criterion": "Clear readiness requests, management effort, fieldwork, exception, and report timeline",
+      "weight": 4
+    },
+    {
+      "id": "SEL-05",
+      "criterion": "Secure evidence access, retention, deletion, location, and subprocessor controls",
+      "weight": 5
+    },
+    {
+      "id": "SEL-06",
+      "criterion": "Fixed first-year total cost and transparent Type II/renewal/add-on pricing",
+      "weight": 4
+    },
+    {
+      "id": "SEL-07",
+      "criterion": "Compatibility with Greenlit evidence and complete import/export without forced generic controls",
+      "weight": 4
+    },
+    {
+      "id": "SEL-08",
+      "criterion": "Useful integrations and demonstrated automated evidence for the actual production stack",
+      "weight": 3
+    },
+    {
+      "id": "SEL-09",
+      "criterion": "Named implementation support, responsiveness, references, and escalation",
+      "weight": 3
+    },
+    {
+      "id": "SEL-10",
+      "criterion": "Direct transition into a credible three-month Type II observation period",
+      "weight": 5
+    }
+  ],
+  "candidates": []
+}
