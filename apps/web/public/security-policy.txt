@@ -1,0 +1,9 @@
+Greenlit vulnerability disclosure policy
+
+Report suspected vulnerabilities to security@greenlit.ai. Include a description, affected component, reproducible steps, impact, and a safe contact method. Do not email customer data, credentials, personal data, or secrets.
+
+Test only accounts and data you own or have explicit permission to use. Stop if you encounter customer data. Do not perform denial of service, social engineering, phishing, destructive actions, persistence, automated high-volume scanning, spam, or testing against third-party infrastructure.
+
+Greenlit supports good-faith research intended to improve security. When you follow this policy, avoid privacy harm and disruption, and report promptly, Greenlit will not initiate legal action against you for the research. Allow a reasonable remediation period before disclosure. Greenlit does not currently guarantee bounty payments.
+
+The full policy is maintained in the Greenlit source repository SECURITY.md file.

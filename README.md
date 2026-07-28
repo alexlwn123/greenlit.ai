@@ -123,6 +123,11 @@ For confidential local work, use a trusted machine and remove `.local-data` when
 The application trust boundaries, implemented protections, and production follow-ups are documented
 in [`docs/security.md`](docs/security.md).
 
+Enterprise security, privacy, legal, AI-governance, incident-response, continuity, and subprocessor
+diligence are indexed in the [Greenlit trust center](docs/trust-center/README.md). Its machine-readable
+control register deliberately distinguishes implemented controls from partial and planned work; run
+`pnpm trust:validate` before sharing it.
+
 ## Corpus Operations
 
 Validate the packaged comparator index before a release:

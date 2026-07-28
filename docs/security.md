@@ -63,6 +63,10 @@ review links as primary security boundaries.
 
 ## Operational follow-ups
 
+The prioritized, evidence-linked enterprise gap register and operational policy set live in the
+[`docs/trust-center`](trust-center/README.md) directory. Those records are the source of truth for
+procurement responses and must not be replaced with broader unsupported claims.
+
 - Enable platform/WAF rate limiting for `/api/respond/*`, `/api/review/*`, authentication, and
   upload-token issuance before expanding beyond the private MVP.
 - Rotate provider credentials on a schedule and immediately after any suspected disclosure.

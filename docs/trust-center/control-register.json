@@ -1,0 +1,222 @@
+{
+  "version": 1,
+  "lastReviewed": "2026-07-28",
+  "statusDefinitions": {
+    "implemented": "Implemented in the product or delivery process with repository evidence.",
+    "partial": "Some controls exist, but enterprise evidence or a material capability is incomplete.",
+    "planned": "Required before broad enterprise claims; not currently represented as complete.",
+    "customer_dependent": "Availability or assurance depends on the selected customer deployment."
+  },
+  "controls": [
+    {
+      "id": "GOV-01",
+      "domain": "Governance",
+      "control": "Named security and privacy ownership, annual policy approval, and risk review",
+      "status": "planned",
+      "evidence": ["docs/trust-center/enterprise-readiness.md"],
+      "gap": "Assign accountable officers and retain dated approvals and risk-review minutes."
+    },
+    {
+      "id": "ASSURE-01",
+      "domain": "Independent assurance",
+      "control": "SOC 2 Type II or equivalent independent control report",
+      "status": "planned",
+      "evidence": ["docs/trust-center/enterprise-readiness.md"],
+      "gap": "Complete readiness assessment, observation period, and independent audit; never imply certification before issuance."
+    },
+    {
+      "id": "ASSURE-02",
+      "domain": "Independent assurance",
+      "control": "Independent penetration test and tracked remediation",
+      "status": "planned",
+      "evidence": ["docs/trust-center/enterprise-readiness.md"],
+      "gap": "Commission an authenticated web/API test and provide an executive letter under NDA."
+    },
+    {
+      "id": "IAM-01",
+      "domain": "Identity and access",
+      "control": "Production authentication and server-derived tenant ownership",
+      "status": "implemented",
+      "evidence": [
+        "docs/security.md",
+        "convex/auth.ts",
+        "convex/analyses.ts",
+        "convex/dossiers.ts"
+      ],
+      "gap": null
+    },
+    {
+      "id": "IAM-02",
+      "domain": "Identity and access",
+      "control": "Enterprise SSO, enforced MFA, SCIM, RBAC, and access reviews",
+      "status": "planned",
+      "evidence": ["docs/trust-center/enterprise-readiness.md"],
+      "gap": "Add SAML/OIDC SSO, organization roles, lifecycle provisioning, MFA policy enforcement, and quarterly access-review evidence."
+    },
+    {
+      "id": "DATA-01",
+      "domain": "Data protection",
+      "control": "Private storage, TLS, cache prevention, owner isolation, and complete record deletion",
+      "status": "implemented",
+      "evidence": ["docs/security.md", "apps/api/src/app.ts", "apps/api/src/storage.ts"],
+      "gap": null
+    },
+    {
+      "id": "DATA-02",
+      "domain": "Data protection",
+      "control": "Customer-specific retention schedules and verified deletion reporting",
+      "status": "partial",
+      "evidence": ["docs/trust-center/data-governance.md", "README.md"],
+      "gap": "Add configurable automatic expiry, legal holds, deletion receipts, and backup-expiry confirmation."
+    },
+    {
+      "id": "DATA-03",
+      "domain": "Data protection",
+      "control": "Tenant-managed encryption keys and selectable data residency",
+      "status": "planned",
+      "evidence": ["docs/confidential-processing.md"],
+      "gap": "Offer customer-managed keys or a customer-hosted data plane and document supported regions."
+    },
+    {
+      "id": "APP-01",
+      "domain": "Application security",
+      "control": "Secure headers, bounded inputs, upload verification, capability-link protection, and generic errors",
+      "status": "implemented",
+      "evidence": ["docs/security.md", "apps/api/src/app.ts", "vercel.json"],
+      "gap": null
+    },
+    {
+      "id": "APP-02",
+      "domain": "Application security",
+      "control": "Malware scanning and content disarm for uploaded files",
+      "status": "planned",
+      "evidence": ["docs/trust-center/enterprise-readiness.md"],
+      "gap": "Quarantine uploads until malware scanning succeeds; evaluate PDF content disarm and reconstruction."
+    },
+    {
+      "id": "SDLC-01",
+      "domain": "Secure development",
+      "control": "CI tests, static analysis, dependency updates, reviewable changes, and secret separation",
+      "status": "implemented",
+      "evidence": [
+        "docs/trust-center/secure-development.md",
+        ".github/workflows/ci.yml",
+        ".github/workflows/codeql.yml",
+        ".github/dependabot.yml"
+      ],
+      "gap": null
+    },
+    {
+      "id": "SDLC-02",
+      "domain": "Secure development",
+      "control": "Dependency vulnerability SLA, SBOM, artifact provenance, and release approvals",
+      "status": "partial",
+      "evidence": ["docs/trust-center/secure-development.md"],
+      "gap": "Generate an SBOM for releases, sign artifacts, protect the production environment, and retain remediation metrics."
+    },
+    {
+      "id": "LOG-01",
+      "domain": "Detection and audit",
+      "control": "Dossier activity audit trail and privacy-safe server errors",
+      "status": "implemented",
+      "evidence": ["docs/security.md", "apps/api/src/app.ts"],
+      "gap": null
+    },
+    {
+      "id": "LOG-02",
+      "domain": "Detection and audit",
+      "control": "Central security monitoring, authentication telemetry, alerting, and immutable retention",
+      "status": "planned",
+      "evidence": ["docs/trust-center/incident-response.md"],
+      "gap": "Connect identity, hosting, storage, and application events to monitored alerting with documented retention and escalation."
+    },
+    {
+      "id": "IR-01",
+      "domain": "Incident response",
+      "control": "Documented severity, containment, evidence, notification, recovery, and lessons-learned process",
+      "status": "partial",
+      "evidence": ["docs/trust-center/incident-response.md"],
+      "gap": "Assign named responders, counsel and forensic contacts; approve and exercise the plan at least annually."
+    },
+    {
+      "id": "BCP-01",
+      "domain": "Availability",
+      "control": "Documented continuity, backup, recovery, RTO/RPO, and restoration exercises",
+      "status": "partial",
+      "evidence": ["docs/trust-center/business-continuity.md"],
+      "gap": "Contractually set service targets, confirm vendor backup behavior, and record successful restore and failover exercises."
+    },
+    {
+      "id": "TPRM-01",
+      "domain": "Third-party risk",
+      "control": "Subprocessor inventory, purpose, data access, location, and change process",
+      "status": "partial",
+      "evidence": ["docs/trust-center/subprocessors.md"],
+      "gap": "Verify vendor legal entities, regions, DPAs, assurance reports, breach terms, and customer notice mechanism before contracting."
+    },
+    {
+      "id": "PRIV-01",
+      "domain": "Privacy and legal",
+      "control": "DPA coverage for roles, instructions, confidentiality, security, subprocessors, rights, deletion, audits, and transfers",
+      "status": "partial",
+      "evidence": ["docs/trust-center/legal-readiness.md"],
+      "gap": "Have qualified counsel adapt and approve customer-facing DPA, privacy notice, terms, and transfer mechanism."
+    },
+    {
+      "id": "PRIV-02",
+      "domain": "Privacy and legal",
+      "control": "Documented data inventory, purpose limitation, minimization, and data-subject request procedure",
+      "status": "partial",
+      "evidence": ["docs/trust-center/data-governance.md"],
+      "gap": "Complete jurisdiction-specific record of processing and operationalize identity verification and response deadlines."
+    },
+    {
+      "id": "AI-01",
+      "domain": "AI governance",
+      "control": "No-training posture, provider approval gate, customer-owned gateway, sanitization, provenance, and human review",
+      "status": "implemented",
+      "evidence": [
+        "docs/confidential-processing.md",
+        "docs/trust-center/ai-governance.md",
+        "apps/api/src/model-gateway.ts"
+      ],
+      "gap": null
+    },
+    {
+      "id": "AI-02",
+      "domain": "AI governance",
+      "control": "Model/vendor evaluation, documented limitations, change control, red-team testing, and AI incident monitoring",
+      "status": "partial",
+      "evidence": ["docs/trust-center/ai-governance.md"],
+      "gap": "Establish release-specific model evaluations and retain approval, regression, and incident evidence."
+    },
+    {
+      "id": "VULN-01",
+      "domain": "Vulnerability management",
+      "control": "Public vulnerability intake and safe-harbor policy",
+      "status": "partial",
+      "evidence": [
+        "SECURITY.md",
+        "apps/web/public/.well-known/security.txt",
+        "apps/web/public/security-policy.txt"
+      ],
+      "gap": "Verify that security@greenlit.ai is a monitored inbound mailbox, assign triage coverage, and test acknowledgement/escalation."
+    },
+    {
+      "id": "HR-01",
+      "domain": "Personnel security",
+      "control": "Background screening, confidentiality, security training, onboarding, and immediate offboarding",
+      "status": "planned",
+      "evidence": ["docs/trust-center/enterprise-readiness.md"],
+      "gap": "Adopt jurisdiction-appropriate personnel controls and retain completion and revocation evidence."
+    },
+    {
+      "id": "INS-01",
+      "domain": "Risk transfer",
+      "control": "Cyber, technology E&O, and appropriate commercial insurance",
+      "status": "planned",
+      "evidence": ["docs/trust-center/legal-readiness.md"],
+      "gap": "Purchase coverage matched to contractual limits and provide a certificate under NDA."
+    }
+  ]
+}
