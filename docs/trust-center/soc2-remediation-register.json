@@ -1,0 +1,123 @@
+{
+  "version": 1,
+  "statuses": ["not_started", "in_progress", "waiting_external", "ready_for_review", "closed"],
+  "items": [
+    {
+      "id": "REM-01",
+      "priority": "P0",
+      "controlIds": ["SOC-GOV-01", "SOC-HR-01"],
+      "action": "Confirm legal entity, workforce roster, control owners, and production-access population.",
+      "owner": "Executive owner",
+      "status": "waiting_external",
+      "exitEvidence": "Approved soc2-program record, organization roster, and access population."
+    },
+    {
+      "id": "REM-02",
+      "priority": "P0",
+      "controlIds": ["SOC-GOV-01", "SOC-RISK-01", "SOC-IR-01", "SOC-BCP-01"],
+      "action": "Approve the policy set, risk register, and assigned control responsibilities without backdating.",
+      "owner": "Executive owner",
+      "status": "waiting_external",
+      "exitEvidence": "Signed policy-approval record and risk approvals."
+    },
+    {
+      "id": "REM-03",
+      "priority": "P0",
+      "controlIds": ["SOC-IAM-02"],
+      "action": "Export all in-scope accounts, enforce MFA, remove shared/stale access, document least privilege, and approve the review.",
+      "owner": "Security owner",
+      "status": "waiting_external",
+      "exitEvidence": "Completed access-review record plus source exports/screenshots."
+    },
+    {
+      "id": "REM-04",
+      "priority": "P0",
+      "controlIds": ["SOC-HR-01"],
+      "action": "Execute confidentiality/IP terms, complete security training, and adopt onboarding/offboarding checklists for the full population.",
+      "owner": "Executive owner",
+      "status": "waiting_external",
+      "exitEvidence": "Signed terms, training completion, and lifecycle records in the restricted audit room."
+    },
+    {
+      "id": "REM-05",
+      "priority": "P0",
+      "controlIds": ["SOC-LOG-01", "SOC-IR-01"],
+      "action": "Connect and monitor identity, GitHub, Vercel, Convex, storage, email, and application security events with an escalation route.",
+      "owner": "Security owner",
+      "status": "not_started",
+      "exitEvidence": "Logging inventory, alert rules, retention configuration, alert test, and responder acknowledgement."
+    },
+    {
+      "id": "REM-06",
+      "priority": "P0",
+      "controlIds": ["SOC-SDLC-02", "SOC-APP-01"],
+      "action": "Commission an independent authenticated penetration test and close or formally accept all material findings.",
+      "owner": "Security owner",
+      "status": "waiting_external",
+      "exitEvidence": "Final report, remediation tickets, and retest letter under NDA."
+    },
+    {
+      "id": "REM-07",
+      "priority": "P1",
+      "controlIds": ["SOC-VENDOR-01"],
+      "action": "Complete assessments for every enabled vendor and retain contracts, DPAs, assurance reports, regions, retention, and recovery terms.",
+      "owner": "Privacy owner",
+      "status": "waiting_external",
+      "exitEvidence": "One approved vendor-assessment record and evidence set per vendor."
+    },
+    {
+      "id": "REM-08",
+      "priority": "P1",
+      "controlIds": ["SOC-IR-01"],
+      "action": "Run and document a security incident tabletop covering cross-tenant access and external model disclosure.",
+      "owner": "Security owner",
+      "status": "not_started",
+      "exitEvidence": "Completed tabletop record, attendance, lessons, corrective actions, and approvals."
+    },
+    {
+      "id": "REM-09",
+      "priority": "P1",
+      "controlIds": ["SOC-BCP-01"],
+      "action": "Run and document a representative metadata/private-object recovery exercise and measure RTO/RPO.",
+      "owner": "System owner",
+      "status": "not_started",
+      "exitEvidence": "Completed recovery-exercise record with integrity and owner-isolation validation."
+    },
+    {
+      "id": "REM-10",
+      "priority": "P1",
+      "controlIds": ["SOC-DATA-02"],
+      "action": "Approve retention periods and perform an end-to-end deletion test including documented vendor backup lifecycle.",
+      "owner": "Privacy owner",
+      "status": "waiting_external",
+      "exitEvidence": "Approved schedule, deletion test, exceptions, and backup-expiry evidence."
+    },
+    {
+      "id": "REM-11",
+      "priority": "P1",
+      "controlIds": ["SOC-SDLC-01", "SOC-SDLC-02"],
+      "action": "Enable protected main/production release approvals, secret protection, dependency features, and retain deployed commit evidence.",
+      "owner": "System owner",
+      "status": "not_started",
+      "exitEvidence": "Repository/deployment settings export and successful controlled release."
+    },
+    {
+      "id": "REM-12",
+      "priority": "P1",
+      "controlIds": ["SOC-MON-01"],
+      "action": "Conduct the first management control review and track every exception to closure.",
+      "owner": "Executive owner",
+      "status": "not_started",
+      "exitEvidence": "Completed quarterly-review record and corrective-action log."
+    },
+    {
+      "id": "REM-13",
+      "priority": "P1",
+      "controlIds": ["SOC-GOV-01"],
+      "action": "Select the independent CPA auditor, confirm Security + Confidentiality scope, and agree the Type I as-of date.",
+      "owner": "Executive owner",
+      "status": "waiting_external",
+      "exitEvidence": "Signed engagement letter and auditor-confirmed scope/date."
+    }
+  ]
+}

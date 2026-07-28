@@ -25,5 +25,9 @@ Greenlit is **not currently represented here as SOC 2 certified, independently p
 - [SOC 2 risk register](soc2-risk-register.json): initial risks, treatments, and pending approvals.
 - [SOC 2 system description](soc2-system-description.md): draft auditor narrative and boundary.
 - [SOC 2 evidence plan](soc2-evidence-plan.md): management, access, technical, and operational evidence.
+- [SOC 2 remediation register](soc2-remediation-register.json): prioritized owners, statuses, and exit evidence.
+- `evidence-templates/`: auditor-ready records for approvals, access, vendors, incidents, recovery, and quarterly review.
 
 Run `pnpm trust:validate` before sharing the package. A successful check verifies structure and evidence-file presence; it does not certify that an organizational control has been operated or audited.
+
+Run `pnpm soc2:readiness` for an intentionally strict readiness decision. It exits nonzero until required management decisions, P0 remediation, and risk approvals are complete; this is separate from `pnpm check` so ordinary product builds remain usable while the SOC 2 program is in progress.

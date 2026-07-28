@@ -14,6 +14,9 @@ const soc2Matrix = JSON.parse(
 const riskRegister = JSON.parse(
   await readFile(path.join(root, "docs", "trust-center", "soc2-risk-register.json"), "utf8")
 )
+const remediationRegister = JSON.parse(
+  await readFile(path.join(root, "docs", "trust-center", "soc2-remediation-register.json"), "utf8")
+)
 
 if (!/^\d{4}-\d{2}-\d{2}$/.test(register.lastReviewed ?? "")) {
   errors.push("lastReviewed must use YYYY-MM-DD")
@@ -73,13 +76,29 @@ for (const risk of riskRegister.risks ?? []) {
   }
 }
 
+const remediationIds = new Set()
+for (const item of remediationRegister.items ?? []) {
+  if (!/^REM-\d{2}$/.test(item.id ?? "")) errors.push(`invalid remediation id: ${item.id}`)
+  if (remediationIds.has(item.id)) errors.push(`duplicate remediation id: ${item.id}`)
+  remediationIds.add(item.id)
+  if (!remediationRegister.statuses.includes(item.status)) {
+    errors.push(`${item.id}: invalid remediation status`)
+  }
+  if (!new Set(["P0", "P1", "P2"]).has(item.priority)) {
+    errors.push(`${item.id}: invalid priority`)
+  }
+  for (const controlId of item.controlIds ?? []) {
+    if (!soc2Ids.has(controlId)) errors.push(`${item.id}: unknown control ${controlId}`)
+  }
+}
+
 if (errors.length) {
   console.error(errors.join("\n"))
   process.exitCode = 1
 } else {
   const counts = Object.groupBy(register.controls, (control) => control.status)
   console.log(
-    `Trust center validated: ${register.controls.length} enterprise controls, ${soc2Ids.size} SOC 2 controls, ${riskIds.size} risks (${Object.entries(
+    `Trust center validated: ${register.controls.length} enterprise controls, ${soc2Ids.size} SOC 2 controls, ${riskIds.size} risks, ${remediationIds.size} remediation items (${Object.entries(
       counts
     )
       .map(([status, controls]) => `${status}=${controls.length}`)
