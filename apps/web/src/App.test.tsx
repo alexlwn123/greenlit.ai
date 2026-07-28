@@ -194,6 +194,19 @@ describe("App", () => {
         if (url.endsWith("/dossiers/draft-demo/sections/section-1/versions")) {
           return jsonResponse({ versions: [] })
         }
+        if (url.endsWith("/dossiers/draft-demo/quality")) {
+          return jsonResponse({
+            checks: [
+              {
+                id: "quality-1",
+                severity: "blocker",
+                title: "Resolve source coverage",
+                detail: "A verified source is required.",
+                target: "Evidence room",
+              },
+            ],
+          })
+        }
         if (url.endsWith("/dossiers/draft-demo")) return jsonResponse(workspace)
         if (url.endsWith("/dossiers")) return jsonResponse({ dossiers: [dossier] })
         return jsonResponse({}, 404)
@@ -206,6 +219,7 @@ describe("App", () => {
     ).toBeInTheDocument()
     expect(screen.getByRole("region", { name: "Dossier readiness scorecard" })).toBeInTheDocument()
     expect(screen.getByText("No evidence sources uploaded")).toBeInTheDocument()
+    expect(await screen.findByText("Blocking quality controls")).toBeInTheDocument()
     fireEvent.click(await screen.findByRole("button", { name: /draft sections/i }))
 
     expect(screen.getByRole("group", { name: "Draft view" })).toBeInTheDocument()

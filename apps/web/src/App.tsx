@@ -2889,7 +2889,7 @@ function DossierPage({
   }, [draftDirty])
 
   useEffect(() => {
-    if (studioTab !== "quality" || !dossierId) return
+    if ((studioTab !== "overview" && studioTab !== "quality") || !dossierId) return
     void getDossierQuality(dossierId)
       .then(setQualityChecks)
       .catch((error) => setFormError(errorMessage(error)))
@@ -3811,6 +3811,7 @@ function DossierPage({
   const openReviewIssueCount = selected.reviewIssues.filter(
     (issue) => issue.status === "open"
   ).length
+  const qualityBlockerCount = qualityChecks.filter((check) => check.severity === "blocker").length
   const allOverviewPriorities: Array<{
     id: string
     title: string
@@ -3865,6 +3866,14 @@ function DossierPage({
       detail: "Document a resolution before locking the release.",
       count: openReviewIssueCount,
       tab: "release",
+      severity: "blocker",
+    },
+    {
+      id: "quality-controls",
+      title: "Blocking quality controls",
+      detail: "Open the quality gate for exact resolution guidance.",
+      count: qualityBlockerCount,
+      tab: "quality",
       severity: "blocker",
     },
   ]
