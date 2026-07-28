@@ -2572,6 +2572,32 @@ label {
   line-height: 1.5;
 }
 
+.dossier-next-action {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.dossier-next-action button {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 9px;
+  border: 1px solid #4d7350;
+  border-radius: 6px;
+  background: rgba(101, 190, 105, 0.12);
+  color: #dff1df;
+  cursor: pointer;
+  font-size: 0.65rem;
+  font-weight: 600;
+}
+
+.dossier-next-action button svg {
+  width: 13px;
+}
+
 .dossier-workbench {
   display: grid;
   grid-template-columns: 220px 1fr;
@@ -2612,6 +2638,29 @@ label {
 
 .dossier-workbench aside svg {
   width: 15px;
+  flex: 0 0 auto;
+}
+
+.dossier-workbench aside button > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dossier-workbench aside button > small {
+  min-width: 24px;
+  margin-left: auto;
+  padding: 2px 5px;
+  border-radius: 999px;
+  background: #202620;
+  color: var(--dim);
+  font-size: 0.56rem;
+  text-align: center;
+}
+
+.dossier-workbench aside button.is-current > small {
+  background: rgba(101, 190, 105, 0.16);
+  color: #a6dba9;
 }
 
 .requirements-heading {
@@ -4545,6 +4594,14 @@ label {
 
   .dossier-progress {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .dossier-completion {
+    grid-template-columns: 1fr;
+  }
+
+  .dossier-next-action {
+    align-items: flex-start;
   }
 
   .dossier-progress > div:nth-child(2) {

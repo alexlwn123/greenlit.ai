@@ -192,12 +192,16 @@ describe("App", () => {
     )
 
     render(<App />)
-    fireEvent.click(await screen.findByRole("button", { name: "Draft sections" }))
+    fireEvent.click(await screen.findByRole("button", { name: /draft sections/i }))
 
     expect(screen.getByRole("group", { name: "Draft view" })).toBeInTheDocument()
     expect(screen.getByRole("textbox", { name: "Section draft" })).toBeInTheDocument()
     expect(screen.getByText("All changes saved")).toBeInTheDocument()
     expect(screen.getByRole("button", { name: "Sources" })).toBeInTheDocument()
+    expect(screen.getByRole("button", { name: /add the first source/i })).toBeInTheDocument()
+    expect(
+      screen.getByRole("button", { name: /draft sections, [01] of 1 drafted/i })
+    ).toHaveAttribute("aria-current", "page")
 
     fireEvent.click(screen.getByRole("button", { name: "Read" }))
     expect(screen.queryByRole("textbox", { name: "Section draft" })).not.toBeInTheDocument()

@@ -3632,6 +3632,41 @@ function DossierPage({
       (draftedSectionCount / Math.max(selected.sections.length, 1)) * 25 +
       (approvedSectionCount / Math.max(selected.sections.length, 1)) * 25
   )
+  const nextAction: { tab: typeof studioTab; label: string; detail: string } = activeRelease
+    ? {
+        tab: "submission",
+        label: "Track the submission",
+        detail: "Review agency questions and submission milestones.",
+      }
+    : selected.evidence.length === 0
+      ? {
+          tab: "evidence",
+          label: "Add the first source",
+          detail: "Upload evidence and connect it to a dossier requirement.",
+        }
+      : verifiedClaimCount === 0
+        ? {
+            tab: "evidence",
+            label: "Verify source claims",
+            detail: "Turn extracted passages into drafting-ready claims.",
+          }
+        : draftedSectionCount < selected.sections.length
+          ? {
+              tab: "draft",
+              label: "Continue drafting",
+              detail: `${draftedSectionCount} of ${selected.sections.length} sections have substantive copy.`,
+            }
+          : approvedSectionCount < selected.sections.length
+            ? {
+                tab: "quality",
+                label: "Review dossier quality",
+                detail: `${approvedSectionCount} of ${selected.sections.length} sections are approved.`,
+              }
+            : {
+                tab: "release",
+                label: "Prepare a controlled release",
+                detail: "Lock the approved narrative and its supporting evidence.",
+              }
   const visiblePassages = readerSearch.trim()
     ? readerPassages.filter((passage) =>
         passage.text.toLowerCase().includes(readerSearch.trim().toLowerCase())
@@ -4035,72 +4070,105 @@ function DossierPage({
         <div className="completion-track">
           <i style={{ width: `${progress}%` }} />
         </div>
-        <p>
-          {nextGate} is the next meaningful gate. Progress reflects verified evidence, substantive
-          drafting, and human approvals.
-        </p>
+        <div className="dossier-next-action">
+          <p>{nextAction.detail}</p>
+          <button
+            type="button"
+            onClick={() => {
+              setStudioTab(nextAction.tab)
+              document.getElementById("dossier-workbench")?.scrollIntoView?.({ behavior: "smooth" })
+            }}
+          >
+            {nextAction.label} <ArrowRight />
+          </button>
+        </div>
       </section>
-      <section className="dossier-workbench">
+      <section className="dossier-workbench" id="dossier-workbench">
         <aside>
           <p>WORKFLOW</p>
-          <button type="button" onClick={() => setStudioTab("evidence")}>
-            <Check /> Scope
-          </button>
           <button
             type="button"
             className={studioTab === "requests" ? "is-current" : ""}
+            aria-current={studioTab === "requests" ? "page" : undefined}
+            aria-label={`Evidence requests, ${selected.evidenceRequests.length}`}
             onClick={() => setStudioTab("requests")}
           >
-            <CircleAlert /> Evidence requests
+            <CircleAlert /> <span>Evidence requests</span>
+            <small aria-hidden="true">{selected.evidenceRequests.length}</small>
           </button>
           <button
             type="button"
             className={studioTab === "evidence" ? "is-current" : ""}
+            aria-current={studioTab === "evidence" ? "page" : undefined}
+            aria-label={`Evidence room, ${selected.evidence.length} sources`}
             onClick={() => setStudioTab("evidence")}
           >
-            <FolderOpen /> Evidence room
+            <FolderOpen /> <span>Evidence room</span>
+            <small aria-hidden="true">{selected.evidence.length}</small>
           </button>
           <button
             type="button"
             className={studioTab === "facts" ? "is-current" : ""}
+            aria-current={studioTab === "facts" ? "page" : undefined}
+            aria-label={`Fact Book, ${selected.factBookEntries.length} facts`}
             onClick={() => setStudioTab("facts")}
           >
-            <TableProperties /> Fact Book
+            <TableProperties /> <span>Fact Book</span>
+            <small aria-hidden="true">{selected.factBookEntries.length}</small>
           </button>
           <button
             type="button"
             className={studioTab === "draft" ? "is-current" : ""}
+            aria-current={studioTab === "draft" ? "page" : undefined}
+            aria-label={`Draft sections, ${draftedSectionCount} of ${selected.sections.length} drafted`}
             onClick={() => setStudioTab("draft")}
           >
-            <FileText /> Draft sections
+            <FileText /> <span>Draft sections</span>
+            <small aria-hidden="true">
+              {draftedSectionCount}/{selected.sections.length}
+            </small>
           </button>
           <button
             type="button"
             className={studioTab === "quality" ? "is-current" : ""}
+            aria-current={studioTab === "quality" ? "page" : undefined}
+            aria-label={`Quality review, ${approvedSectionCount} of ${selected.sections.length} approved`}
             onClick={() => setStudioTab("quality")}
           >
-            <ShieldCheck /> Quality review
+            <ShieldCheck /> <span>Quality review</span>
+            <small aria-hidden="true">
+              {approvedSectionCount}/{selected.sections.length}
+            </small>
           </button>
           <button
             type="button"
             className={studioTab === "release" ? "is-current" : ""}
+            aria-current={studioTab === "release" ? "page" : undefined}
+            aria-label={`Release center, ${selected.releases.length} releases`}
             onClick={() => setStudioTab("release")}
           >
-            <LockKeyhole /> Release center
+            <LockKeyhole /> <span>Release center</span>
+            <small aria-hidden="true">{selected.releases.length}</small>
           </button>
           <button
             type="button"
             className={studioTab === "submission" ? "is-current" : ""}
+            aria-current={studioTab === "submission" ? "page" : undefined}
+            aria-label={`Submission, ${selected.submissions.length} records`}
             onClick={() => setStudioTab("submission")}
           >
-            <ArrowRight /> Submission lifecycle
+            <ArrowRight /> <span>Submission</span>
+            <small aria-hidden="true">{selected.submissions.length}</small>
           </button>
           <button
             type="button"
             className={studioTab === "activity" ? "is-current" : ""}
+            aria-current={studioTab === "activity" ? "page" : undefined}
+            aria-label={`Activity, ${selected.auditEvents.length} events`}
             onClick={() => setStudioTab("activity")}
           >
-            <Clock3 /> Activity
+            <Clock3 /> <span>Activity</span>
+            <small aria-hidden="true">{selected.auditEvents.length}</small>
           </button>
         </aside>
         {studioTab === "evidence" ? (
