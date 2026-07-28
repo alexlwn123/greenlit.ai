@@ -4535,7 +4535,7 @@ label {
 }
 
 .dossier-progress strong {
-  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+  font-family: inherit;
   font-size: 1.5rem;
   font-weight: 600;
   letter-spacing: -0.035em;
@@ -4604,7 +4604,7 @@ label {
 .studio-heading h2,
 .requirements-heading h2 {
   margin-top: 7px;
-  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+  font-family: inherit;
   font-size: clamp(1.6rem, 2.5vw, 2.2rem);
   font-weight: 600;
   letter-spacing: -0.045em;
@@ -4727,12 +4727,12 @@ label {
   gap: 10px;
 }
 
-.draft-studio-state > span:last-child {
+.draft-state-copy {
   color: var(--dim);
   font-size: 0.65rem;
 }
 
-.draft-studio-state > span.has-changes {
+.draft-state-copy.has-changes {
   color: var(--amber);
 }
 
@@ -4984,7 +4984,7 @@ label {
 
 .draft-paper .draft-empty-copy {
   color: var(--dim);
-  font-family: Inter, sans-serif;
+  font-family: inherit;
   font-style: italic;
 }
 
@@ -5178,7 +5178,7 @@ label {
   align-items: center;
   gap: 9px;
   margin: 0;
-  font-family: Inter, sans-serif;
+  font-family: inherit;
 }
 
 .save-indicator {
@@ -5192,7 +5192,7 @@ label {
   background: var(--amber);
 }
 
-.draft-save-state > span:last-child {
+.draft-save-copy {
   display: grid;
   gap: 2px;
 }

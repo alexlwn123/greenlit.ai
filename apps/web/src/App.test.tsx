@@ -196,7 +196,10 @@ describe("App", () => {
 
     expect(screen.getByRole("group", { name: "Draft view" })).toBeInTheDocument()
     expect(screen.getByRole("textbox", { name: "Section draft" })).toBeInTheDocument()
-    expect(screen.getByText("All changes saved")).toBeInTheDocument()
+    expect(screen.getByText("All changes saved").parentElement).toHaveAttribute(
+      "aria-live",
+      "polite"
+    )
     expect(screen.getByRole("button", { name: "Sources" })).toBeInTheDocument()
     expect(screen.getByRole("button", { name: /add the first source/i })).toBeInTheDocument()
     expect(

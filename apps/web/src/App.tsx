@@ -370,7 +370,11 @@ function ExternalResponsePage({ token }: { token: string }) {
           <ShieldCheck />
         </div>
         {status === "loading" ? <p>Opening secure request…</p> : null}
-        {status === "error" ? <p className="form-error">{message}</p> : null}
+        {status === "error" ? (
+          <p className="form-error" role="alert">
+            {message}
+          </p>
+        ) : null}
         {status === "sent" ? (
           <div className="evidence-empty">
             <Check />
@@ -487,7 +491,9 @@ function ExternalReviewPage({ token }: { token: string }) {
   if (!review)
     return (
       <main className="dossier-shell">
-        <p className="form-error">{message}</p>
+        <p className="form-error" role="alert">
+          {message}
+        </p>
       </main>
     )
   const targets = [
@@ -574,7 +580,11 @@ function ExternalReviewPage({ token }: { token: string }) {
                 <h2>Leave a targeted review issue</h2>
               </div>
             </div>
-            {status === "error" ? <p className="form-error">{message}</p> : null}
+            {status === "error" ? (
+              <p className="form-error" role="alert">
+                {message}
+              </p>
+            ) : null}
             <div className="claim-fields">
               <label>
                 Target
@@ -1530,7 +1540,11 @@ function AnalysisPage({
                   ))}
                 </select>
               </label>
-              {comparisonError ? <p className="form-error">{comparisonError}</p> : null}
+              {comparisonError ? (
+                <p className="form-error" role="alert">
+                  {comparisonError}
+                </p>
+              ) : null}
               <DataTable
                 headers={["Requirement", "Status", "Recommended action"]}
                 rows={displayedDiff.map((item) => [
@@ -2458,7 +2472,7 @@ function SampleWorkflowPanel({
           <footer className="draft-save-bar sample-save-bar">
             <div className="draft-save-state">
               <span className="save-indicator" />
-              <span>
+              <span className="draft-save-copy" aria-live="polite">
                 <strong>Draft saved</strong>
                 <small>
                   {draftUpdated ? "Fact Book change applied" : "Interactive sample · local only"}
@@ -3515,7 +3529,11 @@ function DossierPage({
               </p>
             </div>
           </div>
-          {formError ? <p className="form-error">{formError}</p> : null}
+          {formError ? (
+            <p className="form-error" role="alert">
+              {formError}
+            </p>
+          ) : null}
           <button
             type="button"
             className="sample-dossier-launch"
@@ -3730,9 +3748,9 @@ function DossierPage({
             <h2>{selectedSection.part}</h2>
             <p>{selectedSection.title}</p>
           </div>
-          <div className="draft-studio-state">
+          <div className="draft-studio-state" aria-live="polite">
             <StatusPill value={selectedSection.status} />
-            <span className={draftDirty ? "has-changes" : "is-saved"}>
+            <span className={`draft-state-copy ${draftDirty ? "has-changes" : "is-saved"}`}>
               {saving ? "Saving…" : draftDirty ? "Unsaved changes" : "All changes saved"}
             </span>
           </div>
@@ -3975,11 +3993,15 @@ function DossierPage({
                 {assistMeta.claimCount} verified claims. Review before saving.
               </p>
             ) : null}
-            {formError ? <p className="form-error">{formError}</p> : null}
+            {formError ? (
+              <p className="form-error" role="alert">
+                {formError}
+              </p>
+            ) : null}
             <footer className="draft-save-bar">
               <div className={`draft-save-state ${draftDirty ? "has-changes" : ""}`}>
                 <span className="save-indicator" />
-                <span>
+                <span className="draft-save-copy" aria-live="polite">
                   <strong>
                     {saving ? "Saving changes" : draftDirty ? "Changes not saved" : "Draft saved"}
                   </strong>
@@ -4262,7 +4284,11 @@ function DossierPage({
                 <input type="file" accept="application/pdf,.pdf" onChange={uploadEvidence} />
               </label>
             </div>
-            {formError ? <p className="form-error">{formError}</p> : null}
+            {formError ? (
+              <p className="form-error" role="alert">
+                {formError}
+              </p>
+            ) : null}
             {readerEvidence && currentPassage ? (
               <section className="evidence-reader">
                 <div className="evidence-reader-head">
@@ -4560,7 +4586,11 @@ function DossierPage({
               Capture facts once as structured data, link them to source evidence, and reuse them
               across drafting, quality review, and package exports.
             </p>
-            {formError ? <p className="form-error">{formError}</p> : null}
+            {formError ? (
+              <p className="form-error" role="alert">
+                {formError}
+              </p>
+            ) : null}
             <section className="claim-composer">
               <div className="claim-fields">
                 <label>
@@ -4811,7 +4841,11 @@ function DossierPage({
               Turn missing requirements into a concrete work queue, then track each response through
               resolution.
             </p>
-            {formError ? <p className="form-error">{formError}</p> : null}
+            {formError ? (
+              <p className="form-error" role="alert">
+                {formError}
+              </p>
+            ) : null}
             <div className="evidence-cards">
               {selected.evidenceRequests.map((request) => (
                 <article key={request.id}>
@@ -4895,7 +4929,11 @@ function DossierPage({
               Capture named human accountability, freeze a quality snapshot, and prepare a
               controlled consultant review package.
             </p>
-            {formError ? <p className="form-error">{formError}</p> : null}
+            {formError ? (
+              <p className="form-error" role="alert">
+                {formError}
+              </p>
+            ) : null}
             <section className="claim-composer">
               <div className="requirements-heading">
                 <div>
@@ -5312,7 +5350,11 @@ function DossierPage({
               Register the exact locked package sent to an agency, track status and identifiers, and
               manage every agency question through a documented response.
             </p>
-            {formError ? <p className="form-error">{formError}</p> : null}
+            {formError ? (
+              <p className="form-error" role="alert">
+                {formError}
+              </p>
+            ) : null}
             <section className="claim-composer">
               <div className="claim-fields">
                 <label>
@@ -5694,7 +5736,7 @@ function DossierPage({
                       <p>{renderFactReferences(draftContent, selected.factBookEntries).rendered}</p>
                       {renderFactReferences(draftContent, selected.factBookEntries).unresolved
                         .length ? (
-                        <small className="form-error">
+                        <small className="form-error" role="alert">
                           {
                             renderFactReferences(draftContent, selected.factBookEntries).unresolved
                               .length
@@ -5720,7 +5762,11 @@ function DossierPage({
                     ? "Unsaved changes"
                     : `Saved ${formatDate(selectedSection.updatedAt)}`}
                 </p>
-                {formError ? <p className="form-error">{formError}</p> : null}
+                {formError ? (
+                  <p className="form-error" role="alert">
+                    {formError}
+                  </p>
+                ) : null}
                 <div className="draft-actions">
                   <button type="button" onClick={assistSection} disabled={saving}>
                     <NotebookPen /> Draft from verified claims
