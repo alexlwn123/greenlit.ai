@@ -66,6 +66,9 @@ Local variables:
 - `GREENLIT_UPLOAD_SCANNER_URL`: optional customer-controlled HTTPS anti-malware scanner. Set
   `GREENLIT_ALLOW_EXTERNAL_UPLOAD_SCANNING=true` after vendor/data-flow approval and
   `GREENLIT_REQUIRE_UPLOAD_MALWARE_SCAN=true` to fail closed when no clean verdict is available.
+- `GREENLIT_DELETION_RECEIPT_SECRET`: optional server-only secret of at least 32 characters used to
+  HMAC-sign deletion receipts. Pair it with a stable `GREENLIT_DELETION_RECEIPT_KEY_ID`, rotate it
+  under the approved key-management procedure, and retain retired verification keys securely.
 - `GREENLIT_CUSTOMER_GATEWAY_TOKEN`: server-only bearer credential used to authenticate Greenlit to
   the customer gateway.
 - `GREENLIT_ALLOW_PRIVATE_MODEL_GATEWAY`: permits a private IP gateway only for a customer-hosted
@@ -117,7 +120,7 @@ For the customer-owned model architecture and gateway contract, see
 
 The local API stores uploads, extracted text, generated reports, and workbook notes on disk under `.local-data` unless `GREENLIT_LOCAL_DATA_DIR` points somewhere else. This data remains until you delete that directory.
 
-Hosted analyses are retained until the workspace owner deletes them. The **Delete** action on a saved analysis permanently removes its uploaded PDF, extracted-text artifact, analysis record, and associated workbook notes. There is no automatic expiry in the private MVP, which avoids silently deleting active regulatory work; this policy should be revisited before a broader launch.
+Hosted analyses are retained until the workspace owner deletes them. The **Delete** action on a saved analysis permanently removes its uploaded PDF, extracted-text artifact, analysis record, and associated workbook notes, then downloads a privacy-safe JSON deletion receipt. Receipts are explicitly marked unsigned unless the server-side receipt key is configured. There is no automatic expiry in the private MVP, which avoids silently deleting active regulatory work; this policy should be revisited before a broader launch.
 
 API responses containing private workspace data are marked `no-store`, private objects are never made public, ownership is derived from the authenticated account rather than browser-supplied identifiers, and analysis metadata queries and mutations enforce that ownership again in Convex.
 

@@ -1,4 +1,4 @@
-import { createHash, randomUUID } from "node:crypto"
+import { createHash, createHmac, randomUUID } from "node:crypto"
 import path from "node:path"
 import { head, issueSignedToken, presignUrl } from "@vercel/blob"
 import type { HandleUploadPresignedBody } from "@vercel/blob/client"
@@ -242,7 +242,7 @@ export function createApp(options: CreateAppOptions = {}) {
     if (!dossier) return context.json({ error: "Dossier not found" }, 404)
     const deleted = await storage.deleteDossier(ownerId, dossierId)
     return deleted
-      ? context.json({ receipt: deletionReceipt("dossier", dossierId) })
+      ? context.json({ receipt: createDeletionReceipt("dossier", dossierId) })
       : context.json({ error: "Dossier not found" }, 404)
   })
 
@@ -1379,7 +1379,7 @@ export function createApp(options: CreateAppOptions = {}) {
     const analysisId = context.req.param("id")
     const deleted = await storage.deleteAnalysis(ownerId, analysisId)
     if (!deleted) return context.json({ error: "Analysis not found" }, 404)
-    return context.json({ receipt: deletionReceipt("analysis", analysisId) })
+    return context.json({ receipt: createDeletionReceipt("analysis", analysisId) })
   })
 
   app.get("/api/analyses/:id/notes", async (context) => {
@@ -2512,13 +2512,21 @@ export type DeletionReceipt = {
   privateObjects: "deleted"
   derivedCaches: "deleted" | "not_applicable"
   providerBackups: "subject_to_provider_lifecycle"
+  verification:
+    | { status: "unsigned" }
+    | {
+        status: "signed"
+        algorithm: "HMAC-SHA256"
+        keyId: string
+        signature: string
+      }
 }
 
-function deletionReceipt(
+export function createDeletionReceipt(
   targetType: DeletionReceipt["targetType"],
   targetId: string
 ): DeletionReceipt {
-  return {
+  const receipt = {
     schemaVersion: 1,
     receiptId: randomUUID(),
     completedAt: new Date().toISOString(),
@@ -2528,6 +2536,20 @@ function deletionReceipt(
     privateObjects: "deleted",
     derivedCaches: targetType === "analysis" ? "deleted" : "not_applicable",
     providerBackups: "subject_to_provider_lifecycle",
+  } as const
+  const secret = process.env.GREENLIT_DELETION_RECEIPT_SECRET
+  const keyId = process.env.GREENLIT_DELETION_RECEIPT_KEY_ID?.trim()
+  if (!secret || secret.length < 32 || !keyId || keyId.length > 100) {
+    return { ...receipt, verification: { status: "unsigned" } }
+  }
+  return {
+    ...receipt,
+    verification: {
+      status: "signed",
+      algorithm: "HMAC-SHA256",
+      keyId,
+      signature: createHmac("sha256", secret).update(JSON.stringify(receipt)).digest("hex"),
+    },
   }
 }
 

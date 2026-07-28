@@ -1,9 +1,11 @@
+import { createHmac } from "node:crypto"
 import { mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises"
 import { tmpdir } from "node:os"
 import path from "node:path"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 import {
   createApp,
+  createDeletionReceipt,
   type DeletionReceipt,
   redactedRequestPath,
   safeCsvCell,
@@ -75,12 +77,36 @@ describe("local analysis API", () => {
       privateObjects: "deleted",
       derivedCaches: "not_applicable",
       providerBackups: "subject_to_provider_lifecycle",
+      verification: { status: "unsigned" },
     })
     expect(result.receipt.targetSha256).toMatch(/^[a-f0-9]{64}$/)
     expect(JSON.stringify(result.receipt)).not.toContain(created.dossier.id)
     expect(await app.request(`/api/dossiers/${created.dossier.id}`, { headers })).toMatchObject({
       status: 404,
     })
+  })
+
+  it("signs deletion receipts when an approved server-side key is configured", () => {
+    vi.stubEnv(
+      "GREENLIT_DELETION_RECEIPT_SECRET",
+      "a-secure-receipt-secret-with-at-least-32-characters"
+    )
+    vi.stubEnv("GREENLIT_DELETION_RECEIPT_KEY_ID", "greenlit-receipts-2026-01")
+
+    const receipt = createDeletionReceipt("analysis", "private-analysis-id")
+    expect(receipt.verification).toEqual({
+      status: "signed",
+      algorithm: "HMAC-SHA256",
+      keyId: "greenlit-receipts-2026-01",
+      signature: expect.stringMatching(/^[a-f0-9]{64}$/),
+    })
+    const { verification, ...signedFields } = receipt
+    if (verification.status !== "signed") throw new Error("Expected a signed receipt")
+    expect(verification.signature).toBe(
+      createHmac("sha256", "a-secure-receipt-secret-with-at-least-32-characters")
+        .update(JSON.stringify(signedFields))
+        .digest("hex")
+    )
   })
 
   it("removes capability tokens and record identifiers from log paths", () => {

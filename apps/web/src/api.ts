@@ -654,9 +654,14 @@ export async function compareAnalyses(analysisId: string, baselineId: string) {
 }
 
 export async function deleteAnalysis(analysisId: string) {
-  await requestJson<{ receipt: { receiptId: string } }>(`/analyses/${analysisId}`, {
-    method: "DELETE",
-  })
+  const result = await requestJson<{ receipt: { receiptId: string } & Record<string, unknown> }>(
+    `/analyses/${analysisId}`,
+    {
+      method: "DELETE",
+    }
+  )
+  downloadJson(result.receipt, `greenlit-deletion-${safeFileName(result.receipt.receiptId)}.json`)
+  return result.receipt
 }
 
 export async function createAnalysis(file: File) {
@@ -837,4 +842,14 @@ function validatePdf(file: File) {
 
 function safeFileName(fileName: string) {
   return fileName.replace(/[^a-z0-9._-]+/gi, "-").replace(/^-+|-+$/g, "") || "filing.pdf"
+}
+
+function downloadJson(value: unknown, fileName: string) {
+  const blob = new Blob([`${JSON.stringify(value, null, 2)}\n`], { type: "application/json" })
+  const url = URL.createObjectURL(blob)
+  const link = document.createElement("a")
+  link.href = url
+  link.download = fileName
+  link.click()
+  URL.revokeObjectURL(url)
 }
