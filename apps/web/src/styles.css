@@ -4376,6 +4376,56 @@ label {
   font-family: "Segoe UI", Arial, sans-serif;
 }
 
+.dossier-loading-page {
+  min-height: calc(100vh - 68px);
+  display: grid;
+  place-items: center;
+  padding-bottom: 68px;
+}
+
+.dossier-loading-state {
+  width: min(100%, 680px);
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+  padding: 28px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: rgba(18, 22, 19, 0.78);
+}
+
+.dossier-loading-state > svg {
+  width: 22px;
+  color: #76cf78;
+}
+
+.dossier-loading-state h1 {
+  margin: 7px 0 8px;
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+}
+
+.dossier-loading-state p:last-child {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.dossier-loading-actions {
+  grid-column: 2;
+  display: flex;
+  gap: 8px;
+}
+
+.dossier-loading-actions button {
+  padding: 8px 11px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #171c18;
+  color: var(--ink);
+  cursor: pointer;
+}
+
 .dossier-header,
 .sample-dossier-banner {
   padding: 0 0 30px;

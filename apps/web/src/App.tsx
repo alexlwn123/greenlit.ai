@@ -2748,6 +2748,7 @@ function DossierPage({
 
   useEffect(() => {
     if (!dossierId || activeDossier?.dossier.id === dossierId) return
+    setFormError(null)
     void getDossier(dossierId)
       .then(onLoad)
       .catch((error) => setFormError(errorMessage(error)))
@@ -2792,6 +2793,12 @@ function DossierPage({
   const selectedSection =
     selected?.sections.find((section) => section.id === selectedSectionId) ?? selected?.sections[0]
   const draftDirty = Boolean(selectedSection && draftContent !== selectedSection.content)
+
+  function leaveDossier() {
+    if (draftDirty && !window.confirm("Discard unsaved draft changes and return to all dossiers?"))
+      return
+    onOpen("")
+  }
 
   useEffect(() => {
     if (!selectedSection) return
@@ -3537,6 +3544,42 @@ function DossierPage({
     )
   }
 
+  if (dossierId && !selected) {
+    return (
+      <main className="dossier-page dossier-loading-page">
+        <section className="dossier-loading-state" role={formError ? "alert" : "status"}>
+          {formError ? <CircleAlert /> : <LoaderCircle className="spin" />}
+          <div>
+            <p className="section-label">DOSSIER WORKSPACE</p>
+            <h1>{formError ? "We couldn’t open this dossier" : "Opening your dossier…"}</h1>
+            <p>
+              {formError ??
+                "Loading the evidence plan, governed facts, source claims, and current draft."}
+            </p>
+          </div>
+          {formError ? (
+            <div className="dossier-loading-actions">
+              <button
+                type="button"
+                onClick={() => {
+                  setFormError(null)
+                  void getDossier(dossierId)
+                    .then(onLoad)
+                    .catch((error) => setFormError(errorMessage(error)))
+                }}
+              >
+                Try again
+              </button>
+              <button type="button" onClick={() => onOpen("")}>
+                All dossiers
+              </button>
+            </div>
+          ) : null}
+        </section>
+      </main>
+    )
+  }
+
   if (!dossierId || !selected) {
     const visibleDossiers = dossiers.filter(
       (dossier) =>
@@ -3992,7 +4035,7 @@ function DossierPage({
     <main className="dossier-page">
       <section className="dossier-header">
         <div className="dossier-header-toolbar">
-          <button type="button" onClick={() => onOpen("")}>
+          <button type="button" onClick={leaveDossier}>
             <ArrowLeft /> All dossiers
           </button>
           <div className="dossier-header-actions">

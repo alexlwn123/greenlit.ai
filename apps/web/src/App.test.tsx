@@ -203,9 +203,43 @@ describe("App", () => {
       screen.getByRole("button", { name: /draft sections, [01] of 1 drafted/i })
     ).toHaveAttribute("aria-current", "page")
 
+    const confirmDiscard = vi.spyOn(window, "confirm").mockReturnValue(false)
+    fireEvent.change(screen.getByRole("textbox", { name: "Section draft" }), {
+      target: { value: "Unsaved revised section content." },
+    })
+    fireEvent.click(screen.getByRole("button", { name: /all dossiers/i }))
+    expect(confirmDiscard).toHaveBeenCalledWith(
+      "Discard unsaved draft changes and return to all dossiers?"
+    )
+    expect(screen.getByRole("heading", { name: "Fermented protein" })).toBeInTheDocument()
+    confirmDiscard.mockRestore()
+
     fireEvent.click(screen.getByRole("button", { name: "Read" }))
     expect(screen.queryByRole("textbox", { name: "Section draft" })).not.toBeInTheDocument()
     expect(screen.getByText("DOCUMENT VIEW")).toBeInTheDocument()
+  })
+
+  it("shows a recoverable error when a direct dossier link cannot be loaded", async () => {
+    window.history.replaceState({}, "", "/dossiers/missing-dossier")
+    vi.mocked(fetch).mockImplementation(
+      vi.fn(async (input: RequestInfo | URL) => {
+        const url = requestUrl(input)
+        if (url.endsWith("/analyses")) return jsonResponse({ analyses: [] })
+        if (url.endsWith("/dossiers")) return jsonResponse({ dossiers: [] })
+        if (url.endsWith("/dossiers/missing-dossier")) {
+          return jsonResponse({ error: "Dossier not found" }, 404)
+        }
+        return jsonResponse({}, 404)
+      })
+    )
+
+    render(<App />)
+
+    expect(
+      await screen.findByRole("heading", { name: "We couldn’t open this dossier" })
+    ).toBeInTheDocument()
+    expect(screen.getByRole("button", { name: "Try again" })).toBeInTheDocument()
+    expect(screen.getByRole("button", { name: "All dossiers" })).toBeInTheDocument()
   })
 })
 
