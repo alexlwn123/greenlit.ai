@@ -59,6 +59,14 @@ Local variables:
 - `GREENLIT_ALLOW_EXTERNAL_MODEL_PROCESSING`: must be explicitly set to `true` in hosted
   environments before filing or claim content can be sent to the configured external model
   provider. Leave it false for deterministic, Greenlit-local processing.
+- `GREENLIT_MODEL_PROVIDER`: `disabled` (default), `anthropic`, or `customer_gateway`.
+- `GREENLIT_CUSTOMER_GATEWAY_URL`: customer-controlled HTTPS model gateway. This lets an
+  enterprise keep provider credentials, cloud identity, retention controls, and model selection in
+  its own approved environment.
+- `GREENLIT_CUSTOMER_GATEWAY_TOKEN`: server-only bearer credential used to authenticate Greenlit to
+  the customer gateway.
+- `GREENLIT_ALLOW_PRIVATE_MODEL_GATEWAY`: permits a private IP gateway only for a customer-hosted
+  processing plane with private network connectivity.
 - `AUTH_RESEND_KEY`: Resend API key used by Convex Auth for password-reset codes.
 - `AUTH_EMAIL_FROM`: verified sender identity for password-reset email; the Resend onboarding sender can be used during private preview testing.
 - `GREENLIT_VERIFY_REFERENCES`: set to `true` to verify extracted references against Crossref and trusted NCBI sources.
@@ -98,6 +106,9 @@ In production, the browser uploads PDFs directly to private Vercel Blob storage 
 External model processing is disabled by default in hosted environments even when a provider key is
 present. Enable `GREENLIT_ALLOW_EXTERNAL_MODEL_PROCESSING=true` only after approving the provider's
 data-processing and retention terms for the filings handled by that deployment.
+
+For the customer-owned model architecture and gateway contract, see
+[`docs/confidential-processing.md`](docs/confidential-processing.md).
 
 ## Data Retention And Deletion
 

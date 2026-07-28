@@ -11,10 +11,8 @@ import {
   buildComparableAssessmentPrompt,
   mergeAssessments,
 } from "./comparable-assessment.js"
-import {
-  assertExternalModelProcessingAllowed,
-  externalModelRequestError,
-} from "./external-model-policy.js"
+import { externalModelRequestError } from "./external-model-policy.js"
+import { requestExternalModel } from "./model-gateway.js"
 import { readModelStageCache, writeModelStageCache } from "./model-stage-cache.js"
 
 export async function assessAndSynthesizeComparablesWithAnthropic({
@@ -35,8 +33,6 @@ export async function assessAndSynthesizeComparablesWithAnthropic({
   if (unresolved.length === 0 || eligibleFilings.length === 0) {
     return { comparableFilings: filings, comparableActions: [], modelUsage: [] }
   }
-  const apiKey = process.env.ANTHROPIC_API_KEY
-  if (!apiKey) throw new Error("ANTHROPIC_API_KEY is required for comparable synthesis")
   const model = process.env.GREENLIT_ANTHROPIC_MODEL ?? "claude-sonnet-4-6"
   const cacheInput = { model, subjectProfile, unresolved, eligibleFilings }
   const cached = await readModelStageCache<{
@@ -59,27 +55,18 @@ export async function assessAndSynthesizeComparablesWithAnthropic({
     required: ["assessments", "actions"],
     additionalProperties: false,
   } as const
-  assertExternalModelProcessingAllowed()
-  const response = await fetch("https://api.anthropic.com/v1/messages", {
-    method: "POST",
-    headers: {
-      "anthropic-version": "2023-06-01",
-      "content-type": "application/json",
-      "x-api-key": apiKey,
-    },
-    body: JSON.stringify({
-      model,
-      max_tokens: 16_000,
-      temperature: 0,
-      output_config: { format: { type: "json_schema", schema } },
-      system: `Assess comparator transferability conservatively, then produce one targeted action for every unresolved question. Comparator similarity or an FDA response never proves safety or equivalence. Actions must distinguish filing amendments from the smallest evidence-verification step. Use only supplied subject and comparator pages and introduce no new factual premises, studies, numerical limits, or legal conclusions.`,
-      messages: [
-        {
-          role: "user",
-          content: `${buildComparableAssessmentPrompt(subjectProfile, unresolved, eligibleFilings)}\n\nAlso return exactly one action for every unresolved question using the action schema. Base comparatorSupport only on assessments returned in this same response.`,
-        },
-      ],
-    }),
+  const response = await requestExternalModel("comparable_pipeline", {
+    model,
+    max_tokens: 16_000,
+    temperature: 0,
+    output_config: { format: { type: "json_schema", schema } },
+    system: `Assess comparator transferability conservatively, then produce one targeted action for every unresolved question. Comparator similarity or an FDA response never proves safety or equivalence. Actions must distinguish filing amendments from the smallest evidence-verification step. Use only supplied subject and comparator pages and introduce no new factual premises, studies, numerical limits, or legal conclusions.`,
+    messages: [
+      {
+        role: "user",
+        content: `${buildComparableAssessmentPrompt(subjectProfile, unresolved, eligibleFilings)}\n\nAlso return exactly one action for every unresolved question using the action schema. Base comparatorSupport only on assessments returned in this same response.`,
+      },
+    ],
   })
   if (!response.ok) {
     throw externalModelRequestError("Combined comparator pipeline", response.status)

@@ -1,8 +1,6 @@
 import type { DossierClaim, DossierSection } from "@greenlit/core"
-import {
-  externalModelProcessingAllowed,
-  externalModelRequestError,
-} from "./external-model-policy.js"
+import { externalModelRequestError } from "./external-model-policy.js"
+import { modelProcessingStatus, requestExternalModel } from "./model-gateway.js"
 
 const defaultModel = "claude-sonnet-4-6"
 const claimMarkerPattern = /\[\[claim:([^\]]+)\]\]/g
@@ -10,7 +8,7 @@ const anyClaimMarkerPattern = /\[\[claim:[^\]]+\]\]/
 
 export type AssistedDraftResult = {
   draft: string
-  provider: "anthropic" | "deterministic"
+  provider: "anthropic" | "customer_gateway" | "deterministic"
   model: string
   claimIds: string[]
 }
@@ -25,8 +23,8 @@ export async function draftSectionFromVerifiedClaims(input: {
   if (claims.length === 0)
     throw new Error("At least one verified claim is required for assisted drafting")
 
-  const apiKey = process.env.ANTHROPIC_API_KEY
-  if (!apiKey || !externalModelProcessingAllowed()) {
+  const processing = modelProcessingStatus()
+  if (!processing.enabled) {
     return {
       draft: validateAssistedDraft(deterministicDraft(input.section, claims), claims),
       provider: "deterministic",
@@ -36,18 +34,11 @@ export async function draftSectionFromVerifiedClaims(input: {
   }
 
   const model = process.env.GREENLIT_ANTHROPIC_MODEL ?? defaultModel
-  const response = await fetch("https://api.anthropic.com/v1/messages", {
-    method: "POST",
-    headers: {
-      "anthropic-version": "2023-06-01",
-      "content-type": "application/json",
-      "x-api-key": apiKey,
-    },
-    body: JSON.stringify({
-      model,
-      max_tokens: 4_000,
-      temperature: 0,
-      system: `Draft one section of an FDA GRAS notice using only the supplied verified claims.
+  const response = await requestExternalModel("assisted_drafting", {
+    model,
+    max_tokens: 4_000,
+    temperature: 0,
+    system: `Draft one section of an FDA GRAS notice using only the supplied verified claims.
 
 Hard constraints:
 - Do not introduce facts, numerical values, studies, conclusions, or regulatory interpretations that are absent from the verified claims.
@@ -57,21 +48,20 @@ Hard constraints:
 - Do not add a safety conclusion, legal conclusion, or expert conclusion.
 - Preserve uncertainty and qualified wording from the claims.
 - Return draft prose only, without commentary, a bibliography, or markdown code fences.`,
-      messages: [
-        {
-          role: "user",
-          content: JSON.stringify({
-            section: { part: input.section.part, title: input.section.title },
-            verifiedClaims: claims.map((claim) => ({
-              marker: `[[claim:${claim.id}]]`,
-              statement: claim.statement,
-              supportingExcerpt: claim.sourceExcerpt,
-              sourcePage: claim.sourcePage,
-            })),
-          }),
-        },
-      ],
-    }),
+    messages: [
+      {
+        role: "user",
+        content: JSON.stringify({
+          section: { part: input.section.part, title: input.section.title },
+          verifiedClaims: claims.map((claim) => ({
+            marker: `[[claim:${claim.id}]]`,
+            statement: claim.statement,
+            supportingExcerpt: claim.sourceExcerpt,
+            sourcePage: claim.sourcePage,
+          })),
+        }),
+      },
+    ],
   })
   if (!response.ok) {
     throw externalModelRequestError("Assisted drafting", response.status)
@@ -83,7 +73,7 @@ Hard constraints:
   if (!draft) throw new Error("Assisted drafting returned no text")
   return {
     draft: validateAssistedDraft(draft, claims),
-    provider: "anthropic",
+    provider: processing.provider === "customer_gateway" ? "customer_gateway" : "anthropic",
     model,
     claimIds: claims.map((claim) => claim.id),
   }

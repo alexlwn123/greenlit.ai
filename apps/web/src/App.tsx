@@ -87,10 +87,12 @@ import {
   getEvidencePassages,
   getExternalConsultantReview,
   getExternalEvidenceRequest,
+  getModelProcessingStatus,
   getSectionVersions,
   listAnalyses,
   listDossiers,
   lockDossierRelease,
+  type ModelProcessingStatus,
   previewFactImpact,
   restoreSectionVersion,
   reviewDossierClaim,
@@ -2796,6 +2798,7 @@ function DossierPage({
   const [editingFactTitle, setEditingFactTitle] = useState("")
   const [editingFactFields, setEditingFactFields] = useState<Record<string, string>>({})
   const [factImpact, setFactImpact] = useState<FactImpact | null>(null)
+  const [modelProcessing, setModelProcessing] = useState<ModelProcessingStatus | null>(null)
 
   useEffect(() => {
     if (!dossierId || activeDossier?.dossier.id === dossierId) return
@@ -2804,6 +2807,13 @@ function DossierPage({
       .then(onLoad)
       .catch((error) => setFormError(errorMessage(error)))
   }, [activeDossier?.dossier.id, dossierId, onLoad])
+
+  useEffect(() => {
+    if (!dossierId) return
+    void getModelProcessingStatus()
+      .then(setModelProcessing)
+      .catch(() => setModelProcessing(null))
+  }, [dossierId])
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -4476,6 +4486,30 @@ function DossierPage({
                 <small>{activeRelease ? "release locked" : "before release"}</small>
               </article>
             </section>
+
+            {modelProcessing ? (
+              <section
+                className="processing-boundary"
+                aria-label="Confidential AI processing boundary"
+              >
+                <ShieldCheck />
+                <div>
+                  <span>CONFIDENTIAL PROCESSING</span>
+                  <strong>
+                    {modelProcessing.boundary === "customer_cloud"
+                      ? "Customer-controlled AI gateway"
+                      : modelProcessing.boundary === "provider_api"
+                        ? "Approved enterprise model API"
+                        : "Greenlit private processing only"}
+                  </strong>
+                  <small>
+                    {modelProcessing.enabled
+                      ? `Sensitive identifiers are sanitized before transmission${modelProcessing.endpointHost ? ` to ${modelProcessing.endpointHost}` : ""}.`
+                      : "External AI processing is disabled. Deterministic workflows keep dossier content inside Greenlit."}
+                  </small>
+                </div>
+              </section>
+            ) : null}
 
             <div className="overview-grid">
               <section className="overview-priorities">

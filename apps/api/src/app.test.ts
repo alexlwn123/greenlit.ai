@@ -16,6 +16,22 @@ afterEach(async () => {
 })
 
 describe("local analysis API", () => {
+  it("reports the confidential processing boundary without exposing secrets", async () => {
+    vi.stubEnv("GREENLIT_MODEL_PROVIDER", "customer_gateway")
+    vi.stubEnv("GREENLIT_CUSTOMER_GATEWAY_URL", "https://models.example.com/invoke")
+    vi.stubEnv("GREENLIT_CUSTOMER_GATEWAY_TOKEN", "do-not-return")
+    const app = createApp({ dataDir })
+    const response = await app.request("/api/privacy/model-processing", {
+      headers: { "x-greenlit-session": "privacy-user" },
+    })
+    expect(response.status).toBe(200)
+    const body = await response.text()
+    expect(body).toContain("customer_cloud")
+    expect(body).toContain("models.example.com")
+    expect(body).not.toContain("do-not-return")
+    expect(body).not.toContain("/invoke")
+  })
+
   it("enforces the 500-page filing limit", () => {
     expect(() => validatePdfPageCount(500)).not.toThrow()
     expect(() => validatePdfPageCount(501)).toThrow(/supports filings up to 500 pages/)

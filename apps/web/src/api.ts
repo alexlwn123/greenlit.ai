@@ -45,6 +45,22 @@ export async function listDossiers() {
   return response.dossiers
 }
 
+export type ModelProcessingStatus = {
+  enabled: boolean
+  provider: "disabled" | "anthropic" | "customer_gateway"
+  boundary: "greenlit" | "provider_api" | "customer_cloud"
+  externalProcessingApproved: boolean
+  sanitization: "required"
+  endpointHost?: string
+}
+
+export async function getModelProcessingStatus() {
+  const response = await requestJson<{ modelProcessing: ModelProcessingStatus }>(
+    "/privacy/model-processing"
+  )
+  return response.modelProcessing
+}
+
 export async function getDossier(dossierId: string) {
   return requestJson<DossierWorkspace>(`/dossiers/${dossierId}`)
 }
@@ -517,7 +533,7 @@ export async function assistDossierSection(dossierId: string, sectionId: string)
   return requestJson<{
     result: {
       draft: string
-      provider: "anthropic" | "deterministic"
+      provider: "anthropic" | "customer_gateway" | "deterministic"
       model: string
       claimIds: string[]
     }

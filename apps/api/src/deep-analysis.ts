@@ -5,10 +5,8 @@ import {
   type DeepAnalysisResult,
   DeepAnalysisResultSchema,
 } from "../../../packages/core/src/index.js"
-import {
-  assertExternalModelProcessingAllowed,
-  externalModelRequestError,
-} from "./external-model-policy.js"
+import { externalModelRequestError } from "./external-model-policy.js"
+import { modelProcessingStatus, requestExternalModel } from "./model-gateway.js"
 import type { ExtractedPdfPage } from "./pdf.js"
 
 export type DeepAnalyzer = (input: {
@@ -251,11 +249,6 @@ export const deepAnalysisOutputSchema = {
 } as const
 
 export const analyzeNoticeWithAnthropic: DeepAnalyzer = async ({ filingName, pages, cacheDir }) => {
-  const apiKey = process.env.ANTHROPIC_API_KEY
-  if (!apiKey) {
-    throw new Error("ANTHROPIC_API_KEY is required for deep analysis")
-  }
-
   const selected = selectAnalysisPageAwareText(pages)
   const model = process.env.GREENLIT_ANTHROPIC_MODEL ?? defaultModel
   const cacheFile = cacheDir
@@ -275,32 +268,23 @@ export const analyzeNoticeWithAnthropic: DeepAnalyzer = async ({ filingName, pag
     }
   }
   enforceAnalysisBudget(selected.text)
-  assertExternalModelProcessingAllowed()
-  const response = await fetch("https://api.anthropic.com/v1/messages", {
-    method: "POST",
-    headers: {
-      "anthropic-version": "2023-06-01",
-      "content-type": "application/json",
-      "x-api-key": apiKey,
-    },
-    body: JSON.stringify({
-      model,
-      max_tokens: 20_000,
-      temperature: 0,
-      output_config: {
-        format: {
-          type: "json_schema",
-          schema: deepAnalysisOutputSchema,
-        },
+  const response = await requestExternalModel("deep_analysis", {
+    model,
+    max_tokens: 20_000,
+    temperature: 0,
+    output_config: {
+      format: {
+        type: "json_schema",
+        schema: deepAnalysisOutputSchema,
       },
-      system: buildSystemPrompt(),
-      messages: [
-        {
-          role: "user",
-          content: buildAnalysisPrompt(filingName, selected.text, selected.truncated),
-        },
-      ],
-    }),
+    },
+    system: buildSystemPrompt(),
+    messages: [
+      {
+        role: "user",
+        content: buildAnalysisPrompt(filingName, selected.text, selected.truncated),
+      },
+    ],
   })
 
   if (!response.ok) {
@@ -320,7 +304,7 @@ export const analyzeNoticeWithAnthropic: DeepAnalyzer = async ({ filingName, pag
     researchReferences: [],
     analyzedPages: selected.pageNumbers,
     truncated: selected.truncated,
-    modelProvider: `anthropic/${model}`,
+    modelProvider: `${modelProcessingStatus().provider}/${model}`,
     modelUsage,
     estimatedCostUsd: Number(
       modelUsage.reduce((total, usage) => total + usage.estimatedCostUsd, 0).toFixed(6)

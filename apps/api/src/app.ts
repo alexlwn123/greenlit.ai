@@ -63,6 +63,7 @@ import { assessAndSynthesizeComparablesWithAnthropic } from "./comparable-pipeli
 import { loadConfiguredCorpus } from "./corpus.js"
 import { verifyReferencesWithCrossref } from "./crossref.js"
 import { analyzeNoticeWithAnthropic, type DeepAnalyzer } from "./deep-analysis.js"
+import { modelProcessingStatus } from "./model-gateway.js"
 import { extractPdfText } from "./pdf.js"
 import { verifyReferenceSources } from "./source-verification.js"
 import { createConfiguredStorage, defaultDataDir } from "./storage.js"
@@ -153,6 +154,11 @@ export function createApp(options: CreateAppOptions = {}) {
       service: "greenlit-local-api",
     })
   )
+
+  app.get("/api/privacy/model-processing", async (context) => {
+    await requestScope(context)
+    return context.json({ modelProcessing: modelProcessingStatus() })
+  })
 
   app.post("/api/uploads", async (context) => {
     const { ownerId } = await requestScope(context)

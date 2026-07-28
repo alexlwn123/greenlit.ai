@@ -4,10 +4,8 @@ import {
   type EvidenceMatrixItem,
   type NoticeProfile,
 } from "../../../packages/core/src/index.js"
-import {
-  assertExternalModelProcessingAllowed,
-  externalModelRequestError,
-} from "./external-model-policy.js"
+import { externalModelRequestError } from "./external-model-policy.js"
+import { requestExternalModel } from "./model-gateway.js"
 import { readModelStageCache, writeModelStageCache } from "./model-stage-cache.js"
 
 export type ComparableAssessor = (input: {
@@ -78,10 +76,6 @@ export const assessComparableEvidenceWithAnthropic: ComparableAssessor = async (
   filings,
   cacheDir,
 }) => {
-  const apiKey = process.env.ANTHROPIC_API_KEY
-  if (!apiKey) {
-    throw new Error("ANTHROPIC_API_KEY is required for comparable assessment")
-  }
   const unresolved = evidenceMatrix.filter((item) => item.unresolvedQuestions.length > 0)
   if (unresolved.length === 0) return filings
 
@@ -98,25 +92,17 @@ export const assessComparableEvidenceWithAnthropic: ComparableAssessor = async (
     cacheInput
   )
   if (cached) return mergeAssessments(filings, cached, unresolved)
-  assertExternalModelProcessingAllowed()
-  const response = await fetch("https://api.anthropic.com/v1/messages", {
-    method: "POST",
-    headers: {
-      "anthropic-version": "2023-06-01",
-      "content-type": "application/json",
-      "x-api-key": apiKey,
-    },
-    body: JSON.stringify({
-      model,
-      max_tokens: 12_000,
-      temperature: 0,
-      output_config: {
-        format: {
-          type: "json_schema",
-          schema: assessmentOutputSchema,
-        },
+  const response = await requestExternalModel("comparable_assessment", {
+    model,
+    max_tokens: 12_000,
+    temperature: 0,
+    output_config: {
+      format: {
+        type: "json_schema",
+        schema: assessmentOutputSchema,
       },
-      system: `You assess whether passages from comparable FDA GRAS notices can help answer unresolved evidence questions in a subject notice.
+    },
+    system: `You assess whether passages from comparable FDA GRAS notices can help answer unresolved evidence questions in a subject notice.
 
 Do not infer scientific equivalence from ingredient similarity or a prior FDA response. A comparator can show a documentation method without proving that the subject material is safe or equivalent.
 
@@ -129,13 +115,12 @@ Use these labels:
 - insufficient_information: the supplied passages do not support a defensible transferability judgment.
 
 Be conservative. Evaluate identity/source, composition, manufacturing, impurities, intended use/exposure, test article, study purpose, and evidence role as relevant. Cite only supplied comparator page numbers. Never say that FDA approved a substance or that another GRN resolves the subject filing.`,
-      messages: [
-        {
-          role: "user",
-          content: buildComparableAssessmentPrompt(subjectProfile, unresolved, eligibleFilings),
-        },
-      ],
-    }),
+    messages: [
+      {
+        role: "user",
+        content: buildComparableAssessmentPrompt(subjectProfile, unresolved, eligibleFilings),
+      },
+    ],
   })
   if (!response.ok) {
     throw externalModelRequestError("Comparable assessment", response.status)

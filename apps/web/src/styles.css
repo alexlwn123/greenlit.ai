@@ -4702,6 +4702,43 @@ label {
   margin-top: 20px;
 }
 
+.processing-boundary {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  border: 1px solid #b9d8ca;
+  border-radius: 12px;
+  background: #f2faf6;
+  color: #143d2d;
+}
+
+.processing-boundary svg {
+  flex: 0 0 auto;
+  width: 24px;
+  height: 24px;
+}
+
+.processing-boundary div {
+  display: grid;
+  gap: 2px;
+}
+
+.processing-boundary span,
+.processing-boundary small {
+  color: #527263;
+}
+
+.processing-boundary span {
+  font-size: 0.69rem;
+  font-weight: 750;
+  letter-spacing: 0.09em;
+}
+
+.processing-boundary strong {
+  font-size: 0.95rem;
+}
+
 .overview-priorities,
 .overview-activity {
   min-width: 0;

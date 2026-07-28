@@ -4,10 +4,8 @@ import {
   type ComparableFiling,
   type EvidenceMatrixItem,
 } from "../../../packages/core/src/index.js"
-import {
-  assertExternalModelProcessingAllowed,
-  externalModelRequestError,
-} from "./external-model-policy.js"
+import { externalModelRequestError } from "./external-model-policy.js"
+import { requestExternalModel } from "./model-gateway.js"
 import { readModelStageCache, writeModelStageCache } from "./model-stage-cache.js"
 
 export type ComparableActionSynthesizer = (input: {
@@ -83,8 +81,6 @@ export const synthesizeComparableActionsWithAnthropic: ComparableActionSynthesiz
   filings,
   cacheDir,
 }) => {
-  const apiKey = process.env.ANTHROPIC_API_KEY
-  if (!apiKey) throw new Error("ANTHROPIC_API_KEY is required for action synthesis")
   const questions = evidenceMatrix.flatMap((item) =>
     item.unresolvedQuestions.map((question) => ({
       requirementId: item.id,
@@ -105,33 +101,24 @@ export const synthesizeComparableActionsWithAnthropic: ComparableActionSynthesiz
   )
   if (cached) return validateActions(cached, evidenceMatrix, filings)
 
-  assertExternalModelProcessingAllowed()
-  const response = await fetch("https://api.anthropic.com/v1/messages", {
-    method: "POST",
-    headers: {
-      "anthropic-version": "2023-06-01",
-      "content-type": "application/json",
-      "x-api-key": apiKey,
-    },
-    body: JSON.stringify({
-      model,
-      max_tokens: 8_000,
-      temperature: 0,
-      output_config: { format: { type: "json_schema", schema: actionOutputSchema } },
-      system: `Convert comparator assessments into targeted GRAS-notice amendment and research actions.
+  const response = await requestExternalModel("comparable_action_synthesis", {
+    model,
+    max_tokens: 8_000,
+    temperature: 0,
+    output_config: { format: { type: "json_schema", schema: actionOutputSchema } },
+    system: `Convert comparator assessments into targeted GRAS-notice amendment and research actions.
 
 Return exactly one action for each supplied unresolved question. The amendment action must say what to add, revise, reconcile, or explain in the filing. The research action must state the smallest evidence-generation or verification step needed; if existing records can answer the question, say to verify or compile them instead of recommending a new study.
 
 Do not claim that a comparator proves safety, equivalence, FDA acceptance, or resolution. Contextual and non-transferable comparators may inform document structure but cannot supply substantive evidence. Preserve the distinction between filing improvement and new evidence generation. Do not introduce numerical limits, legal interpretations, section numbers, table numbers, studies, or factual premises that are not in the supplied subject evidence. Cite only supplied subject and comparator page numbers.`,
-      messages: [
-        {
-          role: "user",
-          content: `UNRESOLVED QUESTIONS\n${JSON.stringify(
-            questions
-          )}\n\nCOMPARATOR ASSESSMENTS\n${JSON.stringify(filings)}`,
-        },
-      ],
-    }),
+    messages: [
+      {
+        role: "user",
+        content: `UNRESOLVED QUESTIONS\n${JSON.stringify(
+          questions
+        )}\n\nCOMPARATOR ASSESSMENTS\n${JSON.stringify(filings)}`,
+      },
+    ],
   })
   if (!response.ok) {
     throw externalModelRequestError("Comparable action synthesis", response.status)
