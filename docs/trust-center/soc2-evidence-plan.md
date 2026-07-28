@@ -16,6 +16,7 @@ Export user/role/MFA status from GitHub, Vercel, Convex, Resend, DNS/domain/emai
 ## Technical evidence—largely available
 
 - Architecture and data flow; production configuration inventory; source and deployed commit identity.
+- Authenticated secret-free security-control status export from `/api/privacy/security-controls`.
 - Production authentication and owner-isolation code/tests.
 - Private upload/storage and deletion code/tests.
 - Security headers, bounded inputs, privacy-safe errors, capability-link controls, and model gateway tests.

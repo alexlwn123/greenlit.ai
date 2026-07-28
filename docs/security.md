@@ -46,6 +46,9 @@ review links as primary security boundaries.
 - GitHub runs CodeQL's extended security queries on pushes, pull requests, and a weekly schedule.
   Dependabot opens grouped weekly dependency updates to keep remediation work reviewable.
 - CSV cells that could be interpreted as spreadsheet formulas are neutralized before export.
+- Authenticated operators can inspect `/api/privacy/security-controls` for a secret-free summary of
+  upload scanning, SIEM delivery, deletion-receipt signing, and model-processing configuration. It
+  exposes only booleans, protocol properties, key IDs, and endpoint hostnames—not tokens or paths.
 - Resolving or rejecting an evidence request immediately revokes its active response links.
   Completing or cancelling a consultant handoff does the same for review links.
 

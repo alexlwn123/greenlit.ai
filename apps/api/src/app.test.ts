@@ -40,6 +40,56 @@ describe("local analysis API", () => {
     expect(body).not.toContain("/invoke")
   })
 
+  it("reports security-control configuration without exposing endpoints or secrets", async () => {
+    vi.stubEnv("VERCEL", "1")
+    vi.stubEnv("GREENLIT_UPLOAD_SCANNER_URL", "https://scanner.customer.example/private/scan")
+    vi.stubEnv("GREENLIT_UPLOAD_SCANNER_TOKEN", "do-not-return-scanner-token")
+    vi.stubEnv("GREENLIT_ALLOW_EXTERNAL_UPLOAD_SCANNING", "true")
+    vi.stubEnv("GREENLIT_REQUIRE_UPLOAD_MALWARE_SCAN", "true")
+    vi.stubEnv("GREENLIT_SECURITY_TELEMETRY_URL", "https://siem.customer.example/private/events")
+    vi.stubEnv("GREENLIT_SECURITY_TELEMETRY_TOKEN", "do-not-return-telemetry-token")
+    vi.stubEnv("GREENLIT_ALLOW_EXTERNAL_SECURITY_TELEMETRY", "true")
+    vi.stubEnv("GREENLIT_DELETION_RECEIPT_SECRET", "do-not-return-a-secret-that-is-long-enough")
+    vi.stubEnv("GREENLIT_DELETION_RECEIPT_KEY_ID", "receipts-2026")
+    const app = createApp({
+      dataDir,
+      resolveAuthenticatedOwner: async (token) =>
+        token === "valid-auditor-token" ? "owner" : null,
+    })
+
+    const response = await app.request("/api/privacy/security-controls", {
+      headers: { Authorization: "Bearer valid-auditor-token" },
+    })
+    expect(response.status).toBe(200)
+    const body = await response.text()
+    expect(JSON.parse(body)).toMatchObject({
+      uploadSecurity: {
+        localInspection: "required",
+        malwareScannerConfigured: true,
+        configurationValid: true,
+        malwareScanningRequired: true,
+        hostedExternalScanningApproved: true,
+        endpointHost: "scanner.customer.example",
+        sendsFilename: false,
+        digestBinding: "sha256",
+      },
+      securityTelemetry: {
+        configured: true,
+        configurationValid: true,
+        hostedExternalDeliveryApproved: true,
+        endpointHost: "siem.customer.example",
+        eventSigning: "hmac-sha256",
+        payloadPolicy: "metadata_only",
+      },
+      deletionReceipts: {
+        configured: true,
+        algorithm: "HMAC-SHA256",
+        keyId: "receipts-2026",
+      },
+    })
+    expect(body).not.toMatch(/do-not-return|\/private\//)
+  })
+
   it("enforces the 500-page filing limit", () => {
     expect(() => validatePdfPageCount(500)).not.toThrow()
     expect(() => validatePdfPageCount(501)).toThrow(/supports filings up to 500 pages/)

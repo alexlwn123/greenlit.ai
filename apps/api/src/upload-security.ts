@@ -23,6 +23,27 @@ export type UploadSecurityAssessment =
         | "scanner_unavailable"
     }
 
+export function uploadSecurityStatus() {
+  let endpoint: URL | null = null
+  let configurationValid = true
+  try {
+    endpoint = configuredScannerUrl()
+  } catch {
+    configurationValid = false
+  }
+  return {
+    localInspection: "required" as const,
+    malwareScannerConfigured: Boolean(endpoint),
+    configurationValid,
+    malwareScanningRequired: process.env.GREENLIT_REQUIRE_UPLOAD_MALWARE_SCAN === "true",
+    hostedExternalScanningApproved:
+      !isHosted() || process.env.GREENLIT_ALLOW_EXTERNAL_UPLOAD_SCANNING === "true",
+    endpointHost: endpoint?.hostname,
+    sendsFilename: false as const,
+    digestBinding: "sha256" as const,
+  }
+}
+
 const pdfSignature = new TextEncoder().encode("%PDF-")
 const pdfEndMarker = new TextEncoder().encode("%%EOF")
 const prohibitedFeatures = [

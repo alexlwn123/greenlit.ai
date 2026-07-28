@@ -65,10 +65,10 @@ import { verifyReferencesWithCrossref } from "./crossref.js"
 import { analyzeNoticeWithAnthropic, type DeepAnalyzer } from "./deep-analysis.js"
 import { modelProcessingStatus } from "./model-gateway.js"
 import { extractPdfText } from "./pdf.js"
-import { recordSecurityEvent } from "./security-telemetry.js"
+import { recordSecurityEvent, securityTelemetryStatus } from "./security-telemetry.js"
 import { verifyReferenceSources } from "./source-verification.js"
 import { createConfiguredStorage, defaultDataDir } from "./storage.js"
-import { assessPdfUpload } from "./upload-security.js"
+import { assessPdfUpload, uploadSecurityStatus } from "./upload-security.js"
 
 type CreateAppOptions = {
   analysisMode?: "minimum" | "deep"
@@ -170,6 +170,16 @@ export function createApp(options: CreateAppOptions = {}) {
   app.get("/api/privacy/model-processing", async (context) => {
     await requestScope(context)
     return context.json({ modelProcessing: modelProcessingStatus() })
+  })
+
+  app.get("/api/privacy/security-controls", async (context) => {
+    await requestScope(context)
+    return context.json({
+      uploadSecurity: uploadSecurityStatus(),
+      securityTelemetry: securityTelemetryStatus(),
+      deletionReceipts: deletionReceiptSigningStatus(),
+      externalModelProcessing: modelProcessingStatus(),
+    })
   })
 
   app.post("/api/uploads", async (context) => {
@@ -2550,6 +2560,17 @@ export function createDeletionReceipt(
       keyId,
       signature: createHmac("sha256", secret).update(JSON.stringify(receipt)).digest("hex"),
     },
+  }
+}
+
+function deletionReceiptSigningStatus() {
+  const secret = process.env.GREENLIT_DELETION_RECEIPT_SECRET
+  const keyId = process.env.GREENLIT_DELETION_RECEIPT_KEY_ID?.trim()
+  return {
+    configured: Boolean(secret && secret.length >= 32 && keyId && keyId.length <= 100),
+    algorithm: "HMAC-SHA256" as const,
+    keyId: keyId && keyId.length <= 100 ? keyId : undefined,
+    unsignedReceiptsExplicit: true as const,
   }
 }
 

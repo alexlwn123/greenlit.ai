@@ -19,6 +19,26 @@ export type SecurityEvent = {
   status: number
 }
 
+export function securityTelemetryStatus() {
+  let endpoint: URL | null = null
+  let configurationValid = true
+  try {
+    endpoint = configuredTelemetryUrl()
+  } catch {
+    configurationValid = false
+  }
+  return {
+    configured: Boolean(endpoint),
+    configurationValid,
+    hostedExternalDeliveryApproved:
+      !isHosted() || process.env.GREENLIT_ALLOW_EXTERNAL_SECURITY_TELEMETRY === "true",
+    endpointHost: endpoint?.hostname,
+    eventSigning: "hmac-sha256" as const,
+    localFallback: true as const,
+    payloadPolicy: "metadata_only" as const,
+  }
+}
+
 const telemetryTimeoutMs = 2_000
 
 export async function recordSecurityEvent(
