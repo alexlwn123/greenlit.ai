@@ -13,7 +13,9 @@ review links as primary security boundaries.
   Client-provided owner identifiers are ignored.
 - Evidence-response and consultant-review URLs are bearer credentials. Only SHA-256 hashes are
   stored, links expire, newly issued links revoke prior active links for the same workflow, and
-  evidence links are single-use.
+  evidence links are single-use. Newly generated URLs carry credentials in fragments, which
+  browsers do not send to hosting access logs; the client immediately moves them to session-only
+  storage and cleans the address bar. Legacy path links are migrated on first use.
 - Private uploaded objects use owner-prefixed paths and private Vercel Blob access. Upload grants
   accept PDF content only, have a 40 MB limit, cannot overwrite existing objects, and are verified
   again before an analysis record is created.
@@ -27,11 +29,26 @@ review links as primary security boundaries.
 - Requests are bounded at 41 MB, JSON bodies at 256 KB, response notes at 10,000 characters, PDFs
   at 40 MB and 500 pages, and uploaded files must have both PDF metadata and a PDF file signature.
 - Unexpected server failures return a generic message. Internal exception details are not sent to
-  clients.
+  clients, provider response bodies are not copied into errors, and capability credentials are
+  redacted from application error logs.
 - The deployment applies a Content Security Policy, anti-framing controls, MIME sniffing
   protection, strict transport security, a restrictive permissions policy, and no-referrer policy.
 - GitHub runs CodeQL's extended security queries on pushes, pull requests, and a weekly schedule.
   Dependabot opens grouped weekly dependency updates to keep remediation work reviewable.
+- CSV cells that could be interpreted as spreadsheet formulas are neutralized before export.
+- Resolving or rejecting an evidence request immediately revokes its active response links.
+  Completing or cancelling a consultant handoff does the same for review links.
+
+## External processing and retention
+
+- Hosted external-model calls require the separate
+  `GREENLIT_ALLOW_EXTERNAL_MODEL_PROCESSING=true` opt-in even when an API key is configured.
+- Without that opt-in, deterministic analysis and drafting paths remain available and confidential
+  filing text is not sent to a model provider.
+- Model-stage caches are isolated by analysis. Deleting an analysis removes its upload, extracted
+  text, workbook notes, saved metadata, and analysis-scoped model cache.
+- Approving external processing is a deployment-level privacy decision. Review the model
+  provider's data-processing, retention, residency, subprocessors, and training terms first.
 
 ## Secrets and local data
 

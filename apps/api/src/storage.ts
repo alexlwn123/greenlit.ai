@@ -1,5 +1,5 @@
 import { randomUUID } from "node:crypto"
-import { mkdir, readFile, unlink, writeFile } from "node:fs/promises"
+import { mkdir, readFile, rm, unlink, writeFile } from "node:fs/promises"
 import path from "node:path"
 import { fileURLToPath } from "node:url"
 import { del, get, put } from "@vercel/blob"
@@ -666,7 +666,8 @@ export function createStorage(dataDir = defaultDataDir()) {
       evidenceRequestLinks: database.evidenceRequestLinks
         .filter((link) => link.dossierId === dossierId && link.ownerId === ownerId)
         .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
-        .slice(0, 200),
+        .slice(0, 200)
+        .map((link) => ({ ...link, tokenHash: "" })),
       attestations: database.releaseAttestations
         .filter((item) => item.dossierId === dossierId && item.ownerId === ownerId)
         .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt))
@@ -686,7 +687,8 @@ export function createStorage(dataDir = defaultDataDir()) {
       reviewLinks: database.consultantReviewLinks
         .filter((item) => item.dossierId === dossierId && item.ownerId === ownerId)
         .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
-        .slice(0, 100),
+        .slice(0, 100)
+        .map((link) => ({ ...link, tokenHash: "" })),
       submissions: database.submissions
         .filter((item) => item.dossierId === dossierId && item.ownerId === ownerId)
         .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt))
@@ -1188,6 +1190,14 @@ export function createStorage(dataDir = defaultDataDir()) {
     request.status = status
     request.responseNote = responseNote
     request.updatedAt = new Date().toISOString()
+    if (status === "resolved" || status === "rejected") {
+      for (const link of database.evidenceRequestLinks.filter(
+        (item) => item.requestId === request.id && item.status === "active"
+      )) {
+        link.status = "revoked"
+        link.updatedAt = request.updatedAt
+      }
+    }
     if (status === "resolved") {
       pushAudit(
         database,
@@ -1565,6 +1575,14 @@ export function createStorage(dataDir = defaultDataDir()) {
     handoff.status = status
     handoff.responseNote = responseNote
     handoff.updatedAt = new Date().toISOString()
+    if (status === "completed" || status === "cancelled") {
+      for (const link of database.consultantReviewLinks.filter(
+        (item) => item.handoffId === handoff.id && item.status === "active"
+      )) {
+        link.status = "revoked"
+        link.updatedAt = handoff.updatedAt
+      }
+    }
     const action =
       status === "in_review"
         ? "handoff_started"
@@ -1982,6 +2000,7 @@ export function createStorage(dataDir = defaultDataDir()) {
 
     database.analyses = database.analyses.filter((candidate) => candidate.id !== analysisId)
     database.notes = database.notes.filter((note) => note.analysisId !== analysisId)
+    await rm(path.join(dataDir, "model-cache", analysisId), { force: true, recursive: true })
     await writeDatabase(database)
     return true
   }

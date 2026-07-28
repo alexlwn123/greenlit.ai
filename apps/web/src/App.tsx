@@ -113,6 +113,7 @@ import {
   verifyDossierEvidence,
   waitForAnalysis,
 } from "./api"
+import { clearCapabilityToken, consumeCapabilityToken } from "./capability-token"
 
 type LoadState = "idle" | "loading" | "uploading" | "polling"
 type Route =
@@ -353,6 +354,7 @@ function ExternalResponsePage({ token }: { token: string }) {
     try {
       if (file) await submitExternalEvidenceFile(token, file, note, category)
       else await submitExternalEvidenceResponse(token, note)
+      clearCapabilityToken("respond")
       setStatus("sent")
     } catch (error) {
       setMessage(errorMessage(error))
@@ -6207,11 +6209,11 @@ function DossierPage({
 
 function readRoute(): Route {
   const path = window.location.pathname
-  if (path.startsWith("/respond/")) {
-    return { name: "respond", token: path.split("/")[2] ?? "" }
+  if (path === "/respond" || path.startsWith("/respond/")) {
+    return { name: "respond", token: consumeCapabilityToken("respond") }
   }
-  if (path.startsWith("/review/")) {
-    return { name: "review", token: path.split("/")[2] ?? "" }
+  if (path === "/review" || path.startsWith("/review/")) {
+    return { name: "review", token: consumeCapabilityToken("review") }
   }
   if (path.startsWith("/analysis")) {
     return { name: "analysis", id: path.split("/")[2] }
@@ -6226,8 +6228,8 @@ function readRoute(): Route {
 }
 
 function routePath(route: Route) {
-  if (route.name === "respond") return `/respond/${route.token}`
-  if (route.name === "review") return `/review/${route.token}`
+  if (route.name === "respond") return "/respond"
+  if (route.name === "review") return "/review"
   if (route.name === "analysis") return `/analysis/${route.id ?? ""}`
   if (route.name === "workspace") return "/workspace"
   if (route.name === "dossiers") return route.id ? `/dossiers/${route.id}` : "/dossiers"

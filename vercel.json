@@ -27,11 +27,11 @@
       ]
     },
     {
-      "source": "/respond/(.*)",
+      "source": "/respond/:path*",
       "headers": [{ "key": "Cache-Control", "value": "no-store, max-age=0" }]
     },
     {
-      "source": "/review/(.*)",
+      "source": "/review/:path*",
       "headers": [{ "key": "Cache-Control", "value": "no-store, max-age=0" }]
     }
   ],

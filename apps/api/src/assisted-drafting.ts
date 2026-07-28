@@ -1,4 +1,8 @@
 import type { DossierClaim, DossierSection } from "@greenlit/core"
+import {
+  externalModelProcessingAllowed,
+  externalModelRequestError,
+} from "./external-model-policy.js"
 
 const defaultModel = "claude-sonnet-4-6"
 const claimMarkerPattern = /\[\[claim:([^\]]+)\]\]/g
@@ -22,7 +26,7 @@ export async function draftSectionFromVerifiedClaims(input: {
     throw new Error("At least one verified claim is required for assisted drafting")
 
   const apiKey = process.env.ANTHROPIC_API_KEY
-  if (!apiKey) {
+  if (!apiKey || !externalModelProcessingAllowed()) {
     return {
       draft: validateAssistedDraft(deterministicDraft(input.section, claims), claims),
       provider: "deterministic",
@@ -70,8 +74,7 @@ Hard constraints:
     }),
   })
   if (!response.ok) {
-    const detail = await response.text()
-    throw new Error(`Assisted drafting failed (${response.status}): ${detail.slice(0, 500)}`)
+    throw externalModelRequestError("Assisted drafting", response.status)
   }
   const payload = (await response.json()) as {
     content?: Array<{ type?: string; text?: string }>

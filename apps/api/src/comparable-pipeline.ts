@@ -11,6 +11,10 @@ import {
   buildComparableAssessmentPrompt,
   mergeAssessments,
 } from "./comparable-assessment.js"
+import {
+  assertExternalModelProcessingAllowed,
+  externalModelRequestError,
+} from "./external-model-policy.js"
 import { readModelStageCache, writeModelStageCache } from "./model-stage-cache.js"
 
 export async function assessAndSynthesizeComparablesWithAnthropic({
@@ -55,6 +59,7 @@ export async function assessAndSynthesizeComparablesWithAnthropic({
     required: ["assessments", "actions"],
     additionalProperties: false,
   } as const
+  assertExternalModelProcessingAllowed()
   const response = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
     headers: {
@@ -77,10 +82,7 @@ export async function assessAndSynthesizeComparablesWithAnthropic({
     }),
   })
   if (!response.ok) {
-    const detail = await response.text()
-    throw new Error(
-      `Combined comparator pipeline failed (${response.status}): ${detail.slice(0, 500)}`
-    )
+    throw externalModelRequestError("Combined comparator pipeline", response.status)
   }
   const payload = (await response.json()) as {
     content?: Array<{ type?: string; text?: string }>

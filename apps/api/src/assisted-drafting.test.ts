@@ -1,6 +1,6 @@
-import type { DossierClaim } from "@greenlit/core"
-import { describe, expect, it } from "vitest"
-import { validateAssistedDraft } from "./assisted-drafting.js"
+import type { DossierClaim, DossierSection } from "@greenlit/core"
+import { afterEach, describe, expect, it, vi } from "vitest"
+import { draftSectionFromVerifiedClaims, validateAssistedDraft } from "./assisted-drafting.js"
 
 const verifiedClaim: DossierClaim = {
   id: "claim-1",
@@ -16,6 +16,20 @@ const verifiedClaim: DossierClaim = {
   createdAt: "2026-07-26T00:00:00.000Z",
   updatedAt: "2026-07-26T00:00:00.000Z",
 }
+
+const section: DossierSection = {
+  id: "section-1",
+  dossierId: "dossier-1",
+  ownerId: "owner-1",
+  part: "2",
+  title: "Identity",
+  content: "",
+  status: "draft",
+  createdAt: "2026-07-26T00:00:00.000Z",
+  updatedAt: "2026-07-26T00:00:00.000Z",
+}
+
+afterEach(() => vi.unstubAllEnvs())
 
 describe("validateAssistedDraft", () => {
   it("accepts paragraphs grounded in allowed verified claim markers", () => {
@@ -40,5 +54,18 @@ describe("validateAssistedDraft", () => {
         [verifiedClaim]
       )
     ).toThrow(/without verified claim citations/)
+  })
+
+  it("uses the deterministic private path when hosted external processing is not approved", async () => {
+    vi.stubEnv("VERCEL", "1")
+    vi.stubEnv("ANTHROPIC_API_KEY", "configured-but-not-approved")
+    vi.stubEnv("GREENLIT_ALLOW_EXTERNAL_MODEL_PROCESSING", "")
+
+    await expect(
+      draftSectionFromVerifiedClaims({ section, claims: [verifiedClaim] })
+    ).resolves.toMatchObject({
+      provider: "deterministic",
+      model: "verified-claim-template-v1",
+    })
   })
 })

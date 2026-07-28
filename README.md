@@ -54,6 +54,11 @@ Local variables:
 - `VITE_API_BASE_URL`: web app API base URL. Defaults to `/api`, which Vite proxies to the local API during development.
 - `VITE_CONVEX_URL`: public Convex client URL used by the browser authentication provider.
 - `GREENLIT_ALLOWED_EMAILS`: comma-separated exact email addresses allowed to create private-MVP accounts. Configure this on each Convex deployment.
+- `GREENLIT_PUBLIC_APP_URL`: canonical HTTPS application origin used when generating confidential
+  evidence-response and consultant-review links. Vercel's production URL is used when available.
+- `GREENLIT_ALLOW_EXTERNAL_MODEL_PROCESSING`: must be explicitly set to `true` in hosted
+  environments before filing or claim content can be sent to the configured external model
+  provider. Leave it false for deterministic, Greenlit-local processing.
 - `AUTH_RESEND_KEY`: Resend API key used by Convex Auth for password-reset codes.
 - `AUTH_EMAIL_FROM`: verified sender identity for password-reset email; the Resend onboarding sender can be used during private preview testing.
 - `GREENLIT_VERIFY_REFERENCES`: set to `true` to verify extracted references against Crossref and trusted NCBI sources.
@@ -67,6 +72,7 @@ Reserved for hosted or AI-backed work:
 - `VITE_CONVEX_URL`
 - `OPENAI_API_KEY`
 - `BLOB_READ_WRITE_TOKEN`
+- `GREENLIT_PUBLIC_APP_URL`
 
 Do not expose server-side provider keys through `VITE_` variables.
 
@@ -88,6 +94,10 @@ Required Vercel environment variables for the hosted local-MVP path:
 The hosted MVP stores saved-work metadata, analysis state, and workbook notes in Convex. Uploaded PDFs and generated text artifacts remain private Vercel Blob objects referenced from Convex records.
 
 In production, the browser uploads PDFs directly to private Vercel Blob storage using a short-lived, server-authorized upload token. The API verifies the resulting object before creating the analysis. This keeps files up to 40 MB out of the Vercel Function request body and avoids Vercel's function upload-size limit.
+
+External model processing is disabled by default in hosted environments even when a provider key is
+present. Enable `GREENLIT_ALLOW_EXTERNAL_MODEL_PROCESSING=true` only after approving the provider's
+data-processing and retention terms for the filings handled by that deployment.
 
 ## Data Retention And Deletion
 

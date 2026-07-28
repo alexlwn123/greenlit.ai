@@ -2,7 +2,7 @@ import { mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises"
 import { tmpdir } from "node:os"
 import path from "node:path"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
-import { createApp, validatePdfPageCount } from "./app"
+import { createApp, redactedRequestPath, safeCsvCell, validatePdfPageCount } from "./app"
 
 let dataDir: string
 
@@ -57,8 +57,17 @@ describe("local analysis API", () => {
     )
     expect(linkResponse.status).toBe(201)
     const link = (await linkResponse.json()) as { url: string; expiresAt: string }
-    const token = new URL(link.url).pathname.split("/").at(-1) ?? ""
+    const token = capabilityToken(link.url)
     expect(token).toHaveLength(64)
+    expect(new URL(link.url).pathname).toBe("/respond")
+    expect(new URL(link.url).hash).toBe(`#token=${token}`)
+
+    const privateWorkspace = (await (
+      await app.request(`/api/dossiers/${created.dossier.id}`, { headers })
+    ).json()) as { evidenceRequestLinks: Array<{ tokenHash: string }> }
+    expect(privateWorkspace.evidenceRequestLinks).toContainEqual(
+      expect.objectContaining({ tokenHash: "" })
+    )
 
     const publicRequest = await app.request(`/api/respond/${token}`)
     expect(publicRequest.status).toBe(200)
@@ -83,7 +92,7 @@ describe("local analysis API", () => {
       { method: "POST", headers, body: JSON.stringify({ expiresInDays: 7 }) }
     )
     const uploadLink = (await uploadLinkResponse.json()) as { url: string }
-    const uploadToken = new URL(uploadLink.url).pathname.split("/").at(-1) ?? ""
+    const uploadToken = capabilityToken(uploadLink.url)
     const uploadBody = new FormData()
     uploadBody.set(
       "file",
@@ -137,6 +146,32 @@ describe("local analysis API", () => {
     expect(accepted.factBookEntries).toContainEqual(
       expect.objectContaining({ id: candidate?.acceptedFactId, status: "draft" })
     )
+
+    const activeLinkResponse = await app.request(
+      `/api/dossiers/${created.dossier.id}/requests/${requestId}/link`,
+      { method: "POST", headers, body: JSON.stringify({ expiresInDays: 7 }) }
+    )
+    const activeLink = (await activeLinkResponse.json()) as { url: string }
+    const activeToken = capabilityToken(activeLink.url)
+    const resolvedResponse = await app.request(
+      `/api/dossiers/${created.dossier.id}/requests/${requestId}`,
+      {
+        method: "POST",
+        headers,
+        body: JSON.stringify({ status: "resolved", responseNote: "Materials accepted." }),
+      }
+    )
+    expect(resolvedResponse.status).toBe(200)
+    expect((await app.request(`/api/respond/${activeToken}`)).status).toBe(410)
+    expect(
+      (
+        await app.request(`/api/dossiers/${created.dossier.id}/requests/${requestId}/link`, {
+          method: "POST",
+          headers,
+          body: "{}",
+        })
+      ).status
+    ).toBe(409)
   })
 
   it("provides a secure consultant review portal with targeted findings", async () => {
@@ -176,7 +211,7 @@ describe("local analysis API", () => {
     )
     expect(linkResponse.status).toBe(201)
     const link = (await linkResponse.json()) as { url: string }
-    const token = new URL(link.url).pathname.split("/").at(-1) ?? ""
+    const token = capabilityToken(link.url)
     const portalResponse = await app.request(`/api/review/${token}`)
     expect(portalResponse.status).toBe(200)
     const issueResponse = await app.request(`/api/review/${token}/issues`, {
@@ -201,6 +236,16 @@ describe("local analysis API", () => {
         priority: "blocking",
       })
     )
+    const completed = await app.request(
+      `/api/dossiers/${created.dossier.id}/handoffs/${handedOff.handoffs[0].id}`,
+      {
+        method: "POST",
+        headers,
+        body: JSON.stringify({ status: "completed", responseNote: "Review complete." }),
+      }
+    )
+    expect(completed.status).toBe(200)
+    expect((await app.request(`/api/review/${token}`)).status).toBe(410)
   })
 
   it("saves an uploaded PDF and produces a minimum readiness score", async () => {
@@ -797,6 +842,9 @@ describe("local analysis API", () => {
     const createdResponse = await uploadTestPdf(app, "delete-session")
     const created = (await createdResponse.json()) as { analysis: { id: string } }
     const analysis = await pollAnalysis(app, created.analysis.id, "delete-session")
+    const cacheDirectory = path.join(dataDir, "model-cache", analysis.id)
+    await mkdir(cacheDirectory, { recursive: true })
+    await writeFile(path.join(cacheDirectory, "confidential-model-output.json"), "{}")
 
     const blocked = await app.request(`/api/analyses/${analysis.id}`, {
       headers: { "x-greenlit-session": "other-session" },
@@ -820,6 +868,11 @@ describe("local analysis API", () => {
         code: "ENOENT",
       })
     }
+    await expect(
+      readFile(path.join(cacheDirectory, "confidential-model-output.json"))
+    ).rejects.toMatchObject({
+      code: "ENOENT",
+    })
   })
 
   it("saves workbook notes and returns outline/report downloads for the owning session", async () => {
@@ -980,6 +1033,22 @@ describe("authenticated analysis API", () => {
 })
 
 describe("API security boundaries", () => {
+  it("redacts bearer credentials from application log paths", () => {
+    expect(redactedRequestPath(`https://greenlit.ai/api/respond/${"a".repeat(64)}/evidence`)).toBe(
+      "/api/respond/[redacted]/evidence"
+    )
+    expect(redactedRequestPath(`https://greenlit.ai/api/review/${"b".repeat(64)}/issues`)).toBe(
+      "/api/review/[redacted]/issues"
+    )
+  })
+
+  it("neutralizes spreadsheet formulas in CSV exports", () => {
+    expect(safeCsvCell('=HYPERLINK("https://attacker.invalid")')).toBe(
+      '"\'=HYPERLINK(""https://attacker.invalid"")"'
+    )
+    expect(safeCsvCell("  -2+3")).toBe('"\'  -2+3"')
+    expect(safeCsvCell("ordinary text")).toBe('"ordinary text"')
+  })
   it("fails closed in hosted environments instead of trusting a browser session header", async () => {
     vi.stubEnv("VERCEL", "1")
     const app = createApp({ dataDir })
@@ -1074,6 +1143,10 @@ describe("API security boundaries", () => {
     })
   })
 })
+
+function capabilityToken(url: string) {
+  return new URLSearchParams(new URL(url).hash.slice(1)).get("token") ?? ""
+}
 
 async function uploadTestPdf(app: ReturnType<typeof createApp>, sessionId: string) {
   const formData = new FormData()

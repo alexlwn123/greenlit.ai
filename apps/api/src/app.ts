@@ -132,7 +132,7 @@ export function createApp(options: CreateAppOptions = {}) {
     }
     console.error("Unhandled API request failure", {
       method: context.req.method,
-      path: new URL(context.req.url).pathname,
+      path: redactedRequestPath(context.req.url),
       error: error instanceof Error ? error.message : "Unknown error",
     })
     return context.json({ error: "The request could not be completed." }, 500)
@@ -555,6 +555,8 @@ export function createApp(options: CreateAppOptions = {}) {
       (item) => item.id === context.req.param("requestId")
     )
     if (!request) return context.json({ error: "Evidence request not found" }, 404)
+    if (request.status === "resolved" || request.status === "rejected")
+      return context.json({ error: "Closed evidence requests cannot be shared." }, 409)
     const body = (await context.req.json().catch(() => ({}))) as { expiresInDays?: number }
     const expiresInDays = Math.min(Math.max(Math.floor(body.expiresInDays ?? 14), 1), 90)
     const token = `${randomUUID().replaceAll("-", "")}${randomUUID().replaceAll("-", "")}`
@@ -572,8 +574,10 @@ export function createApp(options: CreateAppOptions = {}) {
       createdAt: now.toISOString(),
       updatedAt: now.toISOString(),
     })
-    const origin = new URL(context.req.url).origin
-    return context.json({ url: `${origin}/respond/${token}`, expiresAt }, 201)
+    return context.json(
+      { url: `${publicAppOrigin(context)}/respond#token=${token}`, expiresAt },
+      201
+    )
   })
 
   app.get("/api/respond/:token", async (context) => {
@@ -843,6 +847,8 @@ export function createApp(options: CreateAppOptions = {}) {
     if (!dossier) return context.json({ error: "Dossier not found" }, 404)
     const handoff = dossier.handoffs.find((item) => item.id === context.req.param("handoffId"))
     if (!handoff) return context.json({ error: "Handoff not found" }, 404)
+    if (handoff.status === "completed" || handoff.status === "cancelled")
+      return context.json({ error: "Closed consultant handoffs cannot be shared." }, 409)
     const body = (await context.req.json().catch(() => ({}))) as { expiresInDays?: number }
     const days = Math.min(Math.max(Math.floor(body.expiresInDays ?? 14), 1), 90)
     const token = `${randomUUID().replaceAll("-", "")}${randomUUID().replaceAll("-", "")}`
@@ -860,7 +866,7 @@ export function createApp(options: CreateAppOptions = {}) {
       updatedAt: now.toISOString(),
     })
     return context.json(
-      { url: `${new URL(context.req.url).origin}/review/${token}`, expiresAt },
+      { url: `${publicAppOrigin(context)}/review#token=${token}`, expiresAt },
       201
     )
   })
@@ -1491,6 +1497,7 @@ export function createApp(options: CreateAppOptions = {}) {
     }
 
     try {
+      const analysisCacheDir = path.join(dataDir, "model-cache", analysis.id)
       await storage.updateAnalysis(analysisId, {
         status: "running",
         error: undefined,
@@ -1519,7 +1526,7 @@ export function createApp(options: CreateAppOptions = {}) {
           const analyzedResult = await deepAnalyzer({
             filingName: analysis.filingName,
             pages: extracted.pages,
-            cacheDir: path.join(dataDir, "model-cache"),
+            cacheDir: analysisCacheDir,
           })
           let verifiedReferences = analyzedResult.researchReferences
           if (
@@ -1566,7 +1573,7 @@ export function createApp(options: CreateAppOptions = {}) {
                     subjectProfile: deepResult.filingProfile,
                     evidenceMatrix: deepResult.evidenceMatrix,
                     filings: comparableFilings,
-                    cacheDir: path.join(dataDir, "model-cache"),
+                    cacheDir: analysisCacheDir,
                   })
                   comparableFilings = combined.comparableFilings
                   comparableActions = combined.comparableActions
@@ -1577,12 +1584,12 @@ export function createApp(options: CreateAppOptions = {}) {
                       subjectProfile: deepResult.filingProfile,
                       evidenceMatrix: deepResult.evidenceMatrix,
                       filings: comparableFilings,
-                      cacheDir: path.join(dataDir, "model-cache"),
+                      cacheDir: analysisCacheDir,
                     })
                     comparableActions = await synthesizeComparableActionsWithAnthropic({
                       evidenceMatrix: deepResult.evidenceMatrix,
                       filings: comparableFilings,
-                      cacheDir: path.join(dataDir, "model-cache"),
+                      cacheDir: analysisCacheDir,
                     })
                   } catch {
                     // All comparator model enrichment is additive; retain retrieved passages.
@@ -1599,7 +1606,7 @@ export function createApp(options: CreateAppOptions = {}) {
                     subjectProfile: deepResult.filingProfile,
                     evidenceMatrix: deepResult.evidenceMatrix,
                     filings: comparableFilings,
-                    cacheDir: path.join(dataDir, "model-cache"),
+                    cacheDir: analysisCacheDir,
                   })
                 } catch {
                   // Assessment is additive; retain cited comparator passages on failure.
@@ -1613,7 +1620,7 @@ export function createApp(options: CreateAppOptions = {}) {
                   )({
                     evidenceMatrix: deepResult.evidenceMatrix,
                     filings: comparableFilings,
-                    cacheDir: path.join(dataDir, "model-cache"),
+                    cacheDir: analysisCacheDir,
                   })
                 } catch {
                   // Action synthesis is additive; retain comparator assessments on failure.
@@ -1726,6 +1733,34 @@ async function resolveConvexOwner(token: string) {
 function hashResponseToken(token: string) {
   if (!/^[a-f0-9]{64}$/i.test(token)) return null
   return createHash("sha256").update(token).digest("hex")
+}
+
+export function redactedRequestPath(url: string) {
+  return new URL(url).pathname.replace(
+    /^\/api\/(respond|review)\/[^/]+/,
+    (_match, kind: string) => `/api/${kind}/[redacted]`
+  )
+}
+
+function publicAppOrigin(context: Context) {
+  const configured =
+    process.env.GREENLIT_PUBLIC_APP_URL ??
+    process.env.VERCEL_PROJECT_PRODUCTION_URL ??
+    process.env.VERCEL_URL
+  const candidate = configured
+    ? /^[a-z][a-z\d+.-]*:\/\//i.test(configured)
+      ? configured
+      : `https://${configured}`
+    : new URL(context.req.url).origin
+  const url = new URL(candidate)
+  if (url.protocol !== "https:" && !(url.protocol === "http:" && isLoopbackHost(url.hostname))) {
+    throw new Error("GREENLIT_PUBLIC_APP_URL must use HTTPS")
+  }
+  return url.origin
+}
+
+function isLoopbackHost(hostname: string) {
+  return hostname === "localhost" || hostname === "127.0.0.1" || hostname === "::1"
 }
 
 function isHostedRuntime() {
@@ -2060,7 +2095,6 @@ function buildDossierMarkdown(workspace: DossierWorkspaceData) {
 function buildSubmissionPackageFiles(workspace: DossierWorkspaceData) {
   const quality = evaluateDossierQuality(workspace)
   const activeRelease = workspace.releases.find((item) => item.status === "locked")
-  const csv = (value: unknown) => `"${String(value ?? "").replaceAll('"', '""')}"`
   const claims = [
     "claim_id,status,section,statement,source_title,source_page,source_excerpt",
     ...workspace.claims.map((claim) => {
@@ -2075,7 +2109,7 @@ function buildSubmissionPackageFiles(workspace: DossierWorkspaceData) {
         claim.sourcePage,
         claim.sourceExcerpt,
       ]
-        .map(csv)
+        .map(safeCsvCell)
         .join(",")
     }),
   ].join("\r\n")
@@ -2091,14 +2125,16 @@ function buildSubmissionPackageFiles(workspace: DossierWorkspaceData) {
         workspace.requirements.find((requirement) => requirement.id === item.requirementId)?.title,
         item.createdAt,
       ]
-        .map(csv)
+        .map(safeCsvCell)
         .join(",")
     ),
   ].join("\r\n")
   const audit = [
     "timestamp,action,target_type,target_id,summary",
     ...workspace.auditEvents.map((item) =>
-      [item.createdAt, item.action, item.targetType, item.targetId, item.summary].map(csv).join(",")
+      [item.createdAt, item.action, item.targetType, item.targetId, item.summary]
+        .map(safeCsvCell)
+        .join(",")
     ),
   ].join("\r\n")
   const facts = buildFactBookCsv(workspace.factBookEntries)
@@ -2157,18 +2193,23 @@ function buildSubmissionPackageFiles(workspace: DossierWorkspaceData) {
   return [...initial, { name: "manifest.json", content: JSON.stringify(manifest, null, 2) }]
 }
 
-function buildFactBookCsv(entries: FactBookEntry[]) {
-  const csv = (value: unknown) => `"${String(value ?? "").replaceAll('"', '""')}"`
+export function buildFactBookCsv(entries: FactBookEntry[]) {
   return [
     "fact_id,kind,title,status,field,value,evidence_id",
     ...entries.flatMap((fact) =>
       Object.entries(fact.fields).map(([field, value]) =>
         [fact.id, fact.kind, fact.title, fact.status, field, value, fact.evidenceId]
-          .map(csv)
+          .map(safeCsvCell)
           .join(",")
       )
     ),
   ].join("\r\n")
+}
+
+export function safeCsvCell(value: unknown) {
+  const raw = String(value ?? "")
+  const neutralized = /^\s*[=+\-@]/.test(raw) ? `'${raw}` : raw
+  return `"${neutralized.replaceAll('"', '""')}"`
 }
 
 function createZipArchive(files: Array<{ name: string; content: string }>) {

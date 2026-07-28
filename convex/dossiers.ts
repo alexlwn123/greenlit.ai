@@ -209,12 +209,12 @@ export const get = query({
       claims,
       auditEvents,
       evidenceRequests,
-      evidenceRequestLinks,
+      evidenceRequestLinks: evidenceRequestLinks.map((link) => ({ ...link, tokenHash: "" })),
       attestations,
       releases,
       handoffs,
       reviewIssues,
-      reviewLinks,
+      reviewLinks: reviewLinks.map((link) => ({ ...link, tokenHash: "" })),
       submissions,
       agencyQuestions,
       factBookEntries,
@@ -621,6 +621,15 @@ export const updateRequest = mutation({
       responseNote: args.responseNote,
       updatedAt: args.updatedAt,
     })
+    if (args.status === "resolved" || args.status === "rejected") {
+      const links = await ctx.db
+        .query("evidenceRequestLinks")
+        .withIndex("by_request_id_and_created_at", (q) => q.eq("requestId", request.id))
+        .take(100)
+      for (const link of links.filter((item) => item.status === "active")) {
+        await ctx.db.patch(link._id, { status: "revoked", updatedAt: args.updatedAt })
+      }
+    }
     if (args.status === "resolved") {
       await addAudit(
         ctx,
@@ -1036,6 +1045,15 @@ export const updateHandoff = mutation({
       responseNote: args.responseNote,
       updatedAt: args.updatedAt,
     })
+    if (args.status === "completed" || args.status === "cancelled") {
+      const links = await ctx.db
+        .query("consultantReviewLinks")
+        .withIndex("by_handoff_id_and_created_at", (q) => q.eq("handoffId", handoff.id))
+        .take(100)
+      for (const link of links.filter((item) => item.status === "active")) {
+        await ctx.db.patch(link._id, { status: "revoked", updatedAt: args.updatedAt })
+      }
+    }
     const action =
       args.status === "in_review"
         ? "handoff_started"

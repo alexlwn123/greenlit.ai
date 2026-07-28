@@ -2,6 +2,7 @@ import { StrictMode } from "react"
 import { createRoot } from "react-dom/client"
 import App from "./App"
 import { AuthGate } from "./AuthGate"
+import { isPublicCapabilityRoute } from "./capability-token"
 import "./styles.css"
 
 const rootElement = document.getElementById("root")
@@ -16,12 +17,12 @@ if (!convexUrl) {
 }
 
 const convex = new ConvexReactClient(convexUrl)
-const isPublicCapabilityRoute = /^\/(respond|review)\/[^/]+\/?$/.test(window.location.pathname)
+const publicCapabilityRoute = isPublicCapabilityRoute(window.location)
 
 createRoot(rootElement).render(
   <StrictMode>
     <ConvexAuthProvider client={convex}>
-      {isPublicCapabilityRoute ? (
+      {publicCapabilityRoute ? (
         <App />
       ) : (
         <AuthGate>

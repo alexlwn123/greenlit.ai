@@ -4,6 +4,10 @@ import {
   type ComparableFiling,
   type EvidenceMatrixItem,
 } from "../../../packages/core/src/index.js"
+import {
+  assertExternalModelProcessingAllowed,
+  externalModelRequestError,
+} from "./external-model-policy.js"
 import { readModelStageCache, writeModelStageCache } from "./model-stage-cache.js"
 
 export type ComparableActionSynthesizer = (input: {
@@ -101,6 +105,7 @@ export const synthesizeComparableActionsWithAnthropic: ComparableActionSynthesiz
   )
   if (cached) return validateActions(cached, evidenceMatrix, filings)
 
+  assertExternalModelProcessingAllowed()
   const response = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
     headers: {
@@ -129,10 +134,7 @@ Do not claim that a comparator proves safety, equivalence, FDA acceptance, or re
     }),
   })
   if (!response.ok) {
-    const detail = await response.text()
-    throw new Error(
-      `Comparable action synthesis failed (${response.status}): ${detail.slice(0, 500)}`
-    )
+    throw externalModelRequestError("Comparable action synthesis", response.status)
   }
   const payload = (await response.json()) as {
     content?: Array<{ type?: string; text?: string }>

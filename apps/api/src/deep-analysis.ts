@@ -5,6 +5,10 @@ import {
   type DeepAnalysisResult,
   DeepAnalysisResultSchema,
 } from "../../../packages/core/src/index.js"
+import {
+  assertExternalModelProcessingAllowed,
+  externalModelRequestError,
+} from "./external-model-policy.js"
 import type { ExtractedPdfPage } from "./pdf.js"
 
 export type DeepAnalyzer = (input: {
@@ -271,6 +275,7 @@ export const analyzeNoticeWithAnthropic: DeepAnalyzer = async ({ filingName, pag
     }
   }
   enforceAnalysisBudget(selected.text)
+  assertExternalModelProcessingAllowed()
   const response = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
     headers: {
@@ -299,8 +304,7 @@ export const analyzeNoticeWithAnthropic: DeepAnalyzer = async ({ filingName, pag
   })
 
   if (!response.ok) {
-    const detail = await response.text()
-    throw new Error(`Anthropic deep analysis failed (${response.status}): ${detail.slice(0, 500)}`)
+    throw externalModelRequestError("Anthropic deep analysis", response.status)
   }
 
   const payload = (await response.json()) as AnthropicPayload

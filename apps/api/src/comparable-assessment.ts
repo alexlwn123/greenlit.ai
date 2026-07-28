@@ -4,6 +4,10 @@ import {
   type EvidenceMatrixItem,
   type NoticeProfile,
 } from "../../../packages/core/src/index.js"
+import {
+  assertExternalModelProcessingAllowed,
+  externalModelRequestError,
+} from "./external-model-policy.js"
 import { readModelStageCache, writeModelStageCache } from "./model-stage-cache.js"
 
 export type ComparableAssessor = (input: {
@@ -94,6 +98,7 @@ export const assessComparableEvidenceWithAnthropic: ComparableAssessor = async (
     cacheInput
   )
   if (cached) return mergeAssessments(filings, cached, unresolved)
+  assertExternalModelProcessingAllowed()
   const response = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
     headers: {
@@ -133,8 +138,7 @@ Be conservative. Evaluate identity/source, composition, manufacturing, impuritie
     }),
   })
   if (!response.ok) {
-    const detail = await response.text()
-    throw new Error(`Comparable assessment failed (${response.status}): ${detail.slice(0, 500)}`)
+    throw externalModelRequestError("Comparable assessment", response.status)
   }
   const payload = (await response.json()) as {
     content?: Array<{ type?: string; text?: string }>
