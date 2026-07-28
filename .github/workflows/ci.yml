@@ -34,6 +34,9 @@ jobs:
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6, Node 24
         with:
           name: release-evidence-${{ github.sha }}
-          path: .artifacts/
+          path: |
+            .artifacts/release-evidence.json
+            .artifacts/sbom.cdx.json
+          include-hidden-files: true
           if-no-files-found: error
           retention-days: 90
