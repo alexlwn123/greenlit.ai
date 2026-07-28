@@ -49,11 +49,14 @@ function SignIn() {
   const [flow, setFlow] = useState<"signIn" | "signUp" | "reset" | "resetVerification">("signIn")
   const [resetEmail, setResetEmail] = useState("")
   const [error, setError] = useState<string | null>(null)
+  const [notice, setNotice] = useState<string | null>(null)
   const [pending, setPending] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     setError(null)
+    setNotice(null)
     setPending(true)
     try {
       const formData = new FormData(event.currentTarget)
@@ -61,6 +64,9 @@ function SignIn() {
       if (flow === "reset") {
         setResetEmail(String(formData.get("email") ?? ""))
         setFlow("resetVerification")
+        setNotice(
+          "If that email belongs to an account, a six-digit code is on its way. Check spam if it does not arrive within a minute."
+        )
       }
     } catch {
       if (flow === "signIn") setError("Sign-in failed. Check your email and password.")
@@ -69,7 +75,11 @@ function SignIn() {
           "Account creation failed. Use an invited email and at least 12 characters with uppercase, lowercase, and a number."
         )
       }
-      if (flow === "reset") setError("Could not send a reset code. Check the email address.")
+      if (flow === "reset") {
+        setError(
+          "We could not send a reset code right now. Confirm the address, then try again in a minute."
+        )
+      }
       if (flow === "resetVerification") {
         setError("The reset code was invalid or expired. Request a new code and try again.")
       }
@@ -84,6 +94,11 @@ function SignIn() {
         <p className="eyebrow">GREENLIT.AI</p>
         <h1>{authHeading(flow)}</h1>
         <p>Your filings and reports are visible only inside your authenticated workspace.</p>
+        {notice ? (
+          <p className="auth-notice" role="status">
+            {notice}
+          </p>
+        ) : null}
         <form onSubmit={submit}>
           {flow === "resetVerification" ? (
             <>
@@ -96,7 +111,7 @@ function SignIn() {
                 New password
                 <input
                   name="newPassword"
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   autoComplete="new-password"
                   minLength={12}
                   required
@@ -115,7 +130,7 @@ function SignIn() {
                   Password
                   <input
                     name="password"
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     autoComplete={flow === "signIn" ? "current-password" : "new-password"}
                     minLength={flow === "signUp" ? 12 : undefined}
                     required
@@ -126,6 +141,16 @@ function SignIn() {
             </>
           )}
           {error ? <p className="auth-error">{error}</p> : null}
+          {flow !== "reset" ? (
+            <label className="auth-password-toggle">
+              <input
+                type="checkbox"
+                checked={showPassword}
+                onChange={(event) => setShowPassword(event.target.checked)}
+              />
+              Show password
+            </label>
+          ) : null}
           <button className="primary-action" type="submit" disabled={pending}>
             {pending ? "Please wait…" : authSubmitLabel(flow)}
           </button>

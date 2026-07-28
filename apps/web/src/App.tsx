@@ -2001,6 +2001,62 @@ type SampleWorkflowTab = (typeof sampleWorkflowTabs)[number]["id"]
 
 function SampleDossierPreview({ onClose }: { onClose: () => void }) {
   const [tab, setTab] = useState<SampleWorkflowTab>("evidence")
+  const [demoStep, setDemoStep] = useState(0)
+  const [factAccepted, setFactAccepted] = useState(false)
+  const [draftUpdated, setDraftUpdated] = useState(false)
+  const [issueResolved, setIssueResolved] = useState(false)
+  const [released, setReleased] = useState(false)
+  const demoSteps = [
+    [
+      "Review extracted evidence",
+      "Accept the pivotal-study NOAEL into the governed Fact Book.",
+      "evidence",
+    ],
+    [
+      "Confirm downstream impact",
+      "See every section that depends on the newly governed safety value.",
+      "facts",
+    ],
+    [
+      "Update the live narrative",
+      "Propagate the approved fact into Part 6 with its source citation.",
+      "draft",
+    ],
+    [
+      "Run the quality gate",
+      "Verify traceability and surface the remaining scientific blocker.",
+      "quality",
+    ],
+    [
+      "Resolve independent review",
+      "Close the test-article comparability finding with a documented rationale.",
+      "consultant",
+    ],
+    [
+      "Lock the release",
+      "Create an immutable, submission-ready package and audit trail.",
+      "submission",
+    ],
+  ] as const
+
+  function runNextDemoStep() {
+    if (demoStep === 0) setFactAccepted(true)
+    if (demoStep === 2) setDraftUpdated(true)
+    if (demoStep === 4) setIssueResolved(true)
+    if (demoStep === 5) setReleased(true)
+    const nextStep = Math.min(demoStep + 1, demoSteps.length - 1)
+    setDemoStep(nextStep)
+    setTab(demoSteps[nextStep][2])
+  }
+
+  function resetDemo() {
+    setTab("evidence")
+    setDemoStep(0)
+    setFactAccepted(false)
+    setDraftUpdated(false)
+    setIssueResolved(false)
+    setReleased(false)
+  }
 
   return (
     <main className="dossier-page sample-dossier">
@@ -2013,6 +2069,33 @@ function SampleDossierPreview({ onClose }: { onClose: () => void }) {
         <button type="button" className="secondary-action" onClick={onClose}>
           <ArrowLeft /> Back to your workspace
         </button>
+      </section>
+      <section className="demo-guide" aria-label="Guided demo">
+        <div className="demo-guide-copy">
+          <span>
+            DEMO STEP {demoStep + 1} OF {demoSteps.length}
+          </span>
+          <strong>{demoSteps[demoStep][0]}</strong>
+          <p>{demoSteps[demoStep][1]}</p>
+        </div>
+        <div className="demo-guide-progress" aria-hidden="true">
+          {demoSteps.map((step, index) => (
+            <i key={step[0]} className={index <= demoStep ? "is-complete" : ""} />
+          ))}
+        </div>
+        <div className="demo-guide-actions">
+          <button type="button" className="secondary-action" onClick={resetDemo}>
+            Reset demo
+          </button>
+          <button
+            type="button"
+            className="primary-action"
+            onClick={runNextDemoStep}
+            disabled={released}
+          >
+            {demoStep === demoSteps.length - 1 ? "Lock release" : "Show next step"} <ArrowRight />
+          </button>
+        </div>
       </section>
       <section className="dossier-progress">
         <div>
@@ -2060,15 +2143,58 @@ function SampleDossierPreview({ onClose }: { onClose: () => void }) {
           })}
         </aside>
         <div className="sample-workspace-panel">
-          <SampleWorkflowPanel tab={tab} />
+          <SampleWorkflowPanel
+            tab={tab}
+            factAccepted={factAccepted}
+            draftUpdated={draftUpdated}
+            issueResolved={issueResolved}
+            released={released}
+            onAcceptFact={() => {
+              setFactAccepted(true)
+              setDemoStep(Math.max(demoStep, 1))
+            }}
+            onUpdateDraft={() => {
+              setDraftUpdated(true)
+              setDemoStep(Math.max(demoStep, 3))
+            }}
+            onResolveIssue={() => {
+              setIssueResolved(true)
+              setDemoStep(Math.max(demoStep, 5))
+            }}
+            onLockRelease={() => setReleased(true)}
+          />
         </div>
       </section>
     </main>
   )
 }
 
-function SampleWorkflowPanel({ tab }: { tab: SampleWorkflowTab }) {
+function SampleWorkflowPanel({
+  tab,
+  factAccepted,
+  draftUpdated,
+  issueResolved,
+  released,
+  onAcceptFact,
+  onUpdateDraft,
+  onResolveIssue,
+  onLockRelease,
+}: {
+  tab: SampleWorkflowTab
+  factAccepted: boolean
+  draftUpdated: boolean
+  issueResolved: boolean
+  released: boolean
+  onAcceptFact: () => void
+  onUpdateDraft: () => void
+  onResolveIssue: () => void
+  onLockRelease: () => void
+}) {
   const [sampleDraftMode, setSampleDraftMode] = useState<"edit" | "read" | "split">("split")
+  const [supportTab, setSupportTab] = useState<"sources" | "facts" | "history">("sources")
+  const [sampleDraft, setSampleDraft] = useState(
+    "The pivotal 90-day study established a NOAEL of {{fact:safety-noael.noael}}. Compared with the estimated 90th-percentile intake of {{fact:exposure.p90}}, the resulting margin of safety is 119-fold.\n\nThe evidence supports the intended conditions of use for the general population."
+  )
   if (tab === "evidence")
     return (
       <>
@@ -2101,10 +2227,26 @@ function SampleWorkflowPanel({ tab }: { tab: SampleWorkflowTab }) {
         </div>
         <div className="sample-callout">
           <TableProperties />
-          <p>
-            Greenlit found a NOAEL of 1,000 mg/kg bw/day and proposed it for governed Fact Book
-            review.
-          </p>
+          <div>
+            <p>
+              Greenlit found a NOAEL of 1,000 mg/kg bw/day on page 84 and proposed it for governed
+              Fact Book review.
+            </p>
+            <button
+              type="button"
+              className="inline-action"
+              onClick={onAcceptFact}
+              disabled={factAccepted}
+            >
+              {factAccepted ? (
+                <>
+                  <Check /> Accepted into Fact Book
+                </>
+              ) : (
+                "Review and accept fact"
+              )}
+            </button>
+          </div>
         </div>
       </>
     )
@@ -2116,7 +2258,7 @@ function SampleWorkflowPanel({ tab }: { tab: SampleWorkflowTab }) {
             <p className="section-label">FACT BOOK</p>
             <h2>One governed source of truth</h2>
           </div>
-          <span className="status-badge">12 approved</span>
+          <span className="status-badge">{factAccepted ? "13 approved" : "12 approved"}</span>
         </div>
         <div className="sample-table">
           <div>
@@ -2135,7 +2277,9 @@ function SampleWorkflowPanel({ tab }: { tab: SampleWorkflowTab }) {
             <span>Safety</span>
             <strong>90-day NOAEL</strong>
             <p>1,000 mg/kg bw/day</p>
-            <small>Draft · awaiting reviewer acceptance</small>
+            <small>
+              {factAccepted ? "Approved · used in Part 6" : "Draft · awaiting reviewer acceptance"}
+            </small>
           </div>
         </div>
         <div className="sample-callout">
@@ -2187,10 +2331,8 @@ function SampleWorkflowPanel({ tab }: { tab: SampleWorkflowTab }) {
                   </div>
                   <textarea
                     aria-label="Sample section draft"
-                    readOnly
-                    value={
-                      "The pivotal 90-day study established a NOAEL of {{fact:safety-noael.noael}}. Compared with the estimated 90th-percentile intake of {{fact:exposure.p90}}, the resulting margin of safety is 119-fold.\n\nThe evidence supports the intended conditions of use for the general population."
-                    }
+                    value={sampleDraft}
+                    onChange={(event) => setSampleDraft(event.target.value)}
                   />
                 </div>
               ) : null}
@@ -2218,32 +2360,104 @@ function SampleWorkflowPanel({ tab }: { tab: SampleWorkflowTab }) {
             </div>
             <aside className="draft-support-rail">
               <div className="draft-support-tabs">
-                <button type="button" className="is-active">
+                <button
+                  type="button"
+                  className={supportTab === "sources" ? "is-active" : ""}
+                  onClick={() => setSupportTab("sources")}
+                >
                   Sources
                 </button>
-                <button type="button">Facts</button>
-                <button type="button">History</button>
+                <button
+                  type="button"
+                  className={supportTab === "facts" ? "is-active" : ""}
+                  onClick={() => setSupportTab("facts")}
+                >
+                  Facts
+                </button>
+                <button
+                  type="button"
+                  className={supportTab === "history" ? "is-active" : ""}
+                  onClick={() => setSupportTab("history")}
+                >
+                  History
+                </button>
               </div>
               <div className="draft-support-list">
-                <article>
-                  <div>
-                    <span>[1]</span>
-                    <span className="status-badge">Verified</span>
-                  </div>
-                  <p>NOAEL was 1,000 mg/kg bw/day in the pivotal 90-day oral study.</p>
-                  <blockquote>
-                    “No treatment-related adverse effects were observed at the highest dose tested.”
-                  </blockquote>
-                  <small>90-day study report · p. 84</small>
-                </article>
-                <article>
-                  <div>
-                    <span>[2]</span>
-                    <span className="status-badge">Verified</span>
-                  </div>
-                  <p>90th-percentile intake is 8.4 mg/kg bw/day.</p>
-                  <small>Exposure assessment · p. 19</small>
-                </article>
+                {supportTab === "sources" ? (
+                  <article>
+                    <div>
+                      <span>[1]</span>
+                      <span className="status-badge">Verified</span>
+                    </div>
+                    <p>NOAEL was 1,000 mg/kg bw/day in the pivotal 90-day oral study.</p>
+                    <blockquote>
+                      “No treatment-related adverse effects were observed at the highest dose
+                      tested.”
+                    </blockquote>
+                    <small>90-day study report · p. 84</small>
+                  </article>
+                ) : null}
+                {supportTab === "facts" ? (
+                  <>
+                    <article>
+                      <div>
+                        <span>Safety</span>
+                        <span className="status-badge">{factAccepted ? "Approved" : "Draft"}</span>
+                      </div>
+                      <p>
+                        <strong>90-day NOAEL</strong>
+                        <br />
+                        1,000 mg/kg bw/day
+                      </p>
+                      <button
+                        type="button"
+                        className="inline-action"
+                        onClick={onUpdateDraft}
+                        disabled={!factAccepted || draftUpdated}
+                      >
+                        {draftUpdated ? "Inserted in Part 6" : "Insert governed fact"}
+                      </button>
+                    </article>
+                    <article>
+                      <p>
+                        <strong>90th-percentile intake</strong>
+                        <br />
+                        8.4 mg/kg bw/day
+                      </p>
+                      <small>Approved · Exposure assessment p. 19</small>
+                    </article>
+                  </>
+                ) : null}
+                {supportTab === "history" ? (
+                  <>
+                    <article>
+                      <p>
+                        <strong>{draftUpdated ? "Fact reference updated" : "Draft created"}</strong>
+                      </p>
+                      <small>
+                        {draftUpdated
+                          ? "Just now · Part 6 returned to review"
+                          : "July 26 · Version 3"}
+                      </small>
+                    </article>
+                    <article>
+                      <p>
+                        <strong>Scientific review requested</strong>
+                      </p>
+                      <small>July 25 · Dr. Maya Chen</small>
+                    </article>
+                  </>
+                ) : null}
+                {supportTab === "sources" ? (
+                  <article>
+                    <div>
+                      <span>[2]</span>
+                      <span className="status-badge">Verified</span>
+                    </div>
+                    <p>90th-percentile intake is 8.4 mg/kg bw/day.</p>
+                    <small>Exposure assessment · p. 19</small>
+                  </article>
+                ) : null}
               </div>
             </aside>
           </div>
@@ -2252,15 +2466,23 @@ function SampleWorkflowPanel({ tab }: { tab: SampleWorkflowTab }) {
               <span className="save-indicator" />
               <span>
                 <strong>Draft saved</strong>
-                <small>Read-only sample</small>
+                <small>
+                  {draftUpdated ? "Fact Book change applied" : "Interactive sample · local only"}
+                </small>
               </span>
             </div>
             <div className="draft-lifecycle-actions">
-              <button type="button" disabled>
-                Save draft
+              <button
+                type="button"
+                onClick={onUpdateDraft}
+                disabled={!factAccepted || draftUpdated}
+              >
+                {draftUpdated ? "Draft saved" : "Apply fact update"}
               </button>
-              <button type="button">Send to review</button>
-              <button type="button" className="approve-action">
+              <button type="button" disabled={!draftUpdated}>
+                Send to review
+              </button>
+              <button type="button" className="approve-action" disabled={!issueResolved}>
                 <Check /> Approve
               </button>
             </div>
@@ -2276,7 +2498,9 @@ function SampleWorkflowPanel({ tab }: { tab: SampleWorkflowTab }) {
             <p className="section-label">QUALITY GATE</p>
             <h2>Release readiness</h2>
           </div>
-          <span className="status-badge status-warn">2 blockers</span>
+          <span className={`status-badge ${issueResolved ? "" : "status-warn"}`}>
+            {issueResolved ? "All checks passed" : "1 blocker"}
+          </span>
         </div>
         <div className="sample-checks">
           <div className="is-passed">
@@ -2293,17 +2517,19 @@ function SampleWorkflowPanel({ tab }: { tab: SampleWorkflowTab }) {
               <small>No broken or stale references</small>
             </span>
           </div>
-          <div className="is-blocked">
-            <CircleAlert />
+          <div className="is-passed">
+            <Check />
             <span>
-              <strong>Exposure evidence incomplete</strong>
+              <strong>Population exposure scenarios complete</strong>
               <small>Children’s intake scenario is outstanding</small>
             </span>
           </div>
-          <div className="is-blocked">
-            <CircleAlert />
+          <div className={issueResolved ? "is-passed" : "is-blocked"}>
+            {issueResolved ? <Check /> : <CircleAlert />}
             <span>
-              <strong>Consultant issue open</strong>
+              <strong>
+                {issueResolved ? "Consultant finding resolved" : "Consultant finding open"}
+              </strong>
               <small>Clarify test-article comparability</small>
             </span>
           </div>
@@ -2325,7 +2551,7 @@ function SampleWorkflowPanel({ tab }: { tab: SampleWorkflowTab }) {
             <strong>Dr. Maya Chen</strong>
             <small>Secure scoped review link · In review</small>
           </div>
-          <span>1 open issue</span>
+          <span>{issueResolved ? "Review complete" : "1 open issue"}</span>
         </article>
         <article className="sample-issue">
           <small>BLOCKING · PART 6 · SAFETY</small>
@@ -2334,7 +2560,20 @@ function SampleWorkflowPanel({ tab }: { tab: SampleWorkflowTab }) {
             The study batch should be explicitly bridged to the commercial specification before
             relying on the NOAEL.
           </p>
-          <strong>Open</strong>
+          <button
+            type="button"
+            className="inline-action"
+            onClick={onResolveIssue}
+            disabled={issueResolved}
+          >
+            {issueResolved ? (
+              <>
+                <Check /> Resolved with rationale
+              </>
+            ) : (
+              "Resolve and document rationale"
+            )}
+          </button>
         </article>
       </>
     )
@@ -2345,13 +2584,13 @@ function SampleWorkflowPanel({ tab }: { tab: SampleWorkflowTab }) {
           <p className="section-label">SUBMISSION LIFECYCLE</p>
           <h2>FDA GRAS notice</h2>
         </div>
-        <span className="status-badge">Agency questions</span>
+        <span className="status-badge">{released ? "Release 1.0 locked" : "Ready to release"}</span>
       </div>
       <div className="sample-timeline">
         <div className="is-done">
           <Check />
           <span>
-            <strong>Release locked</strong>
+            <strong>{released ? "Release locked" : "Release ready"}</strong>
             <small>Version 1.0 · immutable package</small>
           </span>
         </div>
@@ -2379,10 +2618,26 @@ function SampleWorkflowPanel({ tab }: { tab: SampleWorkflowTab }) {
       </div>
       <article className="sample-issue">
         <small>HIGH PRIORITY · OPEN</small>
-        <h3>Provide updated manufacturing flow diagram</h3>
+        <h3>{released ? "Submission package is reproducible" : "Lock the approved dossier"}</h3>
         <p>
-          Response draft is linked to the locked submission release and its supporting evidence.
+          {released
+            ? "Every section, governed fact, source page, approval, and version is preserved in Release 1.0."
+            : "Locking freezes the approved narrative and its exact supporting evidence without preventing future amendments."}
         </p>
+        <button
+          type="button"
+          className="inline-action"
+          onClick={onLockRelease}
+          disabled={released || !issueResolved}
+        >
+          {released ? (
+            <>
+              <LockKeyhole /> Release 1.0 locked
+            </>
+          ) : (
+            "Lock release 1.0"
+          )}
+        </button>
       </article>
     </>
   )

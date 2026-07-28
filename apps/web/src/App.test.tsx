@@ -105,8 +105,23 @@ describe("App", () => {
       screen.getByRole("heading", { name: "One governed source of truth" })
     ).toBeInTheDocument()
 
+    fireEvent.click(screen.getByRole("button", { name: "Evidence room" }))
+    fireEvent.click(screen.getByRole("button", { name: /review and accept fact/i }))
+    expect(screen.getByRole("button", { name: /accepted into fact book/i })).toBeDisabled()
+
+    fireEvent.click(screen.getByRole("button", { name: "Live draft" }))
+    fireEvent.click(screen.getByRole("button", { name: "Facts" }))
+    fireEvent.click(screen.getByRole("button", { name: /insert governed fact/i }))
+    expect(screen.getByText(/fact book change applied/i)).toBeInTheDocument()
+
+    fireEvent.click(screen.getByRole("button", { name: "Consultant review" }))
+    fireEvent.click(screen.getByRole("button", { name: /resolve and document rationale/i }))
+    expect(screen.getByText("Review complete")).toBeInTheDocument()
+
     fireEvent.click(screen.getByRole("button", { name: "Submission lifecycle" }))
     expect(screen.getByRole("heading", { name: "FDA GRAS notice" })).toBeInTheDocument()
+    fireEvent.click(screen.getByRole("button", { name: /lock release 1.0/i }))
+    expect(screen.getByText("Submission package is reproducible")).toBeInTheDocument()
   })
 
   it("provides document modes, source support, and explicit lifecycle controls", async () => {
