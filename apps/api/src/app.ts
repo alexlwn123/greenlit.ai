@@ -237,8 +237,13 @@ export function createApp(options: CreateAppOptions = {}) {
 
   app.delete("/api/dossiers/:id", async (context) => {
     const { ownerId, storage } = await requestScope(context)
-    const deleted = await storage.deleteDossier(ownerId, context.req.param("id"))
-    return deleted ? context.body(null, 204) : context.json({ error: "Dossier not found" }, 404)
+    const dossierId = context.req.param("id")
+    const dossier = await storage.getDossier(ownerId, dossierId)
+    if (!dossier) return context.json({ error: "Dossier not found" }, 404)
+    const deleted = await storage.deleteDossier(ownerId, dossierId)
+    return deleted
+      ? context.json({ receipt: deletionReceipt("dossier", dossierId) })
+      : context.json({ error: "Dossier not found" }, 404)
   })
 
   app.post("/api/dossiers", async (context) => {
@@ -1371,9 +1376,10 @@ export function createApp(options: CreateAppOptions = {}) {
 
   app.delete("/api/analyses/:id", async (context) => {
     const { ownerId, storage } = await requestScope(context)
-    const deleted = await storage.deleteAnalysis(ownerId, context.req.param("id"))
+    const analysisId = context.req.param("id")
+    const deleted = await storage.deleteAnalysis(ownerId, analysisId)
     if (!deleted) return context.json({ error: "Analysis not found" }, 404)
-    return context.body(null, 204)
+    return context.json({ receipt: deletionReceipt("analysis", analysisId) })
   })
 
   app.get("/api/analyses/:id/notes", async (context) => {
@@ -2494,6 +2500,35 @@ function recordUploadRejection(context: Context) {
     route: redactedRequestPath(context.req.url),
     status: 400,
   })
+}
+
+export type DeletionReceipt = {
+  schemaVersion: 1
+  receiptId: string
+  completedAt: string
+  targetType: "analysis" | "dossier"
+  targetSha256: string
+  primaryMetadata: "deleted"
+  privateObjects: "deleted"
+  derivedCaches: "deleted" | "not_applicable"
+  providerBackups: "subject_to_provider_lifecycle"
+}
+
+function deletionReceipt(
+  targetType: DeletionReceipt["targetType"],
+  targetId: string
+): DeletionReceipt {
+  return {
+    schemaVersion: 1,
+    receiptId: randomUUID(),
+    completedAt: new Date().toISOString(),
+    targetType,
+    targetSha256: createHash("sha256").update(targetId).digest("hex"),
+    primaryMetadata: "deleted",
+    privateObjects: "deleted",
+    derivedCaches: targetType === "analysis" ? "deleted" : "not_applicable",
+    providerBackups: "subject_to_provider_lifecycle",
+  }
 }
 
 function uploadPathPrefix(ownerId: string) {

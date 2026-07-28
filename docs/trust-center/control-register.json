@@ -66,8 +66,12 @@
       "domain": "Data protection",
       "control": "Customer-specific retention schedules and verified deletion reporting",
       "status": "partial",
-      "evidence": ["docs/trust-center/data-governance.md", "README.md"],
-      "gap": "Add configurable automatic expiry, legal holds, deletion receipts, and backup-expiry confirmation."
+      "evidence": [
+        "docs/trust-center/data-governance.md",
+        "apps/api/src/app.ts",
+        "apps/api/src/storage.ts"
+      ],
+      "gap": "Add configurable automatic expiry, legal holds, durable receipt retention, and provider backup-expiry confirmation."
     },
     {
       "id": "DATA-03",

@@ -24,7 +24,7 @@
 
 ## Enterprise retention schedule to approve
 
-The contract should set active-workspace retention, post-termination export window, deletion deadline, backup expiry, security-log retention, support-log retention, and legal-hold handling. Until automated policy enforcement and deletion receipts exist, do not promise a deadline that cannot be manually verified across Convex, Blob, logs, model caches, and enabled subprocessors.
+The contract should set active-workspace retention, post-termination export window, deletion deadline, backup expiry, security-log retention, support-log retention, and legal-hold handling. Successful full analysis and dossier deletions now return privacy-safe receipts identifying the target only by SHA-256 and distinguishing completed primary deletion from provider-backup lifecycle. Automated expiry, legal holds, durable receipt retention, and provider backup-expiry evidence remain pending; do not promise a deadline that cannot be verified across Convex, Blob, logs, model caches, and enabled subprocessors.
 
 ## Privacy request procedure
 

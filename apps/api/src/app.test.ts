@@ -2,7 +2,13 @@ import { mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises"
 import { tmpdir } from "node:os"
 import path from "node:path"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
-import { createApp, redactedRequestPath, safeCsvCell, validatePdfPageCount } from "./app"
+import {
+  createApp,
+  type DeletionReceipt,
+  redactedRequestPath,
+  safeCsvCell,
+  validatePdfPageCount,
+} from "./app"
 
 let dataDir: string
 
@@ -35,6 +41,46 @@ describe("local analysis API", () => {
   it("enforces the 500-page filing limit", () => {
     expect(() => validatePdfPageCount(500)).not.toThrow()
     expect(() => validatePdfPageCount(501)).toThrow(/supports filings up to 500 pages/)
+  })
+
+  it("returns a privacy-safe receipt only after dossier deletion completes", async () => {
+    const app = createApp({ dataDir })
+    const headers = { "Content-Type": "application/json", "x-greenlit-session": "delete-dossier" }
+    const createdResponse = await app.request("/api/dossiers", {
+      method: "POST",
+      headers,
+      body: JSON.stringify({
+        substanceName: "Receipt test ingredient",
+        companyName: "Receipt test company",
+        substanceType: "other",
+        intendedEffect: "Technical effect",
+        intendedUses: "Selected foods",
+        manufacturingSummary: "Controlled process",
+        targetPopulation: "General population",
+        grasBasis: "scientific_procedures",
+      }),
+    })
+    const created = (await createdResponse.json()) as { dossier: { id: string } }
+
+    const deleted = await app.request(`/api/dossiers/${created.dossier.id}`, {
+      method: "DELETE",
+      headers,
+    })
+    expect(deleted.status).toBe(200)
+    const result = (await deleted.json()) as { receipt: DeletionReceipt }
+    expect(result.receipt).toMatchObject({
+      schemaVersion: 1,
+      targetType: "dossier",
+      primaryMetadata: "deleted",
+      privateObjects: "deleted",
+      derivedCaches: "not_applicable",
+      providerBackups: "subject_to_provider_lifecycle",
+    })
+    expect(result.receipt.targetSha256).toMatch(/^[a-f0-9]{64}$/)
+    expect(JSON.stringify(result.receipt)).not.toContain(created.dossier.id)
+    expect(await app.request(`/api/dossiers/${created.dossier.id}`, { headers })).toMatchObject({
+      status: 404,
+    })
   })
 
   it("removes capability tokens and record identifiers from log paths", () => {
@@ -887,7 +933,18 @@ describe("local analysis API", () => {
       headers: { "x-greenlit-session": "delete-session" },
       method: "DELETE",
     })
-    expect(deleted.status).toBe(204)
+    expect(deleted.status).toBe(200)
+    await expect(deleted.json()).resolves.toMatchObject({
+      receipt: {
+        schemaVersion: 1,
+        targetType: "analysis",
+        targetSha256: expect.stringMatching(/^[a-f0-9]{64}$/),
+        primaryMetadata: "deleted",
+        privateObjects: "deleted",
+        derivedCaches: "deleted",
+        providerBackups: "subject_to_provider_lifecycle",
+      },
+    })
 
     const missing = await app.request(`/api/analyses/${analysis.id}`, {
       headers: { "x-greenlit-session": "delete-session" },

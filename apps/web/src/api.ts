@@ -654,7 +654,9 @@ export async function compareAnalyses(analysisId: string, baselineId: string) {
 }
 
 export async function deleteAnalysis(analysisId: string) {
-  await requestJson<void>(`/analyses/${analysisId}`, { method: "DELETE" })
+  await requestJson<{ receipt: { receiptId: string } }>(`/analyses/${analysisId}`, {
+    method: "DELETE",
+  })
 }
 
 export async function createAnalysis(file: File) {
