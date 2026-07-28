@@ -3,6 +3,7 @@ import { randomUUID } from "node:crypto"
 export type SecurityEventName =
   | "authentication_denied"
   | "capability_rate_limited"
+  | "upload_rejected"
   | "unexpected_request_failure"
 
 export type SecurityEvent = {

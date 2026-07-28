@@ -89,9 +89,13 @@
       "id": "APP-02",
       "domain": "Application security",
       "control": "Malware scanning and content disarm for uploaded files",
-      "status": "planned",
-      "evidence": ["docs/trust-center/enterprise-readiness.md"],
-      "gap": "Quarantine uploads until malware scanning succeeds; evaluate PDF content disarm and reconstruction."
+      "status": "partial",
+      "evidence": [
+        "docs/security.md",
+        "apps/api/src/upload-security.ts",
+        "apps/api/src/upload-security.test.ts"
+      ],
+      "gap": "Local pre-processing quarantine rejects malformed, encrypted, active-content, embedded-file, rich-media, and XFA PDFs. Add an independently maintained anti-malware engine and evaluate content disarm and reconstruction before broad production use."
     },
     {
       "id": "SDLC-01",

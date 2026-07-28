@@ -123,7 +123,7 @@ describe("local analysis API", () => {
     const uploadBody = new FormData()
     uploadBody.set(
       "file",
-      new File(["%PDF-1.4 certificate of analysis lead not more than 0.5 ppm"], "coa.pdf", {
+      new File(["%PDF-1.4 certificate of analysis lead not more than 0.5 ppm\n%%EOF"], "coa.pdf", {
         type: "application/pdf",
       })
     )
@@ -318,9 +318,13 @@ describe("local analysis API", () => {
     evidenceForm.set("category", "identity")
     evidenceForm.set(
       "file",
-      new File(["%PDF-1.4 identity composition analytical characterization"], "identity.pdf", {
-        type: "application/pdf",
-      })
+      new File(
+        ["%PDF-1.4 identity composition analytical characterization\n%%EOF"],
+        "identity.pdf",
+        {
+          type: "application/pdf",
+        }
+      )
     )
     const evidenceResponse = await app.request(`/api/dossiers/${created.dossier.id}/evidence`, {
       method: "POST",
@@ -980,7 +984,8 @@ describe("local analysis API", () => {
       path.join(dataDir, storageKey),
       `%PDF-1.4
       GRAS notice identity composition intended use manufacturing specifications purity safety
-      toxicology NOAEL dietary exposure references journal Food Chem 2024 doi:10.1000/example`
+      toxicology NOAEL dietary exposure references journal Food Chem 2024 doi:10.1000/example
+      %%EOF`
     )
     const app = createApp({
       dataDir,
@@ -1121,6 +1126,32 @@ describe("API security boundaries", () => {
     })
   })
 
+  it("quarantines PDFs containing active content before creating an analysis", async () => {
+    const app = createApp({ dataDir })
+    const formData = new FormData()
+    formData.set(
+      "file",
+      new File(["%PDF-1.7\n1 0 obj << /JavaScript 2 0 R >> endobj\n%%EOF"], "active-content.pdf", {
+        type: "application/pdf",
+      })
+    )
+
+    const response = await app.request("/api/analyses", {
+      method: "POST",
+      headers: { "x-greenlit-session": "active-content-test" },
+      body: formData,
+    })
+
+    expect(response.status).toBe(400)
+    await expect(response.json()).resolves.toEqual({
+      error: "This PDF contains active or embedded content that Greenlit does not accept.",
+    })
+    const analyses = await app.request("/api/analyses", {
+      headers: { "x-greenlit-session": "active-content-test" },
+    })
+    await expect(analyses.json()).resolves.toEqual({ analyses: [] })
+  })
+
   it("marks API responses private and applies browser hardening headers", async () => {
     const response = await createApp({ dataDir }).request("/api/health")
 
@@ -1184,7 +1215,8 @@ async function uploadTestPdf(app: ReturnType<typeof createApp>, sessionId: strin
         `%PDF-1.4
         GRAS notice identity composition intended use conditions of use manufacturing quality control
         specifications purity safety toxicology NOAEL dietary exposure estimated daily intake
-        references journal Food Chem 2024 doi:10.1000/example`,
+        references journal Food Chem 2024 doi:10.1000/example
+        %%EOF`,
       ],
       "notice.pdf",
       { type: "application/pdf" }

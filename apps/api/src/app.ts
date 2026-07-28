@@ -68,6 +68,7 @@ import { extractPdfText } from "./pdf.js"
 import { recordSecurityEvent } from "./security-telemetry.js"
 import { verifyReferenceSources } from "./source-verification.js"
 import { createConfiguredStorage, defaultDataDir } from "./storage.js"
+import { inspectPdfUpload } from "./upload-security.js"
 
 type CreateAppOptions = {
   analysisMode?: "minimum" | "deep"
@@ -279,6 +280,11 @@ export function createApp(options: CreateAppOptions = {}) {
     }
     const file = body.file as File
     const bytes = new Uint8Array(await file.arrayBuffer())
+    const inspectionError = uploadInspectionError(bytes)
+    if (inspectionError) {
+      recordUploadRejection(context)
+      return context.json({ error: inspectionError }, 400)
+    }
     const artifact = await storage.createArtifact({
       bytes,
       fileName: file.name,
@@ -327,6 +333,11 @@ export function createApp(options: CreateAppOptions = {}) {
       fileName
     )
     const bytes = await storage.readArtifact(artifact)
+    const inspectionError = uploadInspectionError(bytes)
+    if (inspectionError) {
+      recordUploadRejection(context)
+      return context.json({ error: inspectionError }, 400)
+    }
     await createEvidenceRecord(storage, {
       ownerId,
       dossierId: dossier.dossier.id,
@@ -656,8 +667,11 @@ export function createApp(options: CreateAppOptions = {}) {
       return context.json({ error: "Response notes cannot exceed 10,000 characters." }, 400)
     const file = body.file as File
     const bytes = new Uint8Array(await file.arrayBuffer())
-    if (!hasPdfSignature(bytes))
-      return context.json({ error: "The uploaded file is not a valid PDF." }, 400)
+    const inspectionError = uploadInspectionError(bytes)
+    if (inspectionError) {
+      recordUploadRejection(context)
+      return context.json({ error: inspectionError }, 400)
+    }
     const extracted = await extractPdfText(bytes)
     validatePdfPageCount(extracted.pageCount)
     const artifact = await storage.createArtifact({
@@ -1443,8 +1457,11 @@ export function createApp(options: CreateAppOptions = {}) {
 
     const pdfFile = file as File
     const bytes = new Uint8Array(await pdfFile.arrayBuffer())
-    if (!hasPdfSignature(bytes))
-      return context.json({ error: "The uploaded file is not a valid PDF." }, 400)
+    const inspectionError = uploadInspectionError(bytes)
+    if (inspectionError) {
+      recordUploadRejection(context)
+      return context.json({ error: inspectionError }, 400)
+    }
     const upload = await storage.createArtifact({
       bytes,
       fileName: pdfFile.name,
@@ -1485,6 +1502,12 @@ export function createApp(options: CreateAppOptions = {}) {
 
     const resolveUploadedArtifact = options.resolveUploadedArtifact ?? resolveVercelBlobArtifact
     const upload = await resolveUploadedArtifact(ownerId, pathname, fileName)
+    const bytes = await storage.readArtifact(upload)
+    const inspectionError = uploadInspectionError(bytes)
+    if (inspectionError) {
+      recordUploadRejection(context)
+      return context.json({ error: inspectionError }, 400)
+    }
     const analysis = await storage.createAnalysis({
       ownerId,
       filingName: fileName,
@@ -2415,15 +2438,27 @@ function isFile(value: FormDataEntryValue | FormDataEntryValue[] | undefined): v
   )
 }
 
-function hasPdfSignature(bytes: Uint8Array) {
-  return (
-    bytes.byteLength >= 5 &&
-    bytes[0] === 0x25 &&
-    bytes[1] === 0x50 &&
-    bytes[2] === 0x44 &&
-    bytes[3] === 0x46 &&
-    bytes[4] === 0x2d
-  )
+function uploadInspectionError(bytes: Uint8Array) {
+  const inspection = inspectPdfUpload(bytes)
+  if (inspection.accepted) return null
+  if (inspection.reason === "invalid_signature") {
+    return "The uploaded file is not a valid PDF."
+  }
+  if (inspection.reason === "truncated") {
+    return "The uploaded PDF appears incomplete or truncated."
+  }
+  if (inspection.reason === "encrypted") {
+    return "Encrypted PDFs cannot be inspected safely. Upload an unencrypted copy."
+  }
+  return "This PDF contains active or embedded content that Greenlit does not accept."
+}
+
+function recordUploadRejection(context: Context) {
+  recordSecurityEvent("upload_rejected", {
+    method: context.req.method,
+    route: redactedRequestPath(context.req.url),
+    status: 400,
+  })
 }
 
 function uploadPathPrefix(ownerId: string) {

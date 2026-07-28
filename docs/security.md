@@ -19,6 +19,10 @@ review links as primary security boundaries.
 - Private uploaded objects use owner-prefixed paths and private Vercel Blob access. Upload grants
   accept PDF content only, have a 40 MB limit, cannot overwrite existing objects, and are verified
   again before an analysis record is created.
+- Before any upload is stored as evidence or processed as an analysis, Greenlit performs a local,
+  metadata-free quarantine inspection. It rejects incomplete PDFs, encryption, embedded files,
+  JavaScript, launch actions, rich media, and XFA. Rejections emit route/status telemetry without
+  filenames, file hashes, identities, or document content.
 
 ## Application protections
 
@@ -31,9 +35,10 @@ review links as primary security boundaries.
 - Unexpected server failures return a generic message. Internal exception details are not sent to
   clients, provider response bodies are not copied into errors, and capability credentials are
   redacted from application error logs.
-- Authentication denials, capability throttling, and unexpected request failures emit structured
-  security events with unique event IDs, timestamps, normalized routes, and status metadata. They
-  exclude identities, tokens, dossier content, and raw record identifiers.
+- Authentication denials, capability throttling, upload rejections, and unexpected request
+  failures emit structured security events with unique event IDs, timestamps, normalized routes,
+  and status metadata. They exclude identities, tokens, dossier content, filenames, file hashes,
+  and raw record identifiers.
 - The deployment applies a Content Security Policy, anti-framing controls, MIME sniffing
   protection, strict transport security, a restrictive permissions policy, and no-referrer policy.
 - GitHub runs CodeQL's extended security queries on pushes, pull requests, and a weekly schedule.
@@ -72,6 +77,8 @@ procurement responses and must not be replaced with broader unsupported claims.
 
 - Enable platform/WAF rate limiting for `/api/respond/*`, `/api/review/*`, authentication, and
   upload-token issuance before expanding beyond the private MVP.
+- Connect the quarantine gate to an independently maintained anti-malware scanner, retain
+  signature/version and disposition evidence, and evaluate PDF content disarm and reconstruction.
 - Rotate provider credentials on a schedule and immediately after any suspected disclosure.
 - Review access logs and Convex audit events for abnormal link creation, upload, and review volume.
 - Define a formal retention period and deletion policy before accepting production customer data.
