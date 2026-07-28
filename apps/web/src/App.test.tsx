@@ -192,6 +192,11 @@ describe("App", () => {
     )
 
     render(<App />)
+    expect(
+      await screen.findByRole("heading", { name: "What needs attention now" })
+    ).toBeInTheDocument()
+    expect(screen.getByRole("region", { name: "Dossier readiness scorecard" })).toBeInTheDocument()
+    expect(screen.getByText("No evidence sources uploaded")).toBeInTheDocument()
     fireEvent.click(await screen.findByRole("button", { name: /draft sections/i }))
 
     expect(screen.getByRole("group", { name: "Draft view" })).toBeInTheDocument()
@@ -201,7 +206,7 @@ describe("App", () => {
       "polite"
     )
     expect(screen.getByRole("button", { name: "Sources" })).toBeInTheDocument()
-    expect(screen.getByRole("button", { name: /add the first source/i })).toBeInTheDocument()
+    expect(screen.getAllByRole("button", { name: /add the first source/i })).not.toHaveLength(0)
     expect(
       screen.getByRole("button", { name: /draft sections, [01] of 1 drafted/i })
     ).toHaveAttribute("aria-current", "page")

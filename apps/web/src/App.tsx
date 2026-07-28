@@ -32,6 +32,7 @@ import {
   FileSearch,
   FileText,
   FolderOpen,
+  LayoutDashboard,
   LoaderCircle,
   LockKeyhole,
   Menu,
@@ -2695,8 +2696,16 @@ function DossierPage({
   const [saving, setSaving] = useState(false)
   const [formError, setFormError] = useState<string | null>(null)
   const [studioTab, setStudioTab] = useState<
-    "evidence" | "facts" | "requests" | "draft" | "quality" | "release" | "submission" | "activity"
-  >("evidence")
+    | "overview"
+    | "evidence"
+    | "facts"
+    | "requests"
+    | "draft"
+    | "quality"
+    | "release"
+    | "submission"
+    | "activity"
+  >("overview")
   const [requirementId, setRequirementId] = useState("auto")
   const [evidenceCategory, setEvidenceCategory] = useState<DossierEvidence["category"]>("other")
   const [selectedSectionId, setSelectedSectionId] = useState("")
@@ -3728,6 +3737,79 @@ function DossierPage({
                 label: "Prepare a controlled release",
                 detail: "Lock the approved narrative and its supporting evidence.",
               }
+  const unresolvedReferenceCount = selected.sections.reduce(
+    (count, section) =>
+      count + renderFactReferences(section.content, selected.factBookEntries).unresolved.length,
+    0
+  )
+  const unreadyRequirementCount = selected.requirements.filter(
+    (requirement) => requirement.status !== "ready"
+  ).length
+  const unverifiedEvidenceCount = selected.evidence.filter(
+    (evidence) => evidence.verificationStatus !== "verified"
+  ).length
+  const proposedClaimCount = selected.claims.filter((claim) => claim.status === "proposed").length
+  const openReviewIssueCount = selected.reviewIssues.filter(
+    (issue) => issue.status === "open"
+  ).length
+  const allOverviewPriorities: Array<{
+    id: string
+    title: string
+    detail: string
+    count: number
+    tab: typeof studioTab
+    severity: "blocker" | "attention"
+  }> = [
+    {
+      id: "source-coverage",
+      title: "No evidence sources uploaded",
+      detail: "Add the first source before drafting or claim verification.",
+      count: selected.evidence.length === 0 ? 1 : 0,
+      tab: "evidence",
+      severity: "blocker",
+    },
+    {
+      id: "requirements",
+      title: "Evidence requirements not ready",
+      detail: "Complete coverage before relying on the dossier narrative.",
+      count: unreadyRequirementCount,
+      tab: "evidence",
+      severity: "attention",
+    },
+    {
+      id: "evidence",
+      title: "Sources awaiting verification",
+      detail: "Only verified evidence can support governed claims.",
+      count: unverifiedEvidenceCount,
+      tab: "evidence",
+      severity: "attention",
+    },
+    {
+      id: "claims",
+      title: "Claims awaiting review",
+      detail: "Accept, edit, or reject proposed claims before drafting.",
+      count: proposedClaimCount,
+      tab: "evidence",
+      severity: "attention",
+    },
+    {
+      id: "references",
+      title: "Broken governed fact references",
+      detail: "Resolve missing values before section approval.",
+      count: unresolvedReferenceCount,
+      tab: "draft",
+      severity: "blocker",
+    },
+    {
+      id: "review",
+      title: "Open consultant findings",
+      detail: "Document a resolution before locking the release.",
+      count: openReviewIssueCount,
+      tab: "release",
+      severity: "blocker",
+    },
+  ]
+  const overviewPriorities = allOverviewPriorities.filter((priority) => priority.count > 0)
   const visiblePassages = readerSearch.trim()
     ? readerPassages.filter((passage) =>
         passage.text.toLowerCase().includes(readerSearch.trim().toLowerCase())
@@ -4153,6 +4235,14 @@ function DossierPage({
           <p>WORKFLOW</p>
           <button
             type="button"
+            className={studioTab === "overview" ? "is-current" : ""}
+            aria-current={studioTab === "overview" ? "page" : undefined}
+            onClick={() => setStudioTab("overview")}
+          >
+            <LayoutDashboard /> <span>Overview</span>
+          </button>
+          <button
+            type="button"
             className={studioTab === "requests" ? "is-current" : ""}
             aria-current={studioTab === "requests" ? "page" : undefined}
             aria-label={`Evidence requests, ${selected.evidenceRequests.length}`}
@@ -4236,6 +4326,135 @@ function DossierPage({
             <small aria-hidden="true">{selected.auditEvents.length}</small>
           </button>
         </aside>
+        {studioTab === "overview" ? (
+          <div className="dossier-overview">
+            <header className="overview-heading">
+              <div>
+                <p className="section-label">DOSSIER COMMAND CENTER</p>
+                <h2>What needs attention now</h2>
+                <p>
+                  A live view of evidence readiness, drafting progress, review blockers, and the
+                  shortest path to the next controlled milestone.
+                </p>
+              </div>
+              <button type="button" onClick={() => setStudioTab(nextAction.tab)}>
+                {nextAction.label} <ArrowRight />
+              </button>
+            </header>
+
+            <section className="overview-scorecard" aria-label="Dossier readiness scorecard">
+              <article>
+                <span>Evidence readiness</span>
+                <strong>
+                  {ready}/{selected.requirements.length}
+                </strong>
+                <small>requirements ready</small>
+              </article>
+              <article>
+                <span>Verified claims</span>
+                <strong>{verifiedClaimCount}</strong>
+                <small>{proposedClaimCount} awaiting review</small>
+              </article>
+              <article>
+                <span>Draft progress</span>
+                <strong>
+                  {draftedSectionCount}/{selected.sections.length}
+                </strong>
+                <small>substantive sections</small>
+              </article>
+              <article>
+                <span>Approved sections</span>
+                <strong>
+                  {approvedSectionCount}/{selected.sections.length}
+                </strong>
+                <small>{activeRelease ? "release locked" : "before release"}</small>
+              </article>
+            </section>
+
+            <div className="overview-grid">
+              <section className="overview-priorities">
+                <div className="overview-section-heading">
+                  <div>
+                    <span>PRIORITY QUEUE</span>
+                    <h3>Blockers and review work</h3>
+                  </div>
+                  <small>{overviewPriorities.length} active</small>
+                </div>
+                {overviewPriorities.length ? (
+                  <div className="overview-priority-list">
+                    {overviewPriorities.map((priority) => (
+                      <button
+                        type="button"
+                        key={priority.id}
+                        className={`is-${priority.severity}`}
+                        onClick={() => setStudioTab(priority.tab)}
+                      >
+                        <span>
+                          {priority.severity === "blocker" ? <CircleAlert /> : <Clock3 />}
+                        </span>
+                        <span>
+                          <strong>{priority.title}</strong>
+                          <small>{priority.detail}</small>
+                        </span>
+                        <b>{priority.count}</b>
+                        <ChevronRight />
+                      </button>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="overview-clear-state">
+                    <Check />
+                    <div>
+                      <strong>No active blockers</strong>
+                      <p>Continue through final quality review and release preparation.</p>
+                    </div>
+                  </div>
+                )}
+              </section>
+
+              <section className="overview-activity">
+                <div className="overview-section-heading">
+                  <div>
+                    <span>RECENT ACTIVITY</span>
+                    <h3>Latest workspace changes</h3>
+                  </div>
+                  <button type="button" onClick={() => setStudioTab("activity")}>
+                    View all
+                  </button>
+                </div>
+                {selected.auditEvents.length ? (
+                  <ol>
+                    {selected.auditEvents.slice(0, 5).map((event) => (
+                      <li key={event.id}>
+                        <span />
+                        <div>
+                          <strong>{event.summary}</strong>
+                          <small>{formatDate(event.createdAt)}</small>
+                        </div>
+                      </li>
+                    ))}
+                  </ol>
+                ) : (
+                  <div className="overview-empty-activity">
+                    <Clock3 />
+                    <p>Activity will appear as evidence and drafts change.</p>
+                  </div>
+                )}
+              </section>
+            </div>
+
+            <section className="overview-next-milestone">
+              <div>
+                <span>NEXT CONTROLLED MILESTONE</span>
+                <h3>{nextGate}</h3>
+                <p>{nextAction.detail}</p>
+              </div>
+              <button type="button" onClick={() => setStudioTab(nextAction.tab)}>
+                {nextAction.label} <ArrowRight />
+              </button>
+            </section>
+          </div>
+        ) : null}
         {studioTab === "evidence" ? (
           <div className="requirements-panel">
             <div className="requirements-heading">
