@@ -98,7 +98,7 @@
       "controlIds": ["SOC-SDLC-01", "SOC-SDLC-02"],
       "action": "Enable protected main/production release approvals, secret protection, dependency features, and retain deployed commit evidence.",
       "owner": "System owner",
-      "status": "not_started",
+      "status": "in_progress",
       "exitEvidence": "Repository/deployment settings export and successful controlled release."
     },
     {

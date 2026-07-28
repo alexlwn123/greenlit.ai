@@ -13,6 +13,7 @@ dist/
 # Test and build output.
 coverage/
 test-results/
+.artifacts/
 playwright-report/
 .tools/
 tmp/

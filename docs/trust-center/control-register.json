@@ -111,7 +111,12 @@
       "domain": "Secure development",
       "control": "Dependency vulnerability SLA, SBOM, artifact provenance, and release approvals",
       "status": "partial",
-      "evidence": ["docs/trust-center/secure-development.md"],
+      "evidence": [
+        "docs/trust-center/secure-development.md",
+        "scripts/generate-sbom.mjs",
+        "scripts/release-evidence.mjs",
+        ".github/workflows/ci.yml"
+      ],
       "gap": "Generate an SBOM for releases, sign artifacts, protect the production environment, and retain remediation metrics."
     },
     {

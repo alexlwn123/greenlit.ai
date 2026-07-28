@@ -18,6 +18,8 @@
     "check": "pnpm lint && pnpm trust:validate && pnpm typecheck && pnpm test && pnpm build",
     "trust:validate": "node scripts/validate-trust-center.mjs",
     "soc2:readiness": "node scripts/soc2-readiness.mjs",
+    "sbom:generate": "node scripts/generate-sbom.mjs",
+    "evidence:release": "node scripts/release-evidence.mjs",
     "corpus:validate": "node scripts/corpus-ops.mjs validate",
     "corpus:refresh": "node scripts/corpus-ops.mjs refresh",
     "corpus:rollback": "node scripts/corpus-ops.mjs rollback",

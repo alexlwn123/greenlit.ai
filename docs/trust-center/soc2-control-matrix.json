@@ -102,7 +102,13 @@
       "frequency": "Continuous",
       "owner": "Security owner",
       "designStatus": "partial",
-      "evidence": ["SECURITY.md", "docs/trust-center/secure-development.md"]
+      "evidence": [
+        "SECURITY.md",
+        "docs/trust-center/secure-development.md",
+        "scripts/generate-sbom.mjs",
+        "scripts/release-evidence.mjs",
+        ".github/workflows/ci.yml"
+      ]
     },
     {
       "id": "SOC-LOG-01",

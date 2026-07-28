@@ -7,6 +7,7 @@
 - Dependabot proposes grouped weekly dependency updates.
 - Production secrets remain server-side; test fixtures must not contain customer data.
 - Security boundaries are regression-tested, including production authentication, owner isolation, capability links, upload validation, privacy gating, model sanitization, and secret-free status output.
+- CI generates a CycloneDX 1.6 inventory of every locked package and a release-evidence manifest binding the SBOM and lockfile hashes to the exact commit and workflow run. The evidence bundle is retained as a CI artifact for 90 days.
 
 ## Required change process
 
@@ -23,6 +24,6 @@ These become external commitments only after ownership, monitoring, exception ap
 
 ## Release evidence still required
 
-Generate a CycloneDX or SPDX SBOM; pin and review CI actions; enable repository secret scanning/push protection and protected production environments; sign releases or generate SLSA-compatible provenance; retain approvals and deployed commit identity; measure remediation performance; commission annual third-party penetration testing.
+Pin and review CI actions; enable repository secret scanning/push protection and protected production environments; add cryptographic signing or SLSA-compatible provenance beyond the current hash-linked release manifest; retain approvals and deployed commit identity; measure remediation performance; commission annual third-party penetration testing.
 
 The dependency-review workflow requires GitHub's dependency graph and, for a private repository, GitHub Code Security or Advanced Security. Confirm licensing and enable the repository feature before making the workflow a required check.
