@@ -69,6 +69,9 @@ Local variables:
 - `GREENLIT_DELETION_RECEIPT_SECRET`: optional server-only secret of at least 32 characters used to
   HMAC-sign deletion receipts. Pair it with a stable `GREENLIT_DELETION_RECEIPT_KEY_ID`, rotate it
   under the approved key-management procedure, and retain retired verification keys securely.
+- `GREENLIT_SECURITY_TELEMETRY_URL`: optional customer-controlled HTTPS SIEM intake. Pair it with
+  `GREENLIT_SECURITY_TELEMETRY_TOKEN` and explicitly approve hosted delivery using
+  `GREENLIT_ALLOW_EXTERNAL_SECURITY_TELEMETRY=true`.
 - `GREENLIT_CUSTOMER_GATEWAY_TOKEN`: server-only bearer credential used to authenticate Greenlit to
   the customer gateway.
 - `GREENLIT_ALLOW_PRIVATE_MODEL_GATEWAY`: permits a private IP gateway only for a customer-hosted

@@ -129,16 +129,16 @@ export function createApp(options: CreateAppOptions = {}) {
     context.header("Referrer-Policy", "no-referrer")
   })
 
-  app.onError((error, context) => {
+  app.onError(async (error, context) => {
     if (error.message === "Not authenticated") {
-      recordSecurityEvent("authentication_denied", {
+      await recordSecurityEvent("authentication_denied", {
         method: context.req.method,
         route: redactedRequestPath(context.req.url),
         status: 401,
       })
       return context.json({ error: "Not authenticated" }, 401)
     }
-    recordSecurityEvent("unexpected_request_failure", {
+    await recordSecurityEvent("unexpected_request_failure", {
       method: context.req.method,
       route: redactedRequestPath(context.req.url),
       status: 500,
@@ -287,7 +287,7 @@ export function createApp(options: CreateAppOptions = {}) {
     const bytes = new Uint8Array(await file.arrayBuffer())
     const assessment = await uploadSecurityAssessment(bytes)
     if (!assessment.accepted) {
-      recordUploadRejection(context)
+      await recordUploadRejection(context)
       return context.json({ error: assessment.error }, assessment.status)
     }
     const artifact = await storage.createArtifact({
@@ -341,7 +341,7 @@ export function createApp(options: CreateAppOptions = {}) {
     const bytes = await storage.readArtifact(artifact)
     const assessment = await uploadSecurityAssessment(bytes)
     if (!assessment.accepted) {
-      recordUploadRejection(context)
+      await recordUploadRejection(context)
       return context.json({ error: assessment.error }, assessment.status)
     }
     const securedArtifact = { ...artifact, security: assessment.security }
@@ -676,7 +676,7 @@ export function createApp(options: CreateAppOptions = {}) {
     const bytes = new Uint8Array(await file.arrayBuffer())
     const assessment = await uploadSecurityAssessment(bytes)
     if (!assessment.accepted) {
-      recordUploadRejection(context)
+      await recordUploadRejection(context)
       return context.json({ error: assessment.error }, assessment.status)
     }
     const extracted = await extractPdfText(bytes)
@@ -1468,7 +1468,7 @@ export function createApp(options: CreateAppOptions = {}) {
     const bytes = new Uint8Array(await pdfFile.arrayBuffer())
     const assessment = await uploadSecurityAssessment(bytes)
     if (!assessment.accepted) {
-      recordUploadRejection(context)
+      await recordUploadRejection(context)
       return context.json({ error: assessment.error }, assessment.status)
     }
     const upload = await storage.createArtifact({
@@ -1515,7 +1515,7 @@ export function createApp(options: CreateAppOptions = {}) {
     const bytes = await storage.readArtifact(upload)
     const assessment = await uploadSecurityAssessment(bytes)
     if (!assessment.accepted) {
-      recordUploadRejection(context)
+      await recordUploadRejection(context)
       return context.json({ error: assessment.error }, assessment.status)
     }
     const securedUpload = { ...upload, security: assessment.security }
@@ -1848,7 +1848,7 @@ function publicLinkRateLimit(counts: Map<string, { count: number; resetAt: numbe
     context.header("X-RateLimit-Remaining", String(remaining))
     context.header("X-RateLimit-Reset", String(Math.ceil(bucket.resetAt / 1000)))
     if (bucket.count > limit) {
-      recordSecurityEvent("capability_rate_limited", {
+      await recordSecurityEvent("capability_rate_limited", {
         method: context.req.method,
         route: redactedRequestPath(context.req.url),
         status: 429,
@@ -2494,8 +2494,8 @@ async function uploadSecurityAssessment(bytes: Uint8Array) {
   }
 }
 
-function recordUploadRejection(context: Context) {
-  recordSecurityEvent("upload_rejected", {
+async function recordUploadRejection(context: Context) {
+  await recordSecurityEvent("upload_rejected", {
     method: context.req.method,
     route: redactedRequestPath(context.req.url),
     status: 400,

@@ -143,10 +143,11 @@
       "status": "partial",
       "evidence": [
         "docs/trust-center/incident-response.md",
+        "docs/security-telemetry.md",
         "apps/api/src/security-telemetry.ts",
         "apps/api/src/security-telemetry.test.ts"
       ],
-      "gap": "Connect identity, hosting, storage, and application events to monitored alerting with documented retention and escalation."
+      "gap": "A customer-controlled SIEM delivery protocol is implemented for privacy-safe application events. Configure and test it in production, then connect identity, hosting, storage, repository, email, and provider events with documented retention, alerts, access, review, and escalation."
     },
     {
       "id": "IR-01",

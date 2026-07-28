@@ -30,3 +30,7 @@ SEV-1 acknowledgement within 15 minutes and executive/legal escalation within 30
 ## Exercises and evidence
 
 Run at least one annual tabletop covering credential compromise, cross-tenant access, malicious PDF/upload, AI-provider data exposure, and regional cloud outage. Retain attendance, timeline, decisions, gaps, corrective actions, and closure evidence. Test contact trees quarterly.
+
+## Monitoring intake
+
+Privacy-safe application events can be forwarded through the documented customer-controlled SIEM protocol. The security owner must configure the production route, approve retention and access, define alert thresholds and on-call escalation, test successful and failed delivery, and reconcile the SIEM with identity, GitHub, Vercel, Convex, storage, email, and enabled provider logs. A configured webhook without reviewed alerts and responder evidence is not a completed monitoring control.

@@ -39,6 +39,8 @@ review links as primary security boundaries.
   failures emit structured security events with unique event IDs, timestamps, normalized routes,
   and status metadata. They exclude identities, tokens, dossier content, filenames, file hashes,
   and raw record identifiers.
+- These events can be delivered to a customer-controlled SIEM using an authenticated, HMAC-signed,
+  redirect-blocked webhook. Console emission remains the fallback if delivery fails.
 - The deployment applies a Content Security Policy, anti-framing controls, MIME sniffing
   protection, strict transport security, a restrictive permissions policy, and no-referrer policy.
 - GitHub runs CodeQL's extended security queries on pushes, pull requests, and a weekly schedule.
