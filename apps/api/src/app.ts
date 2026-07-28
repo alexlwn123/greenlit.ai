@@ -68,7 +68,7 @@ import { extractPdfText } from "./pdf.js"
 import { recordSecurityEvent } from "./security-telemetry.js"
 import { verifyReferenceSources } from "./source-verification.js"
 import { createConfiguredStorage, defaultDataDir } from "./storage.js"
-import { inspectPdfUpload } from "./upload-security.js"
+import { assessPdfUpload } from "./upload-security.js"
 
 type CreateAppOptions = {
   analysisMode?: "minimum" | "deep"
@@ -280,15 +280,16 @@ export function createApp(options: CreateAppOptions = {}) {
     }
     const file = body.file as File
     const bytes = new Uint8Array(await file.arrayBuffer())
-    const inspectionError = uploadInspectionError(bytes)
-    if (inspectionError) {
+    const assessment = await uploadSecurityAssessment(bytes)
+    if (!assessment.accepted) {
       recordUploadRejection(context)
-      return context.json({ error: inspectionError }, 400)
+      return context.json({ error: assessment.error }, assessment.status)
     }
     const artifact = await storage.createArtifact({
       bytes,
       fileName: file.name,
       mimeType: file.type || "application/pdf",
+      security: assessment.security,
     })
     await createEvidenceRecord(storage, {
       ownerId,
@@ -333,18 +334,19 @@ export function createApp(options: CreateAppOptions = {}) {
       fileName
     )
     const bytes = await storage.readArtifact(artifact)
-    const inspectionError = uploadInspectionError(bytes)
-    if (inspectionError) {
+    const assessment = await uploadSecurityAssessment(bytes)
+    if (!assessment.accepted) {
       recordUploadRejection(context)
-      return context.json({ error: inspectionError }, 400)
+      return context.json({ error: assessment.error }, assessment.status)
     }
+    const securedArtifact = { ...artifact, security: assessment.security }
     await createEvidenceRecord(storage, {
       ownerId,
       dossierId: dossier.dossier.id,
       requirementId,
       category: evidenceCategory(body.category),
       title: fileName,
-      artifact,
+      artifact: securedArtifact,
       bytes,
       requirements: dossier.requirements,
     })
@@ -667,10 +669,10 @@ export function createApp(options: CreateAppOptions = {}) {
       return context.json({ error: "Response notes cannot exceed 10,000 characters." }, 400)
     const file = body.file as File
     const bytes = new Uint8Array(await file.arrayBuffer())
-    const inspectionError = uploadInspectionError(bytes)
-    if (inspectionError) {
+    const assessment = await uploadSecurityAssessment(bytes)
+    if (!assessment.accepted) {
       recordUploadRejection(context)
-      return context.json({ error: inspectionError }, 400)
+      return context.json({ error: assessment.error }, assessment.status)
     }
     const extracted = await extractPdfText(bytes)
     validatePdfPageCount(extracted.pageCount)
@@ -678,6 +680,7 @@ export function createApp(options: CreateAppOptions = {}) {
       bytes,
       fileName: file.name,
       mimeType: file.type || "application/pdf",
+      security: assessment.security,
     })
     const now = new Date().toISOString()
     const evidenceId = randomUUID()
@@ -1457,15 +1460,16 @@ export function createApp(options: CreateAppOptions = {}) {
 
     const pdfFile = file as File
     const bytes = new Uint8Array(await pdfFile.arrayBuffer())
-    const inspectionError = uploadInspectionError(bytes)
-    if (inspectionError) {
+    const assessment = await uploadSecurityAssessment(bytes)
+    if (!assessment.accepted) {
       recordUploadRejection(context)
-      return context.json({ error: inspectionError }, 400)
+      return context.json({ error: assessment.error }, assessment.status)
     }
     const upload = await storage.createArtifact({
       bytes,
       fileName: pdfFile.name,
       mimeType: pdfFile.type || "application/pdf",
+      security: assessment.security,
     })
     const analysis = await storage.createAnalysis({
       ownerId,
@@ -1503,15 +1507,16 @@ export function createApp(options: CreateAppOptions = {}) {
     const resolveUploadedArtifact = options.resolveUploadedArtifact ?? resolveVercelBlobArtifact
     const upload = await resolveUploadedArtifact(ownerId, pathname, fileName)
     const bytes = await storage.readArtifact(upload)
-    const inspectionError = uploadInspectionError(bytes)
-    if (inspectionError) {
+    const assessment = await uploadSecurityAssessment(bytes)
+    if (!assessment.accepted) {
       recordUploadRejection(context)
-      return context.json({ error: inspectionError }, 400)
+      return context.json({ error: assessment.error }, assessment.status)
     }
+    const securedUpload = { ...upload, security: assessment.security }
     const analysis = await storage.createAnalysis({
       ownerId,
       filingName: fileName,
-      upload,
+      upload: securedUpload,
     })
 
     if (shouldRunAnalysisInline(options.runAnalysisInline)) {
@@ -2438,19 +2443,49 @@ function isFile(value: FormDataEntryValue | FormDataEntryValue[] | undefined): v
   )
 }
 
-function uploadInspectionError(bytes: Uint8Array) {
-  const inspection = inspectPdfUpload(bytes)
-  if (inspection.accepted) return null
-  if (inspection.reason === "invalid_signature") {
-    return "The uploaded file is not a valid PDF."
+async function uploadSecurityAssessment(bytes: Uint8Array) {
+  const assessment = await assessPdfUpload(bytes)
+  if (assessment.accepted) return assessment
+  if (assessment.reason === "invalid_signature") {
+    return {
+      accepted: false as const,
+      error: "The uploaded file is not a valid PDF.",
+      status: 400 as const,
+    }
   }
-  if (inspection.reason === "truncated") {
-    return "The uploaded PDF appears incomplete or truncated."
+  if (assessment.reason === "truncated") {
+    return {
+      accepted: false as const,
+      error: "The uploaded PDF appears incomplete or truncated.",
+      status: 400 as const,
+    }
   }
-  if (inspection.reason === "encrypted") {
-    return "Encrypted PDFs cannot be inspected safely. Upload an unencrypted copy."
+  if (assessment.reason === "encrypted") {
+    return {
+      accepted: false as const,
+      error: "Encrypted PDFs cannot be inspected safely. Upload an unencrypted copy.",
+      status: 400 as const,
+    }
   }
-  return "This PDF contains active or embedded content that Greenlit does not accept."
+  if (assessment.reason === "scanner_unavailable") {
+    return {
+      accepted: false as const,
+      error: "Upload security scanning is temporarily unavailable. Try again later.",
+      status: 503 as const,
+    }
+  }
+  if (assessment.reason === "malicious") {
+    return {
+      accepted: false as const,
+      error: "The uploaded PDF did not pass security scanning.",
+      status: 400 as const,
+    }
+  }
+  return {
+    accepted: false as const,
+    error: "This PDF contains active or embedded content that Greenlit does not accept.",
+    status: 400 as const,
+  }
 }
 
 function recordUploadRejection(context: Context) {

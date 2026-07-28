@@ -79,6 +79,8 @@ procurement responses and must not be replaced with broader unsupported claims.
   upload-token issuance before expanding beyond the private MVP.
 - Connect the quarantine gate to an independently maintained anti-malware scanner, retain
   signature/version and disposition evidence, and evaluate PDF content disarm and reconstruction.
+  Greenlit supports a fail-closed customer-controlled scanner protocol; the production endpoint,
+  contract, signatures, alerting, and test evidence must still be configured and approved.
 - Rotate provider credentials on a schedule and immediately after any suspected disclosure.
 - Review access logs and Convex audit events for abnormal link creation, upload, and review volume.
 - Define a formal retention period and deletion policy before accepting production customer data.

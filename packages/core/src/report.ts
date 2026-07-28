@@ -13,6 +13,23 @@ export const ArtifactReferenceSchema = z.object({
   size: z.number().nonnegative(),
   storageKey: z.string(),
   createdAt: z.string(),
+  security: z
+    .object({
+      policyVersion: z.literal(1),
+      sha256: z.string().regex(/^[a-f0-9]{64}$/),
+      inspectedAt: z.string(),
+      malwareScan: z.discriminatedUnion("status", [
+        z.object({ status: z.literal("not_configured") }),
+        z.object({
+          status: z.literal("clean"),
+          engine: z.string(),
+          engineVersion: z.string(),
+          signatureVersion: z.string(),
+          scannedAt: z.string(),
+        }),
+      ]),
+    })
+    .optional(),
 })
 
 export const TextStatsSchema = z.object({

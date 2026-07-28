@@ -63,6 +63,9 @@ Local variables:
 - `GREENLIT_CUSTOMER_GATEWAY_URL`: customer-controlled HTTPS model gateway. This lets an
   enterprise keep provider credentials, cloud identity, retention controls, and model selection in
   its own approved environment.
+- `GREENLIT_UPLOAD_SCANNER_URL`: optional customer-controlled HTTPS anti-malware scanner. Set
+  `GREENLIT_ALLOW_EXTERNAL_UPLOAD_SCANNING=true` after vendor/data-flow approval and
+  `GREENLIT_REQUIRE_UPLOAD_MALWARE_SCAN=true` to fail closed when no clean verdict is available.
 - `GREENLIT_CUSTOMER_GATEWAY_TOKEN`: server-only bearer credential used to authenticate Greenlit to
   the customer gateway.
 - `GREENLIT_ALLOW_PRIVATE_MODEL_GATEWAY`: permits a private IP gateway only for a customer-hosted

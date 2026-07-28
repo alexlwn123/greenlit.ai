@@ -65,6 +65,7 @@ type CreateArtifactInput = {
   bytes: Uint8Array
   fileName: string
   mimeType: string
+  security?: ArtifactReference["security"]
 }
 
 export type ExternalConsultantReview = {
@@ -545,6 +546,7 @@ export function createStorage(dataDir = defaultDataDir()) {
       size: input.bytes.byteLength,
       storageKey,
       createdAt: new Date().toISOString(),
+      security: input.security,
     }
   }
 
@@ -2086,6 +2088,7 @@ export function createConvexBlobStorage(authToken?: string) {
       size: input.bytes.byteLength,
       storageKey,
       createdAt: new Date().toISOString(),
+      security: input.security,
     }
   }
 

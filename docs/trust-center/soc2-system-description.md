@@ -46,7 +46,7 @@ Restricted data includes uploaded filings, extracted text, evidence, scientific 
 
 ## Data lifecycle
 
-The browser receives authenticated access and uses short-lived signed grants to place PDF objects into private owner-prefixed storage. The API verifies objects before metadata creation and extraction. Authenticated users create and modify owner-scoped records. Optional external model calls require explicit deployment approval and pass through the confidential model gateway. Deletion removes primary upload, extracted text, analysis metadata, notes, and scoped model cache; configurable expiry, legal holds, receipts, and documented backup expiry remain remediation items.
+The browser receives authenticated access and uses short-lived signed grants to place PDF objects into private owner-prefixed storage. The API performs local quarantine inspection before metadata creation or extraction and supports a fail-closed customer-controlled anti-malware gateway that transmits no filename, owner, dossier, or session identifier. Authenticated users create and modify owner-scoped records. Optional external model and upload-scanner calls require explicit deployment approval and pass through documented gateways. Deletion removes primary upload, extracted text, analysis metadata, notes, and scoped model cache; configurable expiry, legal holds, receipts, and documented backup expiry remain remediation items.
 
 ## Security control environment
 

@@ -1010,11 +1010,21 @@ describe("local analysis API", () => {
       },
       method: "POST",
     })
-    const body = (await response.json()) as { analysis: { filingName: string; status: string } }
+    const body = (await response.json()) as {
+      analysis: {
+        filingName: string
+        status: string
+        upload?: { security?: { sha256: string; malwareScan: { status: string } } }
+      }
+    }
 
     expect(response.status).toBe(202)
     expect(body.analysis.filingName).toBe("notice.pdf")
     expect(body.analysis.status).toBe("complete")
+    expect(body.analysis.upload?.security).toMatchObject({
+      sha256: expect.stringMatching(/^[a-f0-9]{64}$/),
+      malwareScan: { status: "not_configured" },
+    })
   })
 
   it("rejects direct uploads owned by another session", async () => {
@@ -1148,6 +1158,33 @@ describe("API security boundaries", () => {
     })
     const analyses = await app.request("/api/analyses", {
       headers: { "x-greenlit-session": "active-content-test" },
+    })
+    await expect(analyses.json()).resolves.toEqual({ analyses: [] })
+  })
+
+  it("fails closed before storage when required malware scanning is unavailable", async () => {
+    vi.stubEnv("GREENLIT_REQUIRE_UPLOAD_MALWARE_SCAN", "true")
+    const app = createApp({ dataDir })
+    const formData = new FormData()
+    formData.set(
+      "file",
+      new File(["%PDF-1.7\n1 0 obj << /Type /Catalog >> endobj\n%%EOF"], "passive.pdf", {
+        type: "application/pdf",
+      })
+    )
+
+    const response = await app.request("/api/analyses", {
+      method: "POST",
+      headers: { "x-greenlit-session": "required-scan-test" },
+      body: formData,
+    })
+
+    expect(response.status).toBe(503)
+    await expect(response.json()).resolves.toEqual({
+      error: "Upload security scanning is temporarily unavailable. Try again later.",
+    })
+    const analyses = await app.request("/api/analyses", {
+      headers: { "x-greenlit-session": "required-scan-test" },
     })
     await expect(analyses.json()).resolves.toEqual({ analyses: [] })
   })

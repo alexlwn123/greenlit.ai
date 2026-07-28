@@ -92,10 +92,11 @@
       "status": "partial",
       "evidence": [
         "docs/security.md",
+        "docs/upload-security.md",
         "apps/api/src/upload-security.ts",
         "apps/api/src/upload-security.test.ts"
       ],
-      "gap": "Local pre-processing quarantine rejects malformed, encrypted, active-content, embedded-file, rich-media, and XFA PDFs. Add an independently maintained anti-malware engine and evaluate content disarm and reconstruction before broad production use."
+      "gap": "Local quarantine and a fail-closed customer-controlled scanner protocol are implemented. Select, approve, configure, and test an independently maintained anti-malware engine in production; evaluate content disarm and reconstruction before broad production use."
     },
     {
       "id": "SDLC-01",
