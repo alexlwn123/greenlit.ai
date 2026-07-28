@@ -110,8 +110,12 @@
       "control": "Security-relevant identity, hosting, storage, application, and administrative events are centrally retained, reviewed, and alerted without restricted payloads.",
       "frequency": "Continuous",
       "owner": "Security owner",
-      "designStatus": "gap",
-      "evidence": ["docs/trust-center/incident-response.md"]
+      "designStatus": "partial",
+      "evidence": [
+        "docs/trust-center/incident-response.md",
+        "apps/api/src/security-telemetry.ts",
+        "apps/api/src/security-telemetry.test.ts"
+      ]
     },
     {
       "id": "SOC-IR-01",

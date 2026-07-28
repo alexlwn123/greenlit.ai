@@ -31,6 +31,9 @@ review links as primary security boundaries.
 - Unexpected server failures return a generic message. Internal exception details are not sent to
   clients, provider response bodies are not copied into errors, and capability credentials are
   redacted from application error logs.
+- Authentication denials, capability throttling, and unexpected request failures emit structured
+  security events with unique event IDs, timestamps, normalized routes, and status metadata. They
+  exclude identities, tokens, dossier content, and raw record identifiers.
 - The deployment applies a Content Security Policy, anti-framing controls, MIME sniffing
   protection, strict transport security, a restrictive permissions policy, and no-referrer policy.
 - GitHub runs CodeQL's extended security queries on pushes, pull requests, and a weekly schedule.

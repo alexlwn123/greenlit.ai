@@ -37,6 +37,17 @@ describe("local analysis API", () => {
     expect(() => validatePdfPageCount(501)).toThrow(/supports filings up to 500 pages/)
   })
 
+  it("removes capability tokens and record identifiers from log paths", () => {
+    expect(
+      redactedRequestPath(
+        "https://greenlit.ai/api/dossiers/019fa64b-4d08-4900-b955-572b2216d835/sections"
+      )
+    ).toBe("/api/dossiers/[id]/sections")
+    expect(redactedRequestPath(`https://greenlit.ai/api/respond/${"a".repeat(64)}`)).toBe(
+      "/api/respond/[redacted]"
+    )
+  })
+
   it("issues one-time external evidence response links", async () => {
     const app = createApp({ dataDir })
     const headers = { "Content-Type": "application/json", "x-greenlit-session": "link-user" }

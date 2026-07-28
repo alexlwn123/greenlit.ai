@@ -126,8 +126,12 @@
       "id": "LOG-02",
       "domain": "Detection and audit",
       "control": "Central security monitoring, authentication telemetry, alerting, and immutable retention",
-      "status": "planned",
-      "evidence": ["docs/trust-center/incident-response.md"],
+      "status": "partial",
+      "evidence": [
+        "docs/trust-center/incident-response.md",
+        "apps/api/src/security-telemetry.ts",
+        "apps/api/src/security-telemetry.test.ts"
+      ],
       "gap": "Connect identity, hosting, storage, and application events to monitored alerting with documented retention and escalation."
     },
     {

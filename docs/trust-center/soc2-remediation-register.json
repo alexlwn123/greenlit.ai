@@ -44,7 +44,7 @@
       "controlIds": ["SOC-LOG-01", "SOC-IR-01"],
       "action": "Connect and monitor identity, GitHub, Vercel, Convex, storage, email, and application security events with an escalation route.",
       "owner": "Security owner",
-      "status": "not_started",
+      "status": "in_progress",
       "exitEvidence": "Logging inventory, alert rules, retention configuration, alert test, and responder acknowledgement."
     },
     {

@@ -65,6 +65,7 @@ import { verifyReferencesWithCrossref } from "./crossref.js"
 import { analyzeNoticeWithAnthropic, type DeepAnalyzer } from "./deep-analysis.js"
 import { modelProcessingStatus } from "./model-gateway.js"
 import { extractPdfText } from "./pdf.js"
+import { recordSecurityEvent } from "./security-telemetry.js"
 import { verifyReferenceSources } from "./source-verification.js"
 import { createConfiguredStorage, defaultDataDir } from "./storage.js"
 
@@ -129,8 +130,18 @@ export function createApp(options: CreateAppOptions = {}) {
 
   app.onError((error, context) => {
     if (error.message === "Not authenticated") {
+      recordSecurityEvent("authentication_denied", {
+        method: context.req.method,
+        route: redactedRequestPath(context.req.url),
+        status: 401,
+      })
       return context.json({ error: "Not authenticated" }, 401)
     }
+    recordSecurityEvent("unexpected_request_failure", {
+      method: context.req.method,
+      route: redactedRequestPath(context.req.url),
+      status: 500,
+    })
     console.error("Unhandled API request failure", {
       method: context.req.method,
       path: redactedRequestPath(context.req.url),
@@ -1742,10 +1753,9 @@ function hashResponseToken(token: string) {
 }
 
 export function redactedRequestPath(url: string) {
-  return new URL(url).pathname.replace(
-    /^\/api\/(respond|review)\/[^/]+/,
-    (_match, kind: string) => `/api/${kind}/[redacted]`
-  )
+  return new URL(url).pathname
+    .replace(/^\/api\/(respond|review)\/[^/]+/, (_match, kind: string) => `/api/${kind}/[redacted]`)
+    .replace(/[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}/gi, "[id]")
 }
 
 function publicAppOrigin(context: Context) {
@@ -1804,6 +1814,11 @@ function publicLinkRateLimit(counts: Map<string, { count: number; resetAt: numbe
     context.header("X-RateLimit-Remaining", String(remaining))
     context.header("X-RateLimit-Reset", String(Math.ceil(bucket.resetAt / 1000)))
     if (bucket.count > limit) {
+      recordSecurityEvent("capability_rate_limited", {
+        method: context.req.method,
+        route: redactedRequestPath(context.req.url),
+        status: 429,
+      })
       context.header("Retry-After", String(Math.ceil((bucket.resetAt - now) / 1000)))
       return context.json({ error: "Too many requests. Try again later." }, 429)
     }
