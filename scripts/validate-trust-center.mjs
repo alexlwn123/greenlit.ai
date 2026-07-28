@@ -8,6 +8,13 @@ const allowedStatuses = new Set(["implemented", "partial", "planned", "customer_
 const ids = new Set()
 const errors = []
 
+const soc2Matrix = JSON.parse(
+  await readFile(path.join(root, "docs", "trust-center", "soc2-control-matrix.json"), "utf8")
+)
+const riskRegister = JSON.parse(
+  await readFile(path.join(root, "docs", "trust-center", "soc2-risk-register.json"), "utf8")
+)
+
 if (!/^\d{4}-\d{2}-\d{2}$/.test(register.lastReviewed ?? "")) {
   errors.push("lastReviewed must use YYYY-MM-DD")
 }
@@ -36,13 +43,45 @@ for (const control of register.controls ?? []) {
   }
 }
 
+const soc2Ids = new Set()
+for (const control of soc2Matrix.controls ?? []) {
+  if (!/^SOC-[A-Z]+-\d{2}$/.test(control.id ?? "")) errors.push(`invalid SOC 2 id: ${control.id}`)
+  if (soc2Ids.has(control.id)) errors.push(`duplicate SOC 2 id: ${control.id}`)
+  soc2Ids.add(control.id)
+  if (!new Set(["implemented", "partial", "gap"]).has(control.designStatus)) {
+    errors.push(`${control.id}: invalid design status`)
+  }
+  for (const evidence of control.evidence ?? []) {
+    try {
+      await access(path.join(root, evidence))
+    } catch {
+      errors.push(`${control.id}: missing evidence file ${evidence}`)
+    }
+  }
+}
+
+const riskIds = new Set()
+for (const risk of riskRegister.risks ?? []) {
+  if (!/^R-\d{2}$/.test(risk.id ?? "")) errors.push(`invalid risk id: ${risk.id}`)
+  if (riskIds.has(risk.id)) errors.push(`duplicate risk id: ${risk.id}`)
+  riskIds.add(risk.id)
+  if (risk.inherentScore !== risk.likelihood * risk.impact) {
+    errors.push(`${risk.id}: inherent score does not equal likelihood x impact`)
+  }
+  if (risk.residualScore > risk.inherentScore) {
+    errors.push(`${risk.id}: residual score exceeds inherent score`)
+  }
+}
+
 if (errors.length) {
   console.error(errors.join("\n"))
   process.exitCode = 1
 } else {
   const counts = Object.groupBy(register.controls, (control) => control.status)
   console.log(
-    `Trust center validated: ${register.controls.length} controls (${Object.entries(counts)
+    `Trust center validated: ${register.controls.length} enterprise controls, ${soc2Ids.size} SOC 2 controls, ${riskIds.size} risks (${Object.entries(
+      counts
+    )
       .map(([status, controls]) => `${status}=${controls.length}`)
       .join(", ")})`
   )

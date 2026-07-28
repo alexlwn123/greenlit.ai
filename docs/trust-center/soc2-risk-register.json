@@ -1,0 +1,116 @@
+{
+  "version": 1,
+  "method": "Likelihood and impact are scored 1-5; inherent and residual scores are likelihood multiplied by impact. Management must approve ratings and treatment before the Type I as-of date.",
+  "risks": [
+    {
+      "id": "R-01",
+      "risk": "Unauthorized cross-tenant access to restricted dossier information",
+      "likelihood": 2,
+      "impact": 5,
+      "inherentScore": 10,
+      "treatment": "Production authentication, server-derived owner identity, persistence-layer ownership checks, regression tests",
+      "residualScore": 5,
+      "owner": "Security owner",
+      "approval": "pending"
+    },
+    {
+      "id": "R-02",
+      "risk": "Compromised privileged account or source/deployment credential",
+      "likelihood": 3,
+      "impact": 5,
+      "inherentScore": 15,
+      "treatment": "Server secret separation and vendor identity controls; enforce MFA, least privilege, access review and rapid revocation",
+      "residualScore": 10,
+      "owner": "Security owner",
+      "approval": "pending"
+    },
+    {
+      "id": "R-03",
+      "risk": "Malicious or malformed PDF compromises processing or introduces malware",
+      "likelihood": 3,
+      "impact": 4,
+      "inherentScore": 12,
+      "treatment": "Private PDF-only upload grants, size/page/signature validation; add quarantine and malware scanning",
+      "residualScore": 8,
+      "owner": "System owner",
+      "approval": "pending"
+    },
+    {
+      "id": "R-04",
+      "risk": "Restricted content is sent to an unapproved AI provider or retained contrary to contract",
+      "likelihood": 2,
+      "impact": 5,
+      "inherentScore": 10,
+      "treatment": "External processing disabled by default, explicit hosted opt-in, customer gateway, sanitization, fail-closed routing",
+      "residualScore": 4,
+      "owner": "Privacy owner",
+      "approval": "pending"
+    },
+    {
+      "id": "R-05",
+      "risk": "AI output introduces unsupported regulatory or scientific claims",
+      "likelihood": 4,
+      "impact": 4,
+      "inherentScore": 16,
+      "treatment": "Verified-claim constraints, citation markers, schema validation, deterministic fallbacks, mandatory human review",
+      "residualScore": 8,
+      "owner": "System owner",
+      "approval": "pending"
+    },
+    {
+      "id": "R-06",
+      "risk": "Critical cloud vendor outage or data loss prevents service or recovery",
+      "likelihood": 2,
+      "impact": 5,
+      "inherentScore": 10,
+      "treatment": "Documented continuity plan and vendor-managed resilience; verify backups and exercise restoration",
+      "residualScore": 8,
+      "owner": "System owner",
+      "approval": "pending"
+    },
+    {
+      "id": "R-07",
+      "risk": "Security incident is not detected, escalated, or notified promptly",
+      "likelihood": 3,
+      "impact": 5,
+      "inherentScore": 15,
+      "treatment": "Incident plan and privacy-safe errors; implement central telemetry, monitored alerting, contacts and tabletop",
+      "residualScore": 10,
+      "owner": "Security owner",
+      "approval": "pending"
+    },
+    {
+      "id": "R-08",
+      "risk": "Third-party processor fails security, privacy, retention, or availability obligations",
+      "likelihood": 3,
+      "impact": 4,
+      "inherentScore": 12,
+      "treatment": "Subprocessor inventory and pre-use review requirements; complete contractual and annual vendor evidence reviews",
+      "residualScore": 8,
+      "owner": "Privacy owner",
+      "approval": "pending"
+    },
+    {
+      "id": "R-09",
+      "risk": "Known vulnerable dependency or unauthorized change reaches production",
+      "likelihood": 3,
+      "impact": 4,
+      "inherentScore": 12,
+      "treatment": "CI, CodeQL, Dependabot, dependency review, tests; add protected releases, SBOM/provenance and remediation metrics",
+      "residualScore": 6,
+      "owner": "System owner",
+      "approval": "pending"
+    },
+    {
+      "id": "R-10",
+      "risk": "Retention or deletion commitments are not completed across primary stores and backups",
+      "likelihood": 3,
+      "impact": 4,
+      "inherentScore": 12,
+      "treatment": "Primary-record deletion removes scoped artifacts and caches; add schedules, legal holds, receipts and backup-expiry evidence",
+      "residualScore": 8,
+      "owner": "Privacy owner",
+      "approval": "pending"
+    }
+  ]
+}

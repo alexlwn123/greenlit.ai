@@ -1,0 +1,166 @@
+{
+  "version": 1,
+  "scope": "Recommended Security and Confidentiality Type I",
+  "controls": [
+    {
+      "id": "SOC-GOV-01",
+      "area": "CC1/CC2",
+      "control": "Management assigns security, privacy, system, and control ownership and approves policies at least annually.",
+      "frequency": "Annual and upon material change",
+      "owner": "Executive owner",
+      "designStatus": "gap",
+      "evidence": [
+        "docs/trust-center/soc2-program.json",
+        "docs/trust-center/enterprise-readiness.md"
+      ]
+    },
+    {
+      "id": "SOC-GOV-02",
+      "area": "CC2",
+      "control": "Security responsibilities, incident channels, and material changes are communicated to personnel and relevant external parties.",
+      "frequency": "Onboarding and ongoing",
+      "owner": "Security owner",
+      "designStatus": "partial",
+      "evidence": ["SECURITY.md", "docs/trust-center/incident-response.md"]
+    },
+    {
+      "id": "SOC-RISK-01",
+      "area": "CC3",
+      "control": "Management performs and approves a documented security risk assessment covering fraud, vendors, technology, AI, and business change.",
+      "frequency": "Annual and upon material change",
+      "owner": "Security owner",
+      "designStatus": "partial",
+      "evidence": ["docs/trust-center/soc2-risk-register.json"]
+    },
+    {
+      "id": "SOC-VENDOR-01",
+      "area": "CC3/CC9",
+      "control": "Vendors are inventoried, assessed before restricted-data use, contractually governed, monitored, and offboarded.",
+      "frequency": "Before use and annual",
+      "owner": "Privacy owner",
+      "designStatus": "partial",
+      "evidence": ["docs/trust-center/subprocessors.md"]
+    },
+    {
+      "id": "SOC-IAM-01",
+      "area": "CC5/CC6",
+      "control": "Production identity is authenticated and authorization is derived server-side with tenant ownership enforced at API and persistence layers.",
+      "frequency": "Continuous",
+      "owner": "System owner",
+      "designStatus": "implemented",
+      "evidence": ["docs/security.md", "convex/auth.ts", "convex/analyses.ts", "convex/dossiers.ts"]
+    },
+    {
+      "id": "SOC-IAM-02",
+      "area": "CC6",
+      "control": "Privileged access is approved, least-privileged, MFA-protected, reviewed quarterly, and revoked promptly after role change or separation.",
+      "frequency": "Event-driven and quarterly",
+      "owner": "Security owner",
+      "designStatus": "gap",
+      "evidence": ["docs/trust-center/soc2-evidence-plan.md"]
+    },
+    {
+      "id": "SOC-DATA-01",
+      "area": "CC6/C1",
+      "control": "Restricted customer information uses private storage, encrypted transport, cache prevention, owner-scoped paths, and controlled deletion.",
+      "frequency": "Continuous",
+      "owner": "System owner",
+      "designStatus": "implemented",
+      "evidence": ["docs/security.md", "apps/api/src/app.ts", "apps/api/src/storage.ts"]
+    },
+    {
+      "id": "SOC-DATA-02",
+      "area": "C1",
+      "control": "Confidential information is classified, retained only for approved periods, disclosed only for approved purposes, and verifiably deleted or returned.",
+      "frequency": "Continuous and upon termination",
+      "owner": "Privacy owner",
+      "designStatus": "partial",
+      "evidence": ["docs/trust-center/data-governance.md"]
+    },
+    {
+      "id": "SOC-APP-01",
+      "area": "CC6/CC7",
+      "control": "Application boundaries enforce secure headers, input and upload limits, signed capabilities, safe errors, throttling, and external-processing gates.",
+      "frequency": "Continuous",
+      "owner": "System owner",
+      "designStatus": "implemented",
+      "evidence": ["docs/security.md", "apps/api/src/app.ts", "apps/api/src/model-gateway.ts"]
+    },
+    {
+      "id": "SOC-SDLC-01",
+      "area": "CC8",
+      "control": "Changes are version-controlled and must pass automated lint, type, test, build, security, and evidence validation before release.",
+      "frequency": "Every change",
+      "owner": "System owner",
+      "designStatus": "implemented",
+      "evidence": [".github/workflows/ci.yml", ".github/workflows/codeql.yml", "package.json"]
+    },
+    {
+      "id": "SOC-SDLC-02",
+      "area": "CC7/CC8",
+      "control": "Vulnerabilities are received, prioritized, remediated to approved targets, independently tested, and exceptions are approved and tracked.",
+      "frequency": "Continuous",
+      "owner": "Security owner",
+      "designStatus": "partial",
+      "evidence": ["SECURITY.md", "docs/trust-center/secure-development.md"]
+    },
+    {
+      "id": "SOC-LOG-01",
+      "area": "CC4/CC7",
+      "control": "Security-relevant identity, hosting, storage, application, and administrative events are centrally retained, reviewed, and alerted without restricted payloads.",
+      "frequency": "Continuous",
+      "owner": "Security owner",
+      "designStatus": "gap",
+      "evidence": ["docs/trust-center/incident-response.md"]
+    },
+    {
+      "id": "SOC-IR-01",
+      "area": "CC7",
+      "control": "Events are triaged, contained, investigated, recovered, communicated, and reviewed under an approved incident plan.",
+      "frequency": "Per incident; exercised annually",
+      "owner": "Security owner",
+      "designStatus": "partial",
+      "evidence": ["docs/trust-center/incident-response.md"]
+    },
+    {
+      "id": "SOC-BCP-01",
+      "area": "CC7/CC9",
+      "control": "Critical dependencies, recovery objectives, backups, restoration, and continuity procedures are documented and exercised.",
+      "frequency": "Annual and upon material change",
+      "owner": "System owner",
+      "designStatus": "partial",
+      "evidence": ["docs/trust-center/business-continuity.md"]
+    },
+    {
+      "id": "SOC-HR-01",
+      "area": "CC1/CC6",
+      "control": "Personnel sign confidentiality obligations, complete security training, receive approved access, and are offboarded promptly.",
+      "frequency": "Onboarding, annual, and offboarding",
+      "owner": "Executive owner",
+      "designStatus": "gap",
+      "evidence": ["docs/trust-center/soc2-evidence-plan.md"]
+    },
+    {
+      "id": "SOC-AI-01",
+      "area": "CC6/CC8/C1",
+      "control": "External model use requires approval, follows a documented provider boundary, minimizes and sanitizes packets, and preserves human review.",
+      "frequency": "Continuous and upon model change",
+      "owner": "System owner",
+      "designStatus": "implemented",
+      "evidence": [
+        "docs/confidential-processing.md",
+        "docs/trust-center/ai-governance.md",
+        "apps/api/src/model-gateway.ts"
+      ]
+    },
+    {
+      "id": "SOC-MON-01",
+      "area": "CC4",
+      "control": "Management reviews control operation, exceptions, risks, vendors, access, incidents, vulnerabilities, and corrective actions.",
+      "frequency": "Quarterly",
+      "owner": "Executive owner",
+      "designStatus": "gap",
+      "evidence": ["docs/trust-center/soc2-evidence-plan.md"]
+    }
+  ]
+}

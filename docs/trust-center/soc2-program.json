@@ -1,0 +1,44 @@
+{
+  "program": "Greenlit SOC 2 Type I readiness",
+  "reportType": "Type I",
+  "criteria": ["Security", "Confidentiality"],
+  "criteriaDecisionStatus": "recommended_pending_management_confirmation",
+  "executiveOwner": "Jason Platkin",
+  "executiveOwnerStatus": "assumed_pending_confirmation",
+  "securityOwner": "Jason Platkin",
+  "securityOwnerStatus": "interim_pending_confirmation",
+  "privacyOwner": "Jason Platkin",
+  "privacyOwnerStatus": "interim_pending_confirmation",
+  "legalEntity": null,
+  "targetAsOfDate": null,
+  "partnerRequirement": null,
+  "auditor": null,
+  "compliancePlatform": null,
+  "penetrationTestProvider": null,
+  "scope": {
+    "included": [
+      "Greenlit production web application and API",
+      "Convex production authentication and metadata persistence",
+      "Vercel production hosting and private Blob storage",
+      "GitHub source control and CI/CD",
+      "Resend authentication email delivery",
+      "Greenlit personnel and contractors with production or source access",
+      "Enabled external model-processing route and customer gateway boundary"
+    ],
+    "excluded": [
+      "Customer-managed systems beyond the documented Greenlit gateway interface",
+      "Local developer data that is prohibited from containing production customer data",
+      "Optional integrations disabled in the audited production deployment"
+    ]
+  },
+  "requiredManagementInputs": [
+    "Confirm legal entity and principal business address",
+    "Confirm executive, security, and privacy owners",
+    "Provide complete workforce and contractor roster with roles",
+    "Provide production access roster for GitHub, Vercel, Convex, Resend, DNS/email, and model providers",
+    "Confirm partner-required criteria and deadline",
+    "Approve audit and penetration-test budget",
+    "Approve policies and risk acceptance decisions",
+    "Sign auditor engagement and management representation letter"
+  ]
+}

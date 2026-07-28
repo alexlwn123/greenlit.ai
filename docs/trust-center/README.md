@@ -20,5 +20,10 @@ Greenlit is **not currently represented here as SOC 2 certified, independently p
 - [AI governance](ai-governance.md): model boundaries, validation, human review, and prohibited uses.
 - [Legal readiness](legal-readiness.md): contract and privacy terms counsel must finalize.
 - [Control register](control-register.json): machine-validated status and evidence map.
+- [SOC 2 program record](soc2-program.json): scope, owners, decisions, and management inputs.
+- [SOC 2 control matrix](soc2-control-matrix.json): recommended Security + Confidentiality controls.
+- [SOC 2 risk register](soc2-risk-register.json): initial risks, treatments, and pending approvals.
+- [SOC 2 system description](soc2-system-description.md): draft auditor narrative and boundary.
+- [SOC 2 evidence plan](soc2-evidence-plan.md): management, access, technical, and operational evidence.
 
 Run `pnpm trust:validate` before sharing the package. A successful check verifies structure and evidence-file presence; it does not certify that an organizational control has been operated or audited.
