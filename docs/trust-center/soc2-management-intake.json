@@ -1,38 +1,69 @@
 {
   "version": 1,
   "instructions": "Management must replace pending values and approve this record without backdating. Sensitive rosters and exports belong in the restricted audit room, referenced here by evidence ID rather than committed to source control.",
+  "factsRecordedAt": "2026-07-28",
+  "programStage": "pre_entity_pre_product_market_fit",
   "organization": {
     "legalEntity": null,
+    "legalEntityStatus": "not_formed",
     "principalBusinessAddress": null,
     "productName": "Greenlit",
     "productDescriptionApproved": false
   },
   "ownership": {
     "executiveOwner": "Jason Platkin",
-    "executiveOwnerConfirmed": false,
+    "executiveOwnerConfirmed": true,
     "securityOwner": "Jason Platkin",
-    "securityOwnerConfirmed": false,
+    "securityOwnerConfirmed": true,
     "privacyOwner": "Jason Platkin",
-    "privacyOwnerConfirmed": false
+    "privacyOwnerConfirmed": true,
+    "systemOwner": "Jason Platkin",
+    "systemOwnerConfirmed": true
   },
   "scopeDecision": {
     "criteria": ["Security", "Confidentiality"],
-    "criteriaApproved": false,
-    "availabilityRequired": null,
+    "criteriaApproved": true,
+    "availabilityRequired": false,
     "partnerRequirement": null,
     "targetAsOfDate": null
   },
   "populations": {
+    "workforcePopulation": [
+      {
+        "name": "Jason Platkin",
+        "relationship": "Founder",
+        "scope": "All current Greenlit systems"
+      }
+    ],
+    "workforcePopulationStatus": "complete_founder_only_pending_restricted_evidence",
+    "knownHumanAccess": [
+      {
+        "name": "Jason Platkin",
+        "systems": "All current Greenlit systems"
+      },
+      {
+        "name": "Alex",
+        "systems": "GitHub only",
+        "futureReview": "Retain only while business need remains"
+      }
+    ],
     "workforceRosterEvidenceId": null,
     "productionAccessRosterEvidenceId": null,
     "vendorRosterEvidenceId": null
   },
   "procurement": {
+    "status": "deferred_until_product_market_fit",
     "auditBudgetApproved": false,
     "penetrationTestBudgetApproved": false,
     "auditor": null,
     "auditorEngagementEvidenceId": null,
     "penetrationTestProvider": null
+  },
+  "infrastructureDecision": {
+    "sourceRepository": "GitHub",
+    "restrictedAuditRoom": null,
+    "restrictedAuditRoomStatus": "deferred_until_company_workspace_exists",
+    "futureWorkspacePreference": "Google Workspace or equivalent company-controlled service"
   },
   "approval": {
     "approvedBy": null,

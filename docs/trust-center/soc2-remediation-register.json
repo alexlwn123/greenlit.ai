@@ -6,7 +6,7 @@
       "id": "REM-01",
       "priority": "P0",
       "controlIds": ["SOC-GOV-01", "SOC-HR-01"],
-      "action": "Confirm legal entity, workforce roster, control owners, and production-access population.",
+      "action": "Form the legal entity before auditor engagement; preserve the confirmed founder-only workforce, Jason-owned controls, and Jason-plus-Alex GitHub access population in restricted evidence.",
       "owner": "Executive owner",
       "status": "waiting_external",
       "exitEvidence": "Approved soc2-program record, organization roster, and access population."
@@ -114,7 +114,7 @@
       "id": "REM-13",
       "priority": "P1",
       "controlIds": ["SOC-GOV-01"],
-      "action": "Select the independent CPA auditor, confirm Security + Confidentiality scope, and agree the Type I as-of date.",
+      "action": "After product-market-fit validation, select the independent CPA auditor, reconfirm Security + Confidentiality scope, and agree the Type I as-of date.",
       "owner": "Executive owner",
       "status": "waiting_external",
       "exitEvidence": "Signed engagement letter and auditor-confirmed scope/date."

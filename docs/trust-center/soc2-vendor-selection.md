@@ -2,6 +2,8 @@
 
 ## Recommendation
 
+Greenlit is pre-entity and pre-product-market fit. Do not solicit auditors, purchase a compliance platform, commission a paid penetration test, or set an examination date yet. Preserve the current SOC 2-aligned technical foundation and revisit procurement only when a credible customer requirement or validated sales motion justifies the expense.
+
 Collect three independent CPA quotes and three compliance-platform quotes, plus at least two penetration-test quotes. Select the CPA on report quality, independence, scope judgment, secure evidence handling, predictable requests, and a clean transition to Type II—not simply the shortest advertised timeline.
 
 For Greenlit's current size, compare a manual-first track using the existing repository evidence against Vanta, Drata, and Secureframe. A platform is worthwhile only if its integrations reduce real evidence labor and it exports all evidence cleanly. It is not a substitute for control operation or the independent CPA report.
@@ -31,11 +33,13 @@ Prefer a focused, authenticated SaaS web/API assessment with manual authorizatio
 
 ## Decision gates
 
-1. Alex confirms whether the partner accepts Type I and whether Confidentiality/Availability are required.
-2. Management confirms entity, owners, workforce/access population, deadline, and maximum first-year/renewal budget.
-3. Auditor reviews the proposed boundary and control matrix before the as-of date is selected.
-4. Platform is purchased only after a proof-of-concept demonstrates integrations and evidence export.
-5. Penetration scope is approved by the SOC auditor before testing so the resulting report satisfies evidence expectations.
+1. Product-market-fit evidence or a credible delivery partner establishes that SOC 2 materially affects sales.
+2. Greenlit forms a legal entity and establishes company-controlled identity and restricted document storage.
+3. Alex or the relevant partner confirms whether Type I is accepted and whether Confidentiality/Availability are required.
+4. Management confirms deadline and maximum first-year/renewal budget. Owners are confirmed as Jason Platkin; the workforce is founder-only; known human access is Jason across current systems and Alex on GitHub only.
+5. Auditor reviews the proposed boundary and control matrix before the as-of date is selected.
+6. Platform is purchased only after a proof-of-concept demonstrates integrations and evidence export.
+7. Penetration scope is approved by the SOC auditor before testing so the resulting report satisfies evidence expectations.
 
 ## Non-negotiables
 
