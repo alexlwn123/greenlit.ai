@@ -17,7 +17,7 @@ jobs:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5, Node 24
         with:
           persist-credentials: false
-      - uses: pnpm/action-setup@a8198c4bff370c8506180b035930dea56dbd5288 # v5, Node 24
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5, Node 24
         with:
           version: 11.7.0
       - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5, Node 24
