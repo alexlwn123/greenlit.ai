@@ -12,13 +12,13 @@
   },
   "dependencies": {
     "@greenlit/core": "workspace:*",
-    "@hono/node-server": "^2.0.8",
-    "@napi-rs/canvas": "^1.0.2",
-    "@vercel/blob": "^2.6.1",
+    "@hono/node-server": "^2.1.4",
+    "@napi-rs/canvas": "^1.0.11",
+    "@vercel/blob": "^2.8.1",
     "@vercel/oidc": "3.8.0",
-    "convex": "^1.40.0",
-    "hono": "^4.12.27",
-    "pdfjs-dist": "^6.1.200"
+    "convex": "^1.46.0",
+    "hono": "^4.13.13",
+    "pdfjs-dist": "^6.4.299"
   },
   "devDependencies": {
     "vitest": "^4.1.8"
